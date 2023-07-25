@@ -1,0 +1,34 @@
+{
+    "crsapp__CorporateRisk_Res": {
+        "corporateRiskAssesment": {
+            "countryRisk1aval": "",
+            "productRisk1aval": "",
+            "other": "n",
+            "dchannelRisk2b": "y",
+            "dchannelRisk2aval": "",
+            "clientRisk1a": "",
+            "clientRisk1b": "y",
+            "dchannelRisk2a": "",
+            "productRisk": "n",
+            "productRisk1b": "y",
+            "clientRisk": "n",
+            "productRisk1a": "",
+            "countryRisk2aval": "",
+            "clientRisk2aval": "",
+            "countryRisk1b": "y",
+            "countryRisk1a": "",
+            "clientRisk1aval": "",
+            "dchannelRisk1a": "",
+            "clientRisk2a": "y",
+            "dchannelRisk1b": "y",
+            "clientRisk2b": "",
+            "dchannelRisk1aval": "",
+            "dchannelRisk": "n",
+            "countryRisk": "n",
+            "positiveMatch": "y",
+            "applicationId": "14052018535080",
+            "countryRisk2b": "y",
+            "countryRisk2a": ""
+        }
+    }
+}

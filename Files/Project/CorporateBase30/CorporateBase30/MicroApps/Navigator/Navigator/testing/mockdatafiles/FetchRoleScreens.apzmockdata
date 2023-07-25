@@ -1,0 +1,267 @@
+{
+    "menuheader": [
+        {
+            "description": "Home",
+            "icon": "icon-cm-dashboard_new",
+            "submenu": [
+                {
+                    "description": "Dashboard",
+                    "icon": "icon-cm-dashboard_new",
+                    "appId": "ACDB01",
+                    "screenId": "ActiveUsersDashboard"
+                }
+            ]
+        },
+        {
+            "description": "Admin",
+            "icon": "icon-cm-mytask",
+            "submenu": [
+                {
+                    "description": "My Tasks",
+                    "icon": "icon-cm-mytask",
+                    "appId": "actf01",
+                    "screenId": "TaskFlow"
+                },
+                {
+                    "description": "Assign Task",
+                    "icon": "icon-cm-mytask",
+                    "appId": "asntsk",
+                    "screenId": "TasksList"
+                },
+                {
+                    "description": "Users",
+                    "icon": "icon-users",
+                    "appId": "acus01",
+                    "screenId": "UserList"
+                },
+                {
+                    "description": "Roles",
+                    "icon": "icon-cm-rolee",
+                    "appId": "acrl01",
+                    "screenId": "RolesList"
+                },
+                {
+                    "description": " Rules",
+                    "icon": "icon-cm-rules",
+                    "appId": "acru01",
+                    "screenId": "RulesSummary"
+                },
+                {
+                    "description": "Company Profile",
+                    "icon": "icon-cm-company-profile",
+                    "appId": "acpr01",
+                    "screenId": "CorporateInfo"
+                },
+                {
+                    "description": "Company Structure",
+                    "icon": "icon-cm-company-structure",
+                    "appId": "acep01",
+                    "screenId": "CorporateHierarchy"
+                }
+            ]
+        },
+        {
+            "description": "Transfers",
+            "icon": "icon-cm-transfers",
+            "submenu": [
+                {
+                    "description": "Transfers",
+                    "icon": "icon-cm-transfers",
+                    "appId": "acft01",
+                    "screenId": "Transfers"
+                },
+                {
+                    "description": "Standing Instructions",
+                    "icon": "icon-cm-standinginst",
+                    "appId": "acsi01",
+                    "screenId": "StandingInstructions"
+                },
+                {
+                    "description": "Beneficiaries",
+                    "icon": "icon-cm-beneficiary",
+                    "appId": "benf01",
+                    "screenId": "Beneficiary"
+                }
+            ]
+        },
+        {
+            "description": "Accounts",
+            "icon": "icon-cm-account_details",
+            "submenu": [
+                {
+                    "description": "Business Accounts",
+                    "icon": "icon-cm-account_details",
+                    "appId": "accdtl",
+                    "screenId": "AccountSummary"
+                }
+            ]
+        },
+        {
+            "description": "Trade Finance",
+            "icon": "icon-cm-tradefinance",
+            "submenu": [
+               
+                 {
+                    "description": "Trade Finance",
+                    "icon": "icon-cm-tradefinance",
+                    "appId": "lecr01",
+                    "screenId": "LCSummary"
+                }
+            ]
+        },
+        {
+            "description": "Cards",
+            "icon": "icon-cm-cards",
+            "submenu": [
+                {
+                    "description": "Cards",
+                    "icon": "icon-cm-cards",
+                    "appId": "card01",
+                    "screenId": "Cards"
+                }
+            ]
+        },
+        {
+            "description": "Deposits",
+            "icon": "icon-cm-deposits",
+            "submenu": [
+                {
+                    "description": "Liquidate",
+                    "icon": "icon-cm-liquidateFD",
+                    "appId": "acdp01",
+                    "screenId": "LiquidateFD"
+                },
+                {
+                    "description": "Deposits",
+                    "icon": "icon-cm-deposits",
+                    "appId": "acdp01",
+                    "screenId": "DepositLauncher"
+                }
+            ]
+        },
+        {
+            "description": "Facilities",
+            "icon": "icon-file-alt",
+            "submenu": [
+                {
+                    "description": "Credit Limits",
+                    "icon": "icon-file-alt",
+                    "appId": "ficl01",
+                    "screenId": "CreditLimitsList"
+                },
+                 {
+                    "description": "Collaterals",
+                    "icon": "icon-file-alt",
+                    "appId": "ficl01",
+                    "screenId": "CollateralList"
+                },
+                {
+                    "description": "Credit Line",
+                    "icon": "icon-file-alt",
+                    "appId": "ficl01",
+                    "screenId": "CreditLineList"
+                },
+                 {
+                    "description": "Commitment",
+                    "icon": "icon-file-alt",
+                    "appId": "ficl01",
+                    "screenId": "CommitmentList"
+                }
+            ]
+        },
+        {
+            "description": "Loans",
+            "icon": "icon-cm-cashmanagement",
+            "submenu": [
+                {
+                    "description": "Loans",
+                    "icon": "icon-cm-cashmanagement",
+                    "appId": "aclo01",
+                    "screenId": "LoansSummary"
+                }
+            ]
+        },
+        {
+            "description": "Supplier Chain Finance",
+            "icon": "icon-cm-tradefinance",
+            "submenu": [
+                {
+                    "description": "Buyers",
+                    "icon": "icon-zt-buyer",
+                    "appId": "acsf01",
+                    "screenId": "BuyerSummary"
+                },
+                {
+                    "description": "Sellers",
+                    "icon": "icon-zt-seller",
+                    "appId": "acsf01",
+                    "screenId": "SellerSummary"
+                },
+                {
+                    "description": "Imports",
+                    "icon": "icon-rt-imports",
+                    "appId": "acsf01",
+                    "screenId": "ImportSummary"
+                },
+                {
+                    "description": "File Upload",
+                    "icon": "icon-rt-fileupload",
+                    "appId": "acsf01",
+                    "screenId": "ImportSummary"
+                },
+                {
+                    "description": "Templates",
+                    "icon": "icon-cm-tradefinance",
+                    "appId": "acsf01",
+                    "screenId": "SCFTemplateSummary"
+                },
+                {
+                    "description": "Invoices",
+                    "icon": "icon-rt-invoice",
+                    "appId": "acsf01",
+                    "screenId": "InvoiceSummary"
+                }
+            ]
+        },
+         {
+            "description": "Mailbox",
+            "icon": "icon-cm-dashboard_new",
+            "submenu": [
+                {
+                    "description": "Mailbox ",
+                    "icon": "icon-cm-dashboard_new",
+                    "appId": "messag",
+                    "screenId": "Messages"
+                }
+            ]
+        },
+        
+        {
+            "description": "Cash Management",
+            "icon": "icon-cm-cashmanagement",
+            "submenu": [
+                {
+                    "description": "Notional Pooling",
+                    "icon": "icon-cm-dashboard_new",
+                    "appId": "acnp01",
+                    "screenId": "NotionalPooling"
+                }
+            ]
+        },
+       
+        {
+            "description": "Bulk Transfer",
+            "icon": "icon-cm-tradefinance",
+            "submenu": [
+                {
+                    "description": "Bulk Transfer",
+                    "icon": "icon-cm-tradefinance",
+                    "appId": "bulktr",
+                    "screenId": "BulkTransfers"
+                }
+            ]
+        }
+    ]
+}
+
+

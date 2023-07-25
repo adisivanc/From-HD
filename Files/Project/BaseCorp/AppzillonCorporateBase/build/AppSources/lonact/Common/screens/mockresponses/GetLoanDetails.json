@@ -1,0 +1,101 @@
+{
+    "tbDbmiLoanMaster": {
+        "statusChangeMode": "Manual",
+        "frequencyUnit": "1",
+        "product": "Real-Estate",
+        "amount": 31000,
+        "applicationNumber": "1615937385230",
+        "valueDate": "2021-03-16",
+        "accountNumber": "768464738283",
+        "branch": "YOW",
+        "customerName": "ACME Corp",
+        "customerId": "001ACME9182",
+        "amendPastPaidSchedules": "Y",
+        "liquidationMode": "Auto",
+        "reminderFrequency": "Quaterly",
+        "loanStatementRequired": "Y",
+        "maturityDate": "2022-03-15",
+        "liquidateBack": "Y",
+        "currency": "USD",
+        "partialLiquidation": "Y",
+        "statementStartDate": "2021-03-16"
+    },
+    "tbDbmiLoanComponents": [
+        {
+            "applicationNumber": "2915931892506",
+            "componentName": "Principal",
+            "currency": "USD",
+            "branch": "NYC",
+            "liquidationMode": "Auto",
+            "serviceAccount": "7834576232",
+            "waive": "Y",
+            "verifyFunds": "N",
+            "capitalized": "Y"
+        },
+        {
+            "applicationNumber": "2915931892506",
+            "componentName": "MAIN_INT",
+            "currency": "USD",
+            "branch": "LON",
+            "liquidationMode": "Manual",
+            "serviceAccount": "8903458722",
+            "waive": "Y",
+            "verifyFunds": "Y",
+            "capitalized": "Y"
+        }
+    ],
+    "tbDbmiLoanScheduleDefinitions": [
+        {
+            "componentName": "Principal",
+            "scheduleType": "Payment",
+            "scheduleFlag": "Normal",
+            "firstDueDate": "2021-03-16",
+            "noOfSchedules": "2",
+            "frequency": "Yearly",
+            "units": "1",
+            "dueDateOn": "2021-03-16"
+        },
+        {
+            "componentName": "MAIN_INT",
+            "scheduleType": "Payment",
+            "scheduleFlag": "Normal",
+            "firstDueDate": "2021-03-16",
+            "noOfSchedules": "2",
+            "frequency": "Yearly",
+            "units": "1",
+            "dueDateOn": "2021-03-16"
+        },
+        {
+            "componentName": "MAIN_INT",
+            "scheduleType": "Disbursement",
+            "scheduleFlag": "Normal",
+            "firstDueDate": "2021-03-16",
+            "noOfSchedules": "2",
+            "frequency": "Yearly",
+            "units": "1",
+            "dueDateOn": "2021-03-16"
+        }
+    ],
+    "tbDbmiLoanEffectiveDateValues": [
+        {
+            "id": "1",
+            "applicationNumber": "2915931892506",
+            "effectiveDate": "2021-03-16",
+            "udeId": "121",
+            "udeValue": "121",
+            "rateCode": "1",
+            "codeUsage": "Yearly",
+            "resolvedValue": "1292"
+        },
+        {
+            "id": "1",
+            "applicationNumber": "2915931892506",
+            "effectiveDate": "2021-05-18",
+            "udeId": "141",
+            "udeValue": "121",
+            "rateCode": "1",
+            "codeUsage": "Quarterly",
+            "resolvedValue": "1292"
+        }
+    ]
+}

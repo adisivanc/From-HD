@@ -1,0 +1,144 @@
+apz.Regist = {};
+apz.Regist.RegisterPage = {};
+apz.Regist.RegisterPage.sAction = "";
+apz.Regist.RegisterPage.sFlag = "new";
+apz.Regist.RegisterPage.sData = "";
+apz.Regist.RegisterPage.sCompanyID = "";
+apz.app.onLoad_RegisterPage = function(Params) {
+    debugger;
+    apz.data.clearMRMV("Regist__RegisterPage__ct_frm_2");
+    apz.Regist.RegisterPage.sFlag = "new";
+    $("#Regist__RegisterPage__home").addClass("sno");
+};
+apz.Regist.RegisterPage.fnRegisterNext = function() {
+    if (apz.Regist.RegisterPage.sFlag == "modify") {
+        apz.Regist.RegisterPage.sAction = "modify";
+    } else {
+        apz.Regist.RegisterPage.sAction = "new";
+    }
+    apz.data.buildData("BusinessDetailsAOS", "Regist");
+    var req = {};
+    req.tbConstitutionDetails = apz.data.scrdata.Regist__BusinessDetailsAOS_Req.tbConstitutionDetails;;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "Regist",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.Regist.RegisterPage.sAction == "modify") {
+        lParams.ifaceName = "BusinessDetailsAOS_Modify";
+    } else if (apz.Regist.RegisterPage.sAction == "new") {
+        lParams.ifaceName = "BusinessDetailsAOS_New";
+    }
+    apz.Regist.RegisterPage.fnBeforCallServer(lParams);
+};
+apz.Regist.RegisterPage.fnRegisterCancel = function() {
+    debugger;
+    var params = {};
+    params.appId = "ACLI01";
+    params.scr = "Login";
+    params.layout = "Web";
+    apz.launchApp(params);
+};
+apz.Regist.RegisterPage.fnRegisterIconClick = function() {
+    apz.Regist.RegisterPage.sCompanyID = apz.getElmValue("Regist__BusinessDetailsAOS__i__tbConstitutionDetails__companyid");
+    apz.Regist.RegisterPage.sAction = "query";
+    var req = {};
+    req.tbConstitutionDetails = {
+        "companyid": apz.getElmValue("Regist__BusinessDetailsAOS__i__tbConstitutionDetails__companyid")
+    };
+    var lParams = {
+        "ifaceName": "BusinessDetailsAOS_Query",
+        "paintResp": "N",
+        "appId": "Regist",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.Regist.RegisterPage.fnBeforCallServer(lParams);
+};
+apz.Regist.RegisterPage.fnBeforCallServer = function(params) {
+    var lReq = {
+        "ifaceName": params.ifaceName,
+        "paintResp": params.paintResp,
+        "buildReq": params.buildReq,
+        "req": params.lReq,
+        "appId": params.appId,
+        "async": false,
+        "callBack": apz.Regist.RegisterPage.callServerCB,
+        "callBackObj": ""
+    };
+    apz.server.callServer(lReq);
+};
+apz.Regist.RegisterPage.callServerCB = function(params) {
+    debugger;
+    if (apz.Regist.RegisterPage.sAction == "query") {
+        apz.Regist.RegisterPage.fnQueryCB(params);
+    } else if (apz.Regist.RegisterPage.sAction == "new" || apz.Regist.RegisterPage.sAction == "modify") {
+        apz.Regist.RegisterPage.fnInsertCB(params);
+    }
+};
+apz.Regist.RegisterPage.fnQueryCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.Regist.RegisterPage.sFlag = "modify";
+        apz.Regist.RegisterPage.sData = params.res.Regist__BusinessDetailsAOS_Req.tbConstitutionDetails;
+        var lmsg = {
+            "code": "CONF_REG",
+            "callBack": apz.Regist.RegisterPage.fnAutoCB
+        };
+        apz.dispMsg(lmsg);
+    } else {
+        apz.Regist.RegisterPage.sFlag = "new";
+        lmsg = {
+            "message": "Hi there , You are not registered with us . Kindly proceed with registration",
+            "type": "S"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.Regist.RegisterPage.fnAutoCB = function(params) {
+    debugger;
+    if (params.choice) {
+        apz.data.scrdata.Regist__BusinessDetailsAOS_Req.tbConstitutionDetails = apz.Regist.RegisterPage.sData;
+        apz.data.loadData("BusinessDetailsAOS", "Regist");
+        apz.setElmValue("Regist__BusinessDetailsAOS__i__tbConstitutionDetails__companyid", apz.Regist.RegisterPage.sCompanyID);
+    } else {
+        var lCompanyID = apz.data.scrdata.Regist__BusinessDetailsAOS_Req.tbConstitutionDetails.companyid;
+        apz.data.scrdata.Regist__BusinessDetailsAOS_Req.tbConstitutionDetails = {};
+        apz.data.loadData("BusinessDetailsAOS", "Regist");
+        apz.setElmValue("Regist__BusinessDetailsAOS__i__tbConstitutionDetails__companyid", apz.Regist.RegisterPage.sCompanyID);
+    }
+};
+apz.Regist.RegisterPage.fnInsertCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.hide("Regist__RegisterPage__ct_frm_2");
+        apz.hide("Regist__RegisterPage__ct_nav_4");
+        $("#Regist__RegisterPage__gr_row_4,#Regist__RegisterPage__gr_row_7").addClass("sno");
+        debugger;
+        var params = {};
+        params.appId = "icaosm";
+        params.scr = "Home";
+        params.layout = "Web";
+        params.div = "Regist__RegisterPage__launchrow1";
+        params.userObj = {
+            "companyID": apz.getElmValue("Regist__BusinessDetailsAOS__i__tbConstitutionDetails__companyid")
+        }
+        apz.launchApp(params);
+    } else {
+        lmsg = {
+            "message": "Registration failed",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+}
+apz.Regist.RegisterPage.fnLaunchCorporate = function() {
+    apz.data.scrdata.icaosm__Home_Req = undefined;
+    apz.Regist.RegisterPage.fnRegisterCancel();
+};
+apz.Regist.RegisterPage.fnFetchCompanyDetails = function(pobj, event) {
+    if (event.keyCode == 13) {
+        apz.Regist.RegisterPage.fnRegisterIconClick();
+    }
+};

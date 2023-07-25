@@ -1,0 +1,72 @@
+apz.blspli = {};
+apz.blspli.SplitConfirmation = {};
+    apz.blspli.SplitConfirmation.sparams = {};
+    apz.returnAmount = "";
+
+apz.app.onLoad_SplitConfirmation = function(params)
+{
+    debugger;
+    apz.data.loadData("BeneficiaryChange", "blspli");
+    apz.blspli.SplitConfirmation.sparams = params;
+    apz.setElmValue("blspli__SplitConfirmation__el_txt_3",apz.blspli.SplitConfirmation.sparams.amount );
+        apz.setElmValue("blspli__SplitConfirmation__el_txt_1",apz.blspli.SplitConfirmation.sparams.serviceProvider);
+            apz.setElmValue("blspli__SplitConfirmation__el_txt_9",apz.blspli.SplitConfirmation.sparams.myPartAmount );
+apz.returnAmount = apz.getElmValue("blspli__SplitConfirmation__el_txt_9")
+
+}
+
+
+apz.blspli.SplitConfirmation.fnDone = function()
+{
+    debugger;
+    
+    apz.blspli.SplitConfirmation.sparams.callBack(apz.blspli.SplitConfirmation.sparams.myPartAmount);
+apz.data.scrdata.blspli__BeneficiaryChange_Res.Details =[];
+    apz.toggleModal({
+                targetId: "bllpay__ViewBillPayment__pu_mdl_1"
+            });
+             apz.toggleModal({
+                targetId: "bllpay__ViewOneTimeBillPaymeny__pu_mdl_1"
+            });
+
+}
+
+
+apz.blspli.SplitConfirmation.fnCancel = function()
+{
+debugger;
+  var params = {};
+    params.appId = "blspli";
+    params.scr = "BillSplit";
+    params.div = "blspli__LauncherSplit__launcher";
+    params.userObj = {
+        "serviceProvider" : apz.blspli.SplitConfirmation.sparams.serviceProvider,
+        "amount" : apz.blspli.SplitConfirmation.sparams.amount,
+        "myPartAmount" : apz.blspli.SplitConfirmation.sparams.myPartAmount,
+        "from" : "Confirmation"
+    }
+    apz.launchSubScreen(params);
+}
+
+
+
+
+apz.blspli.SplitConfirmation.fnShare = function() {
+    debugger;
+
+    
+    var text = "This is a payment request for KD. xxxx. Please click here to proceed with the payment https://bit.ly/5rTGy";
+         
+         
+    var json = {};
+    json.id = "NATIVE";
+    json.textToShare = text;
+    json.callBack = apz.blspli.SplitConfirmation.fnShareCallBack;
+    json.action = "text";
+    apz.ns.nativeShare(json);
+}
+apz.blspli.accountdetails.fnShareCallBack = function() {
+    debugger;
+    
+}
+

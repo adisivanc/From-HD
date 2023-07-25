@@ -1,0 +1,33 @@
+[
+    {
+        "OccupationType": "Accountant"
+    },
+    {
+        "OccupationType": "Administrative"
+    },
+    {
+        "OccupationType": "Clerical"
+    },
+    {
+        "OccupationType": "Human Resources"
+    },
+    {
+        "OccupationType": "Construction"
+    },
+    
+    {
+        "OccupationType": "Banking"
+    },
+    {
+        "OccupationType": "Doctor"
+    },
+    {
+        "OccupationType": "Nurse"
+    },
+    {
+        "OccupationType": "Software Professional"
+    },
+    {
+        "OccupationType": "Student"
+    }
+]

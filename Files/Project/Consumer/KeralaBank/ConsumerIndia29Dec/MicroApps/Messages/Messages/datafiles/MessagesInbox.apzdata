@@ -1,0 +1,67 @@
+{
+    "messag__MsgInbox_Req":{
+        "Messages":[
+    {
+        "MESSAGE": "Received the Cheque Book request! Will dispatch shortly",
+        "READ_STATUS": "READ",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "123456789",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Cheque!",
+        "ADMIN_USER": "",
+        "MODIFICATION_TS": "2020-04-23 02:30:04"
+    },{
+        "MESSAGE": "Thank you for your valuable feedback",
+        "READ_STATUS": "READ",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "123456789",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Feedback",
+        "ADMIN_USER": "",
+        "MODIFICATION_TS": "2020-04-22 02:30:04"
+    },{
+        "MESSAGE": "Issue regarding cheque submission resolved",
+        "READ_STATUS": "READ",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "123456789",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Complaint regarding cheque",
+        "ADMIN_USER": "",
+        "MODIFICATION_TS": "2020-04-21 02:30:04"
+    },{
+        "MESSAGE": "We will get back to you shortly regarding the passbook enquiry",
+        "READ_STATUS": "READ",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "123456789",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Passbook enquiry",
+        "ADMIN_USER": "",
+        "MODIFICATION_TS": "2020-04-20 02:30:04"
+    },{
+        "MESSAGE": "We have received your complaint regarding cash deposit. We will get back to you shortly",
+        "READ_STATUS": "READ",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "123456789",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Complaint",
+        "ADMIN_USER": "",
+        "MODIFICATION_TS": "2020-04-19 02:30:04"
+    },{
+        "MESSAGE": "Thank you for your valuable feedback",
+        "READ_STATUS": "READ",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "123456789",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Feedback",
+        "ADMIN_USER": "",
+        "MODIFICATION_TS": "2020-04-18 02:30:04"
+    }
+]
+}
+}

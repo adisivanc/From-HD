@@ -1,0 +1,250 @@
+
+#import "NativeService.h"
+#import "AppzillonAppDelegate.h"
+#import "AppzillonViewController.h"
+#import "APZJsonUtil.h"
+#import <Speech/Speech.h>
+#import <AVFoundation/AVFoundation.h>
+
+@interface NativeService()<SFSpeechRecognizerDelegate, AVSpeechSynthesizerDelegate>
+@property(nonatomic,weak)AppzillonViewController *viewController;
+@property(nonatomic,weak)UIWebView *webView;
+@property(nonatomic,strong)NSDictionary *jsonDict;
+@property(nonatomic,strong)SFSpeechRecognizer *speechRecognizer;
+@property(nonatomic,strong)SFSpeechAudioBufferRecognitionRequest *recognitionRequest;
+@property(nonatomic,strong)SFSpeechRecognitionTask *recognitionTask;
+@property(nonatomic,strong)AVAudioEngine *audioEngine;
+@property(nonatomic,strong)UIView *speechView;
+@property(nonatomic,strong)UIImageView *microphoneImageView;
+@property(nonatomic,strong)UILabel *speechLabel;
+@property(nonatomic,strong)UIButton *speechCancelButton;
+@property(nonatomic,strong)NSString *speechResult;
+
+@property (strong, nonatomic) AVSpeechSynthesizer *synthesizer;
+@end
+
+@implementation NativeService
+
+//BOOL speechPaused = 0;
+
+-(void)execute:(NSDictionary *)jsonDict wbView:(UIWebView *)webView{
+    AppzillonAppDelegate *appDelegate = (AppzillonAppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.viewController = [appDelegate viewController];
+    self.webView = webView;
+    self.jsonDict = jsonDict;
+    
+    //    Custom Native plugin Execution logic here, Pass ViewController & webview from here
+    if ([[self.jsonDict objectForKey:@"action"] isEqualToString:@"speechToText"]) {
+        [self callSpeechToTextEvent];
+    }else if ([[self.jsonDict objectForKey:@"action"] isEqualToString:@"textToSpeech"]){
+        [self callTextToSpeechEvent];
+    }
+}
+
+#pragma mark - SpeechToText Event Methods
+-(void) callSpeechToTextEvent{
+    self.speechView = [[UIView alloc] initWithFrame:CGRectMake(0, self.viewController.view.frame.size.height - 200, self.viewController.view.frame.size.width, 200)];
+    self.speechView.backgroundColor = [UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1];
+    
+    self.microphoneImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 4, 20, 30)];
+    self.microphoneImageView.center = CGPointMake(CGRectGetMidX(self.speechView.bounds), self.microphoneImageView.center.y);
+    NSString *microphoneImageBase64 = @"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";
+    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:microphoneImageBase64 options:0];
+    self.microphoneImageView.image = [UIImage imageWithData:imageData];
+    [self.speechView addSubview:self.microphoneImageView];
+    
+    self.speechLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 34, self.speechView.frame.size.width - 40, self.speechView.frame.size.height - 40)];
+    self.speechLabel.numberOfLines = 0;
+    [self.speechView addSubview:self.speechLabel];
+    
+    self.speechCancelButton = [[UIButton alloc] initWithFrame:CGRectMake(self.speechView.frame.size.width - 80, 8, 80, 20)];
+    [self.speechCancelButton addTarget:self action:@selector(speechCancelAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.speechCancelButton setTitle:@"Ok" forState:UIControlStateNormal];
+    [self.speechCancelButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.speechView addSubview:self.speechCancelButton];
+    
+    
+    self.speechRecognizer = [[SFSpeechRecognizer alloc] initWithLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+    
+    // Set speech recognizer delegate
+    self.speechRecognizer.delegate = self;
+    
+    // Request the authorization to make sure the user is asked for permission so you can
+    // get an authorized response, also remember to change the .plist file, check the repo's
+    // readme file or this project's info.plist
+    [SFSpeechRecognizer requestAuthorization:^(SFSpeechRecognizerAuthorizationStatus status) {
+        switch (status) {
+            case SFSpeechRecognizerAuthorizationStatusAuthorized:
+                NSLog(@"Authorized");
+                if (self.audioEngine.isRunning) {
+                    [self.audioEngine stop];
+                    [self.recognitionRequest endAudio];
+                } else {
+                    [self startListening];
+                }
+                break;
+            case SFSpeechRecognizerAuthorizationStatusDenied:
+                NSLog(@"Denied");
+                break;
+            case SFSpeechRecognizerAuthorizationStatusNotDetermined:
+                NSLog(@"Not Determined");
+                break;
+            case SFSpeechRecognizerAuthorizationStatusRestricted:
+                NSLog(@"Restricted");
+                break;
+            default:
+                break;
+        }
+    }];
+}
+- (void)startListening {
+    // Initialize the AVAudioEngine
+    self.audioEngine = [[AVAudioEngine alloc] init];
+    
+    // Make sure there's not a recognition task already running
+    if (self.recognitionTask) {
+        [self.recognitionTask cancel];
+        self.recognitionTask = nil;
+    }
+    
+    // Starts an AVAudio Session
+    NSError *error;
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    [audioSession setCategory:AVAudioSessionCategoryRecord error:&error];
+    [audioSession setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error];
+    
+    // Starts a recognition process, in the block it logs the input or stops the audio
+    // process if there's an error.
+    self.recognitionRequest = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
+    AVAudioInputNode *inputNode = self.audioEngine.inputNode;
+    self.recognitionRequest.shouldReportPartialResults = YES;
+    self.recognitionTask = [self.speechRecognizer recognitionTaskWithRequest:self.recognitionRequest resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
+        BOOL isFinal = NO;
+        if (result) {
+            // Whatever you say in the microphone after pressing the button should be being logged
+            // in the console.
+            NSLog(@"RESULT:%@",result.bestTranscription.formattedString);
+            self.speechLabel.text = result.bestTranscription.formattedString;
+            self.speechResult = result.bestTranscription.formattedString;
+            isFinal = !result.isFinal;
+        }
+        if (error) {
+            [self.audioEngine stop];
+            [inputNode removeTapOnBus:0];
+            self.recognitionRequest = nil;
+            self.recognitionTask = nil;
+        }
+    }];
+    
+    // Sets the recording format
+    AVAudioFormat *recordingFormat = [inputNode outputFormatForBus:0];
+    [inputNode installTapOnBus:0 bufferSize:1024 format:recordingFormat block:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when) {
+        [self.recognitionRequest appendAudioPCMBuffer:buffer];
+    }];
+    
+    // Starts the audio engine, i.e. it starts listening.
+    [self.audioEngine prepare];
+    [self.audioEngine startAndReturnError:&error];
+    NSLog(@"Say Something, I'm listening");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.speechView setFrame:CGRectMake(0, self.viewController.view.frame.size.height + 500, self.viewController.view.frame.size.height - 200, 200)];
+        self.speechLabel.text = @"Say Something, I'm listening";
+        [UIView animateWithDuration:0.4 animations:^{
+            [self.speechView setFrame:CGRectMake(0, self.viewController.view.frame.size.height - 200, self.viewController.view.frame.size.width, 200)];
+            [self.viewController.view addSubview:self.speechView];
+            
+        }];
+    });
+}
+
+- (IBAction)microPhoneTapped:(id)sender {
+    if (self.audioEngine.isRunning) {
+        [self.audioEngine stop];
+        [self.recognitionRequest endAudio];
+    } else {
+        [self startListening];
+    }
+}
+
+-(void)speechCancelAction{
+    NSLog(@"cancel tapped");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.8 animations:^{
+            [self.speechView setFrame:CGRectMake(0, self.viewController.view.frame.size.height + 1000, self.viewController.view.frame.size.width, 200)];
+            [self.audioEngine stop];
+            [self.recognitionRequest endAudio];
+            
+            NSArray *resultkeys=[NSArray arrayWithObjects:@"speechResult",nil];
+            NSArray *result;
+            if (self.speechResult == nil || [self.speechResult isEqualToString:@""]){
+                result=[NSArray arrayWithObjects:[NSString stringWithFormat:@""],nil];
+            }else{
+                result=[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",self.speechResult],nil];
+            }
+            [self jsLayerCall:JSCALLBACKMEHTOD parameter:[APZJsonUtil createResponseJSONString:[self.jsonDict objectForKey:@"id"] :true :false :resultkeys :result]];
+            [self cleanPlugin];
+            [self.speechView removeFromSuperview];
+        }];
+    });
+}
+#pragma mark - SFSpeechRecognizerDelegate Delegate Methods
+
+- (void)speechRecognizer:(SFSpeechRecognizer *)speechRecognizer availabilityDidChange:(BOOL)available {
+    NSLog(@"Availability:%d",available);
+}
+
+#pragma mark - SpeechToText Event Methods
+
+-(void) callTextToSpeechEvent{
+    self.synthesizer = [[AVSpeechSynthesizer alloc] init];
+//    speechPaused = NO;
+    self.synthesizer.delegate = self;
+    
+    if (![[self.jsonDict objectForKey:@"text"] isEqualToString:@""] && [self.jsonDict objectForKey:@"text"] !=nil) {
+        if (self.synthesizer.speaking == NO) {
+            AVSpeechUtterance *utterance = [[AVSpeechUtterance alloc] initWithString:[self.jsonDict objectForKey:@"text"]];
+            //utterance.rate = AVSpeechUtteranceMinimumSpeechRate;
+            utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en_US"];
+            [self.synthesizer speakUtterance:utterance];
+        }
+    }else{
+        NSArray *resultkeys=[NSArray arrayWithObjects:@"textToSpeechResult",nil];
+        NSArray *result=[NSArray arrayWithObjects:[NSString stringWithFormat:@"failed"],nil];
+        [self jsLayerCall:JSCALLBACKMEHTOD parameter:[APZJsonUtil createResponseJSONString:[self.jsonDict objectForKey:@"id"] :false :false :resultkeys :result]];
+        [self cleanPlugin];
+    }
+}
+
+-(void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance {
+    NSLog(@"Playback finished");
+    [self.synthesizer stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
+    NSArray *resultkeys=[NSArray arrayWithObjects:@"textToSpeechResult",nil];
+    NSArray *result=[NSArray arrayWithObjects:[NSString stringWithFormat:@"success"],nil];
+    [self jsLayerCall:JSCALLBACKMEHTOD parameter:[APZJsonUtil createResponseJSONString:[self.jsonDict objectForKey:@"id"] :true :false :resultkeys :result]];
+    [self cleanPlugin];
+}
+
+#pragma mark - Callback methods
+
+-(void) jsLayerCall:(NSString *)jsFunctionName parameter:(NSString *)param{
+    @synchronized(self) {
+        [self.webView performSelectorOnMainThread:@selector(stringByEvaluatingJavaScriptFromString:) withObject:[NSString stringWithFormat:@"%@(%@)",jsFunctionName,param] waitUntilDone:NO];
+    }
+}
+
+-(void)cleanPlugin{
+    self.viewController = nil;
+    self.webView = nil;
+    self.speechRecognizer = nil;
+    self.recognitionRequest = nil;
+    self.recognitionTask = nil;
+    //    self.audioEngine = nil;
+    self.speechLabel = nil;
+    self.speechCancelButton = nil;
+    self.speechView = nil;
+    self.speechResult = nil;
+    self.microphoneImageView = nil;
+    self.jsonDict = nil;
+    self.synthesizer = nil;
+}
+@end

@@ -1,0 +1,296 @@
+apz.docdtl.IdentityPreview = {};
+apz.docdtl.IdentityPreview.fileName = "";
+var isNIDBackSideSaved = false;
+var isMobile = false;
+apz.app.onShown_IdentityPreview = function(params) {
+    debugger;
+    apz.docdtl.IdentityPreview.sCache = params;
+    apz.idType = params.fileType;
+    if (params.fileType === "Passport") {
+        $("#docdtl__IdentityPreview__ct_lst_2").removeClass("sno");
+    } else if (params.fileType === "Emirates ID") {
+        $("#docdtl__IdentityPreview__ct_lst_1").removeClass("sno");
+    } else if (params.fileType === "Uganda ID" || params.fileType === "Bangladesh ID") {
+        $("#docdtl__IdentityPreview__ct_lst_3").removeClass("sno");
+    }
+    apz.docdtl.IdentityPreview.fnUpdateImage(params.file);
+}
+apz.docdtl.IdentityPreview.fnUpdateImage = function(base64) {
+    debugger;
+    if (apz.docdtl.type === "Passport") {
+        apz.setElmValue("docdtl__IdentityPreview__el_img_4", base64);
+        $("#docdtl__IdentityPreview__el_img_4").attr("onclick", "apz.docdtl.IdentityPreview.fnUploadFile('Passport');");
+        $("#docdtl__IdentityPreview__sc_row_5").removeClass("sno");
+        $("#docdtl__IdentityPreview__sc_row_22_row").addClass("sno");
+    } else if (apz.docdtl.type === "Emirates ID Front") {
+        apz.setElmValue("docdtl__IdentityPreview__el_img_1", base64);
+        $("#docdtl__IdentityPreview__el_img_1").attr("onclick", "apz.docdtl.IdentityPreview.fnUploadFile('Emirates ID Front');");
+        $("#docdtl__IdentityPreview__sc_row_5").removeClass("sno");
+        $("#docdtl__IdentityPreview__sc_row_11_row").addClass("sno");
+    } else if (apz.docdtl.type === "Emirates ID Back") {
+        apz.setElmValue("docdtl__IdentityPreview__el_img_2", base64);
+        $("#docdtl__IdentityPreview__el_img_2").attr("onclick", "apz.docdtl.IdentityPreview.fnUploadFile('Emirates ID Back');");
+        $("#docdtl__IdentityPreview__sc_col_6_li,#docdtl__IdentityPreview__sc_row_5").removeClass("sno");
+        $("#docdtl__IdentityPreview__sc_col_3_li,#docdtl__IdentityPreview__sc_row_9_row").addClass("sno");
+    } else if (apz.docdtl.type === "Uganda ID Front" || apz.docdtl.type === "Bangladesh ID Front") {
+        apz.setElmValue("docdtl__IdentityPreview__el_img_5", base64);
+        $("#docdtl__IdentityPreview__el_img_5").attr("onclick", "apz.docdtl.IdentityPreview.fnUploadFile('" + apz.docdtl.type + "');");
+        $("#docdtl__IdentityPreview__sc_row_5").removeClass("sno");
+        $("#docdtl__IdentityPreview__sc_row_27_row").addClass("sno");
+    } else if (apz.docdtl.type === "Uganda ID Back" || apz.docdtl.type === "Bangladesh ID Back") {
+        apz.setElmValue("docdtl__IdentityPreview__el_img_6", base64);
+        $("#docdtl__IdentityPreview__el_img_6").attr("onclick", "apz.docdtl.IdentityPreview.fnUploadFile('" + apz.docdtl.type + "');");
+        $("#docdtl__IdentityPreview__sc_col_31_li,#docdtl__IdentityPreview__sc_row_5").removeClass("sno");
+        $("#docdtl__IdentityPreview__sc_col_27_li,#docdtl__IdentityPreview__sc_row_30_row").addClass("sno");
+    }
+}
+apz.docdtl.IdentityPreview.fnUploadFile = function(id_side) {
+    apz.docdtl.type = id_side;
+    var base64;
+    if (apz.docdtl.type === "Emirates ID Back") {
+        base64 = apz.getElmValue("docdtl__IdentityPreview__el_img_2");
+    } else if (apz.docdtl.type === "Emirates ID Front") {
+        base64 = apz.getElmValue("docdtl__IdentityPreview__el_img_1");
+    } else if (apz.docdtl.type === "Passport") {
+        base64 = apz.getElmValue("docdtl__IdentityPreview__el_img_4");
+    } else if (apz.docdtl.type === "Uganda ID Front" || apz.docdtl.type === "Bangladesh ID Front") {
+        base64 = apz.getElmValue("docdtl__IdentityPreview__el_img_5");
+    } else if (apz.docdtl.type === "Uganda ID Back" || apz.docdtl.type === "Bangladesh ID Back") {
+        base64 = apz.getElmValue("docdtl__IdentityPreview__el_img_6");
+    }
+    apz.setElmValue("docdtl__IdentityPreview__el_img_3", base64)
+    apz.toggleModal({
+        "targetId": "docdtl__IdentityPreview__pu_mdl_1"
+    });
+}
+apz.docdtl.IdentityPreview.fnUploadID = function(type) {
+    if (apz.docdtl.IdentityPreview.sCache.fileType === "Uganda ID" || apz.docdtl.IdentityPreview.sCache.fileType === "Bangladesh ID") {
+        apz.docdtl.type = apz.docdtl.IdentityPreview.sCache.fileType + " " + type;
+    } else {
+        apz.docdtl.type = type;
+    }
+    apz.docdtl.IdentityPreview.fnRetake();
+}
+apz.docdtl.IdentityPreview.fnRetake = function() {
+    $("#docdtl__IdentityPreview__pu_mdl_1_close").click();
+    if (apz.deviceOs === "iOS" || apz.deviceOs === "ANDROID") {
+        isMobile = true;
+    }
+    if (isMobile) {
+        if (apz.docdtl.type === "Emirates ID Front") {
+            identityIntegration.caputure_image("Emirates ID", "emirates id", "3 : 2", ["Nationality", "United Arab Emirates", "ID Number", "Name"],
+                "all");
+        } else if (apz.docdtl.type === "Emirates ID Back") {
+            identityIntegration.caputure_image("Emirates ID", "emirates id", "3 : 2", ["Sex", "Card Number", "Date of Birth", "Expiry Date", "<<<<<",
+                "<<"
+            ], "all");
+        } else if (apz.docdtl.type === "Uganda ID Front" || apz.docdtl.type === "Uganda ID Back") {
+            identityIntegration.caputure_image("Uganda ID", "uganda id", "3.37:2.12", ["", "", "", ""], "all");
+        } else if (apz.docdtl.type === "Passport") {
+            identityIntegration.caputure_image("Passport", "passport", "3:2", [" "], "all");
+        } else if (apz.docdtl.type === "Bangladesh ID Front" || apz.docdtl.type === "Bangladesh ID Back") {
+            if (apz.deviceType === "ANDROID") {
+                apz.docdtl.IdentityPreview.fnFileBrowser();
+            } else {
+                $("#docdtl__IdentityPreview__el_fil_1").trigger("click");
+            }
+        }
+    }
+}
+apz.docdtl.IdentityPreview.fnFileBrowser = function() {
+    debugger;
+    var json = {
+        "filter": "",
+        "fileCategory": "EXTERNAL",
+        "location": "EXTERNAL",
+        "openFile": "N"
+    };
+    json.id = "FILEBROWSER_ID";
+    json.callBack = apz.docdtl.IdentityPreview.fnFileBrowserCB;
+    apz.ns.fileBrowser(json);
+}
+apz.docdtl.IdentityPreview.fnFileBrowserCB = function(params) {
+    debugger;
+    if (params.status) {
+        apz.docdtl.IdentityPreview.fnGetBase64(params.filePath);
+    }
+}
+apz.docdtl.IdentityPreview.fnGetBase64 = function(filePath) {
+    debugger;
+    var json = {};
+    json.id = "FILETOBASE64";
+    json.callBack = apz.docdtl.IdentityPreview.fnGetBase64CB
+    json.filePath = filePath;
+    apz.ns.fileToBase64(json);
+}
+apz.docdtl.IdentityPreview.fnGetBase64CB = function(params) {
+    debugger;
+    if (params.status) {
+        apz.docdtl.IdentityPreview.fnUpdateImage(params.text);
+    }
+}
+apz.docdtl.IdentityPreview.fnGetFile = function(pthis) {
+    let fileObj = pthis.files[0];
+    apz.docdtl.IdentityPreview.fileName = fileObj.name;
+    apz.docdtl.fileType = fileObj.type;
+    let apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        let binaryStr = apzFileReader.result;
+        var encodedImage = binaryStr.split(",").pop();
+        apz.docdtl.IdentityPreview.fnUpdateImage(encodedImage);
+        $("#" + pthis.id).val("");
+    }
+    apzFileReader.readAsDataURL(fileObj);
+}
+apz.docdtl.IdentityPreview.fnProceedId = function() {
+    $("#docdtl__IdentityPreview__pu_mdl_1_close").click();
+    apz.startLoader();
+    setTimeout(function() {
+        if (apz.docdtl.type === "Emirates ID Front") {
+            var base64 = apz.getElmValue("docdtl__IdentityPreview__el_img_1");
+            apz.frontsideImage = base64;
+            identityIntegration.call_server(base64, "ID_CARD", "Emirates_Id_Front", "BASE64", "grey_scale");
+        } else if (apz.docdtl.type === "Emirates ID Back") {
+            var base64 = apz.getElmValue("docdtl__IdentityPreview__el_img_2");
+            apz.backsideImage = base64;
+            identityIntegration.call_server(base64, "ID_CARD", "Emirates_Id_Back", "BASE64", "grey_scale");
+        } else if (apz.docdtl.type === "Uganda ID Front" || apz.docdtl.type === "Uganda ID Back" || apz.docdtl.type === "Bangladesh ID Front" ||
+            apz.docdtl.type === "Bangladesh ID Back") {
+            apz.docdtl.IdentityPreview.fnProceedIdCB();
+        } else if (apz.docdtl.type === "Passport") {
+            var base64 = apz.getElmValue("docdtl__IdentityPreview__el_img_4");
+            apz.frontsideImage = base64;
+            identityIntegration.call_server(base64, "PASSPORT", "Passport", "DATA_TXT", "grey_scale");
+        }
+    }, 10)
+}
+apz.docdtl.IdentityPreview.fnProceedIdCB = function(response) {
+    debugger;
+    if (apz.docdtl.type === "Passport") {
+        apz.applicationDetails.fname = response.name[0];
+        apz.applicationDetails.lname = response.surname[0];
+        apz.applicationDetails.dob = apz.formatDate({
+            val: response.date_of_birth[0],
+            fromFormat: "dd/MM/yyyy",
+            toFormat: "yyyy-MM-dd",
+        });
+        apz.applicationDetails.gender = response.gender[0];
+        if (response.gender[0] === "M") {
+            apz.applicationDetails.title = "Mr.";
+        } else if (response.gender[0] === "F") {
+            apz.applicationDetails.title = "Ms.";
+        }
+        apz.applicationDetails.passportNo = response.passport_no[0];
+        apz.applicationDetails.typeOfID = "Passport";
+        apz.applicationDetails.passportExpiryDate = apz.formatDate({
+            val: response.date_of_expiry[0],
+            fromFormat: "dd/MM/yyyy",
+            toFormat: "yyyy-MM-dd",
+        });
+        apz.applicationDetails.issuePlace = response.country_code[0];
+        apz.docdtl.IdentityPreview.fnValidateExpiryDeta(apz.applicationDetails.passportExpiryDate);
+    } else if (apz.docdtl.type === "Uganda ID Front" || apz.docdtl.type === "Bangladesh ID Front") {
+        apz.stopLoader();
+        apz.frontsideImage = apz.getElmValue("docdtl__IdentityPreview__el_img_5");
+        $("#docdtl__IdentityPreview__sc_col_31_li").removeClass("sno");
+        $("#docdtl__IdentityPreview__sc_col_27_li,#docdtl__IdentityPreview__sc_row_5").addClass("sno");
+    } else if (apz.docdtl.type === "Bangladesh ID Back") {
+        apz.stopLoader();
+        apz.backsideImage = apz.getElmValue("docdtl__IdentityPreview__el_img_6");
+        apz.docdtl.Launcher.sCache.callOCR = true;
+        apz.docdtl.Launcher.fnBackToApplication();
+    } else if (apz.docdtl.type === "Uganda ID Back") {
+        apz.stopLoader();
+        apz.backsideImage = apz.getElmValue("docdtl__IdentityPreview__el_img_6");
+        apz.applicationDetails.fname = apz.docdtl.ugandaDetails.Firstname;
+        apz.applicationDetails.lname = apz.docdtl.ugandaDetails.Lastname;
+        apz.applicationDetails.dob = apz.formatDate({
+            val: apz.docdtl.ugandaDetails.Dateofbirth,
+            fromFormat: "yyMMdd",
+            toFormat: "yyyy-MM-dd",
+        });
+        apz.applicationDetails.gender = apz.docdtl.ugandaDetails.Sex;
+        if (apz.docdtl.ugandaDetails.Sex === "M") {
+            apz.applicationDetails.title = "Mr.";
+        } else if (apz.docdtl.ugandaDetails.Sex === "F") {
+            apz.applicationDetails.title = "Ms.";
+        }
+        apz.applicationDetails.nid = apz.docdtl.ugandaDetails.Documentno;
+        apz.applicationDetails.passportNo = apz.docdtl.ugandaDetails.Documentno;
+        apz.applicationDetails.typeOfID = "National ID";
+        apz.applicationDetails.passportExpiryDate = apz.formatDate({
+            val: apz.docdtl.ugandaDetails.Dateofexpiry,
+            fromFormat: "yyMMdd",
+            toFormat: "yyyy-MM-dd",
+        });
+        apz.applicationDetails.nationality = apz.docdtl.ugandaDetails.Nationality;
+        apz.applicationDetails.issuePlace = apz.docdtl.ugandaDetails.Country;
+        apz.docdtl.IdentityPreview.fnValidateExpiryDeta(apz.applicationDetails.passportExpiryDate);
+    } else if (apz.docdtl.type === "Emirates ID Front") {
+        apz.applicationDetails.nid = response.id_no[0];
+        apz.applicationDetails.passportNo = response.id_no[0];
+        apz.applicationDetails.typeOfID = "Emirates ID";
+        apz.applicationDetails.fname = response.name[0];
+        apz.applicationDetails.nationality = response.nationality[0];
+        $("#docdtl__IdentityPreview__sc_col_6_li").removeClass("sno");
+        $("#docdtl__IdentityPreview__sc_col_3_li,#docdtl__IdentityPreview__sc_row_5").addClass("sno");
+    } else if (apz.docdtl.type === "Emirates ID Back") {
+        apz.applicationDetails.passportExpiryDate = apz.formatDate({
+            val: response.expiry_date[0],
+            fromFormat: "dd/MM/yyyy",
+            toFormat: "yyyy-MM-dd",
+        });
+        apz.applicationDetails.dob = apz.formatDate({
+            val: response.date_of_birth[0],
+            fromFormat: "dd/MM/yyyy",
+            toFormat: "yyyy-MM-dd",
+        });
+        if (response.sex[0] === "M") {
+            apz.applicationDetails.title = "Mr.";
+        } else if (response.sex[0] === "F") {
+            apz.applicationDetails.title = "Ms.";
+        }
+        apz.applicationDetails.gender = response.sex[0];
+        apz.applicationDetails.state = "United Arab Emirates";
+        apz.docdtl.IdentityPreview.fnValidateExpiryDeta(apz.applicationDetails.passportExpiryDate);
+    }
+}
+apz.docdtl.IdentityPreview.fnSaveApplicationDetails = function() {
+    debugger;
+    apz.startLoader();
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Modify",
+        "buildReq": "N",
+        "appId": "docdtl",
+        "paintResp": "N",
+        "req": {
+            "tbDbmiCustomerMaster": apz.applicationDetails
+        },
+        "async": false,
+        "callBack": apz.docdtl.IdentityPreview.fnSaveApplicationDetailsCB
+    };
+    apz.server.callServer(lParams);
+}
+apz.docdtl.IdentityPreview.fnSaveApplicationDetailsCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    apz.docdtl.Launcher.sCache.idCapture = true;
+    apz.docdtl.Launcher.fnBackToApplication();
+}
+apz.docdtl.IdentityPreview.fnValidateExpiryDeta = function(expiryDate) {
+    debugger;
+    var expiry = expiryDate.split("-");
+    var today, expiryDay;
+    today = new Date();
+    expiryDay = new Date().setFullYear(expiry[0], expiry[1] - 1, expiry[2]);
+    if (expiryDay < today) {
+        apz.docdtl.type = "";
+        apz.dispMsg({
+            "message": "The document you are uploading seems to have expired, Please use a valid document.",
+            "callBack": apz.docdtl.Launcher.fnLaunchIDpreview
+        })
+    } else {
+        apz.docdtl.IdentityPreview.fnSaveApplicationDetailsCB();
+    }
+}

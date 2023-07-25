@@ -1,0 +1,38 @@
+apz.declar.Fatca = {};
+apz.declar.Fatca.sCache = {}
+apz.app.onLoad_Fatca = function(params) {
+    debugger;
+    apz.declar.Fatca.sCache = params;
+}
+apz.app.onShown_Fatca = function(params) {
+    debugger;
+    $("#declar__Launcher__launcherModel_content").scrollTop(0);
+}
+apz.declar.Fatca.fnAgree = function() {
+    debugger;
+    if(apz.declar.Fatca.sCache.from==="TermsScreen"){
+        $("#declar__Launcher__launcherModel_close").click();
+    apz.declar.Fatca.sCache.callback();
+    }else{
+    var params = {};
+    params.appId = "appsum";
+    params.scr = "SummaryLauncher";
+    // params.div = "prddtl__ProductAccountLauncher__launcher";
+    params.div = "appdtl__AppLauncher__screenLauncher";
+    params.userObj = {
+        "refNo": apz.declar.Fatca.sCache.refNo,
+        "product": apz.appdtl.AppLauncher.sCache.product,
+        "subproduct": apz.appdtl.AppLauncher.sCache.subproduct
+    }
+    apz.launchApp(params);
+    }
+}
+apz.declar.Fatca.fnBack = function() {
+    debugger;
+    var params = {};
+    params.appId = "declar";
+    params.scr = "Dbt";
+    params.div = "appdtl__AppLauncher__screenLauncher";
+    params.userObj=apz.declar.Fatca.sCache;
+    apz.launchSubScreen(params);
+}

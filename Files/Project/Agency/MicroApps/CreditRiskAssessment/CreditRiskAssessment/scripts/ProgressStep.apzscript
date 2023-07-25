@@ -1,0 +1,156 @@
+apz.crsapp.ProgressStep = {};
+apz.crsapp.ProgressStep.sCache = {};
+apz.app.onLoad_ProgressStep = function(params) {
+    debugger;
+    apz.crsapp.ProgressStep.sCache.refNo = params.refNo;
+    apz.setElmValue("appdtl__AppLauncher__application_number", params.refNo);
+    if (typeof params.applictaionStatus != "undefined") apz.setElmValue("crsapp__ProgressStep__stageID", params.applictaionStatus.split(" ")[1]);
+}
+apz.app.onShown_ProgressStep = function(params) {
+    apz.crsapp.ProgressStep.fnLaunchAML();
+    $("#crsapp__ProgressStep__el_progressstep_1_ext > li:nth-child(1)").addClass("pgst-step pgs-100");
+    // apz.setElmValue("crsapp__ProgressStep__AppNum_txtcnt", "ONBAgency");
+    // apz.setElmValue("crsapp__ProgressStep__CusName_txtcnt", "ONB");
+    // if (apz.crsapp.DashBoard.Role == "GroupHead") {
+    //     $("#crsapp__ProgressStep__Header").hide();
+    // }
+    $("#crsapp__ProgressStep__Header").hide();
+    $("#crsapp__ProgressStep__el_progressstep_1_ext li").unbind().bind('click', apz.crsapp.ProgressStep.fnLaunchSteps);
+    $("#crsapp__ProgressStep__ecddbadge").addClass("st-disable");
+    $("#crsapp__GroupHead__gr_row_9 input").removeAttr('disabled');
+    var product = apz.appdtl.AppLauncher.sCache.product;
+    var subproduct = apz.appdtl.AppLauncher.sCache.subproduct;
+    if (subproduct == "Home Loan" ) {
+        $("#crsapp__ProgressStep__el_progressstep_1_ext > li:nth-child(4)").removeClass("sno");
+    } else {
+        $("#crsapp__ProgressStep__el_progressstep_1_ext > li:nth-child(4)").addClass("sno");
+    }
+};
+apz.crsapp.ProgressStep.fnLaunchSteps = function(event) {
+    debugger;
+    var lStep = $(event.target).children()[1].innerHTML
+    $("#crsapp__ProgressStep__el_progressstep_1_ext li").removeClass("pgst-step pgs-100");
+    $(event.target).addClass("pgst-step pgs-100");
+    if (lStep == "PEP") {
+        apz.crsapp.ProgressStep.fnLaunchPEP();
+    } else if (lStep == "AML") {
+        apz.crsapp.ProgressStep.fnLaunchAML();
+    } else if (lStep == "ECDD") {
+        apz.crsapp.ProgressStep.fnLaunchECDD();
+    } else if (lStep == "COMPLIANCE") {
+        apz.crsapp.ProgressStep.fnLaunchCompliance();
+    } else {
+        apz.crsapp.ProgressStep.fnLaunchRISK();
+    }
+};
+apz.crsapp.ProgressStep.fnLaunchCompliance = function() {
+    debugger;
+    $(".st-active").removeClass("st-active");
+    $("#crsapp__ProgressStep__complianceBadge").addClass("st-active");
+    $(".st-complete").removeClass("st-complete");
+    $("#crsapp__ProgressStep__complianceBadge").addClass("st-complete");
+    var lParams = {
+        "appId": "crsapp",
+        "scr": "DocumentUpload",
+        "div": "crsapp__ProgressStep__LaunchSubScreen",
+        "userObj": ""
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.crsapp.ProgressStep.fnLaunchAML = function() {
+    debugger;
+    $(".st-active").removeClass("st-active");
+    $("#crsapp__ProgressStep__amlBadge").addClass("st-active");
+    var lParams = {
+        "appId": "crsapp",
+        "scr": "AMLSearch",
+        "div": "crsapp__ProgressStep__LaunchSubScreen",
+        "userObj": ""
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.crsapp.ProgressStep.fnLaunchPEP = function() {
+    debugger;
+    $(".st-active").removeClass("st-active");
+    $("#crsapp__ProgressStep__pepBadge").addClass("st-active");
+    $(".st-complete").removeClass("st-complete");
+    $("#crsapp__ProgressStep__amlBadge").addClass("st-complete");
+    var lParams = {
+        "appId": "crsapp",
+        "scr": "PEP",
+        "div": "crsapp__ProgressStep__LaunchSubScreen",
+        "userObj": ""
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.crsapp.ProgressStep.fnLaunchCrdCheck = function() {
+    debugger;
+    $(".st-active").removeClass("st-active");
+    $("#crsapp__ProgressStep__crdBadge").addClass("st-active");
+    $(".st-complete").removeClass("st-complete");
+    $("#crsapp__ProgressStep__crdBadge").addClass("st-complete");
+    var lParams = {
+        "appId": "crsapp",
+        "scr": "CreditCheck",
+        "div": "crsapp__ProgressStep__LaunchSubScreen",
+        "userObj": ""
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.crsapp.ProgressStep.fnLaunchRISK = function() {
+    debugger;
+    $(".st-active").removeClass("st-active");
+    $("#crsapp__ProgressStep__raBadge").addClass("st-active");
+    $(".st-complete").removeClass("st-complete");
+    $("#crsapp__ProgressStep__amlBadge").addClass("st-complete");
+    $("#crsapp__ProgressStep__pepBadge").addClass("st-complete");
+    /*if (apz.crsapp.DashBoard.Role == 'GroupHead') {
+        var lParams = {
+            "appId": "crsapp",
+            "scr": "HeadRiskAssessment",
+            "div": "crsapp__ProgressStep__LaunchSubScreen",
+            "userObj": ""
+        };
+    } else*/
+    var lParams = {
+        "appId": "crsapp",
+        "scr": "RiskAssessment",
+        "div": "crsapp__ProgressStep__LaunchSubScreen",
+        "userObj": ""
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.crsapp.ProgressStep.fnLaunchECDD = function() {
+    debugger;
+    $(".st-disable").removeClass("st-disable");
+    $(".st-active").removeClass("st-active");
+    $("#crsapp__ProgressStep__ecddbadge").addClass("st-active");
+    $(".st-complete").removeClass("st-complete");
+    $("#crsapp__ProgressStep__amlBadge").addClass("st-complete");
+    $("#crsapp__ProgressStep__pepBadge").addClass("st-complete");
+    $("#crsapp__ProgressStep__raBadge").addClass("st-complete");
+    var lParams = {
+        "appId": "crsapp",
+        "scr": "ECDD",
+        "div": "crsapp__ProgressStep__LaunchSubScreen",
+        "userObj": ""
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.crsapp.ProgressStep.fnApplication = function() {
+    apz.hide("crsapp__ProgressStep__prgsstep");
+    // var lParams = {
+    //     "appId": "crsapp",
+    //     "scr": "NewApplication",
+    //     "div": "crsapp__ProgressStep__LaunchSubScreen",
+    //     "userObj": ""
+    // };
+    $("#crsapp__ProgressStep__el_btn_1").addClass("sno");
+    var lParams = {
+        "appId": "crsapp",
+        "scr": "NewApplicationReadOnly",
+        "div": "crsapp__ProgressStep__LaunchSubScreen",
+        "userObj": ""
+    };
+    apz.launchSubScreen(lParams);
+};

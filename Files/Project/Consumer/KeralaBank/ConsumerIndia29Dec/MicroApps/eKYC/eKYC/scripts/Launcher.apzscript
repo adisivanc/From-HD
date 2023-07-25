@@ -1,0 +1,12 @@
+apz.ekycdt={
+    Launcher : {}
+}
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+    var lLaunchParams = {
+        "appId": "ekycdt",
+        "scr": "KYC",
+        "div": "ekycdt__Launcher__launcher"
+    }
+    apz.launchSubScreen(lLaunchParams);
+};

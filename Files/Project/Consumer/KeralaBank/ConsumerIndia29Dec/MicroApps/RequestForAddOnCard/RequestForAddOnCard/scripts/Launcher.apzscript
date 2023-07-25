@@ -1,0 +1,11 @@
+apz.addonc.Launcher={};
+apz.app.onLoad_Launcher = function() {
+    var params = {};
+    params.div = 'addonc__Launcher__launcher';
+    params.scr = 'AddOnCard';
+    params.appId = "addonc";
+    apz.launchSubScreen(params);
+}
+apz.app.onShown_Launcher = function(){
+    debugger;
+}

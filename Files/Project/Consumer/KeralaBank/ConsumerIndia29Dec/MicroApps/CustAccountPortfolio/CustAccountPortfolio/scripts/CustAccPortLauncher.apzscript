@@ -1,0 +1,6 @@
+apz.cuacpf.checkParams = function(params) {
+    params.userObj = {
+        "customerID":"001",
+       
+    };
+};

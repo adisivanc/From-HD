@@ -1,0 +1,33 @@
+{
+    "tbDbmiCorpLoanMaster": [
+        {
+            "corporateId": "000FTAC4321",
+            "accountNo": "150100159521",
+            "accountName": "Captial Loan",
+            "loanName": "",
+            "currency": "USD",
+            "amount": "23986293"
+        },
+        {
+             "corporateId": "000FTAC4321",
+            "accountNo": "15010015952",
+            "accountName": "Captial Loan",
+            "loanName": "",
+            "currency": "USD",
+            "amount": "23986293"
+        },
+        {
+            "corporateId": "000FTAC4321",
+            "accountNo": "1501001595",
+            "accountName": "Captial Loan",
+            "loanName": "",
+            "currency": "USD",
+            "amount": "23986293"
+        }
+
+    ],
+   
+    "Status":"true"
+}
+
+

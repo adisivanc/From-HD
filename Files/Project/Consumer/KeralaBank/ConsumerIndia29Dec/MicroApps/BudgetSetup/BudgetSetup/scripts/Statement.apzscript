@@ -1,0 +1,83 @@
+apz.budget.Statement = {};
+apz.budget.Statement.sParams = {};
+
+ apz.budget.Statement.result = [];
+
+apz.app.onLoad_Statement = function(params) {
+ debugger;
+ $("#budget__Statement__gr_row_1").removeClass("sno");
+ apz.data.loadJsonData("Statement", "budget");
+ apz.budget.Statement.sParams =params;
+
+ var data =  apz.data.scrdata.budget__StatementBudget_Res.Statement;
+ result =data.filter(function(item) {
+                    if (item.budgetfor ==  apz.budget.Statement.sParams.budgetName) return item;
+                });
+                 apz.data.scrdata.budget__StatementBudget_Res.Statement = result;
+                apz.data.loadData("StatementBudget");
+};
+
+
+
+apz.budget.fnFilterByDate = function(){
+    debugger
+    apz.data.loadJsonData("Statement","budget");
+    fromDate = apz.getElmValue("budget__Statement__fromDate");
+    toDate =  apz.getElmValue("budget__Statement__toDate");
+    
+    var fdate = apz.formatDate({"val":fromDate,"fromFormat":"dd/MM/yyyy","toFormat":"yyyy-MM-dd"});
+    var tdate = apz.formatDate({"val":toDate,"fromFormat":"dd/MM/yyyy","toFormat":"yyyy-MM-dd"});
+    var fMonth = parseInt(fdate.split("-")[1]);
+    var tMonth = parseInt(tdate.split("-")[1]);
+        var fday = parseInt(fdate.split("-")[2]);
+
+    var tday = parseInt(tdate.split("-")[2]);
+    var months = [];
+    for(i = fMonth ;i<=tMonth ;i++){
+        months.push(i);
+    }
+ apz.data.scrdata.budget__StatementBudget_Res.Statement = result;
+   
+    var query = result.filter(function(item){
+        debugger;
+              imonth = parseInt(item.date.split("/")[1]);
+              if(months.indexOf(imonth)!=-1){
+                    if(tMonth == imonth || fMonth == imonth){
+                         iday = parseInt(item.date.split("/")[0]);
+                         if(iday<=tday && iday>=fday){
+                             return item;
+                         }
+                    }
+                    // else{
+                    //     return item;
+                    // }
+                  
+              } 
+    });
+    
+    
+    if(query.length==0){
+        apz.dispMsg({"message":"No records found"});
+    }
+    
+      apz.data.scrdata.budget__StatementBudget_Res.Statement = query;
+    apz.data.loadData("StatementBudget");
+    
+    
+    
+};
+apz.budget.fnCancelStatement = function () {
+    debugger;
+    
+        //$("#budget__Launcher__gr_row_3").addClass("sno");
+        $("#budget__Statement__gr_row_1").addClass("sno");
+        
+
+     var params = {
+                "appId": "budget",
+                "scr": "BudgetSummary",
+                "div": "budget__Launcher__Summary",
+     };
+    apz.launchSubScreen(params)
+    
+}

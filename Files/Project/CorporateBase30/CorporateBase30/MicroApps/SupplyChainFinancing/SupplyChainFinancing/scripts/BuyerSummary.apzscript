@@ -1,0 +1,157 @@
+apz.acsf01.buyerSummary = {};
+apz.app.onLoad_BuyerSummary = function() {
+    if (apz.Login) {
+        apz.acsf01.buyerSummary.sCorporateId = apz.Login.sCorporateId;
+    } else {
+        apz.acsf01.buyerSummary.sCorporateId = "000FTAC4321";
+    }
+    apz.acsf01.buyerSummary.getPartySummary();
+};
+apz.acsf01.buyerSummary.getPartySummary = function() {
+    debugger;
+    var req = {};
+    req.tbDbmiCorpScfParty = {
+        "corporateId": apz.acsf01.buyerSummary.sCorporateId,
+        "type": "Buyer"
+    };
+    req.importFunction = "SCFParty";
+    var lReq = {
+        "ifaceName": "PartySummary",
+        "paintResp": "Y",
+        "buildReq": "N",
+        "req": req,
+        "appId": "acsf01",
+        "async": false,
+        "callBack": apz.acsf01.buyerSummary.getPartySummaryCB,
+        "callBackObj": ""
+    };
+    apz.server.callServer(lReq);
+};
+apz.acsf01.buyerSummary.getPartySummaryCB = function(pResp) {
+    debugger;
+    var dataLength = apz.data.scrdata.acsf01__PartySummary_Res.tbDbmiCorpScfParty.length;
+    for (var i = 0; i < dataLength; i++) {
+        try {
+            if (apz.isNull(apz.data.scrdata.acsf01__PartySummary_Res.tbDbmiCorpScfParty[i].logo)) {
+                $("#acsf01__PartySummary__o__tbDbmiCorpScfParty__logo_"+i).attr("src",
+                    'apps/styles/themes/AppzillonCorporateBase/img/user-placeholder.png');
+            } 
+        } catch (e) {
+            $("#acsf01__PartySummary__o__tbDbmiCorpScfParty__logo_"+i).attr("src",
+                'apps/styles/themes/AppzillonCorporateBase/img/user-placeholder.png');
+        }
+    }
+    console.log(dataLength);
+};
+apz.acsf01.buyerSummary.createParty = function() {
+    debugger;
+    $("#acsf01__BuyerSummary__PartySummary_Header").addClass('sno');
+    $("#acsf01__BuyerSummary__MobPartySummary_Header").addClass('sno');
+    $("#acsf01__BuyerSummary__PartySummary_List_Row").addClass('sno');
+    $("#acsf01__BuyerSummary__PartyLauncherRow").removeClass('sno');
+    var params = {};
+    params.appId = "acsf01";
+    params.scr = "BuyerMaintenance";
+    params.userObj = {
+        "action":"Add"
+    };
+    params.div = "acsf01__BuyerSummary__PartyDetailsLauncher";
+    params.layout = "All";
+    apz.launchSubScreen(params);
+    
+};
+apz.acsf01.buyerSummary.partyDetails = function(pObj) {
+    debugger;
+    $("#acsf01__BuyerSummary__PartySummary_Header").addClass('sno');
+    $("#acsf01__BuyerSummary__MobPartySummary_Header").addClass('sno');
+    $("#acsf01__BuyerSummary__PartySummary_List_Row").addClass('sno');
+    $("#acsf01__BuyerSummary__PartyLauncherRow").removeClass('sno');
+    var lRow = $(pObj).attr('rowno');
+    var params = {};
+    params.appId = "acsf01";
+    params.scr = "BuyerDetails";
+    params.userObj = {
+        "Partydetails": apz.data.scrdata.acsf01__PartySummary_Res.tbDbmiCorpScfParty[lRow]
+    };
+    params.div = "acsf01__BuyerSummary__PartyDetailsLauncher";
+    params.layout = "All";
+    apz.launchSubScreen(params);
+};
+apz.acsf01.buyerSummary.editParty = function(pObj) {
+    debugger;
+    $("#acsf01__BuyerSummary__PartySummary_Header").addClass('sno');
+    $("#acsf01__BuyerSummary__MobPartySummary_Header").addClass('sno');
+    $("#acsf01__BuyerSummary__PartySummary_List_Row").addClass('sno');
+    $("#acsf01__BuyerSummary__PartyLauncherRow").removeClass('sno');
+    var lRow = $(pObj).closest("li").attr('rowno');
+    var params = {};
+    params.appId = "acsf01";
+    params.scr = "BuyerMaintenance";
+    params.userObj = {
+        "action":"Edit",
+        "Partydetails": apz.data.scrdata.acsf01__PartySummary_Res.tbDbmiCorpScfParty[lRow]
+    };
+    params.div = "acsf01__BuyerSummary__PartyDetailsLauncher";
+    params.layout = "All";
+    apz.launchSubScreen(params);
+    event.stopPropagation();
+};
+apz.acsf01.buyerSummary.search = function(event,searchBy,inputSearch) {
+    debugger;
+    if (event.keyCode == 13) {
+        var lType = apz.getElmValue("acsf01__BuyerSummary__"+searchBy);
+        var lInput = apz.getElmValue("acsf01__BuyerSummary__"+inputSearch);
+        var lSearchType;
+        var flag = true;
+        if (lType == "Search") {
+            lSearchType = "Buyer";
+            if (apz.isNull(lInput)) {
+                lSearchType = "Buyer";
+            } else {
+                flag = false;
+                var lMsg = {};
+                lMsg.code = "SEARCH_CHK";
+                apz.dispMsg(lMsg);
+            }
+        } else if (lType == "All") {
+            if (apz.isNull(lInput)) {
+                lSearchType = "Buyer";
+            } else {
+                lSearchType = "Buyer";
+            }
+        } else if (lType == "BuyerId") {
+            if (apz.isNull(lInput)) {
+                lSearchType = "Buyer";
+            } else {
+                lSearchType = "BuyerId";
+            }
+        } else if (lType == "BuyerName") {
+            if (apz.isNull(lInput)) {
+                lSearchType = "Buyer";
+            } else {
+                lSearchType = "BuyerName";
+            }
+        }
+        if (flag) {
+            debugger;
+            var req = {};
+            req.tbDbmiCorpScfParty = {
+                "corporateId": apz.acsf01.buyerSummary.sCorporateId,
+                "type": lSearchType,
+                "value": lInput
+            };
+            req.importFunction = "SCFParty";
+            var lReq = {
+                "ifaceName": "PartySummary",
+                "paintResp": "Y",
+                "buildReq": "N",
+                "req": req,
+                "appId": "acsf01",
+                "async": false,
+                "callBack": apz.acsf01.buyerSummary.getPartySummaryCB,
+                "callBackObj": ""
+            };
+            apz.server.callServer(lReq);
+        }
+    }
+};

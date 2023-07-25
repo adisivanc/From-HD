@@ -1,0 +1,30 @@
+{
+    "recrep__ReconciliationReports_Res":{
+    "ReportsSummary": [{
+        "FileName": "SalaryDec2018",
+        "Category": "Salary",
+        "UploadedBy": "John Doe",
+        "Date": "11/22/2018",
+        "Status": "Success"
+    },{
+        "FileName": "TranspotationDec2018",
+        "Category": "Invoice",
+        "UploadedBy": "Robert Willie",
+        "Date": "11/28/2018",
+        "Status": "Success"
+    },{
+        "FileName": "SalaryJan2019",
+        "Category": "Salary",
+        "UploadedBy": "John Doe",
+        "Date": "01/22/2019",
+        "Status": "Success"
+    },{
+        "FileName": "TransportationJan2019",
+        "Category": "Invoice",
+        "UploadedBy": "Robert Willie",
+        "Date": "01/28/2019",
+        "Status": "Success"
+    }
+    ]
+}
+}

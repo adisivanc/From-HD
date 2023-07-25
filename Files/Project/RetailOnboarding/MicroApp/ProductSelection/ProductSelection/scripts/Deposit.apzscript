@@ -1,0 +1,107 @@
+apz.prdsel.Deposit = {};
+var sliderTI = document.getElementById("prdsel__Deposit__slideAmt");
+apz.app.onLoad_Deposit = function(params) {
+    debugger;
+    apz.prdsel.Deposit.sparams=params;
+    apz.setElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__investment", "600000");
+    apz.setElmValue("prdsel__Deposit__slideAmt", "600000");
+    apz.setElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__timePeriodMode","MM");
+    $("#prdsel__DepositDetails__i__tbDbmiDepositDetails__investment").blur();
+    sliderTI.addEventListener("input", apz.prdsel.Deposit.updateValueTotalInvestment);
+    switch (params.subproduct) {
+        case "3 Month Deposit":
+             apz.setElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__rateOfInterest","0.35%");
+             apz.setElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__timePeriod", "3");
+             apz.setElmValue("prdsel__Deposit__slideTenor", "3");
+             apz.setElmValue("prdsel__Deposit__slideROI", "0.35");
+             break;
+        case "6 Month Deposit":
+             apz.setElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__rateOfInterest","0.65%");
+             apz.setElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__timePeriod", "6");
+             apz.setElmValue("prdsel__Deposit__slideTenor", "6");
+             apz.setElmValue("prdsel__Deposit__slideROI", "0.65");
+             break;
+        case "12 Month Deposit":
+             apz.setElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__rateOfInterest","2.10%");
+             apz.setElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__timePeriod", "12");
+             apz.setElmValue("prdsel__Deposit__slideTenor", "12");
+             apz.setElmValue("prdsel__Deposit__slideROI", "2.10");
+             break;
+        case "24 Month Deposit":
+             apz.setElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__rateOfInterest","2.20%");
+             apz.setElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__timePeriod", "24");
+             apz.setElmValue("prdsel__Deposit__slideTenor", "24");
+             apz.setElmValue("prdsel__Deposit__slideROI", "2.20");
+             break;
+    };
+    apz.prdsel.Deposit.calculateIt();
+}
+apz.prdsel.Deposit.updateValueTotalInvestment = function(e) {
+    apz.setElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__investment", e.srcElement.value);
+    $("#prdsel__DepositDetails__i__tbDbmiDepositDetails__investment").blur();
+    apz.prdsel.Deposit.calculateIt();
+}
+apz.prdsel.Deposit.fnsetAmount = function(newVal) {
+    sliderTI.value = newVal;
+    apz.prdsel.Deposit.calculateIt();
+}
+apz.prdsel.Deposit.calculateIt = function() {
+    let TI, ER, MV;
+    var valueTI = apz.getElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__investment");
+    var valueROI = apz.getElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__rateOfInterest");
+    var valueTenure = apz.getElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__timePeriod");
+    var unformateTI = apz.unFormatNumber({value:valueTI,decimalSep:".",displayAsLiteral:"N"}).split(".");
+    TI = Number(unformateTI[0]);
+    let ROI = Number(valueROI.slice(0, -1));
+    let T = Number(valueTenure);
+    let tp_mode = apz.getElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__timePeriodMode");
+    if (TI >= 1000) {
+        if (tp_mode === "YY") {
+            MV = Math.round(TI * Math.pow(1 + ROI / 400, 4 * T));
+        } else if (tp_mode === "MM") {
+            if (T <= 6) {
+                T = (T / 12).toFixed(2);
+                MV = Math.round(TI + (TI * ROI * T) / 100);
+            } else {
+                T = (T / 12).toFixed(2);
+                MV = Math.round(TI * Math.pow(1 + ROI / 400, 4 * T));
+            }
+        } else if (tp_mode === "DD") {
+            T = (T / 365).toFixed(3);
+            MV = Math.round(TI + (TI * ROI * T) / 100);
+        }
+        ER = Math.round(MV - TI);
+        
+        apz.setElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__totalInterest", apz.formatNumber({value:ER,decimalSep:".",mask:"MILLION",decimalPoints:"2"}));
+        apz.setElmValue("prdsel__DepositDetails__i__tbDbmiDepositDetails__maturityValue", apz.formatNumber({value:MV,decimalSep:".",mask:"MILLION",decimalPoints:"2"}));
+    }
+}
+apz.prdsel.Deposit.gotoNext = function() {
+    debugger;
+    apz.depositValues = apz.data.buildData("DepositDetails","prdsel").prdsel__DepositDetails_Req.tbDbmiDepositDetails;
+    apz.depositValues.totalInterest = apz.unFormatNumber({value:apz.depositValues.totalInterest,decimalSep:".",displayAsLiteral:"N"});
+    apz.depositValues.maturityValue = apz.unFormatNumber({value:apz.depositValues.maturityValue,decimalSep:".",displayAsLiteral:"N"});
+    var params = {};
+    params.appId = "onbaut";
+    params.scr = "AuthLauncher";
+    params.div = "apzonb__Navigator__launchdiv";
+    params.userObj = {
+        "parentdiv": "apzonb__Navigator__launchdiv",
+        "subproduct": apz.prdsel.Deposit.sparams.subproduct,
+        "product": apz.prdsel.Deposit.sparams.product,
+        "action": "new"
+    };
+    apz.launchApp(params);
+}
+
+apz.prdsel.Deposit.gotoPre = function() {
+    var params = {};
+    params.appId = "prdsel";
+    params.scr = "SubProducts";
+    params.div = "prdsel__ProductLauncher__productlauncher";
+    params.userObj = {
+        "parentdiv": "apzonb__Navigator__launchdiv",
+        "product": apz.prdsel.Deposit.sparams.product
+    };
+    apz.launchSubScreen(params);
+}

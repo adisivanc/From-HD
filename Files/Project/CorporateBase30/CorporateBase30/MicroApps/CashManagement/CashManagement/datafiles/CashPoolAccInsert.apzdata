@@ -1,0 +1,30 @@
+{
+    "accm01__CashPoolAccInsert_Res": {
+        "tbDbmiCorpCashPoolAcc": [
+            {
+                "corporateId": "000FTAC4321",
+                "sweepType": "fullSweep",
+                "accountNo": "150100159221",
+                "accountType": "Savings",
+                "amount": 100000,
+                "currency": "INR"
+            },
+            {
+                "corporateId": "000FTAC4321",
+                "sweepType": "fullSweep",
+                "accountNo": "150100171542",
+                "accountType": "Savings",
+                "amount": 50000,
+                "currency": "INR"
+            },
+            {
+                "corporateId": "000FTAC4321",
+                "sweepType": "fullSweep",
+                "accountNo": "150100222321",
+                "accountType": "Savings",
+                "amount": 100000,
+                "currency": "INR"
+            }
+        ]
+    }
+}

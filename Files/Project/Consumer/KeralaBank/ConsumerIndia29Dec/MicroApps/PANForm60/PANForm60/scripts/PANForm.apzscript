@@ -1,0 +1,359 @@
+apz.pannad.panform = {};
+apz.app.onLoad_PANForm = function(params) {
+    debugger;
+    apz.pannad.panform.fnInitialise(params);
+};
+apz.pannad.panform.fnInitialise = function(params) {
+    debugger;
+    apz.data.loadJsonData("AccountDetails","pannad");
+    apz.pannad.panform.sParams = apz.data.scrdata.pannad__AccountDetails_Res;
+    if (params.Navigation) {
+        apz.pannad.panform.fnSetNavigation(params);
+    }
+    apz.pannad.panform.fnGoToStage1();
+};
+apz.pannad.panform.fnSetNavigation = function(params) {
+    debugger;
+    apz.pannad.panform.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "PAN Form 60";
+    }
+    lParams.backPressed = apz.pannad.panform.fnBack;
+    apz.pannad.panform.Navigation(lParams);
+};
+apz.pannad.panform.fnGoToStage1 = function() {
+    apz.pannad.panform.fnSetValueStage1();
+    apz.pannad.panform.fnRenderStage1();
+};
+apz.pannad.panform.fnSetValueStage1 = function() {
+    apz.setElmValue("pannad__PANForm60__i__PANForm60Dtls__customerId", apz.pannad.panform.sParams.customerID);
+    
+};
+apz.pannad.panform.fnRenderStage1 = function() {
+    apz.show("pannad__PANForm__Stage1");
+    apz.hide("pannad__PANForm__Stage2");
+    apz.hide("pannad__PANForm__Stage3");
+};
+apz.pannad.panform.fnAssessedChanged = function() {
+    if ($('#pannad__PANForm60__i__PANForm60Dtls__assessedToTax').val() === "y") {
+        $("#pannad__PANForm60__i__PANForm60Dtls__wardDtls_ul").removeClass("sno");
+        $("#pannad__PANForm60__i__PANForm60Dtls__reasonForPANNA_ul").removeClass("sno");
+    } else {
+        $("#pannad__PANForm60__i__PANForm60Dtls__wardDtls_ul").addClass("sno");
+        $("#pannad__PANForm60__i__PANForm60Dtls__reasonForPANNA_ul").addClass("sno");
+    }
+};
+apz.pannad.panform.fnIdProofChanged = function() {
+    if ($('#pannad__PANForm60__i__PANForm60Dtls__idProof').val().length > 1) {
+        $("#pannad__PANForm60__i__PANForm60Dtls__idDescription_ul").removeClass("sno");
+    } else {
+        $("#pannad__PANForm60__i__PANForm60Dtls__idDescription_ul").addClass("sno");
+    }
+};
+apz.pannad.panform.fnAddressProofChanged = function() {
+    if ($('#pannad__PANForm60__i__PANForm60Dtls__addressProof').val().length > 1) {
+        $("#pannad__PANForm60__i__PANForm60Dtls__addressProofDescription_ul").removeClass("sno");
+    } else {
+        $("#pannad__PANForm60__i__PANForm60Dtls__addressProofDescription_ul").addClass("sno");
+    }
+};
+apz.pannad.panform.fnContinueBtn = function() {
+    debugger;
+    var lValid = apz.pannad.panform.fnValidateStage1();
+    if (lValid) {
+        apz.data.buildData("PANForm", "pannad");
+        apz.pannad.panform.fnGoToStage2();
+    }
+};
+apz.pannad.panform.fnGoToStage2 = function() {
+    apz.pannad.panform.fnSetValueStage2();
+    apz.pannad.panform.fnRenderStage2();
+}
+apz.pannad.panform.fnSetValueStage2 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.pannad__PANForm60_Req.PANForm60Dtls;
+    if (lDetails.recipientName != '') {
+        apz.show("pannad__PANForm__stage2_recipientName_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage2_recipientName", lDetails.recipientName);
+    } else {
+        apz.hide("pannad__PANForm__stage2_recipientName_ctrl_grp_div");
+    }
+    if (lDetails.recipientAddr != '') {
+        apz.show("pannad__PANForm__stage2_recipientAddr_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage2_recipientAddr", lDetails.recipientAddr);
+    } else {
+        apz.hide("pannad__PANForm__stage2_recipientAddr_ctrl_grp_div");
+    }
+    if (lDetails.trnDtls != '') {
+        apz.show("pannad__PANForm__stage2_trnDtls_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage2_trnDtls", lDetails.trnDtls);
+    } else {
+        apz.hide("pannad__PANForm__stage2_trnDtls_ctrl_grp_div");
+    }
+    if (lDetails.trnAmount != '') {
+        apz.show("pannad__PANForm__stage2_trnAmount_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage2_trnAmount", lDetails.trnAmount);
+    } else {
+        apz.hide("pannad__PANForm__stage2_trnAmount_ctrl_grp_div");
+    }
+    if (lDetails.aadhaarNo != '') {
+        apz.show("pannad__PANForm__stage2_aadhaarNo_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage2_aadhaarNo", lDetails.aadhaarNo);
+    } else {
+        apz.hide("pannad__PANForm__stage2_aadhaarNo_ctrl_grp_div");
+    }
+    if (lDetails.assessedToTax != '') {
+        apz.show("pannad__PANForm__stage2_assessedToTax_ctrl_grp_div");
+        if (lDetails.assessedToTax == 'y') {
+            apz.setElmValue("pannad__PANForm__stage2_assessedToTax", "Yes");
+        }else{
+            apz.setElmValue("pannad__PANForm__stage2_assessedToTax", "No");
+        }
+        
+        if (lDetails.assessedToTax == 'y') {
+            if (lDetails.wardDtls != '') {
+                apz.show("pannad__PANForm__stage2_wardDtls_ctrl_grp_div");
+                apz.setElmValue("pannad__PANForm__stage2_wardDtls", lDetails.wardDtls);
+            } else {
+                apz.hide("pannad__PANForm__stage2_wardDtls_ctrl_grp_div");
+            }
+            if (lDetails.reasonForPANNA != '') {
+                apz.show("pannad__PANForm__stage2_reasonForPANNA_ctrl_grp_div");
+                apz.setElmValue("pannad__PANForm__stage2_reasonForPANNA", lDetails.reasonForPANNA);
+            } else {
+                apz.hide("pannad__PANForm__stage2_reasonForPANNA_ctrl_grp_div");
+            }
+        } else {
+            apz.hide("pannad__PANForm__stage2_wardDtls_ctrl_grp_div");
+            apz.hide("pannad__PANForm__stage2_reasonForPANNA_ctrl_grp_div");
+        }
+    } else {
+        apz.hide("pannad__PANForm__stage2_assessedToTax_ctrl_grp_div");
+        apz.hide("pannad__PANForm__stage2_wardDtls_ctrl_grp_div");
+        apz.hide("pannad__PANForm__stage2_reasonForPANNA_ctrl_grp_div");
+    }
+    
+    if (lDetails.idProof != '') {
+        debugger;
+        apz.show("pannad__PANForm__stage2ProofOfId_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage2ProofOfId", lDetails.idProof);
+        if (lDetails.idDescription != '') {
+            apz.show("pannad__PANForm__stage2ProofOfIdDesc_ctrl_grp_div");
+            apz.setElmValue("pannad__PANForm__stage2ProofOfIdDesc", lDetails.idDescription);
+        } else {
+            apz.hide("pannad__PANForm__stage2ProofOfIdDesc_ctrl_grp_div");
+        }
+    } else {
+        apz.hide("pannad__PANForm__stage2ProofOfId_ctrl_grp_div");
+        apz.hide("pannad__PANForm__stage2ProofOfIdDesc_ctrl_grp_div");
+    }
+    if (lDetails.addressProof != '') {
+        apz.show("pannad__PANForm__stage2ProofOfAddress_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage2ProofOfAddress", lDetails.addressProof);
+        if (lDetails.addressProofDescription != '') {
+            apz.show("pannad__PANForm__stage2ProofOfAddressDesc_ctrl_grp_div");
+            apz.setElmValue("pannad__PANForm__stage2ProofOfAddressDesc", lDetails.addressProofDescription);
+        } else {
+            apz.hide("pannad__PANForm__stage2ProofOfAddressDesc_ctrl_grp_div");
+        }
+    } else {
+        apz.hide("pannad__PANForm__stage2ProofOfAddress_ctrl_grp_div");
+        apz.hide("pannad__PANForm__stage2ProofOfAddressDesc_ctrl_grp_div");
+    }
+};
+apz.pannad.panform.fnRenderStage2 = function() {
+    apz.hide("pannad__PANForm__Stage1");
+    apz.show("pannad__PANForm__Stage2");
+    apz.hide("pannad__PANForm__Stage3");
+}
+apz.pannad.panform.fnEditBtn = function() {
+    apz.pannad.panform.fnRenderStage1();
+};
+apz.pannad.panform.fnConfirmBtn = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "PANForm60",
+        "req": {
+            "PANForm60Dtls": apz.data.scrdata.pannad__PANForm60_Req.PANForm60Dtls,
+            "action": "Confirm"
+        },
+        "callBack": apz.pannad.panform.fnCallServerCallBack
+    };
+    apz.pannad.panform.fnBeforeCallServer(lParams);
+};
+apz.pannad.panform.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": "N",
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": params.callBack
+    };
+     jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("pannad")+"/PANForm60.json"));
+       apz.data.scrdata.pannad__PANForm60_Res = {};
+                       apz.data.scrdata.pannad__PANForm60_Res= jsondata;
+                      apz.data.loadData("PANForm60", "pannad");
+        apz.pannad.panform.fnCallServerCallBack(jsondata);
+   // apz.server.callServer(lServerParams);
+};
+apz.pannad.panform.fnCallServerCallBack = function(params) {
+    debugger;
+   
+        if (apz.data.scrdata.pannad__PANForm60_Res.PANForm60Dtls.respCd == "app") {
+            apz.pannad.panform.sParams.RefNum = apz.data.scrdata.pannad__PANForm60_Res.PANForm60Dtls.txnRefNo;
+            apz.pannad.panform.fnRenderOtpScreen();
+            var lLaunchParams = {
+                "appId": "otpeng",
+                "scr": "ProcessOTP",
+                "div": "pannad__PANForm__launchMicroApp",
+                "userObj": {
+                    "action": "SetRefNo",
+                    "data": {
+                        "OTPRefNo": apz.data.scrdata.pannad__PANForm60_Res.PANForm60Dtls.data.OTPRefNo
+                    },
+                    "control": {
+                        "appId": "otpeng",
+                        "callBack": apz.pannad.panform.fnOtpCB,
+                        "destroyDiv": "pannad__PANForm__launchMicroApp"
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        }
+   
+};
+apz.pannad.panform.fnRenderOtpScreen = function(){
+    apz.hide("pannad__PANForm__Stage1");
+    apz.hide("pannad__PANForm__Stage2");
+    apz.hide("pannad__PANForm__Stage3");
+    apz.show("pannad__PANForm__launchMicroApp");
+};
+apz.pannad.panform.fnOtpCB = function(){
+    debugger;
+    apz.pannad.panform.fnSetValueStage3();
+    apz.pannad.panform.fnRenderStage3();
+};
+apz.pannad.panform.fnSetValueStage3 = function(){
+    debugger;
+    var lDetails = apz.data.scrdata.pannad__PANForm60_Req.PANForm60Dtls;
+    if (lDetails.recipientName != '') {
+        apz.show("pannad__PANForm__stage3recipientName_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage3recipientName", lDetails.recipientName);
+    } else {
+        apz.hide("pannad__PANForm__stage3recipientName_ctrl_grp_div");
+    }
+    if (lDetails.recipientAddr != '') {
+        apz.show("pannad__PANForm__stage3recipientAddr_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage3recipientAddr", lDetails.recipientAddr);
+    } else {
+        apz.hide("pannad__PANForm__stage3recipientAddr_ctrl_grp_div");
+    }
+    if (lDetails.trnDtls != '') {
+        apz.show("pannad__PANForm__stage3trnDtls_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage3trnDtls", lDetails.trnDtls);
+    } else {
+        apz.hide("pannad__PANForm__stage3trnDtls_ctrl_grp_div");
+    }
+    if (lDetails.trnAmount != '') {
+        apz.show("pannad__PANForm__stage3trnAmount_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage3trnAmount", lDetails.trnAmount);
+    } else {
+        apz.hide("pannad__PANForm__stage3trnAmount_ctrl_grp_div");
+    }
+    if (lDetails.aadhaarNo != '') {
+        apz.show("pannad__PANForm__stage3aadhaarNo_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage3aadhaarNo", lDetails.aadhaarNo);
+    } else {
+        apz.hide("pannad__PANForm__stage3aadhaarNo_ctrl_grp_div");
+    }
+    if (lDetails.assessedToTax != '') {
+        apz.show("pannad__PANForm__stage3assessedToTax");
+        if (lDetails.assessedToTax == 'y') {
+            apz.setElmValue("pannad__PANForm__stage3assessedToTax", "Yes");
+        }else{
+            apz.setElmValue("pannad__PANForm__stage3assessedToTax", "No");
+        }
+        if (lDetails.assessedToTax == 'y') {
+            if (lDetails.wardDtls != '') {
+                apz.show("pannad__PANForm__stage3wardDtls_ctrl_grp_div");
+                apz.setElmValue("pannad__PANForm__stage3wardDtls", lDetails.wardDtls);
+            } else {
+                apz.hide("pannad__PANForm__stage3wardDtls_ctrl_grp_div");
+            }
+            if (lDetails.reasonForPANNA != '') {
+                apz.show("pannad__PANForm__stage3reasonForPANNA_ctrl_grp_div");
+                apz.setElmValue("pannad__PANForm__stage3reasonForPANNA", lDetails.reasonForPANNA);
+            } else {
+                apz.hide("pannad__PANForm__stage3reasonForPANNA_ctrl_grp_div");
+            }
+        } else {
+            apz.hide("pannad__PANForm__stage3wardDtls_ctrl_grp_div");
+            apz.hide("pannad__PANForm__stage3reasonForPANNA_ctrl_grp_div");
+        }
+    } else {
+        apz.hide("pannad__PANForm__stage3assessedToTax");
+        apz.hide("pannad__PANForm__stage3wardDtls_ctrl_grp_div");
+        apz.hide("pannad__PANForm__stage3reasonForPANNA_ctrl_grp_div");
+    }
+    
+    if (lDetails.idProof != '') {
+        debugger;
+        apz.show("pannad__PANForm__stage3idProof_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage3idProof", lDetails.idProof);
+        if (lDetails.idDescription != '') {
+            apz.show("pannad__PANForm__stage3idDescription_ctrl_grp_div");
+            apz.setElmValue("pannad__PANForm__stage3idDescription", lDetails.idDescription);
+        } else {
+            apz.hide("pannad__PANForm__stage3idDescription_ctrl_grp_div");
+        }
+    } else {
+        apz.hide("pannad__PANForm__stage3idProof_ctrl_grp_div");
+        apz.hide("pannad__PANForm__stage3idDescription_ctrl_grp_div");
+    }
+    if (lDetails.addressProof != '') {
+        apz.show("pannad__PANForm__stage3addressProof_ctrl_grp_div");
+        apz.setElmValue("pannad__PANForm__stage3addressProof", lDetails.addressProof);
+        if (lDetails.addressProofDescription != '') {
+            apz.show("pannad__PANForm__stage3addressProofDescription_ctrl_grp_div");
+            apz.setElmValue("pannad__PANForm__stage3addressProofDescription", lDetails.addressProofDescription);
+        } else {
+            apz.hide("pannad__PANForm__stage3addressProofDescription_ctrl_grp_div");
+        }
+    } else {
+        apz.hide("pannad__PANForm__stage3addressProof_ctrl_grp_div");
+        apz.hide("pannad__PANForm__stage3addressProofDescription_ctrl_grp_div");
+    }
+
+};
+apz.pannad.panform.fnRenderStage3 = function(){
+    apz.hide("pannad__PANForm__Stage1");
+    apz.hide("pannad__PANForm__Stage2");
+    apz.show("pannad__PANForm__Stage3");
+};
+apz.pannad.panform.fnPrintBtn = function(){
+    alert("Print");
+};
+apz.pannad.panform.fnDoneBtn = function(){
+    alert("Done");
+};
+apz.pannad.panform.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("pannad__PANForm__Stage1Form");
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "ERR_MAND"
+        };
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};

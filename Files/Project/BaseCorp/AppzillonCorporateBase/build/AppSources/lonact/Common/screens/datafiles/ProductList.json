@@ -1,0 +1,18 @@
+{
+    "lonact__ProductList_Res": {
+        "LIstItem": [
+            {
+                "ProductName": "Working Capital"
+            },
+            {
+                "ProductName": "Real-Estate"
+            },
+            {
+                "ProductName": "Bridge Loan"
+            },
+            {
+                "ProductName": "Buy-to-Let (BTL)"
+            }
+        ]
+    }
+}

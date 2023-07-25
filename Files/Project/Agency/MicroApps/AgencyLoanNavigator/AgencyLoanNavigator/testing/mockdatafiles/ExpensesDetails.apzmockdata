@@ -1,0 +1,12 @@
+{
+    "tbDbmiExpensesDetails":[{
+         "refno":"CONSONB3021573586086",
+         "rent":5000,
+         "mortgage":4000,
+         "tax":3000,
+         "utility":2000,
+         "others":1000,
+         "total":150000,
+         "ratio":"150%"
+    }]
+}

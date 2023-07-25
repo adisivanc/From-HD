@@ -1,0 +1,20 @@
+apz.chqsts.outwardClearing = {};
+apz.app.onShown_OutwardClearing = function(Params) {
+    debugger;
+    apz.setElmValue("chqsts__OutwardClearing__bankName", "SBI")
+    apz.data.scrdata.chqsts__InwardClearing_Res = {};
+    apz.data.scrdata.chqsts__InwardClearing_Res.tbDbtpChequedetails = Params.data.ChequeData;
+    apz.data.loadData("InwardClearing", "chqsts");
+};
+apz.chqsts.outwardClearing.fnOpenImage = function() {
+    debugger;
+    apz.toggleModal({
+        "targetId": "chqsts__OutwardClearing__cheque_Image"
+    });
+};
+apz.chqsts.outwardClearing.fnCancel = function() {
+    debugger;
+    $("#chqsts__OutwardSummary__LaunchOutwardScreen").addClass("sno");
+    $("#chqsts__OutwardSummary__AccNum_Row").removeClass("sno");
+    $("#chqsts__OutwardSummary__Outward_ListRow").removeClass("sno");
+};

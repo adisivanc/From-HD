@@ -1,0 +1,137 @@
+apz.CNUS01.ContactUs = {};
+apz.CNUS01.ContactUs.sCache= {};
+apz.CNUS01.ContactUs.sAction="";
+var sLink = "https://in.linkedin.com/company/i-exceed-technology-solutions-private-limited";
+apz.app.onLoad_ContactUs = function(params) {
+  apz.CNUS01.ContactUs.sCache=params;
+  apz.hide("CNUS01__ContactUs__launchMicrpApps");
+  
+}
+apz.CNUS01.ContactUs.chatOnSkype = function() {
+    debugger;
+   
+    var params = {};
+        params.type = "chat"; //chat/call/video,
+        params.userId = ["iexceed"];
+        params.callBack = apz.CNUS01.ContactUs.skypeCallback;
+        params.id = "SKYPECALLBACK";
+        apz.ns.makeSkypeCall(params);
+ 
+};
+apz.CNUS01.ContactUs.skypeCallback = function(params) {
+    debugger;
+};
+apz.CNUS01.ContactUs.chatOnFaceBook = function() {
+    debugger;
+   
+    var params = {};
+        params.id = "FACEBOOK_ID";
+        params.callBack = apz.CNUS01.ContactUs.facebookCallback;
+        apz.ns.facebookLogin(params);
+   
+};
+apz.CNUS01.ContactUs.facebookCallback = function(params) {
+    debugger;
+    
+};
+apz.CNUS01.ContactUs.fnCancel = function() {
+    debugger;
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": "menuap__Menu__MainLaunchArea",
+            "parentAppId": "menuap",
+            "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+            "custImg": "menuap__Menu__custImg",
+            "custId": "menuap__Menu__custId_txtcnt"
+        }
+    }
+    apz.launchApp(lParams);
+}
+apz.CNUS01.ContactUs.googlePlus = function() {
+   var params = {};
+        params.id = "GOOGLEPLUS_ID";
+        params.callBack = apz.CNUS01.ContactUs.googlePlusInCallback;
+        apz.ns.googleLogin(params);
+};
+apz.CNUS01.ContactUs.googlePlusInCallback = function(message) {
+    debugger;
+   
+};
+apz.CNUS01.ContactUs.linkedInId = function() {
+   
+   debugger;
+   var params = {};
+    params.id = "LINKEDIN_ID";
+    params.userId=["i-exceed-technology-solutions-private-limited"]
+    params.callBack = apz.CNUS01.ContactUs.linkedInCallback;
+    apz.ns.linkedinLogin(params);
+};
+apz.CNUS01.ContactUs.linkedInCallback = function(params) {
+    debugger;
+
+};
+apz.CNUS01.ContactUs.twitterLogin = function() {
+   
+ debugger;
+ var params = {};
+        params.id = "TWITTER_ID";
+        params.callBack = apz.CNUS01.ContactUs.twitterCallback;
+        apz.ns.twitterLogin(params);
+ 
+};
+apz.CNUS01.ContactUs.twitterCallback = function(params) {
+    debugger;
+};
+apz.CNUS01.ContactUs.showSubmitModal = function() {
+    var lobj={
+        "code":"APZ-CNT-SUC"
+    };
+    apz.dispMsg(lobj);
+};
+apz.CNUS01.ContactUs.fnBacktoLogin=function(){
+   var lParams = {
+        "appId": "LNPG01",
+        "scr": "LandingPage",
+        "div": apz.CNUS01.ContactUs.sCache.destroyDiv,
+        "type": "CF",
+        "userObj": {
+            "action": "",
+            "destroyDiv": apz.CNUS01.ContactUs.sCache.destroyDiv,
+            "parentAppId": apz.CNUS01.ContactUs.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+}
+apz.CNUS01.ContactUs.fnShowOpentak=function(){
+   var lParams = {
+        "appId": "opntak",
+        "scr": "OpenTak",
+        "div": "brbase__BaseApp__MainLaunchArea",
+        "type": "CF",
+        "userObj": {
+            "action": "",
+            "destroyDiv": apz.CNUS01.ContactUs.sCache.destroyDiv,
+            "parentAppId": apz.CNUS01.ContactUs.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+}
+apz.CNUS01.ContactUs.fnShowTeamViewer=function(){
+   var lParams = {
+        "appId": "teamvw",
+        "scr": "TeamViewer",
+        "div": "brbase__BaseApp__MainLaunchArea",
+        "type": "CF",
+        "userObj": {
+            "action": "",
+            "destroyDiv": apz.CNUS01.ContactUs.sCache.destroyDiv,
+            "parentAppId": apz.CNUS01.ContactUs.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+}

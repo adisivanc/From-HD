@@ -1,0 +1,15 @@
+{
+    "crsapp__RiskManagementMaster_Res": {
+        "riskManagementMaster": [{
+            "customerRisk": "",
+            "adverseNews": "",
+            "entityName": "ACME Corporation",
+            "appid": "RCorp",
+            "productRisk": "LOW,",
+            "countryRisk": "LOW,LOW,",
+            "positiveMatchPep": "",
+            "distributionChannel": "LOW,LOW,",
+            "clientRisk": "LOW,LOW,"
+        }]
+    }
+}

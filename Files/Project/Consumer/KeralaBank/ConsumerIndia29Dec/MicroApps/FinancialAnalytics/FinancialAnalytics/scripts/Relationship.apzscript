@@ -1,0 +1,133 @@
+apz.finant.Relationship = {};
+apz.finant.Relationship.sParams = {};
+apz.app.onLoad_Relationship = function(params) {
+    apz.finant.Relationship.sParams = params;
+    apz.finant.Relationship.fnSetNavDetails(params);
+    apz.finant.Relationship.fn_initialize(params);
+};
+apz.app.onShown_Relationship = function() {
+    $("body").removeClass("pri");
+    $("body").addClass("ter");
+};
+apz.finant.Relationship.fnSetNavDetails = function(params) {
+    if (params.Navigation) {
+        apz.finant.Relationship.fnsetNavi = params.Navigation.setNavigation;
+        var lParams = {};
+        lParams.showImage = "N";
+        lParams.showHome = "Y";
+        lParams.headerText = apz.lits['finant'][apz.language]['LIT_FinantTitle'];
+        lParams.DashBd = false;
+        lParams.directHome = apz.finant.Relationship.fndirectHome;
+        lParams.backPressed = apz.finant.Relationship.fndirectHome;
+        apz.finant.Relationship.fnsetNavi(lParams);
+    }
+};
+apz.finant.Relationship.fndirectHome = function() {
+    apz.NBBA01.LandingPage.fnLaunchDashBd(apz.finant.Relationship.sParams, "#finant__AccountFAT__analytic_row");
+};
+apz.finant.Relationship.fnBack = function() {
+    apz.NBBA01.LandingPage.fnLaunchDashBd(apz.finant.Relationship.sParams, "#finant__AccountFAT__analytic_row");
+};
+apz.finant.Relationship.fn_initialize = function(lContent) {
+    apz.data.scrdata.finant__Relationship_Req = {};
+    if (lContent.Account[0].isthere == undefined) {
+        apz.data.scrdata.finant__Relationship_Req.Account = lContent.Account;
+    } else {
+        $("#finant__Relationship__AccountPanel_div").addClass("sno");
+    }
+    if (lContent.Card[0].isthere == undefined) {
+        debugger
+        var c = 0,
+            d = 0;
+        apz.data.scrdata.finant__Relationship_Req.CreditCard = [];
+        for (var i = 0; i < lContent.Card.length; i++) {
+            if (lContent.Card[i].CreditDebitFlag == "C") {
+                apz.data.scrdata.finant__Relationship_Req.CreditCard[c] = {};
+                apz.data.scrdata.finant__Relationship_Req.CreditCard[c].CardNumber = lContent.Card[i].CardNumber;
+                apz.data.scrdata.finant__Relationship_Req.CreditCard[c].CardProductName = lContent.Card[i].CardProductName;
+                apz.data.scrdata.finant__Relationship_Req.CreditCard[c].Currency = lContent.Card[i].Currency;
+                apz.data.scrdata.finant__Relationship_Req.CreditCard[c].AvailableCRLimit = apz.finant.Relationship.fn_FormatAmount(lContent.Card[i].AvailableBalance);
+                c++;
+            }
+        }
+    } else {
+        $("#finant__Relationship__DebitCardPanel_div").addClass("sno");
+        $("#finant__Relationship__CreditCardPanel_div").addClass("sno");
+    }
+    apz.data.loadData("Relationship", "finant");
+    if (apz.data.scrdata.finant__Relationship_Req.DebitCard == undefined) {
+        $("#finant__Relationship__DebitCardPanel_div").addClass("sno");
+    } else if (apz.data.scrdata.finant__Relationship_Req.CreditCard == undefined) {
+        $("#finant__Relationship__CreditCardPanel_div").addClass("sno");
+    }
+    apz.accordionAction(document.getElementById("finant__Relationship__AccountPanel_ul"));
+};
+apz.finant.Relationship.fn_FormatAmount = function(amt) {
+    var lparams = {};
+    lparams.value = amt;
+    lparams.mask = apz.numberMask;
+    lparams.decimalPoints = 2;
+    lparams.decimalSep = ".";
+    var formatedAmt = apz.formatNumber(lparams);
+    return formatedAmt;
+};
+apz.finant.Relationship.fnNavigateDetailsScr = function(pthis) {
+    var listid = pthis.id.slice(0, pthis.id.length - 1);
+    var RowNo = pthis.getAttribute("rowno");
+    var UserObj = {};
+    UserObj.Param = apz.finant.Relationship.sParams;
+    UserObj.fromScr = "Relationship";
+    //apz.hide("finant__Relationship__RelationshipRow");
+    switch (listid) {
+        case "finant__Relationship__AccountList_row_":
+            UserObj.fromList = "Account";
+            ScrName = "AccountFAT";
+            AppId = "finant";
+            Div = "finant__AccountFAT__analytic_row";
+            accNoRow = "finant__Relationship__i__Account__AccountNumber_" + RowNo + "_txtcnt";
+            // UserObj.Navigation.acctDetDashBd = "relati";
+            break;
+        case "finant__Relationship__DebitCardList_row_":
+            ScrName = "CardFAT";
+            AppId = "finant";
+            Div = "finant__AccountFAT__analytic_row";
+            accNoRow = "finant__Relationship__i__Account__AccountNumber_" + RowNo + "_txtcnt";
+            //UserObj.Navigation.acctDetDashBd = "relati";
+            break;
+        case "finant__Relationship__CreditCardList_row_":
+            UserObj.fromList = "Card";
+            ScrName = "AccountFAT";
+            AppId = "finant";
+            Div = "finant__AccountFAT__analytic_row";
+            accNoRow = "finant__Relationship__i__Account__AccountNumber_" + RowNo + "_txtcnt";
+            // UserObj.Navigation.acctDetDashBd = "relati";
+            break;
+        default:
+            break;
+    }
+    var AccNo = $("#" + accNoRow).text();
+    UserObj.accNo = AccNo;
+    apz.finant.Relationship.fnLaunchScreen(UserObj, ScrName, Div);
+};
+apz.finant.Relationship.fnLaunchScreen = function(sendObj, scrName, div) {
+    var params = {};
+    params.scr = scrName;
+    params.div = div;
+    params.userObj = sendObj;
+    params.animation = 40;
+    apz.launchSubScreen(params);
+};
+/************Back Pressed*************/
+apz.finant.Relationship.fnBack = function() {
+    apz.finant.Relationship.fnLaunchDashBoard();
+};
+apz.finant.Relationship.fnDirectHome = function() {
+    apz.finant.Relationship.fnLaunchDashBoard();
+};
+apz.finant.Relationship.fnLaunchDashBoard = function() {
+    scrName = "DashBoard";
+    appId = "finant";
+    div = $("#scr__finant__Relationship__main").parent()[0].id;
+    sendObj = apz.finant.Relationship.sParams;
+    apz.finant.Relationship.fnLaunchScreen(sendObj, scrName, div);
+};

@@ -1,0 +1,94 @@
+apz.rdsmry.rddetails = {};
+apz.app.onLoad_RDDetails = function(params) {
+    debugger;
+        if (params.Navigation) {
+            apz.rdsmry.rddetails.fnSetNavigation(params);
+        
+    }
+    apz.rdsmry.rddetails.fnInitialise(params);
+};
+apz.rdsmry.rddetails.fnInitialise = function(params) {
+    debugger;
+    apz.rdsmry.rddetails.sParams = params;
+    if(apz.rdsmry.rddetails.sParams.data.currency == "$")
+    {
+        $("body").addClass("dollarCurrency");   
+        }
+    apz.data.scrdata.rdsmry__RDDetails_Req = {};
+    apz.data.scrdata.rdsmry__RDDetails_Req.depositDtls = params.data;
+    apz.data.loadData("RDDetails", "rdsmry");
+};
+apz.rdsmry.rddetails.fnSetNavigation = function(params) {
+    debugger;
+    apz.rdsmry.rddetails.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.showBack = "N";
+    lParams.headerText = "RECURRING DEPOSIT DETAILS";
+    apz.rdsmry.rddetails.Navigation(lParams);
+};
+apz.rdsmry.rddetails.fnBack = function() {
+    debugger;
+       $("body").removeClass("dollarCurrency");  
+    apz.rdsmry.rddetails.sParams.callBack();
+};
+
+apz.rdsmry.rddetails.fnPrint = function(){
+    debugger;
+    debugger;
+    var jsonFilePath = apz.getDataFilesPath("rdsmry") + "/RDDetailsdata.json";
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    
+    var blob = apz.rdsmry.rddetails.b64toBlob(ljsondata.data.content,"application/pdf");
+    
+    var blobUrl = URL.createObjectURL(blob);
+   var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.rdsmry.rddetails.base64tofilecallBack;
+        json.base64 = ljsondata.data.content;
+        json.fileName = "RDSummary.pdf";
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    }else{
+    window.open(blobUrl);
+    }
+    
+};
+apz.rdsmry.rddetails.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.rdsmry.rddetails.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.rdsmry.rddetails.openFileCallback = function(params) {
+    debugger;
+};
+apz.rdsmry.rddetails.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+   contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+    
+};

@@ -1,0 +1,19 @@
+apz.app.onLoad_LandingHeader = function(params) {
+    if (params != "") {
+        lCurrentUser = params.loginUser;
+        apz.store("CurrentUser", lCurrentUser)
+    }
+    $("#icaosm__LandingHeader__el_txt_4_txtcnt").text("Welcome " + lCurrentUser);
+    /*   if(lCurrentUser == "User1"){
+        $("#icaosm__LandingHeader__gr_row_5").addClass("shownone");
+    } else if(lCurrentUser == "User2"){
+        $("#icaosm__LandingHeader__gr_row_4").addClass("shownone");
+    }*/
+}
+apz.icaosm.LandingHeader.fnLogout = function(params) {
+    apz.launchApp({
+        "appId": "log001",
+        "scr": "Login",
+        "animation": 40,
+    });
+};

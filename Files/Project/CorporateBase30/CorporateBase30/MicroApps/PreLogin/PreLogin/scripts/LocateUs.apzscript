@@ -1,0 +1,162 @@
+apz.locateUs = {};
+var sMarkers = [];
+var sCurrentPosition = {};
+var data;
+apz.app.onLoad_LocateUs = function() {
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+};
+
+function showError(error) {
+    debugger;
+    var img = document.createElement("img");
+    img.src = apz.getStylesPath() + "/" + apz.theme + "/" + "img/branchmap.jpg";
+    var src = document.getElementById("ACPL01__LocateUs__MapContainer");
+    src.appendChild(img);
+}
+
+function showPosition(position) {
+    var json = {
+        "markerInfo": [{
+            "locationLatitude": position.coords.latitude,
+            "locationLongitude": position.coords.longitude,
+            "locationName": "I am here",
+            "locationDescription": "My Location"
+        }]
+    };
+    json.id = "map";
+    json.mapDiv = "ACPL01__LocateUs__MapContainer";
+    json.height = "330px";
+    json.width = "100%";
+    json.callBack = apz.locateUs.loadMapCB;
+    apz.ns.loadMap(json);
+    // apz.locateUs.loadCustomMap();
+}
+apz.locateUs.loadMapCB = function(presp) {
+    if (presp.message === "Plugin not supported for Simulator") {
+        var img = document.createElement("img");
+        img.src = apz.getStylesPath() + "/" + apz.theme + "/" + "img/branchmap.jpg";
+        var src = document.getElementById("ACPL01__LocateUs__MapContainer");
+        src.appendChild(img);
+    }
+};
+
+apz.locateUs.loadCurrentLocation = function(){
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+};
+apz.locateUs.removeDuplicates = function(originalArray, properties) {
+    var newArray = [];
+    var index = 0;
+    var lookupObject = {};
+    var totalProperties = properties.length;
+    for (var i = 0; i < originalArray.length; i++) {
+        var exists = false;
+        for (var a = 0; a < newArray.length; a++) {
+            var propsFound = 0;
+            for (var b = 0; b < totalProperties; b++) {
+                if (originalArray[i][properties[b]] == newArray[a][properties[b]]) {
+                    propsFound++;
+                }
+            }
+            //If there is a match then break the for loop
+            if (propsFound == totalProperties) {
+                exists = true;
+                break;
+            }
+        } //End of New Array
+        if (!exists) {
+            newArray[index] = originalArray[i];
+            index++;
+        }
+    } //End of originalArray
+    return newArray;
+};
+apz.app.onShown_LocateUs = function() {
+    data = JSON.parse(apz.getFile("apps/ACPL01/screens/datafiles/MapData.json"));
+    var state = [{
+        "val": "",
+        "desc": "Select State"
+    }];
+    var statearr = apz.locateUs.removeDuplicates(data.tbMbAtmLocator, ['state']);
+    for (var i = 0; i < statearr.length; i++) {
+        var lObj = {
+            "val": statearr[i].state,
+            "desc": statearr[i].state,
+        }
+        state.push(lObj);
+    }
+    apz.populateDropdown(document.getElementById("ACPL01__LocateUs__StateDD"), state);
+};
+apz.app.searchNearbyLocations = function() {
+    var json = {
+        "radius": 5000,
+        "nearbyplaces": [{
+            "locationLatitude": "12.9205555555556",
+            "locationLongitude": "77.5969444444444"
+        }, {
+            "locationLatitude": "12.9219444444444",
+            "locationLongitude": "77.7080555555556"
+        }, {
+            "locationLatitude": "12.9222222222222",
+            "locationLongitude": "77.6583333333333"
+        }, {
+            "locationLatitude": "12.92",
+            "locationLongitude": "77.6927777777778"
+        }, {
+            "locationLatitude": "12.9216666666667",
+            "locationLongitude": "77.6297222222222"
+        }]
+    };
+    json.id = "LoadMap";
+    json.mapDiv = "ACPL01__LocateUs__MapContainer";
+    json.height = "330px";
+    json.width = "100%";
+    json.callBack = apz.locateUs.loadNearbyLocationsCB;
+    apz.ns.locationSelector(json);
+};
+apz.locateUs.loadNearbyLocationsCB = function(presp) {
+    debugger;
+};
+apz.locateUs.close = function() {
+    var params = {};
+        params.scr = "PreLogin";
+    apz.launchScreen(params);
+    setTimeout(function() {
+        $("#ACPL01__PreLogin__ArrowDown").trigger("click");
+    }, 50);
+};
+apz.locateUs.stateChange = function(lObj) {
+    debugger;
+    var city = [{
+        "val": "",
+        "desc": "Select City"
+    }];
+    var cityArr = apz.locateUs.removeDuplicates(data.tbMbAtmLocator, ['city']);
+    for (var i = 0; i < cityArr.length; i++) {
+        if (cityArr[i].state == lObj.value) {
+            var lTemp = {
+                "val": cityArr[i].city,
+                "desc": cityArr[i].city,
+            };
+            city.push(lTemp);
+        }
+    }
+    apz.populateDropdown(document.getElementById("ACPL01__LocateUs__CityDD"), city);
+};
+apz.locateUs.cityChange = function(lTemp) {
+    debugger;
+    var cityPart = [{
+        "val": "",
+        "desc": "Select Part of City"
+    }];
+    var cityPartArr = apz.locateUs.removeDuplicates(data.tbMbAtmLocator, ['location']);
+    for (var i = 0; i < cityPartArr.length; i++) {
+        if (cityPartArr[i].city == lTemp.value) {
+            var lPart = {
+                "val": cityPartArr[i].location.split("-")[1],
+                "desc": cityPartArr[i].location.split("-")[1],
+            };
+            cityPart.push(lPart);
+        }
+    }
+    apz.populateDropdown(document.getElementById("ACPL01__LocateUs__CityPartDD"), cityPart);
+};

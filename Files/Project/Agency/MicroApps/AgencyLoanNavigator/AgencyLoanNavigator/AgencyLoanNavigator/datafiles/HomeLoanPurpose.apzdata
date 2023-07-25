@@ -1,0 +1,27 @@
+[{
+    "val": "",
+    "desc": "Please Select"
+}, {
+    "val": "Purchase from Builder",
+    "desc": "Purchase from Builder"
+}, {
+    "val": "Resale",
+    "desc": "Resale"
+},
+{
+    "val": "Purchase of Plot of Land",
+    "desc": "Purchase of Plot of Land"
+},
+{
+    "val": "Home Extension",
+    "desc": "Home Extension"
+},
+{
+    "val": "Renovation",
+    "desc": "Renovation"
+},
+{
+    "val": "Balance Transfer",
+    "desc": "Balance Transfer"
+}
+]

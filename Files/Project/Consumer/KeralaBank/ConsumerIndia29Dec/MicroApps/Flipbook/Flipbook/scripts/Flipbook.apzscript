@@ -1,0 +1,61 @@
+apz.flipbo.Flipbook = {};
+
+apz.app.onLoad_Flipbook = function() {
+    debugger;
+        apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "e-PASSBOOK")
+
+    apz.data.loadJsonData("Transactions", "flipbo");
+    $("#flipbo__Flipbook__ps_pls_1").attr("id", "flipbook");
+
+    if(apz.deviceGroup == "Web") 
+    {
+         $('#flipbook').turn({
+        display: 'double',
+        autoCenter: true,
+        gradients: true,
+        
+    });
+    }
+    else if(apz.deviceGroup == "Tablet")
+    {
+         $('#flipbook').turn({
+        display: 'single',
+        autoCenter: true,
+        gradients: true,
+        width : $(window).width()-50,
+        height: $(window).height()-50
+         });
+    }
+    else if (apz.deviceGroup == "Mobile")
+    {
+        // console.log($(window).width() - 50)
+    $("csmrbk__LandingPage__el_icn_41").removeClass("sno");
+         $('#flipbook').turn({
+        display: 'single',
+        autoCenter: true,
+        gradients: true,
+        width : $(window).width()-50,
+        height: $(window).height()-50
+        
+    });
+    }
+    $(document).bind('keydown', function(e) {
+        if (e.keyCode == 37) $('#flipbook').turn('previous');
+        else if (e.keyCode == 39) $('#flipbook').turn('next');
+        else if (e.keyCode == 38) $('#flipbook').turn('next');
+        else if (e.keyCode == 40) $('#flipbook').turn('previous');
+    });
+}
+
+
+
+apz.flipbo.Flipbook.fnCancel = function(params) {
+    debugger;
+    apz.flipbo.Flipbook.submitCallback()
+}
+apz.flipbo.Flipbook.submitCallback = function() {
+    debugger;
+    lParams = {};
+    lParams.textContent = "Account Summary";
+    apz.csmrbk.landingpage.fnLaunch(lParams);
+}

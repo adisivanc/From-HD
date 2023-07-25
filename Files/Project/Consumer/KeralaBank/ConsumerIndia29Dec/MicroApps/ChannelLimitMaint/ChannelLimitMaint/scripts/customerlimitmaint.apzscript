@@ -1,0 +1,256 @@
+apz.chnlmt.customerlimitmaint = {};
+apz.chnlmt.customerlimitmaint.sAction = "";
+apz.app.onLoad_customerlimitmaint = function(params) {
+    debugger;
+    apz.chnlmt.customerlimitmaint.params = params;
+    /* var lReq = {};
+    lReq.tbDbmiCustlvlTxnLimit = {};
+    lReq.tbDbmiCustlvlTxnLimit.channelId = "001";
+    lReq.tbDbmiCustlvlTxnLimit.txnType = "debit";xf` 
+    lReq.tbDbmiCustlvlTxnLimit.customerId = "C001";
+    var lParam = {
+        "ifaceName": "CustLimitMaint_Query",
+        "buildReq": "N",
+        "req": lReq,
+        "paintResp": "Y",
+        "callBack": apz.chnlmt.CustomerLimitMaint.fnServerCallBack
+    }*/
+    if (params.Navigation) {
+        apz.chnlmt.customerlimitmaint.fnSetNavigation(params);
+    }
+    apz.chnlmt.customerlimitmaint.fnInitialise();
+    apz.chnlmt.customerlimitmaint.fnRenderData();
+    $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("min", "0")
+    $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("max", "2000")
+    $("#chnlmt__customerlimitmaint__TxnMaxLimit__slider").attr("max", "2000000")
+    apz.setElmValue("chnlmt__customerlimitmaint__txnMinLmt_slider", "400.00")
+    apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMinLmt", "400.00")
+    apz.setElmValue("chnlmt__customerlimitmaint__TxnMaxLimit__slider", "1,400,000.00")
+    apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMaxLmt", "1,400,000.00")
+};
+apz.chnlmt.customerlimitmaint.fnSetNavigation = function(params) {
+    debugger;
+    apz.chnlmt.customerlimitmaint.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.showBack = "N";
+    lParams.headerText = "LIMITS";
+    apz.chnlmt.customerlimitmaint.Navigation(lParams);
+};
+apz.chnlmt.customerlimitmaint.fnInitialise = function(params) {
+    apz.chnlmt.customerlimitmaint.sAction = "BankLmtMaint_Query";
+    var bReq = {};
+    bReq.tbDbmiBanklvlTxnLimit = {};
+    bReq.tbDbmiBanklvlTxnLimit.channelId = "MBCH";
+    bReq.tbDbmiBanklvlTxnLimit.txnType = "DEBIT";
+    var bParam = {
+        "ifaceName": "BankLimitMaint_Query",
+        "buildReq": "Y",
+        "req": bReq,
+        "paintResp": "Y",
+        "callBack": apz.chnlmt.customerlimitmaint.fnServerCallBack
+    }
+    apz.server.callServer(bParam);
+}
+apz.chnlmt.customerlimitmaint.fnRenderData = function() {
+    apz.chnlmt.customerlimitmaint.sAction = "CustLmtMaint_Query";
+    apz.chnlmt.customerlimitmaint.fnCheckAvailability();
+}
+apz.chnlmt.customerlimitmaint.Fnclick = function() {
+    debugger;
+    // var obj1 = apz.getElmValue("chnlmt__customerlimitmaint__txnMinLmt_slider");
+    var obj1 = {
+        "value": apz.getElmValue("chnlmt__customerlimitmaint__txnMinLmt_slider"),
+        "decimalSep": ".",
+        "mask": "MILLION",
+        "displayAsLiteral": "N",
+        "decimalPoints": "2"
+    }
+    var dobj1 = apz.formatNumber(obj1);
+    apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMinLmt_txtcnt", dobj1);
+}
+apz.chnlmt.customerlimitmaint.Snclick = function() {
+    debugger;
+    //var obj2 = apz.getElmValue("chnlmt__customerlimitmaint__TxnMaxLimit__slider");
+    var obj2 = {
+        "value": apz.getElmValue("chnlmt__customerlimitmaint__TxnMaxLimit__slider"),
+        "decimalSep": ".",
+        "mask": "MILLION",
+        "displayAsLiteral": "N",
+        "decimalPoints": "2"
+    }
+    var dobj2 = apz.formatNumber(obj2);
+    apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMaxLmt_txtcnt", dobj2);
+}
+apz.chnlmt.customerlimitmaint.Tnclick = function() {
+    debugger;
+    //  var obj3 = apz.getElmValue("chnlmt__customerlimitmaint__Daily_Limit_slider");
+    var obj3 = {
+        "value": apz.getElmValue("chnlmt__customerlimitmaint__Daily_Limit_slider"),
+        "decimalSep": ".",
+        "mask": "MILLION",
+        "displayAsLiteral": "N",
+        "decimalPoints": "2"
+    }
+    var dobj3 = apz.formatNumber(obj3);
+    apz.setElmValue("chnlmt__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__dailyLmt", dobj3);
+}
+apz.chnlmt.customerlimitmaint.Vnclick = function() {
+    debugger;
+    //  var obj4 = apz.getElmValue("chnlmt__customerlimitmaint__MonthlyLmt_slider");
+    var obj4 = {
+        "value": apz.getElmValue("chnlmt__customerlimitmaint__MonthlyLmt_slider"),
+        "decimalSep": ".",
+        "mask": "MILLION",
+        "displayAsLiteral": "N",
+        "decimalPoints": "2"
+    }
+    var dobj4 = apz.formatNumber(obj4);
+    apz.setElmValue("chnlmt__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__monthlyLmt", dobj4);
+}
+apz.chnlmt.customerlimitmaint.fnServerCallBack = function(params) {
+    debugger;
+    /* if (params.error)
+    var lMsg = {
+            "message": params.errors[0].errorMessage
+        };
+        apz.dispMsg(lMsg);
+    */
+    // $("#chnlmt__CustomerLimitMaint__txnMinLmt_slider").attr("min",params.res.chnlmt__BankLimitMaint_Res.tbDbmiBanklvlTxnLimit.txnMinLmt);
+    if (apz.chnlmt.customerlimitmaint.sAction == "CustLmtMaint_Query") {
+        if (params.res.chnlmt__CustLimitMaint_Req) {
+            apz.chnlmt.customerlimitmaint.sNewCust = false;
+            apz.setElmValue("chnlmt__customerlimitmaint__txnMinLmt_slider", params.res.chnlmt__CustLimitMaint_Req.tbDbmiCustlvlTxnLimit[0].txnMinLmt);
+            apz.setElmValue("chnlmt__customerlimitmaint__TxnMaxLimit__slider", params.res.chnlmt__CustLimitMaint_Req.tbDbmiCustlvlTxnLimit[0].txnMaxLmt);
+            apz.setElmValue("chnlmt__customerlimitmaint__Daily_Limit_slider", params.res.chnlmt__CustLimitMaint_Req.tbDbmiCustlvlTxnLimit[0].dailyLmt);
+            apz.setElmValue("chnlmt__customerlimitmaint__MonthlyLmt_slider", params.res.chnlmt__CustLimitMaint_Req.tbDbmiCustlvlTxnLimit[0].monthlyLmt);
+        } else {
+            apz.chnlmt.customerlimitmaint.sNewCust = true;
+            apz.chnlmt.customerlimitmaint.Fnclick();
+            apz.chnlmt.customerlimitmaint.Snclick();
+            apz.chnlmt.customerlimitmaint.Tnclick();
+            apz.chnlmt.customerlimitmaint.Vnclick();
+        }
+    } else if (apz.chnlmt.customerlimitmaint.sAction == "BankLmtMaint_Query") {
+        $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("min", 0);
+        $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("max", params.res.chnlmt__BankLimitMaint_Res.tbDbmiBanklvlTxnLimit.txnMinLmt);
+        $("#chnlmt__customerlimitmaint__TxnMaxLimit__slider").attr("min", params.res.chnlmt__BankLimitMaint_Res.tbDbmiBanklvlTxnLimit.txnMinLmt);
+        $("#chnlmt__customerlimitmaint__TxnMaxLimit__slider").attr("max", params.res.chnlmt__BankLimitMaint_Res.tbDbmiBanklvlTxnLimit.txnMaxLmt);
+        $("#chnlmt__customerlimitmaint__Daily_Limit_slider").attr("min", params.res.chnlmt__BankLimitMaint_Res.tbDbmiBanklvlTxnLimit.txnMinLmt);
+        $("#chnlmt__customerlimitmaint__Daily_Limit_slider").attr("max", params.res.chnlmt__BankLimitMaint_Res.tbDbmiBanklvlTxnLimit.dailyLmt);
+        $("#chnlmt__customerlimitmaint__MonthlyLmt_slider").attr("min", params.res.chnlmt__BankLimitMaint_Res.tbDbmiBanklvlTxnLimit.txnMinLmt);
+        $("#chnlmt__customerlimitmaint__MonthlyLmt_slider").attr("max", params.res.chnlmt__BankLimitMaint_Res.tbDbmiBanklvlTxnLimit.monthlyLmt);
+        apz.chnlmt.customerlimitmaint.fnCheckAvailability();
+    } else if (apz.chnlmt.customerlimitmaint.sAction == "SetLimit") {
+        var lMsg = {};
+        lMsg.code = "Success";
+        apz.dispMsg({message : "Limit Set Successfully", type : "S",callBack : apz.landin.Landing.fnHome});
+    }
+};
+apz.chnlmt.customerlimitmaint.fnCheckAvailability = function() {
+    apz.chnlmt.customerlimitmaint.sAction = "CustLmtMaint_Query"
+    var lReq = {};
+    lReq.tbDbmiCustlvlTxnLimit = {};
+    lReq.tbDbmiCustlvlTxnLimit.channelId = "MBCH";
+    lReq.tbDbmiCustlvlTxnLimit.txnType = "debit";
+    lReq.tbDbmiCustlvlTxnLimit.customerId = apz.chnlmt.customerlimitmaint.params.customerID;
+    var lParam = {
+        "ifaceName": "CustLimitMaint_Query",
+        "buildReq": "N",
+        "req": lReq,
+        "paintResp": "Y",
+        "callBack": apz.chnlmt.customerlimitmaint.fnServerCallBack
+    }
+    apz.server.callServer(lParam);
+}
+apz.chnlmt.customerlimitmaint.fnSetLimit = function() {
+    debugger;
+    apz.chnlmt.customerlimitmaint.sAction = "SetLimit"
+    var obj1 = apz.getElmValue("chnlmt__customerlimitmaint__txnMinLmt_slider");
+    var obj2 = apz.getElmValue("chnlmt__customerlimitmaint__TxnMaxLimit__slider");
+    var obj3 = apz.getElmValue("chnlmt__customerlimitmaint__Daily_Limit_slider");
+    var obj4 = apz.getElmValue("chnlmt__customerlimitmaint__MonthlyLmt_slider");
+    //apz.chnlmt.customerlimitmaint.sAction = "CustLmtMaint_Query";
+    //apz.chnlmt.customerlimitmaint.fnCheckAvailability();
+    var lReq = {};
+    lReq.tbDbmiCustlvlTxnLimit = {};
+    lReq.tbDbmiCustlvlTxnLimit.txnMinLmt = obj1;
+    lReq.tbDbmiCustlvlTxnLimit.txnMaxLmt = obj2;
+    lReq.tbDbmiCustlvlTxnLimit.dailyLmt = obj3;
+    lReq.tbDbmiCustlvlTxnLimit.monthlyLmt = obj4;
+    lReq.tbDbmiCustlvlTxnLimit.channelId = "MBCH";
+    lReq.tbDbmiCustlvlTxnLimit.txnType = "debit";
+    lReq.tbDbmiCustlvlTxnLimit.customerId = apz.chnlmt.customerlimitmaint.params.customerID;
+    lReq.tbDbmiCustlvlTxnLimit.currency = "INR";
+    var lifacename = "";
+    if (apz.chnlmt.customerlimitmaint.sNewCust) {
+        lifacename = "CustLimitMaint_New";
+    } else {
+        lifacename = "CustLimitMaint_Modify";
+    }
+    var AParam = {
+        "ifaceName": lifacename,
+        "buildReq": "N",
+        "req": lReq,
+        "paintResp": "N",
+        "callBack": apz.chnlmt.customerlimitmaint.fnServerCallBack
+    }
+    apz.server.callServer(AParam);
+}
+/*  var cParam = {
+        "ifaceName": "CustLimitMaint_New",
+        "buildReq": "N",
+        "req": lReq,
+        "paintResp": "Y",
+        "callBack": apz.chnlmt.customerlimitmaint.fnServerCallBack
+    }
+    apz.server.callServer(cParam);
+}*/
+apz.chnlmt.customerlimitmaint.fnSelMode = function() {
+    debugger;
+    var mode = apz.getElmValue("chnlmt__customerlimitmaint__mode")
+    $("#chnlmt__customerlimitmaint__TxnMaxLimit__slider").attr("step", "1000")
+       $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("step", "50")
+       $("#chnlmt__customerlimitmaint__Daily_Limit_slider").attr("step", "1000") 
+        $("#chnlmt__customerlimitmaint__ MonthlyLmt_slider").attr("step", "1000") 
+    if (mode == "ALL") {
+        $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("min", "0")
+        $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("max", "2000")
+        $("#chnlmt__customerlimitmaint__TxnMaxLimit__slider").attr("max", "2000000")
+        apz.setElmValue("chnlmt__customerlimitmaint__txnMinLmt_slider", "400.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMinLmt", "400.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__TxnMaxLimit__slider", "1,400,000.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMaxLmt", "1,400,000.00")
+    } else if (mode == "FAST") {
+        $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("min", "100")
+        $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("max", "2000")
+        $("#chnlmt__customerlimitmaint__TxnMaxLimit__slider").attr("max", "1000000")
+        apz.setElmValue("chnlmt__customerlimitmaint__txnMinLmt_slider", "100.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMinLmt", "100.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__TxnMaxLimit__slider", "1,000,000.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMaxLmt", "1,000,000.00")
+    } else if (mode == "IFT") {
+        $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("min", "500")
+        $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("max", "2000")
+        $("#chnlmt__customerlimitmaint__TxnMaxLimit__slider").attr("max", "1000000")
+        apz.setElmValue("chnlmt__customerlimitmaint__txnMinLmt_slider", "500.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMinLmt", "500.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__TxnMaxLimit__slider", "1,000,000.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMaxLmt", "1,000,000.00")
+    } else if (mode == "Intrabank") {
+        $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("min", "200000")
+        $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("max", "300000")
+        $("#chnlmt__customerlimitmaint__TxnMaxLimit__slider").attr("max", "1000000")
+        apz.setElmValue("chnlmt__customerlimitmaint__txnMinLmt_slider", "200,000.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMinLmt", "200,000.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__TxnMaxLimit__slider", "1,000,000.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMaxLmt", "1,000,000.00")
+    } else if (mode == "Interbank") {
+        $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("min", "100")
+        $("#chnlmt__customerlimitmaint__txnMinLmt_slider").attr("max", "2000")
+        $("#chnlmt__customerlimitmaint__TxnMaxLimit__slider").attr("max", "200000")
+        apz.setElmValue("chnlmt__customerlimitmaint__txnMinLmt_slider", "100.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMinLmt", "100.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__TxnMaxLimit__slider", "200,000.00")
+        apz.setElmValue("chnlmt__customerlimitmaint__CustLimitMaint__i__tbDbmiCustlvlTxnLimit__txnMaxLmt", "200,000.00")
+    }
+}

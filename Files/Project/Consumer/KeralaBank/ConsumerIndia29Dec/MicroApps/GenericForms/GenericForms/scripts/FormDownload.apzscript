@@ -1,0 +1,120 @@
+apz.genfrm.formdownload = {};
+apz.genfrm.formdownload.sparams = {};
+apz.app.onLoad_FormDownload = function(params) {
+    debugger;
+    apz.genfrm.formdownload.sParams = params;
+    if (params.Navigation) {
+        apz.genfrm.formdownload.fnSetNavigation(params);
+    }
+    apz.genfrm.formdownload.fnGoToStage1();
+};
+apz.genfrm.formdownload.fnSetNavigation = function(params) {
+    debugger;
+    apz.genfrm.formdownload.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "FORM DOWNLOAD";
+    }
+    // lParams.backPressed = apz.genfrm.formdownload.fnBack;
+    apz.genfrm.formdownload.Navigation(lParams);
+};
+apz.genfrm.formdownload.fnGoToStage1 = function() {
+    debugger;
+};
+apz.genfrm.formdownload.fnDownloadForm = function(pthis) {
+    debugger;
+    var extension = "pdf";
+    var docName = apz.getObjValue(document.getElementById("genfrm__FormDownload__fileSelect"));
+    if (docName.length > 1) {
+        docName = docName + "." + extension;
+        var json = {
+            "id": "FormDownload",
+            "destinationPath": "docs",
+            "filePath": "docs",
+            "screenId": "FormDownload",
+            "fileName": docName,
+            "base64": "N",
+            "sessionReq": "N",
+            "callBack": apz.genfrm.formdownload.downloadFileCallback
+        };
+        apz.ns.downloadFile(json);
+    } else {
+        var lMsg = {
+            "code": "ERR_SELECT"
+        }
+        apz.dispMsg(lMsg);
+    }
+};
+apz.genfrm.formdownload.downloadFileCallback = function(params) {
+    debugger;
+    var lMsg = {
+        "code": params.errorCode
+    }
+    apz.dispMsg(lMsg);
+    //apz.show("genfrm__FormDownload__statusBar");
+    //if (params.status) {
+    //   apz.show("genfrm__FormDownload__successStatus");
+    //   apz.hide("genfrm__FormDownload__failureStatus");
+    //} else {	
+    //    apz.hide("genfrm__FormDownload__successStatus");
+    //    apz.show("genfrm__FormDownload__failureStatus");
+    //}
+    // alert(JSON.stringify(params));
+};
+// apz.genfrm.formdownload.getDocument = function() {
+//     debugger;
+//     var jsonFilePath = apz.getDataFilesPath("genfrm") + "/Form15G.json";
+//     var jsonFileContent = apz.getFile(jsonFilePath);
+//     var ljsondata = JSON.parse(jsonFileContent);
+//     apz.genfrm.formdownload.getDocumentCB(ljsondata);
+// };
+// apz.genfrm.formdownload.getDocumentCB = function(pbody) {
+//     debugger;
+//     apz.genfrm.formdownload.ReportdwnldMethod(pbody.data);
+// };
+// apz.genfrm.formdownload.ReportdwnldMethod = function(lbodyobj) {
+//     var blob;
+//     if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+//         blob = apz.genfrm.formdownload.b64toBlob(lbodyobj.content, "application/pdf");
+//     } else if (lbodyobj.mimeType == "application/ondemand extension-field=DOCX") {
+//         blob = appzillon.app.appattachments.b64toBlob(lbodyobj.content, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+//     } else if (lbodyobj.mimeType == "application/ondemand extension-field=tiff") {
+//         blob = appzillon.app.appattachments.b64toBlob(lbodyobj.content, "image/tiff");
+//     } else if (lbodyobj.mimeType == "application/ondemand extension-field=msg") {
+//         blob = appzillon.app.appattachments.b64toBlob(lbodyobj.content, "application/vnd.ms-outlook");
+//     } else if (lbodyobj.mimeType == "application/ondemand extension-field=doc") {
+//         blob = appzillon.app.appattachments.b64toBlob(lbodyobj.content, "application/msword");
+//     }
+//     var blobUrl = URL.createObjectURL(blob);
+//     window.open(blobUrl);
+// };
+// apz.genfrm.formdownload.b64toBlob = function(b64Data, contentType, sliceSize) {
+//     debugger;
+//     contentType = contentType || '';
+//     sliceSize = sliceSize || 512;
+//     var byteCharacters = atob(b64Data);
+//     var byteArrays = [];
+//     for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+//         var slice = byteCharacters.slice(offset, offset + sliceSize);
+//         var byteNumbers = new Array(slice.length);
+//         for (var i = 0; i < slice.length; i++) {
+//             byteNumbers[i] = slice.charCodeAt(i);
+//         }
+//         var byteArray = new Uint8Array(byteNumbers);
+//         byteArrays.push(byteArray);
+//     }
+//     var blob = new Blob(byteArrays, {
+//         type: contentType
+//     });
+//     return blob;
+// };
+apz.genfrm.formdownload.fnScreenBack = function() {
+    apz.show("genfrm__Summary__Stage1");
+    apz.hide("genfrm__Summary__Stage2");
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};

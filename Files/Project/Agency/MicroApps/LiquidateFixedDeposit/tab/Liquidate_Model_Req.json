@@ -1,0 +1,32 @@
+{
+    "depositDtls" : {
+        "txnRefNo" : "",
+        "customerId" : "",
+        "accountNo" : "",
+        "branchCd" : "",
+        "branchName" : "",
+        "city" : "",
+        "state" : "",
+        "depositAmount" : "",
+        "interestType" : "",
+        "tenor" : "",
+        "maturityType" : "",
+        "creditAccountNo" : "",
+        "maturityAmount" : "",
+        "seniorCitizen" : "",
+        "interestRate" : "",
+        "interestEarned" : "",
+        "maturityDate" : "",
+        "issueDate" : "",
+        "liquidationDate" : "",
+        "penalty" : "",
+        "authenticationType" : "",
+        "authenticationTarget" : "",
+        "attachNominee" : "",
+        "customField1" : "",
+        "customField2" : "",
+        "customField3" : "",
+        "customField4" : "",
+        "customField5" : ""
+    }
+}

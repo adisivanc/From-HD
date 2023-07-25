@@ -1,0 +1,1 @@
+{"typeclass":"WORKFLOW","name":"SICS","type":"WORKFLOW","description":"SI Closure","workflows":[{"stageid":"SICS","stagedescription":"SI VERIFY","screen":"SIClosure","sequence":"1"},{"stageid":"SICS","stagedescription":"SI APPROVE","screen":"SIClosureApprove","sequence":"2"},{"stageid":"SICS","stagedescription":"SI SUBMIT","sequence":"3"}]}

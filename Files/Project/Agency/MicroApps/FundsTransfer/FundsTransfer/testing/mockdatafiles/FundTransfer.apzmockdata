@@ -1,0 +1,48 @@
+ {
+     "SavingsAccount": [{
+         "accountNo": "753410000076",
+         "accountBal": "987435",
+         "accountBrnName": "Koramangala",
+         "accountBrnCd": "619",
+         "accountBrnIFSC": "IOB00000619"
+     }, {
+         "accountNo": "732510006721",
+         "accountBal": "332222",
+         "accountBrnName": "Madivala",
+         "accountBrnCd": "619",
+         "accountBrnIFSC": "IOB00000619"
+     }],
+     "CurrentAccount": [{
+         "accountNo": "753410000086",
+         "accountBal": "987435",
+         "accountBrnName": "Koramangala",
+         "accountBrnCd": "619",
+         "accountBrnIFSC": "IOB00000619"
+     }, {
+         "accountNo": "732510006789",
+         "accountBal": "332222",
+         "accountBrnName": "Madivala",
+         "accountBrnCd": "619",
+         "accountBrnIFSC": "IOB00000619"
+     }],
+     "customerDetail": {
+         "customerID": "000004712",
+         "customerName": "Customer Name",
+         "aadhaarNo": "123412341234",
+         "DOB": "20-NOV-1980",
+         "mobileNo": "9876543210",
+         "email": "nobody@me.in",
+         "ib": "Y",
+         "mb": "Y"
+     },
+     "customerAddress": {
+         "addressline1": "Line 1",
+         "addressline2": "Line 2",
+         "addressline3": "Line 3",
+         "addressline4": "Line 4",
+         "city": "Bangalore",
+         "state": "Karnataka",
+         "country": "India",
+         "zip": "560000"
+     }
+ }

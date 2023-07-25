@@ -1,0 +1,102 @@
+{
+    "getCardAccDet": {
+        "xStatus": {
+            "statusMessage": "Action Successful",
+            "severity": "I",
+            "applicationCd": 845,
+            "statusCd": 1
+        },
+        "standardAccountInfo": {
+            "companyNbr": 24024,
+            "accountNbr": "1234560001053",
+            "accountTypeCd": "BAS",
+            "accountName": "RAY LAKEMAN",
+            "accountStatusCd": "BD",
+            "accountStatusReasonCd": "DVL",
+            "currencyCd": "840"
+        },
+        "nonFinancialInfo": {
+            "openDt": "2017-03-31",
+            "cycleCd": 11,
+            "statementCd": "ST1",
+            "accountMailCd": "REG",
+            "accountLanguageCd": "ENU"
+        },
+        "financialInfo": {
+            "availableCreditAmt": 0,
+            "availableCashAmt": 0,
+            "creditLineAmt": 5000,
+            "cashLineAmt": 500,
+            "currentBalanceAmt": 5173.48,
+            "lastPaymentDt": "2017-04-28",
+            "lastPaymentAmt": 100,
+            "lastStatementDt": "2017-05-11",
+            "lastStatementAmt": 4537.88,
+            "minimumPaymentDueDt": "2017-06-05",
+            "minimumPaymentAmt": 4537.88
+        },
+        "customerInfo": {
+            "cardholderName": "RAY LAKEMAN",
+            "accountAddressLine2": "100 QUNICY LANE",
+            "accountCity": "SPRINGDALE",
+            "accountState": "AR",
+            "accountPostalCd": "64523",
+            "emailAddress": "RAY.LAKEMAN@SANDERSFARMS.COM",
+            "taxPayerNbr": "0000000377329876",
+            "homePhoneNbr": "214 408-2908",
+            "businessPhoneNbr": "214 408-2910",
+            "birthDt": 630810
+        },
+        "cardInfo": [
+            {
+                "cardNbr": "4211205530018011",
+                "embossNameLine1": "RAY LAKEMAN",
+                "embossNameLine2": "RAY LAKEMAN",
+                "cardTypeCd": "VC",
+                "chipTypeCd": null,
+                "expirationDt": "2019-03-31",
+                "cardStatusCd": "BD",
+                "cardStatusReasonCd": "DVL",
+                "customertoAccountRelCd": "PRI"
+            },
+            {
+                "cardNbr": "5317395530021014",
+                "embossNameLine1": "KATHY LAKEMAN",
+                "embossNameLine2": null,
+                "cardTypeCd": "MC",
+                "chipTypeCd": null,
+                "expirationDt": "2019-05-31",
+                "cardStatusCd": "BD",
+                "cardStatusReasonCd": "DVL",
+                "customertoAccountRelCd": "SEC"
+            }
+        ],
+        "feesInfo": [
+            {
+                "feeCd": "AD1",
+                "feeStartDt": "2017-03-31",
+                "feeEndDt": "2799-12-31"
+            },
+            {
+                "feeCd": "LC1",
+                "feeStartDt": "2017-03-31",
+                "feeEndDt": "2799-12-31"
+            },
+            {
+                "feeCd": "LSF",
+                "feeStartDt": "2017-03-31",
+                "feeEndDt": "2799-12-31"
+            },
+            {
+                "feeCd": "MB1",
+                "feeStartDt": "2017-03-31",
+                "feeEndDt": "2799-12-31"
+            },
+            {
+                "feeCd": "ST2",
+                "feeStartDt": "2017-03-31",
+                "feeEndDt": "2799-12-31"
+            }
+        ]
+    }
+}

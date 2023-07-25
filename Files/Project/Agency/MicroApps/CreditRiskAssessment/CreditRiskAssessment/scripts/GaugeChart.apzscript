@@ -1,0 +1,51 @@
+apz.app.gaugePaint = function(gVal, gDiv, gGaugeId) {
+    requirejs([apz.getInfraPath() + "/fusioncharts/fusioncharts.js"], function() {
+        examplemethod(gVal, gDiv, gGaugeId);
+    });
+}
+examplemethod = function(pVal, pDiv, pGaugeId) {
+    var pointer = pVal;
+    var cpuGauge = new FusionCharts({
+        type: 'hlineargauge',
+        renderAt: pDiv,
+        id: pGaugeId,
+        width: '300',
+        height: '80',
+        dataFormat: 'json',
+        containerBackgroundOpacity:0,
+        dataSource: {
+            "chart": {
+                "canvasbgAlpha": "0",
+                "bgAlpha": "0",
+                "theme": "fint",
+                "showBorder": "0",
+                "lowerLimit": "0",
+                "upperLimit": "100",
+                "numberSuffix": "%",
+                "valueFontSize": "11",
+                "gaugeFillMix":"",
+                "valueFontBold": "0"
+            },
+            "colorRange": {
+                "color": [{
+                    "minValue": "0",
+                    "maxValue": "25",
+                    "label": "Low",
+                }, {
+                    "minValue": "25",
+                    "maxValue": "75",
+                    "label": "Medium",
+                }, {
+                    "minValue": "75",
+                    "maxValue": "100",
+                    "label": "High",
+                }]
+            },
+            "pointers": {
+                "pointer": [{
+                    "value": pointer
+                }]
+            }
+        }
+    }).render();
+}

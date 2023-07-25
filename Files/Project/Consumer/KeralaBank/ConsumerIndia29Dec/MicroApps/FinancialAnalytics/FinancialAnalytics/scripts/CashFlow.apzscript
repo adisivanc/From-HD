@@ -1,0 +1,56 @@
+apz.finant.CashFlow = {};
+apz.app.onLoad_CashFlow = function(params) {
+    debugger;
+    apz.finant.CashFlow.loadChart();
+    if (params.Navigation) {
+        apz.finant.CashFlow.fnSetNavigation(params);
+    }
+};
+apz.finant.CashFlow.loadChart = function() {
+  
+    var lServerParams = {
+        "ifaceName": "GetCashFlow",
+        "buildReq": "Y",
+        "paintResp": "Y",
+        "callBack": apz.finant.CashFlow.GetCashFlowCB,
+    };
+   // apz.server.callServer(lServerParams);
+         jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("finant")+"/GetCashFlow.json"));
+         apz.data.scrdata.finant__GetCashFlow_Res = {};
+                  apz.data.scrdata.finant__GetCashFlow_Res = jsondata;
+                  apz.data.loadData("GetCashFlow", "finant");
+         
+apz.finant.CashFlow.GetCashFlowCB(jsondata);
+}
+apz.finant.CashFlow.fnSetNavigation = function(params) {
+    apz.finant.CashFlow.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "CASH FLOW";
+    }
+    apz.finant.CashFlow.Navigation(lParams);
+};
+apz.finant.CashFlow.GetCashFlowCB = function(pResp) {
+    debugger;
+     var lServerParams = {
+        "ifaceName": "cashFlowtbl",
+        "buildReq": "Y",
+        "paintResp": "Y",
+        "callBack": apz.finant.CashFlow.cashFlowtblCB,
+    };
+  //  apz.server.callServer(lServerParams);
+           jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("finant")+"/cashFlowtbl.json"));
+            apz.data.scrdata.finant__cashFlowtbl_Res = {};
+                  apz.data.scrdata.finant__cashFlowtbl_Res = jsondata;
+                  apz.data.loadData("cashFlowtbl", "finant");
+         
+           apz.finant.CashFlow.cashFlowtblCB(jsondata);
+
+    
+}
+
+apz.finant.CashFlow.cashFlowtblCB = function(){
+    
+}

@@ -1,0 +1,25 @@
+{
+    "tbDbtpSiFundsTransfer": [
+        {
+            "txnId": "323123232323232",
+            "startDate": "21-FEB-2018",
+            "amount": "2321312",
+            "currency": "USD",
+            "toAccount": "212121212122121"
+        },
+        {
+            "txnId": "323123232323232",
+            "startDate": "21-FEB-2018",
+            "amount": "2321312",
+            "currency": "USD",
+            "toAccount": "212121212122121"
+        },
+        {
+            "txnId": "323123232323232",
+            "startDate": "21-FEB-2018",
+            "amount": "2321312",
+            "currency": "USD",
+            "toAccount": "212121212122121"
+        }
+    ]
+}

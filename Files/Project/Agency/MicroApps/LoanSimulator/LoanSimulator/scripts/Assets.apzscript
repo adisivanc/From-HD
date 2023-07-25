@@ -1,0 +1,126 @@
+apz.lnsmlr.assets = {};
+apz.lnsmlr.assets.sParams = {};
+apz.app.onLoad_Assets = function(params) {
+    debugger;
+    apz.lnsmlr.assets.fnInitialise(params);
+};
+apz.lnsmlr.assets.fnInitialise = function(params) {
+    debugger;
+    apz.lnsmlr.assets.sParams = params;
+    apz.data.scrdata.lnsmlr__CustomerAccSummary_Res = {};
+    apz.lnsmlr.assets.fnSetValueStage1();
+};
+apz.lnsmlr.assets.fnRadio = function(pthis) {
+    debugger;
+    var lStage = pthis.value;
+    if (lStage == "Savings") {
+        apz.lnsmlr.assets.fnSetValueStage1();
+    } else if (lStage == "Current") {
+        apz.lnsmlr.assets.fnSetValueStage2();
+    }
+    if (lStage == "Deposit") {
+        apz.lnsmlr.assets.fnSetValueStage3();
+    }
+};
+apz.lnsmlr.assets.fnSetValueStage1 = function() {
+    debugger;
+    if (!apz.isNull(apz.lnsmlr.assets.sParams.SavingsAccount)) {
+        var lAmount = 0;
+        apz.data.scrdata.lnsmlr__CustomerAccSummary_Res.Savings = apz.lnsmlr.assets.sParams.SavingsAccount;
+        apz.data.loadData("CustomerAccSummary", "lnsmlr");
+        for (i = 0; i < apz.lnsmlr.assets.sParams.SavingsAccount.length; i++) {
+            lAmount = lAmount + parseInt(apz.lnsmlr.assets.sParams.SavingsAccount[i].accountBal);
+        }
+        var lAmount = apz.lnsmlr.assets.fnFormatNumber(lAmount);
+        apz.setElmValue("lnsmlr__Assets__BalanceSavings", lAmount);
+        apz.lnsmlr.assets.fnRenderStages(1);
+    } else {
+        apz.setElmValue("lnsmlr__Assets__nomsg", "No Savings Account");
+        apz.lnsmlr.assets.fnRenderStages(4);
+    }
+};
+apz.lnsmlr.assets.fnSetValueStage2 = function() {
+    debugger;
+    if (!apz.isNull(apz.lnsmlr.assets.sParams.CurrentAccount)) {
+        var lAmount = 0;
+        apz.data.scrdata.lnsmlr__CustomerAccSummary_Res.Current = apz.lnsmlr.assets.sParams.CurrentAccount;
+        apz.data.loadData("CustomerAccSummary", "lnsmlr");
+        for (i = 0; i < apz.lnsmlr.assets.sParams.CurrentAccount.length; i++) {
+            lAmount = lAmount + parseInt(apz.lnsmlr.assets.sParams.CurrentAccount[i].accountBal);
+        }
+        lAmount = apz.lnsmlr.assets.fnFormatNumber(lAmount);
+        apz.setElmValue("lnsmlr__Assets__BalanceCurrent", lAmount);
+        apz.lnsmlr.assets.fnRenderStages(2);
+    } else {
+        apz.setElmValue("lnsmlr__Assets__nomsg", "No Current Account");
+        apz.lnsmlr.assets.fnRenderStages(4);
+    }
+};
+apz.lnsmlr.assets.fnSetValueStage3 = function() {
+    debugger;
+    if (!apz.isNull(apz.lnsmlr.assets.sParams.DepositAccount)) {
+         var lAmount = 0;
+        apz.data.scrdata.lnsmlr__CustomerAccSummary_Res.Deposit = apz.lnsmlr.assets.sParams.DepositAccount;
+        apz.data.loadData("CustomerAccSummary", "lnsmlr");
+        for (i = 0; i < apz.lnsmlr.assets.sParams.DepositAccount.length; i++) {
+            lAmount = lAmount + parseInt(apz.lnsmlr.assets.sParams.DepositAccount[i].accountBal);
+        }
+        var lAmount = apz.lnsmlr.assets.fnFormatNumber(lAmount);
+        apz.setElmValue("lnsmlr__Assets__BalanceDeposit", lAmount);
+        apz.lnsmlr.assets.fnRenderStages(3);
+    } else {
+        apz.setElmValue("lnsmlr__Assets__nomsg", "No Deposit Account");
+        apz.lnsmlr.assets.fnRenderStages(4);
+    }
+};
+apz.lnsmlr.assets.fnRenderStages = function(pstages) {
+    debugger;
+    for (i = 1; i < 5; i++) {
+        if (pstages == i) {
+            apz.show("lnsmlr__Assets__Stage" + i);
+        } else {
+            apz.hide("lnsmlr__Assets__Stage" + i);
+        }
+    }
+};
+apz.lnsmlr.assets.fnFormatNumber = function(pvalue) {
+    debugger;
+    var lObj = {
+        "value": pvalue,
+        "decimalSep": '.',
+        "displayAsLiteral": 'N',
+        "mask": "LAKH"
+    };
+    var lFormatedValue = apz.formatNumber(lObj);
+    return lFormatedValue;
+};
+
+apz.app.preRowClicked = function(containerId,rowNo) {
+    debugger;
+    apz.lnsmlr.assets.fnRenderStages();
+    apz.hide("lnsmlr__Assets__RadioRow");
+    var lData;
+    if(containerId == "lnsmlr__Assets__SavingList"){
+        lData = apz.lnsmlr.assets.sParams.SavingsAccount[rowNo];
+      lData.accountType = "Savings"
+    }
+    else if(containerId == "lnsmlr__Assets__CurrentList"){
+        lData = apz.lnsmlr.assets.sParams.CurrentAccount[rowNo];
+        lData.accountType = "Current"
+    }
+    else if(containerId == "lnsmlr__Assets__DepositList"){
+        lData = apz.lnsmlr.assets.sParams.DepositAccount[rowNo];
+        lData.accountType = "Deposit"
+    }
+    if (rowNo !== undefined) {
+        var lObj = {
+            "scr": "LandingAssets",
+            "div": "lnsmlr__Assets__test",
+            "userObj": {
+                "data": $.extend(true, {}, lData),
+                "action":''
+            }
+        };
+        apz.launchSubScreen(lObj);
+    }
+}

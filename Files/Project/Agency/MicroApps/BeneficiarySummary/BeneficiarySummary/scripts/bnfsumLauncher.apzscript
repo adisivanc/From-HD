@@ -1,0 +1,7 @@
+apz.bnfsum.checkParams = function(params) {
+    params.userObj = {
+        "data": {
+            "customerId": "000004712"
+        }
+    };
+};

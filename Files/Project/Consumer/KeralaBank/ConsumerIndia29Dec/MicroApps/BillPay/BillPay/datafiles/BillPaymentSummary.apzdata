@@ -1,0 +1,83 @@
+{
+    "bllpay__BillPaymentSummary_Res": {
+        "summary": [
+            {
+            "providerImg": "bescom.jpg",
+            "providerName": "BESCOM",
+            "status": "Autopay Scheduled",
+            "dueDate": "20/10/2020",
+            "subsriberId": "3231212",
+            "billType": "Electricity",
+            "providerCategory": "BESCOM",
+            "amount":"6,000.00",
+            "amount1":"₹ 6,000.00",
+"toCurrency" : "INR",
+"fromCurrency" : "INR"
+        },{
+            "providerImg": "Vodofone.png",
+            "providerName": "Vodafone",
+            "status": "Autopay Scheduled",
+            "dueDate": "22/10/2020",
+            "subsriberId": "9600565673",
+            "billType": "Mobile",
+            "providerCategory": "Vodafone",
+            "amount":"2,000.00",
+ "amount1":"₹ 2,000.00",
+"toCurrency" : "INR",
+"fromCurrency" : "INR"
+        },
+        {
+            "providerImg": "airtel.png",
+            "providerName": "Airtel",
+            "status": "Autopay Scheduled",
+            "dueDate": "23/10/2020",
+            "subsriberId": "9600565673",
+            "billType": "Mobile",
+            "providerCategory": "Airtel",
+            "amount":"8,000.00",
+ "amount1":"₹ 8,000.00",
+"toCurrency" : "INR",
+"fromCurrency" : "INR"
+        },
+        {
+            "providerImg": "tatasky.jpg",
+            "providerName": "Tata Sky",
+            "status": "pending",
+            "dueDate": "25/10/2020",
+            "subsriberId": "232323423",
+            "billType": "DishTV",
+            "providerCategory": "Tata Sky",
+            "amount":"5,000.00",
+ "amount1":"₹ 5,000.00",
+"toCurrency" : "INR",
+"fromCurrency" : "INR"
+        },
+        {
+            "providerImg": "Telenor.png",
+            "providerName": "Telenor",
+            "status": "Autopay Scheduled",
+            "dueDate": "27/10/2020",
+            "subsriberId": "8698345627",
+            "billType": "Mobile",
+            "providerCategory": "Telenor",
+            "amount":"878.00",
+ "amount1":"₹ 878.00",
+"toCurrency" : "INR",
+"fromCurrency" : "INR"
+        },
+        {
+            "providerImg": "axa.png",
+            "providerName": "AXA",
+            "status": "pending",
+            "dueDate": "30/10/2020",
+            "subsriberId": "100100023234",
+            "billType": "Insurance",
+            "providerCategory": "AXA",
+            "amount":"3,300.00",
+ "amount1":"₹ 878.00",
+"toCurrency" : "INR",
+"fromCurrency" : "INR"
+        }
+        ]
+    }
+}

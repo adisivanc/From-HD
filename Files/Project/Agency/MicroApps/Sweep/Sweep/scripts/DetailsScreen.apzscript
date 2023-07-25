@@ -1,0 +1,40 @@
+apz.sweep = {};
+apz.sweep.DetailsScreen = {};
+apz.app.onLoad_DetailsScreen = function() {
+    debugger;
+        //apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "SWEEP SETUP")
+
+    apz.setElmValue("sweep__DetailsScreen__interest", "5.00%")
+}
+
+apz.sweep.DetailsScreen.confirm = function() {
+    debugger;
+    var accNo = apz.getElmValue("sweep__DetailsScreen__accNo");
+    var sweep = apz.getElmValue("sweep__DetailsScreen__sweep");
+    var threshold = apz.getElmValue("sweep__DetailsScreen__threshold");
+    var minBal = apz.getElmValue("sweep__DetailsScreen__minBal");
+    var year = apz.getElmValue("sweep__DetailsScreen__year");
+    var interest = apz.getElmValue("sweep__DetailsScreen__interest");
+  
+    apz.sweep.details = {
+        "accountNumber": accNo,
+        "sweepTo": sweep,
+        "thresholdAmount": threshold,
+        "minimumBalance": minBal,
+        "tenor": year,
+        "interestRate" : interest
+    }
+   
+        var lObj = {
+            "scr": "ConfirmDetails",
+            "appId": "sweep",
+            "div": "sweep__Launcher__launcher",
+            "userObj": {
+                "details": apz.sweep.details
+            }
+        }
+        apz.launchSubScreen(lObj)
+    }
+
+
+    

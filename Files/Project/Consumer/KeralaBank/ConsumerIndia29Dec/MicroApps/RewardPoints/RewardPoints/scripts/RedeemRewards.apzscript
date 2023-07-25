@@ -1,0 +1,177 @@
+apz.rewdpt.redeemRewards = {};
+apz.rewdpt.redeemRewards.sParams = {};
+apz.app.onLoad_RedeemRewards = function(params) {
+    debugger;
+    
+     if (params.Navigation) {
+        apz.rewdpt.redeemRewards.fnSetNavigation(params);
+    }
+    apz.data.loadJsonData("AccountDetails","rewdpt");
+    var lCards = apz.data.scrdata.rewdpt__AccountDetails_Res.CardDtls//params.data.CardDtls
+    var lCardsLength = lCards.length;
+    var lArr = [];
+    for (var i = 0; i < lCardsLength; i++) {
+        var lObj = {
+            "val": lCards[i].cardNumber,
+            "desc": lCards[i].cardNumber,
+        };
+        lArr.push(lObj);
+    }
+    apz.populateDropdown(document.getElementById("rewdpt__RedeemRewards__Card_No"), lArr);
+    apz.rewdpt.redeemRewards.getAvailableItems();
+};
+
+apz.rewdpt.redeemRewards.fnSetNavigation = function(params){
+    apz.rewdpt.redeemRewards.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "REDEEM REWARDS";
+    }
+    apz.rewdpt.redeemRewards.Navigation(lParams);
+}
+apz.rewdpt.redeemRewards.getAvailableItems = function() {
+   
+    apz.data.loadJsonData("RewardDetails","rewdpt");
+    apz.rewdpt.redeemRewards.getAvailableItemsCB();
+};
+apz.rewdpt.redeemRewards.getAvailableItemsCB = function() {
+    debugger;
+    apz.data.scrdata.rewdpt__RedeemItems_Req = {};
+    apz.data.scrdata.rewdpt__RedeemItems_Req.tbDbtpRewardDetails = [];
+    apz.data.loadData('RedeemItems','rewdpt');
+};
+apz.rewdpt.redeemRewards.addToCart = function(pObj) {
+    debugger;
+    var lCartArr = [];
+    var lItemsPool = apz.data.scrdata.rewdpt__RewardDetails_Req.tbDbtpRewardDetails;
+    var lItemsPoolLength = lItemsPool.length;
+    for (var i = 0; i < lItemsPoolLength; i++) {
+        var lItemObj = {};
+        var lChecked = $("#rewdpt__RedeemRewards__Add_Check_" + i).prop('checked');
+        if (lChecked) {
+            var lQuantity = apz.getElmValue('rewdpt__RedeemRewards__Quantity_' + i);
+            lItemObj = lItemsPool[i];
+            lItemObj.quantity = lQuantity;
+            lItemObj.points = lQuantity * (lItemObj.itemPoints);
+            lCartArr.push(lItemObj);
+        }
+    };
+    if (lCartArr.length > 0) {
+        var lTotalPoints = "";
+        for (var i = 0; i < lCartArr.length; i++) {
+            if (lTotalPoints == "") {
+                lTotalPoints = lCartArr[i].points;
+            } else {
+                lTotalPoints = lTotalPoints + lCartArr[i].points;
+            }
+        }
+        var lAvailablePoints = apz.getElmValue("rewdpt__RedeemRewards__Pts_To_Redeem");
+        if (lAvailablePoints > lTotalPoints) {
+            $("#rewdpt__RedeemRewards__Selected_Items_List").removeClass('sno');
+            $("#rewdpt__RedeemRewards__Zero_Records_Form").addClass('sno');
+            apz.data.scrdata.rewdpt__RedeemItems_Req.tbDbtpRewardDetails = lCartArr;
+            apz.data.loadData('RedeemItems', 'rewdpt');
+            $("#rewdpt__RedeemRewards__Total_Points_ul").removeClass('sno');
+            apz.setElmValue('rewdpt__RedeemRewards__Total_Points', lTotalPoints);
+            apz.setElmValue('rewdpt__RedeemRewards__Points_Rem', lAvailablePoints - lTotalPoints);
+        } else {
+            var msg = {
+                "code": 'InSuff_points'
+            };
+            apz.dispMsg(msg);
+        }
+    } else {
+        $("#rewdpt__RedeemRewards__Selected_Items_List").addClass('sno');
+        $("#rewdpt__RedeemRewards__Zero_Records_Form").removeClass('sno');
+        apz.data.scrdata.rewdpt__RedeemItems_Req = {};
+        apz.data.scrdata.rewdpt__RedeemItems_Req.tbDbtpRewardDetails = [];
+    }
+};
+apz.rewdpt.redeemRewards.confirmRedeem = function() {
+    debugger;
+    if (apz.data.scrdata.rewdpt__RedeemItems_Req.tbDbtpRewardDetails.length > 0) {
+        $("#rewdpt__RedeemRewards__Card_Sel_Row").addClass("sno");
+        $("#rewdpt__RedeemRewards__Input_Row").addClass("sno");
+        $("#rewdpt__RedeemRewards__Confirm_Row").removeClass('sno');
+        var lAccount = apz.getElmValue("rewdpt__RedeemRewards__Card_No");
+        apz.setElmValue("rewdpt__RedeemRewards__Confirm_Text", "You have chosen the card number " + lAccount +
+            " to redeem your reward points for the following");
+        apz.setElmValue("rewdpt__RedeemRewards__Cnfm_Total_Pts", apz.getElmValue("rewdpt__RedeemRewards__Total_Points"));
+        apz.data.scrdata.rewdpt__RedeemedItemsDummy_Req = {};
+        apz.data.scrdata.rewdpt__RedeemedItemsDummy_Req.tbDbtpRewardDetails = apz.data.scrdata.rewdpt__RedeemItems_Req.tbDbtpRewardDetails;
+        apz.data.loadData('RedeemedItemsDummy', 'rewdpt');
+    } else {
+        var msg = {
+            "code": 'Sel_Items'
+        };
+        apz.dispMsg(msg);
+    }
+};
+apz.rewdpt.redeemRewards.Cancel = function() {
+    $("#rewdpt__RedeemRewards__Card_Sel_Row").removeClass("sno");
+    $("#rewdpt__RedeemRewards__Input_Row").removeClass("sno");
+    $("#rewdpt__RedeemRewards__Confirm_Row").addClass('sno');
+};
+apz.rewdpt.redeemRewards.ConfirmFinal = function() {
+    debugger;
+    $("#rewdpt__RedeemRewards__Done").attr('disabled',false);
+    $("#rewdpt__RedeemRewards__el_btn_9").attr('disabled',false);
+    
+    var checkVal = apz.getElmValue("rewdpt__RedeemRewards__el_cbx_1");
+    if(checkVal == "y"){
+        $("#rewdpt__RedeemRewards__Confirm_Row").addClass('sno');
+    $("#rewdpt__RedeemRewards__OtpMainRow").removeClass('sno');
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "rewdpt__RedeemRewards__OtpMainRow",
+        "userObj": {
+            "action": "Generate",
+            "data": {
+                "OTPRefNo": ""
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.rewdpt.redeemRewards.fnOtpProcessCallBack,
+                "destroyDiv": "rewdpt__RedeemRewards__OtpMainRow"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+    }
+    else {
+        var lMsg = {
+            "code": "VAL-AGREETERM"
+        }
+        apz.dispMsg(lMsg);
+    }
+};
+apz.rewdpt.redeemRewards.fnOtpProcessCallBack = function() {
+    $("#rewdpt__RedeemRewards__Confirm_Row").addClass('sno');
+    $("#rewdpt__RedeemRewards__Success_Row").removeClass('sno');
+    apz.data.scrdata.rewdpt__RedeemedItemsSuccess_Req = {};
+    apz.data.scrdata.rewdpt__RedeemedItemsSuccess_Req.tbDbtpRewardDetails = apz.data.scrdata.rewdpt__RedeemItems_Req.tbDbtpRewardDetails;
+    apz.data.loadData('RedeemedItemsSuccess', 'rewdpt');
+}
+
+apz.rewdpt.redeemRewards.Done = function(){
+    $("#rewdpt__RedeemRewards__Card_Sel_Row").removeClass("sno");
+    $("#rewdpt__RedeemRewards__Input_Row").removeClass("sno");
+    $("#rewdpt__RedeemRewards__Confirm_Row").addClass('sno');
+    $("#rewdpt__RedeemRewards__Success_Row").addClass('sno');
+    $("#rewdpt__RedeemRewards__ct_lst_1 input[type=CHECKBOX]").prop('checked',false);
+    $("#rewdpt__RedeemRewards__Selected_Items_List").addClass('sno');
+    $("#rewdpt__RedeemRewards__Zero_Records_Form").removeClass('sno');
+    var lAvailablePoints = apz.getElmValue("rewdpt__RedeemRewards__Pts_To_Redeem");
+    $("#rewdpt__RedeemRewards__Total_Points").addClass('sno');
+    apz.setElmValue('rewdpt__RedeemRewards__Points_Rem', lAvailablePoints);
+    
+    
+};
+apz.rewdpt.redeemRewards.Edit = function() {
+    $("#rewdpt__RedeemRewards__Card_Sel_Row").removeClass("sno");
+    $("#rewdpt__RedeemRewards__Input_Row").removeClass("sno");
+    $("#rewdpt__RedeemRewards__Confirm_Row").addClass('sno');
+};

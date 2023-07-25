@@ -1,0 +1,242 @@
+apz.loanvg.Applyloan = {};
+apz.app.onLoad_Applyloan = function(params) {
+    debugger;
+    apz.dateFormat = "MM/dd/yyyy";
+    apz.loanvg.Applyloan.sparams = params;
+    if (params.Navigation) {
+        apz.loanvg.Applyloan.fnSetNavigation(params);
+    }
+    $("#loanvg__Applyloan__progressStep_ext li").on("click", function() {
+        debugger;
+        apz.loanvg.Applyloan.fnProgressClick(this)
+    })
+    $("#loanvg__Applyloan__progressStep_ext > li:nth-child(1)")[0].className = "pgst-step pgs-100";
+};
+apz.loanvg.Applyloan.fnSetNavigation = function(params) {
+    debugger;
+    apz.loanvg.Applyloan.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "LOAN APPLICATION";
+    }
+    lParams.backPressed = apz.loanvg.Applyloan.fnBack;
+    apz.loanvg.Applyloan.Navigation(lParams);
+};
+apz.loanvg.Applyloan.fnonloantype = function() {
+    debugger;
+    var val = apz.getElmValue("loanvg__Applyloan__ddlloantype");
+    if (val != '0') {
+        var dropdownValues = [{
+            'val': '1',
+            'desc': '1'
+        }, {
+            'val': '2',
+            'desc': '2'
+        }, {
+            'val': '3',
+            'desc': '3'
+        }, {
+            'val': '4',
+            'desc': '4'
+        }, {
+            'val': '5',
+            'desc': '5'
+        }, {
+            'val': '6',
+            'desc': '6'
+        }, {
+            'val': '7',
+            'desc': '7'
+        }, {
+            'val': '8',
+            'desc': '8'
+        }, {
+            'val': '9',
+            'desc': '9'
+        }, {
+            'val': '10',
+            'desc': '10'
+        }];
+        var elementObj = document.getElementById('loanvg__Applyloan__inptermofloan');
+        apz.populateDropdown(elementObj, dropdownValues);
+        $('.mortagageLoanRow').addClass('sno');
+        $('#loanvg__Applyloan__progressStep_ext li:nth-child(3) span:nth-child(2)').html('Payment Details');
+        $('#loanvg__Applyloan__elgibility_row').removeClass('sno');
+        $('#loanvg__Applyloan__aprRow').removeClass('sno');
+        $('#loanvg__Applyloan__inpamount_grp_lbl').html('Amount');
+        if (val == 1) {
+            apz.setElmValue("loanvg__Applyloan__inpapr", "7%");
+        } else if (val == 2) {
+            $("#loanvg__Applyloan__rowvehicle").removeClass("sno");
+            $("#loanvg__Applyloan__rowmodel").removeClass("sno");
+            $("#loanvg__Applyloan__rowmodelimg").removeClass("sno");
+            apz.setElmValue("loanvg__Applyloan__inpapr", "7%");
+        } else if (val === '9') {
+            $('#loanvg__Applyloan__progressStep_ext li:nth-child(3) span:nth-child(2)').html('Confirmation Details');
+            $('#loanvg__Applyloan__elgibility_row').addClass('sno');
+            $('.mortagageLoanRow').removeClass('sno');
+            $('#loanvg__Applyloan__aprRow').addClass('sno');
+            $('#loanvg__Applyloan__inpamount_grp_lbl').html('Amount for Mortgage')
+            var dropdownValues = [{
+                'val': '30-yr Fixed',
+                'desc': '30-yr Fixed'
+            }, {
+                'val': '20-yr Fixed',
+                'desc': '20-yr Fixed'
+            }, {
+                'val': '15-yr Fixed',
+                'desc': '15-yr Fixed'
+            }, {
+                'val': '7/1 Adjustable',
+                'desc': '7/1 Adjustable'
+            }, {
+                'val': '5/1 Adjustable',
+                'desc': '5/1 Adjustable'
+            }];
+            var elementObj = document.getElementById('loanvg__Applyloan__inptermofloan');
+            apz.populateDropdown(elementObj, dropdownValues);
+        } else {
+            $("#loanvg__Applyloan__rowvehicle").addClass("sno");
+            $("#loanvg__Applyloan__rowmodel").addClass("sno");
+            $("#loanvg__Applyloan__rowmodelimg").addClass("sno");
+            apz.setElmValue("loanvg__Applyloan__inpapr", " ");
+        }
+    } else {
+        apz.dispMsg({
+            "message": "Please select the loan type!"
+        });
+    }
+}
+apz.loanvg.Applyloan.fnCheckEligibleAmount = function() {
+    debugger;
+    var lObj = {
+        "value": apz.getElmValue("loanvg__Applyloan__inpannualIncome"),
+        "decimalSep": '.',
+        "displayAsLiteral": 'N'
+    };
+    var lPrincipal = parseInt(apz.unFormatNumber(lObj));
+    var lTenure = apz.getElmValue("loanvg__Applyloan__inptermofloan");
+    if (apz.isNull(apz.getElmValue("loanvg__Applyloan__inpannualIncome")) || apz.isNull(lTenure)) {
+        var params = {
+            "code": "APZ-CNT-099"
+        };
+        apz.dispMsg(params);
+    } else {
+        var lElAmt = 0.0;
+        var lLoanAsPercntOfSal = lPrincipal * 0.80;
+        var lLoanAmount = apz.getElmValue("loanvg__Applyloan__inpamount");
+        var lObj1 = {
+            "value": lLoanAmount,
+            "decimalSep": '.',
+            "displayAsLiteral": 'N'
+        };
+        lLoanAmount = parseInt(apz.unFormatNumber(lObj1));
+        if (lLoanAmount < lLoanAsPercntOfSal) {
+            lElAmt = lLoanAmount;
+        } else {
+            lElAmt = lLoanAsPercntOfSal;
+        }
+        var lObj1 = {
+            "value": lElAmt,
+            "decimalSep": '.',
+            "displayAsLiteral": 'N',
+            "mask": "MILLION",
+            "decimalPoints": 2
+        };
+        apz.loanvg.Applyloan.eligibleAmt = apz.formatNumber(lObj1);
+        $("#loanvg__Applyloan__inpeligibleamt_ul").removeClass("sno");
+        apz.setElmValue("loanvg__Applyloan__inpeligibleamt", apz.loanvg.Applyloan.eligibleAmt);
+    }
+};
+apz.loanvg.Applyloan.gotoNext = function(type) {
+    debugger;
+    var loantype = apz.getElmValue("loanvg__Applyloan__ddlloantype");
+    if (loantype != '0') {
+        var vehicletype = apz.getElmValue("loanvg__Applyloan__ddlvehicletype");
+        var vehiclemake = apz.getElmValue("loanvg__Applyloan__ddlvehiclemake");
+        apz.loanvg.Applyloan.loantype = loantype;
+        apz.loanvg.Applyloan.vehicletype = vehicletype
+        apz.loanvg.Applyloan.vehiclemake = vehiclemake
+        apz.loanvg.Applyloan.model = apz.getElmValue("loanvg__Applyloan__inpmodel");
+        apz.loanvg.Applyloan.amount = apz.getElmValue("loanvg__Applyloan__inpamount");
+        apz.loanvg.Applyloan.termofloan = apz.getElmValue("loanvg__Applyloan__inptermofloan");
+        apz.loanvg.Applyloan.apr = apz.getElmValue("loanvg__Applyloan__inpapr");
+        var theme = $("link").eq(0).attr("href");
+        // if (theme == "appzillon/styles/themes/MTBLCustomer/css/MTBLCustomer.css") {
+            var div = apz.loanvg.Applyloan.sparams.control.exitApp.div;
+        // } else {
+        //     var div = "scr__appdtl__ProductLauncher__main";
+        // }
+        var lValid = apz.val.validateContainer("loanvg__Applyloan__frmloan");
+        var confirmationDetails = {
+            'loanType': apz.loanvg.Applyloan.loantype,
+            'purchasePrice': apz.getElmValue("loanvg__Applyloan__purchasePrice"),
+            'downPayment': apz.getElmValue("loanvg__Applyloan__downPayment"),
+            'propertyType': apz.getElmValue("loanvg__Applyloan__proprtyType"),
+            'usageProperty': apz.getElmValue("loanvg__Applyloan__usageProperty"),
+            'attachProperty': apz.getElmValue("loanvg__Applyloan__attachProperty"),
+            'purchaseTimeFrame': apz.getElmValue("loanvg__Applyloan__purchaseTimeFrame"),
+            'propertyAddress': apz.getElmValue("loanvg__Applyloan__propertyCity") + "<br>" + apz.getElmValue("loanvg__Applyloan__propertState") +
+                "<br>" + apz.getElmValue("loanvg__Applyloan__propertyZip")
+        }
+        if (!lValid) {
+            var params = {
+                "code": "APZ-CNT-099"
+            };
+            apz.dispMsg(params);
+        } else {
+            if (type == "employment") {
+                var lLaunchParams = {
+                    "appId": "loanvg",
+                    "scr": "Appluloanem",
+                    "div": div,
+                    "userObj": {
+                        "confirmationDetails": confirmationDetails
+                    }
+                };
+                apz.launchSubScreen(lLaunchParams);
+            } else if (type == "payment") {
+                var lLaunchParams = {
+                    "appId": "loanvg",
+                    "scr": "ApplyloanPayment",
+                    "div": div,
+                    "userObj": {
+                        "confirmationDetails": confirmationDetails
+                    }
+                };
+                apz.launchSubScreen(lLaunchParams);
+            } else if (type == "confirmation") {
+                var lLaunchParams = {
+                    "appId": "loanvg",
+                    "scr": "ConfirmationDetails",
+                    "div": div,
+                    "userObj": {
+                        "confirmationDetails": confirmationDetails
+                    }
+                };
+                apz.launchSubScreen(lLaunchParams);
+            }
+        }
+    } else {
+        apz.dispMsg({
+            "message": "Please select the loan type!"
+        });
+    }
+}
+apz.loanvg.Applyloan.fnProgressClick = function(pThis) {
+    debugger;
+    if (pThis.textContent == "Loan Details") {
+        //$("#ACOP01__CustomerInfo__AddrBack").trigger("click");
+    }
+    if (pThis.textContent == "Personal Info") {
+        apz.loanvg.Applyloan.gotoNext("employment");
+    }
+    if (pThis.textContent == "Payment Details") {
+        apz.loanvg.Applyloan.gotoNext("payment");
+    }
+    if (pThis.textContent == "Confirmation Details") {
+        apz.loanvg.Applyloan.gotoNext("confirmation");
+    }
+}

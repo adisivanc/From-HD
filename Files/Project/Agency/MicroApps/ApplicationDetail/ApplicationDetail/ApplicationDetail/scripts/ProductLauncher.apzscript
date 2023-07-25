@@ -1,0 +1,73 @@
+apz.appdtl.ProductLauncher = {};
+apz.app.onLoad_ProductLauncher = function(params) {
+    apz.appdtl.ProductLauncher.fnCallProductApp(params);
+}
+apz.appdtl.ProductLauncher.fnCallProductApp = function(params) {
+    debugger;
+    var cachedvalue = apz.appdtl.AppLauncher.sCache
+    var lparams = {}
+    if (apz.menuap.Menu.userId == "user2") {
+        lparams.appId = "prddtl";
+        lparams.scr = "SuccessScr";
+        lparams.div = "appdtl__ProductLauncher__productlauncher";
+        lparams.userObj = {
+            "message": "The application has been Verified successfull.",
+            "refNo": "Your reference number is " + cachedvalue.refNo
+        }
+    } else {
+        switch (cachedvalue.product) {
+            case "Accounts":
+                lparams.appId = "prddtl";
+                lparams.scr = "ProductAccountLauncher";
+                lparams.div = "appdtl__ProductLauncher__productlauncher";
+                lparams.userObj = {
+                    "refNo": cachedvalue.refNo,
+                    "product": cachedvalue.product,
+                    "appId": cachedvalue.appId,
+                    "subproduct": cachedvalue.subproduct,
+                    "screen": cachedvalue.screen
+                };
+                break;
+            case "Loans":
+                lparams.appId = "agloan";
+                lparams.scr = "Applyloan";
+                lparams.div = "appdtl__ProductLauncher__productlauncher";
+                lparams.userObj = {
+                    "refNo": cachedvalue.refNo,
+                    "product": cachedvalue.product,
+                    "appId": cachedvalue.appId,
+                    "subproduct": cachedvalue.subproduct,
+                    "amount": cachedvalue.amount,
+                    "tenor": cachedvalue.tenor,
+                    "screen": cachedvalue.screen
+                };
+                break;
+            case "Deposits":
+                lparams.appId = "checkm";
+                lparams.scr = "Mail";
+                lparams.div = "appdtl__ProductLauncher__productlauncher";
+                lparams.userObj = {
+                    "refNo": cachedvalue.refNo,
+                    "product": cachedvalue.product,
+                    "appId": cachedvalue.appId,
+                    "subproduct": cachedvalue.subproduct
+                };
+                break;
+            case "Cards":
+                lparams.appId = "agloan";
+                lparams.scr = "Applyloan";
+                lparams.div = "appdtl__ProductLauncher__productlauncher";
+                lparams.userObj = {
+                    "refNo": cachedvalue.refNo,
+                    "product": cachedvalue.product,
+                    "appId": cachedvalue.appId,
+                    "subproduct": cachedvalue.subproduct,
+                    "amount": cachedvalue.amount,
+                    "tenor": cachedvalue.tenor,
+                    "screen": cachedvalue.screen
+                };
+                break;
+        }
+    }
+    apz.launchApp(lparams);
+};

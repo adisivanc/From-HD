@@ -1,0 +1,45 @@
+{
+    "bilpay__ServiceName_Req": {
+        "tbRbBillpServicename": [{
+            "responseTag": "TransactionId,TransactionType,ServiceType,AmountDue,ReplyDateStamp,TransactionDateStamp",
+            "serviceName": "AccessPoint",
+            "serviceId": "1",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,AmountDue,ReplyDateStamp,TransactionDateStamp",
+            "serviceName": "AirUS",
+            "serviceId": "2",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,AmountDue,ReplyDateStamp,TransactionDateStamp",
+            "serviceName": "AT&T",
+            "serviceId": "3",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,AmountDue,ReplyDateStamp,TransactionDateStamp",
+            "serviceName": "CalTelephone",
+            "serviceId": "4",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,AmountDue,ReplyDateStamp,TransactionDateStamp",
+            "serviceName": "BroadStripe",
+            "serviceId": "5",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,ReplyDateStamp,TransactionDateStamp,MinimumAmount,MaximumAmount",
+            "serviceName": "Comcast",
+            "serviceId": "6",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,ReplyDateStamp,TransactionDateStamp,RenewalAmount",
+            "serviceName": "DirectV",
+            "serviceId": "7",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,TransactionDateStamp,OutstandingAmount,BillDate",
+            "serviceName": "TimeWarnerCable",
+            "serviceId": "8",
+            "requestTag": "ConsumerNumber"
+        }]
+    }
+}

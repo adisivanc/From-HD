@@ -1,0 +1,260 @@
+//apz.app.icaosm = {};
+apz.app.icaosm.BusinessDetailsAOS = {}
+apz.app.icaosm.sCache = {};
+apz.app.icaosm.BusinessDetailsAOS.sAction = "";
+apz.app.icaosm.BusinessDetailsAOS.sCompanyID = "";
+apz.app.onLoad_BusinessDetailsAOS = function(params) {
+    debugger;
+    apz.app.icaosm.BusinessDetailsAOS.fnClearData();
+    apz.app.icaosm.BusinessDetailsAOS.sCompanyID = params.companyID;
+    apz.app.icaosm.sCache = params;
+    if (params.action == "submitted") {
+        $("#icaosm__BusinessDetailsAOS__el_btn_3")[0].click();
+    }
+    apz.app.manageCrub(1);
+    var UserID = apz.retrieve("CurrentUser");
+    $("#icaosm__BusinessDetailsAOS__ct_frm_5").addClass("shownone");
+    if (UserID == "User2") {
+        $("#icaosm__BusinessDetailsAOS__ct_frm_5").removeClass("shownone");
+    }
+    if (apz.data.scrdata.icaosm__CompanyInfo_Res != undefined) {
+        apz.data.loadData("CompanyInfo", "icaosm");
+    } else {}
+    if (params.action == "New") {
+        /*
+        if( apz.app.icaosm.Common.sAddNewControl==""){
+            apz.data.scrdata.icaosm__CompanyInfo_Res=[];
+        apz.data.scrdata.icaosm__CompanyInfo_Res.details={};
+         apz.data.loadData("CompanyInfo", "icaosm");
+        }
+        */
+    }
+    apz.app.icaosm.BusinessDetailsAOS.fnQueryBusinessDetails();
+};
+apz.app.icaosm.BusinessDetailsAOS.fnClearData = function() {
+    apz.data.clearMRMV("icaosm__BusinessDetailsAOS__ct_frm_6");
+    apz.data.clearMRMV("icaosm__BusinessDetailsAOS__ct_frm_1");
+    apz.data.clearMRMV("icaosm__BusinessDetailsAOS__ct_frm_2");
+    apz.data.clearMRMV("icaosm__BusinessDetailsAOS__ct_frm_3");
+    apz.data.clearMRMV("icaosm__BusinessDetailsAOS__ct_frm_4");
+};
+apz.app.icaosm.BusinessDetailsAOS.fnQueryBusinessDetails = function() {
+    apz.app.icaosm.BusinessDetailsAOS.sAction = "query";
+    var req = {};
+    req.tbConstitutionDetails = {
+        "companyid": apz.app.icaosm.BusinessDetailsAOS.sCompanyID
+    };
+    var lParams = {
+        "ifaceName": "BusinessDetailsAOS_Query",
+        "paintResp": "Y",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.BusinessDetailsAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.BusinessDetailsAOS.fnBeforCallServer = function(params) {
+    var lReq = {
+        "ifaceName": params.ifaceName,
+        "paintResp": params.paintResp,
+        "buildReq": params.buildReq,
+        "req": params.lReq,
+        "appId": params.appId,
+        "async": false,
+        "callBack": apz.app.icaosm.BusinessDetailsAOS.callServerCB,
+        "callBackObj": ""
+    };
+    apz.server.callServer(lReq);
+};
+apz.app.icaosm.BusinessDetailsAOS.callServerCB = function(params) {
+    debugger;
+    if (apz.app.icaosm.BusinessDetailsAOS.sAction == "query") {
+        apz.app.icaosm.BusinessDetailsAOS.fnQueryBusinessDetailsCB(params);
+    } else if (apz.app.icaosm.BusinessDetailsAOS.sAction == "modifySave") {
+        apz.app.icaosm.BusinessDetailsAOS.fnModifyBusinessDetailsCB(params);
+    } else if (apz.app.icaosm.BusinessDetailsAOS.sAction == "modifyNext") {
+        apz.app.icaosm.BusinessDetailsAOS.fnModifyNextBusinessDetailsCB(params);
+    }
+};
+apz.app.icaosm.BusinessDetailsAOS.fnQueryBusinessDetailsCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {}
+};
+apz.app.icaosm.BusinessDetailsAOS.fnFetch = function() {
+    debugger;
+    var lCompanyID = apz.getElmValue("icaosm__BusinessDetailsAOS__i__tbConstitutionDetails__companyid");
+    var lpath = apz.getDataFilesPath();
+    if (apz.getElmValue("icaosm__BusinessDetailsAOS__i__tbConstitutionDetails__companyid") == "000024554AA2212") {
+        var lData = apz.getFile(lpath + "/companyInfo.json")
+    } else {
+        var lData = apz.getFile(lpath + "/companyInfo1.json");
+    }
+    lData = JSON.parse(lData);
+    apz.data.buildData("BusinessDetailsAOS", "icaosm");
+    apz.data.scrdata.icaosm__BusinessDetailsAOS_Req.tbConstitutionDetails = lData.tbConstitutionDetails;
+    apz.data.loadData("BusinessDetailsAOS", "icaosm");
+    apz.setElmValue("icaosm__BusinessDetailsAOS__i__tbConstitutionDetails__companyid", lCompanyID);
+}
+apz.app.icaosm.BusinessDetailsAOS.fnSave = function() {
+    debugger;
+    apz.app.icaosm.BusinessDetailsAOS.sAction = "modifySave";
+    apz.app.icaosm.BusinessDetailsAOS.fnUpdateBusinessDetails();
+    /*
+    if (apz.app.icaosm.sCache.action == "submitted") {
+        apz.app.icaosm.Common.sAddNewControl = "";
+        $("#icaosm__BusinessDetailsAOS__ct_frm_1 input").val("")
+        apz.launchSubScreen({
+            "scr": "Home",
+            "div": "icaosm__LandingHeader__scrlaunchingdiv",
+            "userObj": {
+                "percentage": "",
+                "val": "Business Details",
+                "action": apz.app.icaosm.sCache.action,
+                "accNum": apz.app.icaosm.sCache.accNum,
+                "appNo": apz.app.icaosm.sCache.appNo
+            }
+        });
+    } else {
+        apz.app.icaosm.Common.sAddNewControl = "Saved"
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__BusinessDetailsAOS__main input[type='text'],#scr__icaosm__BusinessDetailsAOS__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $("#scr__icaosm__BusinessDetailsAOS__main input[type='radio']").each(function() {
+            lRadio++;
+        });
+        lFilled = (lRadio / 2) + lFilled;
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[0].progress = percentage;
+        apz.data.buildData("CompanyInfo", "icaosm");
+    }
+    apz.launchSubScreen({
+        "scr": "Home",
+        "div": "icaosm__LandingHeader__scrlaunchingdiv",
+        "userObj": {
+            "action": apz.app.icaosm.sCache.action,
+            "percentage": percentage,
+            "val": "Business Details",
+            "accNum": apz.app.icaosm.sCache.accNum,
+            "appNo": apz.app.icaosm.sCache.appNo
+        }
+    });
+    */
+};
+apz.app.icaosm.BusinessDetailsAOS.fnUpdateBusinessDetails = function() {
+    //  apz.app.icaosm.BusinessDetailsAOS.sAction = "modify";
+    apz.data.buildData("BusinessDetailsAOS", "icaosm");
+    var req = {};
+    req.tbConstitutionDetails = apz.data.scrdata.icaosm__BusinessDetailsAOS_Req.tbConstitutionDetails;
+    var lParams = {
+        "ifaceName": "BusinessDetailsAOS_Modify",
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.BusinessDetailsAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.BusinessDetailsAOS.fnModifyBusinessDetailsCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        if (apz.app.icaosm.sCache.action == "submitted") {
+            apz.app.icaosm.Common.sAddNewControl = "";
+            $("#icaosm__BusinessDetailsAOS__ct_frm_1 input").val("")
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": "",
+                    "val": "Business Details",
+                    "action": apz.app.icaosm.sCache.action,
+                    "accNum": apz.app.icaosm.sCache.accNum,
+                    "appNo": apz.app.icaosm.sCache.appNo,
+                    "companyID": apz.app.icaosm.BusinessDetailsAOS.sCompanyID
+                }
+            });
+        } else {
+            apz.app.icaosm.Common.sAddNewControl = "Saved"
+            var lTotCount = 0;
+            var lFilled = 0,
+                lRadio = 0;
+            $("#scr__icaosm__BusinessDetailsAOS__main input[type='text'],#scr__icaosm__BusinessDetailsAOS__main select").each(function() {
+                lTotCount++;
+                if ($(this).val() != "" && $(this).val() != "Select") {
+                    lFilled++;
+                }
+            });
+            $("#scr__icaosm__BusinessDetailsAOS__main input[type='radio']").each(function() {
+                lRadio++;
+            });
+            lFilled = (lRadio / 2) + lFilled;
+            lTotCount = (lRadio / 2) + lTotCount;
+            percentage = (lFilled / lTotCount);
+            apz.data.scrdata.icaosm__Home_Req.Home[0].progress = percentage;
+            apz.data.buildData("CompanyInfo", "icaosm");
+        }
+        apz.launchSubScreen({
+            "scr": "Home",
+            "div": "Regist__RegisterPage__launchrow1",
+            "userObj": {
+                "action": apz.app.icaosm.sCache.action,
+                "percentage": percentage,
+                "val": "Business Details",
+                "accNum": apz.app.icaosm.sCache.accNum,
+                "appNo": apz.app.icaosm.sCache.appNo,
+                "companyID": apz.app.icaosm.BusinessDetailsAOS.sCompanyID
+            }
+        });
+    } else {
+        lmsg = {
+            "message": "Business details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.BusinessDetailsAOS.fnModifyNextBusinessDetailsCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__BusinessDetailsAOS__main input[type='text'],#scr__icaosm__BusinessDetailsAOS__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $("#scr__icaosm__BusinessDetailsAOS__main input[type='radio']").each(function() {
+            lRadio++;
+        });
+        lFilled = (lRadio / 2) + lFilled;
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[0].progress = percentage;
+        apz.data.buildData("CompanyInfo", "icaosm");
+        apz.launchSubScreen({
+            "scr": "AccountsServicesAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            //"animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum,
+                "companyID": apz.icaosm.Home.sCompanyID
+            }
+        });
+    } else {
+        lmsg = {
+            "message": "Business details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};

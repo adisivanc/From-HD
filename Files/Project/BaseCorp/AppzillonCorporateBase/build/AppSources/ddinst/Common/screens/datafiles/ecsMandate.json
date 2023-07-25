@@ -1,0 +1,35 @@
+{
+     "EcsMandateRes" : {
+    "data": [{
+        "customerId": "001",
+        "custNameInOB": "James",
+        "bankName": "JPMorgan Chase",
+        "bankCode": "612",
+        "accountNoOfOB": "XXXXXXXXX2115",
+        "mandateAmount": "200",
+        "mandateStartDate": "May-15-2019",
+        "mandateEndDate": "Aug-16-2020",
+        "frequency": "2",
+        "noOfInst": "3",
+        "mandateChgAmt": "",
+        "referenceNumber":"1001",
+        "authenticationType":"OTP",
+        "accountNoOfCR":"XXXXXXXXX4879"
+    }, {
+        "customerId": "002",
+        "custNameInOB": "Sam",
+        "bankName": "JPMorgan Chase",
+        "bankCode": "512",
+        "accountNoOfOB": "XXXXXXXXX7018",
+        "mandateAmount": "300",
+        "mandateStartDate": "Jan-20-2019",
+        "mandateEndDate": "Aug-18-2020",
+        "frequency": "2",
+        "noOfInst": "3",
+        "mandateChgAmt": "",
+        "referenceNumber":"1002",
+        "authenticationType":"OTP",
+        "accountNoOfCR":"XXXXXXXX6879"
+    }]
+}
+}

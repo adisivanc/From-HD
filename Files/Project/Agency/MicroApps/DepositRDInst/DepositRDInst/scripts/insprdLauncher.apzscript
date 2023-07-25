@@ -1,0 +1,26 @@
+apz.insprd.checkParams = function(params) {
+    debugger;
+    params.userObj = {
+        "data": {
+            "customerID": "000004712",
+            "accountNo": "RD1234XDA3",
+            "installmentDueDate" : "23-04-2018",
+            "installmentAmount" : "2000",
+            "branchName" : "Koramangala",
+            "branchCode" : "619",
+            "SavingsAccount": [{
+                "accountNo": "753410000076",
+                "accountBal": "987435",
+                "accountBrnName": "Koramangala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "IOB00000619"
+            }, {
+                "accountNo": "732510006721",
+                "accountBal": "332222",
+                "accountBrnName": "Madivala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "IOB00000619"
+            }]
+        }
+    };
+};

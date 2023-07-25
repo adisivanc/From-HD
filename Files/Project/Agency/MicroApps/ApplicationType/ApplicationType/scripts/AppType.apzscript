@@ -1,0 +1,14 @@
+apz.apptyp.AppType ={};
+apz.app.onLoad_AppType = function(params){
+    apz.apptyp.AppType.sParams = params;
+}
+apz.apptyp.AppType.fnStartApplication = function(flowType){
+    debugger;
+    apz.indianflowType = flowType;
+    var params = {};
+    params.appId = "appdtl";
+    params.scr = "AppLauncher";
+    params.div = "menuap__Menu__MainLaunchArea";
+    params.userObj = apz.apptyp.AppType.sParams;
+    apz.launchApp(params);
+}

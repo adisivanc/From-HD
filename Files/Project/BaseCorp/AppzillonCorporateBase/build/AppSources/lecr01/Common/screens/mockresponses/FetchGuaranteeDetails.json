@@ -1,0 +1,100 @@
+{
+    "guaranteeSummary": [
+        {
+            "amount": 87348,
+            "chargeCollectionAccount": "39485739498",
+            "makerTs": "2018-02-06",
+            "purpose": "d",
+            "accountType": "Credit",
+            "userId": "user0001",
+            "corporateId": "000FTAC4321",
+            "expiryDate": "2019-02-06",
+            "guaranteeFormat": "upload",
+            "referenceNumber": "1517920268979",
+            "beneficaryContactPerson": "Jane",
+            "claimPeriod": "12",
+            "versionNo": "1",
+            "currency": "USD",
+            "beneficaryAddress": "#13, 5th Block, NJ",
+            "beneficaryContactNumber": "9988776655",
+            "beneficaryCompanyName": "AK Associates",
+            "checkerTs": "2018-02-06",
+            "status": "Active"
+        },
+        {
+            "amount": 39859,
+            "chargeCollectionAccount": "309520980983423",
+            "makerTs": "2018-02-06",
+            "purpose": "erf",
+            "accountType": "Credit",
+            "userId": "user0001",
+            "corporateId": "000FTAC4321",
+            "expiryDate": "2020-01-06",
+            "guaranteeFormat": "default",
+            "referenceNumber": "1517920993549",
+            "beneficaryContactPerson": "Jane",
+            "claimPeriod": "24",
+            "versionNo": "1",
+            "currency": "USD",
+            "beneficaryAddress": "#32, 5th Avenue, NY",
+            "beneficaryContactNumber": "9988776655",
+            "beneficaryCompanyName": "SV Inc",
+            "checkerTs": "2018-02-06",
+            "status": "Active"
+        },
+        {
+            "amount": 23323,
+            "chargeCollectionAccount": "23",
+            "purpose": "e",
+            "accountType": "Credit",
+            "userId": "user0001",
+            "corporateId": "000FTAC4321",
+            "expiryDate": "2018-07-07",
+            "guaranteeFormat": "default",
+            "referenceNumber": "1517982018505",
+            "beneficaryContactPerson": "Jane",
+            "claimPeriod": "6",
+            "currency": "USD",
+            "beneficaryAddress": "#2, 15th Avenue, NJ",
+            "beneficaryContactNumber": "120097461",
+            "beneficaryCompanyName": "PR Inc",
+            "status": "Active"
+        }
+    ],
+    "guaranteeDetails": {
+        "amount": 33445567,
+        "chargeCollectionAccount": "98435873592342",
+        "purpose": "for importing car parts",
+        "accountType": "Credit",
+        "userId": "user0003",
+        "corporateId": "000FTAC4321",
+        "expiryDate": "2020-01-01",
+        "guaranteeFormat": "upload",
+        "collateralAccountBalance": 925176,
+        "referenceNumber": "1519898472875",
+        "beneficaryContactPerson": "Jonas Kim",
+        "collateralAccountNumber": "150100171542",
+        "claimPeriod": "24",
+        "currency": "USD",
+        "beneficaryAddress": "#23, 10th Avenue, NY",
+        "beneficaryContactNumber": "9988776655",
+        "beneficaryCompanyName": "cars24",
+        "remarks": "cars 24 importing guarantee",
+        "status": "Active"
+    },
+    "guaranteeDocs": [
+        {
+            "referenceNumber": "1519898472875",
+            "dcoumentName": "9253062682077714206.pdf",
+            "userId": "user0003",
+            "corporateId": "000FTAC4321"
+        },
+        {
+            "referenceNumber": "1519898472875",
+            "dcoumentName": "Finance Doc",
+            "userId": "user0003",
+            "corporateId": "000FTAC4321"
+        }
+    ],
+    "Status": true
+}

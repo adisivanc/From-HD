@@ -1,0 +1,295 @@
+apz.relovr.relationshipoverview = {};
+apz.relovr.relationshipoverview.sParams = {};
+apz.app.onLoad_RelationshipOverview = function(params) {
+    debugger;
+    apz.relovr.relationshipoverview.sParams = params;
+    $("#relovr__RelationshipOverview__savings_list1").addClass("active");
+        $("#relovr__RelationshipOverview__financing_list1").addClass("active");
+
+    
+    
+    apz.data.loadJsonData("AccountsDetails", "relovr");
+    apz.relovr.relationshipoverview.sParams.data.accountDetail = apz.data.scrdata.relovr__AccountsDetails_Res.accountDetail;
+    apz.relovr.relationshipoverview.sParams.data.accounts = apz.data.scrdata.relovr__AccountsDetails_Res.accounts;
+    apz.relovr.relationshipoverview.sParams.data.SavingsAccount = apz.data.scrdata.relovr__AccountsDetails_Res.SavingsAccount;
+    apz.relovr.relationshipoverview.fnInitialise(params);
+};
+apz.app.onShown_RelationshipOverview = function(params) {
+    $("#relovr__RelationshipOverview__accordionSavings_div").removeClass("sno");
+    $("#relovr__RelationshipOverview__savings_list").addClass("current");
+}
+apz.relovr.relationshipoverview.fnInitialise = function(params) {
+    apz.setElmValue("relovr__RelationshipOverview__i__relationshipOverview__customerId", apz.relovr.relationshipoverview.sParams.data.customerId);
+    if (params.Navigation) {
+        apz.relovr.relationshipoverview.fnSetNavigation(params);
+    }
+    apz.relovr.relationshipoverview.fnGetOverview();
+};
+apz.relovr.relationshipoverview.fnGetOverview = function() {
+    apz.relovr.relationshipoverview.sParams.sAction = "getoverview";
+    apz.data.buildData("RelationshipOverview", "relovr");
+    var lServerParams = {
+        "ifaceName": "RelationshipOverview",
+        "buildReq": "N",
+        "req": {
+            "relationshipOverview": apz.data.scrdata.relovr__RelationshipOverview_Req.relationshipOverview,
+            "action": ""
+        }
+    };
+    //apz.relovr.relationshipoverview.fnBeforeCallServer(lServerParams);
+    apz.data.loadJsonData("RelationshipOverview", "relovr");
+    if (apz.relovr.relationshipoverview.sParams.sAction == 'getoverview') {
+        var lResponse = apz.data.scrdata.relovr__RelationshipOverview_Res.relationshipOverview;
+        apz.relovr.relationshipoverview.fnRenderData(lResponse);
+    }
+};
+apz.relovr.relationshipoverview.fnSetNavigation = function(params) {
+    debugger;
+    apz.relovr.relationshipoverview.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "RELATIONSHIP OVERVIEW";
+    }
+    lParams.backPressed = apz.relovr.relationshipoverview.fnBack;
+    apz.relovr.relationshipoverview.Navigation(lParams);
+};
+apz.relovr.relationshipoverview.fnBack = function() {
+    debugger;
+    apz.relovr.relationshipoverview.sParams.callBack();
+};
+apz.relovr.relationshipoverview.fnRenderData = function(pResponse) {
+    var lNoParams = {
+        "decimalSep": ".",
+        "mask": "MILLION"
+    };
+    if (!pResponse.savingAccDtls.length) {
+        $("#relovr__RelationshipOverview__accordionSavings_div").hide();
+    } else {
+        var lTotalSavingBal = 0;
+        for (var i = 0; i < pResponse.savingAccDtls.length; i++) {
+            lTotalSavingBal = lTotalSavingBal + parseInt(pResponse.savingAccDtls[i].availableBal.replace(/,/g, ''));
+        }
+        lNoParams.value = lTotalSavingBal;
+        apz.setElmValue("relovr__RelationshipOverview__saving_avalBal", apz.formatNumber(lNoParams));
+        apz.relovr.relationshipoverview.sParams.data.customerId = apz.relovr.relationshipoverview.sParams.data.customerID;
+        $("#relovr__RelationshipOverview__savingsList li").click(function() {
+            //   alert("Savings");
+            var lLaunchParams = {
+                "appId": "accsum",
+                "scr": "AccountDetails",
+                "div": "landin__Landing__launcher",
+                "userObj": {
+                    "action": "",
+                    "data": apz.relovr.relationshipoverview.sParams.data,
+                    "control": {
+                        "appId": "accsum",
+                        "callBack": apz.relovr.relationshipoverview.fnLaunchStmtCB,
+                        "destroyDiv": "landin__Landing__launcher"
+                    },
+                    "Navigation": {
+                        "setNavigation": apz.relovr.relationshipoverview.Navigation
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        });
+    }
+    if (!pResponse.currentAccDtls.length) {
+        $("#relovr__RelationshipOverview__accordionCurrent_div").hide();
+    } else {
+        var lTotalCurrentBal = 0;
+        for (var i = 0; i < pResponse.currentAccDtls.length; i++) {
+            lTotalCurrentBal = lTotalCurrentBal + parseInt(pResponse.currentAccDtls[i].availableBal.replace(/,/g, ''));
+        }
+        lNoParams.value = lTotalCurrentBal;
+        apz.setElmValue("relovr__RelationshipOverview__current_avalBal", apz.formatNumber(lNoParams));
+        $("#relovr__RelationshipOverview__currentList li").click(function() {
+            //   alert("Current");
+            var lLaunchParams = {
+                "appId": "accsum",
+                "scr": "AccountDetails",
+                "div": "landin__Landing__launcher",
+                "userObj": {
+                    "action": "",
+                    "data": apz.relovr.relationshipoverview.sParams.data,
+                    "control": {
+                        "appId": "accstm",
+                        "callBack": apz.relovr.relationshipoverview.fnLaunchStmtCB,
+                        "destroyDiv": "landin__Landing__launcher"
+                    },
+                    "Navigation": {
+                        "setNavigation": apz.relovr.relationshipoverview.Navigation
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        });
+    }
+    if (!pResponse.loanAccDtls.length) {
+        $("#relovr__RelationshipOverview__accordionLoan_div").hide();
+    } else {
+        var lTotalLoanBal = 0;
+        for (var i = 0; i < pResponse.loanAccDtls.length; i++) {
+            lTotalLoanBal = lTotalLoanBal + parseInt(pResponse.loanAccDtls[i].outstandingBal.replace(/,/g, ''));
+        }
+        lNoParams.value = lTotalLoanBal;
+        apz.setElmValue("relovr__RelationshipOverview__loan_outBal", apz.formatNumber(lNoParams));
+        $("#relovr__RelationshipOverview__loanList li").click(function() {
+            //   alert("Loan");
+            var lLaunchParams = {
+                "appId": "loansm",
+                "scr": "LoanSummary",
+                "div": "landin__Landing__launcher",
+                "userObj": {
+                    "action": "",
+                    "data": apz.relovr.relationshipoverview.sParams.data,
+                    "control": {
+                        "appId": "accstm",
+                        "callBack": apz.relovr.relationshipoverview.fnLaunchStmtCB,
+                        "destroyDiv": "landin__Landing__launcher"
+                    },
+                    "Navigation": {
+                        "setNavigation": apz.relovr.relationshipoverview.Navigation
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        });
+    }
+    if (!pResponse.fixedDepAccDtls.length) {
+        $("#relovr__RelationshipOverview__accordionFixedDep_div").hide();
+    } else {
+        var lTotalFDBal = 0;
+        for (var i = 0; i < pResponse.fixedDepAccDtls.length; i++) {
+            lTotalFDBal = lTotalFDBal + parseInt(pResponse.fixedDepAccDtls[i].depositBal.replace(/,/g, ''));
+        }
+        lNoParams.value = lTotalFDBal;
+        apz.setElmValue("relovr__RelationshipOverview__fd_avalBal", apz.formatNumber(lNoParams));
+        $("#relovr__RelationshipOverview__fdList li").click(function() {
+            //   alert("FD");
+            var lLaunchParams = {
+                "appId": "fdsumm",
+                "scr": "FDSummary",
+                "div": "landin__Landing__launcher",
+                "userObj": {
+                    "action": "",
+                    "data": apz.relovr.relationshipoverview.sParams.data,
+                    "control": {
+                        "appId": "accstm",
+                        "callBack": apz.relovr.relationshipoverview.fnLaunchStmtCB,
+                        "destroyDiv": "landin__Landing__launcher"
+                    },
+                    "Navigation": {
+                        "setNavigation": apz.relovr.relationshipoverview.Navigation
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        });
+    }
+    if (!pResponse.recurringDepAccDtls.length) {
+        $("#relovr__RelationshipOverview__accordionRecurrDep_div").hide();
+    } else {
+        var lTotalRDBal = 0;
+        for (var i = 0; i < pResponse.recurringDepAccDtls.length; i++) {
+            lTotalRDBal = lTotalRDBal + parseInt(pResponse.recurringDepAccDtls[i].depositBal.replace(/,/g, ''));
+        }
+        lNoParams.value = lTotalRDBal;
+        apz.setElmValue("relovr__RelationshipOverview__rd_avalBal", apz.formatNumber(lNoParams));
+        $("#relovr__RelationshipOverview__rdList li").click(function() {
+            //   alert("RD");
+            var lLaunchParams = {
+                "appId": "rdsmry",
+                "scr": "RDSummary",
+                "div": "landin__Landing__launcher",
+                "userObj": {
+                    "action": "",
+                    "data": apz.relovr.relationshipoverview.sParams.data,
+                    "control": {
+                        "appId": "accstm",
+                        "callBack": apz.relovr.relationshipoverview.fnLaunchStmtCB,
+                        "destroyDiv": "landin__Landing__launcher"
+                    },
+                    "Navigation": {
+                        "setNavigation": apz.relovr.relationshipoverview.Navigation
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        });
+    }
+};
+apz.relovr.relationshipoverview.fnLaunchStmtCB = function(params) {
+    debugger;
+};
+apz.relovr.relationshipoverview.fnShowLiabilities = function(ths) {
+    debugger;
+    $("#relovr__RelationshipOverview__sc_row_104 > li").removeClass("current");
+    $(ths).parent("li").addClass("current");
+    $("#relovr__RelationshipOverview__gr_row_11").removeClass("sno");
+    $("#relovr__RelationshipOverview__gr_row_12").addClass("sno");
+};
+apz.relovr.relationshipoverview.fnShowAssets = function(ths) {
+    debugger;
+    $("#relovr__RelationshipOverview__sc_row_104 > li").removeClass("current");
+    $(ths).parent("li").addClass("current");
+    $("#relovr__RelationshipOverview__gr_row_11").addClass("sno");
+    $("#relovr__RelationshipOverview__gr_row_12").removeClass("sno");
+};
+apz.relovr.relationshipoverview.fntoggleRelationships = function(id, param2,param3) {
+    debugger;
+    $("#relovr__RelationshipOverview__" + id).toggleClass("toggleRel");
+    $(".toggleRel").not("#relovr__RelationshipOverview__" + id).removeClass("toggleRel");
+            $("#relovr__RelationshipOverview__" + param3).removeClass("active")
+
+        $("#relovr__RelationshipOverview__" + param2).addClass("active")
+
+}
+/*
+apz.relovr.relationshipoverview.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": params.buildReq,
+        "req": params.req,
+        "paintResp": "Y",
+        "callBack": apz.relovr.relationshipoverview.fnCallServerCallBack,
+        "appId": "relovr",
+        "internal": false
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.relovr.relationshipoverview.fnCallServerCallBack = function(params) {
+    debugger;
+    if (params.errors) {
+        var param = {
+            'code': params.errors[0].errorCode
+        };
+        apz.dispMsg(param);
+    } else {
+        if (apz.relovr.relationshipoverview.sParams.sAction == 'getoverview') {
+            var lResponse = params.res.relovr__RelationshipOverview_Res.relationshipOverview;
+            apz.relovr.relationshipoverview.fnRenderData(lResponse);
+        }
+    }
+};
+*/
+apz.relovr.relationshipoverview.selectList = function(param1, param2) {
+    debugger;
+    $("#relovr__RelationshipOverview__accordionSavings_div").addClass("sno");
+    $("#relovr__RelationshipOverview__accordionCurrent_div").addClass("sno")
+    $("#relovr__RelationshipOverview__accordionFixedDep_div").addClass("sno")
+    $("#relovr__RelationshipOverview__accordionRecurrDep_div").addClass("sno")
+    $("#relovr__RelationshipOverview__accordionLoan_div").addClass("sno")
+    
+    $("#relovr__RelationshipOverview__savings_list").removeClass("current");
+    $("#relovr__RelationshipOverview__current_list").removeClass("current")
+    $("#relovr__RelationshipOverview__fixed_list").removeClass("current")
+    $("#relovr__RelationshipOverview__recurring_list").removeClass("current")
+    $("#relovr__RelationshipOverview__financing_list").removeClass("current")
+    
+    $("#relovr__RelationshipOverview__" + param1).removeClass("sno")
+    $("#relovr__RelationshipOverview__" + param2).addClass("current")
+}

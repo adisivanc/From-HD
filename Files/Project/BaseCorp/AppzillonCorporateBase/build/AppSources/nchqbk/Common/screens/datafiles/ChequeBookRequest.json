@@ -1,0 +1,13 @@
+{"nchqbk__ChequeBookRequest_Res":{
+    "chequeBookReq": {
+        "data": {
+            "OTPRefNo": 1280
+        },
+        "txnRefNo": "1513676882977359117",
+        "extMsg": "",
+        "respCd": "app",
+        "intMsgCd": "",
+        "status": "success"
+    }
+}
+}

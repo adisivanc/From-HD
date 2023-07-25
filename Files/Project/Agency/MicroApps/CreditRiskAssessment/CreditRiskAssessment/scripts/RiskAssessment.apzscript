@@ -1,0 +1,682 @@
+apz.riskAssessment = {};
+apz.riskAssessment.applMaster = {};
+apz.riskAssessment.riskObj = {};
+apz.riskAssessment.sOverride = {};
+apz.riskAssessment.checkRiskMap = {
+    'ClientRisk2': {
+        'id': 'ClientRisk2',
+        'override': false
+    },
+    'IncorporateCountry': {
+        'id': 'IncorporateCountry',
+        'override': false
+    },
+    "ResidentCountry": {
+        'id': 'ResidentCountry',
+        'override': false
+    },
+    "BusinessActivity": {
+        'id': 'BusinessActivity',
+        'override': false
+    },
+    "DChannelRisk1": {
+        'id': 'DChannelRisk1',
+        'override': false
+    },
+    "DChannelRisk2": {
+        'id': 'DChannelRisk2',
+        'override': false
+    },
+    "ProductRisk": {
+        'id': 'ProductRisk',
+        'override': false
+    }
+};
+apz.app.onLoad_RiskAssessment = function() {
+    $('#scr__crsapp__RiskAssessment__main .datainput').addClass('sno');
+    $('#scr__crsapp__RiskAssessment__main .justify').addClass('sno');
+    $('#scr__crsapp__RiskAssessment__main input').attr('disabled', 'disabled');
+    var req = {};
+    req.applicationMaster = {};
+    req.applicationMaster.applicationId = "ONBAgent";
+    /*apz.riskAssessment.doDBCall({
+        'ifaceName': 'RiskApplicationMaster_Query',
+        'req': req,
+        'callBack': apz.riskAssessment.getApplMasterCB,
+    });*/
+    var content = JSON.parse(apz.riskAssessment.getDataFile("RiskApplicationMaster", "crsapp"));
+    apz.data.scrdata.crsapp__RiskApplicationMaster_Res = content.crsapp__RiskApplicationMaster_Res;
+    apz.riskAssessment.getApplMasterCB();
+};
+apz.app.onShown_RiskAssessment = function() {
+    debugger;
+    if (apz.menuap.Menu.userId == "LA004" || apz.menuap.Menu.userId == "SLA004") {
+        $(
+            "#crsapp__RiskAssessment__el_hpl_1,#crsapp__RiskAssessment__el_hpl_5,#crsapp__RiskAssessment__el_hpl_7,#crsapp__RiskAssessment__el_hpl_2,#crsapp__RiskAssessment__el_hpl_10,#crsapp__RiskAssessment__el_hpl_3,#crsapp__RiskAssessment__el_hpl_4"
+        ).trigger("click");
+        // $("#crsapp__RiskAssessment__el_btn_1").trigger("click");
+    }
+    var product = apz.appdtl.AppLauncher.sCache.product;
+    var subproduct = apz.appdtl.AppLauncher.sCache.subproduct;
+    if (subproduct == "Home Loan") {
+        $(".all").addClass("sno");
+        $('#crsapp__RiskAssessment__process_row').addClass('sno');
+        $(".all").addClass("sno");
+    } else {
+        $('#crsapp__RiskAssessment__high_navigation').addClass('sno');
+        $(".homeLoan").addClass("sno");
+    }
+}
+apz.riskAssessment.doDBCall = function(params) {
+    /*var lServerParams = {
+        'appId': 'crsapp',
+        'ifaceName': params.ifaceName,
+        'buildReq': 'N',
+        'req': params.req,
+        'paintResp': 'N',
+        'callBack': params.callBack,
+    };
+    apz.server.callServer(lServerParams);*/
+};
+apz.riskAssessment.getApplMasterCB = function(pResp) {
+    apz.riskAssessment.applMaster = apz.data.scrdata.crsapp__RiskApplicationMaster_Res.applicationMaster;
+};
+apz.riskAssessment.setOverride = function(pFlag) {
+    apz.riskAssessment.sOverride[pFlag] = true;
+};
+apz.riskAssessment.handleInput = function(pObj) {
+    var lId = $(pObj).parent().parent().attr('id');
+    var lValue = apz.getElmValue(lId);
+    if (lValue == 'y') {
+        $(pObj).closest('ul').parent().find('.datainput').removeClass('sno');
+        //$(pObj).closest('ul').parent().find('.justify').removeClass('sno');
+        //$(pObj).closest('ul').parent().find('.datainput').find('input').val('');
+    } else {
+        $(pObj).closest('ul').parent().find('.datainput').addClass('sno');
+    }
+};
+apz.riskAssessment.handleOverride = function(pObj, pFlag) {
+    debugger;
+    $(pObj).parent().parent().next().removeClass('sno');
+    $(pObj).closest('div').find('input').attr('disabled', false);
+    apz.riskAssessment.sOverride[pFlag] = true;
+    apz.riskAssessment.checkRiskMap[pFlag].override = true;
+};
+apz.riskAssessment.generateIncorporateCountryRisk = function() {
+    debugger;
+    /*apz.riskAssessment.doDBCall({
+        'ifaceName': 'CountryRisk_Query',
+        'req': {},
+        'callBack': apz.riskAssessment.generateIncorporateCountryRiskCB,
+    });*/
+    //apz.data.loadData();
+    var content = JSON.parse(apz.riskAssessment.getDataFile("CountryRisk", "crsapp"));
+    apz.data.scrdata.crsapp__CountryRisk_Req = content.crsapp__CountryRisk_Req;
+    apz.riskAssessment.generateIncorporateCountryRiskCB();
+};
+apz.riskAssessment.getDataFile = function(lIfname, lAppId) {
+    let filePath = apz.getDataFilesPath(lAppId) + "/" + lIfname + ".json";
+    let content = apz.getFile(filePath);
+    return content;
+}
+apz.riskAssessment.getPepRisk = function() {
+    debugger;
+    var req = {};
+    req.corporatePep = {};
+    req.corporatePep.applicationId = "ONBAgent";
+    /* apz.riskAssessment.doDBCall({
+        'ifaceName': 'PepRisk_Query',
+        'req': req,
+        'callBack': apz.riskAssessment.getPepRiskCB,
+    });*/
+    var content = JSON.parse(apz.riskAssessment.getDataFile("PepRisk", "crsapp"));
+    apz.data.scrdata.crsapp__PepRisk_Res = content.crsapp__PepRisk_Res;
+    apz.riskAssessment.getPepRiskCB({
+        "errors": false
+    });
+};
+apz.riskAssessment.getPepRiskCB = function(pResp) {
+    debugger;
+    if (!pResp.errors) {
+        var res = apz.data.scrdata.crsapp__PepRisk_Res.corporatePep;
+        apz.setElmValue('crsapp__RiskAssessment__CLIENT_RISK_2', 'y');
+        apz.riskAssessment.checkRiskMap['ClientRisk2'].systemRisk = 'Y';
+        apz.app.gaugePaint("95", 'crsapp__RiskAssessment__CLIENT_RISK_2_GAUGE_gaug', 'crsapp__RiskAssessment__ct_gag_876');
+    } else {
+        apz.setElmValue('crsapp__RiskAssessment__CLIENT_RISK_2', 'n');
+        apz.riskAssessment.checkRiskMap['ClientRisk2'].systemRisk = 'N';
+        apz.app.gaugePaint("15", 'crsapp__RiskAssessment__CLIENT_RISK_2_GAUGE_gaug', 'crsapp__RiskAssessment__ct_gag_7');
+    }
+};
+apz.riskAssessment.generateIncorporateCountryRiskCB = function() {
+    debugger;
+    lCountries = apz.data.scrdata.crsapp__CountryRisk_Req.countryRiskAssesment;
+    var lRisk = apz.riskAssessment.generateCountryRisk('incorporationCountry');
+    apz.app.gaugePaint(lRisk, 'crsapp__RiskAssessment__COUNTRY_RISK_1_GAUGE_gaug', 'crsapp__RiskAssessment__ct_gag_1');
+    if (lRisk >= 75) {
+        apz.setElmValue('crsapp__RiskAssessment__COUNTRY_RISK_1', 'y');
+        $('#crsapp__RiskAssessment__COUNTRY_RISK_1_option_y').trigger('onchange');
+        apz.setElmValue('crsapp__RiskAssessment__COUNTRY_RISK_1AVAL', apz.riskAssessment.applMaster.incorporationCountry);
+        apz.riskAssessment.checkRiskMap["IncorporateCountry"].systemRisk = 'Y';
+        apz.riskAssessment.checkRiskMap["IncorporateCountry"].systemValue = apz.riskAssessment.applMaster.incorporationCountry;
+    } else {
+        apz.setElmValue('crsapp__RiskAssessment__COUNTRY_RISK_1', 'n');
+        apz.riskAssessment.checkRiskMap["IncorporateCountry"].systemRisk = 'N';
+    }
+};
+apz.riskAssessment.generateResidenceCountryRisk = function() {
+    debugger;
+    var content = JSON.parse(apz.riskAssessment.getDataFile("CountryRisk", "crsapp"));
+    apz.data.scrdata.crsapp__CountryRisk_Req = content.crsapp__CountryRisk_Req;
+    apz.riskAssessment.generateResidenceCountryRiskCB();
+};
+apz.riskAssessment.generateResidenceCountryRiskCB = function() {
+    debugger;
+    //apz.data.loadJsonData("CountryRisk","crsapp");
+    /*if (pResp) {*/
+    lCountries = apz.data.scrdata.crsapp__CountryRisk_Req.countryRiskAssesment;
+    //}
+    var lRisk = apz.riskAssessment.generateCountryRisk('residenceCountry');
+    apz.app.gaugePaint(lRisk, 'crsapp__RiskAssessment__COUNTRY_RISK_2_GAUGE_gaug', 'crsapp__RiskAssessment__ct_gag_2');
+    if (lRisk >= 75) {
+        apz.setElmValue('crsapp__RiskAssessment__COUNTRY_RISK_2', 'y');
+        $('#crsapp__RiskAssessment__COUNTRY_RISK_2_option_y').trigger('onchange');
+        apz.setElmValue('crsapp__RiskAssessment__COUNTRY_RISK_2AVAL', apz.riskAssessment.applMaster.residenceCountry);
+        apz.riskAssessment.checkRiskMap["ResidentCountry"].systemRisk = 'Y';
+        apz.riskAssessment.checkRiskMap["ResidentCountry"].systemValue = apz.riskAssessment.applMaster.residenceCountry;
+    } else {
+        apz.setElmValue('crsapp__RiskAssessment__COUNTRY_RISK_2', 'n');
+        apz.riskAssessment.checkRiskMap["ResidentCountry"].systemRisk = 'N';
+    }
+};
+apz.riskAssessment.generateCountryRisk = function(type) {
+    debugger;
+    var lCountryLength = lCountries.length;
+    for (var i = 0; i < lCountryLength; i++) {
+        if (lCountries[i].country == apz.riskAssessment.applMaster[type]) {
+            lCurrentCountry = lCountries[i].country;
+            return apz.riskAssessment.checkRiskCategory(lCountries[i].riskCategory);
+        }
+    }
+};
+apz.riskAssessment.checkRiskCategory = function(risk) {
+    debugger;
+    var lRisk;
+    if (risk == 'High') {
+        lRisk = 95;
+    } else if (risk == 'Medium') {
+        lRisk = 55;
+    } else if (risk == 'Low') {
+        lRisk = 20;
+    } else {
+        lRisk = 100;
+    }
+    return lRisk;
+};
+apz.riskAssessment.generateBusinessActivityRisk = function() {
+    debugger;
+    /* apz.riskAssessment.doDBCall({
+        'ifaceName': 'ClientRisk_Query',
+        'req': {},
+        'callBack': apz.riskAssessment.generateBusinessActivityRiskCB,
+    });*/
+    var content = JSON.parse(apz.riskAssessment.getDataFile("ClientRisk", "crsapp"));
+    apz.data.scrdata.crsapp__ClientRisk_Res = content.crsapp__ClientRisk_Res;
+    apz.riskAssessment.generateBusinessActivityRiskCB();
+};
+apz.riskAssessment.generateBusinessActivityRiskCB = function(pResp) {
+    debugger;
+    var lClientRisk = apz.data.scrdata.crsapp__ClientRisk_Res.clientRiskAssesment;
+    var lClientRiskLength = apz.data.scrdata.crsapp__ClientRisk_Res.clientRiskAssesment.length;
+    var lRisk;
+    for (var i = 0; i < lClientRiskLength; i++) {
+        if (lClientRisk[i].businessType == apz.riskAssessment.applMaster.businessActivities) {
+            lRisk = apz.riskAssessment.checkRiskCategory(lClientRisk[i].riskCategory);
+            break;
+        }
+    }
+    apz.app.gaugePaint(lRisk, 'crsapp__RiskAssessment__CLIENT_RISK_1_GAUGE_gaug', 'crsapp__RiskAssessment__ct_gag_3');
+    if (lRisk >= 75) {
+        apz.setElmValue('crsapp__RiskAssessment__CLIENT_RISK_1', 'y');
+        $('#crsapp__RiskAssessment__CLIENT_RISK_1_option_y').trigger('onchange');
+        apz.setElmValue('crsapp__RiskAssessment__CLIENT_RISK_1AVAL', apz.riskAssessment.applMaster.businessActivities);
+        apz.riskAssessment.checkRiskMap["BusinessActivity"].systemRisk = 'Y';
+        apz.riskAssessment.checkRiskMap["BusinessActivity"].systemValue = apz.riskAssessment.applMaster.businessActivities;
+    } else {
+        apz.setElmValue('crsapp__RiskAssessment__CLIENT_RISK_2', 'n');
+        apz.riskAssessment.checkRiskMap["BusinessActivity"].systemRisk = 'N';
+    }
+}
+//Age risk - 1
+apz.riskAssessment.generateDChannelRisk1 = function() {
+    apz.app.gaugePaint('23', 'crsapp__RiskAssessment__DCHANNEL_RISK_1_GAUGE_gaug', 'crsapp__RiskAssessment__ct_gag_4');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_1', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk1"].systemRisk = 'N';
+};
+apz.riskAssessment.generateDChannelRisk2 = function() {
+    apz.app.gaugePaint('75', 'crsapp__RiskAssessment__DCHANNEL_RISK_2_GAUGE_gaug', 'crsapp__RiskAssessment__ct_gag_5');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_2', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk2"].systemRisk = 'N';
+};
+apz.riskAssessment.generateProductRisk = function() {
+    apz.app.gaugePaint('35', 'crsapp__RiskAssessment__PRODUCT_RISK_1_GAUGE_gaug', 'crsapp__RiskAssessment__ct_gag_6');
+    apz.setElmValue('crsapp__RiskAssessment__PRODUCT_RISK_1', 'n');
+    apz.riskAssessment.checkRiskMap["ProductRisk"].systemRisk = 'N';
+};
+
+//Anand Gauge
+
+apz.riskAssessment.fnAgeOfCoBorrower = function() {
+apz.app.gaugePaint('28', 'crsapp__RiskAssessment__ct_gag_137656_gaug', 'crsapp__RiskAssessment__ct_gag_5');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_2', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk2"].systemRisk = 'N';
+}
+
+
+apz.riskAssessment.fnPropertyLocatedNearFlood = function() {
+apz.app.gaugePaint('20', 'crsapp__RiskAssessment__ct_gag_137656_gaug', 'crsapp__RiskAssessment__ct_gag_5');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_2', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk2"].systemRisk = 'N';
+}
+
+apz.riskAssessment.fnAgeCoBorrower = function() {
+    apz.app.gaugePaint('75', 'crsapp__RiskAssessment__ct_gag_137655_gaug', 'crsapp__RiskAssessment__ct_gag_5');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_2', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk2"].systemRisk = 'N';
+};
+
+
+apz.riskAssessment.fnWillYouOccupy = function() {
+    apz.app.gaugePaint('15', 'crsapp__RiskAssessment__ct_gag_12221_gaug', 'crsapp__RiskAssessment__ct_gag_5');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_2', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk2"].systemRisk = 'N';
+};
+
+apz.riskAssessment.fnPropertyPrimaryResidence = function() {
+    apz.app.gaugePaint('28', 'crsapp__RiskAssessment__ct_gag_12221', 'crsapp__RiskAssessment__ct_gag_5');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_2', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk2"].systemRisk = 'N';
+};
+
+apz.riskAssessment.fnPropertyHeldPrimaryResidence = function() {
+apz.app.gaugePaint('15', 'crsapp__RiskAssessment__ct_gag_137654_gaug', 'crsapp__RiskAssessment__ct_gag_5');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_2', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk2"].systemRisk = 'N';
+}
+
+apz.riskAssessment.fnPropertyLocatorNear = function() {
+apz.app.gaugePaint('20', 'crsapp__RiskAssessment__ct_gag_137657_gaug', 'crsapp__RiskAssessment__ct_gag_5');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_2', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk2"].systemRisk = 'N';
+}
+
+apz.riskAssessment.fnCoBorrowerOwner = function() {
+apz.app.gaugePaint('28', 'crsapp__RiskAssessment__ct_gag_2555_gaug', 'crsapp__RiskAssessment__ct_gag_5');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_2', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk2"].systemRisk = 'N';
+}
+
+apz.riskAssessment.fnCoSignerGaurantor = function() {
+apz.app.gaugePaint('28', 'crsapp__RiskAssessment__ct_gag_363_gaug', 'crsapp__RiskAssessment__ct_gag_5');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_2', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk2"].systemRisk = 'N';
+}
+
+apz.riskAssessment.fnLawsuitsOutstanding = function() {
+apz.app.gaugePaint('28', 'crsapp__RiskAssessment__ct_gag_8222_gaug', 'crsapp__RiskAssessment__ct_gag_5');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_2', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk2"].systemRisk = 'N';
+}
+
+apz.riskAssessment.fnCoBorrowerProperty = function() {
+apz.app.gaugePaint('28', 'crsapp__RiskAssessment__ct_gag_953_gaug', 'crsapp__RiskAssessment__ct_gag_5');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_2', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk2"].systemRisk = 'N';
+}
+
+apz.riskAssessment.fnBorrowingMoney = function() {
+apz.app.gaugePaint('15', 'crsapp__RiskAssessment__ct_gag_14234_gaug', 'crsapp__RiskAssessment__ct_gag_5');
+    apz.setElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_2', 'n');
+    apz.riskAssessment.checkRiskMap["DChannelRisk2"].systemRisk = 'N';
+}
+//--------------
+apz.riskAssessment.saveCorpRisk = function() {
+    debugger;
+    var json = {};
+    json.entityName = apz.riskAssessment.applMaster.entityName;
+    json.countryRisk = "";
+    json.distributionChannel = "";
+    json.productRisk = "";
+    json.clientRisk = "";
+    for (var key in apz.riskAssessment.checkRiskMap) {
+        if (apz.riskAssessment.checkRiskMap.hasOwnProperty(key)) {
+            switch (key) {
+                case "IncorporateCountry":
+                    if (apz.riskAssessment.checkRiskMap[key].override) {
+                        if ($('[name = "crsapp__RiskAssessment__COUNTRY_RISK_1_"]').prop("checked")) {
+                            json.countryRisk += "HIGH,";
+                        } else {
+                            json.countryRisk += "LOW,";
+                        }
+                    } else {
+                        if (apz.riskAssessment.checkRiskMap[key].systemRisk == "Y") {
+                            json.countryRisk += "HIGH,";
+                        } else {
+                            json.countryRisk += "LOW,";
+                        }
+                    }
+                    break;
+                case "ResidentCountry":
+                    if (apz.riskAssessment.checkRiskMap[key].override) {
+                        if ($('[name = "crsapp__RiskAssessment__COUNTRY_RISK_2_"]').prop("checked")) {
+                            json.countryRisk += "HIGH,";
+                        } else {
+                            json.countryRisk += "LOW,";
+                        }
+                    } else {
+                        if (apz.riskAssessment.checkRiskMap[key].systemRisk == "Y") {
+                            json.countryRisk += "HIGH,";
+                        } else {
+                            json.countryRisk += "LOW,";
+                        }
+                    }
+                    break;
+                case "DChannelRisk1":
+                    if (apz.riskAssessment.checkRiskMap[key].override) {
+                        if ($('[name = "crsapp__RiskAssessment__DCHANNEL_RISK_1_"]').prop("checked")) {
+                            json.distributionChannel += "HIGH,";
+                        } else {
+                            json.distributionChannel += "LOW,";
+                        }
+                    } else {
+                        if (apz.riskAssessment.checkRiskMap[key].systemRisk == "Y") {
+                            json.distributionChannel += "HIGH,";
+                        } else {
+                            json.distributionChannel += "LOW,";
+                        }
+                    }
+                    break;
+                case "DChannelRisk2":
+                    if (apz.riskAssessment.checkRiskMap[key].override) {
+                        if ($('[name = "crsapp__RiskAssessment__DCHANNEL_RISK_2_"]').prop("checked")) {
+                            json.distributionChannel += "HIGH,";
+                        } else {
+                            json.distributionChannel += "LOW,";
+                        }
+                    } else {
+                        if (apz.riskAssessment.checkRiskMap[key].systemRisk == "Y") {
+                            json.distributionChannel += "HIGH,";
+                        } else {
+                            json.distributionChannel += "LOW,";
+                        }
+                    }
+                    break;
+                case "ProductRisk":
+                    if (apz.riskAssessment.checkRiskMap[key].override) {
+                        if ($('[name = "crsapp__RiskAssessment__PRODUCT_RISK_1_"]').prop("checked")) {
+                            json.productRisk += "HIGH,";
+                        } else {
+                            json.productRisk += "LOW,";
+                        }
+                    } else {
+                        if (apz.riskAssessment.checkRiskMap[key].systemRisk == "Y") {
+                            json.productRisk += "HIGH,";
+                        } else {
+                            json.productRisk += "LOW,";
+                        }
+                    }
+                    break;
+                case "BusinessActivity":
+                    if (apz.riskAssessment.checkRiskMap[key].override) {
+                        if ($('[name = "crsapp__RiskAssessment__CLIENT_RISK_1_"]').prop("checked")) {
+                            json.clientRisk += "HIGH,";
+                        } else {
+                            json.clientRisk += "LOW,";
+                        }
+                    } else {
+                        if (apz.riskAssessment.checkRiskMap[key].systemRisk == "Y") {
+                            json.clientRisk += "HIGH,";
+                        } else {
+                            json.clientRisk += "LOW,";
+                        }
+                    }
+                    break;
+                case "ClientRisk2":
+                    if (apz.riskAssessment.checkRiskMap[key].override) {
+                        if ($('[name = "crsapp__RiskAssessment__CLIENT_RISK_2_"]').prop("checked")) {
+                            json.clientRisk += "HIGH,";
+                        } else {
+                            json.clientRisk += "LOW,";
+                        }
+                    } else {
+                        if (apz.riskAssessment.checkRiskMap[key].systemRisk == "Y") {
+                            json.clientRisk += "HIGH,";
+                        } else {
+                            json.clientRisk += "LOW,";
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+    apz.crsapp.RiskManagement.upsertEntity(json);
+    apz.crsapp.RiskManagement.getMaster(apz.riskAssessment.saveCorpRiskCB, apz.riskAssessment.applMaster.entityName);
+};
+apz.riskAssessment.saveCorpRiskCB = function(entityData) {
+    debugger;
+    var lRisk = entityData[apz.riskAssessment.applMaster.entityName].range;
+    $("#crsapp__RiskAssessment__risk_category").removeClass("sno");
+    $("#crsapp__RiskAssessment__process_row").addClass('sno');
+    var req = {};
+    req.applicationMaster = apz.riskAssessment.applMaster;
+    if (lRisk == "Low") {
+        $("#crsapp__RiskAssessment__low_check").prop('checked', true);
+        req.applicationMaster.lowRisk = "Yes";
+        req.applicationMaster.lowReviewDeadline = "2019-12-23 03:55:49"
+        req.applicationMaster.mediumRisk = "No";
+        req.applicationMaster.highRisk = "No";
+        req.applicationMaster.applictaionStatus = "Pending Approve";
+    } else if (lRisk == "Med") {
+        req.applicationMaster.lowRisk = "No";
+        //req.applicationMaster.mediumRiskDeadline = "2019-12-23 10:55:49"
+        req.applicationMaster.mediumRisk = "Yes";
+        req.applicationMaster.highRisk = "No";
+        $("#crsapp__RiskAssessment__med_check").prop('checked', true);
+        req.applicationMaster.applictaionStatus = "Pending Approve";
+    } else {
+        req.applicationMaster.lowRisk = "No";
+        //req.applicationMaster.highRiskDeadline = "2018-05-23 09:55:49"
+        req.applicationMaster.mediumRisk = "No";
+        req.applicationMaster.highRisk = "Yes";
+        $("#crsapp__RiskAssessment__high_check").prop('checked', true)
+        $("#crsapp__RiskAssessment__high_navigation").removeClass('sno');
+        req.applicationMaster.applictaionStatus = "Pending Approve";
+    };
+    /*apz.riskAssessment.doDBCall({
+        'ifaceName': 'RiskApplicationMaster_Modify',
+        'req': req,
+        'callBack': apz.riskAssessment.updateRiskInApplMasterCB,
+    });*/
+    var content = JSON.parse(apz.riskAssessment.getDataFile("RiskApplicationMaster", "crsapp"));
+    apz.data.scrdata.crsapp__RiskApplicationMaster_Res = content.crsapp__RiskApplicationMaster_Res;
+    apz.riskAssessment.updateRiskInApplMasterCB();
+}
+apz.riskAssessment.updateRiskInApplMasterCB = function(pResp) {
+    debugger;
+    var req = {};
+    req.corporateRiskAssesment = {};
+    req.corporateRiskAssesment.applicationId = apz.riskAssessment.applMaster.applicationId;
+    req.corporateRiskAssesment.countryRisk1a = (apz.riskAssessment.checkRiskMap.IncorporateCountry.systemRisk == 'Y') ? 'y' : '';
+    req.corporateRiskAssesment.countryRisk1b = (apz.riskAssessment.checkRiskMap.IncorporateCountry.systemRisk == 'N') ? 'y' : '';
+    req.corporateRiskAssesment.countryRisk1aval = (apz.riskAssessment.checkRiskMap.IncorporateCountry.systemValue != undefined) ? apz.riskAssessment.checkRiskMap
+        .IncorporateCountry.systemValue : '';
+    if (apz.riskAssessment.checkRiskMap.IncorporateCountry.override) {
+        req.corporateRiskAssesment.countryRisk1aUser = (apz.getElmValue('crsapp__RiskAssessment__COUNTRY_RISK_1') == 'y') ? 'y' : '';
+        req.corporateRiskAssesment.countryRisk1bUser = (apz.getElmValue('crsapp__RiskAssessment__COUNTRY_RISK_1') == 'n') ? 'y' : '';
+        req.corporateRiskAssesment.countryRisk1aUserval = ($('#crsapp__RiskAssessment__COUNTRY_RISK_1AVAL').val() != '') ? $(
+            '#crsapp__RiskAssessment__COUNTRY_RISK_1AVAL').val() : apz.riskAssessment.applMaster.incorporationCountry;
+        req.corporateRiskAssesment.countryRisk1aUserjust = $('#crsapp__RiskAssessment__COUNTRY_RISK_1A_USERJUST ').val();
+    }
+    req.corporateRiskAssesment.countryRisk2a = (apz.riskAssessment.checkRiskMap.ResidentCountry.systemRisk == 'Y') ? 'y' : '';
+    req.corporateRiskAssesment.countryRisk2b = (apz.riskAssessment.checkRiskMap.ResidentCountry.systemRisk == 'N') ? 'y' : '';
+    req.corporateRiskAssesment.countryRisk2aval = (apz.riskAssessment.checkRiskMap.ResidentCountry.systemValue != undefined) ? apz.riskAssessment.checkRiskMap
+        .ResidentCountry.systemValue : '';
+    if (apz.riskAssessment.checkRiskMap.ResidentCountry.override) {
+        req.corporateRiskAssesment.countryRisk2aUser = (apz.getElmValue('crsapp__RiskAssessment__COUNTRY_RISK_2') == 'y') ? 'y' : '';
+        req.corporateRiskAssesment.countryRisk2bUser = (apz.getElmValue('crsapp__RiskAssessment__COUNTRY_RISK_2') == 'n') ? 'y' : '';
+        req.corporateRiskAssesment.countryRisk2aUserval = ($('#crsapp__RiskAssessment__COUNTRY_RISK_2AVAL').val() != '') ? $(
+            '#crsapp__RiskAssessment__COUNTRY_RISK_2AVAL').val() : apz.riskAssessment.applMaster.ResidentCountry;
+        req.corporateRiskAssesment.countryRisk2aUserjust = $('#crsapp__RiskAssessment__COUNTRY_RISK_2A_USERJUST ').val();
+    }
+    req.corporateRiskAssesment.clientRisk1a = (apz.riskAssessment.checkRiskMap.BusinessActivity.systemRisk == 'Y') ? 'y' : '';
+    req.corporateRiskAssesment.clientRisk1b = (apz.riskAssessment.checkRiskMap.BusinessActivity.systemRisk == 'N') ? 'y' : '';
+    req.corporateRiskAssesment.clientRisk1aval = (apz.riskAssessment.checkRiskMap.BusinessActivity.systemValue != undefined) ? apz.riskAssessment.checkRiskMap
+        .BusinessActivity.systemValue : '';
+    if (apz.riskAssessment.checkRiskMap.BusinessActivity.override) {
+        req.corporateRiskAssesment.clientRisk1aUser = (apz.getElmValue('crsapp__RiskAssessment__CLIENT_RISK_1') == 'y') ? 'y' : '';
+        req.corporateRiskAssesment.clientRisk1bUser = (apz.getElmValue('crsapp__RiskAssessment__CLIENT_RISK_1') == 'n') ? 'y' : '';
+        req.corporateRiskAssesment.clientRisk1aUserval = ($('#crsapp__RiskAssessment__CLIENT_RISK_1AVAL').val() != '') ? $(
+            '#crsapp__RiskAssessment__CLIENT_RISK_1AVAL').val() : apz.riskAssessment.applMaster.businessActivities;
+        req.corporateRiskAssesment.clientRisk1aUserjust = $('#crsapp__RiskAssessment__CLIENT_RISK_1A_USERJUST ').val();
+    }
+    req.corporateRiskAssesment.clientRisk2a = (apz.riskAssessment.checkRiskMap.ClientRisk2.systemRisk == 'Y') ? 'y' : '';
+    req.corporateRiskAssesment.clientRisk2b = (apz.riskAssessment.checkRiskMap.ClientRisk2.systemRisk == 'N') ? 'y' : '';
+    req.corporateRiskAssesment.clientRisk2aval = (apz.riskAssessment.checkRiskMap.ClientRisk2.systemValue != undefined) ? apz.riskAssessment.checkRiskMap
+        .BusinessActivity.systemValue : '';
+    if (apz.riskAssessment.checkRiskMap.ClientRisk2.override) {
+        req.corporateRiskAssesment.clientRisk2aUser = (apz.getElmValue('crsapp__RiskAssessment__CLIENT_RISK_2') == 'y') ? 'y' : '';
+        req.corporateRiskAssesment.clientRisk2bUser = (apz.getElmValue('crsapp__RiskAssessment__CLIENT_RISK_2') == 'n') ? 'y' : '';
+        req.corporateRiskAssesment.clientRisk2aUserval = ($('#crsapp__RiskAssessment__CLIENT_RISK_2AVAL').val() != '') ? $(
+            '#crsapp__RiskAssessment__CLIENT_RISK_2AVAL').val() : '';
+        req.corporateRiskAssesment.clientRisk2aUserjust = $('#crsapp__RiskAssessment__CLIENT_RISK_2A_USERJUST ').val();
+    }
+    req.corporateRiskAssesment.dchannelRisk1a = (apz.riskAssessment.checkRiskMap.DChannelRisk1.systemRisk == 'Y') ? 'y' : '';
+    req.corporateRiskAssesment.dchannelRisk1b = (apz.riskAssessment.checkRiskMap.DChannelRisk1.systemRisk == 'N') ? 'y' : '';
+    req.corporateRiskAssesment.dchannelRisk1aval = (apz.riskAssessment.checkRiskMap.DChannelRisk1.systemValue != undefined) ? apz.riskAssessment.checkRiskMap
+        .DChannelRisk1.systemValue : '';
+    if (apz.riskAssessment.checkRiskMap.DChannelRisk1.override) {
+        req.corporateRiskAssesment.dchannelRisk1aUser = (apz.getElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_1') == 'y') ? 'y' : '';
+        req.corporateRiskAssesment.dchannelRisk1bUser = (apz.getElmValue('crsapp__RiskAssessment__DCHANNEL_RISK_1') == 'n') ? 'y' : '';
+        req.corporateRiskAssesment.dchannelRisk1aUserval = ($('#crsapp__RiskAssessment__DCHANNEL_RISK_1AVAL').val() != '') ? $(
+            '#crsapp__RiskAssessment__DCHANNEL_RISK_1AVAL').val() : '';
+        req.corporateRiskAssesment.dchannelRisk1aUserjust = $('#crsapp__RiskAssessment__DCHANNEL_RISK_1_USERJUST ').val();
+    }
+    req.corporateRiskAssesment.dchannelRisk2a = (apz.riskAssessment.checkRiskMap.DChannelRisk2.systemRisk == 'Y') ? 'y' : '';
+    req.corporateRiskAssesment.dchannelRisk2b = (apz.riskAssessment.checkRiskMap.DChannelRisk2.systemRisk == 'N') ? 'y' : '';
+    req.corporateRiskAssesment.dchannelRisk2aval = (apz.riskAssessment.checkRiskMap.DChannelRisk2.systemValue != undefined) ? apz.riskAssessment.checkRiskMap
+        .DChannelRisk2.systemValue : '';
+    if (apz.riskAssessment.checkRiskMap.DChannelRisk2.override) {
+        req.corporateRiskAssesment.dchannelRisk2aUser = (apz.getElmValue('crsapp__RiskAssessment__CLIENT_RISK_2') == 'y') ? 'y' : '';
+        req.corporateRiskAssesment.dchannelRisk2bUser = (apz.getElmValue('crsapp__RiskAssessment__CLIENT_RISK_2') == 'n') ? 'y' : '';
+        req.corporateRiskAssesment.dchannelRisk2aUserval = ($('#crsapp__RiskAssessment__CLIENT_RISK_2AVAL').val() != '') ? $(
+            '#crsapp__RiskAssessment__CLIENT_RISK_2AVAL').val() : '';
+        req.corporateRiskAssesment.dchannelRisk2aUserjust = $('#crsapp__RiskAssessment__CLIENT_RISK_2A_USERJUST ').val();
+    }
+    req.corporateRiskAssesment.productRisk1a = (apz.riskAssessment.checkRiskMap.ProductRisk.systemRisk == 'Y') ? 'y' : '';
+    req.corporateRiskAssesment.productRisk1b = (apz.riskAssessment.checkRiskMap.ProductRisk.systemRisk == 'N') ? 'y' : '';
+    req.corporateRiskAssesment.productRisk1aval = (apz.riskAssessment.checkRiskMap.ProductRisk.systemValue != undefined) ? apz.riskAssessment.checkRiskMap
+        .ProductRisk.systemValue : '';
+    if (apz.riskAssessment.checkRiskMap.ProductRisk.override) {
+        req.corporateRiskAssesment.productRisk1aUser = (apz.getElmValue('crsapp__RiskAssessment__PRODUCT_RISK_1') == 'y') ? 'y' : '';
+        req.corporateRiskAssesment.productRisk1bUser = (apz.getElmValue('crsapp__RiskAssessment__PRODUCT_RISK_1') == 'n') ? 'y' : '';
+        req.corporateRiskAssesment.productRisk1aUserval = ($('#crsapp__RiskAssessment__PRODUCT_RISK_1AVAL').val() != '') ? $(
+            '#crsapp__RiskAssessment__PRODUCT_RISK_1AVAL').val() : '';
+        req.corporateRiskAssesment.productRisk1aUserjust = $('#crsapp__RiskAssessment__PRODUCT_RISK_1JUST ').val();
+    }
+    req.corporateRiskAssesment.countryRisk = (req.corporateRiskAssesment.countryRisk1a == 'y' && req.corporateRiskAssesment.countryRisk2a == 'y') ?
+        'y' : 'n';
+    req.corporateRiskAssesment.clientRisk = (req.corporateRiskAssesment.clientRisk1a == 'y' && req.corporateRiskAssesment.clientRisk1a == 'y') ? 'y' :
+        'n';
+    req.corporateRiskAssesment.dchannelRisk = (req.corporateRiskAssesment.dchannelRisk1a == 'y' && req.corporateRiskAssesment.dchannelRisk2a == 'y') ?
+        'y' : 'n';
+    req.corporateRiskAssesment.productRisk = (req.corporateRiskAssesment.productRisk1a == 'y') ? 'y' : 'n';
+    req.corporateRiskAssesment.positiveMatch = (req.corporateRiskAssesment.clientRisk2a == 'y') ? 'y' : 'n';
+    req.corporateRiskAssesment.other = 'n';
+    /*apz.riskAssessment.doDBCall({
+        'ifaceName': 'CorporateRisk_New',
+        'req': req,
+        'callBack': apz.riskAssessment.insertRiskMasterCB
+    });*/
+    var content = JSON.parse(apz.riskAssessment.getDataFile("CorporateRisk", "crsapp"));
+    apz.data.scrdata.crsapp__CorporateRisk_Res = content.crsapp__CorporateRisk_Res;
+    apz.riskAssessment.insertRiskMasterCB();
+}
+apz.riskAssessment.insertRiskMasterCB = function(pResp) {
+    debugger;
+    if (apz.menuap.Menu.userId == "LA004" || apz.menuap.Menu.userId == "SLA004") {
+        var lHighRisk = $("#crsapp__RiskAssessment__high_check").prop('checked');
+    } else {
+        // apz.riskAssessment.fnCallNextStateWorkFlow();
+        apz.riskAssessment.next();
+    }
+    //if (!pResp.errors && apz.crsapp.userId != "LA004") 
+    //}
+}
+apz.riskAssessment.dispmsgCB = function(param) {
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": "menuap__Menu__MainLaunchArea",
+            "parentAppId": "menuap",
+            "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+            "custImg": "menuap__Menu__custImg",
+            "custId": "menuap__Menu__custId_txtcnt"
+        }
+    }
+    apz.launchApp(lParams);
+}
+apz.riskAssessment.prev = function() {
+    // $("#crsapp__ProgressStep__pepBadge").click();
+    $("#crsapp__ProgressStep__el_progressstep_1_ext li:nth-child(2)").trigger("click");
+}
+apz.riskAssessment.next = function() {
+    // $("#crsapp__ProgressStep__ecddbadge").click();
+    $("#crsapp__ProgressStep__el_progressstep_1_ext li:nth-child(4)").trigger("click");
+}
+apz.riskAssessment.fnCallNextStateWorkFlow = function() {
+    debugger;
+    if (apz.menuap.Menu.userRole == "SCR" || apz.menuap.Menu.userRole == "CR") {
+        var interfaceName = ""
+        if (apz.menuap.Menu.userRole == "SCR") {
+            interfaceName = "NextWFStageSME"
+        } else if (apz.menuap.Menu.userRole == "CR") {
+            interfaceName = "NextWFStage"
+        }
+        var lServerParams = {
+            "ifaceName": interfaceName,
+            "buildReq": "N",
+            "appId": "crsapp",
+            "req": {
+                "appId": "acdp01",
+                "instanceId": apz.crsapp.ProgressStep.sCache.refNo,
+                "userId": "CorpUser",
+                "screenData": "",
+                "action": "SUBMIT"
+            },
+            "paintResp": "N",
+            "callBack": apz.riskAssessment.fnNexttWorkflowCB
+        }
+        apz.server.callServer(lServerParams);
+    }
+}
+apz.riskAssessment.fnNexttWorkflowCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        var lHighRisk = $("#crsapp__RiskAssessment__high_check").prop('checked');
+        var param = {
+            'message': "The application has been submitted for approval.",
+            'type': "S",
+            "callBack": apz.riskAssessment.dispmsgCB
+        };
+        // window.scrollTo(0, document.body.scrollHeight);
+        apz.startLoader();
+        setTimeout(function() {
+            apz.stopLoader();
+            apz.dispMsg(param)
+        }, 3000);
+    }
+}

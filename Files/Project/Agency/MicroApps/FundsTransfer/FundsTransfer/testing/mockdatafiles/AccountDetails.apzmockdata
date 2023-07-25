@@ -1,0 +1,46 @@
+{
+    "accSummary": [
+        {
+            "minBal": "1200",
+            "linkedMobno": "9876543210",
+            "address": "bangalur",
+            "accountBrnName": "HDFC Karikudi",
+            "linkedCardno": "CURT001",
+            "accountBrnCd": "0033",
+            "accountNo": 1000033,
+            "accountType": "Saving",
+            "accountBrnIfsc": "AF0005600LK",
+            "custId": "18256701",
+            "accountOpnDt": "20/10/2012",
+            "accountBal": "26000"
+        },
+        {
+            "minBal": "1200",
+            "linkedMobno": "9876543210",
+            "address": "bangalur",
+            "accountBrnName": "HDFC Tamilnadu",
+            "linkedCardno": "CURT001",
+            "accountBrnCd": "0003",
+            "accountNo": 1000036,
+            "accountType": "saving",
+            "accountBrnIfsc": "AF0005600SD",
+            "custId": "18256701",
+            "accountOpnDt": "20/10/2012",
+            "accountBal": "10000"
+        },
+        {
+            "minBal": "1200",
+            "linkedMobno": "9876543210",
+            "address": "bangalur",
+            "accountBrnName": "HDFC Karikudi",
+            "linkedCardno": "CURT001",
+            "accountBrnCd": "0005",
+            "accountNo": 1000039,
+            "accountType": "Current",
+            "accountBrnIfsc": "AF0005600LK",
+            "custId": "18256701",
+            "accountOpnDt": "20/10/2012",
+            "accountBal": "10000"
+        }
+    ]
+}

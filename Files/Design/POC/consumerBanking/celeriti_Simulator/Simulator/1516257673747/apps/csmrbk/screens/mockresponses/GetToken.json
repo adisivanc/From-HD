@@ -1,0 +1,8 @@
+{
+   "tokenDet":{
+      "access_token":"f165c832-2ba4-497b-88a7-91461c394b98",
+      "scope":"hackathon",
+      "token_type":"bearer",
+      "expires_in":28800
+   }
+}

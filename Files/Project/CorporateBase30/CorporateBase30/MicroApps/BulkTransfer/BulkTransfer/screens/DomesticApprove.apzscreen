@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"DomesticApprove","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"DomesticApprove","interfaces":[{"name":"OtherBankDom","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

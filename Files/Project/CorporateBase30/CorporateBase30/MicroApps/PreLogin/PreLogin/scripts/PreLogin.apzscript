@@ -1,0 +1,133 @@
+window.oldDefineAmd = define.amd;
+define.amd = false;
+apz.preLogin = {};
+var gScrollTime = 0;
+apz.app.onLoad_PreLogin = function() {
+    $("#ACPL01__PreLogin__dashboard").addClass("sno");
+    $('.content').addClass('sno');
+    $("#ACPL01__PreLogin__Testimonials").find(".grid").removeClass("grid");
+};
+apz.app.onShown_PreLogin = function() {
+    debugger;
+    $("#ACPL01__PreLogin__dashboard").css("display", "none");
+    $(window).scroll(function(event) {
+        if (apz.currScr == "PreLogin") {
+            var scroll = $(window).scrollTop();
+            if (scroll === 0) {
+                gScrollTime++;
+                if (gScrollTime == 2) {
+                    $("body").removeClass("prelogby");
+                    gSwiper.destroy(true, false);
+                    $("#ACPL01__PreLogin__dashboard").slideUp("slow");
+                    $("#ACPL01__PreLogin__launchPage").slideDown("slow");
+                    $("#ACPL01__PreLogin__dashboard").addClass('sno');
+                    // $("#footer").addClass('sno');
+                    $("body").addClass("loginby");
+                    $(".arrowht").removeClass("shownone");
+                    gScrollTime = 0;
+                    apz.preLogin.enableSwiper();
+                }
+            }
+        }
+    });
+    var mousewheelevt = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel" //FF doesn't recognize mousewheel as of FF3.x
+    if (document.attachEvent) //if IE (and Opera depending on user setting)
+        document.getElementById("ACPL01__PreLogin__launchPage").attachEvent("on" + mousewheelevt, function(e) {
+            debugger;
+            if (e.detail > 0) {
+                if (!($(".arrowht").hasClass("shownone"))) {
+                    apz.preLogin.launchDashboard();
+                }
+            }
+        })
+    else if (document.addEventListener) //WC3 browsers
+        document.getElementById("ACPL01__PreLogin__launchPage").addEventListener(mousewheelevt, function(e) {
+            debugger;
+            if (e.detail > 0) {
+                if (!($(".arrowht").hasClass("shownone"))) {
+                    apz.preLogin.launchDashboard();
+                }
+            }
+        }, false)
+    apz.preLogin.enableSwiper();
+};
+apz.preLogin.enableSwiper = function() {
+    gSwiper = new Swiper('.mainCarousel', {
+        pagination: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        slidesPerView: 1,
+        paginationClickable: true,
+        spaceBetween: 1,
+        preventClicks: false,
+        preventClicksPropagation: false,
+        observeParents: true,
+        loop: true,
+        autoplay: 1800,
+        autoHeight: false,
+        autoplayDisableOnInteraction: false,
+        speed: 1000,
+        onSlideChangeEnd: function(swiper) {
+            $(".mainCarousel .swiper-pagination-bullet-active").removeClass("swiper-pagination-bullet-active");
+            if (swiper.activeIndex == "1" || swiper.activeIndex == "4") {
+                $(".mainCarousel .swiper-pagination-bullet").eq(0).addClass("swiper-pagination-bullet-active");
+            } else if (swiper.activeIndex == "2") {
+                $(".mainCarousel .swiper-pagination-bullet").eq(1).addClass("swiper-pagination-bullet-active");
+            } else if (swiper.activeIndex == "3") {
+                $(".mainCarousel .swiper-pagination-bullet").eq(2).addClass("swiper-pagination-bullet-active");
+            }
+        }
+    });
+};
+apz.preLogin.carouselSwiper = function() {
+    swiper = new Swiper('.swiper2', {
+        pagination: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        slidesPerView: 4,
+        paginationClickable: true,
+        spaceBetween: 1,
+        loop: true,
+        autoHeight: false,
+        autoplayDisableOnInteraction: false,
+        speed: 1500
+    });
+};
+apz.preLogin.launchDashboard = function() {
+    $(".arrowht").addClass("shownone");
+    $("body").addClass("prelogby");
+    $("#ACPL01__PreLogin__dashboard").slideDown("slow");
+    $("#ACPL01__PreLogin__launchPage").slideUp();
+    $("#footer").removeClass('shownone');
+    $("body").removeClass("loginby");
+    $("#ACPL01__PreLogin__dashboard").removeClass("sno");
+    apz.preLogin.carouselSwiper();
+    $('.grid').masonry({
+        columnWidth: 0,
+        itemSelector: '.grid-item'
+    });
+};
+$('.grid-item').mouseover(function() {
+    if ($(this).children().filter('.content').hasClass('sno')) {
+        $(this).children().filter('.content').removeClass('sno');
+    }
+});
+$('.grid-item').mouseout(function() {
+    if (!$(this).children().filter('.content').hasClass('sno')) {
+        $(this).children().filter('.content').addClass('sno');
+    }
+});
+apz.preLogin.launchNextScreen = function(pScreenName) {
+    var params = {};
+    params.scr = pScreenName;
+    apz.launchScreen(params);
+};
+apz.preLogin.launchLogin = function() {
+    var params = {};
+    params.appId = "ACLI01";
+    params.scr = "Login";
+    params.userObj = {
+        "templateName": "newtemplate"
+    };
+    apz.launchApp(params);
+}

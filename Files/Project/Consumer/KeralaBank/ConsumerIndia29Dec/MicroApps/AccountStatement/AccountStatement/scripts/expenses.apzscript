@@ -1,0 +1,4 @@
+apz.accstm.expenses={};
+apz.app.onLoad_expenses=function(params){
+      apz.data.loadJsonData("expenses","accstm");
+}

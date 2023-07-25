@@ -1,0 +1,17 @@
+{
+    "loanvg__ImageInterface_Res": {
+        "imageDetails": [{
+            "image": "card1.png",
+            "name" : "Visa Card"
+            
+        },
+        {
+               "image": "card2.png",
+            "name" : "Master Card"
+        },
+        {
+           "image": "card3.png",
+            "name" : "Platinum Card"
+    }]
+}
+}

@@ -1,0 +1,133 @@
+apz.genfrm.formupload = {};
+apz.genfrm.formupload.sParams = {};
+apz.app.onLoad_FormUpload = function(params) {
+    debugger;
+    apz.genfrm.formupload.sParams = params;
+    if (params.Navigation) {
+        apz.genfrm.formupload.fnSetNavigation(params);
+    }
+    apz.genfrm.formupload.fnGoToStage1();
+};
+apz.genfrm.formupload.fnSetNavigation = function(params) {
+    debugger;
+    apz.genfrm.formupload.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "FORM UPLOAD";
+    }
+    // lParams.backPressed = apz.genfrm.formupload.fnBack;
+    apz.genfrm.formupload.Navigation(lParams);
+};
+apz.genfrm.formupload.fnGoToStage1 = function() {
+    debugger;
+    apz.setElmValue("genfrm__NewUpload__i__tbDbtpFrmUpload__customerId", apz.genfrm.formupload.sParams.data.customerID);
+    apz.setElmValue("genfrm__NewUpload__i__tbDbtpFrmUpload__dateOfUpload", new Date().toJSON().slice(0, 10));
+};
+apz.genfrm.formupload.fnUpload = function() {
+    debugger;
+    var lValid = apz.genfrm.formupload.fnValidateStage1();
+    if (lValid) {
+        apz.data.buildData("NewUpload", "genfrm");
+        var json = {};
+        json.fieldID = "genfrm__FormUpload__file_uploadPath";
+        json.callBack = apz.genfrm.formupload.uploadFileCallback;
+        json.fileName = "";
+        json.overWrite = "Y";
+        json.destination = "GenericForms/Upload/user1";
+        // alert(JSON.stringify(json));
+        apz.ns.uploadFile(json);
+        // var temp = {
+        //     "status" : true
+        // };
+        // apz.genfrm.formupload.uploadFileCallback(temp);
+    }
+};
+apz.genfrm.formupload.uploadFileCallback = function(params) {
+    debugger;
+    if (params.status) {
+        apz.genfrm.formupload.uploadEntryInDb();
+    } else {
+        //if(params.includes("successMessage")){
+        if (params.hasOwnProperty('successMessage')) {
+            apz.genfrm.formupload.uploadEntryInDb();
+        } else {
+            var lMsg = {
+                "code": params.errorCode
+            };
+            apz.dispMsg(lMsg);
+        }
+    }
+};
+apz.genfrm.formupload.uploadEntryInDb = function() {
+    var lReq = {
+        "tbDbtpFrmUpload": apz.data.scrdata.genfrm__NewUpload_Req.tbDbtpFrmUpload
+    };
+    var lServerParams = {
+        "ifaceName": "NewUpload_New",
+        "buildReq": "N",
+        "req": lReq,
+        "callBack": apz.genfrm.formupload.uploadResultCB
+    };
+    apz.genfrm.formupload.fnBeforeCallServer(lServerParams);
+};
+apz.genfrm.formupload.uploadResultCB = function(params) {
+    debugger;
+    apz.show("genfrm__FormUpload__statusBar");
+   // if (params.status) {
+        apz.show("genfrm__FormUpload__successStatus");
+        apz.hide("genfrm__FormUpload__failureStatus");
+    //} else {
+      //  apz.hide("genfrm__FormUpload__successStatus");
+        //apz.show("genfrm__FormUpload__failureStatus");
+//    }
+};
+apz.genfrm.formupload.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": params.buildReq,
+        "req": params.req,
+        "paintResp": "Y",
+        "callBack": params.callBack,
+        "appId": "genfrm",
+        "internal": false
+    };
+    //apz.server.callServer(lServerParams);
+    jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("genfrm")+"/NewUpload.json"));
+       apz.data.scrdata.genfrm__NewUpload_Req = {};
+                       apz.data.scrdata.genfrm__NewUpload_Req = jsondata;
+                      apz.data.loadData("NewUpload", "cbdtax");
+     apz.genfrm.formupload.uploadResultCB(jsondata);
+};
+apz.genfrm.formupload.fnLaunchDetailsCB = function(params) {
+    debugger;
+    if (params.status) {} else {
+        var lMsg = {
+            "code": params.errorCode
+        };
+        apz.dispMsg(lMsg);
+    }
+};
+apz.genfrm.formupload.fnScreenBack = function() {
+    apz.show("genfrm__Summary__Stage1");
+    apz.hide("genfrm__Summary__Stage2");
+};
+apz.genfrm.formupload.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("genfrm__FormUpload__Stage1Form");
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "ERR_MAND"
+        };
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};

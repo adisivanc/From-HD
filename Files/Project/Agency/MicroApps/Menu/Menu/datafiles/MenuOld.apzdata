@@ -1,0 +1,81 @@
+{
+    "typeclass": "CONTAINER",
+    "name": "Ageny_Menu",
+    "type": "CONTAINER",
+    "id": "6857e1da4bc3b0c8685fb748",
+    "pid": "7a36a154416ebd25e52ade10",
+    "widgetcategory": "CONTAINER",
+    "widgettype": "MENU",
+    "appearance": "pri",
+    "contextmenu": "N",
+    "custom": "N",
+    "events": [{
+        "name": "ONCLICK",
+        "function": "apz.menuap.Menu.fnMenuClick(this)"
+    }],
+    "iconposition": "LEFT",
+    "menuitems": [{
+        "menuname": "Home",
+        "menuicon": "icon-nav-relationOverview",
+        "parentname": "None",
+        "selected": "SELECTED"
+    }, {
+        "menuname": "My Tasks",
+        "menuicon": "icon-cm-mytask",
+        "parentname": "None",
+        "selected": "None"
+    }, {
+        "menuname": "Customers",
+        "menuicon": "icon-customer",
+        "parentname": "None",
+        "selected": "None"
+    }, {
+        "menuname": "Applications",
+        "menuicon": "icon-applications",
+        "parentname": "None",
+        "selected": "None"
+    }, {
+        "menuname": "Service Request",
+        "menuicon": "icon-nav-serviceRequest",
+        "parentname": "None",
+        "selected": "None"
+    }, {
+        "menuname": "Create Lead",
+        "menuicon": "icon-lead-details",
+        "parentname": "None",
+        "selected": "None"
+    }, {
+        "menuname": "Utilities",
+        "menuicon": "icon-nav-utilities",
+        "parentname": "None",
+        "selected": "None"
+    }, {
+        "menuname": "My Profile",
+        "menuicon": "icon-cm-company-profile",
+        "parentname": "None",
+        "selected": "None"
+    }, {
+        "menuname": "My Performance",
+        "menuicon": "icon-performance",
+        "parentname": "None",
+        "selected": "None"
+    }, {
+        "menuname": "Contact Us",
+        "menuicon": "icon-phone",
+        "parentname": "None",
+        "selected": "None"
+    }, {
+        "menuname": "Reports",
+        "menuicon": "icon-home",
+        "parentname": "None",
+        "selected": "None"
+    }, {
+        "menuname": "Logout",
+        "menuicon": "icon-signout",
+        "parentname": "None",
+        "selected": "None"
+    }],
+    "options": "Y",
+    "orientation": "HORIZONTAL",
+    "responsive": "N"
+}

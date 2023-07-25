@@ -1,0 +1,36 @@
+   {
+       "ovdrfd__SavDepAccDetails_Res": {
+           "SavingsAccount": [{
+               "accountNo": "100009312263",
+               "accountBal": "50000",
+               "accountBrn": "Koramangala, Bengaluru",
+               "accountBrnCd": "619",
+               "accountBrnIFSC": "HKL00000619"
+           }, {
+               "accountNo": "100009312401",
+               "accountBal": "65000",
+               "accountBrn": "Koramangala, Bengaluru",
+               "accountBrnCd": "619",
+               "accountBrnIFSC": "HKL00000619"
+           }],
+           "DepositAccount": [{
+               "accountNo": "100009312285",
+               "accountBal": "45000",
+               "accountBrn": "Koramangala, Bengaluru",
+               "accountBrnCd": "556",
+               "accountBrnIFSC": "HKL00000619"
+           }, {
+               "accountNo": "100009312256",
+               "accountBal": "90000",
+               "accountBrn": "Koramangala, Bengaluru",
+               "accountBrnCd": "098",
+               "accountBrnIFSC": "HKL00000619"
+           }, {
+               "accountNo": "100009312985",
+               "accountBal": "100000",
+               "accountBrn": "Koramangala, Bengaluru",
+               "accountBrnCd": "556",
+               "accountBrnIFSC": "HKL00000619"
+           }]
+       }
+   }

@@ -1,0 +1,15 @@
+apz.apptyp.AppType ={};
+apz.app.onLoad_AppType = function(params){
+    apz.apptyp.AppType.sParams = params;
+    $(".MenuFixed").addClass("sno");
+}
+apz.apptyp.AppType.fnStartApplication = function(flowType){
+    debugger;
+    apz.indainflowType = flowType;
+    var params = {};
+    params.appId = "navgtn";
+    params.scr = "Navigator";
+    params.div = "apzonb__Navigator__launchdiv";
+    params.userObj = apz.apptyp.AppType.sParams;
+    apz.launchApp(params);
+}

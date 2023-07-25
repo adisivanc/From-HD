@@ -1,0 +1,254 @@
+{
+    "DataSource": {
+        "chart": {
+            "palette": "2",
+            "xaxisminvalue": "0",
+            "xaxismaxvalue": "100",
+            "yaxisminvalue": "-5",
+            "yaxismaxvalue": "225",
+            "is3d": "0",
+            "showformbtn": "0",
+            "viewmode": "1",
+            "allowdrag": "0",
+            "showBorder": "0",
+            "bgAlpha": "0",
+            "showCanvasBorder": "0",
+            "showFormBtn": "0",
+            "showRestoreBtn": "0"
+        },
+        "dataset": [
+            {
+                "allowdrag": "0",
+                "showformbtn": "0",
+                "plotBorderColor": "0693ea",
+                "data": [
+                    {
+                        "x": "50",
+                        "y": "190",
+                        "name": "CITI Global",
+                        "color": "ffffff",
+                        "id": "CITI Global",
+                        "height": "40",
+                        "width": "100",
+                        "shape": "rectangle",
+                        "tooltext": "Name: CITI Global Owner: CITI Group"
+                    },
+                    {
+                        "x": "50",
+                        "y": "140",
+                        "name": "CITI EMEA",
+                        "color": "ffffff",
+                        "id": "CITI EMEA",
+                        "height": "40",
+                        "width": "100",
+                        "shape": "rectangle",
+                        "tooltext": "Name: CITI EMEA Owner: CITI Group"
+                    },
+                    {
+                        "x": "20",
+                        "y": "150",
+                        "name": "CITI NA",
+                        "color": "ffffff",
+                        "id": "CITI NA",
+                        "height": "40",
+                        "width": "100",
+                        "shape": "rectangle",
+                        "tooltext": "Name: CITI NA Owner: CITI Group"
+                    },
+                    {
+                        "x": "80",
+                        "y": "150",
+                        "name": "CITI ASIA",
+                        "color": "ffffff",
+                        "id": "CITI ASIA",
+                        "height": "40",
+                        "width": "100",
+                        "shape": "rectangle",
+                        "tooltext": "Name: CITI ASIA Owner: CITI Group"
+                    },
+                    {
+                        "x": "40",
+                        "y": "80",
+                        "name": "CITI UAE",
+                        "color": "ffffff",
+                        "id": "CITI UAE",
+                        "height": "40",
+                        "width": "70",
+                        "shape": "rectangle",
+                        "tooltext": "Name: CITI UAE Owner: CITI Group"
+                    },
+                    {
+                        "x": "50",
+                        "y": "80",
+                        "name": "CITI UK",
+                        "color": "ffffff",
+                        "id": "CITI UK",
+                        "height": "40",
+                        "width": "70",
+                        "shape": "rectangle",
+                        "tooltext": "Name: CITI UK Owner: CITI Group"
+                    },
+                    {
+                        "x": "60",
+                        "y": "80",
+                        "name": "CITI SA",
+                        "color": "ffffff",
+                        "id": "CITI SA",
+                        "height": "40",
+                        "width": "70",
+                        "shape": "rectangle",
+                        "tooltext": "Name: CITI South Africa Owner: CITI Group"
+                    },
+                    {
+                        "x": "75",
+                        "y": "80",
+                        "name": "CITI IND",
+                        "color": "ffffff",
+                        "id": "CITI IND",
+                        "height": "40",
+                        "width": "70",
+                        "shape": "rectangle",
+                        "tooltext": "Name: CITI INDIA Owner: CITI Group"
+                    },
+                    {
+                        "x": "85",
+                        "y": "80",
+                        "name": "CITI BAN",
+                        "color": "ffffff",
+                        "id": "CITI BAN",
+                        "height": "40",
+                        "width": "70",
+                        "shape": "rectangle",
+                        "tooltext": "Name: CITI Bangladesh Owner: CITI Group"
+                    },
+                    {
+                        "x": "15",
+                        "y": "80",
+                        "name": "CITI USA",
+                        "color": "ffffff",
+                        "id": "CITI USA",
+                        "height": "40",
+                        "width": "70",
+                        "shape": "rectangle",
+                        "tooltext": "Name: CITI United States Owner: CITI Group"
+                    },
+                    {
+                        "x": "25",
+                        "y": "80",
+                        "name": "CITI CAN",
+                        "color": "ffffff",
+                        "id": "CITI CAN",
+                        "height": "40",
+                        "width": "70",
+                        "shape": "rectangle",
+                        "tooltext": "Name: CITI Canada Owner: CITI Group"
+                    }
+                ]
+            }
+        ],
+        "connectors": [
+            {
+                "color": "0693ea",
+                "stdthickness": "5",
+                "connector": [
+                    {
+                        "strength": "0.3",
+                        "from": "CITI Global",
+                        "label": "",
+                        "to": "CITI ASIA",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    },
+                    {
+                        "strength": "0.3",
+                        "from": "CITI Global",
+                        "label": "",
+                        "to": "CITI EMEA",
+                        "color": "0693ea",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    },
+                    {
+                        "strength": "0.3",
+                        "from": "CITI Global",
+                        "label": "",
+                        "to": "CITI NA",
+                        "color": "0693ea",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    },
+                    {
+                        "strength": "0.3",
+                        "from": "CITI EMEA",
+                        "label": "",
+                        "to": "CITI UK",
+                        "color": "0693ea",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    },
+                    {
+                        "strength": "0.3",
+                        "from": "CITI EMEA",
+                        "label": "",
+                        "to": "CITI UAE",
+                        "color": "0693ea",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    },
+                    {
+                        "strength": "0.3",
+                        "from": "CITI EMEA",
+                        "label": "",
+                        "to": "CITI SA",
+                        "color": "0693ea",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    },
+                    {
+                        "strength": "0.3",
+                        "from": "CITI ASIA",
+                        "label": "",
+                        "to": "CITI IND",
+                        "color": "0693ea",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    },
+                    {
+                        "strength": "0.3",
+                        "from": "CITI ASIA",
+                        "label": "",
+                        "to": "CITI BAN",
+                        "color": "0693ea",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    },
+                    {
+                        "strength": "0.3",
+                        "from": "CITI NA",
+                        "label": "",
+                        "to": "CITI USA",
+                        "color": "0693ea",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    },
+                    {
+                        "strength": "0.3",
+                        "from": "CITI NA",
+                        "label": "",
+                        "to": "CITI CAN",
+                        "color": "0693ea",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    }
+                ]
+            }
+        ],
+        "labels": [
+            {
+                "label": [
+                    
+                ]
+            }
+        ]
+    }
+}

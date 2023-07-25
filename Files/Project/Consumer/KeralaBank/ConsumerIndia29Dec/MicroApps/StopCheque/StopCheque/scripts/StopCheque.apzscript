@@ -1,0 +1,354 @@
+apz.stpchq.stopcheque = {};
+apz.app.onShown_StopCheque = function(pParams) {
+    debugger;
+    apz.stpchq.stopcheque.sParams = pParams;
+    apz.stpchq.stopcheque.fnInitialise(pParams);
+    apz.stpchq.stopcheque.fnaddRowClicked();
+    $("#stpchq__StopCheque__chequeInpu1").attr("type", "tel");
+    $("#stpchq__StopCheque__chequeInpu2").attr("type", "tel");
+    $("#stpchq__StopCheque__chequeInpu3").attr("type", "tel");
+    $("#stpchq__StopCheque__chequeInpu4").attr("type", "tel");
+    $("#stpchq__StopCheque__chequeInpu5").attr("type", "tel");
+    $("#stpchq__StopCheque__chequeInpu6").attr("type", "tel");
+    $("#stpchq__StopCheque__strtChqnum_1").attr("type", "tel");
+    $("#stpchq__StopCheque__strtChqnum_2").attr("type", "tel");
+    $("#stpchq__StopCheque__strtChqnum_3").attr("type", "tel");
+    $("#stpchq__StopCheque__strtChqnum_4").attr("type", "tel");
+    $("#stpchq__StopCheque__strtChqnum_5").attr("type", "tel");
+    $("#stpchq__StopCheque__strtChqnum_6").attr("type", "tel");
+    $("#stpchq__StopCheque__stpChqnum_1").attr("type", "tel");
+    $("#stpchq__StopCheque__stpChqnum_2").attr("type", "tel");
+    $("#stpchq__StopCheque__stpChqnum_3").attr("type", "tel");
+    $("#stpchq__StopCheque__stpChqnum_4").attr("type", "tel");
+    $("#stpchq__StopCheque__stpChqnum_5").attr("type", "tel");
+    $("#stpchq__StopCheque__stpChqnum_6").attr("type", "tel");
+};
+apz.stpchq.stopcheque.fnInitialise = function(pParams) {
+    debugger;
+    apz.data.loadJsonData("SavCurrAccDetails", "stpchq");
+    apz.data.scrdata.stpchq__DebitAccount_Res = {};
+    apz.data.scrdata.stpchq__DebitAccount_Res.SavingsAccount = apz.data.scrdata.stpchq__SavCurrAccDetails_Res.SavingsAccount;
+    apz.data.scrdata.stpchq__DebitAccount_Res.CurrentAccount = apz.data.scrdata.stpchq__SavCurrAccDetails_Res.CurrentAccount;
+    if (pParams.Navigation) {
+        apz.stpchq.stopcheque.fnSetNavigation(pParams);
+    }
+    if (apz.data.scrdata.stpchq__SavCurrAccDetails_Res.SavingsAccount.length === 0) {
+        apz.hide("stpchq__StopCheque__savAcc");
+    }
+    if (apz.data.scrdata.stpchq__SavCurrAccDetails_Res.CurrentAccount.length === 0) {
+        apz.hide("stpchq__StopCheque__debAcc");
+    }
+    apz.data.loadData("DebitAccount", "stpchq");
+    apz.setElmValue("stpchq__StopCheque__i__chequeDtls__custId", pParams.data.customerID);
+    apz.stpchq.stopcheque.fnGoToStage1();
+};
+apz.stpchq.stopcheque.fnSetNavigation = function(params) {
+    debugger;
+    apz.stpchq.stopcheque.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "STOP CHEQUE";
+    }
+    lParams.backPressed = apz.stpchq.stopcheque.fnBack;
+    apz.stpchq.stopcheque.Navigation(lParams);
+};
+apz.stpchq.stopcheque.fnGoToStage1 = function() {
+    debugger;
+    apz.hide("stpchq__StopCheque__singleChequeRow");
+    apz.hide("stpchq__StopCheque__multiChequeRow");
+    apz.hide("stpchq__StopCheque__reasonRow");
+    apz.hide("stpchq__StopCheque__navBtnsRow");
+    apz.hide("stpchq__StopCheque__otpRow");
+    apz.hide("stpchq__StopCheque__statusRow");
+    apz.hide("stpchq__StopCheque__CancelChequeRow");
+    // apz.hide("stpchq__StopCheque__ct_lst_4_row_0");
+    apz.hide("stpchq__StopCheque__cancelChequeOptionRow");
+};
+apz.stpchq.stopcheque.fnaddRowClicked = function() {
+    debugger;
+    apz.app.preRowClicked = function(pContainer, pRowNo) {
+        debugger;
+        if (pContainer == "stpchq__StopCheque__savAcc") {
+            apz.stpchq.stopcheque.sAccNo = apz.getElmValue("stpchq__DebitAccount__o__SavingsAccount__accountNo_" + pRowNo);
+            apz.stpchq.stopcheque.sAccType = "Savings Account ";
+            apz.stpchq.stopcheque.fnFromAccSel();
+        } else if (pContainer == "stpchq__StopCheque__debAcc") {
+            apz.stpchq.stopcheque.sAccNo = apz.getElmValue("stpchq__DebitAccount__o__CurrentAccount__accountNo_" + pRowNo);
+            apz.stpchq.stopcheque.sAccType = "Current Account ";
+            apz.stpchq.stopcheque.fnFromAccSel();
+        }
+    };
+};
+apz.stpchq.stopcheque.fnFromAccSel = function() {
+    debugger;
+    apz.hide("stpchq__StopCheque__debitAccSelection");
+    apz.show("stpchq__StopCheque__cancelChequeOptionRow");
+    apz.setElmValue("stpchq__StopCheque__debitAccType", apz.stpchq.stopcheque.sAccType);
+    apz.setElmValue("stpchq__StopCheque__debitAccNum", apz.stpchq.stopcheque.sAccNo);
+    var pObj = {};
+    pObj = "SingleCheque";
+    apz.stpchq.stopcheque.fnGetChequeVale(pObj);
+    
+};
+apz.stpchq.stopcheque.fnCancelStopCheque = function() {
+    debugger;
+     apz.show("stpchq__StopCheque__debitAccSelection");
+    apz.hide("stpchq__StopCheque__cancelChequeOptionRow");
+    
+};
+apz.stpchq.stopcheque.fnDoneStpChq = function() {
+    debugger;
+    apz.landin.Landing.fnHome();
+};
+apz.stpchq.stopcheque.fnGetChequeVale = function(pThis) {
+    debugger;
+    if(pThis.id == undefined)
+    {
+         var lchequeValue = pThis;
+
+    }
+    else
+    {
+    var lchequeValue = apz.getElmValue(pThis.id);
+    }
+    if (lchequeValue === "MultipleCheque") {
+        apz.hide("stpchq__StopCheque__singleChequeRow");
+        apz.show("stpchq__StopCheque__multiChequeRow");
+        apz.show("stpchq__StopCheque__reasonRow");
+        apz.show("stpchq__StopCheque__navBtnsRow");
+        apz.show("stpchq__StopCheque__endChqNo_ctrl_grp_div") //In confirmation stage
+        for (var i = 1; i < 7; i++) {
+            apz.setElmValue("stpchq__StopCheque__chequeInpu" + i, "");
+        }
+    } else {
+        apz.hide("stpchq__StopCheque__multiChequeRow");
+        apz.show("stpchq__StopCheque__singleChequeRow");
+        apz.show("stpchq__StopCheque__reasonRow");
+        apz.show("stpchq__StopCheque__navBtnsRow");
+        apz.hide("stpchq__StopCheque__endChqNo_ctrl_grp_div") //In confirmation stage
+        for (var j = 1; j < 7; j++) {
+            apz.setElmValue("stpchq__StopCheque__strtChqnum_" + j, "");
+            apz.setElmValue("stpchq__StopCheque__stpChqnum_" + j, "");
+        }
+    }
+};
+apz.stpchq.stopcheque.fnChequeCancelReason = function(pThis) {
+    debugger;
+    apz.setElmValue("stpchq__StopCheque__i__chequeDtls__reason", pThis.value);
+    /* $("#stpchq__StopCheque__reasonRow .active").removeClass("active");
+    if (pThis.id === "stpchq__StopCheque__Reason1") {
+        apz.setElmValue("stpchq__StopCheque__i__chequeDtls__reason", "Lost / Stolen");
+        $("#stpchq__StopCheque__Reason1").addClass("active");
+    } else if (pThis.id === "stpchq__StopCheque__reason2") {
+        apz.setElmValue("stpchq__StopCheque__i__chequeDtls__reason", "Paid By Cash");
+        $("#stpchq__StopCheque__reason2").addClass("active");
+    } else if (pThis.id === "stpchq__StopCheque__reason3") {
+        apz.setElmValue("stpchq__StopCheque__i__chequeDtls__reason", "Replacement Issued");
+        $("#stpchq__StopCheque__reason3").addClass("active");
+    } else if (pThis.id === "stpchq__StopCheque__reason4") {
+        apz.setElmValue("stpchq__StopCheque__i__chequeDtls__reason", "Insufficient Funds");
+        $("#stpchq__StopCheque__reason4").addClass("active");
+    }*/
+};
+apz.stpchq.stopcheque.fnSwitchOver = function(pObj, pEvent) {
+    debugger;
+    if (pEvent.which === 8) {
+        $("#" + pObj.id.slice(0, -1) + (Number(pObj.id.slice("-1")) - 1)).focus();
+    } else {
+        $("#" + pObj.id.slice(0, -1) + (Number(pObj.id.slice("-1")) + 1)).focus();
+    }
+};
+apz.stpchq.stopcheque.fnStopPayement = function() {
+    debugger;
+    if (apz.isNull(apz.getElmValue("stpchq__StopCheque__i__chequeDtls__reason"))) {
+        var lMsg = {
+            "code": "VAL-REASON"
+        };
+        apz.dispMsg(lMsg);
+    } else {
+        apz.setElmValue("stpchq__StopCheque__i__chequeDtls__accountNo", apz.stpchq.stopcheque.sAccNo);
+        var lSingleChequeValue = "";
+        var lMultiChecqueValue = "";
+        var lChequeRadioBtnValue = apz.getElmValue("stpchq__StopCheque__el_rdo_1");
+        if (lChequeRadioBtnValue === "SingleCheque") {
+            for (var i = 1; i < 7; i++) {
+                var lsingleInputValue = apz.getElmValue("stpchq__StopCheque__chequeInpu" + i);
+                if (!(apz.isNull(lsingleInputValue)) && !(isNaN(lsingleInputValue))) {
+                    lSingleChequeValue = lSingleChequeValue.concat(lsingleInputValue);
+                } else {
+                    break;
+                }
+            }
+            apz.setElmValue("stpchq__StopCheque__i__chequeDtls__startChequeNumber", lSingleChequeValue);
+            apz.stpchq.stopcheque.fnCallBeforeAuthentication(lSingleChequeValue, "singleCheque");
+        } else {
+            for (var j = 1; j < 7; j++) {
+                var lStartChqValue = apz.getElmValue("stpchq__StopCheque__strtChqnum_" + j);
+                var lLastChqValue = apz.getElmValue("stpchq__StopCheque__stpChqnum_" + j);
+                if (!(apz.isNull(lStartChqValue && lLastChqValue)) && !(isNaN(lStartChqValue)) && !(isNaN(lLastChqValue))) {
+                    lSingleChequeValue = lSingleChequeValue.concat(lStartChqValue);
+                    lMultiChecqueValue = lMultiChecqueValue.concat(lLastChqValue);
+                } else {
+                    break;
+                }
+            }
+            apz.setElmValue("stpchq__StopCheque__i__chequeDtls__startChequeNumber", lSingleChequeValue);
+            apz.setElmValue("stpchq__StopCheque__i__chequeDtls__endChequeNumber", lMultiChecqueValue);
+            apz.stpchq.stopcheque.fnCallBeforeAuthentication(lSingleChequeValue, lMultiChecqueValue);
+        }
+    }
+};
+apz.stpchq.stopcheque.fnCallBeforeAuthentication = function(respSingleChequeValue, respMultiChecqueValue) {
+    debugger;
+    if (respMultiChecqueValue === "singleCheque") {
+        if (respSingleChequeValue.length != 6) {
+            var lMsg = {
+                "code": "VAL-001"
+            };
+            apz.dispMsg(lMsg);
+        } else {
+            apz.stpchq.stopcheque.fnStopCheque();
+        }
+    } else {
+        if (respSingleChequeValue.length != 6 && respMultiChecqueValue.length != 6) {
+            var lMsg = {
+                "code": "VAL-001"
+            };
+            apz.dispMsg(lMsg);
+        } else {
+            apz.stpchq.stopcheque.fnStopCheque();
+        }
+    }
+};
+/*
+apz.stpchq.stopcheque.fnCallAuthentication = function() {
+    apz.hide("stpchq__StopCheque__cancelChequeOptionRow");
+    var llaunch = {};
+    llaunch.appId = "authnv";
+    llaunch.scr = "TransactionAuthorize";
+    llaunch.div = "stpchq__StopCheque__otpRow";
+    llaunch.userObj = {
+        "lauthMethod": "BIOD",
+        "headerCallback": apz.stpchq.stopcheque.sParams.headerCallback,
+        "control": {
+            "callBack": apz.stpchq.stopcheque.fnStopChequeCallBack,
+            "destroyDiv": "stpchq__StopCheque__otpRow"
+        }
+    };
+    apz.data.buildData('StopCheque', 'stpchq');
+    apz.launchApp(llaunch);
+};*/
+apz.stpchq.stopcheque.fnStopCheque = function(presp) {
+    debugger;
+    apz.hide("stpchq__StopCheque__cancelChequeOptionRow");
+    apz.setElmValue("stpchq__StopCheque__i__chequeDtls__authenticationType", 'OTP');
+    apz.data.buildData('StopCheque', 'stpchq');
+    apz.stpchq.stopcheque.sAction = "Confirm";
+    // var lReq = {
+    //     "ifaceName": "StopCheque",
+    //     "req": {
+    //         "action": apz.stpchq.stopcheque.sAction,
+    //         "chequeDtls": apz.data.scrdata.stpchq__StopCheque_Req.chequeDtls
+    //     }
+    // };
+    // apz.stpchq.stopcheque.fnBeforeCallServer(lReq);
+    apz.data.loadJsonData("StopCheque", "stpchq");
+    var lOtpRef = apz.data.scrdata.stpchq__StopCheque_Res.chequeDtls.data.OTPRefNo;
+    if (apz.data.scrdata.stpchq__StopCheque_Res.chequeDtls.status == 'success' && apz.data.scrdata.stpchq__StopCheque_Res.chequeDtls.respCd == 'app') {
+        var llaunch = {};
+        llaunch.appId = "otpeng";
+        llaunch.scr = "ProcessOTP";
+        llaunch.div = "stpchq__StopCheque__otpRow";
+        llaunch.userObj = {};
+        llaunch.userObj.action = "SetRefNo";
+        llaunch.userObj.control = {};
+        llaunch.userObj.control.destroyDiv = "stpchq__StopCheque__otpRow";
+        llaunch.userObj.control.callBack = apz.stpchq.stopcheque.fnOtpProcessCallBack;
+        llaunch.userObj.headerCallback = apz.stpchq.stopcheque.sParams.headerCallback;
+        llaunch.userObj.data = {};
+        llaunch.userObj.data.OTPRefNo = lOtpRef;
+        $("#stpchq__StopCheque__otpRow").children().remove();
+        apz.launchApp(llaunch);
+    }
+};
+apz.stpchq.stopcheque.fnBeforeCallServer = function(pParams) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": pParams.ifaceName,
+        "req": pParams.req,
+        "buildReq": "N",
+        "paintResp": "N",
+        "appId": "stpchq",
+        "callBack": apz.stpchq.stopcheque.fnCallServerCallBack
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.stpchq.stopcheque.fnCallServerCallBack = function(pParams) {
+    debugger;
+    if (pParams.resFull.appzillonHeader.status === true) {
+        var lOtpRef = pParams.res.stpchq__StopCheque_Res.chequeDtls.data.OTPRefNo;
+        if (pParams.res.stpchq__StopCheque_Res.chequeDtls.status == 'success' && pParams.res.stpchq__StopCheque_Res.chequeDtls.respCd == 'app') {
+            var llaunch = {};
+            llaunch.appId = "otpeng";
+            llaunch.scr = "ProcessOTP";
+            llaunch.div = "stpchq__StopCheque__otpRow";
+            llaunch.userObj = {};
+            llaunch.userObj.action = "SetRefNo";
+            llaunch.userObj.control = {};
+            llaunch.userObj.control.destroyDiv = "stpchq__StopCheque__otpRow";
+            llaunch.userObj.control.callBack = apz.stpchq.stopcheque.fnOtpProcessCallBack;
+            llaunch.userObj.headerCallback = apz.stpchq.stopcheque.sParams.headerCallback;
+            llaunch.userObj.data = {};
+            llaunch.userObj.data.OTPRefNo = lOtpRef;
+            $("#stpchq__StopCheque__otpRow").children().remove();
+            apz.launchApp(llaunch);
+        }
+    } else if (pParams.errors[0].errorCode != "$APZ-SMS-EX-003") {
+        var lMsg = {
+            "code": pParams.errors[0].errorCode
+        };
+        apz.dispMsg(lMsg);
+    }
+};
+apz.stpchq.stopcheque.fnOtpProcessCallBack = function(pParams) {
+    debugger;
+    if (!(pParams.errors)) {
+        if (pParams.chequeDtls.status === "success" && pParams.chequeDtls.respCd === "ack") {
+            apz.show("stpchq__StopCheque__statusRow");
+            $("#stpchq__StopCheque__el_btn_1").removeAttr("disabled");
+            $("#stpchq__StopCheque__el_btn_2").removeAttr("disabled");
+            apz.setElmValue("stpchq__StopCheque__accType", apz.stpchq.stopcheque.sAccType);
+            apz.setElmValue("stpchq__StopCheque__accNo", apz.stpchq.stopcheque.sAccNo);
+            apz.setElmValue("stpchq__StopCheque__startChqNo", apz.getElmValue("stpchq__StopCheque__i__chequeDtls__startChequeNumber"));
+            apz.setElmValue("stpchq__StopCheque__endChqNo", apz.getElmValue("stpchq__StopCheque__i__chequeDtls__endChequeNumber"));
+            apz.setElmValue("stpchq__StopCheque__reason", apz.getElmValue("stpchq__StopCheque__i__chequeDtls__reason"));
+            var lRefNo = "Your Reference no is " + pParams.chequeDtls.txnRefNo;
+            apz.setElmValue("stpchq__StopCheque__i__chequeDtls__txnRefNo", lRefNo);
+        } else if (pParams.chequeDtls.status === "failure" && pParams.chequeDtls.respCd === "msg") {
+            if (pParams.chequeDtls.extMsg !== null) {
+                apz.hide("stpchq__StopCheque__statusRow");
+                apz.show("stpchq__StopCheque__statusErrRow");
+                $("#stpchq__StopCheque__el_btn_3").removeAttr("disabled");
+                apz.setElmValue("stpchq__StopCheque__errorMsg", pParams.chequeDtls.extMsg);
+            } else if (pParams.chequeDtls.intMsgCd !== null) {
+                var lMsg = {
+                    "code": pParams.chequeDtls.intMsgCd,
+                    "callBack": apz.stpchq.stopcheque.fnErrorCallBck
+                };
+                apz.dispMsg(lMsg);
+            }
+        }
+    } else if (pParams.errors[0].errorCode != "$APZ-SMS-EX-003") {
+        var lMsg = {
+            "message": pParams.errors[0].errorMessage
+        };
+        apz.dispMsg(lMsg);
+    }
+};
+apz.app.postGetHeader = function(header) {
+    debugger;
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};

@@ -1,0 +1,41 @@
+apz.csmrbk.recentTransaction = {};
+apz.app.onLoad_recentTransaction = function(params) {
+    debugger;
+    apz.data.loadJsonData("RecentTransactions", "accstm");
+     
+}
+//show transcation
+apz.csmrbk.recentTransaction.fnShowRecentTransaction = function(ths) {
+    debugger;
+    
+    var rowno = $(ths).attr("rowno");
+    var transactionData = apz.data.scrdata.accstm__RecentTransactions_Res.widgRecentTransac[rowno].details;
+   
+    apz.launchApp({
+        "appId": "accstm",
+        "scr": "Navigator",
+        "div": "csmrbk__LandingPage__microappLauncherCol",
+        "userObj": {
+            "data": transactionData,
+            "callBack": apz.csmrbk.recentTransaction.fnShowRecentTransactionCB,
+            "action": "Mini"
+        }
+    })
+}
+//back to dashbard
+apz.csmrbk.recentTransaction.fnShowRecentTransactionCB = function() {
+    apz.launchApp({
+        "scr": "Dashboard",
+        "div": "csmrbk__LandingPage__microappLauncherCol",
+        "appId": "csmrbk",
+        "userObj": {
+            "control": {
+                "exitApp": {
+                    "appId": "",
+                    "div": "csmrbk__LandingPage__microappLauncherCol",
+                    "callBack": ""
+                }
+            }
+        }
+    });
+}

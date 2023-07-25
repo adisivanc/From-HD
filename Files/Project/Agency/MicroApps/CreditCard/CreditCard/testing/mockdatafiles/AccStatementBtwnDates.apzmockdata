@@ -1,0 +1,51 @@
+{
+    "accStmtMaster": {
+        "txnRefNo": "",
+        "status": "",
+        "respCd": "",
+        "intMsgCd": "",
+        "extMsg": "",
+        "accStmtDtls": [
+            {
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "RF- Big Bazzar",
+                "trnAmount": "3000",
+                "runningBalance": "71978",
+                "trnDate": "4 MAR 2018",
+                "drcrInd": "D",
+                "pageNo": ""
+            },
+            {
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "Airtel-56XXXXXX03",
+                "trnAmount": "4000",
+                "runningBalance": "68978",
+                "trnDate": "7 MAR 2018",
+                "drcrInd": "D",
+                "pageNo": ""
+            },
+            {
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "Ola ZipCashMumbai",
+                "trnAmount": "245",
+                "runningBalance": "68457",
+                "trnDate": "7 MAR 2018",
+                "drcrInd": "D",
+                "pageNo": ""
+            },
+            {
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "Epay XXXXXXXXXXX",
+                "trnAmount": "3743",
+                "runningBalance": "68457",
+                "trnDate": "15 MAR 2018",
+                "drcrInd": "C",
+                "pageNo": ""
+            }
+        ]
+    }
+}

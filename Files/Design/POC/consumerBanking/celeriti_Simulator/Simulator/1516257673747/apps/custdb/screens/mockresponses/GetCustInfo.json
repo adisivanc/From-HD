@@ -1,0 +1,127 @@
+{
+   "custDetails":{
+      "accountInformation":[
+         {
+            "subProductCd":null,
+            "customertoAccountRelCd":"PRI",
+            "accountOpenDt":"2017-03-31",
+            "currencyCd":null,
+            "accountName":"RAY LAKEMAN",
+            "accountStatusCd":"*A",
+            "accountType":"BOR",
+            "companyNbr":11,
+            "ownershipPercent":100,
+            "accountNbr":"000-000000300021",
+            "currentBalanceAmt":0
+         },
+         {
+            "subProductCd":null,
+            "customertoAccountRelCd":"DLB",
+            "accountOpenDt":"2016-06-20",
+            "currencyCd":null,
+            "accountName":"RAY LAKEMAN",
+            "accountStatusCd":"*A",
+            "accountType":"MLS",
+            "companyNbr":11,
+            "ownershipPercent":0,
+            "accountNbr":"3016-3",
+            "currentBalanceAmt":182772.48
+         },
+         {
+            "subProductCd":null,
+            "customertoAccountRelCd":"PRI",
+            "accountOpenDt":"2017-03-31",
+            "currencyCd":"840",
+            "accountName":"RAY LAKEMAN",
+            "accountStatusCd":"BD",
+            "accountType":"CRD",
+            "companyNbr":24024,
+            "ownershipPercent":100,
+            "accountNbr":"123456*000105*3",
+            "currentBalanceAmt":5173.48
+         },
+         {
+            "subProductCd":null,
+            "customertoAccountRelCd":"PLS",
+            "accountOpenDt":"2017-03-31",
+            "currencyCd":null,
+            "accountName":null,
+            "accountStatusCd":"BD",
+            "accountType":"PLS",
+            "companyNbr":24024,
+            "ownershipPercent":100,
+            "accountNbr":"421120-5530018-01-1",
+            "currentBalanceAmt":0
+         }
+      ],
+      "xStatus":{
+         "severity":"I",
+         "applicationCd":0,
+         "statusCd":64000,
+         "statusMessage":"ACTION SUCCESSFUL                      *"
+      },
+      "bankRelationshipInfo":[
+         {
+            "bankRelationshipCd":"OTH"
+         }
+      ],
+      "customerInfo":{
+         "customerPostalCd":"64523",
+         "customerState":"AR",
+         "businessPhoneNbr":"214 408-2910",
+         "homePhoneNbr":"214 408-2908",
+         "employerName":"SANDERS FARMS",
+         "customerCity":"SPRINGDALE",
+         "customerCostCenterNbr":98766,
+         "customerNameLine1":"RAY LAKEMAN",
+         "customerSegmentCd":"TWOB",
+         "customerStatusCd":"01",
+         "emailAddress":"RAY.LAKEMAN@SANDERSFARMS.COM",
+         "customerOfficer2Cd":"OFF01",
+         "customerCompanyNbr":11,
+         "householdNbr":0,
+         "customerOfficer1Cd":"OFF02",
+         "factActInd":"N",
+         "taxPayerNbr":"377329876",
+         "genderCd":"M",
+         "solicitationCd":"A",
+         "customerTypeCd":"02",
+         "customerAddressLine2":"100 QUNICY LANE",
+         "occupationCd":"010",
+         "customerNbr":2240,
+         "birthDt":"1963-08-10",
+         "communicationMethodCd":"ASL",
+         "employeeInd":"N",
+         "nationalityCd":"US",
+         "customerOpenDt":"2017-03-31",
+         "customerBranchNbr":1,
+         "maritalStatusCd":"M",
+         "customerLanguageCd":"ENU"
+      },
+      "bankServicesInfo":[
+         {
+            "bankServiceCd":"LKB"
+         },
+         {
+            "bankServiceCd":"ARP"
+         },
+         {
+            "bankServiceCd":"PCS"
+         }
+      ],
+      "remarkInformation":[
+         {
+            "remarkTypeCd":"9992",
+            "remarkData":"Y00890  NEW ADDRESS ADDED",
+            "remarkEndDt":"2024-09-30",
+            "remarkStartDt":"2017-03-31"
+         },
+         {
+            "remarkTypeCd":"9992",
+            "remarkData":"Y06523  NEW ADDRESS ADDED",
+            "remarkEndDt":"2024-11-18",
+            "remarkStartDt":"2017-05-18"
+         }
+      ]
+   }
+}

@@ -1,0 +1,38 @@
+apz.disclo.Disclosure = {};
+apz.disclo.Disclosure.sCache = {};
+apz.app.onLoad_Disclosure = function(params){
+    debugger;
+    apz.disclo.Disclosure.sCache = params;
+}
+apz.disclo.Disclosure.fnNext = function(params){
+    debugger;
+    apz.launchSubScreen({
+        appId:"disclo",
+        scr:"Agreement",
+        div:"disclo__Launcher__launcher",
+        userObj:{
+            "refNo": apz.disclo.Disclosure.sCache.refNo,
+            "subproduct": apz.appdtl.AppLauncher.sCache.subproduct,
+            "product": apz.appdtl.AppLauncher.sCache.product,
+            "appId": apz.appdtl.AppLauncher.sCache.appId,
+            "screen": "nominee",
+            "parentDiv": apz.disclo.Disclosure.sCache.parentDiv
+        }
+    })
+}
+apz.disclo.Disclosure.fnBackToProducts=function(){
+  debugger;
+    var params = {};
+        params.appId = "appdtl";
+        params.scr = "ProductLauncher";
+        params.div = "appdtl__AppLauncher__screenLauncher";
+        params.userObj = {
+            "refNo": apz.disclo.Disclosure.sCache.refNo,
+            "subproduct": apz.appdtl.AppLauncher.sCache.subproduct,
+            "product": apz.appdtl.AppLauncher.sCache.product,
+            "appId": apz.appdtl.AppLauncher.sCache.appId,
+            "screen": "nominee"
+        };
+        apz.launchSubScreen(params);
+}
+

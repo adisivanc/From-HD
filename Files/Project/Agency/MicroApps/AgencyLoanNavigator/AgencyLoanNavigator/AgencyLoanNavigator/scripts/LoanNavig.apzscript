@@ -1,0 +1,258 @@
+apz.agloan.loannavig = {};
+apz.app.onLoad_LoanNavig = function(params) {
+    apz.agloan.loannavig.fnInitialise(params);
+};
+apz.agloan.loannavig.fnInitialise = function(params) {
+    debugger;
+    apz.hide("agloan__LoanNavig__eligAmtRow");
+    apz.agloan.loannavig.sParams = params;
+      if(params.Navigation){
+         apz.agloan.loannavig.fnSetNavigation(params);
+    }
+    apz.agloan.loannavig.fnGoToStage1();
+};
+apz.app.onShown_LoanNavig = function() {
+    debugger;
+    
+   // $(".crt-form.ver .ecn > .syl > span").text("Rs.");
+};
+ apz.agloan.loannavig.fnSetNavigation = function(params){
+     debugger;
+    apz.agloan.loannavig.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "APPLY FOR LOAN";
+    }
+    lParams.backPressed = apz.agloan.loannavig.fnBack;
+    apz.agloan.loannavig.Navigation(lParams);
+ };
+apz.agloan.loannavig.fnGoToStage1 = function() {
+    apz.agloan.loannavig.fnRenderStage1();
+};
+apz.agloan.loannavig.fnRenderStage1 = function() {
+    apz.show("agloan__LoanNavig__Stage1");
+    apz.hide("agloan__LoanNavig__Stage2");
+};
+apz.agloan.loannavig.fnGoToStage2 = function() {
+    apz.agloan.loannavig.fnRenderStage2();
+};
+apz.agloan.loannavig.fnRenderStage2 = function() {
+    apz.show("agloan__LoanNavig__Stage2");
+    apz.hide("agloan__LoanNavig__Stage1");
+};
+apz.agloan.loannavig.fnCalculateRate = function() {
+    var lAmt = apz.getElmValue("agloan__LoanNavig__Loan_amt");
+    var lPeriod = apz.getElmValue("agloan__LoanNavig__tenor_yrs");
+    if (!apz.isNull(lAmt) && !apz.isNull(lPeriod)) {
+        apz.setElmValue("agloan__LoanNavig__interestRate", 8.20);
+    } else {
+        apz.setElmValue("agloan__LoanNavig__interestRate", "");
+    }
+};
+apz.agloan.loannavig.fnLoanNext = function() {
+    var lValid = apz.val.validateContainer("agloan__LoanNavig__LoanDetailsForm");
+    var lLoanType = apz.getElmValue("agloan__LoanNavig__loanType");
+    if (lValid && (!apz.isNull(lLoanType))) {
+        apz.agloan.loannavig.fnOnChangeLoanType(lLoanType);
+    } else {
+        var params = {
+            "code": "APZ-CNT-099"
+        };
+        apz.dispMsg(params);
+    }
+};
+apz.agloan.loannavig.fnOnChangeLoanType = function(pLoanType) {
+    debugger;
+    apz.agloan.loannavig.sParams.data.loanType = pLoanType;
+    apz.agloan.loannavig.sParams.data.Amount = apz.getElmValue("agloan__LoanNavig__EligibleLoanAmt");
+    apz.agloan.loannavig.sParams.data.Period = apz.getElmValue("agloan__LoanNavig__tenor_yrs");
+    apz.agloan.loannavig.sParams.data.Rate = apz.getElmValue("agloan__LoanNavig__interestRate");
+    if (apz.isNull(apz.agloan.loannavig.eligibleAmt)) {
+        var lObj = {
+            "value": apz.getElmValue("agloan__LoanNavig__Loan_annualInc"),
+            "decimalSep": '.',
+            "displayAsLiteral": 'N'
+        };
+        var lPrincipal = parseInt(apz.unFormatNumber(lObj));
+        var lObj1 = {
+            "value": lPrincipal * 0.80,
+            "decimalSep": '.',
+            "displayAsLiteral": 'N',
+            "mask": "LAKH",
+            "decimalPoints": 2
+        };
+        apz.agloan.loannavig.eligibleAmt = apz.formatNumber(lObj1);
+    }
+    if (pLoanType == "Home") {
+        /*  lParams = {
+            "appId": "homeln",
+            "scr": "HomeLoan",
+            "div": "agloan__LoanNavig__appLauncherCol",
+            "userObj": {
+                "action": "",
+                "data": apz.agloan.loannavig.sParams.data,
+                "control": {
+                    "exitApp": {
+                        "appId": "",
+                        "div": "",
+                        "callBack": apz.agloan.loannavig.fnCallBack
+                    }
+                }
+            }
+        };*/
+    } else if (pLoanType == "Auto") {
+        /*  lParams = {
+            "appId": "onbcus",
+            "scr": "ProductSelection",
+            "div": "agloan__LoanNavig__appLauncherCol",
+            "userObj": {
+                "action": "",
+                "data": {},
+                "destroyDiv": "agloan__LoanNavig__appLauncherCol",
+                "parentAppId": "agloan",
+                "callBack": apz.agloan.loannavig.fnCallBack
+            }
+        };*/
+    } else if (pLoanType == "Personal") {
+        apz.agloan.loannavig.fnGoToStage2();
+        lParams = {
+            "appId": "prsnln",
+            "scr": "PersonalLoan",
+            "div": "agloan__LoanNavig__appLauncherCol",
+            "userObj": {
+                "action": "",
+                "data": apz.agloan.loannavig.sParams.data,
+                "control": {
+                    "exitApp": {
+                        "appId": "",
+                        "div": "",
+                        "callBack": apz.agloan.loannavig.fnCallBack
+                    }
+                }
+            }
+        };
+        apz.launchApp(lParams);
+    }
+};
+apz.agloan.loannavig.fnCallBack = function() {
+    // $("#agloan__LoanNavig__LoanDetailsForm input").val("");
+    apz.agloan.loannavig.fnRenderStage1();
+};
+apz.agloan.loannavig.fnCheckEligibleAmount = function() {
+    debugger;
+    var lObj = {
+        "value": apz.getElmValue("agloan__LoanNavig__Loan_annualInc"),
+        "decimalSep": '.',
+        "displayAsLiteral": 'N'
+    };
+    var lPrincipal = parseInt(apz.unFormatNumber(lObj));
+    //lPrincipal = lPrincipal.toString();
+    var lTenure = apz.getElmValue("agloan__LoanNavig__tenor_yrs");
+    // var lROI = apz.getElmValue("agloan__PersonalLoan__i__PersonlLn__Rate");
+    // var lIncome = apz.getElmValue("agloan__PersonalLoan__i__PersonlLn__AnnualIncome");
+    // var lValid = apz.val.validateContainer("agloan__LoanNavig__LoanDetailsForm");
+    if (apz.isNull(apz.getElmValue("agloan__LoanNavig__Loan_annualInc")) || apz.isNull(lTenure)) {
+        var params = {
+            "code": "APZ-CNT-099"
+        };
+        apz.dispMsg(params);
+    } else {
+        var lObj1 = {
+            "value": lPrincipal * 0.80,
+            "decimalSep": '.',
+            "displayAsLiteral": 'N',
+            "mask": "LAKH",
+            "decimalPoints": 2
+        };
+        apz.agloan.loannavig.eligibleAmt = apz.formatNumber(lObj1);
+        apz.show("agloan__LoanNavig__eligAmtRow");
+        apz.setElmValue("agloan__LoanNavig__EligibleLoanAmt", apz.agloan.loannavig.eligibleAmt);
+    }
+};
+apz.agloan.loannavig.fnCheckEligAmtChange = function() {
+    var lObj = {
+        "value": apz.agloan.loannavig.eligibleAmt,
+        "decimalSep": '.',
+        "displayAsLiteral": 'N'
+    };
+    var lEligAmt = parseInt(apz.unFormatNumber(lObj));
+    lObj.value = apz.getElmValue("agloan__LoanNavig__EligibleLoanAmt");
+    var lChangedAmt = parseInt(apz.unFormatNumber(lObj));
+    if (lEligAmt < lChangedAmt) {
+        var params = {
+            "code": "ERR_ELIG_AMT"
+        };
+        apz.dispMsg(params);
+    } else {
+        var lObj1 = {
+            "value": lChangedAmt,
+            "decimalSep": '.',
+            "displayAsLiteral": 'N',
+            "mask": "LAKH",
+            "decimalPoints": 2
+        };
+        apz.agloan.loannavig.eligibleAmt = apz.formatNumber(lObj1);
+    }
+    apz.setElmValue("agloan__LoanNavig__EligibleLoanAmt", apz.agloan.loannavig.eligibleAmt);
+};
+apz.agloan.loannavig.fnCheckEMISchedule = function() {
+    apz.agloan.loannavig.fnCalculateEMI();
+};
+apz.agloan.loannavig.fnvalueEMI = function(pPrincipal, pMonthlyROI, pMonthlyTenure) {
+    var lMonthyEMI = (pMonthlyROI * pPrincipal * Math.pow((1 + pMonthlyROI), pMonthlyTenure)) / (Math.pow((1 + pMonthlyROI), pMonthlyTenure) - 1);
+    return Math.round((lMonthyEMI * 100) / 100);
+};
+apz.agloan.loannavig.fnCalcAmortizationSchedule = function(pEmi, pPrincipal, pROI, pTenure, pCurrPeriod, pArmotScheduleJSON) {
+    if (pCurrPeriod <= pTenure) {
+        var lMonthInterest = Math.round((pPrincipal * pROI * 100) / 100);
+        var lMonthPrincipal = Math.round(((pEmi - lMonthInterest) * 100) / 100);
+        var lBalance = Math.round(((pPrincipal - lMonthPrincipal) * 100) / 100);
+        var lCurrAmort = {};
+        lCurrAmort.Interest = lMonthInterest;
+        lCurrAmort.Principal = lMonthPrincipal;
+        lCurrAmort.Balance = lBalance;
+        lCurrAmort.Period = pCurrPeriod;
+        pArmotScheduleJSON.push(lCurrAmort);
+        pCurrPeriod = pCurrPeriod + 1;
+        apz.agloan.loannavig.fnCalcAmortizationSchedule(pEmi, lBalance, pROI, pTenure, pCurrPeriod, pArmotScheduleJSON);
+    }
+};
+apz.agloan.loannavig.fnCalculateEMI = function() {
+    debugger;
+    var lObj = {
+        "value": apz.agloan.loannavig.eligibleAmt,
+        "decimalSep": '.',
+        "displayAsLiteral": 'N'
+    };
+    var lPrincipal = parseInt(apz.unFormatNumber(lObj));
+    lPrincipal = lPrincipal.toString();
+    var lTenure = apz.getElmValue("agloan__LoanNavig__tenor_yrs");
+    var lROI = apz.getElmValue("agloan__LoanNavig__interestRate");
+    if (apz.isNull(lPrincipal) || apz.isNull(lTenure) || apz.isNull(lROI)) {
+        var params = {
+            "code": "ERR_AMT_TENOR"
+        };
+        apz.dispMsg(params);
+    } else {
+        var lMonthlyTenure = lTenure * 12;
+        var lMonthlyROI = lROI / (12 * 100);
+        var lEmi = apz.agloan.loannavig.fnvalueEMI(lPrincipal, lMonthlyROI, lMonthlyTenure);
+        var lObj1 = {
+            "value": lEmi,
+            "decimalSep": '.',
+            "displayAsLiteral": 'N',
+            "mask": "LAKH"
+        };
+        apz.agloan.loannavig.monthlyEmi = apz.formatNumber(lObj1);
+        var lArmotScheduleJSON = [];
+        apz.agloan.loannavig.fnCalcAmortizationSchedule(lEmi, lPrincipal, lMonthlyROI, lMonthlyTenure, 1, lArmotScheduleJSON);
+        apz.data.scrdata.agloan__PersonalLoanSimulation_Req = {};
+        apz.data.scrdata.agloan__PersonalLoanSimulation_Req.EMI = lArmotScheduleJSON;
+        apz.toggleModal({
+            "targetId": "agloan__LoanNavig__EmiScheduleModal"
+        });
+        apz.data.loadData("PersonalLoanSimulation", "agloan");
+    }
+};

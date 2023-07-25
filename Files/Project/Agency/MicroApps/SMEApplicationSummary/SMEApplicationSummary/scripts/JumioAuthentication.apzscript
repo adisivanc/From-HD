@@ -1,0 +1,65 @@
+apz.corsum.JumioAuthentication = {};
+apz.app.onLoad_JumioAuthentication = function(params) {
+    apz.corsum.JumioAuthentication.sParams = params;
+   apz.corsum.JumioAuthentication.fnDocValidation(); 
+}
+apz.corsum.JumioAuthentication.fnDocValidation=function(){
+    debugger;
+    apz.startLoader();
+    apz.server.callServer({
+        "ifaceName": "DocumentAuthentication",
+        "buildReq": "N",
+        "req": {
+            "tokenObj":{
+                "token":apz.docRefNo
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.corsum.JumioAuthentication.fnDocValidationCB,
+        "appId": "corsum"
+    });
+}
+apz.corsum.JumioAuthentication.fnDocValidationCB=function(params){
+    debugger;
+    if(params.res.corsum__DocumentAuthentication_Res.document.status==="APPROVED_VERIFIED"&&params.res.corsum__DocumentAuthentication_Res.verification.identityVerification.similarity==="MATCH"){
+        apz.setElmValue("corsum__JumioAuthentication__el_txt_1","Your passport has been verified.Please proceed to submit your application.");
+        $("#corsum__JumioAuthentication__el_btn_1,#corsum__JumioAuthentication__el_btn_4").removeClass("sno");
+    }
+    else{
+        apz.setElmValue("corsum__JumioAuthentication__el_txt_1","There seems to be mismatch in the document you submitted . Would you like to proceed to submit the application or get back later");
+        $("#corsum__JumioAuthentication__el_btn_1,#corsum__JumioAuthentication__el_btn_3").removeClass("sno");
+    }
+    apz.stopLoader();
+}
+apz.corsum.JumioAuthentication.fnProceed = function(){
+    debugger;
+    $("#corsum__Launcher__gr_row_2").removeClass("sno");
+    apz.corsum.Launcher.fnLaunchScreen(apz.corsum.JumioAuthentication.sParams.flowno);
+}
+apz.corsum.JumioAuthentication.fnBack = function(){
+    debugger;
+    $("#corsum__Launcher__gr_row_2").removeClass("sno");
+    apz.corsum.Launcher.gotoPre();
+}
+apz.corsum.JumioAuthentication.fnCancelWorkflow=function(){
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "corsum",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "REJECT"
+        },
+        "paintResp": "N",
+        "callBack": apz.corsum.JumioAuthentication.fnCancelWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.corsum.JumioAuthentication.fnCancelWorkflowCB=function(params){
+    if(params.errors == undefined && params.status) {
+        apz.monumt.Navigator.ShowHomePage();
+    }
+}

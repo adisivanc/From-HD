@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"CashPoolingDetails","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"CashPoolingDetails","interfaces":[{"name":"CashPoolAccs","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

@@ -1,0 +1,36 @@
+apz.logreg.ChangePIN = {};
+
+
+apz.app.onLoad_ChangePIN = function(params) {
+debugger;
+apz.logreg.ChangePIN.sParams = params;
+    
+}
+
+
+// apz.logreg.ChangePIN.launchOTPScreen = function() {
+//   $("#logreg__ChangePIN__gr_row_1").addClass("sno");
+//     var params = {};
+//     params.appId = "otpeng";
+//     params.div = "logreg__ChangePIN__OTP";
+//     params.scr = "ProcessOTP";
+    
+//     params.userObj = {
+       
+//         "control": {
+//             "callBack": apz.logreg.ChangePIN.fnOTPCB,
+//             "destroyDiv": "logreg__ChangePIN__OTP"
+//         }
+//     }
+//     apz.launchApp(params);
+// }
+apz.logreg.ChangePIN.fnOTPCB = function(lParams) {
+    debugger;
+   apz.dispMsg({message : "User registered Successfully", type : "S",callBack:apz.logreg.ChangePIN.sParams.control.callBack})
+};
+
+
+apz.logreg.ChangePIN.fnCancel = function() {
+    debugger;
+    apz.logreg.ChangePIN.sParams.control.callBack();
+}

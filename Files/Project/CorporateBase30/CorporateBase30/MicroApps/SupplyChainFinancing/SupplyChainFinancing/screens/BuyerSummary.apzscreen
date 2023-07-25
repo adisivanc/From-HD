@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"BuyerSummary","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"BuyerSummary","interfaces":[{"name":"PartySummary","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

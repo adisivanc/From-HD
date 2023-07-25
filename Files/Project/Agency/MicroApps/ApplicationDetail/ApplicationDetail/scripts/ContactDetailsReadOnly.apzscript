@@ -1,0 +1,83 @@
+apz.appdtl.ContactDetailsReadOnly = {};
+apz.app.onLoad_ContactDetailsReadOnly = function(params) {
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo", params.refNo);  
+    
+    apz.setElmValue("appdtl__AppLauncher__application_number", params.refNo);
+    apz.setElmValue("appdtl__AppLauncher__application_number", params.refNo);
+    
+    apz.setElmValue("appdtl__AppLauncher__el_txt_17_txtcnt","MANUAL VERIFICATION");
+    apz.appdtl.ContactDetailsReadOnly.fetchApplicationDetails(params);
+    // var userId = apz.menuap.Menu.userId;
+    // if (userId == "user2") {
+    //     $("#appdtl__ContactDetailsReadOnly__ct_frm_2 input,#appdtl__ContactDetailsReadOnly__ct_frm_2 select,#appdtl__ContactDetailsReadOnly__ct_frm_2 button").css({
+    //         "pointer-events": "none"
+    //     });
+    // }
+};
+apz.appdtl.ContactDetailsReadOnly.fetchApplicationDetails = function(params) {
+    debugger;
+    /*apz.data.buildData("ApplicationInfoDB", "appdtl");
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req = {
+        tbDbmiCustomerMaster: {
+            refNo: params.refNo
+        }
+    }*/
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                "refNo": params.refNo
+            },
+        },
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.ContactDetailsReadOnly.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.ContactDetailsReadOnly.fetchApplicationDetailsCB = function(pResp) {
+    debugger;
+}
+apz.appdtl.ContactDetailsReadOnly.saveApplicationDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Modify",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.ContactDetailsReadOnly.saveApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.ContactDetailsReadOnly.saveApplicationDetailsCB = function(pResp) {
+    debugger;
+        if(!apz.isNull(pResp.res.appdtl__ApplicationInfoDB_Req)){
+           apz.applicationDetails=jQuery.extend(true, {}, pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster);
+        }
+        else{
+           apz.applicationDetails=jQuery.extend(true, {}, pResp.res.appdtl__ApplicationInfoDB_Res.tbDbmiCustomerMaster); 
+        }
+}
+apz.appdtl.ContactDetailsReadOnly.nextScreen = function(pResp) {
+    var scr = "DocumentDetailsReadOnly";
+    apz.appdtl.ContactDetailsReadOnly.launchScreen(scr);
+}
+apz.appdtl.ContactDetailsReadOnly.preScreen = function(pResp) {
+    debugger;
+    var scr = "FldVerification";
+    apz.appdtl.ContactDetailsReadOnly.launchScreen(scr);
+}
+apz.appdtl.ContactDetailsReadOnly.launchScreen = function(pResp) {
+    debugger;
+    // apz.appdtl.ContactDetailsReadOnly.saveApplicationDetails();
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "" + pResp,
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo")
+        }
+    };
+    apz.launchSubScreen(lParams);
+}

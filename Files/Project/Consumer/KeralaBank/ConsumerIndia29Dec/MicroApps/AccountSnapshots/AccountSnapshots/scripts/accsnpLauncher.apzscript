@@ -1,0 +1,40 @@
+apz.accsnp.checkParams = function(params) {
+    params.userObj ={"data":{
+        "customerDetail": {
+                "customerID": "000004712"
+            },
+            "SavingsAccount": [{
+                "accountNo": "100009312263",
+                "accountBal": "1000996",
+                "accountBrnName": "Koramangala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "IOB00000619"
+            }, {
+                "accountNo": "100009312401",
+                "accountBal": "188373",
+                "accountBrnName": "Madiwala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "IOB00000619"
+            }, {
+                "accountNo": "732510006721",
+                "accountBal": "264748",
+                "accountBrnName": "HSR Layout",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "IOB00000619"
+            }],
+            "CurrentAccount": [{
+                "accountNo": "100009312274",
+                "accountBal": "46504",
+                "accountBrnName": "Koramangala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "IOB00000619"
+            }, {
+                "accountNo": "753410000895",
+                "accountBal": "657498",
+                "accountBrnName": "Madiwala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "IOB00000619"
+            }]
+        }
+    }
+}      

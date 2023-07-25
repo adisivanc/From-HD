@@ -1,0 +1,36 @@
+{
+    "RecurringDeposit" : {
+        "txnRefNo" : "123",
+        "status" : true,
+        "respCd" : "",
+        "extMsg" : "",
+        "intMsgCd" : "",
+        "depositDtls" : [{
+            "accountNo" : "543985494322",
+            "branchName" : "West Bay",
+            "interestType" : "Compounded Interest",
+            "bookDate" : "05/10/2017",
+            "tenor" : "1 Year",
+            "interestRate" : "5.00%",
+            "maturityType" : "Maturity Proceeds to FD (Principle + Interest)",
+            "creditAccountNo" : "001234541574",
+            "maturityAmount" : "15000",
+            "maturityDate" : "15/10/2018",
+            "seniorCitizen" : "No",
+            "attachNominee" : "No"
+        },{
+            "accountNo" : "955980980442",
+            "branchName" : "West Bay",
+            "interestType" : "Compounded Interest",
+            "bookDate" : "05/10/2017",
+            "tenor" : "6 Months",
+            "interestRate" : "6.00%",
+            "maturityType" : "Maturity Proceeds to FD (Principle + Interest)",
+            "creditAccountNo" : "001234541574",
+            "maturityAmount" : "200000",
+            "maturityDate" : "15/10/2018",
+            "seniorCitizen" : "No",
+            "attachNominee" : "No"
+        }]
+    }
+}

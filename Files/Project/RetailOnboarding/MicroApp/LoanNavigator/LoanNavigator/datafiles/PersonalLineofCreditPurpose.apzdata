@@ -1,0 +1,28 @@
+[{
+    "val": "Consumer Durables",
+    "desc": "Consumer Durables"
+}, {
+    "val": "Home Furnishings",
+    "desc": "Home Furnishings"
+},
+{
+    "val": "Home Repair",
+    "desc": "Home Repair"
+},
+{
+    "val": "Wedding Expenses",
+    "desc": "Wedding Expenses"
+},
+{
+    "val": "Travel Expenses",
+    "desc": "Travel Expenses"
+},
+{
+    "val": "Education",
+    "desc": "Education"
+},
+{
+    "val": "Others",
+    "desc": "Others"
+}
+]

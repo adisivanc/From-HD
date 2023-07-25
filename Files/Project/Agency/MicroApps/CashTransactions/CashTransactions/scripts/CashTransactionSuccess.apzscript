@@ -1,0 +1,20 @@
+apz.cashtr.CashTransactionSuccess = {}
+apz.cashtr.CashTransactionSuccess.sCache = "";
+apz.app.onLoad_CashTransactionSuccess = function(params) {
+    debugger;
+    apz.cashtr.CashTransactionSuccess.sCache = params;
+    
+    apz.setElmValue("cashtr__CashTransactionSuccess__Stage2Acc", params.data.accno);
+    apz.setElmValue("cashtr__CashTransactionSuccess__Stage2Amt", params.data.amount);
+    if(params.data.type == "withdrawal"){
+    apz.setElmValue("cashtr__CashTransactionSuccess__successText", "Cash withdrawal has been done successfully");
+    }else{
+    apz.setElmValue("cashtr__CashTransactionSuccess__successText", "Cash deposit has been done successfully");
+    }
+}
+apz.app.onShown_CashTransactionSuccess = function(params) {
+    debugger;
+}
+apz.cashtr.CashTransactionSuccess.fnDone = function() {
+    debugger;
+}

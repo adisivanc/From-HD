@@ -1,0 +1,99 @@
+apz.chqsts.clearingChequeSummary = {};
+
+apz.app.onLoad_ClearingChequeSummary = function() {
+   // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "INWARD CLEARING")
+}
+apz.app.onShown_ClearingChequeSummary = function(pParams) {
+    debugger;
+    if (pParams.Navigation) {
+        apz.chqsts.clearingChequeSummary.fnSetNavigation(pParams);
+    }
+   
+    apz.chqsts.clearingChequeSummary.sParams = pParams;
+    apz.chqsts.clearingChequeSummary.fnInitialise(pParams);
+};
+apz.chqsts.clearingChequeSummary.fnSetNavigation = function(params) {
+    apz.chqsts.clearingChequeSummary.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "INWARD CLEARING";
+    }
+    apz.chqsts.clearingChequeSummary.Navigation(lParams);
+};
+apz.chqsts.clearingChequeSummary.fnInitialise = function(pParams) {
+    debugger;
+    var lfrmarr = [];
+    var lObj = {
+        "val": "Please Select",
+        "desc": "Please Select"
+    };
+    lfrmarr.push(lObj);
+    var larrLength = pParams.SavingsAccount.length;
+    for (var i = 0; i < larrLength; i++) {
+        var lfrmacc = {
+            "val": pParams.SavingsAccount[i].accountNo,
+            "desc": pParams.SavingsAccount[i].accountNo
+        };
+        lfrmarr.push(lfrmacc);
+    }
+    apz.populateDropdown(document.getElementById("chqsts__ClearingChequeSummary__accNum"), lfrmarr);
+    apz.setElmValue("chqsts__ClearingChequeSummary__accNum",lfrmarr[1].val);
+};
+apz.chqsts.clearingChequeSummary.fnGetDetails = function() {
+    debugger;
+    // var lReq = {
+    //     "ifaceName": "ClearingCheques",
+    //     "paintResp": "N",
+    //     "buildReq": "N",
+    //     "req": "",
+    //     "appId": "chqsts",
+    //     "async": false,
+    //     "callBack": apz.chqsts.clearingChequeSummary.fnGetDetailsCB,
+    //     "callBackObj": ""
+    // };
+  //  apz.server.callServer(lReq);
+        jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("chqsts")+"/ClearingCheques.json"));
+         apz.data.scrdata.chqsts__ClearingCheques_Res = {};
+                      apz.data.scrdata.chqsts__ClearingCheques_Res = jsondata;
+                      apz.data.loadData("ClearingCheques", "chqsts");
+        apz.chqsts.clearingChequeSummary.fnGetDetailsCB(jsondata);
+
+};
+apz.chqsts.clearingChequeSummary.fnGetDetailsCB = function(pResp) {
+    debugger;
+  //  $("#chqsts__ClearingChequeSummary__ListRow").removeClass("sno");
+    var lAccountNo = apz.getElmValue("chqsts__ClearingChequeSummary__accNum");
+    var lRecords = pResp.tbDbtpChequedetails;
+    var lRecordsLength = lRecords.length;
+    var lFinalRecord = [];
+    for (var i = 0; i < lRecordsLength; i++) {
+        if (lRecords[i].accountNumber == lAccountNo) {
+            lFinalRecord.push(lRecords[i]);
+        }
+        apz.data.scrdata.chqsts__ClearingCheques_Res.tbDbtpChequedetails = lFinalRecord;
+        //$("#chqsts__ClearingCheques__o__tbDbtpChequedetails__chequeStatus_0").addClass("suc");
+        $("#chqsts__ClearingCheques__o__tbDbtpChequedetails__chequeStatus_1").addClass("war");
+        apz.data.loadData("ClearingCheques", "chqsts");
+    }
+};
+apz.chqsts.clearingChequeSummary.fnViewDetails = function(lObj, event) {
+    debugger;
+    var RowNo = $(lObj).attr('rowno');
+    var lScrData = apz.data.scrdata.chqsts__ClearingCheques_Res.tbDbtpChequedetails[RowNo];
+    var params = {};
+    params.appId = "chqsts";
+    params.scr = "InwardClearing";
+    params.layout = "Web";
+    params.userObj = {
+        "data": {
+            "ChequeData": lScrData
+        }
+    };
+    params.div = "chqsts__ClearingChequeSummary__LaunchScreen";
+    $("#chqsts__ClearingChequeSummary__LaunchScreen").removeClass("sno");
+    $("#chqsts__ClearingChequeSummary__AccNumRow").addClass("sno");
+    $("#chqsts__ClearingChequeSummary__ListRow").addClass("sno");
+    apz.launchSubScreen(params);
+};

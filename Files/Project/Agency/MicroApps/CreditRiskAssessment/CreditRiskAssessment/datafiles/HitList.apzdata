@@ -1,0 +1,13 @@
+{
+    "crsapp__HitList_Req": {
+        "amlHitlistDowjones": [{
+            "description": "Entity SOC",
+            "documentName": "AML.pdf",
+            "entityIndividualName": "John Doe",
+            "status": "HIT",
+            "systemId": "DOWJONES",
+            "systemName": "AML",
+            "type": "E"
+        }]
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "beneficiaryDtls": {
+        "data": {
+            "OTPRefNo": 12
+        },
+        "scrAction": "SetRefNo",
+        "BeneId": "81514286100040152083",
+        "extMsg": "",
+        "respCd": "app",
+        "intMsgCd": "",
+        "status": "success"
+    }
+}

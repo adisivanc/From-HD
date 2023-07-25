@@ -1,0 +1,258 @@
+apz.app.icaosm.AccountsServicesAOS = {};
+apz.app.icaosm.AccountsServicesAOS.sCache = {};
+apz.app.icaosm.AccountsServicesAOS.sAction = "";
+apz.app.icaosm.AccountsServicesAOS.sFlag = false;
+apz.app.onLoad_AccountsServicesAOS = function(params) {
+    apz.app.icaosm.AccountsServicesAOS.fnClearData();
+    apz.app.icaosm.AccountsServicesAOS.sCache = params;
+    apz.app.manageCrub(2);
+    var UserID = apz.retrieve("CurrentUser");
+    $("#icaosm__AccountsServicesAOS__ct_frm_2").addClass("shownone");
+    if (UserID == "User2") {
+        $("#icaosm__AccountsServicesAOS__ct_frm_2").removeClass("shownone");
+    }
+    if (apz.data.scrdata.icaosm__AccountsServicesAOS_Res != undefined) {
+        apz.data.loadData("AccountsServicesAOS", "icaosm");
+    }
+    apz.app.icaosm.AccountsServicesAOS.fnQueryData();
+};
+apz.app.icaosm.AccountsServicesAOS.fnClearData = function() {
+    apz.data.clearMRMV("icaosm__AccountsServicesAOS__ct_frm_1");
+};
+apz.app.icaosm.AccountsServicesAOS.fnQueryData = function() {
+    apz.app.icaosm.AccountsServicesAOS.sAction = "query";
+    var req = {};
+    req.tbAccountService = {
+        "companyid": apz.icaosm.Home.sCompanyID
+    };
+    var lParams = {
+        "ifaceName": "AccountsServicesAOS_Query",
+        "paintResp": "Y",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.AccountsServicesAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.AccountsServicesAOS.fnBeforCallServer = function(params) {
+    var lReq = {
+        "ifaceName": params.ifaceName,
+        "paintResp": params.paintResp,
+        "buildReq": params.buildReq,
+        "req": params.lReq,
+        "appId": params.appId,
+        "async": false,
+        "callBack": apz.app.icaosm.AccountsServicesAOS.callServerCB,
+        "callBackObj": ""
+    };
+    apz.server.callServer(lReq);
+};
+apz.app.icaosm.AccountsServicesAOS.callServerCB = function(params) {
+    debugger;
+    if (apz.app.icaosm.AccountsServicesAOS.sAction == "query") {
+        apz.app.icaosm.AccountsServicesAOS.fnQueryDataCB(params);
+    } else if (apz.app.icaosm.AccountsServicesAOS.sAction == "modifySave" || apz.app.icaosm.AccountsServicesAOS.sAction == "newSave") {
+        apz.app.icaosm.AccountsServicesAOS.fnModifySaveAccountServiceCB(params);
+    } else if (apz.app.icaosm.AccountsServicesAOS.sAction == "modifyNext" || apz.app.icaosm.AccountsServicesAOS.sAction == "newNext") {
+        apz.app.icaosm.AccountsServicesAOS.fnModifyNextAccountServiceCB(params);
+    }
+};
+apz.app.icaosm.AccountsServicesAOS.fnQueryDataCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.AccountsServicesAOS.sFlag = true;
+    } else {
+        apz.app.icaosm.AccountsServicesAOS.sFlag = false;
+    }
+};
+apz.app.icaosm.AccountsServicesAOS.fnSave = function() {
+    debugger;
+    if (apz.app.icaosm.AccountsServicesAOS.sFlag) {
+        apz.app.icaosm.AccountsServicesAOS.sAction = "modifySave";
+    } else {
+        apz.app.icaosm.AccountsServicesAOS.sAction = "newSave";
+    }
+    apz.app.icaosm.AccountsServicesAOS.fnModifySaveAccountService();
+    /*
+     
+    if (apz.app.icaosm.AccountsServicesAOS.sCache == "submitted") {
+        apz.launchSubScreen({
+            "scr": "Home",
+            "div": "icaosm__LandingHeader__scrlaunchingdiv",
+            "userObj": {
+                "percentage": "",
+                "val": "Account & Services",
+                "action": apz.app.icaosm.AccountsServicesAOS.sCache.action,
+                "accNum": apz.app.icaosm.AccountsServicesAOS.sCache.accNum,
+                "appNo": apz.app.icaosm.AccountsServicesAOS.sCache.appNo
+            }
+        });
+    } else {
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__AccountsServicesAOS__main input[type='text'],#scr__icaosm__AccountsServicesAOS__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $("#scr__icaosm__AccountsServicesAOS__main input[type='radio']").each(function() {
+            lRadio++;
+        });
+        lFilled = (lRadio / 2) + lFilled;
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[1].progress = percentage;
+        apz.data.buildData("AccountsServicesAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "Home",
+            "div": "icaosm__LandingHeader__scrlaunchingdiv",
+            "userObj": {
+                "action": apz.app.icaosm.AccountsServicesAOS.sCache.action,
+                "percentage": percentage,
+                "val": "Account & Services",
+                "accNum": apz.app.icaosm.AccountsServicesAOS.sCache.accNum,
+                "appNo": apz.app.icaosm.AccountsServicesAOS.sCache.appNo
+            }
+        });
+    }
+    */
+};
+apz.app.icaosm.AccountsServicesAOS.fnModifySaveAccountService = function() {
+    apz.data.buildData("AccountsServicesAOS", "icaosm");
+    var req = {};
+    req.tbAccountService = apz.data.scrdata.icaosm__AccountsServicesAOS_Req.tbAccountService;
+    req.tbAccountService.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.AccountsServicesAOS.sAction == "modifySave") {
+        lParams.ifaceName = "AccountsServicesAOS_Modify";
+    } else if (apz.app.icaosm.AccountsServicesAOS.sAction == "newSave") {
+        lParams.ifaceName = "AccountsServicesAOS_New";
+    }
+    apz.app.icaosm.AccountsServicesAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.AccountsServicesAOS.fnModifySaveAccountServiceCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.AccountsServicesAOS.sFlag = false;
+        if (apz.app.icaosm.AccountsServicesAOS.sCache == "submitted") {
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": "",
+                    "val": "Account & Services",
+                    "action": apz.app.icaosm.AccountsServicesAOS.sCache.action,
+                    "accNum": apz.app.icaosm.AccountsServicesAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.AccountsServicesAOS.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        } else {
+            var lTotCount = 0;
+            var lFilled = 0,
+                lRadio = 0;
+            $("#scr__icaosm__AccountsServicesAOS__main input[type='text'],#scr__icaosm__AccountsServicesAOS__main select").each(function() {
+                lTotCount++;
+                if ($(this).val() != "" && $(this).val() != "Select") {
+                    lFilled++;
+                }
+            });
+            $("#scr__icaosm__AccountsServicesAOS__main input[type='radio']").each(function() {
+                lRadio++;
+            });
+            lFilled = (lRadio / 2) + lFilled;
+            lTotCount = (lRadio / 2) + lTotCount;
+            percentage = (lFilled / lTotCount);
+            apz.data.scrdata.icaosm__Home_Req.Home[1].progress = percentage;
+            apz.data.buildData("AccountsServicesAOS", "icaosm");
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "action": apz.app.icaosm.AccountsServicesAOS.sCache.action,
+                    "percentage": percentage,
+                    "val": "Account & Services",
+                    "accNum": apz.app.icaosm.AccountsServicesAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.AccountsServicesAOS.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        }
+    } else {
+        lmsg = {
+            "message": "Account Services failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.AccountsServicesAOS.fnModifyNextAccService = function() {
+    if (apz.app.icaosm.AccountsServicesAOS.sFlag) {
+        apz.app.icaosm.AccountsServicesAOS.sAction = "modifyNext";
+    } else {
+        apz.app.icaosm.AccountsServicesAOS.sAction = "newNext";
+    }
+    apz.data.buildData("AccountsServicesAOS", "icaosm");
+    var req = {};
+    req.tbAccountService = apz.data.scrdata.icaosm__AccountsServicesAOS_Req.tbAccountService;
+    req.tbAccountService.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.AccountsServicesAOS.sAction == "modifyNext") {
+        lParams.ifaceName = "AccountsServicesAOS_Modify";
+    } else if (apz.app.icaosm.AccountsServicesAOS.sAction == "newNext") {
+        lParams.ifaceName = "AccountsServicesAOS_New";
+    }
+    apz.app.icaosm.AccountsServicesAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.AccountsServicesAOS.fnModifyNextAccountServiceCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.AccountsServicesAOS.sFlag = false;
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__AccountsServicesAOS__main input[type='text'],#scr__icaosm__AccountsServicesAOS__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $("#scr__icaosm__AccountsServicesAOS__main input[type='radio']").each(function() {
+            lRadio++;
+        });
+        lFilled = (lRadio / 2) + lFilled;
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[1].progress = percentage;
+        apz.data.buildData("AccountsServicesAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "AuthorisedSignatoryAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            // "animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.AccountsServicesAOS.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum,
+                "companyID": apz.icaosm.Home.sCompanyID
+            }
+        });
+    } else {
+        lmsg = {
+            "message": "Account Services failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};

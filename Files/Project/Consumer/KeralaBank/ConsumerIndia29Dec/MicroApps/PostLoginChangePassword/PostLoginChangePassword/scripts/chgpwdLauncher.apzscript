@@ -1,0 +1,11 @@
+apz.chgpwd.checkParams = function(params) {
+    params.userObj = {
+        "userId": "admin"
+    }
+};
+apz.app.setMockServer = function() {
+    apz.mockServer = true;
+};
+apz.app.resetMockServer = function() {
+    apz.mockServer = false;
+};

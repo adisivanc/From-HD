@@ -1,0 +1,68 @@
+
+
+/* ------- Methodology -------- */
+
+.page_header { width:100%; float:left; background:#0396cb; padding:34px 0; position:relative;  }
+.pagehd { width:100%; float:left; color:#FFFFFF; font-size:28px; text-transform:uppercase; font-weight:normal;  }
+.pagenav { position: absolute; top:37px; right:0; font-size:14px; color:#FFFFFF; }
+.pagenav_home { color:#000000; text-decoration:none; }
+
+#workflow_container { width:100%; float:left; border:0px solid red; padding:20px 0 0 0; }
+#workflow_slider { max-width:1379px; width:100%; height:182px; margin:0 auto; overflow:hidden; }
+
+.circle { width:187px; height:182px; float:left; margin:0 5px; overflow:hidden; cursor:pointer; }
+.circle0 { background:url(../images/circle1_unselect.png) no-repeat; color:#000000; }
+.circle0:hover, .circle0.active  { background:url(../images/circle1_select.png) no-repeat; color:#FFFFFF; }
+.circle1 { background:url(../images/circle2_unselect.png) no-repeat; color:#000000; }
+.circle1:hover, .circle1.active { background:url(../images/circle2_select.png) no-repeat; color:#FFFFFF; }
+
+.circletop { width:100%; height:60px; font-size:14px; text-transform:uppercase; padding-top:30px; }
+.circlebtm { width:100%; height:83px; font-size:14px; text-transform:uppercase; text-align:center; padding-top:7px; }
+
+.circletop span { float:left; margin:0 35px 0 40px; font-family: 'oswaldbold'; font-size:18px; line-height:40px; }
+
+#workflow_title { width:100%; float:left; padding:30px 0 0 0; }
+#workflow_title_left { width: auto; float:left; }
+#workflow_title_right { width: auto; float:right; }
+
+#workflow_arrow_left { width:40px; height:25px; line-height:25px; background:url(../images/bluearrow_left.png) no-repeat; float:left; font-family: 'oswaldbold'; font-size:18px; color:#FFFFFF; text-align: right; margin-right:10px; cursor:pointer; padding-right:10px; }
+#workflow_arrow_right { width:43px; height:25px; line-height:25px; background:url(../images/bluearrow_right.png) no-repeat top right; float:right; font-family: 'oswaldbold'; font-size:18px; color:#FFFFFF; text-align: left; margin-left:10px; cursor:pointer; padding-left:7px; }
+
+.flowhd {  font-family: 'oswaldlight'; font-size:18px; color:#011e3e; }
+#workflow_desc { width:100%; float:left; background:#e9e9e9; padding:15px 0; }
+.workflow_content { width:100%; float:left; font-size:18px; display:none; }
+.workflow_hd { width:100%; float:left; color:#0396cb; font-size:20px; padding: 0 0 12px 0; }
+.workflow_content p { padding-bottom:15px; text-align:justify; }
+
+.workflowlist { list-style:none; width:100%; float:left; }
+.workflowlist li { background: url(../images/tick_gray.png) no-repeat 0 5px; padding:0 0 12px 20px; }
+
+.workflowlist1 { list-style-type:disc; }
+.workflowlist1 li { background:none; padding:0 0 12px 0; margin-left:40px; }
+
+.factor { width:25%; float:left; }
+
+
+
+/* -------- Services --------- */
+
+.descfull { width:100%; float:left; text-align: justify; font-size:18px; padding-bottom:20px; }
+.service_listout { width:100%; float:left;  }
+.service_listinner { width:25%; float:left; padding-top:30px; }
+
+.services_center { width:280px; margin:0 auto; }
+.services_themeimg, .services_hd, .services_desc, .services_readmore { width:280px; float:left; text-align:center; padding-bottom:20px; }
+
+.services_hd { font-family: 'oswaldbold'; font-size:18px; }
+.services_desc { font-size:15px; min-height:40px; padding-bottom:5px; }
+.services_readmore { color:#0e80f2; }
+.services_readmore span { cursor:pointer; }
+.services_readmore img { position:relative; top:3px; }
+
+
+
+
+
+
+
+

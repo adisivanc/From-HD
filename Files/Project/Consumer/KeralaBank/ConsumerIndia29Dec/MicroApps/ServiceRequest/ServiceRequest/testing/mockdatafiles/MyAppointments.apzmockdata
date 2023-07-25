@@ -1,0 +1,40 @@
+{
+    "tbMyAppointments": [
+        {
+            "referenceNumber": "4512345",
+            "appointmentDate": "1/02/2018",
+            "appoinementTime": "1:00 pm",
+            "branchName": "Koramangala",
+            "status": "Pending",
+            "serviceType": "CASH DEPOSIT",
+            "toAcc":"209871678897"
+        },
+        {
+            "referenceNumber": "4512312",
+            "appointmentDate": "1/08/2018",
+            "appoinementTime": "2:00 pm",
+            "branchName": "HSR Layout",
+            "status": "Pending",
+            "serviceType": "CASH DEPOSIT",
+             "toAcc":"209871678897"
+        },
+        {
+            "referenceNumber": "4512390",
+            "appointmentDate": "1/12/2018",
+            "appoinementTime": "11:00 am",
+            "branchName": "Koramangala",
+            "status": "Pending",
+            "serviceType": "CASH DEPOSIT",
+             "toAcc":"209871678897"
+        },
+        {
+            "referenceNumber": "4512321",
+            "appointmentDate": "1/15/2018",
+            "appoinementTime": "10:00 am",
+            "branchName": "Madiwala",
+            "status": "Pending",
+            "serviceType": "CASH DEPOSIT",
+             "toAcc":"209871678897"
+        }
+    ]
+}

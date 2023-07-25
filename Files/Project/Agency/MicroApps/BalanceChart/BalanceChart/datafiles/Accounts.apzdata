@@ -1,0 +1,106 @@
+{
+    "balanc__QuarterlyBalance_Res": {
+        "datasets": [
+        {
+            "Months": "Savings Account",
+            "Amount": "11",
+            "Account": "New"
+        }, {
+            "Months": "Savings Account",
+            "Amount": "8",
+            "Account": "Existing"
+        }, {
+            "Months": "Savings Account",
+            "Amount": "30",
+            "Account": "Approved"
+        }, {
+            "Months": "Savings Account",
+            "Amount": "20",
+            "Account": "Pending"
+        }, {
+            "Months": "Savings Account",
+            "Amount": "10",
+            "Account": "Rejected"
+        },{
+            "Months": "Current Account",
+            "Amount": "11",
+            "Account": "New"
+        }, {
+            "Months": "Current Account",
+            "Amount": "27",
+            "Account": "Existing"
+        }, {
+            "Months": "Current Account",
+            "Amount": "25",
+            "Account": "Approved"
+        }, {
+            "Months": "Current Account",
+            "Amount": "22",
+            "Account": "Pending"
+        }, {
+            "Months": "Current Account",
+            "Amount": "3",
+            "Account": "Rejected"
+        },{
+            "Months": "Total Checking",
+            "Amount": "13",
+            "Account": "New"
+        }, {
+            "Months": "Total Checking",
+            "Amount": "23",
+            "Account": "Existing"
+        }, {
+            "Months": "Total Checking",
+            "Amount": "12",
+            "Account": "Approved"
+        }, {
+            "Months": "Total Checking",
+            "Amount": "19",
+            "Account": "Pending"
+        }, {
+            "Months": "Total Checking",
+            "Amount": "13",
+            "Account": "Rejected"
+        },{
+            "Months": "Premier Plus Checking",
+            "Amount": "26",
+            "Account": "New"
+        }, {
+            "Months": "Premier Plus Checking",
+            "Amount": "5",
+            "Account": "Existing"
+        }, {
+            "Months": "Premier Plus Checking",
+            "Amount": "13",
+            "Account": "Approved"
+        }, {
+            "Months": "Premier Plus Checking",
+            "Amount": "19",
+            "Account": "Pending"
+        }, {
+            "Months": "Premier Plus Checking",
+            "Amount": "24",
+            "Account": "Rejected"
+        },{
+            "Months": "Premier Savings",
+            "Amount": "13",
+            "Account": "New"
+        }, {
+            "Months": "Premier Savings",
+            "Amount": "23",
+            "Account": "Existing"
+        }, {
+            "Months": "Premier Savings",
+            "Amount": "12",
+            "Account": "Approved"
+        }, {
+            "Months": "Premier Savings",
+            "Amount": "19",
+            "Account": "Pending"
+        }, {
+            "Months": "Premier Savings",
+            "Amount": "13",
+            "Account": "Rejected"
+        }]
+    }
+}

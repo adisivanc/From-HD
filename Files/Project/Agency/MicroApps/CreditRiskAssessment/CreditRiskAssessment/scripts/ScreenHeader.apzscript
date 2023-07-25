@@ -1,0 +1,43 @@
+apz.app.onLoad_ScreenHeader = function() {
+    debugger;
+    apz.crsapp.userId="user3";
+    //apz.crsapp.DashBoard.Role = "Compliance";
+    //apz.setElmValue("crsapp__ScreenHeader__welcomeTxt", "Welcome " + apz.crsapp.userId);
+    apz.app.HomeLaunch();
+};
+apz.app.HomeLaunch = function() {
+    debugger;
+    var params = {};
+    params.appId = "crsapp";
+    params.scr = "";
+    params.div = "crsapp__ScreenHeader__subScreenLauncher";
+    if (apz.crsapp.userId == "user1" || apz.crsapp.userId == "user3" || apz.crsapp.userId == "user4" || apz.crsapp.userId == "user2") {
+        params.scr = "DashBoard";
+        apz.launchSubScreen(params);
+        return;
+    } else if (apz.crsapp.userId.toUpperCase() == "CIMBGROUP" || apz.crsapp.userId.toUpperCase() == "CIMBTHAI" || apz.crsapp.userId.toUpperCase() ==
+        "CIMBNIAGA") {
+        params.scr = "Documents";
+        apz.launchSubScreen(params);
+        return;
+    }else if(apz.crsapp.DashBoard.Role == "Compliance" ){
+        apz.launchScreen("ProgressStep");
+    }
+    
+}
+apz.app.fnLogout = function() {
+    debugger;
+    params = {};
+    params.userId = "admin";
+    apz.resetCurrAppId("crsapp");
+    params.appId = apz.currAppId;
+    params.callBack = apz.app.fnLogoutCallBack;
+    apz.server.logout(params);
+};
+apz.app.fnLogoutCallBack = function() {
+    debugger;
+    apz.launchScreen({
+        "appId": "crsapp",
+        "scr": "Login"
+    });
+};

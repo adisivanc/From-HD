@@ -1,0 +1,138 @@
+apz.beamnt.bearerdetails = {};
+apz.beamnt.bearerdetails.userimage = "";
+apz.app.onLoad_BearerDetails = function(params) {
+    debugger;
+    apz.beamnt.bearerdetails.Sparams = params;
+}
+apz.beamnt.bearerdetails.OnClick = function() {
+    if (apz.val.validateContainer("beamnt__BearerDetails__bearerdet")) {
+        //apz.data.scrdata.beamnt__Bearers_Req={};
+        var params = {
+            "val": $("#beamnt__BearerDetails____i__tbBearerDetails__bearerDob").val(),
+            "fromFormat": "dd-MMM-yyyy",
+            "toFormat": "yyyy-MM-dd"
+        };
+        var lformattedDate = apz.formatDate(params);
+        var reqObj = {
+            "tbBearerDetails": {
+                "referenceNo": Math.floor(1000 + Math.random() * 9000),
+                "bearerName": $("#beamnt__BearerDetails____i__tbBearerDetails__bearerName").val(),
+                "bearerDob": lformattedDate,
+                "bearerMobileNo": $("#beamnt__BearerDetails____i__tbBearerDetails__bearerMobileNo").val(),
+                "bearerEmailId": $("#beamnt__BearerDetails____i__tbBearerDetails__bearerEmailId").val(),
+                "bearerAccountNo": $("#beamnt__BearerDetails____i__tbBearerDetails__bearerAccountNo").val(),
+                "bearerImage": apz.beamnt.bearerdetails.userimage,
+                "bearerId": Math.floor(1000 + Math.random() * 9000),
+                "reqType": "Bearer"
+            }
+        }
+        var lServerParams = {
+            "ifaceName": "BearerDetail_New",
+            "buildReq": "N",
+            "req": reqObj,
+            "appId": "beamnt",
+            "paintResp": "N",
+            "async": false,
+            "callBack": apz.beamnt.bearerdetails.fnCallServerCallBack,
+            "callBackObj": "",
+        };
+        apz.server.callServer(lServerParams);
+    } else {
+        apz.dispMsg({
+            "message": "Please provide value for mandatory field(s)",
+            "type": "I"
+        });
+    }
+}
+apz.beamnt.bearerdetails.uploadPic = function() {
+    debugger;
+    $("#beamnt__BearerDetails__filebrowse").click();
+}
+apz.beamnt.bearerdetails.OnChange = function(obj, event) {
+    debugger;
+    var fileObj = $(obj)[0].files[0];
+    var apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        var binaryStr = apzFileReader.result;
+        var base64Str = btoa(binaryStr);
+        apz.beamnt.bearerdetails.userimage = base64Str;
+        var blob = convertBase64toBlob(base64Str, 'image/jpg');
+        var blobUrl = URL.createObjectURL(blob);
+        $("#beamnt__BearerDetails____i__tbBearerDetails__bearerImage").attr("src", blobUrl);
+    };
+    apzFileReader.readAsBinaryString(fileObj);
+};
+
+function convertBase64toBlob(content, contentType) {
+    contentType = contentType || '';
+    var sliceSize = 512;
+    var byteCharacters = window.atob(content); //method which converts base64 to binary
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    }); //statement which creates the blob
+    return blob;
+};
+apz.beamnt.bearerdetails.Capture = function(params) {
+    debugger;
+    if (apz.deviceGroup == "Mobile") {
+        var jsonobj = {
+            "zoomLevel": "20",
+            "targetWidth": "200",
+            "targetHeight": "200",
+            "crop": "Y", //Y or N 
+            "flash": "N",
+            "action": "base64_Save", // save,base64
+            "fileName": 'Sample',
+            "quality": "50",
+            "encodingType": "JPG",
+            "sourceType": "camera" // photo
+        };
+        jsonobj.id = "CAMERA_ID";
+        jsonobj.callBack = cameraCallback;
+        apz.ns.openCamera(jsonobj);
+    } else {
+        $("#beamnt__BearerDetails__filebrowse").click();
+    }
+    cameraCallback = function(pjson) {
+        debugger;
+        if (pjson.status) {
+            document.getElementById("beamnt__BearerDetail__i__tbBearerDetails__bearerImage").src = "data:image/jpg;base64," + pjson.encodedImage;
+            apz.beamnt.bearerdetails.userimage = pjson.encodedImage;
+        }
+    }
+}
+apz.beamnt.bearerdetails.fnCallServerCallBack = function(params) {
+    debugger;
+    if (params.res != undefined) {
+        apz.dispMsg({
+            "message": "Successfully added",
+            "type": "S"
+        });
+        apz.show("beamnt__BearerSummary__bearerListDiv");
+        apz.hide("beamnt__BearerSummary__newBearerDiv");
+        apz.beamnt.bearerdetails.fnBack();
+    }
+}
+apz.beamnt.bearerdetails.fnBack = function(pthis) {
+    debugger;
+    var Params = {
+        "appId": "beamnt",
+        "scr": "BearerSummary",
+        "div": apz.beamnt.bearerdetails.Sparams.destroyDiv,
+        "userObj": {
+            "destroyDiv": apz.beamnt.bearerdetails.Sparams.destroyDiv,
+            "parentAppId": apz.beamnt.bearerdetails.Sparams.parentAppId
+        }
+    }
+    apz.launchSubScreen(Params);
+}

@@ -1,0 +1,123 @@
+apz.tdsfrm.dicertificate = {};
+apz.app.onLoad_DICertificateRequest = function(params) {
+    debugger;
+                 apz.setElmValue("tdsfrm__DICertificateRequest__acc_no", params.accountNumber);
+
+};
+apz.app.onShown_DICertificateRequest = function(params) {
+    debugger;
+    apz.show("tdsfrm__DICertificateRequest__stage_one");
+    apz.setElmValue("landin__Landing__heading", "DEPOSIT INTEREST CERTIFICATE REQUEST");
+};
+apz.tdsfrm.dicertificate.fnSubmit = function(params) {
+    apz.hide("tdsfrm__DICertificateRequest__nav_one");
+}
+apz.tdsfrm.dicertificate.fnCancel = function(params) {
+    apz.tdsfrm.dicertificate.submitCallback()
+}
+apz.tdsfrm.dicertificate.fnChangeYear = function() {
+    debugger;
+    var val1 = apz.isNull(apz.getElmValue("tdsfrm__DICertificateRequest__acc_no"))
+    var val2 = apz.isNull(apz.getElmValue("tdsfrm__DICertificateRequest__fin_year"))
+    if (!val1 && !val2) {
+        apz.show("tdsfrm__DICertificateRequest__inner_form");
+    } else {
+        apz.hide("tdsfrm__DICertificateRequest__inner_form");
+    }
+}
+apz.tdsfrm.dicertificate.dispMsg = function(pResp, type) {
+    var params = {};
+    params.message = pResp;
+    params.type = type;
+    params.callBack = apz.app.displayMessageCallBack;
+    apz.dispMsg(params);
+}
+apz.tdsfrm.dicertificate.submitCallback = function() {
+    lParams = {};
+    lParams.textContent = "Fixed Deposit Summary";
+    apz.landin.Landing.fnMenuClickInside("Fixed Deposit Summary");
+}
+apz.tdsfrm.dicertificate.fnDownload = function(params, fileType) {
+    debugger;
+    var val1 = apz.getElmValue("tdsfrm__DICertificateRequest__acc_no");
+    var val2 = apz.getElmValue("tdsfrm__DICertificateRequest__fin_year");
+    if (val1 && val2) {
+        var jsonFilePath = apz.getDataFilesPath("tdsfrm") + "/DICertificate.json";
+        var jsonFileContent = apz.getFile(jsonFilePath);
+        var ljsondata = JSON.parse(jsonFileContent);
+        for (var i = 0; i < ljsondata.data.length; i++) {
+            var mimetype = ljsondata.data[i].mimeType;
+            var lMimeType = mimetype.slice(-3);
+            if (fileType == lMimeType.toLowerCase()) {
+                apz.tdsfrm.dicertificate.ReportdwnldMethod(ljsondata.data[i]);
+            }
+        }
+    } else {
+        apz.dispMsg({
+            message: "Please choose an account number and financial year!",
+            type: "S"
+        });
+    }
+}
+apz.tdsfrm.dicertificate.ReportdwnldMethod = function(lbodyobj) {
+    debugger;
+    var blob;
+    var fileType = "";
+    if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+        blob = apz.tdsfrm.dicertificate.b64toBlob(lbodyobj.content, "application/pdf");
+        fileType = ".pdf";
+    }
+    var blobUrl = URL.createObjectURL(blob);
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.tdsfrm.dicertificate.base64tofilecallBack;
+        json.base64 = lbodyobj.content;
+        json.fileName = "BalanceCertificate"+fileType;
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+                apz.landin.Landing.fnMenuClickInside("Fixed Deposit Summary")
+
+    } else {
+        window.open(blobUrl);
+                apz.landin.Landing.fnMenuClickInside("Fixed Deposit Summary")
+
+    }
+};
+apz.tdsfrm.dicertificate.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+
+};
+apz.tdsfrm.dicertificate.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.tdsfrm.dicertificate.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.tdsfrm.dicertificate.openFileCallback = function(params) {
+    debugger;
+};

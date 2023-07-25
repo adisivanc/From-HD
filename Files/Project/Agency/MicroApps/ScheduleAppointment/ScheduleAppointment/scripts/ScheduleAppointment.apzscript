@@ -1,0 +1,100 @@
+apz.schapp.ScheduleAppointment = {};
+
+apz.app.onLoad_ScheduleAppointment  = function(params) {
+    apz.schapp.ScheduleAppointment.sCache= params;
+    apz.schapp.ScheduleAppointment.fnInitialize();
+};
+
+apz.schapp.ScheduleAppointment.fnInitialize = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "scheduleAppointment_Query",
+        "buildReq": "N",
+        "req": {
+            tbScheduleAppointment:{
+                customerId:apz.schapp.ScheduleAppointment.sCache.userinfo.id,
+                referenceNo:apz.schapp.ScheduleAppointment.sCache.userinfo.referenceNo
+            }
+        },
+        "paintResp": "Y",
+        "async": false,
+        "callBack": apz.schapp.ScheduleAppointment.fnInitializeCB,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+
+
+apz.schapp.ScheduleAppointment.fnInitializeCB=function(params){
+    console.log(params);
+}
+
+apz.schapp.ScheduleAppointment.fnApprove=function(){
+    var reqObj=apz.data.buildData("scheduleAppointment","schapp");
+    reqObj.schapp__scheduleAppointment_Req.tbScheduleAppointment.status="Approved";
+    var lServerParams = {
+        "ifaceName": "scheduleAppointment_Modify",
+        "buildReq": "N",
+        "req":reqObj.schapp__scheduleAppointment_Req,
+        "paintResp": "N",
+        "async": false,
+        "callBack": apz.schapp.ScheduleAppointment.fnApproveCB
+    };
+    apz.server.callServer(lServerParams);
+}
+
+apz.schapp.ScheduleAppointment.fnApproveCB=function(params){
+    apz.schapp.ScheduleAppointment.sendMsg("Approved");
+}
+
+
+apz.schapp.ScheduleAppointment.fnReject=function(){
+    var reqObj=apz.data.buildData("scheduleAppointment","schapp");
+    reqObj.schapp__scheduleAppointment_Req.tbScheduleAppointment.status="Rejected";
+    var lServerParams = {
+        "ifaceName": "scheduleAppointment_Modify",
+        "buildReq": "N",
+        "req":reqObj.schapp__scheduleAppointment_Req,
+        "paintResp": "N",
+        "async": false,
+        "callBack": apz.schapp.ScheduleAppointment.fnRejectCB
+    };
+    apz.server.callServer(lServerParams);
+}
+
+apz.schapp.ScheduleAppointment.fnRejectCB=function(params){
+    apz.schapp.ScheduleAppointment.sendMsg("Rejected");
+}
+
+
+apz.schapp.ScheduleAppointment.sendMsg=function(msg){
+            var lmobileNo =apz.getElmValue("schapp__scheduleAppointment__i__tbScheduleAppointment__mobileNumber");
+            var lsenderID = "APZBNK";
+            var lmessage = "Your request has been "+msg;
+            var llurl = "http://smshorizon.co.in/api/sendsms.php?user=Iexceed&apikey=XOTNwz3OffqcodOubdhl&mobile=9535343296&message=" +
+                lmessage + "&senderid=" + lsenderID + "&type=txt";
+            $.ajax({
+                url: llurl,
+                dataType: "JSONP",
+                success: function(data) {
+                   apz.schapp.ScheduleAppointment.sendMsgCB(data);
+                },
+                error: function(data) {
+                    apz.schapp.ScheduleAppointment.sendMsgCB(data);
+                }
+            });
+}
+
+
+apz.schapp.ScheduleAppointment.sendMsgCB=function(){
+    var lParams = {
+        "appId": apz.schapp.ScheduleAppointment.sCache.parentAppId,
+        "scr": apz.schapp.ScheduleAppointment.sCache.parentScr,
+        "div":apz.schapp.ScheduleAppointment.sCache.destroyDiv,
+        "animation": 9,
+        "userObj":{
+            
+        }
+    };
+    apz.launchApp(lParams);
+}

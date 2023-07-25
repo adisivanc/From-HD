@@ -1,0 +1,20 @@
+{
+    "InterestRate" : [{
+        "amount" : "Upto 1 Lakh",
+        "tenor" : "30 Days",
+        "interestRate" : "5.00"
+    },{
+        "amount" : "Upto 1 Lakh",
+        "tenor" : "60 Days",
+        "interestRate" : "5.50"
+    },{
+        "amount" : "Upto 1 Lakh",
+        "tenor" : "270 Days",
+        "interestRate" : "6.00"
+    },
+    {
+        "amount" : "Upto 1 Lakh",
+        "tenor" : ">365 Days",
+        "interestRate" : "6.50"
+    }]
+}

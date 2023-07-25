@@ -1,0 +1,108 @@
+apz.docmnt.DocumentLauncher = {};
+apz.app.onLoad_DocumentLauncher = function(params) {
+    debugger;
+    apz.docmnt.DocumentLauncher.sCache = params;
+    apz.docmnt.DocumentLauncher.currentFlowIndex = params.currentFlow;
+    apz.docmnt.DocumentLauncher.onboardingFlow = JSON.parse(apz.getFile(apz.getDataFilesPath("apzonb") + "/OnboardingFlow.json"));
+    apz.docmnt.DocumentLauncher.fnLaunchScreen();
+}
+apz.docmnt.DocumentLauncher.fnCancel = function() {
+    debugger;
+    apz.apzonb.Navigator.fnSaveFlow();
+}
+apz.docmnt.DocumentLauncher.nextScreen = function() {
+    debugger;
+    $("#docmnt__DocumentLauncher__el_btn_3").attr("disabled", "disabled");
+    apz.docmnt.DocumentLauncher.navigation = "Next";
+    var index = apz.docmnt.DocumentLauncher.currentFlowIndex;
+    var screenName = apz.docmnt.DocumentLauncher.onboardingFlow[index].screenName;
+    apz.docmnt.DocumentLauncher.currentFlowIndex++;
+    apz.startLoader();
+    setTimeout(function(){
+        apz.docmnt[screenName].saveApplicationDetails();
+    },10)
+}
+apz.docmnt.DocumentLauncher.preScreen = function(scr) {
+    debugger;
+    $("#docmnt__DocumentLauncher__el_btn_2").attr("disabled", "disabled");
+    if(scr == "DocumentSelection"){
+        
+        
+    var lParams = {
+        "appId": "docmnt",
+        "scr": "DocumentSelection",
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": apz.docmnt.DocumentLauncher.sCache
+    };
+    apz.launchApp(lParams);
+    }else{
+        
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "DocumentSelection",
+        "div": "IdentityDetails",
+        "userObj": apz.docmnt.DocumentLauncher.sCache
+    };
+    apz.launchApp(lParams);
+    }
+    apz.startLoader();
+    setTimeout(function(){
+        apz.docmnt[screenName].saveApplicationDetails();
+    },10)
+}
+apz.docmnt.DocumentLauncher.fnLaunchScreen = function() {
+    debugger;
+    $("#docmnt__DocumentLauncher__el_btn_3,#docmnt__DocumentLauncher__el_btn_2").removeAttr("disabled");
+    var index = apz.docmnt.DocumentLauncher.currentFlowIndex;
+    apz.flowNo = index;
+    var lParams = {
+        "appId": "docmnt",
+        "scr": "DocumentSelection",
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": apz.docmnt.DocumentLauncher.sCache
+    };
+    apz.launchApp(lParams);
+}
+apz.docmnt.DocumentLauncher.fnLunchProducts = function() {
+    var lparams = {};
+    apz.docmnt.DocumentLauncher.sCache.parentdiv = "apzonb__Navigator__launchdiv";
+    switch (apz.docmnt.DocumentLauncher.sCache.product) {
+        case "Accounts":
+            apz.docmnt.DocumentLauncher.sCache.currentFlow = 6;
+            lparams.appId = "prddtl";
+            lparams.scr = "ProductAccountLauncher";
+            break;
+        case "Cards":
+        case "Loans":
+            apz.docmnt.DocumentLauncher.sCache.currentFlow = 8;
+            lparams.appId = "loanvg";
+            lparams.scr = "LoanLauncher";
+            break;
+        case "Deposits":
+            apz.docmnt.DocumentLauncher.sCache.currentFlow = 12;
+            lparams.appId = "checkm";
+            lparams.scr = "Mail";
+            break;
+        default:
+            apz.dispMsg({
+                "type": "I",
+                "message": "Your request has been captured and sent for processing. We will get in touch with you shortly .Your reference number is " +
+                    apz.docmnt.DocumentLauncher.sCache.refNo,
+                "callBack": apz.apzonb.Navigator.fnLunachHome
+            });
+    }
+    lparams.div = "apzonb__Navigator__launchdiv";
+    lparams.userObj = apz.docmnt.DocumentLauncher.sCache;
+    apz.launchApp(lparams);
+}
+apz.docmnt.DocumentLauncher.fnLunchApplicationDetails = function() {
+    debugger;
+    apz.docmnt.DocumentLauncher.sCache.parentdiv = "apzonb__Navigator__launchdiv";
+    apz.docmnt.DocumentLauncher.sCache.currentFlow = 3;
+    var lparams = {};
+    lparams.appId = "appdtl";
+    lparams.scr = "AppLauncher";
+    lparams.div = "apzonb__Navigator__launchdiv";
+    lparams.userObj = apz.docmnt.DocumentLauncher.sCache;
+    apz.launchApp(lparams);
+}

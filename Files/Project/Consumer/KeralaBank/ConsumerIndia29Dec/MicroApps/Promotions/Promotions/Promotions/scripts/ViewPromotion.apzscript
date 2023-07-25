@@ -1,0 +1,26 @@
+//declaration
+apz.promtn.ViewPromotion = {};
+apz.promtn.ViewPromotion.sCache = {};
+//on load functon
+apz.app.onLoad_ViewPromotion = function(params) {
+    debugger;
+    $("#"+params.div).removeClass("sno");
+    apz.promtn.ViewPromotion.sCache = params;
+    apz.promtn.ViewPromotion.fnGetViewPromotion(params.id);
+}
+//get view details from db
+apz.promtn.ViewPromotion.fnGetViewPromotion=function(){
+    var lServerParams = {
+        "ifaceName": "PromotionsList_Query",
+        "buildReq": "Y",
+        "paintResp": "Y",
+        "appId":"promtn",
+        "async": false,
+        "callBack": apz.promtn.ViewPromotion.fnGetViewPromotionCB
+    };
+    apz.server.callServer(lServerParams);
+}
+//callback function for get view details
+apz.promtn.ViewPromotion.fnGetViewPromotionCB=function(sParams){
+    
+}

@@ -1,0 +1,1 @@
+{"typeclass":"WORKFLOW","name":"CRSR","type":"WORKFLOW","workflows":[{"stageid":"INPUT","stagedescription":"Input Rule Details","screen":"RuleBuilder","sequence":"1"},{"stageid":"APPROVE","stagedescription":"Approve Rule Details","screen":"ViewRules","sequence":"2"},{"stageid":"SUBMIT","stagedescription":"Submit Rule Details","sequence":"3"}]}

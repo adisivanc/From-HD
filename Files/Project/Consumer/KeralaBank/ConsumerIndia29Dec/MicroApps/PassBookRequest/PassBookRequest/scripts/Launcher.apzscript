@@ -1,0 +1,11 @@
+apz.passbk.Launcher = {};
+apz.app.onLoad_Launcher = function() {
+    var params = {};
+    params.div = 'passbk__Launcher__launcher';
+    params.scr = 'PassBookRequest';
+    params.appId = "passbk";
+    apz.launchSubScreen(params);
+}
+apz.app.onShown_Launcher = function(){
+    debugger;
+}

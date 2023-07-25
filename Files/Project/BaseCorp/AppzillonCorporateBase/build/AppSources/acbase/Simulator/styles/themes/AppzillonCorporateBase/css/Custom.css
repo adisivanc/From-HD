@@ -1,0 +1,9 @@
+.org-del-button{background:url(./delete.png) no-repeat;}
+body > .line::after{content:url(../img/arrow_move_f.png);}
+body > .line::after{content:url("../img/arrow_move_f.png");}
+.line-text{background-image:url(img/coin.gif);}
+.line-text1{background-image:url(img/coin.gif);}
+.line-textR{background-image:url(img/coin.gif);}
+.lineR::after{content:url("img/arrow_move_r.png");}
+.line-textR1{background-image:url(img/coin.gif);}
+.ac-tr0{background:url(img/account.png) no-repeat 5px;}

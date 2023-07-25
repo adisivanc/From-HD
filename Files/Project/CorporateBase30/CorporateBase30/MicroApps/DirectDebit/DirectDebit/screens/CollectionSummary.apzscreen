@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"CollectionSummary","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","screencategory":"NONE","displayname":"CollectionSummary","interfaces":[{"name":"collectionSummary","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"NewLayout","landscapelo":"NewLayout"}]}

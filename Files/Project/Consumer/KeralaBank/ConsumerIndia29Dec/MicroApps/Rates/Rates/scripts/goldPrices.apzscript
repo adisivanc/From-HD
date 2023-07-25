@@ -1,0 +1,21 @@
+apz.Rates.goldPrices={};
+apz.app.onLoad_goldPrices=function(){
+    
+var dateObj = new Date();
+var month = dateObj.getUTCMonth() + 1; 
+var day = dateObj.getUTCDate();
+var year = dateObj.getUTCFullYear();
+
+newdate = day + "-" + month + "-" + year;
+    apz.setElmValue("Rates__goldPrices__el_inp_1",newdate);
+    $("#Rates__goldPrices__ct_tbl_2_add_btn").addClass("sno");
+    $("#Rates__goldPrices__ct_tbl_2_rem_btn").addClass("sno");
+ 
+  apz.data.loadJsonData("gold","Rates");
+}
+
+apz.Rates.backgold= function() {
+    apz.launchScreen( {
+        scr:"MainScreen"
+    }       )
+}

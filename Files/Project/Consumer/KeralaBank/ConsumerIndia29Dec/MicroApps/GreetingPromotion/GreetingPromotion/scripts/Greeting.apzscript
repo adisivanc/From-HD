@@ -1,0 +1,171 @@
+apz.app.onLoad_Greeting = function(params){
+    debugger;
+   //apz.mockServer = true;
+    apz.grtprm.sCache = params;
+   // apz.grtprm.ChangeMsg();
+     apz.setElmValue("grtprm__Greeting__usernmae_0",apz.grtprm.sCache.userId || "John");
+    if(params.from == "GoalSetup"){
+            requestOBj= {
+            "vwUserPromotion":{
+                "appId":"baseap",
+                "userId":apz.grtprm.sCache.userId,
+                "header":(params.goalSetupName).toLowerCase()       
+            }
+          
+      };
+        apz.grtprm.fnInitialise("PromotionListGoalSetup_Query",apz.grtprm.fnGetViewGoalPromotionCB,requestOBj);   
+    }else{
+     
+      requestOBj= {
+            "vwUserPromotion":{
+                "appId":"baseap",
+                "userId":apz.grtprm.sCache.userId,
+                
+            }
+          
+      };
+    apz.grtprm.fnInitialise("PromotionList_Query",apz.grtprm.fnGetViewPromotionCB,requestOBj); 
+    }
+    
+};
+apz.grtprm.fnInitialise = function(ifaceName,fncallback, requestObj){
+    debugger;
+    
+   apz.startLoader();
+    var lServerParams = {
+        "ifaceName": ifaceName,
+        "buildReq": "N",
+        "paintResp": "N",
+        "appId":"grtprm",
+        "req":requestObj,
+        "async": false,
+        "callBack": fncallback
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.grtprm.fnGetViewPromotionCB = function(resp){
+    debugger;
+    //   if(apz.data.scrdata.grtprm__PromotionList_Req == undefined){
+    //     apz.data.scrdata.grtprm__PromotionList_Req = apz.data.scrdata.grtprm__PromotionList_Res
+    // }
+    apz.data.scrdata.grtprm__PromotionList_Req = {};
+    apz.data.scrdata.grtprm__PromotionList_Req.vwUserPromotion= [];
+    if(apz.mockServer){
+           obj = {};
+        obj.img = apz.grtprm.ChangeMsg(); 
+       apz.data.scrdata.grtprm__PromotionList_Req.vwUserPromotion.push(obj);
+    }else{
+         if(!resp.errors && resp.res.grtprm__PromotionList_Res){
+        apz.data.scrdata.grtprm__PromotionList_Req.vwUserPromotion = resp.res.grtprm__PromotionList_Res.vwUserPromotion;
+            }else{
+                    obj = {};
+                    obj.img = apz.grtprm.ChangeMsg(); 
+                      apz.data.scrdata.grtprm__PromotionList_Req.vwUserPromotion.push(obj);
+             }
+    }
+   
+     apz.data.loadData("PromotionList","grtprm");
+      apz.toggleModal({targetId:apz.grtprm.sCache.modaldiv});
+     
+};
+
+apz.grtprm.fnGetViewGoalPromotionCB = function(resp){
+    debugger;
+     apz.data.scrdata.grtprm__PromotionList_Req = {};
+    apz.data.scrdata.grtprm__PromotionList_Req.vwUserPromotion= [];
+ if(!resp.errors){
+      if(!resp.errors && resp.res.grtprm__PromotionListGoalSetup_Res){
+        apz.data.scrdata.grtprm__PromotionList_Req.vwUserPromotion =[ resp.res.grtprm__PromotionListGoalSetup_Res.vwUserPromotion[0]];
+       // apz.data.loadData("PromotionList","grtprm");
+    } else if(!resp.errors && resp.res.grtprm__PromotionListGoalSetup_Req){
+       apz.data.scrdata.grtprm__PromotionList_Req.vwUserPromotion = [resp.res.grtprm__PromotionListGoalSetup_Req.vwUserPromotion[0]];
+      
+    }
+   apz.data.loadData("PromotionList","grtprm");
+   $("#grtprm__Greeting__sc_row_3_row").addClass("sno");
+     $("#grtprm__Greeting__sc_row_9_row").addClass("sno");
+   try{
+   apz.grtprm.fnUpdateGoal();    
+   }catch(e){
+       apz.toggleModal({targetId:"golstp__GoalSummary__promoModal"});
+   } 
+    
+ }    else{
+     apz.toggleModal({targetId:"golstp__GoalSummary__promoModal"});
+ }
+   
+}
+ apz.grtprm.fnUpdateGoal = function(){
+       debugger;
+       
+     data = apz.data.scrdata.grtprm__PromotionList_Req.vwUserPromotion;
+     if(data.constructor == Array && Array.isArray(data)){
+         data = data[0];
+     }
+     
+    apz.grtprm.goalSetupPromo = data;
+     try{
+       apz.grtprm.fnDeletePromotion(apz.grtprm.goalSetupPromo);  
+     }catch(e){
+         apz.toggleModal({targetId:"golstp__GoalSummary__promoModal"});
+     }
+       
+   
+     
+ }  
+ apz.grtprm.fnDeletePromotion = function(goalSetupPromo){
+     debugger
+    requestOBj= {
+            "vwUserPromotion":{
+                "appId":"csmrbk",
+                "userId":apz.grtprm.sCache.userId,
+                 "header":goalSetupPromo.header     
+            }
+          
+      };
+       apz.grtprm.fnInitialise("DeletePromotion_Delete",apz.grtprm.fnDeletePromotionCB,requestOBj); 
+     
+ }
+ apz.grtprm.fnDeletePromotionCB = function(pResp){
+     debugger;
+     apz.stopLoader();
+     if(!pResp.errors){
+         apz.grtprm.fnAddPromotion(apz.grtprm.goalSetupPromo);
+     }
+ }
+ 
+ apz.grtprm.fnAddPromotion = function(promo){
+     debugger
+    promo.status = "active";
+    requestOBj= {
+            "vwUserPromotion":promo
+          
+      };
+       apz.grtprm.fnInitialise("AddPromotion_New",apz.grtprm.fnAddPromotionCB,requestOBj); 
+     
+ }
+ apz.grtprm.fnAddPromotionCB = function(pResp){
+     debugger;
+ }
+apz.grtprm.ChangeMsg = function(){
+     debugger;
+     greetmsg = "";
+     d = new Date();
+     hour = d.getHours();
+     if(hour>=0 && hour<12 || hour == 24){
+         greetmsg = "gudmrg.jpg";
+         
+     }else if(hour>=12 && hour<16){
+         greetmsg = "gudafter.jpg";
+     }else if(hour>=16 && hour<24){
+         greetmsg = "gudnoon.jpg";
+         
+     }
+  return greetmsg;
+    // apz.setElmValue("grtprm__Greeting__gretting_0",greetmsg);
+ }
+
+apz.grtprm.fnCloaseModal = function(){
+    debugger
+    apz.toggleModal({targetId:apz.grtprm.sCache.modaldiv});
+}

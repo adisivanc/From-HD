@@ -1,0 +1,590 @@
+{
+    "spndas__SpendDetails_Res": {
+        "details": [{
+            "account": "100009312274",
+            "transactions": [{
+                "month": "January",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "5000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "20000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "12000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "10000"
+                }, {
+                    "name": "Investments",
+                    "value": "6000"
+                },
+                {
+                    "name": "Auto and Transport",
+                    "value": "5000"
+                }, {
+                    "name": "Others",
+                    "value": "2000"
+                }]
+            },{
+                "month": "February",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "4000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "15000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "5000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "9000"
+                }, {
+                    "name": "Investments",
+                    "value": "1000"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "7000"
+                }, {
+                    "name": "Others",
+                    "value": "3000"
+                }]
+            },{
+                "month": "March",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "10000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "10000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "8000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "5000"
+                }, {
+                    "name": "Investments",
+                    "value": "1200"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "4000"
+                }, {
+                    "name": "Others",
+                    "value": "2500"
+                }]
+            },{
+                "month": "April",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "1000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "11000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "6000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "6000"
+                }, {
+                    "name": "Investments",
+                    "value": "500"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "7000"
+                }, {
+                    "name": "Others",
+                    "value": "1500"
+                }]
+            },{
+                "month": "May",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "5000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "20000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "15000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "10000"
+                }, {
+                    "name": "Investments",
+                    "value": "6000"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "5000"
+                }, {
+                    "name": "Others",
+                    "value": "2000"
+                }]
+            },{
+                "month": "June",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "2500"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "6000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "6000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "5000"
+                }, {
+                    "name": "Investments",
+                    "value": "4000"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "3000"
+                }, {
+                    "name": "Others",
+                    "value": "4000"
+                }]
+            },{
+                "month": "July",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "800"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "6000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "1500"
+                }, {
+                    "name": "Entertainment",
+                    "value": "6000"
+                }, {
+                    "name": "Investments",
+                    "value": "2000"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "5000"
+                }, {
+                    "name": "Others",
+                    "value": "2000"
+                }]
+            },{
+                "month": "August",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "2000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "5000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "1200"
+                }, {
+                    "name": "Entertainment",
+                    "value": "4000"
+                }, {
+                    "name": "Investments",
+                    "value": "500"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "4500"
+                }, {
+                    "name": "Others",
+                    "value": "3000"
+                }]
+            },{
+                "month": "September",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "4000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "8000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "10000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "8000"
+                }, {
+                    "name": "Investments",
+                    "value": "500"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "2500"
+                }, {
+                    "name": "Others",
+                    "value": "1000"
+                }]
+            },{
+                "month": "October",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "3000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "5000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "1000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "6000"
+                }, {
+                    "name": "Investments",
+                    "value": "300"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "6000"
+                }, {
+                    "name": "Others",
+                    "value": "2000"
+                }]
+            },{
+                "month": "November",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "500"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "8000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "2000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "6000"
+                }, {
+                    "name": "Investments",
+                    "value": "1000"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "7500"
+                }, {
+                    "name": "Others",
+                    "value": "1200"
+                }]
+            },{
+                "month": "December",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "2000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "8000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "10000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "8000"
+                }, {
+                    "name": "Investments",
+                    "value": "2000"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "5000"
+                }, {
+                    "name": "Others",
+                    "value": "2000"
+                }]
+            }
+            ]
+        },{
+            "account": "100009312263",
+            "transactions": [{
+                "month": "January",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "5000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "20000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "12000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "10000"
+                }, {
+                    "name": "Investments",
+                    "value": "6000"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "5000"
+                }, {
+                    "name": "Others",
+                    "value": "2000"
+                }]
+            },{
+                "month": "February",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "4000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "15000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "5000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "9000"
+                }, {
+                    "name": "Investments",
+                    "value": "1000"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "4000"
+                }, {
+                    "name": "Others",
+                    "value": "3000"
+                }]
+            },{
+                "month": "March",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "8000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "10000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "8000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "5000"
+                }, {
+                    "name": "Investments",
+                    "value": "1200"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "5000"
+                }, {
+                    "name": "Others",
+                    "value": "2000"
+                }]
+            },{
+                "month": "April",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "1000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "11000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "6000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "6000"
+                }, {
+                    "name": "Investments",
+                    "value": "500"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "7000"
+                }, {
+                    "name": "Others",
+                    "value": "1000"
+                }]
+            },{
+                "month": "May",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "5000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "20000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "15000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "10000"
+                }, {
+                    "name": "Investments",
+                    "value": "6000"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "5000"
+                }, {
+                    "name": "Others",
+                    "value": "2000"
+                }]
+            },{
+                "month": "June",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "2500"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "6000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "6000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "5000"
+                }, {
+                    "name": "Investments",
+                    "value": "4000"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "8000"
+                }, {
+                    "name": "Others",
+                    "value": "4000"
+                }]
+            },{
+                "month": "July",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "800"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "6000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "1500"
+                }, {
+                    "name": "Entertainment",
+                    "value": "6000"
+                }, {
+                    "name": "Investments",
+                    "value": "2000"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "7500"
+                }, {
+                    "name": "Others",
+                    "value": "3000"
+                }]
+            },{
+                "month": "August",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "2000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "5000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "1200"
+                }, {
+                    "name": "Entertainment",
+                    "value": "4000"
+                }, {
+                    "name": "Investments",
+                    "value": "500"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "8500"
+                }, {
+                    "name": "Others",
+                    "value": "3000"
+                }]
+            },{
+                "month": "September",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "4000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "8000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "10000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "8000"
+                }, {
+                    "name": "Investments",
+                    "value": "500"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "5000"
+                }, {
+                    "name": "Others",
+                    "value": "2000"
+                }]
+            },{
+                "month": "October",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "3000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "5000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "1000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "6000"
+                }, {
+                    "name": "Investments",
+                    "value": "300"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "3500"
+                }, {
+                    "name": "Others",
+                    "value": "2500"
+                }]
+            },{
+                "month": "November",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "500"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "8000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "2000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "6000"
+                }, {
+                    "name": "Investments",
+                    "value": "1000"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "4500"
+                }, {
+                    "name": "Others",
+                    "value": "1500"
+                }]
+            },{
+                "month": "December",
+                "spends": [{
+                    "name": "Bills and Utilities",
+                    "value": "2000"
+                }, {
+                    "name": "Food and Dining",
+                    "value": "8000"
+                }, {
+                    "name": "Health and Fitness",
+                    "value": "10000"
+                }, {
+                    "name": "Entertainment",
+                    "value": "8000"
+                }, {
+                    "name": "Investments",
+                    "value": "2000"
+                }, {
+                    "name": "Auto and Transport",
+                    "value": "8000"
+                }, {
+                    "name": "Others",
+                    "value": "4000"
+                }]
+            }
+            ]
+        }]
+    }
+}

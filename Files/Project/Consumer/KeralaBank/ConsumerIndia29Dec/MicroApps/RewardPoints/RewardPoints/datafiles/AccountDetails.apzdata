@@ -1,0 +1,15 @@
+{"rewdpt__AccountDetails_Res":
+    {
+	"CardDtls": [{
+		"accountNumber": "100009312263",
+		"cardType": "Credit Card",
+		"cardProduct": "Capital One",
+		"cardNumber": "7349 XX7X X8XX 2345"
+	}, {
+		"accountNumber": "100009312401",
+		"cardType": "Debit Card",
+		"cardProduct": "Contactless Debit Card",
+		"cardNumber": "2324 XXXX XXXX XX34"
+	}]
+}
+}

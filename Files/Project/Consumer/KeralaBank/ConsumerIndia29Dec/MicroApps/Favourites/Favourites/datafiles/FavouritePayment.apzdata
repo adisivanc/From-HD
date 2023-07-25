@@ -1,0 +1,58 @@
+{
+    "favour__FavouritePayment_Res": {
+        "summary": [
+            {
+                "providerImg": "mob_dr.png",
+                "providerName": "Mobile",
+                "status": "Autopay Scheduled",
+                "dueDate": "",
+                "subsriberId": "9600565673",
+                "billType": "Mobile",
+                "providerCategory": "Airtel",
+                "fromAccountNo": "100009312274",
+                "amount": "12000",
+                "toCurrency": "INR",
+                "fromCurrency": "INR"
+            },
+            {
+                "providerImg": "gas_dr.png",
+                "providerName": "Gas",
+                "status": "pending",
+                "dueDate": "20/07/2020",
+                "subsriberId": "232323423",
+                "billType": "General",
+                "providerCategory": "Adani Gas",
+                "fromAccountNo": "100009312263",
+                "amount": "5000",
+                "toCurrency": "INR",
+                "fromCurrency": "INR"
+            },
+            {
+                "providerImg": "el_dr.png",
+                "providerName": "Electricity",
+                "status": "Autopay Scheduled",
+                "dueDate": "",
+                "subsriberId": "8698345627",
+                "billType": "Mobile",
+                "providerCategory": "BESCOM",
+                "fromAccountNo": "100009312263",
+                "amount": "878",
+                "toCurrency": "INR",
+                "fromCurrency": "INR"
+            },
+            {
+                "providerImg": "insu_dr.png",
+                "providerName": "Insurance",
+                "status": "pending",
+                "dueDate": "28/07/2020",
+                "subsriberId": "100100023234",
+                "billType": "General",
+                "providerCategory": "AXA",
+                "fromAccountNo": "100009312274",
+                "amount": "3300",
+                "toCurrency": "INR",
+                "fromCurrency": "INR"
+            }
+        ]
+    }
+}

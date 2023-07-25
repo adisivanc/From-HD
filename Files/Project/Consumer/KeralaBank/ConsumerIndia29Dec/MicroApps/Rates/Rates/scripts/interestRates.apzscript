@@ -1,0 +1,17 @@
+apz.Rates.interestRates = {};
+apz.app.onLoad_interestRates = function() {
+    apz.Rates.interestRates.fnLaunchSavingDeposit("savingsDeposit");
+   $("#Rates__interestRates__sc_col_2").addClass("current")
+}
+
+apz.Rates.interestRates.fnLaunchSavingDeposit = function(scr,ths) {
+    debugger;
+     $("#Rates__interestRates__ct_frm_1>ul>li").removeClass("current");
+    $(ths).closest("li").addClass("current");
+    apz.launchSubScreen({
+        appId:"Rates",
+        scr: scr,
+        div: "Rates__interestRates__ps_pls_2",
+    })
+}
+

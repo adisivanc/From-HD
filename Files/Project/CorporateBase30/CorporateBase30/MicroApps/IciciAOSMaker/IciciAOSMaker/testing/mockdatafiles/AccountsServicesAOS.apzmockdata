@@ -1,0 +1,12 @@
+{
+    "tbAccountService" :{
+        "companyid" : "08880881",
+        "purposeAccOpening" : "Savings",
+        "accPurposeOther" : "",
+        "accountCurrency" : "USD",
+        "branchPreperences" : "Southall",
+        "cashPaymentType" : "",
+        "similarProductCheck" : "",
+        "productType" : "Business Bank  Account"
+    }
+}

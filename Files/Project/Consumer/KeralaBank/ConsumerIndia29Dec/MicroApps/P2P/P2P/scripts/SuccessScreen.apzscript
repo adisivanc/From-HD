@@ -1,0 +1,72 @@
+apz.pplpay.SuccessScreen = {};
+apz.app.onLoad_SuccessScreen = function(params) {
+    debugger;
+    apz.setElmValue("pplpay__SuccessScreen__inpName", apz.pplpay.peoplePay.name);
+    apz.setElmValue("pplpay__SuccessScreen__inpemail", apz.pplpay.peoplePay.email);
+    apz.setElmValue("pplpay__SuccessScreen__inpAmount", apz.pplpay.peoplePay.amount);
+    apz.setElmValue("pplpay__SuccessScreen__ddlPayfrom", apz.pplpay.peoplePay.payfrom);
+    apz.setElmValue("pplpay__SuccessScreen__inpSendon", apz.pplpay.peoplePay.sendon);
+    apz.setElmValue("pplpay__SuccessScreen__inpHowtoPay", apz.pplpay.peoplePay.howtopay);
+    apz.setElmValue("pplpay__SuccessScreen__inoFreq", apz.pplpay.peoplePay.freq);
+};
+apz.pplpay.SuccessScreen.fnDone = function() {
+    var div = apz.pplpay.peoplePay.sparams.control.exitApp.div;
+    var lLaunchParams = {
+        "appId": "pplpay",
+        "scr": "peoplePay",
+        "div": div,
+        "userObj": {
+            "control": {
+                "exitApp": {
+                    "appId": "",
+                    "backFunction": "",
+                    "div": "csmrbk__LandingPage__microappLauncherCol",
+                    "callBack": ""
+                }
+            },
+            "Navigation": {
+                "setNavigation": apz.csmrbk.landingpage.fnSetNavigation
+            }
+        }
+    };
+    apz.launchSubScreen(lLaunchParams);
+}
+apz.pplpay.SuccessScreen.sendConformationMail = function(params) {
+    debugger;
+    $("#csmrbk__LandingPage__el_img_3").trigger("click")
+    var email = {
+        "mailId": "mail44001",
+        "recipientMailId": apz.pplpay.peoplePay.sparams.emailId,
+        "senderMailId": "iexceedtestemail@gmail.com",
+        "ccIdList": "",
+        "internal": "Y",
+        "subject": "Payment Confirmation",
+        "body": "You have received a Payment of $100.00 to your account from 1000XXXX2263. To claim please click on the link below </br>  <a href='http://localhost:8080/VarifyRouting'>Click Here</a>",
+        "interfaceId": ""
+    };
+    email.id = "MAIL_ID";
+    email.callBack = apz.pplpay.SuccessScreen.mailCallback;
+    apz.ns.sendMail(email);
+}
+apz.pplpay.SuccessScreen.mailCallback = function(successMsg) {
+    debugger;
+    apz.pplpay.SuccessScreen.fnDone();
+    /* if (successMsg.status) {
+        alert("Mail Sent Successfully");
+        setTimeout(function() {;
+            var param = {
+                'message': "Mail Sent successfully, for verification check your mail.",
+                'type': "S"
+            };
+            apz.dispMsg(param);
+            apz.fndftr.fundstranfer.sParams.control.exitApp.callBack();
+        }, 1000);
+    } else {*/
+    /* setTimeout(function() {
+            var param = {
+                'message': "Mail Sent successfully, for verification check your mail."
+            };
+            apz.dispMsg(param);
+            apz.fndftr.fundstranfer.sParams.control.exitApp.callBack();
+        }, 1000);*/
+}

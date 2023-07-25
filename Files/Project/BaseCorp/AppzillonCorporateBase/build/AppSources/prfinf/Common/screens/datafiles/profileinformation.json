@@ -1,0 +1,56 @@
+{
+    "prfinf__profileinformation_Req": {
+        "tbAsmiUser": [{
+            "userId":"robert.langford",
+            "userName": "Robert Langford",
+            "userEml1": "robert.langford@acme.com",
+            "userPhno1": "97142091236",
+            "userAddr1": "22 West Raymond Street,  New York , United States of America - 10005",
+            "addInfo2": "AFYF3467",
+            "userAddr2": "Newyork, 07102",
+            "language": "en",
+            "Facebook": "robert.langford@acme.com",
+            "LinkedIn": "robert.langford",
+            "Twitter": "robert.langford",
+            "instagram": "robert.langford",
+            "profilePic": "userprofl.png",
+            "salutation": "Mr.",
+            "PanNumber": "135-XX-XXXX",
+            "aadhar":"C6524 25647 12846"
+        },{
+            "userId":"mike.smith",
+            "userName": "Mike Smith",
+            "userEml1": "mike.smith@acme.com",
+            "userPhno1": "97142091236",
+            "userAddr1": "22 West Raymond Street,  New York , United States of America - 10005",
+            "addInfo2": "AFYF3467",
+            "userAddr2": "Newyork, 07102",
+            "language": "en",
+            "Facebook": "mike.smith@acme.com",
+            "LinkedIn": "mike.smith",
+            "Twitter": "mike.smith",
+            "instagram": "mike.smith",
+            "profilePic": "userprofl.png",
+            "salutation": "Mr.",
+            "PanNumber": "135-XX-XXXX",
+            "aadhar":"C6524 25647 12846"
+        },{
+            "userId":"patrick.wilson",
+            "userName": "Patrick Wilson",
+            "userEml1": "patrick.wilson@acme.com",
+            "userPhno1": "97142091236",
+            "userAddr1": "22 West Raymond Street,  New York , United States of America - 10005",
+            "addInfo2": "AFYF3467",
+            "userAddr2": "Newyork, 07102",
+            "language": "en",
+            "Facebook": "patrick.wilson@acme.com",
+            "LinkedIn": "patrick.wilson",
+            "Twitter": "patrick.wilson",
+            "instagram": "patrick.wilson",
+            "profilePic": "userprofl.png",
+            "salutation": "Mr.",
+            "PanNumber": "135-XX-XXXX",
+            "aadhar":"C6524 25647 12846"
+        }]
+    }
+}

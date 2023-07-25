@@ -1,0 +1,22 @@
+[
+    {
+        "STAGE_ID": "APPROVE",
+        "STAGE_DESC": "Approve Funds Transfer"
+    },
+    {
+        "STAGE_ID": "CONFIRM",
+        "STAGE_DESC": "Confirm Funds Transfer"
+    },
+    {
+        "STAGE_ID": "DETAILS",
+        "STAGE_DESC": "Funds Transfer Details"
+    },
+    {
+        "STAGE_ID": "SUBMIT",
+        "STAGE_DESC": "Submit Funds Transfer"
+    },
+    {
+        "STAGE_ID": "VERIFY",
+        "STAGE_DESC": "Verify Funds Transfer"
+    }
+]

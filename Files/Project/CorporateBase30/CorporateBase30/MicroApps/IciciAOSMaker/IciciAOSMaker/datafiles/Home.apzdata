@@ -1,0 +1,50 @@
+{
+    "icaosm__Home_Req": {
+        "Home": [{
+            "fsticon": "icon-settings-alt",
+            "value": "Business Details",
+            "scndicon": "icon-chevron-right",
+            "progress": ""
+        }, {
+            "fsticon": "icon-settings-alt",
+            "value": "Accounts Types",
+           "scndicon": "icon-chevron-right",
+            "progress": ""
+        }, {
+            "fsticon": "icon-settings-alt",
+            "value": "Personal Details of Authorized Signatorie(s)",
+           "scndicon": "icon-chevron-right",
+            "progress": ""
+        }, {
+            "fsticon": "icon-settings-alt",
+            "value": "Personal Details of Ultimate Beneficial Owners(s)",
+           "scndicon": "icon-chevron-right",
+            "progress": ""
+        }, {
+            "fsticon": "icon-settings-alt",
+            "value": "Service Required",
+           "scndicon": "icon-chevron-right",
+            "progress": ""
+        }, {
+            "fsticon": "icon-settings-alt",
+            "value": "Tax Residency Details",
+           "scndicon": "icon-chevron-right",
+            "progress": ""
+        }, {
+            "fsticon": "icon-settings-alt",
+            "value": "Declarations",
+           "scndicon": "icon-chevron-right",
+            "progress": ""
+        }, {
+            "fsticon": "icon-settings-alt",
+            "value": "Authorization",
+           "scndicon": "icon-chevron-right",
+            "progress": ""
+        }, {
+            "fsticon": "icon-settings-alt",
+            "value": "Mandates/Resolution",
+           "scndicon": "icon-chevron-right",
+            "progress": ""
+        }]
+    }
+}

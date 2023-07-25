@@ -1,0 +1,34 @@
+{
+    "ACOP01__ProductInfo_Req": {
+        "Information": {
+            "Savings Bank Rural - SemiUrban": {
+                "minbalreq": "100",
+                "minbalreqchk": "500",
+                "Sweepinfacility": "Yes",
+                "Sweepoutfacility": "No",
+                "rateofinterest": "4 % pa (at present)",
+                "nonperchkbk": "Free Upto 50 Leaves Per year ",
+                "instatmdbt": "Free*",
+                "internetbanking": "Free",
+                "mobilebankng": "Free#",
+                "smsbanking": "Rs. 15/- per quater",
+                "misssedcallbanking": "Free",
+                "epassbankapp": "Free"
+            },
+            "Savings Bank Metro - Urban": {
+                "minbalreq": "500",
+                "minbalreqchk": "1000",
+                "Sweepinfacility": "Yes",
+                "Sweepoutfacility": "No",
+                "rateofinterest": "4 % pa (at present)",
+                "nonperchkbk": "Free Upto 50 Leaves Per year",
+                "instatmdbt": "Free*",
+                "internetbanking": "Free",
+                "mobilebankng": "Free#",
+                "smsbanking": "Rs. 15/- per quater",
+                "misssedcallbanking": "Free",
+                "epassbankapp": "Free"
+            }
+        }
+    }
+}

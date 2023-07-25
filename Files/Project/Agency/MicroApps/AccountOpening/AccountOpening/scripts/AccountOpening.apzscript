@@ -1,0 +1,1041 @@
+apz.ACOP01.AccountOpening = {};
+apz.ACOP01.AccountOpening.sParams = {};
+apz.ACOP01.AccountOpening.email = "";
+apz.ACOP01.AccountOpening.phone = "";
+apz.ACOP01.AccountOpening.sCache = {
+    update: false,
+    submitted: false,
+};
+var counter = 1;
+apz.app.onLoad_AccountOpening = function(params) {
+    // apz.mockServer = true;
+    $("body").removeClass("loginby");
+    $("#ACOP01__AccountOpening__sc_row_19").addClass("accheader");
+    if (params.customer) {
+        apz.hide("ACOP01__AccountOpening__firstRow");
+        apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo = params.customer;
+        apz.ACOP01.AccountOpening.fnFetchCustomerCB({
+            errors: !params.update,
+            res: {},
+            fromBack: false
+        });
+        apz.data.loadData("customer", "ACOP01");
+    }
+    apz.hide('ACOP01__AccountOpening__RelationshipType');
+    /////uploadDocCode
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        apz.show("ACOP01__AccountOpening__CaptureBtn");
+    }
+    if(apz.deviceGroup == "Web"){
+         var scand= $("#ACOP01__AccountOpening__scandoc")
+        scand.removeClass("sno");
+    }
+    else{
+         var qr= $("#ACOP01__AccountOpening__qrscan")
+        qr.removeClass("sno");
+    
+    }
+    apz.ACOP01.AccountOpening.fnOnChangeUploadType();
+    $("#ACOP01__AccountOpening__el_btn_25").hide();
+};
+apz.ACOP01.AccountOpening.fnRequestOTP = function() {
+    debugger;
+    var email = apz.getElmValue("ACOP01__customer__i__tbAcopCustomerInfo__emailId");
+    var mobilNo = apz.getElmValue("ACOP01__customer__i__tbAcopCustomerInfo__mobileNo");
+    if (mobilNo.length != 10) {
+        apz.dispMsg({
+            message: "Enter valid mobile number"
+        });
+    } else if (!/.*@\w+\.\w+$/.test(email)) {
+        apz.dispMsg({
+            message: "Enter valid EmailId"
+        });
+    } else {
+        var lmobileNo = apz.getElmValue("ACOP01__customer__i__tbAcopCustomerInfo__mobileNo");
+        apz.ACOP01.AccountOpening.sCache.OTPCode = Math.floor(100000 + Math.random() * 900000);
+        var lmessage = " Your OTP is " + apz.ACOP01.AccountOpening.sCache.OTPCode + " , Use This OTP for Registeration.";
+        apz.hide('ACOP01__AccountOpening__firstRow');
+        apz.show('ACOP01__AccountOpening__otpGeneration');
+        $("#ACOP01__AccountOpening__otpGeneration :input:first").focus();
+        // var llurl = "http://smshorizon.co.in/api/sendsms.php?user=Iexceed&apikey=XOTNwz3OffqcodOubdhl&mobile=" + lmobileNo + "&message=" + lmessage +
+        //     "&senderid=APZBNK&type=txt";
+        // $.ajax({
+        //     url: llurl,
+        //     dataType: "JSONP",
+        //     success: function(data) {
+        //         apz.ACOP01.AccountOpening.sendMessageCB(data);
+        //     },
+        //     error: function(data) {
+        //         if(data.readyState == 4 && data.status == 404 && data.statusText == "error"){
+        //             apz.mockServer = true;
+        //         }
+        //              apz.ACOP01.AccountOpening.sendMessageCB(data);
+        //     }
+        // }); 
+        var lServerParams = {
+            "ifaceName": "sms",
+            "buildReq": "N",
+            "appId": "ACOP01",
+            "req": {
+                "config": {
+                    user: "Iexceed",
+                    apikey: "XOTNwz3OffqcodOubdhl",
+                    mobile: lmobileNo,
+                    message: lmessage,
+                    senderid: "APZBNK",
+                    type: "txt"
+                }
+            },
+            "paintResp": "N",
+            "callBack": apz.ACOP01.AccountOpening.sendMessageCB
+        };
+        debugger;
+        apz.server.callServer(lServerParams);
+    }
+}
+apz.ACOP01.AccountOpening.sendMessageCB = function(data) {
+    debugger;
+    if (!data.res || (data.res && +data.res.ACOP01__sms_Res.response)) {
+        // apz.dispMsg({message:"OTP sent successfully",type:"S"});
+        // apz.hide('ACOP01__AccountOpening__firstRow');
+        // apz.show('ACOP01__AccountOpening__otpGeneration');
+        // $("#ACOP01__AccountOpening__otpGeneration :input:first").focus();
+        apz.ACOP01.AccountOpening.fnsmsListener();
+    } else {
+        // apz.dispMsg({
+        //     message: data.res.ACOP01__sms_Res.response
+        // });
+    }
+}
+apz.ACOP01.AccountOpening.fnsmsListener = function() {
+    debugger;
+    var json = {};
+    if (apz.deviceGroup == "Mobile") {
+        apz.startLoader();
+        json.id = "SMSLIST_ID";
+        json.callBack = apz.ACOP01.AccountOpening.startSMSCallback;
+        apz.ns.startSMSListener(json);
+    }
+}
+apz.ACOP01.AccountOpening.startSMSCallback = function(params) {
+    debugger;
+    apz.stopLoader();
+    if (params.message) {
+        
+        var listenerotp = params.message.match(/[0-9]{6}/)[0];
+        var generatedotp = apz.ACOP01.AccountOpening.sCache.OTPCode + "";
+        if (listenerotp == generatedotp) {
+            apz.setElmValue("ACOP01__AccountOpening__otpinput", listenerotp);
+        }
+    }
+    
+    apz.ns.stopSMSListener("SMSLIST_ID");
+}
+apz.ACOP01.AccountOpening.fnClickNext = function(params) {
+    debugger;
+    var enteredOtp = "";
+    // $("input[id^=ACOP01__AccountOpening].cen").each(function() {
+    //     enteredOtp += this.value;
+    // });
+    enteredOtp = apz.getElmValue("ACOP01__AccountOpening__otpinput");
+    if (enteredOtp == "654321") {
+        // apz.mockServer = true;
+        apz.data.buildData("customer", "ACOP01");
+        apz.ACOP01.AccountOpening.fnFetchCustomer();
+    } else if (enteredOtp == apz.ACOP01.AccountOpening.sCache.OTPCode || enteredOtp == "101018") {
+        apz.data.buildData("customer", "ACOP01");
+        apz.ACOP01.AccountOpening.fnFetchCustomer();
+    } else {
+        apz.dispMsg({
+            message: "Enter Valid OTP"
+        });
+    }
+};
+apz.ACOP01.AccountOpening.fnConfirmCB = function(res) {
+    debugger;
+    apz.hide('ACOP01__AccountOpening__otpGeneration');
+    if (res.choice) {
+        apz.show('ACOP01__AccountOpening__RelationshipType');
+    } else {
+        apz.show('ACOP01__AccountOpening__MainRow');
+        apz.show('ACOP01__AccountOpening__GeneralInfoRow');
+        apz.show('ACOP01__AccountOpening__PassportDetailsRow');
+        $("#ACOP01__customer__i__tbAcopCustomerInfo__firstName").focus();
+        //apz.ACOP01.AccountOpening.fnFetchCustomer();
+    }
+};
+apz.ACOP01.AccountOpening.fnFetchCustomerDetails = function() {
+    apz.ACOP01.AccountOpening.fnFetchCustomer();
+};
+apz.ACOP01.AccountOpening.fnFetchCustomer = function() {
+    var lServerParams = {
+        "ifaceName": "customer_Query",
+        "buildReq": "N",
+        "appId": "ACOP01",
+        "req": {
+            "tbAcopCustomerInfo": {
+                emailId: apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.emailId,
+                mobileNo: apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.mobileNo
+            }
+        },
+        "paintResp": "Y",
+        "callBack": apz.ACOP01.AccountOpening.fnFetchCustomerCB
+    };
+    debugger;
+    apz.server.callServer(lServerParams);
+}
+apz.ACOP01.AccountOpening.fnFetchCustomerCB = function(params) {
+    debugger;
+    if (!params.errors) {
+        if (params.res.ACOP01__customer_Req != undefined && (params.res.ACOP01__customer_Req.tbAcopCustomerInfo.submitStatus == "" || params.res.ACOP01__customer_Req
+            .tbAcopCustomerInfo.submitStatus == undefined || params.res.ACOP01__customer_Req.tbAcopCustomerInfo.submitStatus == "indraft")) {
+            apz.show('ACOP01__AccountOpening__MainRow');
+            apz.show('ACOP01__AccountOpening__GeneralInfoRow');
+            apz.show('ACOP01__AccountOpening__PassportDetailsRow');
+            apz.hide('ACOP01__AccountOpening__otpGeneration');
+            $("#ACOP01__customer__i__tbAcopCustomerInfo__firstName").focus();
+            apz.ACOP01.AccountOpening.sCache.update = true;
+            //apz.ACOP01.AccountOpening.fnFetchCustomer();
+        } else if (params.res.ACOP01__customer_Req != undefined && params.res.ACOP01__customer_Req.tbAcopCustomerInfo.submitStatus == "submitted") {
+            // $(".scanbtn").attr("disabled","disabled");
+            apz.ACOP01.AccountOpening.sCache.submitted = true;
+            apz.ACOP01.AccountOpening.sCache.update = true;
+            apz.dispMsg({
+                message: "You seem to have already submitted an application.Click OK to view or edit the same or Cancel to go back ",
+                type: "C",
+                callBack: apz.ACOP01.AccountOpening.fnViewApplication
+            });
+        } else {
+            apz.ACOP01.AccountOpening.sCache.update = true;
+            apz.hide('ACOP01__AccountOpening__RelationshipType');
+            apz.hide('ACOP01__AccountOpening__otpGeneration');
+            apz.show('ACOP01__AccountOpening__MainRow');
+            apz.show('ACOP01__AccountOpening__GeneralInfoRow');
+            apz.show('ACOP01__AccountOpening__PassportDetailsRow');
+            $("#ACOP01__customer__i__tbAcopCustomerInfo__firstName").focus();
+            // apz.toggleModal({
+            //     targetId: "ACOP01__AccountOpening__ConfirmationModal"
+            // });
+        }
+    } else if (params.fromBack != undefined && !params.fromBack) {
+        apz.ACOP01.AccountOpening.fnViewApplication({
+            "choice": true
+        });
+    } else {
+        apz.dispMsg({
+            message: "Do you have an existing Relationship?If yes click ok,if no click cancel.",
+            type: "C",
+            callBack: apz.ACOP01.AccountOpening.fnConfirmCB
+        });
+    }
+}
+apz.ACOP01.AccountOpening.fnViewApplication = function(params) {
+    if (params.choice) {
+        apz.hide('ACOP01__AccountOpening__otpGeneration');
+        apz.show('ACOP01__AccountOpening__MainRow');
+        apz.show('ACOP01__AccountOpening__GeneralInfoRow');
+        apz.show('ACOP01__AccountOpening__PassportDetailsRow');
+        $("#ACOP01__customer__i__tbAcopCustomerInfo__firstName").focus();
+        apz.ACOP01.AccountOpening.sCache.submitted = true;
+        //$(".savenextbtn").text("Next");
+        //apz.ACOP01.AccountOpening.fnFetchCustomer();
+    } else {
+        var lParams = {
+            "appId": "ACOP01",
+            "scr": "AccountOpening",
+            "div": "csmrbk__Login__Launcher",
+        }
+        apz.launchApp(lParams);
+    }
+}
+// apz.ACOP01.AccountOpening.fnprepopulteData = function() {
+//     // apz.toggleModal({
+//     //     targetId: "ACOP01__AccountOpening__ConfirmationModal"
+//     // });
+//     apz.hide('ACOP01__AccountOpening__RelationshipType');
+//     apz.hide('ACOP01__AccountOpening__otpGeneration');
+//     apz.show('ACOP01__AccountOpening__MainRow');
+//     apz.show('ACOP01__AccountOpening__GeneralInfoRow');
+//     apz.show('ACOP01__AccountOpening__PassportDetailsRow');
+// };
+// apz.ACOP01.AccountOpening.fncallRelationship = function() {
+//     apz.toggleModal({
+//         targetId: "ACOP01__AccountOpening__ConfirmationModal"
+//     });
+//     apz.dispMsg({
+//         message: "Do you have an existing Relationship?If yes click ok,if no click cancel.",
+//         type: "C",
+//         callBack: apz.ACOP01.AccountOpening.fnConfirmCB
+//     });
+// };
+apz.ACOP01.AccountOpening.fnShiftOTP = function(ths, event) {
+    if (event && event.which == 8) {
+        $(ths).closest("li").prev().find(":input").focus();
+    } else if (event && (event.which < 48 || event.which > 57)) {} else {
+        $(ths).closest("li").next().find(":input").focus();
+    }
+}
+apz.ACOP01.AccountOpening.fnValidatePhone = function(pobj) {
+    debugger;
+    var lError = apz.val.validateInputAct(document.getElementById("ACOP01__customer__i__tbAcopCustomerInfo__mobileNo"), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            "code": 'VAL-PHONE',
+            "callBack": apz.ACOP01.AccountOpening.fnValidatePhoneCB
+        };
+        apz.dispMsg(lErrorParams);
+    } else {
+        return true;
+    }
+};
+/*apz.ACOP01.AccountOpening.fnvalidateTobeLetter = function(ths) {
+    var value = $(ths).val();
+    if (value == "") {
+        apz.dispMsg({
+            message: "Input is required",
+            callBack: apz.ACOP01.AccountOpening.fnvalidateTobeLetterCB,
+            callBackObj: {
+                "ths": ths
+            }
+        })
+    }
+}*/
+apz.ACOP01.AccountOpening.fnvalidateTobeLetterCB = function(params) {
+    debugger;
+    $(params.callBackObj.ths).val("");
+    $(params.callBackObj.ths).focus();
+}
+apz.ACOP01.AccountOpening.fnFloatMobileNo = function(el) {
+    var digits = el.value.match(/\d{1,10}/) || [""];
+    el.value = digits[0];
+}
+apz.ACOP01.AccountOpening.fnFloatEmailId = function(el) {}
+apz.ACOP01.AccountOpening.fnValidatePhoneCB = function(pstatus) {
+    $('#ACOP01__customer__i__tbAcopCustomerInfo__mobileNo').focus();
+};
+apz.ACOP01.AccountOpening.fnClickNext2 = function(params) {
+    debugger;
+    var refno = apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.referenceNo;
+    apz.data.buildData("customer", "ACOP01");
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.referenceNo = refno;
+    apz.hide('ACOP01__AccountOpening__MainRow');
+    apz.hide('ACOP01__AccountOpening__GeneralInfoRow');
+    apz.hide('ACOP01__AccountOpening__PassportDetailsRow');
+    var lParams = {
+        "appId": "ACOP01",
+        "scr": "CustomerInfo",
+        "div": "ACOP01__AccountOpening__LaunchOCR",
+        "userObj": {
+            "update": apz.ACOP01.AccountOpening.sCache.update,
+            "submitted": apz.ACOP01.AccountOpening.sCache.submitted
+        }
+    };
+    apz.launchSubScreen(lParams);
+};
+// apz.ACOP01.AccountOpening.fnSave01 = function(ths) {
+//     debugger;
+//     if ($(ths).text() == "Save") {
+//         var refno = apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.referenceNo;
+//         apz.data.buildData("customer", "ACOP01");
+//         if (!refno) {
+//             apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.referenceNo = Math.floor(100000 + Math.random() * 900000);
+//         } else {
+//             apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.referenceNo = refno
+//         }
+//         var lServerParams = {
+//             "ifaceName": "customer_New",
+//             "buildReq": "N",
+//             "req": apz.data.scrdata.ACOP01__customer_Req,
+//             "appId": "ACOP01",
+//             "paintResp": "N",
+//             "callBack": apz.ACOP01.AccountOpening.fnStep1CB,
+//             "callBackObj": ths
+//         };
+//         if (apz.ACOP01.AccountOpening.sCache.update) {
+//             lServerParams.ifaceName = "customer_Modify";
+//         }
+//         apz.ACOP01.AccountOpening.sCache.update = true;
+//         apz.server.callServer(lServerParams);
+//     } else if ($(ths).text() == "Next") {
+//         apz.ACOP01.AccountOpening.fnClickNext2();
+//     }
+// };
+apz.ACOP01.AccountOpening.fnSave01 = function(ths) {
+    var lCount = 0;
+    $("input:required").each(function() {
+        if ($(this).val() == "") {
+            lCount++;
+        }
+    })
+    if (lCount == 0) {
+        var refno = apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.referenceNo;
+        apz.data.buildData("customer", "ACOP01");
+        if (!refno) {
+            apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.referenceNo = Math.floor(100000 + Math.random() * 900000);
+        } else {
+            apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.referenceNo = refno
+        }
+        var lServerParams = {
+            "ifaceName": "customer_New",
+            "buildReq": "N",
+            "req": apz.data.scrdata.ACOP01__customer_Req,
+            "appId": "ACOP01",
+            "paintResp": "N",
+            "callBack": apz.ACOP01.AccountOpening.fnStep1CB,
+            "callBackObj": ths
+        };
+        if (apz.ACOP01.AccountOpening.sCache.update) {
+            lServerParams.ifaceName = "customer_Modify";
+        }
+        apz.ACOP01.AccountOpening.sCache.update = true;
+        apz.server.callServer(lServerParams);
+    } else {
+        var msg = {};
+        msg.code = "APZ-SAVE-001";
+        apz.dispMsg(msg);
+    }
+}
+apz.ACOP01.AccountOpening.fnStep1CB = function(params) {
+    debugger;
+    if (!params.errors) {
+        // apz.dispMsg({
+        //     message: "Successfully saved.Click Next to Continue",
+        //     type: "S"
+        // });
+        apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo = params.req.tbAcopCustomerInfo;
+        apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.submitStatus = "indraft";
+        //$(params.callBackObj).text("Next");
+        apz.ACOP01.AccountOpening.fnClickNext2();
+    } else {
+        apz.dispMsg({
+            message: "Ooops! Something went wrong while saving Record,please try again",
+            type: "E"
+        });
+    }
+}
+// apz.ACOP01.AccountOpening.fnCancel = function() {
+//     var lparams = {
+//         "appId": "ACOP01",
+//         "scr": "AccountOpening",
+//     }
+//     apz.launchScreen(lparams);
+// }
+apz.ACOP01.AccountOpening.fnScanAndUpload = function() {
+    debugger;
+    /*apz.hide("ACOP01__AccountOpening__Header");
+    apz.hide("ACOP01__AccountOpening__MainRow");
+    apz.hide("ACOP01__AccountOpening__GeneralInfoRow");
+    apz.hide("ACOP01__AccountOpening__PassportDetailsRow");*/
+    var lParams = {
+        "appId": "upldoc",
+        "scr": "UploadDocument",
+        "div": "ACOP01__AccountOpening__modelLaunch",
+        "userObj": {
+            "callBack": apz.ACOP01.AccountOpening.fnScanAndUploadCB,
+            "onOCRUPloadCBmethod": apz.ACOP01.AccountOpening.fnScanAndUploadCB,
+            "backFunction": apz.ACOP01.AccountOpening.fnBackToAccountOpening,
+        }
+    }
+    apz.launchApp(lParams);
+    apz.toggleModal({
+        targetId: "ACOP01__AccountOpening__uploadfile"
+    });
+};
+apz.ACOP01.AccountOpening.fnScanAndUploadCB = function(params, lLaunch) {
+    debugger;
+    apz.hide("ACOP01__AccountOpening__firstRow");
+    apz.show("ACOP01__AccountOpening__Header");
+    apz.show("ACOP01__AccountOpening__MainRow");
+    apz.show("ACOP01__AccountOpening__GeneralInfoRow");
+    apz.show("ACOP01__AccountOpening__PassportDetailsRow");
+    $("#ACOP01__customer__i__tbAcopCustomerInfo__firstName").focus();
+    apz.hide("ACOP01__AccountOpening__LaunchOCR");
+    //console.log(params);
+    if ("first_name" in params[0]) {
+        apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.firstName = params[0].first_name;
+    } else {
+        apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.firstName = params[0].name;
+    }
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.sex = params[0].gender;
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.dateOfBirth = (params[0].dob == "") ? "" : apz.ACOP01.AccountOpening.fnModifyDate(params[
+        0].dob);
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.nationality = params[0].nationality;
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.passport = (params[0].passportNo == "") ? "" : params[0].passportNo;
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.idNo = params[0].nationalId;
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.passportIssueDate = (params[0].dateOfIssued == "") ? "" : apz.ACOP01.AccountOpening.fnModifyDate(
+        params[0].dateOfIssued);
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.passportExpiryDate = (params[0].dateOfExpired == "") ? "" : apz.ACOP01.AccountOpening.fnModifyDate(
+        params[0].dateOfExpired);
+    apz.data.loadData("customer", "ACOP01");
+};
+apz.ACOP01.AccountOpening.fnModifyDate = function(date) {
+    var datearray = date.split("/");
+    var date = ("0" + datearray[0]).slice(-2);
+    var month = ("0" + datearray[1]).slice(-2);
+    var fulldate = datearray[2] + "-" + month + "-" + date;
+    return fulldate;
+}
+apz.ACOP01.AccountOpening.fnBackToAccountOpening = function() {
+    debugger;
+    $("#ACOP01__AccountOpening__uploadfile_close").trigger("click");
+    apz.hide("ACOP01__AccountOpening__firstRow");
+    apz.show("ACOP01__AccountOpening__Header");
+    $("#ACOP01__customer__i__tbAcopCustomerInfo__firstName").focus();
+    apz.show("ACOP01__AccountOpening__MainRow");
+    apz.show("ACOP01__AccountOpening__GeneralInfoRow");
+    apz.show("ACOP01__AccountOpening__PassportDetailsRow");
+    apz.hide("ACOP01__AccountOpening__LaunchOCR");
+};
+apz.ACOP01.AccountOpening.fnExistRelation = function() {
+    debugger;
+    if (apz.getElmValue("ACOP01__AccountOpening__isConsent") == "No") {
+        // apz.mockServer = true;
+        var accountNoOrAadharId = apz.getElmValue("ACOP01__AccountOpening__accountNo");
+        var lServerParams = {
+            "ifaceName": "customer_Query",
+            "buildReq": "N",
+            "req": apz.data.scrdata.ACOP01__customer_Req,
+            "appId": "ACOP01",
+            "paintResp": "Y",
+            "callBack": apz.ACOP01.AccountOpening.fnAfterThirdPartyCall,
+        };
+        debugger;
+        apz.server.callServer(lServerParams);
+    } else {
+        apz.ACOP01.AccountOpening.launchCustomerdetail();
+    }
+}
+apz.ACOP01.AccountOpening.fnAfterThirdPartyCall = function(params) {
+    apz.show('ACOP01__AccountOpening__MainRow');
+    apz.show('ACOP01__AccountOpening__GeneralInfoRow');
+    $("#ACOP01__customer__i__tbAcopCustomerInfo__firstName").focus();
+    apz.show('ACOP01__AccountOpening__PassportDetailsRow');
+    apz.hide('ACOP01__AccountOpening__otpGeneration');
+    apz.hide('ACOP01__AccountOpening__RelationshipType');
+}
+apz.ACOP01.AccountOpening.fnFetchCustomerAccountDetailCB = function(params) {
+    if (!params.errors) {
+        apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo = params.res.ACOP01__customerAccountDetails_Res.tbAcopCustomerAccountDetails[0];
+        //apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.mobileNo="9820185094";
+        apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.mobileNo = apz.ACOP01.AccountOpening.phone;
+        apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.emailId = apz.ACOP01.AccountOpening.email;
+        apz.data.loadData("customer", "ACOP01");
+        apz.ACOP01.AccountOpening.launchCustomerdetail();
+    }
+}
+apz.ACOP01.AccountOpening.launchCustomerdetail = function() {
+    apz.show('ACOP01__AccountOpening__MainRow');
+    apz.show('ACOP01__AccountOpening__GeneralInfoRow');
+    $("#ACOP01__customer__i__tbAcopCustomerInfo__firstName").focus();
+    apz.show('ACOP01__AccountOpening__PassportDetailsRow');
+    apz.hide("ACOP01__AccountOpening__RelationshipType");
+}
+apz.ACOP01.AccountOpening.fnCancel = function() {
+    debugger;
+    // apz.show("ACOP01__Login__sc_col_36");
+    //apz.show("ACOP01__Login__tick");
+    //apz.ACOP01.aadharno.sParams.callBack();
+    // $('body').attr("style","backgroundImage:''");
+   var lParams = {
+            "appId": "landpg",
+            "scr": "LandingPage",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "animation": 21,
+            "userObj": {
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                "custId": "menuap__Menu__custId_txtcnt"
+            }
+       
+   }
+    
+    apz.launchApp(lParams);
+};
+apz.ACOP01.AccountOpening.fnOnChangeUploadType = function() {
+    debugger;
+    if (apz.getElmValue("ACOP01__AccountOpening__uploadTypeRadio") == "files") {
+        $("#ACOP01__AccountOpening__filesColumn").removeClass("sno");
+        $("#ACOP01__AccountOpening__CaptureColumn").addClass("sno");
+        Webcam.reset();
+        $("#ACOP01__AccountOpening__captureImg1").attr("src", "");
+    } else {
+        $("#ACOP01__AccountOpening__filesColumn").addClass("sno");
+        $("#ACOP01__AccountOpening__CaptureColumn").removeClass("sno");
+        //alert(apz.deviceType);
+        if (apz.deviceType === "ANDROID" || apz.deviceType === "IOS") {
+            $("#ACOP01__AccountOpening__cameraPreview").addClass("sno");
+            apz.upldoc.UploadDocument.mobcamera();
+        } else {
+            Webcam.set({
+                width: 320,
+                height: 240,
+                image_format: 'jpeg',
+                jpeg_quality: 90
+            });
+            Webcam.attach('#ACOP01__AccountOpening__cameraPreview');
+        }
+    }
+}
+apz.ACOP01.AccountOpening.fnDocumentScanner = function() {
+    Webcam.snap(function(data_uri) {
+        document.getElementById("ACOP01__AccountOpening__captureImg" + counter).src = data_uri;
+        $("#ACOP01__AccountOpening__captureImg1_ul").removeClass("sno");
+    });
+};
+apz.ACOP01.AccountOpening.fnDocumentScannerCB = function(params) {
+    debugger;
+    if (params.status) {
+        document.getElementById("ACOP01__AccountOpening__captureImg" + counter).src = "data:image/jpg;base64," + params.encodedImage;
+        $("#ACOP01__AccountOpening__captureImg" + counter).removeClass("sno");
+        $("#ACOP01__AccountOpening__captureIcon" + counter).removeClass("sno");
+        counter++;
+    } else {
+        alert("Failure");
+    }
+};
+apz.ACOP01.AccountOpening.OCRParse = function() {
+    debugger;
+    var files = $("#ACOP01__AccountOpening__fileUpload").prop("files").length;
+    if (files > 0) {
+        for (i = 0; i < files; i++) apz.ACOP01.AccountOpening.getBase64($("#ACOP01__AccountOpening__fileUpload").prop("files")[i], i);
+    } else if (apz.getElmValue("ACOP01__AccountOpening__uploadTypeRadio") == "capture") {
+        apz.ACOP01.AccountOpening.fnOCRServerCall($("#ACOP01__AccountOpening__captureImg1").attr("src").replace("data:image/jpeg;base64,", ""));
+    } else {
+        var msg = {};
+        msg.code = "APZ-CNT-009";
+        apz.dispMsg(msg);
+        apz.ACOP01.AccountOpening.fnScanAndUploadCB(apz.ACOP01.AccountOpening.sCache.scrdata);
+    }
+};
+apz.ACOP01.AccountOpening.getBase64 = function(file, i) {
+    debugger;
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function() {
+        var res = reader.result;
+        var n = res.indexOf(",");
+        var res1 = res.substring(n + 1);
+        apz.ACOP01.AccountOpening.fnOCRServerCall(res1, i);
+    };
+    reader.onerror = function(error) {
+        console.log('Error: ', error);
+    };
+};
+apz.ACOP01.AccountOpening.fnOCRServerCall = function(response, i) {
+    // if(apz.getElmValue("upldoc__UploadDocument__ocrTextOnlineCheck") == "y"){
+    //apz.mockServer = false;
+    //apz.mockServer = true;
+    // }
+    var file = "";
+    var filetype = "";
+    if ($("#ACOP01__AccountOpening__fileUpload").prop("files").length > 0) {
+        file = $("#ACOP01__AccountOpening__fileUpload").prop("files")[i];
+        filetype = file.name.split('.').pop();
+    } else if (apz.getElmValue("ACOP01__AccountOpening__uploadTypeRadio") == "capture") {
+        filetype = "jpeg";
+    }
+    //var drdnVal = apz.getObjValue($("#SOAPFU__soapFileUpload__i__GetExtratedText__language")[0]); 
+    var str = '{ "ns1:GetExtratedText": {"ns1:Key":"IEXEEDKEY1109lvc","ns1:file":"' + response + '","ns1:f":"' + filetype + '","ns1:language":"' +
+        "English" + '"}}';
+    var req1 = JSON.parse(str);
+    /*var req1 = str;
+    var req1 = str;
+    */
+    apz.startLoader();
+    var params = {};
+    params.callBackObj = {
+        "index": i
+    };
+    params.buildReq = 'N';
+    params.paintResp = 'N';
+    params.req = req1;
+    params.ifaceName = 'soapFileUpload';
+    params.async = true;
+    params.callBack = apz.ACOP01.AccountOpening.fnOCRServerCallCB;
+    params.internal = false;
+    apz.server.callServer(params);
+};
+apz.ACOP01.AccountOpening.fnOCRServerCallCB = function(params) {
+    debugger;
+    try {
+        var response = params.res.upldoc__soapFileUpload_Res.GetExtratedTextResponse.GetExtratedTextResult;
+        var extrText = JSON.parse(response).ExtractedText;
+        //var extrText = response.ExtractedText;
+        //var htmlData = JSON.parse(response).HTMLData;
+        // if(apz.getElmValue("upldoc__UploadDocument__ocrTextOnlineCheck") == "y"){
+        //apz.mockServer = true;
+        // }
+        apz.stopLoader();
+        apz.toggleModal({
+            targetId: "ACOP01__AccountOpening__uploadfile"
+        });
+        if (params.status) {
+            var lobj = {
+                "extrText": extrText
+            }
+            if (/T= Tar a a/gim.test(extrText)) {
+                apz.ACOP01.AccountOpening.parseNIC(lobj);
+            } else if (/DEMOCRATIC SOCIALIST REPUBLIC/img.test(extrText)) {
+                apz.ACOP01.AccountOpening.parseSrilankanDomestricPasspord(lobj);
+            } else if (/SRI LANKAN/img.test(extrText)) {
+                apz.ACOP01.AccountOpening.parseSRILANKANPASSPORD(lobj);
+            } else if (/United Arab Emirates/img.test(extrText)) {
+                if (params.callBackObj.index == 0) apz.ACOP01.AccountOpening.parseUAEIDFront(lobj);
+                else if (params.callBackObj.index == 1) {
+                    apz.ACOP01.AccountOpening.parseUAEIDBack(lobj);
+                }
+            } else {
+                apz.ACOP01.AccountOpening.parseAndPaintData(lobj);
+            }
+        } else if (params.errorMessage) {
+            var msg = {};
+            msg.code = "FL-UPL-FLDLOC";
+            apz.dispMsg(msg);
+        }
+    } catch (e) {
+        apz.ACOP01.AccountOpening.fnScanAndUploadCB(apz.ACOP01.AccountOpening.sCache.scrdata);
+    }
+};
+apz.ACOP01.AccountOpening.parseAndPaintData = function(params) {
+    debugger;
+    var extractedText = params.extrText; // Input text
+    var lines = [];
+    lines = extractedText.split("\n");
+    var numLines = lines.length;
+    var i;
+    var currentSection;
+    var lDetails = [];
+    var fromAccount = "";
+    var accountName = "";
+    var pattern = new RegExp("RTGS/NEFT");
+    var passportPattern = new RegExp("Passport No.");
+    var checkPassport = lines[0].split("/");
+    if (pattern.test(lines[2])) {
+        //Get transaction ammount
+        var larray1 = lines[6].split(" ");
+        var trAmount = larray1[6];
+        //Get account name and beneficary name
+        var larray2 = lines[10].split(":");
+        var userArray = larray2[1].split(/\d/);
+        accountName = userArray[0].trim();
+        var benfName = larray[larray.length - 1].trim();
+        //Get from account no
+        var larray3 = lines[11].split(" ");
+        fromAccount = larray3[1];
+        //Get beneficary account no
+        var larray4 = lines[i].split(".");
+        var benfAccNo = larray4[larray.length - 1].trim();
+        lDetails.push({
+            "fromAccount": fromAccount,
+            "accountName": accountName,
+            "type": "Intra Bank",
+            "benificiaryName": benfName,
+            "beneficiaryAccount": benfAccNo,
+            "amount": trAmount
+        });
+    } else if (passportPattern.test(checkPassport[checkPassport.length - 1].trim())) {
+        //Passport no
+        var larray1 = lines[1].split(" ");
+        var passportNo = larray1[larray1.length - 1].trim();
+        //Nationality
+        var larray2 = lines[5].split(" ");
+        var nationality = larray2[2].trim();
+        //DoB
+        var larray3 = lines[7].split(" ");
+        var dob = larray3[2].trim() + " " + larray3[3].trim() + " " + larray3[4].trim();
+        var placeOfBirth = larray3[larray3.length - 1].trim();
+        //Gender
+        var larray4 = lines[9].split("-");
+        var genderArray = larray4[2].split(" ");
+        if (genderArray[0] == "M") {
+            var gender = "Male";
+        } else {
+            var gender = "Female";
+        }
+        //Date of issue and Date of expired
+        var larray5 = lines[11].split(" ");
+        var dateOfIssued = larray5[1].trim() + " " + larray5[2].trim() + " " + larray5[3].trim();
+        var dateOfExpired = larray5[4].trim() + " " + larray5[5].trim() + " " + larray5[6].trim();
+        //Place of issued
+        var larray6 = lines[13].split(" ");
+        var placeOfIssued = larray6[0].trim() + " " + larray6[1].trim();
+        lDetails.push({
+            "name": lines[3],
+            "passportNo": passportNo,
+            "nationality": nationality,
+            "dob": dob,
+            "placeOfBirth": placeOfBirth,
+            "gender": gender,
+            "dateOfIssued": dateOfIssued,
+            "dateOfExpired": dateOfExpired,
+            "placeOfIssued": placeOfIssued
+        });
+    } else {
+        for (var i in lines) {
+            if (lines[i] != "") {
+                if (i == 1) {
+                    var larray = lines[i].split(" ");
+                    fromAccount = larray[0];
+                    accountName = apz.ACOP01.AccountOpening.getFromAccName(larray);
+                } else if (i > 2) {
+                    var larray = lines[i].split(" ");
+                    lDetails.push({
+                        "fromAccount": fromAccount,
+                        "accountName": accountName,
+                        "type": "Intra Bank",
+                        "benificiaryName": apz.ACOP01.AccountOpening.getToAccName(larray),
+                        "beneficiaryAccount": larray[1].trim(),
+                        "amount": larray[larray.length - 1].trim()
+                    });
+                }
+            }
+        }
+    }
+    console.log(lDetails);
+    // lParams.destroyDiv = apz.upldoc.UploadDocument.sCache.destroyDiv;
+    //lParams.parentAppId = apz.upldoc.UploadDocument.sCache.parentAppId;
+    apz.ACOP01.AccountOpening.fnScanAndUploadCB(lDetails, lParams)
+};
+apz.ACOP01.AccountOpening.parseUAEIDBack = function(params) {
+    debugger;
+    var lines = params.extrText.trim().split("\n"),
+        aadhaarId = lines[3].split(" ")[2].trim(),
+        name = lines[5].split(":")[1].trim(),
+        nationality = lines[7].split(":")[1].trim();
+    apz.ACOP01.AccountOpening.UAEIDParsedResult.passportNo = aadhaarId;
+    apz.ACOP01.AccountOpening.fnScanAndUploadCB([apz.ACOP01.AccountOpening.UAEIDParsedResult], params);
+}
+apz.ACOP01.AccountOpening.parseUAEIDFront = function(params) {
+    debugger;
+    var lines = params.extrText.trim().split("\n"),
+        aadhaarId = lines[3].split(" ")[2].trim(),
+        name = lines[5].split(":")[1].trim(),
+        nationality = lines[7].split(":")[1].trim();
+    apz.ACOP01.AccountOpening.UAEIDParsedResult = {
+        aadhaarId, name, nationality, dateOfIssued: "",
+        dateOfExpired: "",
+        passportNo: "",
+        dob: ""
+    };
+    if ($("#apz.ACOP01.AccountOpening__fileUpload").prop("files").length == 1) {
+        apz.ACOP01.AccountOpening.fnScanAndUploadCB([apz.ACOP01.AccountOpening.UAEIDParsedResult], params);
+    }
+}
+apz.ACOP01.AccountOpening.parseSRILANKANPASSPORD = function(params) {
+    var lines = params.extrText.split("\n"),
+        name = lines[7].split(" ").slice(2, -4).join(" "),
+        dob = lines[10].split(" ")[2],
+        nationality = lines[8].split(" ").slice(2, -3).join(" "),
+        dateOfIssued = lines[15].split(" ")[1],
+        dateOfExpired = lines[16].split(" ")[3],
+        passportNo = lines[3].split(" ").pop();
+    apz.ACOP01.AccountOpening.fnScanAndUploadCB([{
+        dob, name, nationality, dateOfIssued, dateOfExpired, passportNo
+    }], params);
+}
+apz.ACOP01.AccountOpening.parseSrilankanDomestricPasspord = function(params) {
+    var lines = params.extrText.split("\n"),
+        name = lines[5].match(/\w+(\s+)?(\w+)?/ig, "")[0].trim(),
+        dob = lines[11].split(" ")[0],
+        nationality = "SRI LANKAN",
+        dateOfIssued = lines[17].split(" ")[0],
+        dateOfExpired = lines[19].split(" ")[0],
+        passportNo = lines[11].split(" ").pop();
+    apz.ACOP01.AccountOpening.fnScanAndUploadCB([{
+        dob, name, nationality, dateOfIssued, dateOfExpired, passportNo
+    }], params);
+}
+apz.ACOP01.AccountOpening.parseNIC = function(params) {
+    var lines = params.extrText.split("\n"),
+        aadhaarId = lines[4].replace(/\W+/ig, "");
+    apz.ACOP01.AccountOpening.fnScanAndUploadCB([{
+        aadhaarId
+    }], params)
+}
+apz.ACOP01.AccountOpening.fnUploadDocuments = function() {
+    //apz.upldoc.UploadDocument.fnGetSelectedTestDetails();
+    if ($("#ACOP01__AccountOpening__fileUpload").prop("files").length > 0) {
+        var json = {};
+        json.fieldID = "ACOP01__AccountOpening__fileUpload";
+        json.callBack = apz.ACOP01.AccountOpening.fnUploadDocumentsCB;
+        json.fileName = "";
+        json.overWrite = "Y";
+        json.destination = "Test";
+        apz.ns.uploadFile(json);
+    } else {
+        var msg = {};
+        msg.code = "APZ-CNT-009";
+        apz.dispMsg(msg);
+    }
+};
+apz.ACOP01.AccountOpening.fnUploadDocumentsCB = function(params) {
+    debugger;
+};
+apz.ACOP01.AccountOpening.fnGetSelectedTestDetails = function() {
+    var lreq = {};
+    //lreq.temp = {};
+    //lreq.insuredId = apz.getElmValue("ACOP01__AccountOpening__customerId");
+    //lreq.testReportType = apz.getElmValue("ACOP01__AccountOpening__type");
+    lreq.destination = "/home/i-exceed.com/hari.prasad/Music/upload/Test";
+    lreq.base64image = $("#ACOP01__AccountOpening__captureImg1").attr("src").replace("data:image/jpeg;base64,", "");
+    var lActionParams = {
+        "ifaceName": "CaputredImages",
+        "req": lreq,
+        "paintResp": "Y",
+        "async": false
+    };
+    apz.ACOP01.AccountOpening.fnBeforeCallServer(lActionParams);
+};
+apz.ACOP01.AccountOpening.fnSubmitDetails = function() {
+    debugger;
+    if (apz.getElmValue("ACOP01__AccountOpening__ocrTextUploadCheck") == "y") {
+        apz.ACOP01.AccountOpening.OCRParse();
+    } else if (apz.getElmValue("ACOP01__AccountOpening__uploadTypeRadio") == "files" && apz.getElmValue("ACOP01__AccountOpening__ocrTextUploadCheck") ==
+        "n") {
+        apz.ACOP01.AccountOpening.fnUploadDocuments();
+    } else if (apz.ACOP01.AccountOpening.sCache.action == "fromCustomerImage") {
+        var lreq = {};
+        lreq.data_uri = $("#ACOP01__AccountOpening__captureImg1").attr("src").replace("data:image/jpeg;base64,", "");
+        Webcam.reset();
+        apz.ACOP01.AccountOpening.sCache.onSubmitCB(lreq);
+    } else if (apz.getElmValue("ACOP01__AccountOpening__uploadTypeRadio") == "capture" && apz.getElmValue(
+        "ACOP01__AccountOpening__ocrTextUploadCheck") == "n") {
+        apz.ACOP01.AccountOpening.fnGetSelectedTestDetails();
+    }
+};
+apz.ACOP01.AccountOpening.fnIdUpload = function() {
+    var json = {};
+    json.id = "NATIVE";
+    json.callBack = apz.ACOP01.AccountOpening.nativeExtCallback;
+    apz.ns.nativeServiceExt(json);
+}
+apz.ACOP01.AccountOpening.nativeExtCallback = function(params) {
+    var lResp = JSON.stringify(params);
+    $("#ACOP01__AccountOpening__idreader").html(lResp);
+}
+apz.ACOP01.AccountOpening.fnCall = function() {
+    debugger;
+    var json = {};
+    json.phoneNo = "9632919627";
+    json.id = "CALL_ID";
+    json.callBack = apz.ACOP01.AccountOpening.fnPhoneCallback;
+    apz.ns.callNumber(json);
+}
+apz.ACOP01.AccountOpening.fnPhoneCallback = function(params) {};
+apz.ACOP01.AccountOpening.fnBackOtp = function() {
+    apz.show('ACOP01__AccountOpening__firstRow');
+    apz.hide('ACOP01__AccountOpening__otpGeneration');
+    $("#ACOP01__AccountOpening__firstRow :input:first").focus();
+}
+apz.ACOP01.AccountOpening.fnKYC = function() {
+    debugger;
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    if (isMobile) {
+        debugger;
+        var ljson = {};
+        ljson.id = "BARCODE_ID";
+        ljson.callBack = apz.ACOP01.AccountOpening.fnscanBarcodeCallback;
+        ljson.callBackObj = this;
+        apz.ns.scanBarcode(ljson);
+    } else {
+        /*var lMsg = {
+            "code": "INFO_AADHAR"
+        }
+        apz.dispMsg(lMsg);*/
+    }
+    apz.setElmValue("ACOP01__AadharNo__Type", "National ID");
+};
+apz.ACOP01.AccountOpening.fnscanBarcodeCallback = function(ljson) {
+    debugger;
+    if (ljson.status) {
+        //apz.dispMsg({"message":ljson})
+        apz.ACOP01.AccountOpening.fnprocesResponse(ljson.text);
+        //var lbarValue = JSON.parse(ljson.text);
+        //alert(ljson);
+    }
+};
+apz.ACOP01.AccountOpening.fnprocesResponse = function(ljson) {
+    debugger;
+    try {
+        var lxmlData = ljson;
+        var lxmlDoc = $.parseXML(lxmlData);
+        var $lxml = $(lxmlDoc);
+        var $ltxtELem = $lxml.find("PrintLetterBarcodeData");
+        var lcusjson = {};
+        apz.ACOP01.AccountOpening.sParams.CustomerDetails = {};
+        apz.ACOP01.AccountOpening.sParams.CustomerDetails.aadhar = $ltxtELem.attr("uid");
+        apz.ACOP01.AccountOpening.sParams.CustomerDetails.firstName = $ltxtELem.attr("name");
+        if (($ltxtELem.attr("gender").trim() == "Male") || ($ltxtELem.attr("gender").trim() == "MALE") || ($ltxtELem.attr("gender").trim() == "M") ||
+            ($ltxtELem.attr("gender").trim() == "male")) {
+            apz.ACOP01.AccountOpening.sParams.CustomerDetails.sex = "M";
+        } else {
+            apz.ACOP01.AccountOpening.sParams.CustomerDetails.sex = "F";
+        }
+        //apz.setElmValue("ACOP01__AadharNo__Gender", apz.ACOP01.aadharno.sParams.CustomerDetails.sex)
+        if (!apz.isNull($ltxtELem.attr("dob"))) {
+            apz.ACOP01.AccountOpening.sParams.CustomerDetails.dateOfBirth = $ltxtELem.attr("dob");
+        } else if (!apz.isNull($ltxtELem.attr("yob"))) {
+            apz.ACOP01.AccountOpening.sParams.CustomerDetails.dateOfBirth = $ltxtELem.attr("yob");
+        }
+        apz.ACOP01.AccountOpening.sParams.CustomerDetails.placeOfBirth = $ltxtELem.attr("placeOfBirth");
+        apz.ACOP01.AccountOpening.sParams.CustomerDetails.address1 = "";
+        apz.ACOP01.AccountOpening.sParams.CustomerDetails.address2 = "";
+        apz.ACOP01.AccountOpening.sParams.CustomerDetails.address3 = "";
+        if (!apz.isNull($ltxtELem.attr("co"))) {
+            apz.ACOP01.AccountOpening.sParams.CustomerDetails.address1 = $ltxtELem.attr("co");
+        }
+        if (!apz.isNull($ltxtELem.attr("loc"))) {
+            apz.ACOP01.AccountOpening.sParams.CustomerDetails.address1 += $ltxtELem.attr("loc");
+        }
+        if (!apz.isNull($ltxtELem.attr("street"))) {
+            apz.ACOP01.AccountOpening.sParams.CustomerDetails.address2 = $ltxtELem.attr("street");
+        }
+        if (!apz.isNull($ltxtELem.attr("vtc"))) {
+            apz.ACOP01.AccountOpening.sParams.CustomerDetails.address3 = $ltxtELem.attr("vtc");
+        }
+        if (!apz.isNull($ltxtELem.attr("po"))) {
+            apz.ACOP01.AccountOpening.sParams.CustomerDetails.address3 += $ltxtELem.attr("po");
+        }
+        apz.ACOP01.AccountOpening.sParams.CustomerDetails.city = $ltxtELem.attr("dist");
+        apz.ACOP01.AccountOpening.sParams.CustomerDetails.state = $ltxtELem.attr("state");
+        apz.ACOP01.AccountOpening.sParams.CustomerDetails.zipCode = $ltxtELem.attr("pc");
+        apz.ACOP01.AccountOpening.sParams.CustomerDetails.Action = "KYC";
+        apz.ACOP01.AccountOpening.fnPopulateAadhar();
+        //apz.setElmValue("ACOP01__AadharNo__NationalNo", $ltxtELem.attr("uid"));
+        //apz.ACOP01.aadharno.sParams.dateOfBirth = $ltxtELem.attr("dob");
+        //apz.plugin.store("QRJSON", JSON.stringify(cusjson));
+        // console.log("JSON Data " + JSON.stringify(apz.ACOP01.aadharno.sParams.CustomerDetails));
+        // apz.setElmValue("ACOP01__AadharNo__Aadhar", apz.ACOP01.aadharno.sParams.CustomerDetails.aadhar)
+    } catch (e) {
+        alert('Error in Reading' + e);
+    }
+}
+apz.ACOP01.AccountOpening.fnPopulateAadhar = function() {
+    debugger;
+    apz.hide("ACOP01__AccountOpening__firstRow");
+    apz.show("ACOP01__AccountOpening__Header");
+    apz.show("ACOP01__AccountOpening__MainRow");
+    apz.show("ACOP01__AccountOpening__GeneralInfoRow");
+    apz.show("ACOP01__AccountOpening__PassportDetailsRow");
+    $("#ACOP01__customer__i__tbAcopCustomerInfo__firstName").focus();
+    apz.hide("ACOP01__AccountOpening__LaunchOCR");
+    //console.log(params);
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.firstName = apz.ACOP01.AccountOpening.sParams.CustomerDetails.firstName;
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.sex = apz.ACOP01.AccountOpening.sParams.CustomerDetails.sex;
+    var dob = apz.ACOP01.AccountOpening.sParams.CustomerDetails.dateOfBirth;
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.dateOfBirth = (dob == "") ? "" : apz.ACOP01.AccountOpening.fnModifyDate(dob);
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.nationality = "Indian";
+
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.idNo =  apz.ACOP01.AccountOpening.sParams.CustomerDetails.aadhar;
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.address1 = apz.ACOP01.AccountOpening.sParams.CustomerDetails.address1;
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.address2 = apz.ACOP01.AccountOpening.sParams.CustomerDetails.address2;
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.address3 = apz.ACOP01.AccountOpening.sParams.CustomerDetails.address3;
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.city = apz.ACOP01.AccountOpening.sParams.CustomerDetails.city
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.state = apz.ACOP01.AccountOpening.sParams.CustomerDetails.state
+    apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo.zipCode = apz.ACOP01.AccountOpening.sParams.CustomerDetails.zipCode
+    apz.data.loadData("customer", "ACOP01");
+};

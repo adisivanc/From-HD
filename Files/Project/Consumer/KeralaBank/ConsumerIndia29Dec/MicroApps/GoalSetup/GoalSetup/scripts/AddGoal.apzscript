@@ -1,0 +1,241 @@
+apz.golstp.AddGoal = {};
+apz.golstp.AddGoal.sParams = {};
+apz.golstp.AddGoal.sAction = {};
+var sdownPaymentMonths = 0,
+    sPurchasePrice = "",
+    sExpectedDownPayment = "",
+    sMonthlyExpenses = "",
+    sMonthlySavings = "",
+    sYearlyIncome = "",
+    sEligibleLoanAmt = "",
+    sPersonalizedLoanAmt = "",
+    sFinalDownPayment = "",
+    sDownpaymentAmt = "",
+    sRemainingAmt = "";
+apz.app.onLoad_AddGoal = function(params) {
+    debugger;
+    if (params.Navigation) {
+        apz.golstp.AddGoal.fnSetNavigation(params);
+    }
+    apz.golstp.AddGoal.sAction = params.action;
+    apz.golstp.AddGoal.fnInitialize();
+}
+apz.golstp.AddGoal.fnInitialize = function() {
+    debugger;
+}
+apz.golstp.AddGoal.fnGoToStep2 = function(pthis) {
+    debugger;
+    if ($("#golstp__AddGoal__choiceDpd").val() != "Select your Choice") {
+        $("#golstp__AddGoal__durationRow").removeClass("sno");
+        $("#golstp__AddGoal__purchasePriceRow").removeClass("sno");
+    }
+}
+apz.golstp.AddGoal.fnValidateStep2 = function() {
+    debugger;
+    var lPurchasePrice = $("#golstp__AddGoal__purchasePrice").val()
+    if (sdownPaymentMonths != 0 && lPurchasePrice != "") {
+        lPurchasePrice = lPurchasePrice.split(",").join("");
+        if (!isNaN(lPurchasePrice)) {
+            sExpectedDownPayment = parseInt(lPurchasePrice * 0.2);
+            apz.golstp.AddGoal.fnGoToStep3();
+        } else {
+            $("#golstp__AddGoal__purchasePrice").val("");
+        }
+    }
+}
+apz.golstp.AddGoal.fnCalculateMonths = function() {
+    debugger;
+    ldownPaymentMonths = 0;
+    var lyear = ($("#golstp__AddGoal__years").val() == "No. of Years") ? 0 : parseInt($("#golstp__AddGoal__years").val()) * 12;
+    var lMonth = ($("#golstp__AddGoal__months").val() == "No. of Months") ? 0 : parseInt($("#golstp__AddGoal__months").val());
+    sdownPaymentMonths = lyear + lMonth;
+    apz.golstp.AddGoal.fnValidateStep2();
+}
+apz.golstp.AddGoal.fnGoToStep3 = function() {
+    debugger;
+    var lobj = {
+        "value": sExpectedDownPayment,
+        "decimalSep": ".",
+        "decimalPoints": 2,
+        "mask": "MILLION",
+        "displayAsLiteral": "N"
+    }
+    var lExpectedDownPayment = apz.formatNumber(lobj);
+    $("#golstp__AddGoal__expectedDownpayment").text("₹ " + lExpectedDownPayment);
+    $("#golstp__AddGoal__downPaymentRow").removeClass("sno");
+    $("#golstp__AddGoal__eligibilityForm").removeClass("sno");
+}
+apz.golstp.AddGoal.fnValidateNumber = function(pthis) {
+    debugger;
+    var lValue = $(pthis).val();
+    if (lValue != "") {
+        lUnformattedValue = lValue.split(",").join("");
+        if (isNaN(lUnformattedValue)) {
+            $(pthis).val("");
+        }
+    }
+}
+apz.golstp.AddGoal.fnSubmit = function() {
+    debugger;
+    var lAnnualIncome = $("#golstp__AddGoal__annualIncome").val();
+    if (lAnnualIncome == "") {
+        $("#golstp__AddGoal__annualIncome").attr("style", "border:1px solid red");
+    } else {
+        $("#golstp__AddGoal__annualIncome").attr("style", "");
+        var lAnnualIncome = parseInt($("#golstp__AddGoal__annualIncome").val().split(",").join(""));
+        var lEstimatedMonthlyExp = ($("#golstp__AddGoal__monthlyExpenses").val() == "") ? 0 : (parseInt($("#golstp__AddGoal__monthlyExpenses").val().split(
+            ",").join("")));
+        var lMonthlyDebt = ($("#golstp__AddGoal__monthlyDebt").val() == "") ? 0 : (parseInt($("#golstp__AddGoal__monthlyDebt").val().split(",").join(
+            "")));
+        var lInvestments = ($("#golstp__AddGoal__Investments").val() == "") ? 0 : (parseInt($("#golstp__AddGoal__Investments").val().split(",").join(
+            "")));
+        sPurchasePrice = parseInt($("#golstp__AddGoal__purchasePrice").val().split(",").join(""));
+        sMonthlyExpenses = lEstimatedMonthlyExp + lMonthlyDebt + lInvestments;
+        sMonthlySavings = parseInt((lAnnualIncome / 12) - sMonthlyExpenses);
+        sYearlyIncome = parseInt(sMonthlySavings * 12);
+        sEligibleLoanAmt = parseInt(sYearlyIncome * 6.45);
+        if ((sPurchasePrice * 0.8) > sEligibleLoanAmt) {
+            sPersonalizedLoanAmt = sEligibleLoanAmt
+        } else {
+            sPersonalizedLoanAmt = parseInt(sPurchasePrice * 0.8);
+        }
+        sFinalDownPayment = sPurchasePrice - sPersonalizedLoanAmt;
+        sDownpaymentAmt = parseInt(sFinalDownPayment / sdownPaymentMonths);
+        var lRemainingAmt = sMonthlySavings - sDownpaymentAmt;
+        $("#golstp__AddGoal__ResultCol").removeClass("sno");
+        var lobj = {
+            "value": sPersonalizedLoanAmt,
+            "decimalSep": ".",
+            "decimalPoints": 2,
+            "mask": "MILLION",
+            "displayAsLiteral": "N"
+        }
+        var lPersonalizedLoanAmt = apz.formatNumber(lobj);
+        lobj.value = sFinalDownPayment;
+        var lFinalDownPayment = apz.formatNumber(lobj);
+        $("#golstp__AddGoal__eligibleLoanAmt").text("₹ " + lPersonalizedLoanAmt);
+        $("#golstp__AddGoal__FinalDownpayment").val(lFinalDownPayment);
+        $("#golstp__AddGoal__downPaymentMonths").text(sdownPaymentMonths);
+        apz.data.scrdata.golstp__DownPayment_Res = {};
+        if (lRemainingAmt > 0) {
+            apz.data.scrdata.golstp__DownPayment_Res.data = [{
+                "label": "Down Payment",
+                "value": sDownpaymentAmt
+            }, {
+                "label": "Remaining",
+                "value": lRemainingAmt
+            }];
+            $("#golstp__AddGoal__errorTxt").text("You have remaining ₹ " + Math.abs(lRemainingAmt) + " post your downpayment goal");
+            $("#golstp__AddGoal__chartDownpayment").text("₹ " + sDownpaymentAmt).css("color", "green");
+            $("#golstp__AddGoal__chartRemaining").text("₹ " + lRemainingAmt).css("color", "green");
+        } else {
+            apz.data.scrdata.golstp__DownPayment_Res.data = [{
+                "label": "Down Payment",
+                "value": sDownpaymentAmt
+            }];
+            $("#golstp__AddGoal__errorTxt").text("You are falling short of ₹ " + Math.abs(lRemainingAmt) + " to meet your goal");
+            $("#golstp__AddGoal__chartDownpayment").text("₹ " + sDownpaymentAmt).css("color", "green");
+            $("#golstp__AddGoal__chartRemaining").text("₹ " + lRemainingAmt).css("color", "red");
+        }
+        apz.data.loadData("DownPayment", "golstp");
+        $("#golstp__AddGoal__chartDownpayment").text("₹ " + sDownpaymentAmt);
+        $("#golstp__AddGoal__chartRemaining").text("₹" + lRemainingAmt);
+    }
+}
+apz.app.updateChartBeforeRender = function(chartType, chartData, id, chart) {
+    debugger;
+    if (id == "golstp__AddGoal__affordabilityChart") {
+        chartData.chart.formatNumberScale = "0";
+        chartData.chart.defaultCenterLabel = "Monthly Savings : ₹" + sMonthlySavings;
+        chartData.chart.numberPrefix = "₹";
+        if (chartData.data.length == 1) {
+            chartData.chart.palettecolors = "ff0000";
+        }
+    }
+}
+apz.golstp.AddGoal.fnBack = function() {
+    debugger;
+    $("#golstp__GoalSummary__GoalSummaryRow").removeClass('sno');
+    $("#golstp__GoalSummary__LaunchGoalRow").addClass('sno');
+}
+apz.golstp.AddGoal.fnOnChangeDownPayment = function() {
+    debugger;
+    var lDownPayment = parseInt($("#golstp__AddGoal__FinalDownpayment").val().split(",").join(""));
+    sDownpaymentAmt = parseInt(lDownPayment / sdownPaymentMonths);
+    var lRemainingAmt = sMonthlySavings - sDownpaymentAmt;
+    if (lRemainingAmt > 0) {
+        apz.data.scrdata.golstp__DownPayment_Res.data = [{
+            "label": "Down Payment",
+            "value": sDownpaymentAmt
+        }, {
+            "label": "Remaining",
+            "value": lRemainingAmt
+        }];
+        $("#golstp__AddGoal__errorTxt").text("You have remaining ₹ " + Math.abs(lRemainingAmt) + " post your Down payment goal");
+        $("#golstp__AddGoal__chartDownpayment").text("₹ " + sDownpaymentAmt).css("color", "green");
+        $("#golstp__AddGoal__chartRemaining").text("₹ " + lRemainingAmt).css("color", "green");
+    } else {
+        apz.data.scrdata.golstp__DownPayment_Res.data = [{
+            "label": "Down Payment",
+            "value": sDownpaymentAmt
+        }];
+        $("#golstp__AddGoal__errorTxt").text("You are falling short of ₹ " + Math.abs(lRemainingAmt) + " to meet your goal");
+        $("#golstp__AddGoal__chartDownpayment").text("₹ " + sDownpaymentAmt).css("color", "green");
+        $("#golstp__AddGoal__chartRemaining").text("₹ " + lRemainingAmt).css("color", "red");
+    }
+    apz.data.loadData("DownPayment", "golstp");
+}
+apz.golstp.AddGoal.fnAddGoal = function() {
+    debugger;
+    $("#golstp__GoalSummary__GoalSummaryRow").removeClass('sno');
+    $("#golstp__GoalSummary__LaunchGoalRow").addClass('sno');
+    cate = $("#golstp__AddGoal__choiceDpd").val()
+    var lObj = {
+        "goalId": "B100746",
+        "customerId": "100032892",
+        "goalDescription":cate,
+        "expTimeforGoalUnit": sdownPaymentMonths,
+        "amtReqforGoal": sPurchasePrice,
+        "expTimeforGoalFreq": "Years",
+        "goalFundBy": "Savings",
+        "goalStatus": "No",
+        "progress":"0.00",
+        "term": "0/10 yrs",
+        "prgressvalue": "0.0 of"+sPurchasePrice 
+    }
+    apz.data.scrdata.golstp__SetupGoal_Req.tbDbtpSetupGoal.push(lObj);
+    apz.data.loadData("SetupGoal", "golstp");
+    var summary = apz.data.scrdata.golstp__SetupGoal_Req.tbDbtpSetupGoal;
+    var lis=    $("#golstp__GoalSummary__ct_lst_1 > ul >li");
+        for(i=0;i<summary.length;i++){
+            clsname = apz.golstp.goalSummary.golimg[summary[i].goalDescription]
+            
+            if(summary[i].progress <= "0.5"){
+                $("#golstp__SetupGoal__i__tbDbtpSetupGoal__progress_"+i+"_div").addClass("ter");
+            }
+           if(clsname){
+             $(lis[i]).addClass(clsname)  
+           }else{
+               $(lis[i]).addClass("others");  
+           }
+             
+        }
+apz.golstp.AddGoal.fnShowPromo(cate);
+       
+};
+
+apz.golstp.AddGoal.fnShowPromo = function(cate){
+  apz.toggleModal({targetId:"golstp__GoalSummary__promoModal"});
+    apz.launchApp({
+        appId:"grtprm",
+        scr : "Greeting",
+        div : "golstp__GoalSummary__promosetup",
+        userObj:{
+               'userId' : LandingCommon.getLoggedInUser(),
+                from :"GoalSetup",
+                goalSetupName : cate,
+                modaldiv:"golstp__GoalSummary__promoModal"
+        }
+    });  
+}
+  

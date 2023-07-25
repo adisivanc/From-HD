@@ -1,0 +1,49 @@
+{"cdtcrd__CCDetails_Res":{
+    "ccDetailMaster": {
+        "txnRefNo": "",
+        "status": "",
+        "respCd": "",
+        "intMsgCd": "",
+        "extMsg": "",
+        "ccSummary" : [{
+            "accountNo": "753410000076",
+            "cardName" : "Visa Card",
+            "cardNumber" : "7349 XX7X X8XX 2345",
+            "location" : "Clarendon Centre",
+            "balance" : "4351",
+            "creditLimit" : "10000",
+            "avlCreditLimit" : "5000",
+            "cashLimit" : "2000",
+            "avlCashLimit" : "1200",
+            "lastBilledDate" : "05/12/2019",
+            "lastBilledAmount" : "6127",
+            "unbilledPurchases" : "3125",
+            "unbilledPayments" : "8451",
+            "totalOS" : "4351",
+            "accountBal": "7117",
+            "customerID" : "12345",
+            "paymentDueDate" : "15/01/2020"
+            },
+            {
+            "accountNo": "961897412864",
+            "cardName" : "Master Card",
+            "cardNumber" : "6493 XX3X X2XX 1143",
+            "location" : "Clarendon Centre",
+            "balance" : "6634",
+            "creditLimit" : "10000",
+            "avlCreditLimit" : "4357",
+            "cashLimit" : "2783",
+            "avlCashLimit" : "1637",
+            "lastBilledDate" : "05/12/2019",
+            "lastBilledAmount" : "4371",
+            "unbilledPurchases" : "3368",
+            "unbilledPayments" : "4471",
+            "totalOS" : "6634",
+            "accountBal": "3543",
+            "customerID" : "53982",
+            "paymentDueDate" : "15/01/2020"
+            }
+        ]
+    }
+}
+}

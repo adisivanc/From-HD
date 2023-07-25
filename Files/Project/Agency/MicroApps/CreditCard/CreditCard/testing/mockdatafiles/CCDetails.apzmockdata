@@ -1,0 +1,48 @@
+{
+    "ccDetailMaster": {
+        "txnRefNo": "",
+        "status": "",
+        "respCd": "",
+        "intMsgCd": "",
+        "extMsg": "",
+        "ccSummary" : [{
+            "accountNo": "753410000076",
+            "cardName" : "Visa Card",
+            "cardNumber" : "7349 XX7X X8XX 2345",
+            "location" : "Bangalore",
+            "balance" : "-2345",
+            "creditLimit" : "100000",
+            "avlCreditLimit" : "5000",
+            "cashLimit" : "20000",
+            "avlCashLimit" : "12000",
+            "lastBilledDate" : "12-Jan-2018",
+            "lastBilledAmount" : "6127",
+            "unbilledPurchases" : "3125",
+            "unbilledPayments" : "8451",
+            "totalOS" : "4351",
+            "accountBal": "71178",
+            "customerID" : "12345",
+            "paymentDueDate" : "31-Mar-2018"
+            },
+            {
+            "accountNo": "961897412864",
+            "cardName" : "Master Card",
+            "cardNumber" : "6493 XX3X X2XX 1143",
+            "location" : "Mangalore",
+            "balance" : "-6340",
+            "creditLimit" : "100000",
+            "avlCreditLimit" : "4357",
+            "cashLimit" : "27831",
+            "avlCashLimit" : "16371",
+            "lastBilledDate" : "23-Feb-2017",
+            "lastBilledAmount" : "4371",
+            "unbilledPurchases" : "3368",
+            "unbilledPayments" : "4471",
+            "totalOS" : "6634",
+            "accountBal": "35432",
+            "customerID" : "53982",
+            "paymentDueDate" : "01-Apr-2018"
+            }
+        ]
+    }
+}

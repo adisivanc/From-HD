@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="65" height="65" viewBox="0 0 65 65">
+  <defs>
+    <clipPath id="clip-face">
+      <rect width="65" height="65"/>
+    </clipPath>
+  </defs>
+  <g id="face" clip-path="url(#clip-face)">
+    <g id="Icon_ionic-md-sad" data-name="Icon ionic-md-sad" transform="translate(-3.375 -3.375)">
+      <path id="Path_15825" data-name="Path 15825" d="M26.619,20.25a17.489,17.489,0,0,0-15.806,9.9H42.425A17.489,17.489,0,0,0,26.619,20.25Z" transform="translate(8.922 20.24)" fill="#ef3e42"/>
+      <path id="Path_15826" data-name="Path 15826" d="M35.542,3.375A32.167,32.167,0,1,0,67.708,35.542,32.158,32.158,0,0,0,35.542,3.375Zm0,57.9A25.733,25.733,0,1,1,61.276,35.542,25.81,25.81,0,0,1,35.542,61.275Z" fill="#ef3e42"/>
+      <path id="Path_15827" data-name="Path 15827" d="M25.75,21.8a4.739,4.739,0,0,0,4.825-4.825,4.825,4.825,0,0,0-9.65,0A4.739,4.739,0,0,0,25.75,21.8Z" transform="translate(21.05 10.525)" fill="#ef3e42"/>
+      <path id="Path_15828" data-name="Path 15828" d="M15.513,21.8a4.739,4.739,0,0,0,4.825-4.825,4.739,4.739,0,0,0-4.825-4.825,4.739,4.739,0,0,0-4.825,4.825A4.739,4.739,0,0,0,15.513,21.8Z" transform="translate(8.771 10.525)" fill="#ef3e42"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,102 @@
+apz.chqsts.outwardSummary = {};
+ apz.app.onLoad_outwardSummary = function() {
+    
+}
+apz.app.onShown_OutwardSummary = function(pParams) {
+    debugger;
+   // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "OUTWARD CLEARING")
+    if (pParams.Navigation) {
+        apz.chqsts.outwardSummary.fnSetNavigation(pParams);
+    }
+    //$("#chqsts__OutwardSummary__o__tbDbtpChequedetails__chequeStatus_0").addClass("suc");
+    $("#chqsts__ClearingCheques__o__tbDbtpChequedetails__chequeStatus_1").addClass("war");
+    apz.chqsts.outwardSummary.sParams = pParams;
+    apz.chqsts.outwardSummary.fnInitialise(pParams);
+};
+apz.chqsts.outwardSummary.fnSetNavigation = function(params) {
+    apz.chqsts.outwardSummary.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "OUTWARD CLEARING";
+    }
+    apz.chqsts.outwardSummary.Navigation(lParams);
+};
+apz.chqsts.outwardSummary.fnInitialise = function(pParams) {
+    debugger;
+    var lfrmarr = [];
+    var lObj = {
+        "val": "Please Select",
+        "desc": "Please Select"
+    };
+    lfrmarr.push(lObj);
+    var larrLength = pParams.SavingsAccount.length;
+    for (var i = 0; i < larrLength; i++) {
+        var lfrmacc = {
+            "val": pParams.SavingsAccount[i].accountNo,
+            "desc": pParams.SavingsAccount[i].accountNo
+        };
+        lfrmarr.push(lfrmacc);
+    }
+    apz.populateDropdown(document.getElementById("chqsts__OutwardSummary__OutwardAccNum"), lfrmarr);
+    apz.setElmValue("chqsts__OutwardSummary__OutwardAccNum",lfrmarr[1].val);
+    
+};
+apz.chqsts.outwardSummary.fnGetDetails = function() {
+    debugger;
+    // var lReq = {
+    //     "ifaceName": "OutwardSummary",
+    //     "paintResp": "N",
+    //     "buildReq": "N",
+    //     "req": "",
+    //     "appId": "chqsts",
+    //     "async": false,
+    //     "callBack": apz.chqsts.outwardSummary.fnGetDetailsCB,
+    //     "callBackObj": ""
+    // };
+   // apz.server.callServer(lReq);
+           jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("chqsts")+"/OutwardSummary.json"));
+           apz.data.scrdata.chqsts__OutwardSummary_Res = {};
+                      apz.data.scrdata.chqsts__OutwardSummary_Res = jsondata;
+                      apz.data.loadData("OutwardSummary", "chqsts");
+
+       apz.chqsts.outwardSummary.fnGetDetailsCB(jsondata);    
+
+};
+apz.chqsts.outwardSummary.fnGetDetailsCB = function(pResp) {
+    debugger;
+    $("#chqsts__OutwardSummary__Outward_ListRow").removeClass("sno");
+    var lAccountNo = apz.getElmValue("chqsts__OutwardSummary__OutwardAccNum");
+    var lRecords = pResp.tbDbtpChequedetails;
+    var lRecordsLength = lRecords.length;
+    var lFinalRecord = [];
+    for (var i = 0; i < lRecordsLength; i++) {
+        if (lRecords[i].accountNumber == lAccountNo) {
+            lFinalRecord.push(lRecords[i]);
+        }
+        apz.data.scrdata.chqsts__OutwardSummary_Res.tbDbtpChequedetails = lFinalRecord;
+        //$("#chqsts__OutwardSummary__o__tbDbtpChequedetails__chequeStatus_0").addClass("suc");
+        $("#chqsts__OutwardSummary__o__tbDbtpChequedetails__chequeStatus_1").addClass("war");
+        apz.data.loadData("OutwardSummary", "chqsts");
+    }
+};
+apz.chqsts.outwardSummary.fnViewDetails = function(lObj, event) {
+    debugger;
+    var RowNo = $(lObj).attr('rowno');
+    var lScrData = apz.data.scrdata.chqsts__OutwardSummary_Res.tbDbtpChequedetails[RowNo];
+    var params = {};
+    params.appId = "chqsts";
+    params.scr = "OutwardClearing";
+    params.layout = "Web";
+    params.userObj = {
+        "data": {
+            "ChequeData": lScrData
+        }
+    };
+    params.div = "chqsts__OutwardSummary__LaunchOutwardScreen";
+    $("#chqsts__OutwardSummary__LaunchOutwardScreen").removeClass("sno");
+    $("#chqsts__OutwardSummary__AccNum_Row").addClass("sno");
+    $("#chqsts__OutwardSummary__Outward_ListRow").addClass("sno");
+    apz.launchSubScreen(params);
+};

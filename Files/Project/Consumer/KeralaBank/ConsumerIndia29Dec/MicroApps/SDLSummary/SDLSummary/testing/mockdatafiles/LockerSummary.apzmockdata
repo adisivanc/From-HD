@@ -1,0 +1,35 @@
+{
+    "tbDbtpLockerSummary" : [
+            {
+                "fromAccount": "56XXXXXX01",
+                "rentAmount": "3000",
+                "rentDuedate": "3 May 2018",
+                "lockerSize": "Small",
+                "lockerId" : "ABD231"
+                
+            },
+            {
+                "fromAccount": "56XXXXXX01",
+                "rentAmount": "4000",
+                "rentDuedate": "7 JUN 2018",
+                "lockerSize": "Large",
+                "lockerId" : "NBC12UF2"
+            },
+            {
+                "fromAccount": "56XXXXXX01",
+                "rentAmount": "11245",
+                "rentDuedate": "18 JUL 2018",
+                "lockerSize": "Extra Large",
+                "lockerId" : "517XBH2MN"
+            },
+            {
+                "fromAccount": "56XXXXXX01",
+                "rentAmount": "11245",
+                "rentDuedate": "16 AUG 2018",
+                "lockerSize": "Extra Large",
+                "lockerId" : "517XBH2MN"
+            }
+        ]
+}
+
+

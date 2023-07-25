@@ -1,0 +1,10 @@
+{
+  "tbDbmiCorpTaskvariable":[{
+      "appId": "acpr01", 
+      "taskVariableType": "String",
+      "taskVariableName": "action",
+      "workflowId": "CPMA",
+      "stageId": "APPROVE"
+      
+  }]  
+}

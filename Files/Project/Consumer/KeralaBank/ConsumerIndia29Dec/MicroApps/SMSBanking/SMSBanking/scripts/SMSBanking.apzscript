@@ -1,0 +1,104 @@
+apz.smsban = {};
+apz.smsban.SMSBanking = {};
+apz.smsban.SMSBanking.sService = "";
+apz.smsban.SMSBanking.sAccountNumber = "";
+apz.app.onLoad_SMSBanking = function(params) {
+    apz.smsban.SMSBanking.sCache = params;
+    apz.smsban.SMSBanking.fnInitialize();
+}
+apz.app.onShown_SMSBanking = function()
+{
+        $("#smsban__SMSBanking__accountNumber").attr("type", "tel");
+
+}
+apz.smsban.SMSBanking.fnInitialize = function() {
+    debugger;
+    //apz.mockServer=false;
+    $("#smsban__SMSBanking__stage2").hide();
+}
+apz.smsban.SMSBanking.fnSelectService = function(pThis) {
+    debugger;
+    apz.smsban.SMSBanking.sService = $(pThis).find(".serviceName").text();
+    apz.setHtml("smsban__SMSBanking__title",apz.smsban.SMSBanking.sService);
+    $("#smsban__SMSBanking__stage1").hide();
+    $("#smsban__SMSBanking__stage2").show();
+}
+apz.smsban.SMSBanking.fnSendSMS = function() {
+    debugger;
+    var lMsg = "";
+    apz.smsban.SMSBanking.sAccountNumber = $("#smsban__SMSBanking__accountNumber").val();
+    if (apz.smsban.SMSBanking.sService == "BALANCE ENQUIRY") {
+        lMsg = "BAL "+apz.smsban.SMSBanking.sAccountNumber;
+    }
+    else if(apz.smsban.SMSBanking.sService = "MINI STATEMENT"){
+        lMsg = "MIN "+apz.smsban.SMSBanking.sAccountNumber;
+    }
+    var JsonObject = {
+        "phoneNo": "9632919627",
+        "message": lMsg,
+        "type": "UI",
+        "id":"BEACONSTART_ID",
+        "callBack":apz.smsban.SMSBanking.fnSendSMSCallback
+    };
+    apz.ns.smsSend(JsonObject);
+}
+apz.smsban.SMSBanking.fnSendSMSCallback = function(params) {
+    debugger;
+    if (apz.smsban.SMSBanking.sService == "BALANCE ENQUIRY") {
+        lMsg = "Balance Enquiry  :  Account Balance for XX"+apz.smsban.SMSBanking.sAccountNumber+" on DATE : LKR 90,000.000 . Credit in A/c subject to clearing";
+    }
+    else if(apz.smsban.SMSBanking.sService = "MINI STATEMENT"){
+        lMsg = "Last 5 transactions for A/c no. ******"+apz.smsban.SMSBanking.sAccountNumber+" :   31-07-18 Rs.15.00 DR 01-07-18 Rs.29.00 CR 18-05-18 Rs.376.00 DR 16-05-18 Rs.20000.00 DR 16-05-18 Rs.20000.00 CR";
+    }
+    var JsonObject = {
+        "phoneNo": "8951519545",
+        "message": lMsg,
+        "type": "BG",
+        "id":"BEACONSTART_ID",
+        "callBack":apz.smsban.SMSBanking.fnGetResponseSMSCallback
+    };
+    setTimeout(apz.smsban.SMSBanking.fnSendSMSForCustomer,2000);
+    apz.ns.smsSend(JsonObject);
+}
+
+apz.smsban.SMSBanking.fnGetResponseSMSCallback = function(params){
+       debugger;
+       apz.dispMsg({message : "SMS sent.Standard SMS charges will be applicable as per your telecom service provider", type : "S"});
+};
+apz.smsban.SMSBanking.fnSendSMSForCustomer=function(){
+    var lmessage = "UPDATE: Available balance is A/C XX7876: INR 12000.00. Credits in A/C is subject to clearing. Check A/C statements on the MobileBanking App.";
+        var lServerParams = {
+            "ifaceName": "sms",
+            "buildReq": "N",
+            "appId": "smsban",
+            "req": {
+                "config": {
+                    user: "Iexceed",
+                    apikey: "XOTNwz3OffqcodOubdhl",
+                    mobile: "8951519545",
+                    message: lmessage,
+                    senderid: "APZBNK",
+                    type: "txt"
+                }
+            },
+            "paintResp": "N",
+            "callBack": apz.smsban.SMSBanking.sendMessageCB
+        };
+    debugger;
+    apz.server.callServer(lServerParams);
+}
+
+
+apz.smsban.SMSBanking.sendMessageCB=function(params){
+    console.log(params)
+}
+
+apz.smsban.SMSBanking.fnBack=function(){
+    apz.setElmValue("smsban__SMSBanking__accountNumber", "");
+    $("#smsban__SMSBanking__stage1").show();
+    $("#smsban__SMSBanking__stage2").hide();
+}
+
+apz.smsban.SMSBanking.fnCancel=function(){
+     apz.smsban.SMSBanking.sCache.callBack();
+}

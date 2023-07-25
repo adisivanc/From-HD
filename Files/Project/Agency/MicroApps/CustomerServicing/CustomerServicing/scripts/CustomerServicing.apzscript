@@ -1,0 +1,30 @@
+apz.csrser = {};
+apz.csrser.CustomerServicing = {};
+apz.csrser.CustomerServicing.sCache = "";
+apz.app.onLoad_CustomerServicing = function(params) {
+    debugger;
+    apz.csrser.CustomerServicing.sCache = params;
+   // apz.csrser.CustomerServicing.DetailExposure("BLDC01", "BlockDebit")
+};
+apz.app.onShown_CustomerServicing = function(params) {
+    debugger;
+    $("#csrser__CustomerServicing__ps_pls_4_li").trigger("click");
+};
+apz.csrser.CustomerServicing.DetailExposure = function(pAppId, pScrname,divele) {
+    debugger;
+    apz.currAppId = "csrser";
+        var lParams = {
+            "appId": pAppId,
+            "scr": pScrname,
+            "div": "csrser__CustomerServicing__"+divele,
+            "type": "CF",
+            "userObj": {
+                "action": "fromService",
+                "data": {},
+                "destroyDiv": apz.csrser.CustomerServicing.sCache.destroyDiv,
+                "parentAppId": apz.csrser.CustomerServicing.sCache.parentAppId,
+                "callBack":apz.csrser.CustomerServicing.sCache.callBack
+            }
+        };
+        apz.launchApp(lParams);
+};

@@ -1,0 +1,92 @@
+apz.cashtr.cashtransactionverify = {}
+apz.cashtr.cashtransactionverify.sCache = "";
+apz.cashtr.cashtransactionverify.AccountBalance = "";
+apz.cashtr.cashtransactionverify.AccountType = "";
+apz.cashtr.cashtransactionverify.TransDate = '';
+apz.cashtr.cashtransactionverify.TransId = '';
+apz.app.onLoad_CashTransactionVerify = function(params) {
+    debugger;
+    apz.cashtr.cashtransactionverify.sCache = params;
+}
+apz.app.onShown_CashTransactionVerify = function(params) {
+    apz.cashtr.cashtransactionverify.fnUpdateUI();
+    // apz.cashtr.cashtransactionverify.fnLaunchAuthScreen();
+}
+apz.cashtr.cashtransactionverify.fnUpdateUI = function() {
+    debugger;
+    apz.currAppId = "cashtr";
+    if (apz.cashtr.cashtransactionshome.sTransferType == "deposit") {
+        apz.setElmValue("cashtr__CashTransactionVerify__accno", apz.cashtr.cashtransactionverify.sCache.toAcc == "" ? "374857676868" : apz.cashtr.cashtransactionverify
+            .sCache.toAcc);
+    } else {
+        apz.setElmValue("cashtr__CashTransactionVerify__accno", apz.cashtr.cashtransactionverify.sCache.fromAcc == "" ? "374857676868" : apz.cashtr.cashtransactionverify
+            .sCache.fromAcc);
+    }
+    apz.setElmValue("cashtr__CashTransactionVerify__transferAmt", apz.cashtr.cashtransactionverify.sCache.amount == "" ? "3333" : apz.cashtr.cashtransactionverify
+        .sCache.amount);
+}
+apz.cashtr.cashtransactionverify.Continue = function() {
+    debugger;
+    
+    apz.cashtr.cashtransactionverify.sCache.accno =  apz.getElmValue("cashtr__CashTransactionVerify__accno");
+    apz.cashtr.cashtransactionverify.sCache.amount =  apz.getElmValue("cashtr__CashTransactionVerify__transferAmt");
+    apz.cashtr.cashtransactionverify.sCache.type = apz.cashtr.cashtransactionshome.sTransferType
+    var lLaunchParams = {
+            "appId": "otpeng",
+            "scr": "ProcessOTP",
+            "div": "cmrnav__Launcher__Launcher",
+            "userObj": {
+                "action": "SetRefNo",
+                "cashTransaction": apz.cashtr.cashtransactionverify.sCache,
+                "control": {
+                    "appId": "otpeng",
+                    //"callBack": apz.bookfd.bookfixeddeposit.fnGotoStage4,
+                    "destroyDiv": "cmrnav__Launcher__Launcher"
+                },
+                from:"cashtransaction"
+            }
+        };
+        apz.launchApp(lLaunchParams);
+    
+   
+   /*apz.show("excust__CustomerDashboard__gr_col_10");
+    apz.hide("cashtr__CashTransactionVerify__sc_col_16");
+    apz.hide("cashtr__CashTransactionVerify__ct_frm_1");
+    apz.hide("pfauth__Authentication__gr_col_2");
+    $(".between").removeClass("sno");
+    apz.setElmValue("cashtr__CashTransactionVerify__Stage2Acc", apz.getElmValue("cashtr__CashTransactionVerify__accno"));
+    apz.setElmValue("cashtr__CashTransactionVerify__Stage2Amt", apz.getElmValue("cashtr__CashTransactionVerify__transferAmt"));
+    if (apz.cashtr.cashtransactionverify.sCache.transferType == "deposit") {
+        
+            
+            apz.setElmValue("cashtr__CashTransactionVerify__transactionTitle", "Cash Deposit has been done successfully!");
+            
+    } else {
+            apz.setElmValue("cashtr__CashTransactionVerify__transactionTitle", "Cash Withdrawal has been done successfully!");
+    }*/
+    
+    
+    
+    
+}
+apz.cashtr.cashtransactionverify.fnLaunchAuthScreen = function() {
+    debugger;
+    $(".active").removeClass("active");
+    var lParams = {
+        "appId": "pfauth",
+        "scr": "Authentication",
+        "div": "cashtr__CashTransactionVerify__authlaunchArea",
+        "type": "CF",
+        "userObj": {
+            "action": "",
+            "data": {},
+            "destroyDiv": apz.cashtr.cashtransactionverify.sCache.destroyDiv,
+            "parentAppId": apz.cashtr.cashtransactionverify.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+}
+apz.cashtr.cashtransactionverify.FnDone = function(params) {
+    // apz.cashtr.cashtransactionverify.sCache.callBack();
+apz.cmrnav.fnLaunchConsumerHome()
+}

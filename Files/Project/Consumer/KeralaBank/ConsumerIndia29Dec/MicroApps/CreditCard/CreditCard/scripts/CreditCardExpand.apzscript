@@ -1,0 +1,142 @@
+apz.cdtcrd.CreditCardExpand = {};
+apz.cdtcrd.CreditCardExpand.sparams = {};
+apz.app.onLoad_CreditCardExpand = function(params)
+{
+    debugger;
+    apz.cdtcrd.CreditCardExpand.sparams = params;
+     apz.data.scrdata.cdtcrd__CCDetails_Res.ccDetailMaster.ccSummary[0]= params.cardDetails;
+         //apz.data.buildData("AccountsInterface");
+apz.setElmValue("cdtcrd__CreditCardExpand__cardName", params.cardDetails.cardName);
+ var param = {
+            "decimalSep": ".",
+            "value": params.cardDetails.creditLimit,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    
+apz.setElmValue("cdtcrd__CreditCardExpand__outBalance", apz.formatNumber(param));
+
+    apz.data.loadData("CCDetails", "cdtcrd");
+        apz.data.loadJsonData("MiniStatement", "cdtcrd");
+
+    var userObj = {
+          userId:LandingCommon.getLoggedInUser()
+      };
+      apz.launchApp({
+          "appId":"ernspn",
+          "scr":"EarnAndSpend",
+          "userObj":userObj,
+          "div":"cdtcrd__CreditCardExpand__earnAndSpend"
+      });
+      
+      
+    
+}
+
+
+apz.cdtcrd.CreditCardExpand.fnBack = function()
+{
+    debugger;
+    apz.cdtcrd.CreditCardExpand.sparams.callback();
+}
+
+ apz.cdtcrd.CreditCardExpand.fnDownload = function(fileType) {
+        debugger;
+        apz.cdtcrd.CreditCardExpand.getDocument(fileType);
+       
+    };
+   
+    apz.cdtcrd.CreditCardExpand.getDocument = function(fileType) {
+        debugger;
+        var jsonFilePath = apz.getDataFilesPath("cdtcrd") + "/CreditCardStatement.json";
+        var jsonFileContent = apz.getFile(jsonFilePath);
+        var ljsondata = JSON.parse(jsonFileContent);
+        for (var i = 0; i < ljsondata.data.length; i++) {
+            var mimetype = ljsondata.data[i].mimeType;
+            var lMimeType = mimetype.slice(-3);
+            if (fileType == lMimeType.toLowerCase()) {
+                apz.cdtcrd.CreditCardExpand.getDocumentCB(ljsondata.data[i]);
+            }
+        }
+    };
+   
+    apz.cdtcrd.CreditCardExpand.getDocumentCB = function(pbody) {
+        debugger;
+        apz.cdtcrd.CreditCardExpand.ReportdwnldMethod(pbody);
+    };
+    apz.cdtcrd.CreditCardExpand.ReportdwnldMethod = function(lbodyobj) {
+        debugger;
+        var blob;
+        var fileType = "";
+        if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+            blob = apz.cdtcrd.CreditCardExpand.b64toBlob(lbodyobj.content, "application/pdf");
+            fileType = ".pdf";
+        } else if (lbodyobj.mimeType == "application/ondemand extension-field=DOCX") {
+            blob = apz.cdtcrd.CreditCardExpand.b64toBlob(lbodyobj.content, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+            fileType = ".docx";
+        } else if (lbodyobj.mimeType == "application/ondemand extension-field=tiff") {
+            blob = apz.cdtcrd.CreditCardExpand.b64toBlob(lbodyobj.content, "image/tiff");
+            fileType = ".tiff";
+        } else if (lbodyobj.mimeType == "application/ondemand extension-field=msg") {
+            blob = apz.cdtcrd.CreditCardExpand.b64toBlob(lbodyobj.content, "application/vnd.ms-outlook");
+            fileType = ".msg";
+        } else if (lbodyobj.mimeType == "application/ondemand extension-field=doc") {
+            blob = apz.cdtcrd.CreditCardExpand.b64toBlob(lbodyobj.content, "application/msword");
+            fileType = ".docx";
+        } else if (lbodyobj.mimeType == "application/ondemand extension-field=xls") {
+            blob = apz.cdtcrd.CreditCardExpand.b64toBlob(lbodyobj.content, "application/xls");
+            fileType = ".xlsx";
+        } else if (lbodyobj.mimeType == "application/ondemand extension-field=txt") {
+            blob = apz.cdtcrd.CreditCardExpand.b64toBlob(lbodyobj.content, "application/txt");
+            fileType = ".txt";
+        }
+        var blobUrl = URL.createObjectURL(blob);
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+            var json = {};
+            json.id = "BASE64TOFILE";
+            json.callBack = apz.cdtcrd.CreditCardExpand.base64tofilecallBack;
+            json.base64 = lbodyobj.content;
+            json.fileName = "CreditCardStatement" + fileType;
+            json.filePath = "docs";
+            apz.ns.base64ToFile(json);
+        } else {
+            window.open(blobUrl);
+        }
+    };
+    apz.cdtcrd.CreditCardExpand.base64tofilecallBack = function(json) {
+        if (json.status) {
+            var json = {
+                "filePath": json.filePath
+            };
+            json.id = "OPENFILE_ID";
+            json.callBack = apz.cdtcrd.CreditCardExpand.openFileCallback;
+            apz.ns.openFile(json);
+        } else {
+            alert(json.errorCode);
+        }
+    };
+    apz.cdtcrd.CreditCardExpand.openFileCallback = function(params) {
+        debugger;
+    };
+    apz.cdtcrd.CreditCardExpand.b64toBlob = function(b64Data, contentType, sliceSize) {
+        debugger;
+        contentType = contentType || '';
+        sliceSize = sliceSize || 512;
+        var byteCharacters = atob(b64Data);
+        var byteArrays = [];
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+            var byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+        var blob = new Blob(byteArrays, {
+            type: contentType
+        });
+        return blob;
+    };

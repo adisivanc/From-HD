@@ -1,0 +1,27 @@
+{
+    "tbConstitutionDetails": {
+        "country": "GB",
+        "countryIncorporation": "USA",
+        "companyid": " 000024554AA2212",
+        "businessName": "GLOBAL FUNDS AXIS LTD",
+        "registrationNo": "C985643219",
+        "companyType": "Small Local Authority",
+        "constitutionType": "Partnership Firm",
+        "establishmentDate": "2015-10-04",
+        "city": "London",
+        "postalCode": "NW2 2PY",
+        "faxNo": "1166",
+        "telephoneNo": "77354",
+        "daytimeContactNo": "115656",
+        "mobileNo": "7232322444",
+        "email1": "Darren.Lansterman@gmail.com",
+        "email2": "Darren.Lansterman@gmail.com",
+        "other": "not applicable",
+        "annualTurnover": "656565",
+        "networth": "456667",
+        "noOfEmployees": "10",
+        "businessPurpose": "Business",
+        "creditTransactions": "1115",
+        "debitTransaction": "31114"
+    }
+}

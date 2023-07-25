@@ -1,0 +1,205 @@
+apz.accsnp.QRGenerator = {
+    
+};
+apz.app.onLoad_QRGenerator = function(pParams) {
+    apz.accsnp.QRGenerator.sParams = pParams;
+    if (pParams.Navigation) {
+        apz.accsnp.QRGenerator.fnSetNavigation(pParams);
+    }
+    apz.accsnp.QRGenerator.fnGetAccountSnapShots();
+    apz.accsnp.QRGenerator.fnInitialise();
+};
+
+apz.accsnp.QRGenerator.fnGetAccountSnapShots = function(pResp) {
+    apz.data.loadJsonData("GetAccountSnapshots","accsnp");
+    debugger;
+    apz.stopLoader();
+    
+};
+apz.accsnp.QRGenerator.fnShowGenerate = function() {
+    apz.hide("accsnp__QRGenerator__accountSnapshotsLists");
+    apz.show("accsnp__QRGenerator__generate");
+};
+apz.accsnp.QRGenerator.fnShowSnapshots = function() {
+    apz.hide("accsnp__QRGenerator__generate");
+    apz.show("accsnp__QRGenerator__accountSnapshotsLists");
+    apz.setElmValue("accsnp__QRGenerator__accountNumber", "");
+};
+apz.accsnp.QRGenerator.fnInitialise = function(pParams) {
+    debugger;
+    apz.data.loadJsonData('AccountDetails', 'accsnp');
+    apz.currAppId = "accsnp";
+    var lArr = [{
+        "val": "",
+        "desc": "Please Select"
+    }];  
+    for (var i = 0; i < apz.data.scrdata.accsnp__AccountDetails_Res.SavingsAccount.length; i++) {
+        var lObj = {
+            "val": apz.data.scrdata.accsnp__AccountDetails_Res.SavingsAccount[i].accountNo,
+            "desc": "Savings Account - " + apz.data.scrdata.accsnp__AccountDetails_Res.SavingsAccount[i].accountNo
+        };
+        lArr.push(lObj);
+    }
+    for (var i = 0; i < apz.data.scrdata.accsnp__AccountDetails_Res.CurrentAccount.length; i++) {
+        var lObj = {
+            "val": apz.data.scrdata.accsnp__AccountDetails_Res.CurrentAccount[i].accountNo,
+            "desc": "Current Account - " + apz.data.scrdata.accsnp__AccountDetails_Res.CurrentAccount[i].accountNo
+        };
+        lArr.push(lObj);
+    }
+        lArr.push(lObj);
+    apz.populateDropdown(document.getElementById("accsnp__QRGenerator__accountNumber"), lArr);
+    apz.setElmValue("accsnp__QRGenerator__customerId", apz.accsnp.QRGenerator.sParams.data.customerDetail.customerID);
+};
+apz.accsnp.QRGenerator.fnSetNavigation = function(params) {
+    debugger;
+    apz.accsnp.QRGenerator.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.showBack = "N";
+    lParams.headerText = "ACCOUNT SNAPSHOT";
+    apz.accsnp.QRGenerator.Navigation(lParams);
+};
+apz.accsnp.QRGenerator.fnPopulateAccountData = function(pThis) {
+    var lVal = apz.getObjValue(pThis);
+    var lTheme = apz.baseThemesMap.ConsumerBank;
+    var lBank = "Appzillon Bank";
+    if (lTheme == "BankCom") {
+        lBank = "Bank of Commerce";
+    } else if (lTheme == "JapanBank") {
+        lBank = "Maruhan Bank";
+    }
+    var lText = $(pThis).val().split(" - ");
+    if (lText[0] == "Savings Account") {
+        for (var i = 0; i < apz.data.scrdata.accsnp__AccountDetails_Res.SavingsAccount.length; i++) {
+            if (lText[1] == apz.data.scrdata.accsnp__AccountDetails_Res.SavingsAccount[i].accountNo) {
+                apz.setElmValue("accsnp__QRGenerator__bankName", lBank);
+                apz.setElmValue("accsnp__QRGenerator__branchName", apz.data.scrdata.accsnp__AccountDetails_Res.SavingsAccount[i].accountBrnName);
+                apz.setElmValue("accsnp__QRGenerator__branchCode", apz.data.scrdata.accsnp__AccountDetails_Res.SavingsAccount[i].accountBrnCd);
+                apz.setElmValue("accsnp__QRGenerator__branchIFSC", apz.data.scrdata.accsnp__AccountDetails_Res.SavingsAccount[i].accountBrnIFSC);
+            }
+        }
+    } else if (lText[0] == "Current Account") {
+        for (var i = 0; i < apz.data.scrdata.accsnp__AccountDetails_Res.CurrentAccount.length; i++) {
+            if (lText[1] == apz.data.scrdata.accsnp__AccountDetails_Res.CurrentAccount[i].accountNo) {
+                apz.setElmValue("accsnp__QRGenerator__bankName", lBank);
+                apz.setElmValue("accsnp__QRGenerator__branchName", apz.data.scrdata.accsnp__AccountDetails_Res.CurrentAccount[i].accountBrnName);
+                apz.setElmValue("accsnp__QRGenerator__branchCode", apz.data.scrdata.accsnp__AccountDetails_Res.CurrentAccount[i].accountBrnCd);
+                apz.setElmValue("accsnp__QRGenerator__branchIFSC", apz.data.scrdata.accsnp__AccountDetails_Res.CurrentAccount[i].accountBrnIFSC);
+            }
+        }
+    } else if (lText[0] == "Please Select") {
+        apz.setElmValue("accsnp__QRGenerator__bankName", "");
+        apz.setElmValue("accsnp__QRGenerator__branchName", "");
+        apz.setElmValue("accsnp__QRGenerator__branchCode", "");
+        apz.setElmValue("accsnp__QRGenerator__branchIFSC", "");
+    }
+};
+apz.accsnp.QRGenerator.fnGenerate = function() {
+    var lval = apz.getElmValue("accsnp__QRGenerator__accountNumber");
+    if (!apz.isNull(lval)) {
+        var lFlag = true;
+        for (var i = 0; i < apz.data.scrdata.accsnp__GetAccountSnapshots_Res.tbDbtpAccountSnapshots.length; i++) {
+            if (lval == apz.data.scrdata.accsnp__GetAccountSnapshots_Res.tbDbtpAccountSnapshots[i].accountNumber) {
+                lFlag = false;
+            }
+        }
+        if (lFlag) {
+            var lText = "customerId=" + apz.getElmValue("accsnp__QRGenerator__customerId") + ",accountNumber=" + lval + ",bankName=" + apz.getElmValue(
+                "accsnp__QRGenerator__bankName") + ",branchName=" + apz.getElmValue("accsnp__QRGenerator__branchName") + ",branchCode=" + apz.getElmValue(
+                "accsnp__QRGenerator__branchCode") + ",branchIFSC=" + apz.getElmValue("accsnp__QRGenerator__branchIFSC");
+            var json = {
+                "inputString": lText,
+                "base64": "Y",
+                "destinationPath": "docs",
+                "fileName": "QRCode"
+            };
+            json.id = "BARCODE_GEN";
+            json.callBack = apz.accsnp.QRGenerator.fnGenerateCB;
+            apz.ns.genBarcode(json);
+        } else {
+            apz.dispMsg({
+                "code": "APZ_DM_015"
+            });
+        }
+    } else {
+        apz.dispMsg({
+            "code": "ERR_ACCOUNTNULL"
+        });
+    }
+};
+apz.accsnp.QRGenerator.fnGenerateCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        apz.startLoader();
+        var lText = $("#accsnp__QRGenerator__accountNumber").val().split(" - ");
+        var lReq = {
+            "tbDbtpAccountSnapshots": {
+                "customerId": apz.accsnp.QRGenerator.sParams.data.customerDetail.customerID,
+                "accountNumber": lText[1],
+                "accountType": lText[0],
+                "bankName": apz.getElmValue("accsnp__QRGenerator__bankName"),
+                "branchName": apz.getElmValue("accsnp__QRGenerator__branchName"),
+                "branchCode": apz.getElmValue("accsnp__QRGenerator__branchCode"),
+                "branchIfsc": apz.getElmValue("accsnp__QRGenerator__branchIFSC"),
+                "qrText": pResp.text
+            }
+        };
+        var lParams = {};
+        lParams.appId = "accsnp";
+        lParams.ifaceName = "SaveAccountSnapshots_New";
+        lParams.buildReq = "N";
+        lParams.paintResp = "Y";
+        lParams.req = lReq;
+        lParams.callBack = apz.accsnp.QRGenerator.fnSaveAccountSnapShotsCB;
+        apz.server.callServer(lParams);
+    }
+};
+apz.accsnp.QRGenerator.fnSaveAccountSnapShotsCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    if (pResp.status && pResp.resFull.appzillonHeader.status) {
+        apz.dispMsg({
+            "message": "Account snapshots created successfully",
+            "type": "S",
+            "callBack":   apz.landin.Landing.fnHome
+        });
+        // apz.accsnp.QRGenerator.fnShowSnapshots();
+        apz.accsnp.QRGenerator.fnGetAccountSnapShots();
+    } else {
+        apz.dispMsg({
+            "message": pResp.errors[0].errorMessage,
+            "type": "E"
+        });
+    }
+};
+apz.accsnp.QRGenerator.fnShowFullScreen = function(pThis) {
+    var lSrc = $(pThis).attr("src");
+    document.getElementById("accsnp__QRGenerator__modalImg").src = lSrc;
+    apz.toggleModal({
+        "targetId": "accsnp__QRGenerator__fullscrSnapshot"
+    });
+};
+apz.accsnp.QRGenerator.fnConfirmDeleteSnapshot = function(pThis) {
+    lRow = $(pThis).attr("rowno");
+    apz.dispMsg({
+        "code": "CONF_DELETESNAPSHOT",
+        "callBack": apz.accsnp.QRGenerator.fnDeleteSnapshot
+    });
+}
+apz.accsnp.QRGenerator.fnDeleteSnapshot = function(pResp) {
+    debugger;
+    if(pResp.choice){
+        apz.accsnp.QRGenerator.fnDeleteSnapshotCB();
+    }
+    
+};
+apz.accsnp.QRGenerator.fnDeleteSnapshotCB = function(pResp) {
+    debugger;
+   
+        apz.dispMsg({
+            "message": "Account snapshots deleted successfully",
+            "type": "S",
+            "callBack": apz.landin.Landing.fnHome
+        });
+    
+};

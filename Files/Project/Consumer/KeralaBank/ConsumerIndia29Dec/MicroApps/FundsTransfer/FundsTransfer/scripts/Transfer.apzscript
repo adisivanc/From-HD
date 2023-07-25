@@ -1,0 +1,287 @@
+apz.fndftr.Transfer = {};
+ apz.fndftr.Transfer.sCache ={};
+ var rates= "";
+apz.app.onLoad_Transfer = function(params)
+{
+    debugger;
+     apz.fndftr.Transfer.sCache = params;
+     if( apz.fndftr.Transfer.sCache.fromAnd == "PopOver")
+     {
+    apz.Common.fnremovePopOver();
+     }
+
+
+
+}
+apz.app.onShown_Transfer = function(params) {
+    debugger;
+    
+    apz.fndftr.Transfer.sCache = params;
+    if(apz.deviceGroup == "Web")
+    {
+    if(! apz.fndftr.Transfer.sCache.from )
+    {
+        $("#fndftr__Transfer__el_btn_3").addClass("sno");
+    }
+    }
+    apz.data.scrdata.fndftr__TransferDetails_Res = {};
+    apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls = {};
+    apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls = params.transferDetails;
+    apz.fndftr.Transfer.fromCurrency = params.fromAccontCurrency;
+    if (apz.fndftr.Transfer.sCache.transferDetails.nodeName == "internationalRemittance") {
+        var examples = [];
+        apz.fndftr.Transfer.fromCurrency = params.transferDetails.currency
+        if(apz.fndftr.Transfer.sCache.fromAccontCurrency ==apz.fndftr.Transfer.fromCurrency )
+        {
+             examples[0] = {
+            'val': apz.fndftr.Transfer.sCache.fromAccontCurrency,
+            'desc': apz.fndftr.Transfer.sCache.fromAccontCurrency
+        }
+        }
+        else
+        {
+        examples[0] = {
+            'val': apz.fndftr.Transfer.sCache.fromAccontCurrency,
+            'desc': apz.fndftr.Transfer.sCache.fromAccontCurrency
+        }
+        
+        examples[1] = {
+            'val': apz.fndftr.Transfer.fromCurrency,
+            'desc': apz.fndftr.Transfer.fromCurrency
+        }
+        }
+        var lObj = document.getElementById("fndftr__Transfer__transferCurrency");
+        apz.populateDropdown(lObj, examples);
+        apz.setElmValue("fndftr__Transfer__transferCurrency", apz.fndftr.TransferLauncher.sCache.fromAccontCurrency);
+    }
+    else
+    {
+        var examples = [];
+        if(apz.fndftr.Transfer.sCache.fromAccontCurrency == apz.fndftr.Transfer.sCache.transferDetails.currency)
+        {
+               examples[0] = {
+            'val' :  apz.fndftr.Transfer.sCache.fromAccontCurrency,
+            'desc' :  apz.fndftr.Transfer.sCache.fromAccontCurrency
+        }
+            
+        }
+        else
+        {
+             examples[0] = {
+            'val' :  apz.fndftr.Transfer.sCache.fromAccontCurrency,
+            'desc' :  apz.fndftr.Transfer.sCache.fromAccontCurrency
+        }
+        examples[1] = {
+            'val' :  apz.fndftr.Transfer.sCache.transferDetails.currency,
+            'desc' :  apz.fndftr.Transfer.sCache.transferDetails.currency        }
+            
+        }
+       
+             var lObj = document.getElementById("fndftr__Transfer__transferCurrency");
+        apz.populateDropdown(lObj, examples);
+    //apz.setElmValue("fndftr__Transfer__transferCurrency", apz.fndftr.Transfer.fromCurrency);
+    }
+    apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls['currency'] = apz.fndftr.Transfer.fromCurrency;
+    let paymentOption = [];
+    if (apz.fndftr.Transfer.sCache.transferDetails.nodeName == "internationalRemittance") {
+        apz.fndftr.isInternational = true;
+    } else {
+        apz.fndftr.isInternational = false;
+    }
+    if (apz.fndftr.isInternational) {
+        paymentOption = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.paymentOption["international"];
+    } else {
+        paymentOption = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.paymentOption["domestic"];
+    }
+    let result = []
+    paymentOption.forEach(function(item) {
+        var obj = {};
+        obj.desc = item.value;
+        obj.val = item.value;
+        result.push(obj);
+    });
+    apz.populateDropdown(document.getElementById("fndftr__TransferDetails__o__transferDtls__paymentOption"), result);
+    // if (params.summaryData) {
+    //     debugger;
+    //     apz.fndftr.fromAccountCurrency = params.fromAccontCurrency;
+    //     apz.setElmValue("fndftr__Transfer__tranferCurr", params.fromAccontCurrency);
+    //     apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls['currency'] = params.transferDetails.currency;
+    //     apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls['remarks'] = params.summaryData.remarks;
+    //     apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls['amount'] = params.summaryData.transferAmount;
+    // }else{
+    // //apz.populateDropdown("fndftr__Transfer__tranferCurr",{"val":params.transferDetails.currency,"desc":params.transferDetails.currency});
+    // apz.setElmValue("fndftr__Transfer__tranferCurr", params.fromAccontCurrency);
+    //     apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls['currency'] =  params.transferDetails.currency;
+    //     apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls['remarks'] = "";
+    //     apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls['amount'] = "";
+    // }
+    apz.data.loadData("TransferDetails", "fndftr");
+}
+//Go to confirmation screen
+apz.fndftr.Transfer.fnContinue = function() {
+    debugger;
+    apz.data.buildData("TransferDetails", "fndftr");
+    //   var tranferDetails =  {...apz.fndftr.Transfer.sCache.transferDetails};
+    //   tranferDetails["amount"] =apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls.amount;
+    //   tranferDetails["remarks"] =apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls.remarks;
+    //   tranferDetails["paymentoption"] = apz.getElmValue("fndftr__Transfer__paymentoption");
+    tranferDetails = apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls
+    apz.launchSubScreen({
+        appId: "fndftr",
+        scr: "TranferConfirmation",
+        div: "fndftr__TransferLauncher__ps_pls_3",
+        userObj: {...apz.fndftr.Transfer.sCache,
+            transferDetails: tranferDetails
+        }
+    })
+}
+//get transfer type
+apz.fndftr.Transfer.fnGetTransferType = function(element) {
+    debugger;
+    if ($(element).val() !== "Transfer Now") {
+        $("#fndftr__Transfer__sc_col_10").removeClass("sno");
+    } else {
+        $("#fndftr__Transfer__sc_col_10").addClass("sno");
+    }
+}
+//back to accounts page
+apz.fndftr.Transfer.fnBackToAccounts = function() {
+    debugger;
+    if (!apz.fndftr.Transfer.sCache.transferDetails.from) {
+        if (apz.deviceGroup === "Mobile") {
+            $("#fndftr__FundsTransfer__beneficiaryAcc_row").removeClass("sno");
+            $("#fndftr__FundsTransfer__payment_row").addClass("sno");
+            apz.fndftr.fundstranfer.fnOnSwitchDestinationAccount();
+        }
+    } else  if( apz.fndftr.Transfer.sCache.from == "favAndDash")
+     { 
+              $("#landin__Landing__gr_row_16").toggleClass("expandmenu");
+                  $("#landin__Landing__gr_row_16").toggleClass("sno");
+                       $("#landin__Landing__gr_row_17").toggleClass("xband"); 
+if(apz.deviceGroup == "Mobile")
+{
+
+apz.launchApp({
+            "scr": "Home",
+            "div": "landin__Landing__launcher",
+            "appId": "moblan",
+            "userObj": {
+               
+                "control": {
+                    "exitApp": {
+                        "appId": "",
+                        "div": "landin__Landing__launcher",
+                        "callBack": ""
+                    }
+                }
+        }
+    })
+}
+else if(apz.deviceGroup == "Web")
+{
+       apz.setElmValue("landin__Landing__heading", "Relationship Overview");
+
+    apz.launchApp({
+            "scr": "Dashboard",
+            "div": "landin__Landing__launcher",
+            "appId": "dashbo",
+            "userObj": {
+               
+                "control": {
+                    "exitApp": {
+                        "appId": "",
+                        "div": "landin__Landing__launcher",
+                        "callBack": ""
+                    }
+                }
+        }
+    })
+}
+   // apz.common.launchApp("moblan", "Home", "landin__Landing__launcher");
+    }
+        else if( apz.fndftr.Transfer.sCache.from == "favourites"){
+        apz.launchApp({
+            appId: "favour",
+            scr: "FavouriteSummary",
+            div: apz.fndftr.Transfer.sCache.control.exitApp.div,
+            userObj: {...apz.fndftr.Transfer.sCache
+            }
+        })
+    }
+   
+}
+//launching rates microapp
+apz.fndftr.Transfer.fnlaunchRates = function() {
+    debugger;
+    var lLaunchParams = {};
+    lLaunchParams.appId = "Rates";
+    lLaunchParams.scr = "MainScreen";
+    lLaunchParams.div = "fndftr__Transfer__launchRates";
+    lLaunchParams.userObj = {};
+    lLaunchParams.userObj.data = {
+        "customerID": "000004712",
+        "customerName": "JackSparrow"
+    };
+    apz.launchApp(lLaunchParams);
+    apz.toggleModal({
+        targetId: "fndftr__Transfer__pu_mdl_1",
+        callBack: function() {
+            $("#Rates__MainScreen__ct_nav_2").addClass("sno");
+            $("#Rates__MainScreen__gr_row_5").addClass("sno");
+        }
+    });
+}
+apz.fndftr.Transfer.fnCurrencyChanged = function(ths) {
+    debugger;
+    var currency = apz.getElmValue("" + $(ths).attr("id"));
+    if (apz.fndftr.Transfer.fromCurrency !== apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls['currency']) {
+        $("#fndftr__Transfer__el_hpl_1").parents("ul").removeClass("sno");
+        $("#fndftr__Transfer__paymentoptrow").addClass("sno");
+        apz.populateDropdown(document.getElementById("fndftr__Transfer__el_dpd_1"), [{
+            "val": "Transfer Now",
+            "desc": "Transfer Now"
+        }]);
+        $("#fndftr__Transfer__disclaimer").removeClass("sno");
+    }
+}
+
+
+apz.fndftr.Transfer.fnChangeCurrencyDropDown = function()
+{
+    debugger;
+      
+    var conversionCurrency = apz.getElmValue("fndftr__Transfer__transferCurrency");
+    var conversionAmount = apz.getElmValue("fndftr__TransferDetails__o__transferDtls__amount");
+
+   if(conversionCurrency ==apz.fndftr.Transfer.sCache.fromAccontCurrency )
+    {
+                $("#fndftr__Transfer__sc_row_9").addClass("sno");
+
+    }
+    else if((conversionCurrency !=apz.fndftr.Transfer.sCache.fromAccontCurrency ) &&(conversionAmount != ""))
+    {
+                        $("#fndftr__Transfer__sc_row_9").removeClass("sno");
+                        apz.fndftr.Transfer.fnCalculateConversionAmount();
+
+    }
+}
+
+apz.fndftr.Transfer.fnCalculateConversionAmount = function()
+{
+    debugger;
+     rates  = JSON.parse(apz.getFile(apz.getDataFilesPath("fndftr")+"/ConversionRates.json"));
+var conversionAmount = apz.getElmValue("fndftr__TransferDetails__o__transferDtls__amount");
+var fromCurrency = apz.fndftr.Transfer.sCache.fromAccontCurrency;
+    var conversionCurrency = apz.getElmValue("fndftr__Transfer__transferCurrency");
+      if(conversionCurrency != fromCurrency)
+    {
+        $("#fndftr__Transfer__sc_row_9").removeClass("sno");
+        
+            apz.setElmValue("fndftr__Transfer__currencyText", fromCurrency + " " + (Math.round((conversionAmount * (rates[conversionCurrency][fromCurrency]))*100)/100) + " (Offered Rate = "+ rates[conversionCurrency][fromCurrency] + ")");
+}
+   if(conversionCurrency == fromCurrency)
+    {
+                $("#fndftr__Transfer__sc_row_9").addClass("sno");
+
+    }
+}

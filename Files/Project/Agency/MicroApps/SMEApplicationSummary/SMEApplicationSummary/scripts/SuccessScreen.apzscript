@@ -1,0 +1,77 @@
+apz.corsum.SuccessScreen = {};
+apz.corsum.SuccessScreen.sParams = {};
+apz.app.onLoad_SuccessScreen = function(params) {
+    debugger;
+    apz.corsum.SuccessScreen.sParams = params;
+    apz.corsum.SuccessScreen.fnSendSuccessMsg(params);
+};
+apz.corsum.SuccessScreen.fnSendSuccessMsg = function(params) {
+  debugger;
+
+    $("#corsum__SuccessScreen__el_txt_6_txtcnt").text(params.message);
+    $("#corsum__SuccessScreen__el_txt_8_txtcnt").text(params.refNo);
+};
+apz.corsum.SuccessScreen.fnDone = function(){
+    debugger;
+    $("#menuap__Menu__country").addClass("sno");
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": "menuap__Menu__MainLaunchArea",
+            "parentAppId": "menuap",
+            "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+            "custImg": "menuap__Menu__custImg",
+            "custId": "menuap__Menu__custId_txtcnt"
+        }
+    }
+    apz.launchApp(lParams);
+}
+apz.corsum.SuccessScreen.getReport = function() {
+    apz.startLoader();
+    setTimeout(function(){
+        apz.server.callServer({
+        "ifaceName": "Report",
+        "buildReq": "N",
+        "req": {
+            reportData: {
+                params: {
+                    "REF_NO": apz.appNo
+                },
+                reportDetails: {
+                    fileType: "PDF"
+                }
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.corsum.SuccessScreen.getReportCB,
+        "appId": "corsum"
+    });
+    },100)
+    
+};
+apz.corsum.SuccessScreen.getReportCB = function(pResp) {
+    debugger;
+    try {
+        apz.corsum.SuccessScreen.showPDF(pResp.res.corsum__Report_Res.file);
+    } catch (e) {};
+}
+apz.corsum.SuccessScreen.showPDF = function(pObj) {
+    apz.stopLoader();
+    var myBase64string = pObj;
+    if (navigator.userAgent.indexOf("Chrome") != -1) {
+        var uri = 'data:application/pdf;base64,';
+        var link = document.createElement("a");
+        link.download = "Onboarding Application.pdf";
+        link.href = uri + myBase64string;
+        link.click();
+    } else if (navigator.userAgent.indexOf("Firefox") != -1) {
+        window.open("data:application/pdf;base64," + myBase64string, "", "");
+    } else if ((navigator.userAgent.indexOf("MSIE") != -1) || ( !! document.documentMode == true)) //IF IE > 10
+    {
+        window.open("data:application/pdf;base64," + myBase64string, "", "");
+    }
+};

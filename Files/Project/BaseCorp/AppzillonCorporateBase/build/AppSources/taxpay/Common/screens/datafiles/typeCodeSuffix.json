@@ -1,0 +1,46 @@
+{
+    "taxpay__TypeCodeSuffix_Res": {
+        "TypeCodeSuffixDetails": [
+            {
+                "code": "0",
+                "desc" : "[Amended]"
+            },
+            {
+               "code": "2",
+                "desc" : "[Extension]"
+            },
+            {
+                "code": "3",
+                "desc" : "[Designated Payment of Fees or Collection Costs]"
+            },
+            {
+                 "code": "4",
+                "desc" : "[Advanced Payment of Determined Deficiency]"
+            },
+            {
+                 "code": "5",
+                "desc" : "[Deposit]"
+            },
+            {
+               "code": "6",
+                "desc" : "[Estimated]"
+            },
+            {
+               "code": "7",
+                "desc" : "[Subsequent/with Return]"
+            },
+            {
+                "code": "8",
+                "desc" : "[Designated Payment of Interest]"
+            },
+            {
+                 "code": "9",
+                "desc" : "[Designated Payment of Penalty]"
+            },
+            {
+                 "code": "B",
+                "desc" : "[Cash Bond Payment]"
+            }
+        ]
+    }
+}

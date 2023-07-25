@@ -1,0 +1,25 @@
+{
+    "tbDbmiCorpUserMaster": [
+        {
+            "corporateId": "000FTAC4321",
+            "userId": "user0001",
+            "firstName": "John",
+            "lastName": "Paul",
+            "designation": "Manager",
+            "supervisor": "Robert",
+            "homeEntity": "CITI USA",
+            "language": "English",
+            "address1": "Dno 74-30-12",
+            "address2": "Church Stret",
+            "address3": "Kingsville Town",
+            "address4": "England",
+            "authenticationType": "",
+            "versionNo": "1",
+            "makerId": "harry",
+            "makerDateStamp": "",
+            "checkerId": "",
+            "checkerTs": ""
+        }
+    ],
+    "userStatus": true
+}

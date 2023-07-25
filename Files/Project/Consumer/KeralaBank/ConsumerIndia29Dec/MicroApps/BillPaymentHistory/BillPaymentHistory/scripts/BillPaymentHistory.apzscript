@@ -1,0 +1,124 @@
+apz.app.onLoad_BillPaymentHistory = function(){
+    debugger;
+    $("#landin__Landing__heading").text("BILL PAYMENT HISTORY");
+    apz.data.loadJsonData("BillPaymentHistory","bphist");
+    
+$("#bphist__BillPaymentHistory__el_inp_2").change(function() {
+    debugger;
+    fromDate = apz.getElmValue("bphist__BillPaymentHistory__el_inp_1");
+    if (fromDate == "") {
+        apz.dispMsg({
+            "message": "please select from date"
+        });
+        apz.setElmValue("bphist__BillPaymentHistory__el_inp_2", "");
+    } else {
+        $("#bphist__BillPaymentHistory__el_btn_1").removeAttr("disabled").removeClass("disabled");
+    }
+});
+      
+}
+apz.app.onShown_BillPaymentHistory = function()
+{
+    debugger;
+                   $('#bphist__BillPaymentHistory__el_btn_1').removeAttr("disabled");
+                                  $('#bphist__BillPaymentHistory__el_btn_1').removeClass("disabled")
+
+
+
+}
+apz.bphist.fnFilterByDate = function(){
+    debugger
+    apz.data.loadJsonData("BillPaymentHistory","bphist");
+    fromDate = apz.getElmValue("bphist__BillPaymentHistory__el_inp_1");
+    toDate =  apz.getElmValue("bphist__BillPaymentHistory__el_inp_2");
+    
+    var fdate = apz.formatDate({"val":fromDate,"fromFormat":"dd/mm/yyyy","toFormat":"yyyy-mm-dd"});
+    var tdate = apz.formatDate({"val":toDate,"fromFormat":"dd/mm/yyyy","toFormat":"yyyy-mm-dd"});
+    var fMonth = parseInt(fdate.split("-")[1]);
+    var tMonth = parseInt(tdate.split("-")[1]);
+    var fromyear =  parseInt(fdate.split("-")[0]);
+        var toyear =  parseInt(tdate.split("-")[0]);
+
+            var fday = parseInt(fdate.split("-")[2]);
+
+    
+    var tday = parseInt(tdate.split("-")[2]);
+    var months = [];
+    if((fromyear <= toyear) &&(fMonth >= tMonth))
+    {
+        var i = fMonth;
+        while(tMonth<=fMonth)
+        {
+        months.push(i);
+        if(i == 12)
+        {
+            i =1;
+        }
+        i++;
+        }
+    }
+    else
+    {
+    for(i = fMonth ;i<=tMonth ;i++){
+        months.push(i);
+    }
+    }
+    var data = apz.data.scrdata.bphist__BillPaymentHistory_Res;
+   
+    var result = data.filter(function(item){
+              imonth = parseInt(item.paymentDate.split("/")[1]);
+              if(months.indexOf(imonth)!=-1){
+                    if(tMonth == imonth || fMonth == imonth){
+                         iday = parseInt(item.paymentDate.split("/")[0]);
+                         if(iday<=tday && iday>=fday){
+                             return item;
+                         }
+                    }else{
+                        return item;
+                    }
+                  
+              } 
+    });
+    
+    if(result.length==0){
+        apz.dispMsg({"message":"No records found"});
+        $("#bphist__BillPaymentHistory__ct_tbl_1").addClass("sno");
+    }
+    else{
+        $("#bphist__BillPaymentHistory__ct_tbl_1").removeClass("sno");
+    }
+        apz.data.scrdata.bphist__BillPaymentHistory_Res = result;
+    apz.data.loadData("BillPaymentHistory","bphist");
+    
+    
+    
+};
+
+
+
+apz.bphist.fnDropDownChange = function(param) {
+    debugger;
+    var lstatus = apz.getElmValue("bphist__BillPaymentHistory__el_dpd_1");
+            var data =  apz.data.scrdata.bphist__BillPaymentHistory_Res;
+
+
+    
+    
+    if(lstatus != "")
+    {
+var  result =data.filter(function(item) {
+                    if(item.status == lstatus)return item;
+                });
+                apz.data.scrdata.bphist__BillPaymentHistory_Res = result;
+    apz.data.loadData("BillPaymentHistory", "bphist");
+                   apz.data.scrdata.bphist__BillPaymentHistory_Res = data;
+
+    }
+    else if(lstatus == "")
+    {
+            apz.data.loadJsonData("BillPaymentHistory", "bphist");
+
+    }
+   
+   
+}

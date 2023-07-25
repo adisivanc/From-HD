@@ -1,0 +1,127 @@
+apz.common = {}
+apz.common.callServer = function(appId, ifaceName, buildReq, paintResp, req, callBack) {
+    debugger;
+    const serverObject = {
+        appId,
+        ifaceName,
+        buildReq,
+        req,
+        paintResp,
+        callBack
+    };
+    apz.server.callServer(serverObject);
+}
+apz.common.fnGetDate = function(param, val) {
+    debugger;
+    var d = new Date();
+    if (param == "add") {
+        d.setDate(d.getDate() + val);
+    } else {
+        d.setDate(d.getDate() - val);
+    }
+    return d.toLocaleDateString();
+}
+/*apz.common.fnSwitchTheme = function(theme) {
+    debugger;
+    var links = apz.common.getStyleLinks();
+    apz.common.disableStyleLinks();
+    if (theme == "agency") {
+        apz.appContext = "agency";
+        links[0].disabled = true;
+        apz.common.enableDefaultStyle()
+    } else {
+        apz.appContext = "consumer";
+        links[1].disabled = false;
+        links[0].disabled = false;
+        apz.common.disableDefaultStyle();
+    }
+    links = $("head > link[href]");
+    for (i = 0; i < links.length; i++) {
+        if ($("link").eq(i).attr("href") == "appzillon/styles/mobiscroll/mobiscroll.css") {
+            $("link").eq(i).attr("disabled", false)
+        }
+    }
+}*/
+
+apz.common.fnSwitchTheme = function(theme) {
+    debugger;
+    var links = apz.common.getStyleLinks();
+    console.log(links);
+    apz.common.disableStyleLinks();
+    if (theme == "agency") {
+        apz.appContext = "agency";
+        links[0].disabled = true;
+        apz.common.enableDefaultStyle()
+        
+    $("#menuap__Menu__app_logo").attr("src", "apps/styles/themes/BranchBase/img/appzwhite.png");
+    } else {
+        apz.appContext = "consumer";
+        links[1].disabled = false;
+        links[0].disabled = false;
+        apz.common.disableDefaultStyle();
+    $("#menuap__Menu__app_logo").attr("src", "apps/styles/themes/BranchBase/img/AppzillonBankWhite.png");
+    }
+    links = $("head > link[href]");
+    for (i = 0; i < links.length; i++) {
+        if ($("link").eq(i).attr("href") == "appzillon/styles/mobiscroll/mobiscroll.css") {
+            debugger;
+            console.log(links[i]);
+            $("link").eq(i).attr("disabled", false)
+        }
+    }
+}
+apz.common.getStyleLinks = function() {
+    debugger;
+    // return $("head > link[href*='Theme\.css']");
+    return $("head > link").slice(2, 4);
+}
+apz.common.disableStyleLinks = function() {
+    debugger;
+    Array.from(this.getStyleLinks()).forEach(function(link) {
+        link.disabled = true;
+    });
+}
+apz.common.enableDefaultStyle = function() {
+    debugger;
+    $("head > link[href*='AgencyBase\.css']")[0].disabled = false;
+}
+apz.common.disableDefaultStyle = function() {
+    debugger;
+    $("head > link[href*='AgencyBase\.css']")[0].disabled = true;
+}
+apz.common.launchApp = function(appId, scr, userObj, div) { //params todo
+    debugger
+    apz.launchApp({
+        appId,
+        scr,
+        userObj,
+        div
+    });
+}
+apz.common.login = function(userId, pwd, callBack, callBackObj) {
+    debugger;
+    apz.server.login({
+        userId,
+        pwd,
+        callBack,
+        callBackObj
+    });
+}
+apz.common.dispMsg = function(message, type, callBack) {
+    debugger;
+    apz.dispMsg({
+        message,
+        type,
+        callBack
+    })
+}
+apz.common.changePassword = function(userId, callBack, oldPassword, newPassword, confirmPassword) {
+    debugger;
+    apz.server.changePassword({
+        userId,
+        oldPassword,
+        newPassword,
+        confirmPassword,
+        callBack
+    })
+}

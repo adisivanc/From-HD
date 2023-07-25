@@ -1,0 +1,43 @@
+{
+    "ACNR01__MenuList_Req": {
+        "vwMenu": [{
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Home",
+            "displayOrder": "1",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "",
+            "roleId": "CorpUser",
+            "screenId": ""
+        }, {
+            "appId": "ACDB01",
+            "corporateId": "000FTAC4321",
+            "description": "My Dashboard",
+            "displayOrder": "1",
+            "groupName": "Home",
+            "icon": "icon-cm-dashboard_new",
+            "roleId": "CorpUser",
+            "screenId": "Dashboard"
+        },  {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Accounts",
+            "displayOrder": "8",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "",
+            "roleId": "CorpUser",
+            "screenId": ""
+        }, {
+            "appId": "accdtl",
+            "corporateId": "000FTAC4321",
+            "description": "Business Accounts",
+            "displayOrder": "8",
+            "groupName": "Accounts",
+            "icon": "icon-cm-account_details",
+            "roleId": "CorpUser",
+            "screenId": "AccountSummary"
+        }]
+    }
+}

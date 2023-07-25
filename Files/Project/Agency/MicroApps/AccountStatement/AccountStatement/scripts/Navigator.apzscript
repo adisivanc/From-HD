@@ -1,0 +1,189 @@
+apz.accstm.navigator = {};
+apz.accstm.navigator.sParams = {};
+apz.app.onLoad_Navigator = function(params) {
+    debugger;
+    apz.accstm.navigator.sParams = params;
+    apz.accstm.navigator.fnLoadAccDetails(params);
+    
+    $("#accstm__Navigator__ct_tbl_1ul_ttl").addClass("sno");
+    // apz.accstm.navigator.fnLaunchMiniStatement();
+    $("#csmrbk__LandingPage__sc_col_55").addClass("sno");
+    if (apz.accstm.navigator.sParams.data.from && apz.accstm.navigator.sParams.data.from == "recentTransactions") {
+        apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "Account Details")
+        // csmrbk__LandingPage__ScreenNmeLandingTxt_txtcnt
+        $("#accstm__Navigator__el_btn_1").addClass("sno");
+    }
+    //code by Anand
+    apz.accstm.navigator.fnAccountStmt();
+};
+apz.accstm.navigator.fnLoadAccDetails = function(params) {
+    debugger;
+    apz.data.scrdata.accstm__AccountDetails_Res = {};
+    apz.data.scrdata.accstm__AccountDetails_Res.accSummary = params.data;
+    apz.data.loadData("AccountDetails", "accstm");
+};
+apz.app.onShown_Navigator = function(params) {
+    debugger;
+    if (apz.accstm.navigator.sParams.data.status == "Inactive") {
+        $("#accstm__AccountDetails__o__accSummary__status").addClass("disabled");
+    } else {
+        $("#accstm__AccountDetails__o__accSummary__status").removeClass("disabled");
+    }
+}
+apz.accstm.navigator.fnChangeAccStatus = function(param) {
+    debugger;
+    var status = apz.getElmValue("accstm__AccountDetails__o__accSummary__status");
+    if (status == "Inactive") {
+        apz.dispMsg({
+            title: "Freeze Account!",
+            message: "This action cannot be reversed. Are you sure you want to freeze your account?",
+            type: "C",
+            callBack: function(pResp) {
+                debugger;
+                if (pResp.choice) {
+                    $("#accstm__AccountDetails__o__accSummary__status").addClass("disabled");
+                    var params = {};
+                    params.appId = "otpeng";
+                    params.div = "accsum__AccountDetails__accStmtLauncher";
+                    params.scr = "ProcessOTP";
+                    params.layout = "Web";
+                    params.userObj = {
+                        "from":"ChangeStatus",
+                        "action": "Generate",
+                        "mobileNo": "9902615777",
+                        "control": {
+                            "callBack": apz.accstm.navigator.fnOTPCB,
+                            // "callBack":apz.cmrnav.fnLaunchConsumerHome,
+                            "destroyDiv": "accsum__AccountDetails__accStmtLauncher",
+                            "action": "Mini"
+                        }
+                    }
+                    apz.launchApp(params);
+                } else {
+                    apz.setElmValue("accstm__AccountDetails__o__accSummary__status", "Active");
+                }
+            }
+        });
+    }
+}
+apz.accstm.navigator.fnBack = function(){
+        apz.accstm.navigator.sParams.callBack();
+}
+apz.accstm.navigator.fnBalanceCertificate = function() {
+    apz.accstm.details = {
+        "accountNo": apz.data.scrdata.accstm__AccountDetails_Res.accSummary.accountNo
+    }
+    var params = {};
+    params.appId = "tdsfrm";
+    params.div = "cmrnav__Launcher__Launcher";
+    params.scr = "Launcher";
+    // params.layout = "Web";
+    params.userObj = {
+        "type": "B",
+        "accountNumber": apz.accstm.details.accountNo
+    }
+    apz.launchApp(params);
+}
+apz.accstm.navigator.fnRenderStage1 = function() {
+    apz.show("accsum__AccountDetails__Stage1");
+    apz.hide("accsum__AccountDetails__Stage2");
+};
+apz.accstm.navigator.fnOTPCB = function(lParams) {
+    debugger;
+    // if (lParams.otpdetails.Status == "P") {
+        var lParams = {
+            "appId": "accstm",
+            "scr": "Navigator",
+            "div": "accsum__AccountDetails__accStmtLauncher",
+            "userObj": {
+                "data": apz.data.scrdata.accstm__AccountDetails_Res.accSummary,
+                "callBack": apz.accsum.accountdetails.fnlaunchCallback,
+                "action": "Mini"
+            }
+        };
+        lParams.userObj.control = {
+            "callBack": apz.accsum.accountdetails.fnRenderStage1,
+            "destroyDiv": "accsum__AccountDetails__accStmtLauncher"
+        };
+        if (apz.accsum.accountdetails.sParams.Navigation) {
+            lParams.userObj.Navigation = {
+                "setNavigation": apz.accsum.accountdetails.Navigation
+            }
+        }
+        apz.launchApp(lParams);
+        // apz.show("accstm__MiniStatement__BackNav");
+        // apz.show("accstm__MiniStatement__AccNoForm");
+    // }
+};
+apz.accstm.navigator.fnLaunchAccStatement = function() {
+    debugger;
+     $("#accstm__Navigator__gr_row_8").addClass("sno");
+    $("#accstm__Navigator__gr_row_6").addClass("sno");
+     $("#accstm__Navigator__gr_row_3").addClass("sno");
+    var isHidden = $("#accstm__Navigator__launchAccStatement").hasClass("sno");
+    if (isHidden) {
+        $("#accstm__Navigator__launchAccStatement").removeClass("sno");
+        var lParams = {
+            "scr": "AccStatement",
+            "div": "accstm__Navigator__launchAccStatement",
+            "userObj": apz.accstm.navigator.sParams
+        };
+        apz.launchSubScreen(lParams);
+        window.scrollTo(0, document.body.scrollHeight);
+    } else {
+        $("#accstm__Navigator__launchAccStatement").addClass("sno");
+    }
+};
+apz.accstm.navigator.fnAccountStmt = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "MiniStatement",
+        "buildReq": "N",
+        "req": {
+            "customerId": apz.accstm.navigator.sParams.customerID,
+            "stmtType": "MINI",
+            "accountNo": apz.accstm.navigator.sParams.accountNo
+        }
+    };
+    apz.accstm.navigator.fnBeforeCallServer(lServerParams);
+};
+
+apz.accstm.navigator.fnMore = function() {
+    apz.toggleModal({
+        "targetId": "accstm__Navigator__moreDetails"
+    });
+}
+apz.accstm.navigator.fnBeforeCallServer = function(params) {
+    apz.data.loadJsonData(params.ifaceName, "accstm");
+    debugger;
+    if (params.errors) {
+        var param = {
+            'code': params.errors[0].errorCode
+        };
+        apz.dispMsg(param);
+    } else {
+        var lminiStmt = apz.data.scrdata.accstm__MiniStatement_Res.miniStmtMaster.miniStmtDtls;
+        for (var i = 0; i < lminiStmt.length; i++) {
+            if (lminiStmt[i].drcrInd == "C") {
+                $("#accstm__MiniStatement__o__miniStmtDtls__trnAmount_" + i).addClass("suc");
+            } else if (lminiStmt[i].drcrInd == "D") {
+                $("#accstm__MiniStatement__o__miniStmtDtls__trnAmount_" + i).addClass("err");
+            }
+        }
+    }
+};
+apz.accstm.navigator.fnLaunchMiniStatement = function() {
+    debugger;
+    var lParams = {
+        "scr": "MiniStatement",
+        "div": "accstm__Navigator__launchMiniStatement",
+        "userObj": apz.accstm.navigator.sParams
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.accstm.navigator.fnLaunchStatement = function() {
+    debugger;
+   
+    $("#accstm__Navigator__second_panel").removeClass("sno");
+    $("#accstm__Navigator__first_panel").addClass("sno");
+}

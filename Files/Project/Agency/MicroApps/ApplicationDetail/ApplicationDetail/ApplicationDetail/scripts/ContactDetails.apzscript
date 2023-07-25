@@ -1,0 +1,134 @@
+apz.appdtl.ContactDetails = {};
+apz.appdtl.ContactDetails.sParams = {};
+apz.appdtl.ContactDetails.sContactDetails;
+apz.appdtl.currentFieldVal = "";
+apz.appdtl.ContactDetails.saveIt = false;
+apz.app.onLoad_ContactDetails = function(params) {
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo", params.refNo);
+    apz.appdtl.ContactDetails.sParams = params;
+    apz.appdtl.ContactDetails.manageHeaders();
+    if (apz.appdtl.sContactDetails) {
+        debugger;
+        apz.data.scrdata.appdtl__ApplicationOptionalInfo_Req = {};
+        apz.data.scrdata.appdtl__ApplicationOptionalInfo_Req.config = apz.appdtl.sContactDetails;
+        apz.data.loadData('ApplicationOptionalInfo', 'appdtl')
+    }
+    apz.appdtl.ContactDetails.fetchApplicationDetails(params);
+};
+apz.app.onShown_ContactDetails = function(params) {
+    apz.appdtl.currenctScreen = "contact_details";
+    apz.appdtl.ContactDetails.saveIt = true;
+    $("#appdtl__ContactDetails__contact_details_form input").each(function() {
+        $(this).change(function() {
+            debugger;
+            if (apz.appdtl.ContactDetails.saveIt) {
+                var val = apz.getElmValue(this.id);
+                if (val == "Please select") {
+                    val = "";
+                }
+                if (val.length <= 0 && apz.appdtl.currentFieldVal.length > 0) { //empty on change
+                    console.log("empty on change");
+                    apz.appdtl.personalFieldsCount = apz.appdtl.personalFieldsCount + 1;
+                    apz.appdtl.personalFieldPercentage = apz.appdtl.personalFieldPercentage - apz.appdtl.personalPercentageValue;
+                } else if (val.length > 0 && apz.appdtl.currentFieldVal.length <= 0) { //filled on change
+                    console.log("filled on change");
+                    apz.appdtl.personalFieldsCount = apz.appdtl.personalFieldsCount - 1;
+                    apz.appdtl.personalFieldPercentage = apz.appdtl.personalFieldPercentage + apz.appdtl.personalPercentageValue;
+                }
+                apz.setElmValue("appdtl__AppLauncher__personal_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.personalFieldsCount);
+                $("#appdtl__AppLauncher__personal_slider").roundSlider("option", "value", apz.appdtl.personalFieldPercentage);
+            }
+        })
+        $(this).focus(function() {
+            apz.appdtl.currentFieldVal = apz.getElmValue(this.id);
+            if (apz.appdtl.currentFieldVal == "Please select") {
+                apz.appdtl.currentFieldVal = "";
+            }
+        })
+    });
+    if (apz.appdtl.contactManageFilled) {
+        apz.appdtl.ContactDetails.manageFieldsFilled();
+        apz.setElmValue("appdtl__AppLauncher__personal_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.personalFieldsCount);
+        $("#appdtl__AppLauncher__personal_slider").roundSlider("option", "value", apz.appdtl.personalFieldPercentage);
+        apz.appdtl.contactManageFilled = false;
+    }
+}
+apz.appdtl.ContactDetails.manageFieldsFilled = function() {
+    debugger;
+    $("#appdtl__ContactDetails__contact_details_form input").each(function() {
+        var val = apz.getElmValue(this.id);
+        debugger;
+        if (val != "") {
+            apz.appdtl.personalFieldsCount = apz.appdtl.personalFieldsCount - 1;
+            apz.appdtl.personalFieldPercentage = apz.appdtl.personalFieldPercentage + apz.appdtl.personalPercentageValue;
+        }
+    });
+}
+apz.appdtl.ContactDetails.manageHeaders = function() {
+    $("#appdtl__AppLauncher__personal_div").addClass('active');
+    $("#appdtl__AppLauncher__employment_div").removeClass('active');
+}
+apz.appdtl.ContactDetails.fetchApplicationDetails = function(params) {
+    debugger;
+    apz.data.buildData("ApplicationInfoDB", "appdtl");
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.refNo = params.refNo;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.ContactDetails.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.ContactDetails.fetchApplicationDetailsCB = function(pResp) {
+    debugger;
+}
+apz.appdtl.ContactDetails.fnCancel = function(params) {
+    debugger;
+    apz.appdtl.DocumentDetails.saveApplicationDetails();
+        apz.appdtl.AppLauncher.onCancel();
+}
+apz.appdtl.ContactDetails.saveApplicationDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Modify",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "N",
+        "callBack": apz.appdtl.ContactDetails.saveApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.ContactDetails.saveApplicationDetailsCB = function(pResp) {
+    debugger;
+    if (!apz.isNull(pResp.res.appdtl__ApplicationInfoDB_Req)) {
+        apz.applicationDetails = jQuery.extend(true, {}, pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster);
+    } else {
+        apz.applicationDetails = jQuery.extend(true, {}, pResp.res.appdtl__ApplicationInfoDB_Res.tbDbmiCustomerMaster);
+    }
+}
+apz.appdtl.ContactDetails.nextScreen = function(pResp) {
+apz.appdtl.ContactDetails.saveIt = false;
+    var scr = "IdentityDetail";
+    apz.appdtl.ContactDetails.launchScreen(scr);
+}
+apz.appdtl.ContactDetails.preScreen = function(pResp) {
+apz.appdtl.ContactDetails.saveIt = false;
+    debugger;
+    var scr= "AdditionalPersonalDetails";
+    apz.appdtl.ContactDetails.launchScreen(scr);
+}
+apz.appdtl.ContactDetails.launchScreen = function(pResp) {
+    debugger;
+    apz.appdtl.ContactDetails.saveApplicationDetails();
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "" + pResp,
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo")
+        }
+    };
+    apz.launchSubScreen(lParams);
+}

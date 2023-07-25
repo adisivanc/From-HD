@@ -1,0 +1,309 @@
+apz.lnsmlr.loansimulation = {};
+var graphObj = [];
+apz.app.onLoad_LoanSimulation = function(params) {
+    debugger;
+    /*  if($('#Utility_li').css('display') == 'block'){
+     }else{
+         $("#Utility_li").find("ul").css('display', 'block');
+          $(".ui-accordion-header-active").removeClass("ui-accordion-header-active ui-state-active");
+        $("#Utility_li").find(">:first-child").addClass("ui-accordion-header-active ui-state-active");
+         $(".ui-state-active").removeClass("ui-state-active");
+           $('#Utility_ul').find(">:first-child").find("a").addClass("ui-state-active");
+            $("#Accounts_li").find("ul").css('display', 'none');
+           $("#Loans_li").find("ul").css('display', 'none');
+     }
+    $("#AmortizationSchedule_add_btn,#AmortizationSchedule_rem_btn").addClass("shownone");*/
+    if(params.Navigation){
+         apz.lnsmlr.loansimulation.fnSetNavigation(params);
+    }
+    apz.hide("lnsmlr__LoanSimulation__chartcolumn");
+    apz.hide("lnsmlr__LoanSimulation__amorttable");
+    apz.hide("lnsmlr__LoanSimulation__amortStackedChart");
+    apz.hide("lnsmlr__LoanSimulation__chartTitle");
+};
+apz.app.onShown_LoanSimulation = function() {
+    debugger;
+    
+    $(".crt-form.ver .ecn > .syl > span").text("Rs.");
+};
+apz.lnsmlr.loansimulation.fnSetNavigation = function(params) {
+    debugger;
+    apz.lnsmlr.loansimulation.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.showBack = "N";
+    lParams.headerText = "LOAN SIMULATOR";
+    apz.lnsmlr.loansimulation.Navigation(lParams);
+};
+apz.app.onShown_LoanSimulation = function() {
+    debugger;
+    $("#lnsmlr__LoanSimulation__LoanAmtSlider").roundSlider({
+        sliderType: "min-range",
+        radius: 48,
+        width: 8,
+        min: 100000,
+        max: 1000000000,
+        handleShape: "dot",
+        startAngle: 90,
+        endAngle: "+330",
+        value: "500000000",
+        step: 10000,
+        handleSize: "+13",
+        change: function(args) {
+            apz.lnsmlr.loansimulation.fnCalculateEMI();
+        }
+    });
+    $("#lnsmlr__LoanSimulation__TenorSlider").roundSlider({
+        sliderType: "min-range",
+        radius: 48,
+        width: 8,
+        min: 1,
+        max: 30,
+        handleShape: "dot",
+        startAngle: 90,
+        endAngle: "+330",
+        value: 15,
+        handleSize: "+13",
+        change: function(args) {
+            apz.lnsmlr.loansimulation.fnCalculateEMI();
+        }
+    });
+    $("#lnsmlr__LoanSimulation__InterestRateSlider").roundSlider({
+        step: 0.25,
+        sliderType: "min-range",
+        radius: 48,
+        width: 8,
+        min: 1,
+        max: 20,
+        handleShape: "dot",
+        startAngle: 90,
+        endAngle: "+330",
+        value: 10,
+        handleSize: "+13",
+        change: function(args) {
+            apz.lnsmlr.loansimulation.fnCalculateEMI();
+        }
+    });
+    apz.lnsmlr.loansimulation.fnCalculateEMI();
+};
+apz.lnsmlr.loansimulation.fnCalculateEMI = function() {
+    debugger;
+    $("#lnsmlr__LoanSimulation__EMIAMT").removeClass("shownone");
+    graphObj = [];
+    //$("#LoanAmtSlider  .rs-tooltip-text ").text(apz.unFormatNumber($("#LoanAmtSlider").roundSlider("getValue"), '.', '0', 'MILLION', 'N'));
+    // $("#LoanAmtSlider  .rs-tooltip-text ").text(apz.formatNumber($("#LoanAmtSlider").roundSlider("getValue"), '.', '0', 'MILLION', 'N'));
+    //$("#LoanAmtSlider").roundSlider({ editableTooltip: "true"});
+    var lObj = {
+        "value": $("#lnsmlr__LoanSimulation__LoanAmtSlider").roundSlider("getValue"),
+        "decimalSep": '.',
+        "displayAsLiteral": 'N'
+    }
+    var lPrincipal = parseInt(apz.unFormatNumber(lObj));
+    lPrincipal = lPrincipal.toString();
+    var lTenure = $("#lnsmlr__LoanSimulation__TenorSlider").roundSlider("getValue");
+    var lROI = $("#lnsmlr__LoanSimulation__InterestRateSlider").roundSlider("getValue");
+    var lMonthlyTenure = lTenure * 12;
+    var lMonthlyROI = lROI / (12 * 100);
+    var lEmi = apz.lnsmlr.loansimulation.fnvalueEMI(lPrincipal, lMonthlyROI, lMonthlyTenure);
+    var lObj1 = {
+        "value": lEmi,
+        "decimalSep": '.',
+        "displayAsLiteral": 'N',
+        "mask":"LAKH"
+    }
+    $("#emi").html("Your Monthly EMI is <span class='emi-txt-mobile'>$" + apz.formatNumber(lObj1) + "</span>");
+    $("#lnsmlr__LoanSimulation__emiweb").val(" " + apz.formatNumber(lObj1));
+    var lChartTotalInterest = {
+        "type": "Total Interest ",
+        "amount": (lEmi * lMonthlyTenure) - lPrincipal
+    };
+    graphObj.push(lChartTotalInterest);
+    var lChartLoanAmount = {
+        "amount": parseInt(lPrincipal),
+        "type": "Loan Amount"
+    };
+    graphObj.push(lChartLoanAmount);
+    var lArmotScheduleJSON = [];
+    apz.lnsmlr.loansimulation.fnCalcAmortizationSchedule(lEmi, lPrincipal, lMonthlyROI, lMonthlyTenure, 1, lArmotScheduleJSON);
+    apz.data.scrdata.lnsmlr__LoanSimulation_Req = {};
+    apz.data.scrdata.lnsmlr__LoanSimulation_Req.LoanGraph = graphObj;
+    apz.data.scrdata.lnsmlr__LoanSimulation_Req.EMI = lArmotScheduleJSON;
+    apz.data.loadData("LoanSimulation", "lnsmlr");
+    //setTimeout(apz.lnsmlr.loansimulation.fnPaintStackedChart();
+    setTimeout(function() {apz.lnsmlr.loansimulation.fnPaintStackedChart()}, 100);
+        //var lAmortResp = JSON.stringify(lArmotScheduleJSON);
+        apz.show("lnsmlr__LoanSimulation__chartcolumn"); apz.show("lnsmlr__LoanSimulation__amorttable"); apz.show(
+            "lnsmlr__LoanSimulation__chartTitle"); apz.show("lnsmlr__LoanSimulation__amortStackedChart");
+    };
+    apz.lnsmlr.loansimulation.fnFormatNumber = function() {
+        debugger;
+    }
+    apz.lnsmlr.loansimulation.fnvalueEMI = function(pPrincipal, pMonthlyROI, pMonthlyTenure) {
+        var lMonthyEMI = (pMonthlyROI * pPrincipal * Math.pow((1 + pMonthlyROI), pMonthlyTenure)) / (Math.pow((1 + pMonthlyROI), pMonthlyTenure) - 1);
+        //alert("Monthly EMI = " + lMonthyEMI);
+        return Math.round((lMonthyEMI * 100) / 100);
+    };
+    apz.lnsmlr.loansimulation.fnCalcAmortizationSchedule = function(pEmi, pPrincipal, pROI, pTenure, pCurrPeriod, pArmotScheduleJSON) {
+        if (pCurrPeriod <= pTenure) {
+            var lMonthInterest = Math.round((pPrincipal * pROI * 100) / 100);
+            var lMonthPrincipal = Math.round(((pEmi - lMonthInterest) * 100) / 100);
+            var lBalance = Math.round(((pPrincipal - lMonthPrincipal) * 100) / 100);
+            var lCurrAmort = {};
+            lCurrAmort.Interest = lMonthInterest;
+            lCurrAmort.Principal = lMonthPrincipal;
+            lCurrAmort.Balance = lBalance;
+            lCurrAmort.Period = pCurrPeriod;
+            pArmotScheduleJSON.push(lCurrAmort);
+            pCurrPeriod = pCurrPeriod + 1;
+            apz.lnsmlr.loansimulation.fnCalcAmortizationSchedule(pEmi, lBalance, pROI, pTenure, pCurrPeriod, pArmotScheduleJSON);
+        }
+    };
+    apz.lnsmlr.loansimulation.fnPaintStackedChart = function() {
+        debugger;
+        var ldata = apz.data.scrdata.lnsmlr__LoanSimulation_Req.EMI;
+        var lcategory = [];
+        var lPrincipal = [];
+        var lInterest = [];
+        var lBalance = [];
+        var lPrincipalValue = 0,
+            lInterestValue = 0,
+            lBalanceValue = 0;
+        var date = new Date();
+        var year = date.getFullYear();
+        for (var i = 0; i < ldata.length; i++) {
+            lPrincipalValue += ldata[i].Principal;
+            lInterestValue += ldata[i].Interest;
+            lBalanceValue += ldata[i].Balance;
+            if (Number.isInteger(ldata[i].Period / 12)) {
+                var obj = {
+                    "label": year.toString()
+                };
+                lcategory.push(obj);
+                var pobj = {
+                    "value": lPrincipalValue
+                };
+                lPrincipal.push(pobj);
+                var iobj = {
+                    "value": lInterestValue
+                };
+                lInterest.push(iobj);
+                var bobj = {
+                    "value": lBalanceValue
+                };
+                lBalance.push(bobj);
+                lInterestValue = lBalanceValue = lPrincipalValue = 0;
+                year++;
+            }
+        }
+        var revenueChart = new FusionCharts({
+            type: 'msstackedcolumn2dlinedy',
+            renderAt: 'lnsmlr__LoanSimulation__stackedChart',
+            width: '100%',
+            height: '350',
+            dataFormat: 'json',
+            dataSource: {
+                "chart": {
+                    "caption": "",
+                    "subcaption": "",
+                    "xAxisName": "Period",
+                    "pYAxisName": "EMI Payment",
+                    "sYAxisName": "Balance Amount",
+                    "numberPrefix": "",
+                    "numbersuffix": "",
+                    "sNumberSuffix": "",
+                    "sYAxisMaxValue": "",
+                    //Cosmetics
+                    "paletteColors": "#C9F5FF,#71CDE2,#FF0000",
+                    "baseFontColor": "#333333",
+                    "baseFont": "Helvetica Neue,Arial",
+                    "captionFontSize": "14",
+                    "subcaptionFontSize": "14",
+                    "subcaptionFontBold": "0",
+                    "showBorder": "0",
+                    "showValues": "0",
+                    "bgColor": "#ffffff",
+                    "showShadow": "0",
+                    "canvasBgColor": "#ffffff",
+                    "canvasBorderAlpha": "0",
+                    "divlineAlpha": "100",
+                    "divlineColor": "#999999",
+                    "divlineThickness": "1",
+                    "divLineIsDashed": "1",
+                    "divLineDashLen": "1",
+                    "divLineGapLen": "1",
+                    "usePlotGradientColor": "0",
+                    "showplotborder": "0",
+                    "valueFontColor": "#ffffff",
+                    "placeValuesInside": "1",
+                    "showXAxisLine": "1",
+                    "xAxisLineThickness": "1",
+                    "xAxisLineColor": "#999999",
+                    "showAlternateHGridColor": "0",
+                    "legendBgAlpha": "0",
+                    "legendBorderAlpha": "0",
+                    "legendShadow": "0",
+                    "legendItemFontSize": "10",
+                    "legendItemFontColor": "#666666"
+                },
+                "categories": [{
+                    "category": lcategory
+                }],
+                "dataset": [{
+                    "dataset": [{
+                        "seriesname": "Principal Paid",
+                        "data": lPrincipal
+                    }, {
+                        "seriesname": "Interest Paid",
+                        "data": lInterest
+                    }]
+                }],
+                "lineset": [{
+                    "seriesname": "Outstanding Loan Balance",
+                    "data": lBalance
+                }]
+            }
+        });
+        revenueChart.render();
+    };
+    apz.lnsmlr.loansimulation.fnPownloadLoanSimulationDetails = function() {
+        if (apz.data.scrdata.lnsmlr__LoanSimulation_Req) {
+            var columns = [{
+                title: "Month",
+                dataKey: "Period"
+            }, {
+                title: "Principal",
+                dataKey: "Principal"
+            }, {
+                title: "Interest",
+                dataKey: "Interest"
+            }, {
+                title: "Loan Balance",
+                dataKey: "Balance"
+            }];
+            var lloan, ltenor, linterest, lemi;
+            lloan = $(".rs-tooltip-text").eq(0).text();
+            ltenor = $(".rs-tooltip-text").eq(1).text();
+            linterest = $(".rs-tooltip-text").eq(2).text();
+            lemi = apz.getElmValue("lnsmlr__LoanSimulation__emiweb");
+            /* lloan = apz.getElmValue("loanamount");
+            ltenor = apz.getElmValue("tenor");
+            linterest = apz.getElmValue("Interest")*/
+            ;
+            lemi = $(".emi-txt-mobile").text();
+            var rows = apz.data.scrdata.lnsmlr__LoanSimulation_Req.EMI;
+            var doc = new jsPDF('landscape');
+            doc.text("Loan Calculator", 150, 10);
+            doc.text("Loan Amount", 20, 20);
+            doc.text(lloan, 100, 20);
+            doc.text("Tenor(years)", 20, 30);
+            doc.text(ltenor, 100, 30);
+            doc.text("Interest Rate(%)", 20, 40);
+            doc.text(linterest, 100, 40);
+            doc.text("EMI VALUE", 20, 50);
+            doc.text(lemi, 100, 50);
+            doc.text("Amortization Schedule", 10, 65);
+            doc.autoTable(columns, rows, {
+                startY: 70,
+            });
+            doc.save("Loan Simulation.pdf");
+        }
+    };

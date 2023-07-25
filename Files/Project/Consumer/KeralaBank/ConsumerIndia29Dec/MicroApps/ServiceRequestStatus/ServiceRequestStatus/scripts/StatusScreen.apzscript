@@ -1,0 +1,6 @@
+apz.servic.StatusScreen = {};
+apz.app.onLoad_StatusScreen = function() {
+    apz.data.loadJsonData("RequestDetails","servic")
+       apz.setElmValue("landin__Landing__heading", "SERVICE REQUEST STATUS")
+
+}

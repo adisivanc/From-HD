@@ -1,0 +1,178 @@
+// Properties declairation
+apz.ablogn = {};
+apz.ablogn.Login = {};
+apz.ablogn.Login.userId = '';
+apz.ablogn.Login.sCache = {};
+apz.ablogn.Login.qCount = 1;
+//Life cycle 
+apz.app.onLoad_Login = function(params) {
+    apz.ablogn.Login.sCache = params;
+    $("body").addClass("bgclr");
+    // $("#ablogn__Login__count").text("1/4");
+};
+apz.app.onShown_Login = function(params) {}
+//Button click actions
+// window.open("https://www.thecitybank.com/home");
+apz.ablogn.Login.fnSubmitLogin = function(pThis, e) {
+    debugger;
+    if (e.key === 'Enter') {
+        apz.ablogn.Login.fnLogin();
+    }
+}
+apz.ablogn.Login.fnQuickLogin = function(userId) {
+    debugger;
+    apz.ablogn.Login.sCache.userId = userId
+    if (apz.mockServer) {
+        apz.isOnline = false;
+        apz.ablogn.Login.fnStaticLogin(userId);
+    }
+}
+apz.ablogn.Login.fnLogin = function() {
+    debugger;
+    var userId = apz.getElmValue("ablogn__Login__userId");
+    var passwordD = apz.getElmValue("ablogn__Login__password");
+    var password = passwordD.trim()
+    if (userId && userId != "" && password && password != "") {
+        apz.ablogn.Login.sCache.userId = userId;
+        if (apz.mockServer) {
+            apz.isOnline = false;
+            apz.ablogn.Login.fnStaticLogin(userId);
+        } else {
+            apz.isOnline = true;
+            // apz.ablogn.Login.fnStaticLogin(userId);
+            apz.common.login(userId, password, apz.ablogn.Login.fnLoginCallback, this);
+        }
+    } else {
+        apz.common.dispMsg("Please enter the Username/Password", "E", null);
+    }
+};
+apz.ablogn.Login.fnStaticLogin = function(userId) {
+    debugger;
+    if (userId == "RM001" || userId == "RM002" || userId == "FLD002" || userId == "CR003" || userId == "LA004" || userId == "SRM001" || userId ==
+        "SCR003" || userId == "SLA004" || userId == "MRM001" || userId == "MCR003" || userId == "MLA004") {
+        if (userId == "RM001" || userId == "RM002") {
+            apz.ablogn.Login.sCache.userRole = "RM";
+        } else if (userId == "FLD002") {
+            apz.ablogn.Login.sCache.userRole = "FLD";
+        } else if (userId == "CR003") {
+            apz.ablogn.Login.sCache.userRole = "CR";
+        } else if (userId == "LA004") {
+            apz.ablogn.Login.sCache.userRole = "LA";
+        } else if (userId == "SRM001" || userId == "MRM001") {
+            apz.ablogn.Login.sCache.userRole = "SRM";
+        } else if (userId == "SCR003" || userId == "MCR003") {
+            apz.ablogn.Login.sCache.userRole = "SCR";
+        } else if (userId == "SLA004" || userId == "MLA004") {
+            apz.ablogn.Login.sCache.userRole = "SLA";
+        }
+        apz.common.launchApp("menuap", "Menu", apz.ablogn.Login.sCache);
+        $("body").removeAttr('style');
+        $("body").removeClass("bgclr");
+    } else {
+        apz.dispMsg({
+            "message": "Incorrect User Id or Password"
+        });
+    }
+}
+apz.ablogn.Login.fnLoginCallback = function(pResp) {
+    debugger;
+    if (pResp.errors) {
+        var errorMessage = pResp.errors[0].errorMessage; //check message not code
+        var errorCode = pResp.errors[0].errorCode;
+        if (errorCode == "APZ-DM-031") { //password expired and change password
+            apz.ablogn.Login.sCache.oldPassword = pResp.pwd
+            var userObj = {
+                "userId": pResp.userId,
+                "oldPassword": pResp.pwd
+            }
+            /*var lParams = {
+                "appId": "ablogn",
+                "scr": "ChangePassword",
+                "userObj": pResp.userCallBackObj
+            }*/
+            apz.common.launchApp("ablogn", "ChangePassword", apz.ablogn.Login.sCache);
+        } else {
+            apz.common.dispMsg(errorMessage, "E", null);
+        }
+    } else {
+        if (pResp.res.loginResponse.status) {
+            /*appId: "brbase"
+        controlsAccessType: "N"
+        dbpin: "34385d77dd2ecce588b11613adfd130b59a164ac019f44129157d46ec144e10b"
+        deviceId: "WEB"
+        ifacesAccessType: "N"
+        keepMeSignedIn: "N"
+        pwd: "klEqlesgbd5zbxzqxku#zeuuxmelcvql"
+        scrsAccessType: "N"
+        status: "ACTIVE"
+        sysDate: "Thu, 19-03-2020 18:37:02"
+        userId: "RM001"*/
+            apz.ablogn.Login.sCache.userResponse = pResp.res.loginResponse;
+            apz.ablogn.Login.sCache.userDetails = pResp.resFull.appzillonHeader;
+            // apz.ablogn.Login.fnGetUserPreferences()
+            apz.ablogn.Login.fnFetchPreviligeDetails()
+            // apz.common.login("BM001", "Admin@123", apz.ablogn.Login.fnLoginCallback2, this);
+            // apz.common.launchApp("menuap", "Menu", apz.ablogn.Login.sCache);
+        } else {
+            apz.common.dispMsg(errorMessage, "E", "Something went wrong! Please try again.");
+        }
+    }
+}
+apz.ablogn.Login.fnFetchPreviligeDetails = function() {
+    debugger;
+    var params = {};
+    params.screensreqd = "A";
+    params.interfacesreqd = "D";
+    params.controlsreqd = "N";
+    params.async = true;
+    params.callBack = apz.ablogn.Login.fetchPreviligeDetailsCB;
+    apz.server.fetchPreviligeDetails(params);
+};
+apz.ablogn.Login.fetchPreviligeDetailsCB = function(lParams) {
+    debugger;
+    apz.server.applyPrivileges()
+    apz.ablogn.Login.params = lParams;
+    apz.ablogn.Login.sCache.userRole = lParams.res.authorizationResponse.roles[0];
+    apz.ablogn.Login.sCache.interfaces = lParams.res.authorizationResponse.ifaces;
+    apz.ablogn.Login.sCache.controls = lParams.res.authorizationResponse.controls;
+    apz.ablogn.Login.sCache.scrs = lParams.res.authorizationResponse.scrs;
+}
+apz.ablogn.Login.fnLoginCallback2 = function(pResp) {
+    debugger;
+    apz.ablogn.Login.fnFetchPreviligeDetails();
+}
+apz.app.preapplyPrivileges = function() {
+    debugger;
+}
+apz.app.postapplyPrivileges = function() {
+    debugger;
+    apz.common.launchApp("menuap", "Menu", apz.ablogn.Login.sCache);
+}
+//-------------------------------------------
+apz.ablogn.Login.fnGetUserPreferences = function() {
+    debugger
+    var json = {};
+    json.id = "getUserPrefs"
+    json.callBack = apz.ablogn.Login.fnGetUserPreferencesCallback;
+    apz.ns.getUserPrefs(json);
+}
+apz.ablogn.Login.fnGetUserPreferencesCallback = function(params) {
+    debugger;
+    // alert(JSON.stringify(params));
+    apz.ablogn.Login.fnSetUserPreferences()
+}
+apz.ablogn.Login.fnSetUserPreferences = function() {
+    debugger
+    var json = {};
+    json.id = "setUserPrefs";
+    json.callBack = apz.ablogn.Login.fnSetUserPreferencesCallback;
+    json.userprefs = {
+        "THEME": "Appzillon"
+    };
+    apz.ns.setUserPrefs(json)
+}
+apz.ablogn.Login.fnSetUserPreferencesCallback = function(params) {
+    debugger;
+    // alert(JSON.stringify(params));
+    apz.common.launchApp("menuap", "Menu", apz.ablogn.Login.sCache);
+}

@@ -1,0 +1,86 @@
+apz.cracop.maps = {};
+apz.cracop.maps.sCache = {};
+apz.cracop.maps.latitude = "";
+apz.cracop.maps.longitude = "";
+apz.app.onShown_Maps = function(params) {
+    debugger;
+    getUsersLocation();
+    $("#cracop__CustomerInfo__mapDiv").css("width", "80");
+    $("#cracop__CustomerInfo__mapDiv").css("height", "80");
+    apz.app.loadCustomMap();
+};
+getUsersLocation = function() {
+    var jsonObj = {};
+    jsonObj.id = "LOCATEUSER";
+    jsonObj.callBack = getUserLocationCallback;
+    apz.ns.getLocation(jsonObj);
+}
+getUserLocationCallback = function(jsonObj) {
+    debugger;
+    alert(jsonObj.latitude + "," + jsonObj.longitude);
+    apz.cracop.maps.latitude = jsonObj.latitude;
+    apz.cracop.maps.longitude = jsonObj.longitude;
+}
+apz.cracop.maps.fnGetLOcationCB = function(params) {
+    apz.cracop.maps.fnLoadMap(params);
+};
+apz.cracop.maps.fnLoadMap = function(params) {
+    var json = {
+        "markerInfo": [{
+            "locationLatitude": apz.cracop.maps.latitude,
+            "locationLongitude": apz.cracop.maps.longitude,
+            "locationName": "Me",
+            "locationDescription": "My Location"
+        }]
+    }
+    json.id = "MAP3_ID";
+    json.callBack = apz.cracop.maps.fnlocCallback;
+    apz.ns.loadMap(json);
+};
+apz.cracop.maps.fnlocCallback = function(params) {
+    debugger;
+}
+apz.app.loadCustomMap = function() {
+    debugger;
+    llatitude = apz.cracop.maps.latitude;
+    llongitude = apz.cracop.maps.longitude;
+    var vScript = document.createElement('script');
+    vScript.setAttribute("type", "text/javascript");
+    vScript.setAttribute("src",
+        "https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyA0ZNrVELZlqs01WuC31y-44ik7fqrw_Hw&sensor=true&callback=mapCallBack");
+    document.getElementsByTagName("head")[0].appendChild(vScript);
+}
+
+function mapCallBack() {
+    //appzillon.app.setMapData("", "");
+    apz.server.locationCallback();
+}
+apz.server.locationCallback = function() {
+    debugger;
+    // alert(plocationStr);
+    var myLatlng = new google.maps.LatLng(llatitude, llongitude);
+    var mapOptions = {
+        zoom: 16,
+        center: myLatlng
+    };
+    map = new google.maps.Map(document.getElementById("cracop__CustomerInfo__mapDiv"), mapOptions);
+    var plannedMarkerBgColor = "812990";
+    var plannedMarkerTxtColor = "FFFFFF";
+    //alert("plocationStr");
+    var plannedIcon = new google.maps.MarkerImage('https://chart.googleapis.com/chart?chst=d_bubble_text_small&chld=bb|Location|' +
+        plannedMarkerBgColor + '|' + plannedMarkerTxtColor + '|');
+    plannedIcon.anchor = new google.maps.Point(0, 40);
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(llatitude, llongitude),
+        visible: true,
+        icon: plannedIcon,
+        map: map
+    });
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+            apz.app.mapAction(plannedResultSet[i].id);
+            // alert(plannedResultSet[i].id);
+        };
+    })(marker, 0));
+    marker.setMap(map);
+};

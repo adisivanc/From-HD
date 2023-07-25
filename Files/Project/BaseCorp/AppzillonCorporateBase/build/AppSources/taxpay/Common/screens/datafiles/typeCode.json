@@ -1,0 +1,58 @@
+{
+    "taxpay__TypeCode_Res": {
+        "TypeCodeDetails": [
+            {
+                "code": "0002",
+                "desc" : "[Employee Representatives Railroad Retirement, CT-2]"
+            },
+            {
+               "code": "0111",
+                "desc" : "[Special Tax Return & Application for Registry-Wagering, 11-C]"
+            },
+            {
+                "code": "0709",
+                "desc" : "[Gift Tax Return, 0709]"
+            },
+            {
+                 "code": "0730",
+                "desc" : "[Tax on Wagering, 730]"
+            },
+            {
+                 "code": "0926",
+                "desc" : "[Return by Transferor of Property to Foreign Corp, 926]"
+            },
+            {
+               "code": "0940",
+                "desc" : "[Employers Annual Unemployment Tax Return, 940]"
+            },
+            {
+               "code": "0943",
+                "desc" : "[Employers Annual Tax for Agricultural Employees, 943]"
+            },
+            {
+                "code": "0945",
+                "desc" : "[Withheld Federal Income Tax, 945]"
+            },
+            {
+                 "code": "0965",
+                "desc" : "[Transition Tax, 965]"
+            },
+            {
+                 "code": "0990",
+                "desc" : "[Organization Exempt Income Tax, 990]"
+            },
+            {
+                 "code": "1000",
+                "desc" : "[RailRoad Retirement Tax & Unemployment Return, CT-1]"
+            },
+            {
+                 "code": "1041",
+                "desc" : "[Fiduiciary Income Tax Return, 1041]"
+            },
+            {
+                 "code": "1042",
+                "desc" : "[Annual Withholding Tax-Income of Foreign Persons, 1042]"
+            }
+        ]
+    }
+}

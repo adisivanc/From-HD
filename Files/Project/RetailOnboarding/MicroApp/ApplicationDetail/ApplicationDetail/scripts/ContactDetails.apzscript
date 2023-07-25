@@ -1,0 +1,174 @@
+apz.appdtl.ContactDetails = {};
+apz.app.onShown_ContactDetails = function(params) {
+    apz.appdtl.ContactDetails.sCache=params;
+    $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__mobileNo,#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__alternateNo,#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__pin").attr({"pattern":"[0-9]*","inputmode":"numeric"});
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo", params.refNo);
+    /*var stateList = JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/StateList.json"));
+    apz.populateDropdown($("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__state")[0],stateList);*/
+    if(apz.country === "IND" || apz.country === "UAE" || apz.country === "UGA" || apz.country === "BD"){
+        var typeOfId = JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/"+apz.country +"typeofID.json"));
+        apz.populateDropdown($("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__typeOfID")[0],typeOfId)
+    }
+    apz.appdtl.ContactDetails.fetchApplicationDetails(params);
+    $("#navigation_"+apz.flowNo).removeClass("sno");
+        $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+            $(this).removeClass("active");
+        })
+        $("#navigation_"+apz.flowNo+",#navgtn__MobileNavigation__ct_lst_2_row_"+apz.flowNo).addClass("active");
+    $("#appdtl__Launcher__sc_row_2").removeClass("sno");
+    if(apz.country==="US"){
+        $("#appdtl__ContactDetails__sc_col_34").addClass("sno");
+    }
+    
+    var  Country= JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/CountryList.json"));
+    apz.data.scrdata.appdtl__CountryList_Res ={
+        ListItem : Country
+    }
+    apz.data.loadData("CountryList","appdtl");
+};
+apz.appdtl.ContactDetails.fetchApplicationDetails = function(params) {
+    debugger;
+    apz.startLoader();
+    apz.data.buildData("ApplicationInfoDB", "appdtl");
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.refNo = params.refNo;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.ContactDetails.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.ContactDetails.fetchApplicationDetailsCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    var getTypeofReidence = pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.typeOfResident;
+    if (getTypeofReidence == "Owned") {
+        $("#appdtl__ContactDetails__btnOwned").addClass("current");
+    } else if (getTypeofReidence == "Rented") {
+        $("#appdtl__ContactDetails__btnRent").addClass("current");
+    } else if (getTypeofReidence == "Parent-owned") {
+        $("#appdtl__ContactDetails__btnParentOwned").addClass("current");
+    } else if (getTypeofReidence == "Mortgaged") {
+        $("#appdtl__ContactDetails__btnMortraged").addClass("current");
+    }
+}
+apz.appdtl.ContactDetails.saveApplicationDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Modify",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.ContactDetails.saveApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.ContactDetails.saveApplicationDetailsCB = function(pResp) {
+    debugger;
+    apz.applicationDetails = jQuery.extend(true, {}, pResp.req.tbDbmiCustomerMaster);
+    apz.userEmail=apz.userEmail=apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__email");
+    apz.navgtn.Navigator.fnLaunchApp();
+}
+//email validation
+apz.appdtl.ContactDetails.fnCheckEmail=function(element){
+    var email=$(element).val();
+     var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+     if (!emailRegex.test(email)) {
+        apz.dispMsg({
+            message: "Enter valid EmailId"
+        });
+     }
+     
+}
+apz.appdtl.ContactDetails.fnRestrictYear = function(el) {
+        var digits = el.value.match(/\d{1,2}/) || [""];
+        el.value = digits[0];
+    }
+//validate mobile
+apz.appdtl.ContactDetails.fnFloatMobileNo = function(el) {
+        var digits = el.value.match(/\d{1,10}/) || [""];
+        el.value = digits[0];
+    }
+apz.appdtl.ContactDetails.fnRestrictZIP = function(el) {
+      if(apz.country==="US"){
+        var digits = el.value.match(/\d{1,5}/) || [""];
+        el.value = digits[0];
+      }
+    }
+apz.appdtl.ContactDetails.fnCheckDropdwonClass=function(element){
+        $("body").removeClass("hasb");
+}
+$("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__state").on("select2:open", function (e) { 
+    setTimeout(function(){
+       $("body").addClass("hasb"); 
+    },200);
+});
+
+apz.appdtl.ContactDetails.fnSelectResidence= function(pthis, pval) {
+    debugger;
+    // $("#appdtl__ContactDetails__btnOwned").removeClass("current");
+    // $("#appdtl__ContactDetails__btnRent").removeClass("current");
+    // $("#appdtl__ContactDetails__btnParentOwned").removeClass("current");
+    // $("#appdtl__ContactDetails__btnMortraged").removeClass("current");
+    $("#appdtl__ContactDetails__sc_row_28 :button").removeClass("current")
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__typeOfResident", pval);
+}
+
+apz.appdtl.ContactDetails.fnOpenCountryModal = function(ptype) {
+    debugger;
+    if (ptype == "open") {
+        $("#appdtl__ContactDetails__countryModal").removeClass("sno");
+        
+         var  Country= JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/CountryList.json"));
+    apz.data.scrdata.appdtl__CountryList_Res ={
+        ListItem : Country
+    }
+    apz.data.loadData("CountryList","appdtl");
+        $("#appdtl__ContactDetails__ct_lst_1 li").removeClass("current");
+        apz.setElmValue("appdtl__ContactDetails__inpSearch","");
+        
+        
+        
+         var inpCountry = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__state");
+         //var occupationName = $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__occupation").val();
+         var lLength = apz.data.scrdata.appdtl__CountryList_Res.ListItem.length;
+        for (var i = 0; i < lLength; i++) {
+            var countryListName = apz.getElmValue("appdtl__CountryList__o__ListItem__CountryName_" + i);
+            if (inpCountry == countryListName) {
+                $("#appdtl__ContactDetails__ct_lst_1_row_" + i).addClass("current");
+                break;
+            }
+        }
+    }
+    if (ptype == "close") {
+        $("#appdtl__ContactDetails__countryModal").addClass("sno");
+    }
+}
+
+apz.appdtl.ContactDetails.fnSelectCountry = function(pthis) {
+   var lrowno = $(pthis).attr("rowno");
+    var countryname = apz.getElmValue("appdtl__CountryList__o__ListItem__CountryName_"+lrowno);
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__state",countryname);
+   // $("#appdtl__AdditionalPersonalDetails__inpOccupation").val(occupation);
+     $("#appdtl__ContactDetails__countryModal").addClass("sno");
+}
+
+
+apz.appdtl.ContactDetails.fnSearchCountry = function(pthis){
+    debugger;
+    $("#appdtl__ContactDetails__ct_lst_1 li").removeClass("current");
+   apz.searchRecords("appdtl__ContactDetails__ct_lst_1",pthis.value);
+   var searchrecords = apz.data.scrdata.appdtl__CountryList_Res.ListItem;
+   var textrecord = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__state");
+   for (var i = 0; i < searchrecords.length; i++) {
+            
+            if (searchrecords[i].CountryName == textrecord) {
+                $("#appdtl__ContactDetails__ct_lst_1_row_" + i).addClass("current");
+                break;
+            }
+        }
+
+}

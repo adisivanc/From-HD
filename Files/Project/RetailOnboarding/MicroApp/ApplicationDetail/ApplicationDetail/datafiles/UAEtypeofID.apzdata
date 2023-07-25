@@ -1,0 +1,22 @@
+[
+    {
+        "val":"",
+        "desc":"Please Select"
+    },
+    {
+        "val":"Emirates ID",
+        "desc":"Emirates ID"
+    },
+    {
+        "val":"Passport",
+        "desc":"Passport"
+    },
+    {
+        "val":"Resident Identity Card",
+        "desc":"Resident Identity Card"
+    },
+    {
+        "val":"Driver’s License",
+        "desc":"Driver’s License"
+    }
+]

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500" viewBox="0 0 500 500">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_1" data-name="Rectangle 1" width="500" height="500"/>
+    </clipPath>
+  </defs>
+  <g id="_001-credit-card" data-name="001-credit-card" clip-path="url(#clip-path)">
+    <g id="_001-credit-card-2" data-name="001-credit-card" clip-path="url(#clip-path)">
+      <g id="_Group_" data-name=" Group " transform="translate(-6 -5.88)">
+        <path id="Path_36" data-name="Path 36" d="M484,359v16.12a30,30,0,0,1-30,30H58a30,30,0,0,1-30-30V359Z" fill="#272727"/>
+        <path id="Path_37" data-name="Path 37" d="M484,300.65V359H28V300.65Z"/>
+        <path id="Path_38" data-name="Path 38" d="M484,136.88V300.65H28V136.88a30,30,0,0,1,30-30H454a30,30,0,0,1,30,30Z" fill="#272727"/>
+        <path id="Path_39" data-name="Path 39" d="M393.04,171.31c15.3,0,27.71,13.19,27.71,29.47s-12.41,29.48-27.71,29.48a27.3,27.3,0,0,1-23.19-13.35,31.041,31.041,0,0,0,0-32.26A27.31,27.31,0,0,1,393.04,171.31Z" fill="#cad0f2"/>
+        <ellipse id="Ellipse_7" data-name="Ellipse 7" cx="4.52" cy="16.13" rx="4.52" ry="16.13" transform="translate(365.33 184.65)" fill="#d4d4d4"/>
+        <path id="Path_40" data-name="Path 40" d="M346.66,171.31a27.31,27.31,0,0,1,23.19,13.34,31.041,31.041,0,0,0,0,32.26,27.3,27.3,0,0,1-23.19,13.35c-15.31,0-27.71-13.2-27.71-29.48S331.35,171.31,346.66,171.31Z" fill="#d4d4d4"/>
+        <rect id="Rectangle_5" data-name="Rectangle 5" width="106.01" height="38.45" transform="translate(82.82 181.56)" fill="#e7e7e7"/>
+      </g>
+    </g>
+  </g>
+</svg>

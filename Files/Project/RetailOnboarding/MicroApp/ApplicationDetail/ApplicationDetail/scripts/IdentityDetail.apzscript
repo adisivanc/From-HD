@@ -1,0 +1,62 @@
+apz.appdtl.IdentityDetail = {};
+apz.app.onLoad_IdentityDetail = function(params) {
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo", params.refNo);
+    if (apz.country === "IND" || apz.country === "UAE" || apz.country === "UGA" || apz.country === "BD") {
+        var typeOfId = JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/" + apz.country + "typeofID.json"));
+        apz.populateDropdown($("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__typeOfID")[0], typeOfId)
+    }
+    apz.appdtl.IdentityDetail.fetchApplicationDetails(params);
+    $("#navigation_" + apz.flowNo).removeClass("sno");
+    $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+        $(this).removeClass("active");
+    })
+    $("#navigation_"+apz.flowNo+",#navgtn__MobileNavigation__ct_lst_2_row_"+apz.flowNo).addClass("active");
+    $("#appdtl__Launcher__sc_row_2").removeClass("sno");
+};
+apz.appdtl.IdentityDetail.fetchApplicationDetails = function(params) {
+    debugger;
+    apz.startLoader();
+    apz.data.buildData("ApplicationInfoDB", "appdtl");
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.refNo = params.refNo;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.IdentityDetail.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.IdentityDetail.fetchApplicationDetailsCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    var getPEP = pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.pep;
+    if (getPEP == "Yes") {
+        $("#appdtl__IdentityDetail__btnPepYes").addClass("current");
+    } else if (getPEP == "No") {
+        $("#appdtl__IdentityDetail__btnPepNo").addClass("current");
+    }
+}
+apz.appdtl.IdentityDetail.saveApplicationDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Modify",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.IdentityDetail.saveApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.IdentityDetail.saveApplicationDetailsCB = function(pResp) {
+    debugger;
+    apz.applicationDetails = jQuery.extend(true, {}, pResp.req.tbDbmiCustomerMaster);
+    apz.navgtn.Navigator.fnLaunchApp();
+}
+apz.appdtl.IdentityDetail.fnSelectPEP = function(pthis, pval) {
+    debugger;
+    $("#appdtl__IdentityDetail__btnPepYes").removeClass("current");
+    $("#appdtl__IdentityDetail__btnPepNo").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__pep", pval);
+}

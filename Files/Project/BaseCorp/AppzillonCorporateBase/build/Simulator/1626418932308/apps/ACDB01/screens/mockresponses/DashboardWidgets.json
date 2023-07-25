@@ -1,0 +1,7 @@
+{
+    "tbDbmiCorpUserDashboardWidget": {
+        "widgets": "ACDB01__Dashboard__task_summary_row,ACDB01__Dashboard__recent_transactions_row,ACDB01__Dashboard__balance_movement_row,ACDB01__Dashboard__balance_summary_row,ACDB01__Dashboard__calendar_row",
+        "userId": "admin",
+        "corporateId": "000FTAC4321"
+    }
+}

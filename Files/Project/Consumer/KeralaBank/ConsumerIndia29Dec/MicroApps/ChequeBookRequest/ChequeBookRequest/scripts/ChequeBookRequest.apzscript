@@ -1,0 +1,172 @@
+apz.nchqbk.ChequeBookRequest = {};
+apz.nchqbk.ChequeBookRequest.sParams = {};
+apz.nchqbk.ChequeBookRequest.sCache = {};
+apz.nchqbk.ChequeBookRequest.sChqLeaf = "";
+apz.app.onLoad_ChequeBookRequest = function(params) {
+    // if(apz.isOnline){
+    //     apz.mockServer = false;
+    // }else{
+    //     apz.mockServer = true;
+    // }
+    apz.nchqbk.ChequeBookRequest.sCache = params;
+    apz.nchqbk.ChequeBookRequest.sParams = params;
+};
+apz.app.onShown_ChequeBookRequest = function(params) {
+    // apz.data.loadJsonData("ChequeBookRequest","nchqbk");
+    // $("#nchqbk__ChequeBookRequest__ChequeBookRequestCardForm input").each(function() {
+    //     $(this).attr("disabled", "disabled");
+    // })
+    apz.data.loadData("ChequeBookRequest", "nchqbk");
+}
+apz.nchqbk.ChequeBookRequest.fnEditSubmit = function(param) {
+    debugger;
+    var text = param.innerText;
+    if (text == "Submit") {
+        var validated = apz.val.validateContainer("nchqbk__ChequeBookRequest__chequeBookRequestForm");
+        if (validated) {
+            
+            
+            //apz.data.loadData("ChequeBookRequest", "nchqbk");
+            apz.data.buildData("ChequeBookRequest", "nchqbk");
+            apz.data.scrdata.nchqbk__ChequeBookRequest_Req.accounts.chequeLeaf = apz.nchqbk.ChequeBookRequest.sChqLeaf;
+            // var lParams = {
+            //     "appId": "nchqbk",
+            //     "scr": "ApproveCheckBook",
+            //     "div": "cmrnav__Launcher__Launcher",
+            //     "type": "CF",
+            //     "userObj": {
+            //         "action": "fromIssue",
+            //         "data": [],
+            //         "destroyDiv": "cmrnav__Launcher__Launcher",
+            //         "parentAppId": "excust",
+            //         "callBack": apz.nchqbk.ChequeBookRequest.sParams.callBack
+            //     }
+            // };
+            // apz.launchApp(lParams);
+            apz.nchqbk.ChequeBookRequest.fnStartWorkflow();
+        }
+    } else {
+        // $("#nchqbk__ChequeBookRequest__editSubmit").html("Submit");
+        // $("#nchqbk__ChequeBookRequest__ChequeBookRequestCardForm input").each(function() {
+        //     $(this).removeAttr("disabled");
+        // })
+    }
+};
+
+
+apz.nchqbk.ChequeBookRequest.fnStartWorkflow = function(){
+    debugger;
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "StartWorkFlow",
+        "buildReq": "N",
+        "appId": "nchqbk",
+        "req": {
+            "appId": "acdp01",
+            "workFlowId": "",
+            "userId": "CorpUser"
+        },
+        "paintResp": "N",
+        "callBack": apz.nchqbk.ChequeBookRequest.fnStartWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+}
+
+apz.nchqbk.ChequeBookRequest.fnStartWorkflowCB = function(pResp) {
+    debugger;
+    // if (pResp.status) {
+    //     if (pResp.res.nchqbk__StartWorkFlow_Res) {
+    //         apz.nchqbk.ApproveCheckBook.sCache.refNo = pResp.res.nchqbk__StartWorkFlow_Res.instanceId;
+    //         apz.refNo = apz.nchqbk.ApproveCheckBook.sCache.refNo;
+    //         apz.nchqbk.ApproveCheckBook.fnAddUser(apz.nchqbk.ApproveCheckBook.sCache.refNo);
+    //     }
+    // }
+    
+    var d = new Date();
+       
+        apz.nchqbk.ChequeBookRequest.sCache.refNo = "CONSONB"+d.getTime();
+        apz.refNo = apz.nchqbk.ChequeBookRequest.sCache.refNo;
+        apz.nchqbk.ChequeBookRequest.fnAddUser(apz.nchqbk.ChequeBookRequest.sCache.refNo);
+}
+
+apz.nchqbk.ChequeBookRequest.fnAddUser = function(refno) {
+    debugger;
+    apz.startLoader();
+    var d = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    var lServerParams = {
+        "ifaceName": "CustomerServiceRequest_New",
+        "buildReq": "N",
+        "appId": "nchqbk",
+        "req": {
+            "tbDbmiCustomerServicerequest": {
+                refno: refno,
+                makerdate: d,
+                category: "Service Request",
+                subcategory: "Cheque Book Request",
+                status: "Pending",
+                customerid: "43211234",
+                maker: "RM001",
+                initdate: d,
+                srcdata: JSON.stringify(apz.data.scrdata.nchqbk__ChequeBookRequest_Req)
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.nchqbk.ChequeBookRequest.fnAddUserCB
+    };
+    apz.server.callServer(lServerParams);
+     //customerid: apz.data.scrdata.cmrnav__CustmerDetails_Res.customerId,
+}
+apz.nchqbk.ChequeBookRequest.fnAddUserCB = function(pResp) {
+    if (pResp.status) {
+        //apz.nchqbk.ChequeBookRequest.fnCallNextStateWorkFlow(apz.nchqbk.ChequeBookRequest.fnRMCB);
+        apz.nchqbk.ChequeBookRequest.showSuccessMessage("The request has been initiated");
+    }
+}
+
+
+apz.nchqbk.ChequeBookRequest.fnBackToList = function() {
+    debugger;
+    // apz.nchqbk.ChequeBookRequest.sParams.callBack();
+  apz.landin.Landing.fnMenuClickInside("Service Requests");
+};
+apz.nchqbk.ChequeBookRequest.fnProceed = function() {
+    debugger;
+    apz.nchqbk.ChequeBookRequest.fnRenderStage2();
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "nchqbk__ChequeBookRequest__Stage2",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.nchqbk.ChequeBookRequest.showSuccessMessage,
+                "destroyDiv": "nchqbk__ChequeBookRequest__Stage2"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.nchqbk.ChequeBookRequest.fnRenderStage2 = function() {
+    debugger;
+    apz.hide('nchqbk__ChequeBookRequest__Stage1');
+    apz.show('nchqbk__ChequeBookRequest__Stage2');
+};
+apz.nchqbk.ChequeBookRequest.showSuccessMessage = function(msg) {
+    apz.dispMsg({
+        message: msg,
+        type: "S",
+        callBack: apz.nchqbk.ChequeBookRequest.showSuccessMessageCB
+    });
+}
+apz.nchqbk.ChequeBookRequest.showSuccessMessageCB = function(params){
+apz.landin.Landing.fnMenuClickInside("Service Requests");
+}
+apz.nchqbk.ChequeBookRequest.fnRadioCheque = function() {
+    debugger;
+    var lChequeNo = apz.getElmValue("nchqbk__ChequeBookRequest__chequeLeaf");
+    apz.nchqbk.ChequeBookRequest.sChqLeaf = lChequeNo;
+}

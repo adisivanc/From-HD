@@ -1,0 +1,109 @@
+apz.pfauth = {};
+apz.pfauth.Authentication = {};
+apz.pfauth.Authentication.sParams = {};
+var lOtpNumber;
+apz.app.onLoad_Authentication = function(params) {
+    debugger;
+    apz.pfauth.Authentication.sParams = params;
+    apz.hide("pfauth__Authentication__sc_row_4");
+};
+apz.app.onShown_Authentication = function(params) {
+    debugger;
+    $("#pfauth__Authentication__el_btn_2").addClass("active");
+    // apz.pfauth.Authentication.sendOtp();
+};
+apz.pfauth.Authentication.sendOtp = function() {
+    var lmobileNo = "9535343296";
+    var lsenderID = "APZBNK";
+    lOtpNumber = Math.round((Math.random() * 1000000));
+    var lmessage = "Your OTP  is " + lOtpNumber;
+    var llurl = "http://smshorizon.co.in/api/sendsms.php?user=Iexceed&apikey=XOTNwz3OffqcodOubdhl&mobile=" + lmobileNo + "&message=" + lmessage +
+        "&senderid=" + lsenderID + "&type=txt";
+    $.ajax({
+        url: llurl,
+        dataType: "JSONP",
+        success: function(result, error) {
+            console.log(result, error);
+        }
+    });
+}
+apz.pfauth.Authentication.fnLaunchFingerPrint = function() {
+    apz.hide("pfauth__Authentication__sc_row_4");
+    $(".active").removeClass("active");
+    $("#pfauth__Authentication__el_btn_4").addClass("active");
+    var lJsonObj = {
+        "id": "",
+        "callBack": apz.pfauth.Authentication.launchFingerPrintCallBack
+    }
+    apz.ns.biometricAuth(lJsonObj);
+};
+apz.pfauth.Authentication.launchFingerPrintCallBack = function(params) {
+    debugger;
+}
+//
+apz.pfauth.Authentication.fnLaunchOtp = function() {
+    apz.currAppId = "pfauth";
+    var from = "authentication"
+    var currentTheme = $("link").eq(0).attr("href");
+    if (currentTheme == "appzillon/styles/themes/ConsUK/css/ConsUK.css") {
+        from = "transactions"
+        $(".active").removeClass("active");
+        $("#pfauth__Authentication__el_btn_2").addClass("active");
+        apz.show("pfauth__Authentication__sc_row_4");
+    } else {
+        apz.launchApp({
+            appId: "otpeng",
+            scr: "ProcessOTP",
+            // div: "menuap__Menu__MainLaunchArea"
+            div: apz.pfauth.Authentication.sParams.destroyDiv,
+            userObj: {
+                "action": "SetRefNo",
+                "transferDetails": [],
+                "customerDetails": apz.pfauth.Authentication.sParams.customerDetails,
+                "back": apz.pfauth.Authentication.sParams.callBack,
+                "data": apz.pfauth.Authentication.sParams.data,
+                "destroyDiv": apz.pfauth.Authentication.sParams.destroyDiv,
+                "from": from,
+                "control": {
+                    "appId": "otpeng",
+                    "callBack": apz.pfauth.Authentication.sParams.callBack,
+                    "destroyDiv": apz.pfauth.Authentication.sParams.destroyDiv,
+                    "loggedCust": apz.pfauth.Authentication.sParams.loggedCust,
+                    "loggedCustImg": apz.pfauth.Authentication.sParams.loggedCustImg,
+                    "loggedCustId": apz.pfauth.Authentication.sParams.loggedCustId,
+                    "loggedCustBranch": apz.pfauth.Authentication.sParams.loggedCustBranch,
+                    "selectedCustImg": apz.pfauth.Authentication.sParams.custImage
+                }
+            }
+        })
+    }
+};
+apz.pfauth.Authentication.fnLaunchIris = function() {
+    apz.currAppId = "pfauth";
+    $(".active").removeClass("active");
+    $("#pfauth__Authentication__el_btn_3").addClass("active");
+    apz.hide("pfauth__Authentication__sc_row_4");
+};
+apz.pfauth.Authentication.verifyOtp = function() {
+    debugger;
+    var enteredOtp = apz.getElmValue("pfauth__Authentication__enteredOtp");
+    if (apz.pfauth.Authentication.sParams.callBack) {
+        apz.pfauth.Authentication.sParams.callBack();
+    }
+    // if(enteredOtp == lOtpNumber){
+    //     var msg = {
+    //     'message': 'Profile is successfully verified',
+    //     "type":"S"
+    // };
+    // apz.dispMsg(msg);
+    // }else{
+    //     var msg = {
+    //     'message': 'OTP is incorrect. Please enter the correct otp number',
+    //     "type":"E"
+    // };
+    // apz.dispMsg(msg);
+    // }
+}
+apz.pfauth.Authentication.sendSMSCallBack = function(params) {
+    debugger;
+}

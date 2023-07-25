@@ -1,0 +1,9 @@
+{"tbDbmiBanklvlTxnLimit": {
+    "monthlyLmt": 3000000,
+    "dailyLmt": 300000,
+    "txnMinLmt": 500,
+    "txnMaxLmt": 2000000,
+    "txnType": "DEBIT",
+    "currency": "INR",
+    "channelId": "MBCH"
+}}

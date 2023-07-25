@@ -1,0 +1,23 @@
+apz.app.onLoad_Launcher = function(params){
+    debugger;
+    var action = params.data.actionscr;
+    var lparams ={}
+    lparams["appId"] = "bllpay"
+    if(action!=undefined){
+        if(action == "BP" && params.from == undefined ){
+              lparams["scr"] = "BillPaymentSummary";
+        } else if(action == "BP" && params.from == "favourites"){
+              lparams["scr"] = "ViewBillPayment";
+             
+        }else{
+            lparams["scr"] = "ViewOneTimeBillPaymeny";
+            
+        }
+    }
+    lparams["div"] = "bllpay__Launcher__launcher";
+    //params.control.exitApp.div = "bllpay__Launcher__launcher"
+    lparams["userObj"] = params;
+    
+    apz.launchSubScreen(lparams);
+    
+};

@@ -1,0 +1,82 @@
+{
+    "statementDetails": [
+        {
+          
+            "trnId": "",
+            "accountNo": "56XXXXXX01",
+            "trnDescription": "AEON",
+            "trnAmount": "3000",
+            "runningBalance": "50000",
+            "trnDate": "19/03/2020",
+            "drcrInd": "C",
+            "pageNo": ""
+        },
+        {
+           
+            "trnId": "",
+            "accountNo": "56XXXXXX01",
+            "trnDescription": "NEFT-56XXXXXX03",
+            "trnAmount": "4000",
+            "runningBalance": "46000",
+            "trnDate": "22/03/2020",
+            "drcrInd": "D",
+            "pageNo": ""
+        },
+        {
+           
+            "trnId": "",
+            "accountNo": "56XXXXXX01",
+            "trnDescription": "POS-Services",
+            "trnAmount": "245",
+            "runningBalance": "45755",
+            "trnDate": "21/03/2020",
+            "drcrInd": "C",
+            "pageNo": ""
+        },
+        {
+           
+            "trnId": "",
+            "accountNo": "56XXXXXX01",
+            "trnDescription": "NEFT-56XXXXXX04",
+            "trnAmount": "3000",
+            "runningBalance": "45755",
+            "trnDate": "15/03/2020",
+            "drcrInd": "C",
+            "pageNo": ""
+        },
+        {
+          
+            "trnId": "",
+            "accountNo": "56XXXXXX09",
+            "trnDescription": "NEFT-56XXXXXX03",
+            "trnAmount": "3000",
+            "runningBalance": "42755",
+            "trnDate": "19/03/2020",
+            "drcrInd": "C",
+            "pageNo": ""
+        },
+        {
+            
+            "trnId": "",
+            "accountNo": "56XXXXXX09",
+            "trnDescription": "NEFT-56XXXXXX08",
+            "trnAmount": "4000",
+            "runningBalance": "38755",
+            "trnDate": "24/03/2020",
+            "drcrInd": "D",
+            "pageNo": ""
+        },
+        {
+           
+            "trnId": "",
+            "accountNo": "56XXXXXX09",
+            "trnDescription": "POS-Services",
+            "trnAmount": "245",
+            "runningBalance": "38510",
+            "trnDate": "17/03/2020",
+            "drcrInd": "D",
+            "pageNo": ""
+        }
+    ]
+}
+ 

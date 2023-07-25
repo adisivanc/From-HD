@@ -1,0 +1,75 @@
+apz.services = {};
+apz.services.currentPositionFound = !1;
+apz.services.directionPosition = !1;
+var map = {};
+apz.services.mapkey = "dQV9yXLy7uFAP9qzGRJ02tGQQBnhIZfE";
+apz.services.updateMapHtmlOn = function(a) {
+    $("head").append('<meta http-equiv="X-UA-Compatible" content="IE=Edge" />');
+    $("head").append('$("head").append("<meta http-equiv="X-UA-Compatible" content="IE=Edge" />")');
+    $("#" + a).append('<div id="map" class="map" style="margin: 10px;height:330px;border: 1px solid grey;"></div>')
+};
+apz.services.configureMap = function() {
+    debugger;
+    tt.setProductInfo("Locator", "1.0");
+    tt.map({
+        key: apz.services.mapkey,
+        container: "map",
+        style: "tomtom://vector/1/basic-main"
+    });
+    navigator.geolocation ? navigator.geolocation.getCurrentPosition(apz.services.showPosition) : x.innerHTML =
+        "Geolocation is not supported by this browser."
+};
+apz.services.showPosition = function(a) {
+    debugger;
+    apz.services.currentCords = a.coords;
+    apz.services.initMap(a.coords.longitude, a.coords.latitude);
+    apz.services.currentPositionFound = !0
+};
+apz.services.initMap = function(a, b) {
+    map = tt.map({
+        key: apz.services.mapkey,
+        container: "map",
+        style: "tomtom://vector/1/basic-main",
+        center: [a, b],
+        zoom: 15
+    });
+    apz.services.directionPosition ? (apz.services.addMarker(apz.services.currentCords.longitude, apz.services.currentCords.latitude,
+        "Current location"), apz.services.addMarker(apz.services.destinationLong, apz.services.destinationLat, apz.services.destinationDesc)) : apz.services
+        .addMarker(a, b, "My current location");
+    $(".mapboxgl-ctrl-bottom-right").hide()
+};
+apz.services.addMarker = function(a, b, d) {
+    (new tt.Marker).setLngLat([a, b]).addTo(map).setPopup((new tt.Popup).setHTML(d))
+};
+apz.services.getDirection = function(a, b, d) {
+    debugger;
+    tt.services.calculateRoute({
+        key: apz.services.mapkey,
+        locations: apz.services.currentCords.longitude + "," + apz.services.currentCords.latitude + ":" + a + "," + b
+    }).go().then(function(c) {
+        c = c.toGeoJson();
+        map.addLayer({
+            id: "route",
+            type: "line",
+            source: {
+                type: "geojson",
+                data: c
+            },
+            paint: {
+                "line-color": "#95060C",
+                "line-width": 2
+            }
+        });
+        var e = new tt.LngLatBounds;
+        c.features[0].geometry.coordinates.forEach(function(f) {
+            e.extend(tt.LngLat.convert(f))
+        });
+        map.fitBounds(e, {
+            padding: 2
+        })
+    });
+    apz.services.directionPosition = !0;
+    apz.services.destinationLong = a;
+    apz.services.destinationLat = b;
+    apz.services.destinationDesc = d
+};

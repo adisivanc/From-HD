@@ -1,0 +1,5 @@
+username : isvirone_mms
+Database : isvirone_mms
+Password: d1#S6wFmvEq2
+
+Added user “isvirone_mms” with password “d1#S6wFmvEq2”. 

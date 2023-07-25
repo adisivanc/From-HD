@@ -1,0 +1,11 @@
+{
+    "transactionDetails":{
+        "customerId":"Customer01",
+        "creditCardNumber":"378282000000000",
+        "amount":"5000",
+        "dueDate":"2017-09-01",
+        "paymentDue":"2017-10-09",
+        "transactionId":"12345678",
+        "status":"true"
+    }
+}

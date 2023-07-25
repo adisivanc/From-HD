@@ -1,0 +1,228 @@
+apz.finant.CardFAT = {};
+apz.finant.CardFAT.sParams = {};
+apz.finant.CardFAT.activeIndex = 0;
+apz.finant.CardFAT.lStartDt;
+apz.finant.CardFAT.lEndDt;
+apz.finant.CardFAT.sGraphData = [];
+duplicates = [];
+apz.app.onLoad_CardFAT = function(params) {
+	$("#NBBA01__LandingPage__FinancialAnalyticsRow").removeClass("sno");
+	apz.finant.CardFAT.sParams = params;
+	apz.finant.CardFAT.fnInitialize();
+	apz.finant.CardFAT.fn_getMCCData();
+	apz.finant.CardFAT.fn_setRange("1", apz.lits['finant']['en']['LIT_LastOneMonth']);
+	window.setTimeout(function() {
+        apz.finant.CardFAT.fnInitialCarousel();
+    }, 1000);
+};
+apz.finant.CardFAT.fn_getMCCData = function() {
+	apz.startLoader();
+	var lreq = {};
+	lreq.tbMccMapping = {};
+	var lparam = {};
+	lparam.appId = 'finant';
+	lparam.ifaceName = 'GetMCCCodes';
+	lparam.req = lreq;
+	lparam.callBack = apz.finant.CardFAT.fn_getMCCDataCB;
+	lparam.async = false;
+	apz.server.callServer(lparam);
+};
+apz.finant.CardFAT.fn_getMCCDataCB = function(resp) {
+	apz.stopLoader();
+	if(resp.resFull.appzillonHeader.status) {
+		apz.finant.CardFAT.sMccCodes = resp.res.finant__GetMCCCodes_Res.tbMccMapping;
+	} else {
+		var lmsg = {
+			"message" : resp.resFull.appzillonErrors[0].errorMessage
+		};
+		apz.dispMsg(lmsg);
+	}
+};
+apz.app.onShown_CardFAT = function() {
+	$("body").addClass("ter");
+	$("body").removeClass("pri");
+};
+apz.finant.CardFAT.fnInitialize = function() {
+	var lContent = apz.finant.CardFAT.sParams.Param;
+	apz.data.scrdata.finant__CardFAT_Req = {};
+    var c = 0;
+    apz.data.scrdata.finant__CardFAT_Req.CardFATDetails = [];
+    var lArr = [];
+    if (lContent.Account[0].isthere == undefined) {
+        for (var i = 0; i < lContent.Account.length; i++) {
+            lArr[c] = {};
+            lArr[c].title = lContent.Account[i].AccountTitle;
+            lArr[c].number = lContent.Account[i].AccountNumber;
+            lArr[c].availBal = lContent.Account[i].AvailableBalance;
+            lArr[c].currency = lContent.Account[i].Currency;
+            lArr[c].heading = apz.lits['finant']['en']['LIT_AvailableBalance'];//"Available Balance";
+            lArr[c].type = "Account";
+            c++;
+        }
+    }
+    apz.data.buildData("CardFAT");
+    apz.data.scrdata.finant__CardFAT_Req.CardFATDetails = lArr;
+    apz.data.loadData("CardFAT", "finant");
+};
+apz.finant.CardFAT.fn_setRange = function(val, desc) {
+    apz.setElmValue("finant__CardFAT__setMonth", desc);
+    apz.setElmValue("finant__CardFAT__setPeriodVal", val);
+};
+apz.finant.CardFAT.fnInitialCarousel = function() {
+	apz.startLoader();
+    $("#finant__CardFAT__AccountsCarouselRow").addClass("swiper-container");
+    $("#finant__CardFAT__AccRowList").addClass("swiper-container");
+    $("#finant__CardFAT__AccRowList ul").removeClass("pri");
+    $("#finant__CardFAT__AccRowList ul").addClass("swiper-wrapper");
+    $("#finant__CardFAT__AccRowList ul > li").addClass("swiper-slide");
+    $("#finant__CardFAT__carouselPagination").addClass("swiper-pagination");
+    apz.finant.CardFAT.fnSlider();
+    apz.stopLoader();
+};
+apz.finant.CardFAT.fnSlider = function() {
+	var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        longSwipes: false,
+        initialSlide: 0,
+        loop: false,
+        touchMoveStopPropagation: true,
+        pagination: '.swiper-pagination',
+        onSlideChangeEnd: function(swiper) {
+            apz.finant.CardFAT.fn_setRange("1", apz.lits['finant']['en']['LIT_LastOneMonth']);
+            apz.finant.CardFAT.activeIndex = swiper.activeIndex;
+            apz.finant.CardFAT.fnShowGraphs(swiper.activeIndex);
+        }
+    });
+    apz.finant.CardFAT.fnShowGraphs(0);
+};
+apz.finant.CardFAT.fnShowGraphs = function(activeIndex) {
+	apz.startLoader();
+    apz.finant.CardFAT.fn_setData();
+    var accNo = apz.getElmValue("finant__CardFAT__i__CardFATDetails__number_" + activeIndex);
+    var lparam = {};
+    var lreq = {};
+    lreq.action = "CardFAT";
+    lreq.CardFAT = {};
+    lreq.CardFAT.StartDateTime = "20150101000000"; //apz.finant.AccountFAT.lStartDt;
+    lreq.CardFAT.EndDateTime = "20180101000000"; //apz.finant.AccountFAT.lEndDt;
+    lreq.CardFAT.CardNumber = "00210310670013" //accNo;
+    lparam.appId = "finant";
+    lparam.ifaceName = "GetFinAnalytics";
+    lparam.req = lreq;
+    lparam.async = true;
+    lparam.callBack = apz.finant.CardFAT.fn_GetFinCB;
+    apz.server.callServer(lparam);
+};
+apz.finant.CardFAT.fn_setData = function() {
+	var per = apz.getElmValue("finant__AccountFAT__setPeriodVal");
+    var lStartDt = new Date();
+    apz.finant.CardFAT.lStartDt = lStartDt.format('Ymdhms');
+    var lEndDt = new Date();
+    switch (per) {
+        case "1":
+            lEndDt.setDate(lEndDt.getDate() - 30);
+            lEndDt = Date.parse(lEndDt).format('Ymdhms');
+            apz.finant.CardFAT.lEndDt = lEndDt;
+            break;
+        case "2":
+            lEndDt.setDate(lEndDt.getDate() - 60);
+            lEndDt = Date.parse(lEndDt).format('Ymdhms');
+            apz.finant.CardFAT.lEndDt = lEndDt;
+            break;
+        case "3":
+            lEndDt.setDate(lEndDt.getDate() - 90);
+            lEndDt = Date.parse(lEndDt).format('Ymdhms');
+            apz.finant.CardFAT.lEndDt = lEndDt;
+            break;
+        case "4":
+            lEndDt.setDate(lEndDt.getDate() - 180);
+            lEndDt = Date.parse(lEndDt).format('Ymdhms');
+            apz.finant.CardFAT.lEndDt = lEndDt
+            break;
+    }
+};
+apz.finant.CardFAT.fn_GetFinCB = function(resp) {
+    apz.stopLoader();
+    if (resp.resFull.appzillonHeader.status) {
+        var lContent = resp.res.finant__GetFinAnalytics_Res.FinancialAnalytics.Transaction;
+        apz.finant.CardFAT.sGraphData = lContent;
+        apz.finant.CardFAT.fn_setGraphDetails(lContent);
+    } else {
+        var lmsg = {
+            "message" : resp.resFull.appzillonErrors[0].errorMessage
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.finant.CardFAT.fn_setGraphDetails = function(param) {
+	apz.data.scrdata.finant__Graph_Req = {};
+	apz.data.scrdata.finant__Graph_Req.AccountFATTransaction = param;
+	apz.data.loadData("Graph", "finant");
+};
+apz.app.updateChartBeforeRender = function(gcharttype, gchartdata, gfgp, lchart) {
+	if(chart.id == "finant__CardFAT__ct_cht_1") {
+		gchartdata.chart.doughnutRadius = 50;
+    	gchartdata.chart.pieRadius = 70;
+    	gchartdata.chart.centerLabelColor = "#F15A24";
+    	gchartdata.chart.defaultCenterLabel = "";
+    	gchartdata.chart.startingAngle = 60;
+    	gchartdata.chart.showLegend = 1;
+    	gchartdata.chart.formatNumberScale = 0;
+    	gchartdata.chart.formatNumber = 1;
+    	gchartdata.chart.showLabels = 0;
+    	gchartdata.chart.showValues = 0;
+    	gchartdata.chart.bgColor = "#ffffff";
+    	gchartdata.chart.showBorder = 0;
+    	gchartdata.chart.theme = 'fint';
+    	gchartdata.chart.paletteColors = "#E14F62, #00ACC1, #73B8FF, #FAAF3A, #3971A8, #E6E6E6, #1E2B35, #f05a23";
+    	gchartdata.data = apz.finant.CardFAT.fn_SetGraphData();
+    }
+};
+apz.finant.CardFAT.fn_SetGraphData = function() {
+    var data = [];
+    var dataVal = 0;
+    var lArr = {},
+        k = 0;
+    apz.finant.CardFAT.fn_getUniqueArr();
+    var lMixArr = [];
+    var lContent = apz.finant.CardFAT.sGraphData;
+    for (var i = 0; i < duplicates.length; i++) {
+        lMixArr[i] = {};
+        lMixArr[i].Spent_Type = duplicates[i];
+        lMixArr[i].Amount = 0;
+        for (var j = 0; j < lContent.length; j++) {
+            if (duplicates[i] == lContent[j].Spent_Type) {
+                lMixArr[i].Amount += lContent[j].Amount;
+            }
+        }
+    }
+    debugger
+    lArr.value = 0;
+    for (var k = 0; k < lMixArr.length; k++) {
+        if(lMixArr[k].Spent_Type == "Others" || lMixArr[k].Spent_Type == "") {
+            lArr.label = "Others";
+            lArr.value += lMixArr[k].Amount;
+        } else {
+            data[dataVal] = {};
+            data[dataVal].label = lMixArr[k].Spent_Type;
+            data[dataVal].value = lMixArr[k].Amount;
+            dataVal++;
+        }
+        }
+        data[dataVal] = {};
+        data[dataVal].label = lArr.label;
+        data[dataVal].value = lArr.value;
+	return data;
+};
+apz.finant.CardFAT.fn_getUniqueArr = function() {
+    debugger
+    var origData = apz.finant.CardFAT.sGraphData;
+    duplicates = [];
+    for (var i = 0; i < origData.length; i++) {
+        if ((duplicates.lastIndexOf(origData[i].Spent_Type) != i) && (duplicates.indexOf(origData[i].Spent_Type) == -1)) {
+            duplicates.push(origData[i].Spent_Type);
+        }
+    }
+};

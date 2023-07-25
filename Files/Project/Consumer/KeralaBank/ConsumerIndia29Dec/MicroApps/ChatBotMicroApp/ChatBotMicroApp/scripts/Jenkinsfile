@@ -1,0 +1,42 @@
+pipeline {
+	agent any
+	tools {
+		maven 'LocalMaven'
+	}
+	
+    stages {
+		stage('Build') {
+			steps {
+				echo 'Copying the apzscript file to JavaScript file for the scanner to process.'
+				bat "copy *.apzscript *.js"
+				echo 'JavaScript Build Not Required'
+			}
+		}
+
+		stage('Sonar Qube') {
+			environment {
+				scannerHome = tool 'JavaSonarQuberRunner'
+			}
+			
+			steps {
+				echo 'SonarQube Analysis starting'
+				withSonarQubeEnv('LocalSonar') {
+					bat "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ChatbotMicroApp -Dsonar.projectName=ChatbotMicroApp -Dsonar.projectVersion=1.0 -Dsonar.sources=."
+				}
+				echo 'SonarQube Analysis completed'
+			}			
+		}
+		
+		stage('Test') {
+			steps {
+				echo 'Testing is not enabled'
+			}
+		}
+		
+		stage('Deploy') {
+			steps {
+				echo 'Deployment is not enabled'
+			}			
+		}
+	}
+}

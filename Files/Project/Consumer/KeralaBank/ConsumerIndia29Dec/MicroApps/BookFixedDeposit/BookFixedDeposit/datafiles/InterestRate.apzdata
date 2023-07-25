@@ -1,0 +1,21 @@
+{
+    "bookfd__InterestRate_Res": {
+        "InterestRate": [{
+            "amount": "Upto 100,000",
+            "tenor": "30 Days",
+            "interestRate": "5.00"
+        }, {
+            "amount": "Upto 100,000",
+            "tenor": "60 Days",
+            "interestRate": "5.50"
+        }, {
+            "amount": "Upto 100,000",
+            "tenor": "270 Days",
+            "interestRate": "6.00"
+        }, {
+            "amount": "Upto 100,000",
+            "tenor": ">365 Days",
+            "interestRate": "6.50"
+        }]
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "tbDbmiCorpExternalAccounts": [{
+        "accountNumber": "123456789",
+        "bankName": "HDFC",
+        "bicCode": "hdfc4563",
+        "statementType": "MYC12",
+        "frequency": "Monthly"
+    }, {
+        "accountNumber": "1234567823",
+        "bankName": "Axis",
+        "bicCode": "hdfc4563",
+        "statementType": "MYC12",
+        "frequency": "Monthly"
+    }, {
+        "accountNumber": "904523789",
+        "bankName": "SBI",
+        "bicCode": "hdfc4563",
+        "statementType": "MYC12",
+        "frequency": "Monthly"
+    }]
+}

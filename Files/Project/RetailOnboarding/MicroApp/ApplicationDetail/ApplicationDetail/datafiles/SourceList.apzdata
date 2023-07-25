@@ -1,0 +1,14 @@
+[
+    {
+        "SourceType": "Salary"
+    },
+    {
+        "SourceType": "Business Income"
+    },
+    {
+        "SourceType": "Investment"
+    },
+    {
+        "SourceType": "Inheritance"
+    }
+]

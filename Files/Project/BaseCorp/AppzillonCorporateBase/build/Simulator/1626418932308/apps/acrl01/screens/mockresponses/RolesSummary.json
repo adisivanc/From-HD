@@ -1,0 +1,28 @@
+{
+    "tbDbmiCorpRoleMaster": [
+        {
+            "corporateId": "CITI001",
+            "roleId": "Admin",
+            "roleDescription": "Admin For DB maintenance",
+            "versionNo": "",
+            "makerId": "Robert",
+            "makerTs": "11-12-2017 12:10:05"
+        },
+        {
+            "corporateId": "CITI001",
+            "roleId": "Loan Officer",
+            "roleDescription": "Loan Officer For Bank ",
+            "versionNo": "",
+            "makerId": "Robert",
+            "makerTs": "11-12-2017 12:10:05"
+        },
+        {
+            "corporateId": "CITI001",
+            "roleId": "Customer Support Officer",
+            "roleDescription": "Customer Support Officer For Bank",
+            "versionNo": "",
+            "makerId": "Robert",
+            "makerTs": "11-12-2017 12:10:05"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{"chqsts__AccountDetails_Res":{
+   "SavingsAccount": [{
+                "accountNo": "100009312263",
+                "accountBal": "50000",
+                "accountBrnName": "One Wall Street,New York",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }, {
+                "accountNo": "100009312401",
+                "accountBal": "60000",
+                "accountBrnName": "One Wall Street,New York",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }],
+            "CurrentAccount": [{
+                "accountNo": "100009312274",
+                "accountBal": "65000",
+                "accountBrnName": "One Wall Street,New York",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }]
+}}

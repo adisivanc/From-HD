@@ -1,0 +1,850 @@
+apz.appdtl.PersonalDetails = {};
+apz.appdtl.PersonalDetails.RekycDetils = {};
+apz.appdtl.PersonalDetails.documentType = "";
+apz.appdtl.PersonalDetails.isMasked = true;
+isEmiratesIdUpload = false;
+isPassportUpload = false;
+isNationalIDUpload = false;
+isBangladeshIDUpload = false;
+apz.app.onLoad_PersonalDetails = function(params) {
+    //var lRefNo = "1";
+    apz.appdtl.PersonalDetails.sCache = params;
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo", params.refNo);
+    $("#navigation_" + apz.flowNo).removeClass("sno");
+    $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+        $(this).removeClass("active");
+    })
+    $("#navigation_" + apz.flowNo + ",#navgtn__MobileNavigation__ct_lst_2_row_" + apz.flowNo).addClass("active");
+    if (apz.country === "IND" || apz.country === "UAE" || apz.country === "UGA" || apz.country === "BD") {
+        var typeOfId = JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/" + apz.country + "typeofID.json"));
+        apz.populateDropdown($("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__typeOfID")[0], typeOfId)
+    }
+    if (apz.deviceGroup == "Mobile") {
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__title_ul").addClass("sno");
+        $("#appdtl__PersonalDetails__rowTitle").removeClass("sno");
+    } else {
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__title_ul").removeClass("sno");
+        $("#appdtl__PersonalDetails__rowTitle").addClass("sno");
+    }
+    if (params.idCapture) {
+        apz.checkExistingCustomer = "n";
+        $("#navgtn__Navigator__el_btn_3").removeAttr("disabled");
+        apz.appdtl.PersonalDetails.fnOpenSelfieCapture()
+    }
+    apz.appdtl.PersonalDetails.fetchApplicationDetails();
+};
+apz.appdtl.PersonalDetails.fnLaunchDeclarationScr = function() {
+    var params = {};
+    params.appId = "declar";
+    params.scr = "Launcher";
+    params.div = "appdtl__PersonalDetails__declaration_Launcher",
+    params.userObj = {
+        "callback": apz.appdtl.PersonalDetails.fnShowConfirmation
+    }
+    apz.launchApp(params);
+}
+apz.app.onShown_PersonalDetails = function(params) {
+    $("#navgtn__Navigator__el_btn_2").addClass("sno");
+}
+apz.appdtl.PersonalDetails.fnPaintScreenData = function(response, params) {
+    debugger;
+    response.dob = apz.formatDate({
+        val: response.dob,
+        fromFormat: "yyyy-MM-dd",
+        toFormat: apz.dateFormat
+    });
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.gender = response.gender;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.lname = response.lname;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.fname = response.fname;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.nationality = response.nationality;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.dob = response.dob
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.passportNo = response.passportNo;
+    apz.appdtl.PersonalDetails.fnValidateExpiryDeta(response.passportExpiryDate);
+}
+apz.appdtl.PersonalDetails.fnAadharVerify = function() {
+    $("#appdtl__PersonalDetails__pu_mdl_1_close").click();
+    var addharDetails = JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/AadharVerify.json"));
+    apz.appdtl.PersonalDetails.fnAadharVerifyCB(addharDetails);
+}
+apz.appdtl.PersonalDetails.fnAadharVerifyCB = function(lParam) {
+    apz.appdtl.PersonalDetails.AadharDetails = lParam.out_msg
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.fname = apz.appdtl.PersonalDetails.AadharDetails.name;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.gender = apz.appdtl.PersonalDetails.AadharDetails.gender;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.dob = apz.appdtl.PersonalDetails.AadharDetails.dateOfBirth;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.fatherName = apz.appdtl.PersonalDetails.AadharDetails.careOf;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.addressLine1 = apz.appdtl.PersonalDetails.AadharDetails.hoNumber;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.addressLine2 = apz.appdtl.PersonalDetails.AadharDetails.street;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.addressLine3 = apz.appdtl.PersonalDetails.AadharDetails.postOffice;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.city = apz.appdtl.PersonalDetails.AadharDetails.district;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.state = apz.appdtl.PersonalDetails.AadharDetails.state;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.pin = apz.appdtl.PersonalDetails.AadharDetails.pinCode;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.nid = apz.getElmValue(
+        "appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid");
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.virtualAadhaarNo = apz.getElmValue(
+        "appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__virtualAadhaarNo");
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.countryCode = apz.country;
+    if (apz.appdtl.PersonalDetails.AadharDetails.gender === "M") {
+        apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.title = "Mr."
+    } else if (apz.appdtl.PersonalDetails.AadharDetails.gender === "F") {
+        apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.title = "Mrs."
+    }
+    apz.data.loadData("ApplicationInfoDB", "appdtl");
+}
+apz.appdtl.PersonalDetails.fetchApplicationDetails = function() {
+    debugger;
+    apz.startLoader();
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "async": false,
+        "callBack": apz.appdtl.PersonalDetails.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.PersonalDetails.fetchApplicationDetailsCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    if (apz.appdtl.PersonalDetails.sCache.idCapture) {
+        apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster = apz.applicationDetails;
+        apz.data.loadData("ApplicationInfoDB", "appdtl");
+        apz.appdtl.PersonalDetails.sCache.idCapture = false;
+    }
+    if (apz.appdtl.PersonalDetails.sCache.countryCode && apz.appdtl.PersonalDetails.sCache.countryCode !== "") {
+        apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__countryCode", apz.appdtl.PersonalDetails.sCache.countryCode);
+    } else {
+        apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__countryCode", apz.country);
+    }
+    if (pResp.errors == undefined && pResp.status) {
+        apz.country = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__countryCode");
+        apz.panNo = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo");
+        var getGender = pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.gender;
+        if (getGender == "M") {
+            $("#appdtl__PersonalDetails__btnMale").addClass("current");
+        } else if (getGender == "F") {
+            $("#appdtl__PersonalDetails__btnFemale").addClass("current");
+        } else if (getGender == "O") {
+            $("#appdtl__PersonalDetails__btnOthers").addClass("current");
+        }
+        var title = pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.title;
+        if (title == "Mr.") {
+            $("#appdtl__PersonalDetails__btnMr").addClass("current");
+        } else if (title == "Mrs.") {
+            $("#appdtl__PersonalDetails__btnMrs").addClass("current");
+        } else if (title == "Ms.") {
+            $("#appdtl__PersonalDetails__btnMs").addClass("current");
+        }
+        if (apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__currentResidentYear") == "0") {
+            apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__currentResidentYear", "");
+        }
+        if (apz.country === "IND") {
+            if (apz.indainflowType === "eKYC") {
+                $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid_grp_lbl").html(apz.lits.appdtl[apz.language].LIT_AADHAAR_NO);
+                $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid").attr("placeholder", apz.lits.appdtl[apz.language].LIT_AADHAAR_NO);
+                $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__virtualAadhaarNo_ul").removeClass("sno");
+            } else {
+                $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid_grp_lbl").html(apz.lits.appdtl[apz.language].LIT_ID_NUMBER);
+                $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid").attr("placeholder", apz.lits.appdtl[apz.language].LIT_ID_NUMBER);
+            }
+            $("#appdtl__PersonalDetails__sc_col_51").removeClass("sno");
+            $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo_button").html("<span>" + apz.lits.appdtl[apz.language].LIT_VERIFY +
+                "</span>");
+            if (apz.panVerified) {
+                $("#appdtl__PersonalDetails__sc_row_30").removeClass("sno");
+                apz.setElmValue("appdtl__PersonalDetails__el_txt_4", apz.lits.appdtl[apz.language].LIT_NAME_PAN);
+                var successIcon = $("#appdtl__PersonalDetails__el_icn_1").clone();
+                $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo_button").html(successIcon);
+            }
+        } else if (apz.country === "US") {
+            $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid_grp_lbl").html(apz.lits.appdtl[apz.language].LIT_SSN_NO);
+            $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid").attr("placeholder", apz.lits.appdtl[apz.language].LIT_SSN_NO);
+        } else if (apz.country === "UAE") {
+            $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid_grp_lbl").html(apz.lits.appdtl[apz.language].LIT_EMIRATES_ID);
+            $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid").attr("placeholder", apz.lits.appdtl[apz.language].LIT_EMIRATES_ID);
+        }
+        apz.setElmValue("apzonb__Navigator__el_dpd_1_ext", apz.country);
+        apz.setElmValue("apzonb__Navigator__el_img_2", apz.country + ".png");
+    }
+    if (apz.appdtl.PersonalDetails.sCache.callOCR) {
+        apz.appdtl.PersonalDetails.encodedImage = apz.frontsideImage;
+        apz.appdtl.PersonalDetails.fnDoLogin();
+    }
+    if (apz.checkExistingCustomer == "y") {
+        var ExistingCustomerDetails = "";
+        apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid", apz.kycId);
+        if (apz.kycType == "norekyc") {
+            ExistingCustomerDetails = JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/ExistingCustomerDetails.json"));
+            apz.appdtl.PersonalDetails.fnPaintExistingCustomerDetails(ExistingCustomerDetails);
+        }
+        if (apz.kycType == "rekyc") {
+            ExistingCustomerDetails = JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/ExistingCustomerDetailsRekyc.json"));
+            apz.appdtl.PersonalDetails.fnPaintExistingCustomerDetails(ExistingCustomerDetails);
+            apz.appdtl.PersonalDetails.fnShowKYCExpiredModal();
+        }
+    }
+}
+apz.appdtl.PersonalDetails.fnRestrictSSN = function(el, digit) {
+    debugger;
+    if (apz.country === "US") {
+        var digits = el.value.match(/d{1,9}/) || [""];
+        el.value = digits[0];
+    } else if (apz.country === "IND" && apz.indainflowType === "eKYC") {
+        var regex = new RegExp("\\d{1," + digit + "}");
+        var digits = el.value.match(regex) || [""];
+        el.value = digits[0];
+    }
+    //apz.appdtl.PersonalDetails.RekycDetils.nid = el.value;
+}
+apz.appdtl.PersonalDetails.fnFetchDetails = function() {
+    debugger;
+    var nid = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid")
+    if (nid === "ONB12345" || apz.country === "US") {
+        apz.appdtl.PersonalDetails.fnFetchDetailsCB();
+    } else {
+        $("#appdtl__PersonalDetails__gr_col_8").removeClass("sno");
+        if (apz.country === "IND" && apz.indainflowType === "eKYC") {
+            apz.appdtl.PersonalDetails.fnLaunchDeclarationScr();
+        } else {
+            apz.appdtl.PersonalDetails.fnLaunchScanModal();
+        }
+    }
+}
+apz.appdtl.PersonalDetails.fnShowAadhaarOtp = function() {
+    apz.dispMsg({
+        "message": "Please enter the OTP sent to the mobile number registered with UIDAI.",
+        "type": "P",
+        "callBack": apz.appdtl.PersonalDetails.fnAadharVerify
+    })
+    $(".dialog").find("input:first").attr("onkeyup", "apz.appdtl.PersonalDetails.fnFloatMobileNo(this)");
+    $(".dialog").find("input:first").attr("type", "password")
+}
+apz.appdtl.PersonalDetails.fnLaunchScanModal = function() {
+    if (apz.country === "IND" && apz.indainflowType === "eKYC") {
+        apz.toggleModal({
+            "targetId": "appdtl__PersonalDetails__pu_mdl_1"
+        })
+        if (apz.deviceOs !== "WEB" && apz.deviceOs !== "SIMULATOR") {
+            $("#appdtl__PersonalDetails__sc_col_74,#appdtl__PersonalDetails__sc_col_76").removeClass("sno")
+        }
+    } else if (apz.deviceOs !== "WEB" && apz.deviceOs !== "SIMULATOR") {
+        if (apz.deviceOs === "ANDROID") {
+            $("#appdtl__PersonalDetails__sc_col_57").addClass("sno");
+            $("#appdtl__PersonalDetails__sc_col_81").removeClass("sno");
+        }
+        if (apz.country === "UK" || apz.country === "BD" || apz.country === "UGA") {
+            $("#appdtl__PersonalDetails__sc_col_59").addClass("sno");
+        } else if (apz.country === "UAE") {
+            $("#appdtl__PersonalDetails__sc_col_60").addClass("sno");
+        } else if (apz.country === "IND") {
+            $("#appdtl__PersonalDetails__sc_col_59,#appdtl__PersonalDetails__sc_col_60").addClass("sno");
+        }
+        apz.toggleModal({
+            "targetId": "appdtl__PersonalDetails__scan_option"
+        })
+    } else {
+        if (apz.country === "IND") {
+            apz.appdtl.PersonalDetails.fnAadharVerify();
+        } else if (apz.country === "UK" || apz.country === "BD") {
+            apz.appdtl.PersonalDetails.fnUploadFile("OCR");
+        }
+    }
+}
+apz.appdtl.PersonalDetails.fnShowConfirmation = function() {
+    $("#appdtl__PersonalDetails__gr_col_8").addClass("sno");
+    apz.appdtl.PersonalDetails.fnLaunchScanModal();
+}
+apz.appdtl.PersonalDetails.fnFetchDetailsCB = function(pResp) {
+    var lFetchedJSON = JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/SSNDetails.json"));
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster = {};
+    var scrData = apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster;
+    scrData.nid = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid");
+    scrData.addressLine1 = lFetchedJSON.addressLine1;
+    scrData.addressLine2 = lFetchedJSON.addressLine2;
+    scrData.addressLine3 = lFetchedJSON.addressLine3;
+    scrData.city = lFetchedJSON.city;
+    scrData.dob = lFetchedJSON.dob;
+    scrData.fname = lFetchedJSON.fname;
+    scrData.gender = lFetchedJSON.gender;
+    scrData.lname = lFetchedJSON.lname;
+    scrData.maritalStatus = lFetchedJSON.maritalStatus;
+    scrData.mname = lFetchedJSON.mname;
+    scrData.nationality = lFetchedJSON.nationality;
+    scrData.pin = lFetchedJSON.pin;
+    scrData.state = lFetchedJSON.state;
+    scrData.title = lFetchedJSON.title;
+    scrData.countryCode = apz.country;
+    apz.data.loadData("ApplicationInfoDB", "appdtl");
+}
+apz.appdtl.PersonalDetails.fnScanAadhaar = function() {
+    $("#appdtl__PersonalDetails__scan_option_close").click();
+    apz.appdtl.PersonalDetails.fnScanDocuments();
+}
+apz.appdtl.PersonalDetails.fnUploadFile = function(docType) {
+    if (apz.country === "UGA") {
+        isNationalIDUpload = true;
+        apz.startLoader();
+        apz.appdtl.PersonalDetails.saveApplicationDetails();
+    } else if (apz.country === "BD") {
+        isBangladeshIDUpload = true;
+        apz.startLoader();
+        apz.appdtl.PersonalDetails.saveApplicationDetails();
+    } else {
+        apz.appdtl.PersonalDetails.documentType = docType;
+        $("#appdtl__PersonalDetails__scan_option_close").click();
+        if (apz.deviceType === "ANDROID") {
+            apz.appdtl.PersonalDetails.fnOpenCamera();
+        } else {
+            $("#appdtl__PersonalDetails__el_fil_1").click();
+        }
+    }
+}
+apz.appdtl.PersonalDetails.fnJumio = function() {
+    apz.isJumioChecked = true;
+    $("#appdtl__PersonalDetails__scan_option_close").click();
+    var json = {};
+    json.id = "NATIVE";
+    json.callBack = apz.appdtl.PersonalDetails.fnJumioCB;
+    apz.ns.nativeServiceExt(json);
+}
+apz.appdtl.PersonalDetails.fnJumioCB = function(params) {
+    $("#navgtn__Navigator__el_btn_3").removeAttr("disabled");
+    if (params.scanReferenceNumber) {
+        apz.docRefNo = params.scanReferenceNumber;
+        var scrData = apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster;
+        var documentDetails = params.documentData;
+        scrData.fname = documentDetails['First Name'];
+        scrData.lname = documentDetails['Last Name'];
+        scrData.passportExpiryDate = apz.formatDate({
+            val: documentDetails['Expiry Date'].split(" ")[0],
+            fromFormat: "dd/MM/yyyy",
+            toFormat: apz.dateFormat
+        });
+        scrData.dob = apz.formatDate({
+            val: documentDetails['dob'].split(" ")[0],
+            fromFormat: "dd/MM/yyyy",
+            toFormat: apz.dateFormat
+        });
+        if (documentDetails['Gender'] === "male") {
+            scrData.gender = "M";
+            scrData.title = "Mr.";
+        } else {
+            scrData.gender = "F";
+            scrData.title = "Ms.";
+        }
+        if (documentDetails['Document Type'] === "ID") {
+            scrData.typeOfID = "Resident Identity Card";
+        } else if (documentDetails['Document Type'] === "PP") {
+            scrData.typeOfID = "Passport";
+        } else {
+            scrData.typeOfID = "Driver’s License"
+        }
+        scrData.passportNo = documentDetails['ID Number'];;
+        scrData.issuePlace = documentDetails['Issuing Country'];
+        scrData.nid = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid");
+        scrData.countryCode = apz.country;
+        scrData.passportExpiryDate = apz.formatDate({
+            val: documentDetails['Expiry Date'].split(" ")[0],
+            fromFormat: "dd/MM/yyyy",
+            toFormat: apz.dateFormat
+        })
+        apz.data.loadData("ApplicationInfoDB", "appdtl");
+        //apz.appdtl.PersonalDetails.fnValidateExpiryDeta(expiryDate);
+    } else {
+        apz.dispMsg({
+            "message": "We have not configured this option for this demo"
+        })
+    }
+}
+apz.appdtl.PersonalDetails.saveApplicationDetails = function() {
+    debugger;
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo", apz.refNo);
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Modify",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "async": false,
+        "callBack": apz.appdtl.PersonalDetails.saveApplicationDetailsCB
+    };
+    apz.server.callServer(lParams);
+};
+apz.appdtl.PersonalDetails.saveApplicationDetailsCB = function(pResp) {
+    debugger;
+    apz.applicationDetails = jQuery.extend(true, {}, pResp.req.tbDbmiCustomerMaster);
+    if (isEmiratesIdUpload) {
+        apz.appdtl.PersonalDetails.fnLaunchEmiratesUpload();
+    } else if (isPassportUpload) {
+        apz.appdtl.PersonalDetails.fnLaunchPassportUpload();
+    } else if (isNationalIDUpload) {
+        apz.appdtl.PersonalDetails.fnLaunchNationalIDUpload();
+    } else if (isBangladeshIDUpload) {
+        apz.appdtl.PersonalDetails.sCache.fileType = "Bangladesh ID";
+        apz.appdtl.PersonalDetails.fnOCRLauncher();
+    } else {
+        apz.checkExistingCustomer = "n";
+        $("#navgtn__Navigator__el_btn_2").removeClass("sno");
+        apz.navgtn.Navigator.fnLaunchApp();
+    }
+}
+apz.appdtl.PersonalDetails.fnToggleMaskedValue = function() {
+    debugger;
+    if (apz.appdtl.PersonalDetails.isMasked) {
+        apz.appdtl.PersonalDetails.isMasked = false;
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid").attr("type", "text");
+    } else {
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid").attr("type", "password");
+        apz.appdtl.PersonalDetails.isMasked = true;
+    }
+}
+apz.appdtl.PersonalDetails.fnShowUploadModal = function() {
+    apz.ocrapp.ScanAndUpload.fnUploadDoc();
+}
+apz.appdtl.PersonalDetails.fnVerifyPan = function() {
+    var panNo = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo");
+    if (!apz.isNull(panNo)) {
+        var panRegex = new RegExp("^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$");
+        var isPanValid = panRegex.test(panNo);
+        apz.startLoader();
+        setTimeout(function() {
+            apz.stopLoader();
+            if (isPanValid) {
+                $("#appdtl__PersonalDetails__sc_row_30").removeClass("sno");
+                apz.setElmValue("appdtl__PersonalDetails__el_txt_4", apz.lits.appdtl[apz.language].LIT_NAME_PAN);
+                $("#appdtl__PersonalDetails__el_txt_4").removeClass("err");
+                $("#appdtl__PersonalDetails__el_txt_4").addClass("suc");
+            } else {
+                $("#appdtl__PersonalDetails__sc_row_30").removeClass("sno");
+                apz.setElmValue("appdtl__PersonalDetails__el_txt_4", apz.lits.appdtl[apz.language].LIT_PAN_INVALID);
+                $("#appdtl__PersonalDetails__el_txt_4").removeClass("suc");
+                $("#appdtl__PersonalDetails__el_txt_4").addClass("err");
+            }
+        }, 1000)
+    } else {
+        apz.dispMsg({
+            message: "Please enter your PAN"
+        })
+    }
+}
+apz.appdtl.PersonalDetails.fnVerifyPanCB = function(sParam) {
+    debugger;
+    if (!apz.isNull(sParam.res)) {
+        var PanRes = sParam.res.appdtl__PanVerify_Res.out_msg.Response
+        if (PanRes == "success") {
+            apz.panVerified = true;
+            $("#appdtl__PersonalDetails__sc_row_30").removeClass("sno");
+            apz.setElmValue("appdtl__PersonalDetails__el_txt_4", apz.lits.appdtl[apz.language].LIT_NAME_PAN);
+            $("#appdtl__PersonalDetails__el_txt_4").removeClass("err");
+            $("#appdtl__PersonalDetails__el_txt_4").addClass("suc");
+        }
+    } else {
+        $("#appdtl__PersonalDetails__sc_row_30").removeClass("sno");
+        apz.setElmValue("appdtl__PersonalDetails__el_txt_4", apz.lits.appdtl[apz.language].LIT_PAN_INVALID);
+        $("#appdtl__PersonalDetails__el_txt_4").removeClass("suc");
+        $("#appdtl__PersonalDetails__el_txt_4").addClass("err");
+    }
+}
+apz.appdtl.PersonalDetails.fnOpenCamera = function() {
+    var jsonobj = {
+        "zoomLevel": "20",
+        "targetWidth": "200",
+        "targetHeight": "200",
+        "crop": "N", //Y or N
+        "flash": "N",
+        "action": "base64", // save,base64
+        "fileName": "Identity_Image",
+        "quality": "50",
+        "encodingType": "JPG",
+        "sourceType": "photo" // photo
+    };
+    jsonobj.id = "CAMERA_ID";
+    jsonobj.callBack = apz.appdtl.PersonalDetails.fnGetBase64;
+    apz.ns.openCamera(jsonobj);
+}
+apz.appdtl.PersonalDetails.fnGetBase64 = function(params) {
+    apz.appdtl.PersonalDetails.encodedImage = params.encodedImage;
+    if (apz.appdtl.PersonalDetails.documentType === "OCR") {
+        apz.appdtl.PersonalDetails.fnDoLogin();
+    } else {}
+}
+apz.appdtl.PersonalDetails.fnGetNationalId = function(pthis) {
+    apz.startLoader();
+    let fileObj = pthis.files[0];
+    let apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        let binaryStr = apzFileReader.result;
+        apz.appdtl.PersonalDetails.encodedImage = binaryStr.split(",").pop();
+        if (apz.appdtl.PersonalDetails.documentType === "OCR") {
+            apz.appdtl.PersonalDetails.fnDoLogin();
+        } else {}
+        $("#" + pthis.id).val("");
+    }
+    apzFileReader.readAsDataURL(fileObj);
+}
+apz.appdtl.PersonalDetails.fnDoLogin = function() {
+    apz.startLoader();
+    apz.server.login({
+        "userId": "admin",
+        "pwd": "admin",
+        "callBack": apz.appdtl.PersonalDetails.fnCallOCR
+    })
+}
+apz.appdtl.PersonalDetails.fnCallOCR = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "NationalID_OCR",
+        "buildReq": "N",
+        "appId": "appdtl",
+        "paintResp": "N",
+        "async": false,
+        "req": {
+            "document_type": "NATIONAL_ID",
+            "document_id": "National_Id_Bangaladesh",
+            "image_source": "camera",
+            "image_type": "BASE64",
+            "data": apz.appdtl.PersonalDetails.encodedImage
+        },
+        "callBack": apz.appdtl.PersonalDetails.fnCallOCRcb
+    };
+    apz.server.callServer(lParams);
+}
+apz.appdtl.PersonalDetails.fnCallOCRcb = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    if (!pResp.status) {
+        apz.dispMsg({
+            message: "OCR service is down."
+        })
+    } else {
+        var result = pResp.res.appdtl__NationalID_OCR_Res.extracted_entities;
+        var name, dob, nid;
+        for (var i = 0, len = result.length; i < len; i++) {
+            if (result[i].name === "name") {
+                name = result[i].value;
+            } else if (result[i].name === "date_of_birth") {
+                dob = result[i].value;
+            } else if (result[i].name === "id_no") {
+                nid = result[i].value;
+            }
+        }
+        var scrData = apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster;
+        try {
+            scrData.fname = name.split(" ")[0] + " " + name.split(" ")[1];
+            scrData.lname = name.split(" ")[2];
+            scrData.nid = nid.split(" ")[0];
+            scrData.passportNo = nid.split(" ")[0];
+            scrData.typeOfID = "National ID";
+            scrData.dob = apz.formatDate({
+                val: dob,
+                fromFormat: "dd MMM yyyy",
+                toFormat: apz.dateFormat
+            });
+            scrData.countryCode = apz.country;
+            apz.data.loadData("ApplicationInfoDB", "appdtl");
+        } catch (e) {
+            apz.dispMsg({
+                message: "Error in data extraction."
+            })
+        }
+        if (apz.deviceOs !== "WEB" && apz.deviceOs !== "SIMULATOR") {
+            apz.appdtl.PersonalDetails.fnOpenSelfieCapture();
+        }
+    }
+}
+apz.appdtl.PersonalDetails.fnScanDocuments = function() {
+    debugger;
+    var ljson = {};
+    ljson.id = "BARCODE_ID";
+    ljson.callBack = apz.appdtl.PersonalDetails.fnscanBarcodeCallback;
+    ljson.callBackObj = this;
+    apz.ns.startBarcodeScan(ljson);
+}
+apz.appdtl.PersonalDetails.fnscanBarcodeCallback = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        apz.ns.stopBarcodeScan({
+            "id": "BARCODE_ID"
+        });
+    }
+    try {
+        var decodedresult = pResp.text;
+        var lXmlStr = JSON.stringify(decodedresult);
+        var uidCount = lXmlStr.indexOf("uid=");
+        lXmlStr = lXmlStr.substr(uidCount);
+        lXmlStr = lXmlStr.replace(/\s/g, '').replace(/((=\\"))/g, '":"').replace(/((\\"))/g, '","');
+        lXmlStr = lXmlStr.substring(0, lXmlStr.length - 6);
+        var aadhaarDetails = JSON.parse('{"' + lXmlStr + '"}');
+        var scrData = apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster;
+        scrData.nid = aadhaarDetails.uid;
+        var name = aadhaarDetails.name.split(/(?=[A-Z])/);
+        scrData.fname = name.slice(0, name.length - 1).join(" ");
+        scrData.lname = name[name.length - 1];
+        scrData.addressLine1 = aadhaarDetails.lm;
+        scrData.addressLine2 = aadhaarDetails.loc;
+        scrData.addressLine3 = aadhaarDetails.po;
+        scrData.city = aadhaarDetails.dist;
+        scrData.state = aadhaarDetails.state;
+        scrData.pin = aadhaarDetails.pc;
+        scrData.nationality = "Indian";
+        scrData.gender = aadhaarDetails.gender;
+        if (aadhaarDetails.gender === "M") {
+            scrData.title = "Mr.";
+        } else {
+            scrData.title = "Ms.";
+        }
+        if (aadhaarDetails.dob) {
+            scrData.dob = apz.formatDate({
+                val: aadhaarDetails.dob,
+                fromFormat: "dd/MM/yyyy",
+                toFormat: apz.dateFormat
+            });
+        }
+        scrData.countryCode = apz.country;
+        apz.data.loadData("ApplicationInfoDB", "appdtl");
+    } catch (e) {
+        alert('Error in Reading' + e);
+    }
+}
+apz.appdtl.PersonalDetails.fnFloatMobileNo = function(el) {
+    var digits = el.value.match(/\d{1,10}/) || [""];
+    el.value = digits[0];
+}
+apz.appdtl.PersonalDetails.fnGetPanNo = function(el) {
+    var panNo = apz.getElmValue(el.id);
+    apz.panNo = panNo;
+}
+apz.appdtl.PersonalDetails.fnEmiratesIdUpload = function() {
+    debugger;
+    isEmiratesIdUpload = true;
+    apz.startLoader();
+    apz.appdtl.PersonalDetails.saveApplicationDetails();
+}
+apz.appdtl.PersonalDetails.fnPassportUpload = function() {
+    debugger;
+    isPassportUpload = true;
+    apz.startLoader();
+    apz.appdtl.PersonalDetails.saveApplicationDetails();
+}
+apz.appdtl.PersonalDetails.fnLaunchNationalIDUpload = function() {
+    apz.appdtl.PersonalDetails.sCache.fileType = "Uganda ID";
+    apz.appdtl.PersonalDetails.fnOCRLauncher();
+}
+apz.appdtl.PersonalDetails.fnLaunchPassportUpload = function() {
+    apz.appdtl.PersonalDetails.sCache.fileType = "Passport";
+    apz.appdtl.PersonalDetails.fnOCRLauncher();
+}
+apz.appdtl.PersonalDetails.fnLaunchEmiratesUpload = function() {
+    apz.appdtl.PersonalDetails.sCache.fileType = "Emirates ID";
+    apz.appdtl.PersonalDetails.fnOCRLauncher();
+}
+apz.appdtl.PersonalDetails.fnOCRLauncher = function() {
+    debugger;
+    apz.appdtl.PersonalDetails.sCache.idCapture = false;
+    var lparams = {};
+    lparams.appId = "docdtl";
+    lparams.scr = "Launcher";
+    lparams.div = "apzonb__Navigator__launchdiv";
+    lparams.userObj = apz.appdtl.PersonalDetails.sCache;
+    apz.launchApp(lparams);
+}
+apz.appdtl.PersonalDetails.fnValidateExpiryDeta = function(expiryDate) {
+    debugger;
+    var expiry = expiryDate.split("-");
+    var today, expiryDay;
+    today = new Date();
+    expiryDay = new Date().setFullYear(expiry[0], expiry[1] - 1, expiry[2]);
+    if (expiryDay < today) {
+        apz.dispMsg({
+            "message": "The document you are uploading seems to have expired, Please use a valid document."
+        })
+    } else {
+        expiryDate = apz.formatDate({
+            val: expiryDate,
+            fromFormat: "yyyy-MM-dd",
+            toFormat: apz.dateFormat
+        })
+        apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.passportExpiryDate = expiryDate;
+        apz.data.loadData("ApplicationInfoDB", "appdtl");
+    }
+}
+apz.appdtl.PersonalDetails.fnSelectGender = function(pthis, pval) {
+    debugger;
+    $("#appdtl__PersonalDetails__sc_row_49 :button").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__gender", pval);
+}
+apz.appdtl.PersonalDetails.fnSelectTitle = function(pthis, pval) {
+    debugger;
+    $("#appdtl__PersonalDetails__rowTitle :button").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__title", pval);
+}
+apz.appdtl.PersonalDetails.fnPaintExistingCustomerDetails = function(lFetchedJSON) {
+    debugger;
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req = {};
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster = {};
+    var scrData = apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster;
+    scrData.refNo = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo");
+    scrData.nid = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid");
+    scrData.addressLine1 = lFetchedJSON.addressLine1;
+    scrData.addressLine2 = lFetchedJSON.addressLine2;
+    scrData.addressLine3 = lFetchedJSON.addressLine3;
+    scrData.city = lFetchedJSON.city;
+    scrData.dob = lFetchedJSON.dob;
+    scrData.fname = lFetchedJSON.fname;
+    scrData.gender = lFetchedJSON.gender;
+    scrData.lname = lFetchedJSON.lname;
+    scrData.maritalStatus = lFetchedJSON.maritalStatus;
+    scrData.mname = lFetchedJSON.mname;
+    scrData.nationality = lFetchedJSON.nationality;
+    scrData.pin = lFetchedJSON.pin;
+    scrData.state = lFetchedJSON.state;
+    scrData.title = lFetchedJSON.title;
+    scrData.countryCode = apz.country;
+    scrData.panNo = lFetchedJSON.panNo;
+    scrData.mobileNo = lFetchedJSON.mobileNo;
+    scrData.email = lFetchedJSON.email;
+    scrData.typeOfResident = lFetchedJSON.typeOfResident;
+    scrData.typeOfID = lFetchedJSON.typeOfID;
+    scrData.passportNo = lFetchedJSON.passportNo;
+    scrData.issueDate = lFetchedJSON.issueDate;
+    scrData.passportExpiryDate = lFetchedJSON.passportExpiryDate;
+    scrData.issuePlace = lFetchedJSON.issuePlace;
+    scrData.pep = lFetchedJSON.pep;
+    apz.data.loadData("ApplicationInfoDB", "appdtl");
+    if (lFetchedJSON.gender == "M") {}
+    $("#appdtl__PersonalDetails__sc_row_49 :button").removeClass("current");
+    if (lFetchedJSON.gender == "M") {
+        $("#appdtl__PersonalDetails__btnMale").addClass("current");
+    } else if (lFetchedJSON.gender == "F") {
+        $("#appdtl__PersonalDetails__btnFemale").addClass("current");
+    } else if (lFetchedJSON.gender == "O") {
+        $("#appdtl__PersonalDetails__btnOthers").addClass("current");
+    }
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__title", lFetchedJSON.title)
+    $("#appdtl__PersonalDetails__sc_row_52 :button").removeClass("current");
+    if (lFetchedJSON.title == "Mr.") {
+        $("#appdtl__PersonalDetails__btnMr").addClass("current");
+    } else if (lFetchedJSON.title == "Mrs.") {
+        $("#appdtl__PersonalDetails__btnMrs").addClass("current");
+    } else if (lFetchedJSON.title == "Ms.") {
+        $("#appdtl__PersonalDetails__btnMs").addClass("current");
+    }
+}
+apz.appdtl.PersonalDetails.fnShowKYCExpiredModal = function() {
+    debugger;
+    $("#appdtl__PersonalDetails__rekyctext").addClass("sno");
+    apz.toggleModal({
+        "targetId": "appdtl__PersonalDetails__kycexpiredModal"
+    })
+    $("#appdtl__PersonalDetails__kycexpiredModal_close").on("click", function() {
+        $("#appdtl__PersonalDetails__rekyctext").removeClass("sno");
+        apz.data.scrdata.appdtl__ApplicationInfoDB_Req = {};
+        apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster = {};
+        apz.data.loadData("ApplicationInfoDB", "appdtl");
+    });
+    $("#navgtn__Navigator__el_btn_3").attr("disabled", "disabled");
+}
+apz.appdtl.PersonalDetails.fnStartKYC = function() {
+    debugger;
+    apz.toggleModal({
+        "targetId": "appdtl__PersonalDetails__kycexpiredModal"
+    });
+    $("#appdtl__PersonalDetails__rekyctext").removeClass("sno");
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req = {};
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster = {};
+    apz.data.loadData("ApplicationInfoDB", "appdtl");
+    //$("#navgtn__Navigator__el_btn_3").removeAttr("disabled");
+}
+apz.appdtl.PersonalDetails.fnRekycDetails = function(pthis, ptype) {
+    debugger;
+    if (apz.checkExistingCustomer == "y" && apz.kycType == "rekyc") {
+        var count = 0;
+        var proceed = true;
+        apz.appdtl.PersonalDetails.RekycDetils[ptype] = pthis.value;
+        for (var i in apz.appdtl.PersonalDetails.RekycDetils) {
+            count++;
+            if (apz.appdtl.PersonalDetails.RekycDetils[i] == "") {
+                proceed = false;
+            }
+        }
+        if (count == 5 && proceed) {
+            $("#navgtn__Navigator__el_btn_3").removeAttr("disabled");
+            $("#appdtl__PersonalDetails__rekyctext").addClass("sno");
+        } else {
+            $("#navgtn__Navigator__el_btn_3").attr("disabled", "disabled");
+            $("#appdtl__PersonalDetails__rekyctext").removeClass("sno");
+        }
+    }
+}
+//selfie and document capture
+apz.appdtl.PersonalDetails.fnOpenSelfieCapture = function() {
+    debugger;
+    var jsonobj = {};
+    jsonobj.id = "CALLLOGS";
+    jsonobj.type = "base64";
+    jsonobj.fileName = "FILE_PATH"; //mandatory if type is "file"
+    jsonobj.encodingType = "PNG"; // default is JPEG encoding
+    jsonobj.quality = 100; //default is 100
+    jsonobj.blinkEyeDetection = "Y";
+    jsonobj.blinkInstruction = "Blink your eyes slowly.";
+    jsonobj.pageTitle = "Capture A Selfie ";
+    jsonobj.faceInstruction1 = "Position your face inside the oval frame.";
+    jsonobj.faceInstruction2 = "Your face is too far. Please move closer.";
+    jsonobj.faceInstruction3 = "Your face is too close. Please move further away.";
+    jsonobj.scanStatus = "Capturing...";
+    jsonobj.fontColor = "#000000";
+    jsonobj.overlayColor = "#FFFFFF";
+    jsonobj.holdTimeInstruction = "Hold steady";
+    jsonobj.instructionPosition = "1";
+    jsonobj.holdTimeForCapture = "4";
+    jsonobj.nativePreviewScreen = "Y";
+    jsonobj.callBack = apz.appdtl.PersonalDetails.fnOpenSelfieCaptureCB;
+    apz.ns.selfieCapture(jsonobj);
+}
+apz.appdtl.PersonalDetails.fnOpenSelfieCaptureCB = function(params) {
+    debugger;
+    if (params.status) {
+        apz.selfieImage = params.outputFile.data;
+        apz.appdtl.PersonalDetails.fnCreateDocumentArray();
+    }
+}
+apz.appdtl.PersonalDetails.fnCreateDocumentArray = function() {
+    debugger;
+    apz.idDocArray = [];
+    var obj = apz.idDocArray.push({
+        "refNo": apz.refNo,
+        "docType": "PhotoSignature",
+        "docData": apz.selfieImage,
+        "docName": "Upload your photo",
+        "fileName": "",
+        "docId": +new Date
+    });
+    var docName;
+    if (apz.idType === "Passport") {
+        docName = "Passport";
+    } else {
+        docName = "National ID";
+    }
+    var idArrray = [{
+        "refNo": apz.refNo,
+        "docType": "IdentityDocuments",
+        "docData": apz.frontsideImage,
+        "docName": docName,
+        "docId": +new Date + 1,
+        "fileName": "Front"
+    }, {
+        "refNo": apz.refNo,
+        "docType": "IdentityDocuments",
+        "docData": apz.backsideImage,
+        "docName": docName,
+        "docId": +new Date + 2,
+        "fileName": "Back"
+    }];
+    apz.idDocArray = apz.idDocArray.concat(idArrray);
+    apz.selfieImage = "";
+    apz.frontsideImage = "";
+    apz.backsideImage = "";
+    apz.idType = "";
+}

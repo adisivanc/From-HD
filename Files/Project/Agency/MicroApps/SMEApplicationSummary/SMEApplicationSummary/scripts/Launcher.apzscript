@@ -1,0 +1,244 @@
+apz.corsum.Launcher = {};
+apz.corsum.Launcher.sParams = {};
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+    apz.corsum.Launcher.sParams = params;
+    apz.corsum.Launcher.fnLaunchScreen();
+}
+apz.corsum.Launcher.gotoNext = function() {
+    debugger;
+    apz.corsum.Launcher.fnSubmitConfirm();
+}
+apz.corsum.Launcher.gotoPre = function() {
+    debugger;
+    apz.corsum.Launcher.navigationNo--;
+    var navIndex = apz.corsum.Launcher.navigationNo;
+    if (apz.naviationList[navIndex + 1].screenName === "SummaryScreen") {
+        apz.corsum.Launcher.fnLaunchApp(apz.corsum.Launcher.navigationNo);
+    }
+}
+apz.corsum.Launcher.fnLaunchScreen = function() {
+    debugger;
+    var lParams = {
+        "appId": "corsum",
+        "scr": "SummaryScreen",
+        "div": "corsum__Launcher__summary_launcher"
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.corsum.Launcher.fnLaunchApp = function(flowno) {
+    debugger;
+    var lParams = {
+        "appId": apz.naviationList[flowno].appId,
+        "scr": "Launcher",
+        "div": "monumt__Navigator__launchdiv",
+        "userObj": {
+            "flowno": apz.corsum.Launcher.navigationNo
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.corsum.Launcher.fnSubmitConfirm = function() {
+    debugger;
+    apz.dispMsg({
+        "message": "Please confirm you are ready to approve the application.",
+        "type": "C",
+        "callBack": apz.corsum.Launcher.fnSubmitConfirmCB
+    });
+}
+apz.corsum.Launcher.fnSubmitConfirmCB = function(params) {
+    debugger;
+    if (params.choice) {
+        apz.corsum.Launcher.fnSubmitWorkflow();
+    }
+}
+apz.corsum.Launcher.fnSubmitWorkflow = function() {
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "corsum",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "SUBMIT"
+        },
+        "paintResp": "N",
+        "callBack": apz.corsum.Launcher.fnSubmitWorkflowSecondTime
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.corsum.Launcher.fnSubmitWorkflowSecondTime = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "corsum",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "SUBMIT"
+        },
+        "paintResp": "N",
+        "callBack": apz.corsum.Launcher.fnSubmitWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.corsum.Launcher.fnSubmitWorkflowCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    if (params.status) {
+        $("#corsum__Launcher__remarksRow").addClass("sno");
+        $("#corsum__Launcher__navigationRow").addClass("sno");
+        var lParams = {
+            "appId": "corsum",
+            "scr": "SuccessScreen",
+            "div": "corsum__Launcher__summary_launcher",
+            "userObj": {
+                "message": "The application has been approved successfully!",
+                "refNo": apz.appNo,
+            }
+        };
+        apz.launchSubScreen(lParams);
+    }
+}
+//------------ Reject flow
+apz.corsum.Launcher.fnRejectApplicationConfirmation = function() {
+    debugger;
+    if (apz.isNull(apz.getElmValue("corsum__Launcher__remarks"))) {
+        apz.dispMsg({
+            "message": "Please add comments in remarks section about rejection."
+        });
+    } else {
+        apz.dispMsg({
+            "message": "Please confirm if you want to reject this application?",
+            "type": "C",
+            "callBack": apz.corsum.Launcher.fnRejectCB
+        });
+    }
+}
+apz.corsum.Launcher.fnRejectCB = function(params) {
+    debugger;
+    if (params.choice) {
+        apz.corsum.Launcher.fnRejectApplication()
+    }
+}
+apz.corsum.Launcher.fnRejectApplication = function() {
+    debugger;
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "corsum",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "REJECT",
+            "remarks": apz.getElmValue("corsum__Launcher__remarks")
+        },
+        "paintResp": "N",
+        "callBack": apz.corsum.Launcher.fnRejectWFStageCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.corsum.Launcher.fnRejectWFStageCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    if (pResp.status) {
+        $("#corsum__Launcher__remarksRow").addClass("sno");
+        $("#corsum__Launcher__navigationRow").addClass("sno");
+        var lParams = {
+            "appId": "corsum",
+            "scr": "SuccessScreen",
+            "div": "corsum__Launcher__summary_launcher",
+            "userObj": {
+                "message": "The application has been rejected.",
+                "refNo": apz.appNo
+            }
+        };
+        apz.launchSubScreen(lParams);
+    }
+}
+//--------------
+apz.corsum.Launcher.fnSendEmail = function() {
+    debugger;
+    var email = {
+        "mailId": "iexceedemail",
+        "recipientMailId": apz.email,
+        "senderMailId": "yagnya.dipu@gmail.com",
+        "ccIdList": "",
+        "internal": "Y",
+        "subject": "NBG Application Status",
+        "body": "Your application has been submitted successfully!!. Use the reference no. " + apz.appNo + " for further enquiry.",
+    };
+    email.id = "MAIL_ID";
+    email.callBack = apz.corsum.Launcher.fnSendEmailCB;
+    apz.ns.sendMail(email);
+}
+apz.corsum.Launcher.fnSendEmailCB = function(params) {
+    debugger;
+    apz.corsum.Launcher.fnSetFlowNo();
+}
+apz.corsum.Launcher.fnSetFlowNo = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "NavigationFlow_Modify",
+        "buildReq": "N",
+        "appId": "corsum",
+        "req": {
+            "tbComiNavigationFlow": {
+                "flowNo": 0,
+                "appNo": apz.appNo,
+                "country": apz.country
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.corsum.Launcher.fnSetFlowNoCB
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.corsum.Launcher.fnSetFlowNoCB = function() {
+    debugger;
+    apz.stopLoader();
+    apz.corsum.Launcher.fnLaunchScreen(apz.corsum.Launcher.navigationNo);
+}
+apz.corsum.Launcher.fnCancelApplication = function() {
+    apz.monumt.Navigator.fnUpdateFlowNo(apz.corsum.Launcher.navigationNo);
+}
+apz.corsum.Launcher.fnLaunchJumioAuth = function() {
+    debugger;
+    $("#corsum__Launcher__gr_row_2").addClass("sno");
+    var params = {};
+    params.appId = "corsum";
+    params.scr = "JumioAuthentication";
+    params.div = "corsum__Launcher__summary_launcher";
+    params.userObj = {
+        "flowno": apz.corsum.Launcher.navigationNo
+    }
+    apz.launchSubScreen(params);
+}
+apz.corsum.Launcher.fnCancel = function(pResp) {
+    debugger;
+    $("#menuap__Menu__country").addClass("sno");
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": "menuap__Menu__MainLaunchArea",
+            "parentAppId": "menuap",
+            "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+            "custImg": "menuap__Menu__custImg",
+            "custId": "menuap__Menu__custId_txtcnt"
+        }
+    }
+    apz.launchApp(lParams);
+}

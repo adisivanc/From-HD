@@ -1,0 +1,99 @@
+apz.app.onLoad_MenuList = function() {
+    debugger;
+      $(".srbtn1").removeClass("sno")
+           $(".srbtn").addClass("sno")
+        // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "SERVICE REQUESTS")
+
+    apz.data.loadJsonData("ServiceRequestMenus", "srmenu");
+    apz.data.scrdata.srmenu__CustomerServices_Res = apz.data.scrdata.srmenu__ServiceRequestMenus_Res.menuList["Customer Services"];
+    apz.data.loadData("CustomerServices", "srmenu");
+    apz.data.scrdata.srmenu__AccountServices_Res = apz.data.scrdata.srmenu__ServiceRequestMenus_Res.menuList["Account Services"];
+    apz.data.loadData("AccountServices", "srmenu");
+    apz.data.scrdata.srmenu__LoanServices_Res = apz.data.scrdata.srmenu__ServiceRequestMenus_Res.menuList["Loan Services"];
+    apz.data.loadData("LoanServices", "srmenu");
+    apz.data.scrdata.srmenu__CardServices_Res = apz.data.scrdata.srmenu__ServiceRequestMenus_Res.menuList["Card Services"];
+    apz.data.loadData("CardServices", "srmenu");
+    apz.data.scrdata.srmenu__ChequeServices_Res = apz.data.scrdata.srmenu__ServiceRequestMenus_Res.menuList["Cheque Services"];
+    apz.data.loadData("ChequeServices", "srmenu");
+    
+   
+}
+apz.srmenu.fnRequestMenu = function(ths, submenu) {
+    debugger;
+    var selectedSubMenu = []
+    switch (submenu) {
+        case "CustomerServices":
+            selectedSubMenu = apz.data.scrdata.srmenu__CustomerServices_Res;
+            break;
+        case "AccountServices":
+            selectedSubMenu = apz.data.scrdata.srmenu__AccountServices_Res;
+            break;
+        case "LoanServices":
+            selectedSubMenu = apz.data.scrdata.srmenu__LoanServices_Res;
+            break;
+        case "CardServices":
+            selectedSubMenu = apz.data.scrdata.srmenu__CardServices_Res;
+            break;
+        case "ChequeServices":
+            selectedSubMenu = apz.data.scrdata.srmenu__ChequeServices_Res;
+            break;
+        case "TaxCorner":
+            selectedSubMenu = apz.data.scrdata.srmenu__TaxCorner_Res;
+            break;
+        case "SocialSecurityScheme":
+            selectedSubMenu = apz.data.scrdata.srmenu__SocialSecurityScheme_Res;
+            break;
+    }
+    var rowno = parseInt($(ths).attr("rowno"));
+    var selectedItem = selectedSubMenu[rowno];
+    apz.srmenu.fnLaunchApp(selectedItem)
+}
+
+apz.srmenu.fnLaunchApp = function(selectedItem) {
+    debugger;
+    var action = ""
+    if(selectedItem.appId == "update"){
+        action = "fromService"
+    }
+    var lLaunchParams = {
+        "appId": selectedItem.appId,
+        "scr": selectedItem.scr,
+        "div": "cmrnav__Launcher__Launcher",
+        "userObj": {
+            "action":action,
+            "data": {
+                "customerID": "1",
+            },
+            "control": {
+                "exitApp": {
+                    "appId": "csmrbk",
+                    "div": "cmrnav__Launcher__Launcher",
+                    "callBack": function(){}
+                }
+            }
+        }
+    };
+    if (selectedItem.userObj != undefined && selectedItem.appId == "tdsfrm") {
+        lLaunchParams["userObj"]["type"] = selectedItem.userObj.type;
+    }
+    else if(selectedItem.userObj != undefined && (selectedItem.appId == "atpsyj" || selectedItem.appId == "bmyjna"))
+    {
+           lLaunchParams["userObj"]["data"] = selectedItem.userObj.data
+    }
+    else if(selectedItem.userObj != undefined && selectedItem.appId == "chqsts" )
+    {
+         lLaunchParams["userObj"] = selectedItem.userObj
+    }
+    else if(selectedItem.userObj != undefined && selectedItem.appId == "accsnp")
+    {
+         lLaunchParams["userObj"]["data"] = selectedItem.userObj
+    }
+     else if(selectedItem.userObj != undefined && selectedItem.appId == "nchqbk")
+    {
+         lLaunchParams["userObj"] = selectedItem.userObj
+    }
+    apz.launchApp(lLaunchParams);
+     apz.setElmValue(screenId+"el_txt_1",selectedItem.name);
+     $(".srbtn").removeClass("sno")
+     $(".srbtn1").addClass("sno")
+}

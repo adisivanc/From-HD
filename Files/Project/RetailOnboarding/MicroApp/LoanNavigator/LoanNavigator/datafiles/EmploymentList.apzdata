@@ -1,0 +1,17 @@
+[
+    {
+        "EmploymentType": "Full-Time Employed"
+    },
+    {
+        "EmploymentType": "Self-Employed"
+    },
+    {
+        "EmploymentType": "Part-Time Employed"
+    },
+    {
+        "EmploymentType": "Unemployed"
+    },
+    {
+        "EmploymentType": "Retired"
+    }
+]

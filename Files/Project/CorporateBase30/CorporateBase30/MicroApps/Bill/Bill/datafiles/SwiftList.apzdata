@@ -1,0 +1,25 @@
+{
+    "bill01__Favourites_Res": {
+        "FundDetails": [{
+            "BeneficiaryName":"Canada Paper Mills",
+            "BeneficiaryAccNo":"1212176735",
+            "SwiftId":"BOFMCAT2XXX",
+            "DueDate": "2019-01-21",
+            "Currency": "USD",
+            "TotalAmt": 24000,
+            "VendorName": "Robertson & Associates",
+            "VendorId": "46",
+            "BillId": "126"
+        }, {
+            "BeneficiaryName":"Schneider & Klaus",
+            "BeneficiaryAccNo":"1221978740",
+            "SwiftId":"DEUTDEFFXXX",
+            "DueDate": "2019-01-21",
+            "Currency": "USD",
+            "TotalAmt": 5000,
+            "VendorName": "Norton Lumber and Building Materials",
+            "VendorId": "46",
+            "BillId": "126"
+        }]
+    }
+}

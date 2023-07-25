@@ -1,0 +1,192 @@
+apz.blspli = {};
+apz.blspli.BillSplit = {};
+    apz.blspli.BillSplit.sparams = {};
+
+var amount = "";
+var beAmount = "";
+apz.app.onLoad_BillSplit = function(params)
+{
+    debugger;
+        apz.blspli.BillSplit.sparams = params;
+        
+        apz.setElmValue("blspli__BillSplit__serviceProvider",  apz.blspli.BillSplit.sparams.serviceProvider);
+                apz.setElmValue("blspli__BillSplit__amountText",  apz.blspli.BillSplit.sparams.amount);
+                apz.setElmValue("blspli__BillSplit__el_txt_14",  apz.blspli.BillSplit.sparams.amount);
+
+if( apz.blspli.BillSplit.sparams.from == "Confirmation")
+{
+        $("#blspli__BillSplit__sc_row_7").addClass("sno");
+            $("#blspli__BillSplit__sc_row_3").removeClass("sno");
+                    $("#blspli__BillSplit__sc_row_9").removeClass("sno");
+                    $("#blspli__BillSplit__ct_lst_1").addClass("sno");
+                    apz.setElmValue("blspli__BillSplit__mypart",apz.blspli.BillSplit.sparams.myPartAmount );
+
+
+        
+
+        
+
+}
+
+    apz.data.loadJsonData("Beneficiary", "blspli");
+    var names = [];
+    var length = apz.data.scrdata.blspli__BeneficiarySelection_Res.beneficiaryDetails.length;
+    var i;
+    names[0] = {
+        'val' : "Search Beneficiary",
+        "desc" : "Search Beneficiary"
+     }
+     
+     for(i = 0; i < length ; i++ )
+    {
+        names[i+1] =  {
+            'val' : i,
+            'desc' : apz.data.scrdata.blspli__BeneficiarySelection_Res.beneficiaryDetails[i].beneficiaryName
+            
+        }
+    }
+     var lObj = document.getElementById("blspli__BillSplit__bnfName");
+        apz.populateDropdown(lObj, names);
+        document.getElementById("blspli__BillSplit__bnfName_option_Search Beneficiary_input").checked = false;
+document.getElementById("blspli__BillSplit__bnfName_option_Search Beneficiary").style.display="none";
+
+        
+
+}
+
+apz.blspli.BillSplit.fnChangeBeneficiary = function()
+{
+    debugger;
+        //    $("#blspli__BillSplit__bnfName").removeClass("sno");
+
+    $("#blspli__BillSplit__sc_row_7").removeClass("sno");
+        $("#blspli__BillSplit__sc_row_9").removeClass("sno");
+    $("#blspli__BillSplit__ct_lst_1").removeClass("sno");
+
+   var index= apz.getElmValue("blspli__BillSplit__bnfName");
+   var index_array = index.split(',');
+
+   apz.data.loadJsonData("beneficiaryChange", "blspli");
+   var i;
+   
+   var obj = [];
+
+    amount =     (parseFloat( apz.getElmValue("blspli__BillSplit__amountText").replace(/,/g, '')))/(index_array.length+1);
+
+     beAmount = Math.floor(amount);
+      var param = {
+            "decimalSep": ".",
+            "value":  beAmount,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+        beAmount = apz.formatNumber(param);
+   apz.setElmValue("blspli__BillSplit__mypart", beAmount);
+   for(i=0; i< index_array.length; i++)
+   {
+   obj=
+   {
+       "beneficiaryName" : apz.data.scrdata.blspli__BeneficiarySelection_Res.beneficiaryDetails[index_array[i]].beneficiaryName,
+                "amount" : Math.round(amount)
+   }
+                
+           apz.data.scrdata.blspli__BeneficiaryChange_Res.Details.push(obj);
+        
+   }
+                apz.data.loadData("BeneficiaryChange", "blspli");
+       apz.blspli.BillSplit.fnChangeAmount();
+}
+
+
+
+apz.blspli.BillSplit.fnDeLink = function(ths) {
+    debugger;
+    var rowno = parseInt($(ths).attr("rowno"));
+    var benfName = apz.data.scrdata.blspli__BeneficiaryChange_Res.Details[rowno].beneficiaryName;
+
+            document.getElementById("blspli__BillSplit__bnfName_option_" + benfName +"_input").checked = false;
+        apz.data.scrdata.blspli__BeneficiaryChange_Res.Details.splice(rowno, 1);
+        apz.data.loadData("BeneficiaryChange", "blspli");
+        
+         //  $("#blspli__BillSplit__bnfName").addClass("sno");
+
+
+
+}
+
+apz.blspli.BillSplit.fnSplit = function() {
+    debugger;
+        apz.data.buildData("BeneficiaryChange", "blspli");
+
+
+    var i;
+    var sum =0;
+    var totalAmount =  parseFloat( apz.getElmValue("blspli__BillSplit__amountText").replace(/,/g, ''));
+    
+
+    amountpart =    parseFloat( apz.getElmValue("blspli__BillSplit__mypart").replace(/,/g, ''))
+
+//      beAmount = Math.floor(amount);
+//   var beAmount1= parseFloat((beAmount).replace(/,/g, ''));
+
+
+    for(i=0; i< apz.data.scrdata.blspli__BeneficiaryChange_Res.Details.length; i++)
+    {
+        var benefAmount =parseFloat(apz.getElmValue("blspli__BeneficiaryChange__o__Details__amount_" + i).replace(/,/g,''));
+        var sum = sum  + benefAmount;
+    }
+    sum = sum + amountpart;
+
+    if(sum != totalAmount)
+    {
+        apz.dispMsg({"message" : "The amount doesnt match the amount to be paid", "type" : "E"})
+    }
+    else
+    {
+            $("#blspli__BillSplit__sc_row_3").addClass("sno");
+
+        var params = {};
+        params.appId = "blspli";
+        params.scr = "SplitConfirmation";
+                params.div = "blspli__LauncherSplit__launcher"
+
+        params.userObj ={
+            ...apz.blspli.BillSplit.sparams,
+            "amount" : apz.blspli.BillSplit.sparams.amount,
+            "serviceProvider" : apz.blspli.BillSplit.sparams.serviceProvider,
+            "myPartAmount" : amountpart
+        }
+        apz.launchSubScreen(params);
+    }
+}
+
+
+
+apz.blspli.BillSplit.fnChangeAmount = function() {
+    debugger;
+    var i;
+    var sum =0;
+    for(i=0; i< apz.data.scrdata.blspli__BeneficiaryChange_Res.Details.length; i++)
+    {
+        var benefAmount =parseFloat(apz.getElmValue("blspli__BeneficiaryChange__o__Details__amount_" + i).replace(/,/g,''));
+         sum = sum  + benefAmount;
+    }
+    amountPaid = parseFloat(apz.getElmValue("blspli__BillSplit__mypart").replace(/,/g,'')) + sum;
+     var param = {
+            "decimalSep": ".",
+            "value":  amountPaid,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+        amountPaid = apz.formatNumber(param);
+            apz.setElmValue("blspli__BillSplit__el_txt_14", amountPaid)
+
+    
+    
+}
+
+
+
+

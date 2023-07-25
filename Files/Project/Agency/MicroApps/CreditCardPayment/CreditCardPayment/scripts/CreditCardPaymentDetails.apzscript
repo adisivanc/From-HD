@@ -1,0 +1,233 @@
+apz.paymts.CreditCardPaymentDetails = {};
+apz.paymts.CreditCardPaymentDetails.sCache = {};
+apz.paymts.CreditCardPaymentDetails.AccountData = [];
+apz.paymts.CreditCardPaymentDetails.lAmount = "";
+apz.paymts.CreditCardPaymentDetails.lFinalAmount = "";
+apz.paymts.CreditCardPaymentDetails.lAccountNumber = "";
+apz.app.onLoad_CreditCardPaymentDetails = function(params) {
+    debugger;
+    apz.paymts.CreditCardPaymentDetails.sCache = params;
+    params = {
+        "action": "CardNoDD"
+    }
+    apz.paymts.CreditCardPaymentDetails.fnBeforeCallServer(params);
+    apz.paymts.CreditCardPaymentDetails.BeforeCallServerQuery();
+    $("#paymts__CreditCardPaymentDetails__accountform,#paymts__CreditCardPaymentDetails__debitcardform").addClass("sno");
+    apz.paymts.CreditCardPaymentDetails.fnGraph();
+};
+apz.paymts.CreditCardPaymentDetails.fnOnChangeCardNumber = function() {
+    apz.show("paymts__CreditCardPaymentDetails__balanceRow");
+}
+apz.app.onShown_CreditCardPaymentDetails = function(params) {
+    debugger;
+    apz.paymts.CreditCardPaymentDetails.onOptionChange();
+};
+apz.paymts.CreditCardPaymentDetails.onOptionChange = function() {
+    debugger;
+    if (document.getElementById('paymts__CreditCardPayment__o__payment__value_option_Accounts').checked) {
+        $("#paymts__CreditCardPaymentDetails__debitcardform").addClass("sno");
+        $("#paymts__CreditCardPaymentDetails__accountform").removeClass("sno");
+        apz.currAppId = "paymts";
+        params = {
+            "action": "AccountsDD"
+        };
+        apz.paymts.CreditCardPaymentDetails.fnBeforeCallServer(params);
+    } else if (document.getElementById('paymts__CreditCardPayment__o__payment__value_option_Debit Card').checked) {
+        apz.currAppId = "paymts";
+        $("#paymts__CreditCardPaymentDetails__debitcardform").removeClass("sno");
+        $("#paymts__CreditCardPaymentDetails__accountform").addClass("sno");
+    } else {
+        apz.currAppId = "paymts";
+        $("#paymts__CreditCardPaymentDetails__accountform,#paymts__CreditCardPaymentDetails__debitcardform").addClass("sno");
+        $("#paymts__CreditCardPaymentDetails__totalInput").addClass("sno");
+    }
+};
+apz.paymts.CreditCardPaymentDetails.onContinue = function() {
+    var lObj = {
+        "scr": "CreditCardPaymentVerify",
+        "div": apz.paymts.CreditCardPaymentDetails.sCache.destroyDiv,
+        "animation": 9,
+        "userObj": {
+            "action": apz.paymts.CreditCardPaymentDetails.sCache.action,
+            "data": {
+                "creditCardNum": $("#paymts__CreditCardPayment__o__creditCardNumberList__val").val(),
+                "Amount": $("#paymts__CreditCardPaymentDetails__amt").val(),
+                "fromAcc": apz.getElmValue("paymts__CreditCardPayment__o__fromAccountList__val")
+            },
+            "destroyDiv": apz.paymts.CreditCardPaymentDetails.sCache.destroyDiv,
+            "parentAppId": apz.paymts.CreditCardPaymentDetails.sCache.parentAppId,
+            "callBack": apz.paymts.CreditCardPaymentDetails.sCache.callBack
+        }
+    };
+    apz.launchSubScreen(lObj);
+};
+apz.paymts.CreditCardPaymentDetails.fnBeforeCallServer = function(params) {
+    var lServerParams = {
+        "ifaceName": "CreditCardPayment",
+        "buildReq": "N",
+        "req": {
+            "temp": {
+                "customerId": "Customer01"
+            }
+        },
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.paymts.CreditCardPaymentDetails.creditCardDetails,
+        "callBackObj": "",
+        "action": params.action
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.paymts.CreditCardPaymentDetails.creditCardDetails = function(params) {
+    debugger;
+    var ldropdownArr = [];
+    var ldropDownAccounts = [];
+    var lparamResponse = params.res.paymts__CreditCardPayment_Res.creditCardTransaction;
+    if (params != null) {
+        for (var i = 0; i < lparamResponse.creditCardNumberList.length; i++) {
+            var loption = {};
+            loption.val = lparamResponse.creditCardNumberList[i].val;
+            loption.desc = lparamResponse.creditCardNumberList[i].desc;
+            ldropdownArr.push(loption);
+        }
+        for (var i = 0; i < lparamResponse.fromAccountList.length; i++) {
+            var loption = {};
+            loption.val = lparamResponse.fromAccountList[i].val;
+            loption.desc = lparamResponse.fromAccountList[i].desc;
+            ldropDownAccounts.push(loption);
+        }
+    }
+    debugger;
+    console.log(ldropdownArr);
+    apz.populateDropdown(document.getElementById("paymts__CreditCardPayment__o__creditCardNumberList__val"), ldropdownArr);
+    apz.populateDropdown(document.getElementById("paymts__CreditCardPayment__o__fromAccountList__val"), ldropDownAccounts);
+}
+apz.paymts.CreditCardPaymentDetails.callServerCallBack = function(params) {
+    debugger;
+    apz.paymts.CreditCardPaymentDetails.AccountData = apz.data.scrdata.paymts__TransctionDetails_Res.agencybankingtransactions;
+}
+apz.paymts.CreditCardPaymentDetails.BeforeCallServerQuery = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "TransctionDetails_Query",
+        "buildReq": "N",
+        "req": {
+            agencybankingtransactions: {
+                "accountNumber": "%"
+            }
+        },
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.paymts.CreditCardPaymentDetails.callServerCallBack,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.paymts.CreditCardPaymentDetails.onCancel = function() {
+    apz.paymts.CreditCardPaymentDetails.sCache.callBack();
+};
+apz.paymts.CreditCardPaymentDetails.fnGraph = function() {
+    debugger;
+    apz.paymts.CreditCardPaymentDetails.lAccountNumber = apz.getElmValue("paymts__CreditCardPayment__o__fromAccountList__val");
+    apz.paymts.CreditCardPaymentDetails.lAmount = apz.getElmValue("paymts__CreditCardPaymentDetails__amt");
+    if (apz.getElmValue("paymts__CreditCardPaymentDetails__amt") == "") {
+        apz.paymts.CreditCardPaymentDetails.lAmount = 0;
+    } else {
+        apz.paymts.CreditCardPaymentDetails.lAmount = parseInt(apz.paymts.CreditCardPaymentDetails.lAmount);
+    }
+    for (i = 0; i < apz.data.scrdata.paymts__CreditCardPayment_Res.creditCardTransaction.fromAccountList.length; i++) {
+        if (apz.paymts.CreditCardPaymentDetails.lAccountNumber == apz.data.scrdata.paymts__CreditCardPayment_Res.creditCardTransaction.fromAccountList[
+            i].val) {
+            apz.paymts.CreditCardPaymentDetails.lFinalAmount = parseInt(apz.data.scrdata.paymts__CreditCardPayment_Res.creditCardTransaction.fromAccountList[
+                i].balance) - apz.paymts.CreditCardPaymentDetails.lAmount;
+        }
+    }
+    apz.data.loadData("ChartDetails", "paymts");
+}
+//Bill payment 
+apz.paymts.CreditCardPaymentDetails.fnOnClickBillPay = function() {
+    debugger;
+    apz.hide("paymts__CreditCardPaymentDetails__creditCardDiv");
+    apz.show("paymts__CreditCardPaymentDetails__bilPayDiv");
+    var lParams = {
+        "appId": "bllpay",
+        "scr": "BillPay",
+        "div": "paymts__CreditCardPaymentDetails__bilPayContainer",
+        "type": "CF",
+        "userObj": {
+            "destroyDiv": "paymts__CreditCardPaymentDetails__bilPayContainer",
+            "parentAppId": "paymts",
+            "data": {
+                "accounts": [{
+                    "accountNo": "5432xxxxx575",
+                    "accountType": "Savings",
+                    "accountBalance": "50,000"
+                }, {
+                    "accountNo": "5432xxxxx858",
+                    "accountType": "Savings",
+                    "accountBalance": "25,000"
+                }, {
+                    "accountNo": "5432xxxxx988",
+                    "accountType": "Savings",
+                    "accountBalance": "40,000"
+                }, {
+                    "accountNo": "5432xxxxx128",
+                    "accountType": "Savings",
+                    "accountBalance": "1,00,000"
+                }],
+                "customerId": "1"
+            },
+            "customerId": "1"
+        }
+    };
+    apz.launchApp(lParams);
+}
+apz.paymts.CreditCardPaymentDetails.fnOnClickCreditcardPay = function() {
+    debugger;
+    apz.show("paymts__CreditCardPaymentDetails__creditCardDiv");
+    apz.hide("paymts__CreditCardPaymentDetails__bilPayDiv");
+}
+apz.app.updateChartBeforeRender = function(pchartType, pchartData, pid, pchart) {
+    debugger;
+    if (pchartType == "Marimekko") {
+        pchartData.chart = {
+            "caption": "Account Overview",
+            "xaxisname": "Account Number",
+            "yaxisname": "Balance",
+            "showvalues": "0",
+            "numberprefix": "$",
+            "showborder": "0",
+            "usePercentDistribution": "0",
+            "bgcolor": "FFFFFF",
+            "canvasborderthickness": "1",
+            "canvasbordercolor": "999999",
+            "plotgradientcolor": "",
+            "palettecolors": "#7DCEA0,#F09F97,#AFC0CF,#C1D0DF,#C0C0CF,#F0F0F0",
+            "basefontsize": "9",
+            "outcnvbasefontsize": "11",
+            "legendshadow": "0",
+            "legendborderalpha": "0",
+            "plotbordercolor": "999999"
+        };
+        pchartData.categories = [{
+            "category": [{
+                "label": apz.paymts.CreditCardPaymentDetails.lAccountNumber,
+                "x": -0.028967254408060417,
+                "plotWidth": 109.51511335012594,
+                "stepSkipped": false,
+                "appliedSmartLabel": true
+            }]
+        }];
+        pchartData.dataset = [{
+            "seriesname": "Available Balance",
+            "data": [{
+                "value": apz.paymts.CreditCardPaymentDetails.lFinalAmount
+            }]
+        }, {
+            "seriesname": "Deducted Amount",
+            "data": [{
+                "value": apz.paymts.CreditCardPaymentDetails.lAmount
+            }]
+        }];
+    }
+}

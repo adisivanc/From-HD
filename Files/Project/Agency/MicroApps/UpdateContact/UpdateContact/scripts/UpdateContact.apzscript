@@ -1,0 +1,612 @@
+apz.update = {};
+apz.update.UpdateContact = {};
+apz.update.UpdateContact.sCache = "";
+apz.update.UpdateContact.sParams = "";
+apz.update.UpdateContact.DocType = ""
+apz.update.UpdateContact.sDocData = {};
+apz.update.UpdateContact.progress = 0;
+apz.update.UpdateContact.progressInterval = "";
+apz.update.UpdateContact.DocType2 = ""
+apz.update.UpdateContact.sDocData2 = {};
+apz.update.UpdateContact.progress2 = 0;
+apz.update.UpdateContact.progressInterval2 = "";
+apz.app.onLoad_UpdateContact = function(params) {
+    debugger;
+    if(apz.isOnline){
+        apz.mockServer = false;
+    }else{
+        apz.mockServer = true;
+    }
+    apz.update.UpdateContact.sParams = params;
+    apz.update.UpdateContact.sCache = params;
+    apz.data.scrdata.update__DocumentsTypes_Res = {
+        additionalDocuments: [],
+        additionalDocuments2: []
+    };
+    if (params.action == "fromStatus") {
+        if (apz.mockServer) {
+            apz.data.scrdata.update__DocumentsTypes_Res = params.data.srcdata;
+        } else {
+            apz.data.scrdata.update__DocumentsTypes_Res = JSON.parse(params.data.srcdata);
+        }
+        apz.refNo = params.data.refno;
+        apz.data.loadData("DocumentsTypes", "update");
+        $("#update__UpdateContact__approve").removeClass("sno");
+        $("#update__UpdateContact__edit_submit").addClass("sno");
+    } else if (params.action == "fromService") {
+        apz.data.loadJsonData("DocumentsTypes", "update");
+    } else {
+        if (apz.mockServer) {
+            apz.data.scrdata.update__DocumentsTypes_Res = params.data.srcdata;
+        } else {
+            apz.data.scrdata.update__DocumentsTypes_Res = JSON.parse(params.data.srcdata);
+        }
+        apz.data.loadData("DocumentsTypes", "update");
+        var initDate = apz.formatDate({
+            val: new Date().toDateString(),
+            fromFormat: "ddd MMM dd yyyy",
+            toFormat: "yyyy-MM-dd"
+        });
+        apz.refNo = params.data.workflow_ref_no;
+        $("#update__UpdateContact__approve").removeClass("sno");
+        $("#update__UpdateContact__edit_submit").addClass("sno");
+        var makerdate = new Date().toISOString().slice(0, 19).replace('T', ' ')
+        apz.update.UpdateContact.sCache.data.makerdate = makerdate;
+        apz.update.UpdateContact.sCache.data.customerid = "1234567";
+        apz.update.UpdateContact.sCache.data.initdate = initDate;
+    }
+};
+apz.app.onShown_UpdateContact = function(params) {
+    debugger;
+    $("#update__UpdateContact__addressForm input").each(function() {
+        $(this).attr("disabled", "disabled");
+    });
+    $("#update__UpdateContact__phoneForm input").each(function() {
+        $(this).attr("disabled", "disabled");
+    });
+    $(".BrowseToUpload").attr({
+        "ondrop": "apz.update.UpdateContact.fnGetDroppedFile(event)",
+        "ondragover": "apz.update.UpdateContact.allowDrop(event)"
+    });
+};
+apz.update.UpdateContact.allowDrop = function(e) {
+    e.preventDefault();
+}
+apz.update.UpdateContact.fnGetDroppedFile = function(e) {
+    debugger;
+    e.preventDefault();
+    apz.update.UpdateContact.fileList = e.target.files || e.dataTransfer.files;
+    apz.update.UpdateContact.fileList2 = e.target.files || e.dataTransfer.files;
+    var address = $("#update__UpdateContact__address").hasClass("active");
+    if (address) {
+        $("#update__UpdateContact__documentUpload").trigger("change");
+    }
+    var phone = $("#update__UpdateContact__phone").hasClass("active");
+    if (phone) {
+        $("#update__UpdateContact__documentUpload2").trigger("change");
+    }
+}
+//remove the file upload status
+apz.update.UpdateContact.fnRemoveImageStatus = function(element, documentsArray, documentType) {
+    var rowNo = $(element).attr("rowno");
+    apz.data.scrdata.update__DocumentsTypes_Res[documentsArray].splice(rowNo, 1);
+    apz.data.loadData("DocumentsTypes", "update");
+    if (apz.data.scrdata.update__DocumentsTypes_Res[documentsArray].length === 0) {
+        $("#update__UpdateContact__" + documentType + "_lst").addClass("sno")
+    }
+}
+apz.update.UpdateContact.uploadDocument = function(pthis) {
+    debugger;
+    $("#update__UpdateContact__documentUpload").trigger("click");
+}
+apz.update.UpdateContact.uploadPhoto = function(pthis) {
+    $("#update__UpdateContact__documentUpload").trigger("click");
+}
+apz.update.UpdateContact.fnCallFileBrowser = function(id) {
+    var json = {
+        "filter": "",
+        "fileCategory": "EXTERNAL",
+        "location": "EXTERNAL",
+        "openFile": "N"
+    };
+    json.id = id;
+    json.callBack = apz.update.UpdateContact.fnGetSession;
+    apz.ns.fileBrowser(json);
+}
+apz.update.UpdateContact.fnGetSession = function(jsonObj) {
+    apz.update.UpdateContact.androidFilePath = jsonObj.filePath;
+    apz.server.login({
+        "userId": "admin",
+        "pwd": "admin",
+        "callBack": apz.update.UpdateContact.fnGetSessionCB
+    })
+}
+apz.update.UpdateContact.fnGetSessionCB = function(params) {
+    if (params.errors == undefined && params.status) {
+        var path = apz.update.UpdateContact.androidFilePath;
+        var lfilePath = path.split("/")
+        apz.update.UpdateContact.androidfileName = lfilePath.pop();
+        var json = {
+            "filePath": lfilePath.join("/"),
+            "sessionReq": "Y"
+        };
+        json.fileName = apz.update.UpdateContact.androidfileName;
+        json.base64 = "Y";
+        json.id = "DOWNLOADFILE_ID";
+        json.callBack = apz.update.UpdateContact.fnGetBase64
+        apz.ns.downloadFile(json);
+    }
+}
+apz.update.UpdateContact.fnGetBase64 = function(params) {
+    if (params.base64) {
+        var lfileName = apz.update.UpdateContact.androidfileName;
+        apz.update.UpdateContact.fnShowFileProgress(lfileName, "data:image;base64," + params.base64);
+    }
+}
+apz.update.UpdateContact.BrowseToUpload = function(pthis, event) {
+    debugger;
+    var fieArray = (pthis.files.length > 0) ? pthis.files : apz.update.UpdateContact.fileList;
+    for (var i = 0, len = fieArray.length; i < len; i++) {
+        let fileObj = fieArray[i];
+        if (fileObj.size <= 2097152) {
+            let apzFileReader = new FileReader();
+            apzFileReader.onload = function() {
+                debugger;
+                let binaryStr = apzFileReader.result;
+                apz.update.UpdateContact.fnShowFileProgress(fileObj.name, binaryStr);
+                $("#" + pthis.id).val("");
+            }
+            apzFileReader.readAsDataURL(fileObj);
+        } else {
+            apz.dispMsg({
+                appId: "update",
+                message: "Please select the size below 2 Mb."
+            })
+        }
+    }
+}
+apz.update.UpdateContact.fnShowFileProgress = function(filename, base64) {
+    var uploadObj = {};
+    var documentType = "additionalProof";
+    uploadObj.fileName = filename;
+    uploadObj.docData = base64;
+    uploadObj.docType = documentType;
+    uploadObj.docName = "Additional Proof";
+    apz.data.scrdata.update__DocumentsTypes_Res.additionalDocuments.push(uploadObj);
+    apz.update.nodeName = apz.data.scrdata.update__DocumentsTypes_Res.additionalDocuments;
+    if (apz.update.nodeName.length > 0) {
+        $("#update__UpdateContact__" + documentType + "_lst").removeClass("sno")
+    }
+    apz.data.loadData("DocumentsTypes", "update");
+    /*$("#update__UpdateContact__" + documentType + "_ProgressBar_" + (apz.update.nodeName.length - 1)).removeClass("suc");
+    $("#update__UpdateContact__" + documentType + "_ProgressBar_" + (apz.update.nodeName.length - 1 + "_div")).removeClass("sno");
+    $("#update__UpdateContact__" + documentType + "_docName_input_" + (apz.update.nodeName.length - 1)).parent().removeClass("sno");
+    apz.update.UpdateContact.progressInterval = setInterval(apz.update.UpdateContact.fnShowProgressbarStatus, 20);*/
+}
+apz.update.UpdateContact.fnShowProgressbarStatus = function() {
+    apz.update.UpdateContact.progress++;
+    var documentType = "additionalProof";
+    if (apz.update.UpdateContact.progress <= 100) {
+        $("#update__DocumentDetails__" + documentType + "_ProgressBar_" + (apz.appdtl.nodeName.length - 1)).css("width", apz.update.UpdateContact.progress +
+            "%");
+    } else if (apz.update.UpdateContact.progress > 100) {
+        $("#update__DocumentDetails__" + documentType + "_ProgressBar_" + (apz.appdtl.nodeName.length - 1)).addClass("suc");
+        $("#update__DocumentDetails__" + documentType + "_StatusMsg_" + (apz.appdtl.nodeName.length - 1)).removeClass("sno");
+        clearInterval(apz.update.DocumentDetails.progressInterval);
+    }
+}
+//----------------------------------------------------
+//remove the file upload status
+apz.update.UpdateContact.fnRemoveImageStatus2 = function(element, documentsArray, documentType) {
+    var rowNo = $(element).attr("rowno");
+    apz.data.scrdata.update__DocumentsTypes_Res[documentsArray].splice(rowNo, 1);
+    apz.data.loadData("DocumentsTypes", "update");
+    if (apz.data.scrdata.update__DocumentsTypes_Res[documentsArray].length === 0) {
+        $("#update__UpdateContact__" + documentType + "_lst2").addClass("sno")
+    }
+}
+apz.update.UpdateContact.uploadDocument2 = function(pthis) {
+    debugger;
+    $("#update__UpdateContact__documentUpload2").trigger("click");
+}
+apz.update.UpdateContact.uploadPhoto2 = function(pthis) {
+    $("#update__UpdateContact__documentUpload2").trigger("click");
+}
+apz.update.UpdateContact.fnCallFileBrowser2 = function(id) {
+    var json = {
+        "filter": "",
+        "fileCategory": "EXTERNAL",
+        "location": "EXTERNAL",
+        "openFile": "N"
+    };
+    json.id = id;
+    json.callBack = apz.update.UpdateContact.fnGetSession2;
+    apz.ns.fileBrowser(json);
+}
+apz.update.UpdateContact.fnGetSession2 = function(jsonObj) {
+    apz.update.UpdateContact.androidFilePath = jsonObj.filePath;
+    apz.server.login({
+        "userId": "admin",
+        "pwd": "admin",
+        "callBack": apz.update.UpdateContact.fnGetSessionCB2
+    })
+}
+apz.update.UpdateContact.fnGetSessionCB2 = function(params) {
+    if (params.errors == undefined && params.status) {
+        var path = apz.update.UpdateContact.androidFilePath;
+        var lfilePath = path.split("/")
+        apz.update.UpdateContact.androidfileName = lfilePath.pop();
+        var json = {
+            "filePath": lfilePath.join("/"),
+            "sessionReq": "Y"
+        };
+        json.fileName = apz.update.UpdateContact.androidfileName;
+        json.base64 = "Y";
+        json.id = "DOWNLOADFILE_ID";
+        json.callBack = apz.update.UpdateContact.fnGetBase642
+        apz.ns.downloadFile(json);
+    }
+}
+apz.update.UpdateContact.fnGetBase642 = function(params) {
+    if (params.base64) {
+        var lfileName = apz.update.UpdateContact.androidfileName;
+        apz.update.UpdateContact.fnShowFileProgress2(lfileName, "data:image;base64," + params.base64);
+    }
+}
+apz.update.UpdateContact.BrowseToUpload2 = function(pthis, event) {
+    debugger;
+    var fieArray = (pthis.files.length > 0) ? pthis.files : apz.update.UpdateContact.fileList2;
+    for (var i = 0, len = fieArray.length; i < len; i++) {
+        let fileObj = fieArray[i];
+        if (fileObj.size <= 2097152) {
+            let apzFileReader = new FileReader();
+            apzFileReader.onload = function() {
+                debugger;
+                let binaryStr = apzFileReader.result;
+                apz.update.UpdateContact.fnShowFileProgress2(fileObj.name, binaryStr);
+                $("#" + pthis.id).val("");
+            }
+            apzFileReader.readAsDataURL(fileObj);
+        } else {
+            apz.dispMsg({
+                appId: "update",
+                message: "Please select the size below 2 Mb."
+            })
+        }
+    }
+}
+apz.update.UpdateContact.fnShowFileProgress2 = function(filename, base64) {
+    var uploadObj = {};
+    var documentType = "additionalProof";
+    uploadObj.fileName2 = filename;
+    uploadObj.docData2 = base64;
+    uploadObj.docType2 = documentType;
+    uploadObj.docName2 = "Additional Proof";
+    apz.data.scrdata.update__DocumentsTypes_Res.additionalDocuments2.push(uploadObj);
+    apz.update.nodeName2 = apz.data.scrdata.update__DocumentsTypes_Res.additionalDocuments2;
+    if (apz.update.nodeName2.length > 0) {
+        $("#update__UpdateContact__" + documentType + "_lst2").removeClass("sno")
+    }
+    apz.data.loadData("DocumentsTypes", "update");
+}
+//----------------------------------------------------
+apz.update.UpdateContact.fnProceed = function() {
+    debugger;
+    apz.update.UpdateContact.fnRenderStage3();
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "update__UpdateContact__Stage3",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.update.UpdateContact.showSuccessMessage,
+                "destroyDiv": "update__UpdateContact__Stage3"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.update.UpdateContact.fnRenderStage3 = function() {
+    debugger;
+    apz.hide('update__UpdateContact__Stage1');
+    apz.hide('update__UpdateContact__Stage2');
+    apz.show('update__UpdateContact__Stage3');
+};
+apz.update.UpdateContact.showSuccessMessage = function(msg) {
+    debugger;
+    var theme = $("link").eq(0).attr("href")
+    //"appzillon/styles/themes/ConsUK/css/ConsUK.css"
+    
+        if (apz.appContext == "agency") {
+        apz.dispMsg({
+            message: msg, //"Your request for issuing debit card has been submitted successfully!",
+            type: "S",
+            callBack: apz.update.UpdateContact.sParams.callBack
+        });
+    } else {
+        apz.dispMsg({
+            message: msg,
+            type: "S",
+            callBack: apz.cmrnav.fnLaunchConsumerHome
+        });
+    }
+}
+apz.update.UpdateContact.fnTabChange = function() {
+    debugger;
+    apz.data.buildData("DocumentsTypes", "update");
+};
+apz.update.UpdateContact.fnRenderStage4 = function() {
+    debugger;
+    apz.show('update__UpdateContact__Stage1');
+    apz.show('update__UpdateContact__Stage2');
+    apz.hide('update__UpdateContact__Stage3');
+};
+apz.update.UpdateContact.fnBrowse = function(params) {
+    debugger;
+};
+apz.update.UpdateContact.fnCancel = function(params) {
+    debugger;
+    // apz.update.UpdateContact.sParams.callBack(); //Working code
+    debugger;
+    var theme = $("link").eq(0).attr("href")
+    //"appzillon/styles/themes/ConsUK/css/ConsUK.css"
+    
+        if (apz.appContext == "agency") {
+        var lParams = {
+            "appId": "landpg",
+            "scr": "LandingPage",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "animation": 21,
+            "userObj": {
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                "custId": "menuap__Menu__custId_txtcnt"
+            }
+        }
+        apz.launchApp(lParams);
+    } else {
+        apz.cmrnav.fnLaunchConsumerHome()
+    }
+};
+apz.update.UpdateContact.fnEditSubmit = function(params) {
+    debugger;
+    var text = params.innerText;
+    if (text == "Edit") {
+        $("#update__UpdateContact__addressForm input").each(function() {
+            $(this).removeAttr("disabled");
+        });
+        $("#update__UpdateContact__addressDragDrop").removeClass("sno");
+        $("#update__UpdateContact__phoneForm input").each(function() {
+            $(this).removeAttr("disabled");
+        });
+        $("#update__UpdateContact__phoneDragDrop").removeClass("sno");
+        $("#update__UpdateContact__edit_submit").html("Submit");
+    } else {
+        var validated = apz.val.validateContainer("update__UpdateContact__addressForm");
+        if (validated) {
+            apz.data.buildData("DocumentsTypes", "update");
+            apz.update.UpdateContact.fnStartWorkflow();
+            //  apz.update.UpdateContact.fnProceed();
+        } else {
+            apz.dispMsg({
+                message: "Please fill all the mandatory fields!",
+                type: "A",
+                callBack: function() {}
+            });
+        }
+    }
+};
+apz.update.UpdateContact.fnStartWorkflow = function() {
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "StartWorkFlow",
+        "buildReq": "N",
+        "appId": "update",
+        "req": {
+            "appId": "acdp01",
+            "workFlowId": "",
+            "userId": "CorpUser"
+        },
+        "paintResp": "N",
+        "callBack": apz.update.UpdateContact.fnStartWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+};
+apz.update.UpdateContact.fnStartWorkflowCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        if (pResp.res.update__StartWorkFlow_Res) {
+            apz.update.UpdateContact.sCache.refNo = pResp.res.update__StartWorkFlow_Res.instanceId;
+            apz.refNo = apz.update.UpdateContact.sCache.refNo;
+            apz.update.UpdateContact.fnAddUser(apz.update.UpdateContact.sCache.refNo);
+        }
+    }
+}
+apz.update.UpdateContact.fnAddUser = function(refno) {
+    debugger;
+    apz.startLoader();
+    var d = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    var lServerParams = {
+        "ifaceName": "CustomerServiceRequest_New",
+        "buildReq": "N",
+        "appId": "update",
+        "req": {
+            "tbDbmiCustomerServicerequest": {
+                refno: refno,
+                makerdate: d,
+                category: "Service Request",
+                subcategory: "Update Contact",
+                status: "Pending",
+                // customerid: apz.getElmValue("excust__CustomerDashboard__custId"),
+                customerid: apz.data.scrdata.cmrnav__CustmerDetails_Res.customerId,
+                maker: "RM001",
+                initdate: d,
+                srcdata: JSON.stringify(apz.data.scrdata.update__DocumentsTypes_Res)
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.update.UpdateContact.fnAddUserCB
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.update.UpdateContact.fnAddUserCB = function(pResp) {
+    if (pResp.status) {
+        apz.update.UpdateContact.fnAddUserInCustomerMaster(apz.update.UpdateContact.sCache.refNo);
+        apz.update.UpdateContact.fnCallNextStateWorkFlow(apz.update.UpdateContact.fnRMCB);
+        apz.update.UpdateContact.showSuccessMessage("The request has been initiated");
+    }
+}
+apz.update.UpdateContact.fnAddUserInCustomerMaster = function(refno) {
+    debugger;
+    apz.startLoader();
+    var data = apz.data.scrdata.update__DocumentsTypes_Res;
+    var lServerParams = {
+        "ifaceName": "ApplicationDetailsDB_New",
+        "buildReq": "N",
+        "appId": "update",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                mobileNo: data.mobileNumber,
+                email: data.emailId,
+                addressLine1: data.addressLine1,
+                addressLine2: data.addressLine2,
+                addressLine3: data.addressLine3,
+                city: data.city,
+                state: data.state,
+                pin: data.zip,
+                refNo: refno,
+                product: "Service Request",
+                subproduct: "Update Address",
+                issueDate: new Date().toISOString().slice(0, 19).replace('T', ' ')
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.update.UpdateContact.callItBack
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.update.UpdateContact.callItBack = function(pResp) {
+    debugger;
+    //apz.update.UpdateContact.fnCallNextStateWorkFlow(apz.update.UpdateContact.fnRMCB)
+}
+apz.update.UpdateContact.fnRMCB = function(pResp) {
+    debugger;
+}
+apz.update.UpdateContact.fnApprove = function() {
+    debugger;
+    if (apz.mockServer) {
+        apz.update.UpdateContact.showSuccessMessage("The request has been approved successfully!");
+    } else {
+        apz.update.UpdateContact.fnDeleteRecord();
+        //apz.update.UpdateContact.fnupdateStatus();
+        apz.update.UpdateContact.fnCallNextStateWorkFlow(apz.update.UpdateContact.fnNexttWorkflowCB);
+    }
+};
+apz.update.UpdateContact.fnCallNextStateWorkFlow = function(cb) {
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "update",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "SUBMIT"
+        },
+        "paintResp": "N",
+        "callBack": cb
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.update.UpdateContact.fnNexttWorkflowCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        apz.update.UpdateContact.showSuccessMessage("The request has been approved successfully!");
+    }
+}
+apz.update.UpdateContact.fnDeleteRecord = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "CustomerServiceRequest_Delete",
+        "buildReq": "N",
+        "appId": "update",
+        "req": {
+            "tbDbmiCustomerServicerequest": {
+                refno: apz.refNo,
+                makerdate: apz.formatDate({
+                    val: apz.update.UpdateContact.sCache.data.makerdate,
+                    fromFormat: "dd/MM/yyyy hh:mm:ss",
+                    toFormat: "yyyy-MM-dd hh:mm:ss"
+                }),
+                category: "Service Request",
+                subcategory: "Update Contact",
+                status: "Resolved from RM",
+                customerid: apz.update.UpdateContact.sCache.data.customerid,
+                maker: "RM001",
+                checker: "RM001",
+                checkerdate: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                initdate: apz.formatDate({
+                    val: apz.update.UpdateContact.sCache.data.initdate,
+                    fromFormat: "dd/MM/yyyy",
+                    toFormat: "yyyy-MM-dd"
+                }),
+                srcdata: JSON.stringify(apz.data.scrdata.update__DocumentsTypes_Res)
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.update.UpdateContact.fnDeleteCB
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.update.UpdateContact.fnDeleteCB = function(pResp) {
+    debugger
+    if (pResp.status) {
+        apz.update.UpdateContact.fnupdateStatus();
+    }
+}
+apz.update.UpdateContact.fnupdateStatus = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "CustomerServiceRequest_New",
+        "buildReq": "N",
+        "appId": "update",
+        "req": {
+            "tbDbmiCustomerServicerequest": {
+                refno: apz.refNo,
+                makerdate: apz.formatDate({
+                    val: apz.update.UpdateContact.sCache.data.makerdate,
+                    fromFormat: "dd/MM/yyyy hh:mm:ss",
+                    toFormat: "yyyy-MM-dd hh:mm:ss"
+                }),
+                category: "Service Request",
+                subcategory: "Update Contact",
+                status: "Resolved",
+                customerid: apz.update.UpdateContact.sCache.data.customerid,
+                maker: "RM001",
+                checker: "RM001",
+                checkerdate: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                initdate: apz.formatDate({
+                    val: apz.update.UpdateContact.sCache.data.initdate,
+                    fromFormat: "dd/MM/yyyy",
+                    toFormat: "yyyy-MM-dd"
+                }),
+                srcdata: JSON.stringify(apz.data.scrdata.update__DocumentsTypes_Res)
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.update.UpdateContact.fnupdateStatusCB
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.update.UpdateContact.fnupdateStatusCB = function(pResp) {
+    debugger;
+}

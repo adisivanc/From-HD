@@ -1,0 +1,3692 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+@media only screen and (min-width: 1200px) and (max-width: 1920px) {
+
+
+/* ------- Fun Stop ------ */
+
+/* Gallery */
+
+#gall_popup { min-width:720px; max-width:870px; padding:0; margin:0; }
+#galleriestab > img { max-width:580px; height:370px; padding:0; margin:0 125px; text-align:center; }
+
+#gall_popup p { width:98%; padding:0 1%; float:left; }
+.gallpoptbl h2 { width:98%; padding:0 1%; float:left; }
+
+}
+
+
+@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+
+
+.add_pad { padding-top:130px; }	
+
+.school_quote { bottom:140px; right:30px; font-size:30px; }
+.school_quote span { font-size:52px; }
+
+.content { width:96%; }
+.pagetitle { font-size:40px; text-shadow:1px 1px 1px #fff; }
+.ourvalue_row_left { line-height:4; } 
+.about_quote { font-size:22px; height:99%; margin: 0 0 0 70px; line-height:1.45; background-color:rgba(232,232,232,0.7); padding-left:2%; padding-right:2%; padding-top:1%; }
+
+#slide1 .parallax { padding-top:120px; }
+
+#innerslide2 .hsContainer { background-image: none; }
+.subhd { font-size:26px; padding-bottom:5px; margin-bottom:10px; }
+
+.school_titlebar { background:url(../images/getknow_header_bg.png) no-repeat right center; font-size:40px; }
+
+.type_outer { width:100%; float:left; padding:30px 0 40px 0; }
+.school_type { max-width:33%; font-size:19px; line-height:2.2; }
+.school_type2 { margin-left:0.5%; } 
+
+
+.subhd1 { font-size:40px; }
+.row2_content1 img, .row2_content2 img { width:90%; } 
+.row2_content_inner { width:33.2%; float:left; border-right:1px dotted #ccc; text-align:center; }
+
+.photo_stream_container { padding-left:10px;  border-left:1px dotted #ccc; float:left; }
+.photo_stream_hd { color:#666666; font-size:20px; padding-bottom:5px; text-align:left; }
+
+.photo_stream_outer { width:100%; }
+.photo_stream { max-width:105px; width:100%; float:left; text-align:left; padding-bottom:10px; }
+.photo_stream img { max-width:80px; border:3px solid #666666; }
+.row2_content2 { border-right:0; }
+
+
+.events_container { width:96%; margin:0 2% 6px 2%; padding-bottom:6px; font-size:14px; }
+.events_left { width:92px; font-size:16px; padding-top:5px; }
+.events_left span { font-size:11px; }
+.events_right h2 { color:#555555; font-size:15px; padding-bottom:5px; }
+
+
+
+/* ---- Footer ----- */
+
+.footer_top { background:#a8a89b; padding-top:10px; }
+.footer_content { width:33.33%; float:left; padding:20px 0; }
+.footer_content h2 { font-size:24px; }
+
+.footer2 { width:30.33%; padding-left:3%; }
+
+.footer2 ul { margin-left:20px; }
+.footer2 ul li { padding-bottom:13px; font-size:15px; }
+
+.footer_form { width:100%; float:left; padding:20px 0 0 0; }
+.txtbox_news { max-width:355px; width:98%; float:left; font-size:16px; margin-bottom:20px; padding:0 5px 0 40px;  } 
+
+
+/* menu */
+
+.nav_menu_outer { width:720px; float:right; border:0px solid red; }
+.wrapper { max-width:720px; border:0px solid red; }
+.nav { font-size:15px; }
+
+
+
+/* ---- Home page Popup ----  */
+
+.yt_popup_outer { width:820px; float:left; font-family: 'LetterGothicMTStd';  position:relative; padding:15px 15px 5px 15px; background: url("../images/bg1.jpg") center center; background-size: cover; }
+.yt_popup_outer .whyakka_hd { width:100%; float:left; font-family: 'LetterGothicMTStd'; font-size:26px; color:#75b1cb; font-weight:600; border-bottom:1px dashed #cccccc; padding-bottom:5px; margin-bottom:15px; }
+.yt_popup_outer p { font-size:16px; text-align:justify; padding-bottom:15px; line-height:1.4; }
+.yt_popup_outer .whyakka_popup_desc { width:500px; float:left; background:url(../images/teacher_popup_bg.jpg) repeat; color:#000000; position:relative; left:-25px; margin-bottom:10px; padding:15px 15px 5px 25px; position:relative; }
+.yt_popup_outer .whyakka_popup_desc > p { line-height:22px; font-size:14px; }
+.yt_popup_outer .whyakkaimg { float:right; margin: 30px 0 0 0; position: absolute; right:20px; padding-top:45px; width:280px; top:-7px; }
+
+
+
+/* ----  Campus ----- */
+
+.page_menu_active { position: static; top:50px; padding-top:0; }
+.page_menutop { width:100%; float:left; padding:5px 0; background:url(../images/sub_header_split1.jpg) repeat-x bottom left; } 
+.page_menuhd { width:100%; float:left; font-size:42px; background: none; height: auto; line-height: normal; padding-top:0px; padding-right:0;  }
+.pagemenu_right { width:100%; float:left; padding-left:0; }
+.pagemenu_desctop { font-size:15px; padding-top:5px; text-align:justify; }
+.pagemenu_desctop br { display: none; }
+
+.page_menubtm ul { list-style:none; margin-top:0px; min-height:50px; }
+.page_menubtm ul li { display:inline; padding:7px 17px 0 0; float:left; font-size:15px; } 
+.page_menubtm ul li:last-child { padding-right:0; }
+.page_menubtm ul li a { color:#999999; padding:7px 0 15px 0; display:block; border-bottom:5px hidden #ffffff; }
+.page_menubtm ul li:hover a, .page_menubtm ul li a.active { background:url(../images/header_bottom.png) repeat-x bottom left; }
+.page_menu_pad { margin-top:280px; }
+
+
+.campus_row1_left { width:65%; }
+.campus_row1_right { width:33%; }
+.campus_row1_img img { max-width:380px; width:100%; float:right; margin-bottom:7px; }  
+.campus_quote { padding:15px 0; font-size:18px; margin-bottom:15px; }
+
+
+.campus_test_content { width:70%; float:left; text-align:center; }
+.campus_testimonial_desc { font-size:32px; text-align:center; margin-top:20px; }
+.campus_testimonial_author { font-size:32px; color:#75b1be;  }
+.campus_testimonial_img { width:330px; float:right; }
+.campus_testimonial_img img { width:80%; margin-top:30px; }
+#innerslide8 .parallax_inner { height:260px; }
+#innerslide8 .parallax_inner .content { max-width:1600px; }
+#slideall_hide .test_slide_ht { height:500px; }
+.testimonial_slide { padding-bottom:0;  }
+
+
+
+#innerslide5 .hsContainer, #innerslide6 .hsContainer, #innerslide7 .hsContainer { background-image: none; background-color: rgba(0,0,0,0.4); }
+.innerslide6_content { font-size:22px; padding-top:120px; line-height:1.5; }
+
+.campus_events_board h2 { font-size:18px; padding-bottom:5px; } 
+.campus_events_board p { font-size:14px; }
+.campus_events_desc { padding-top:0; padding-bottom:10px; float:left; } 
+
+.akka_container { width:200px; margin:0 auto; }
+.akka_slide_img { padding-bottom:15px; } 
+.akka_slide_img img { max-width:275px; width:100%; }
+.akkas_desc h2 { font-size:20px; }
+.akkas_desc p { font-size:14px; padding-bottom:7px; line-height:1.5; }
+.akkas_desc .akka_readmore { font-size:14px; float:right; } 
+
+/*  -----  contact -----  */
+
+.contact_left { width:58%; float:left; padding:25px 2% 0 0; }
+.contact_right { width:40%; float:right; padding:10px 0 0 0; }
+.txtbox { padding-left:9%; }
+.msgbox { padding-left:9%; }  
+
+ 
+/* ------  Funstop  ------ */
+
+.funstop_container { width:100%; float:left; padding:110px 0 0 0; }
+.funstop_content { width:100%; float:left; padding:30px 0 20px 0; }
+.gallery_left { width:68%; border-right:1px dotted #cecece; }
+.funstop_content .gallery_right { width:31.5%; }
+.gallery_outer { width:50%; margin-bottom:40px; font-size:16px; }
+
+
+.gallery_popup_content { width:700px; float:left; } 
+.gallery_popup_top { width:100%; float:left; }
+.gallery_popup_img { width:405px; float:left; }
+.gallery_popup_img img { width:100%; }
+.gallery_right { width:275px; float:right; }
+.popup_outer { padding:15px 10px; }
+.gallery_popup_btm h1 { font-size:22px; }
+.gallery_popup_btm p { font-size:15px; }
+
+/* ------- Up Events ------- */
+
+.upevents_container { width:100%; float:left; }
+.upevents_left { width:100%; float:left; border-right:0; padding-right:0; }
+.upevents_right { width:100%; float:left; }
+#event_cal { width:310px; float:left; }
+
+/* ------ Events popup ------ */
+
+.events_popup_content { width:700px; float:left; padding:10px 0 0 0; }
+.events_popup_img { width:340px; float:left; }
+.events_popup_img img { width:340px; }
+.event_row1_right { margin-left:355px;  }
+
+.event_regdet {  width:98%; float:left; padding:0 1%; }
+.event_regdesc { width:75%; float:left; font-size:16px; padding:7px 0; padding-right:1%; }
+.event_regamt {  width:24%; float:right; font-size:26px; text-align:center; line-height:2.5; }
+
+.events_popup_content .popupbtn_group { display:none; }
+
+
+
+
+
+/* ---- Akka ----  */
+.teacher_details { width:47%; float:left; padding:0 1.5%; margin-bottom:32px;  }
+.teacher_details img { width:100%; float:left; }
+
+.teacher_head p { font-size:15px; line-height:20px; width:96%; padding:0 2%;  }
+.teacher_head h1 { text-align:left; margin-bottom:15px; padding-left:10px; }
+
+.teacher_roles { margin-left:20px; }
+.joinus_alldetail { margin-left:7px; }
+.teacher_join { margin-left:7px; }
+
+.joinus_cntr p { width:96%; padding:0 2%; float:left; }
+.joinus_cntr h1 { width:96%; padding:0 2%; float:left; margin-bottom:7px; }
+
+
+/*--Join us Tab--*/
+
+#thankyou_akka { height:305px; }
+#thankyou_akka p { width:94%; padding:20px 3% 20px 3%; font-size:22px;}
+.strip_center { height:8px; }
+.subscribe_newsbtn { width:66%; float:left; margin:0 14% 0 20%; padding:7px 0; font-size:22px; }
+
+
+
+/*----- Akka Details Popup ------*/
+
+.akka_popuptbl { width:920px; float:left; }
+.popup_contact_left2 { width:60%; background-size:100% 100%; }
+.popup_contact_right2 { width:40%; background-size:100% 100%; }
+
+
+/*----- Contact ------*/
+
+.contact_left { width:98.5%; float:left; padding-right:1.5%; }
+.contact_right { width:98.5%; float:right; padding-left:1.5%; }
+.page_menuhdd { width:98%; padding:0 1%; margin:0; float:left; }
+#c_map { width:98%; height:280px; float:left; }
+
+
+/*----- Curriculum ------*/
+
+.arithmetic_cntr1 { width:39%; float:left; padding-right:2%; padding-bottom:17px; }
+.arithmetic_cntr2 { width:59%; float:left; padding-right:0%; padding-bottom:17px; }
+
+.what_explore h2 { margin:16px 0 0 137px; }
+.what_explore ul { margin:20px 0 0 180px;  }
+
+
+
+/*----- Event Registration ------*/
+
+.funhd2 { width:98%; padding:0 1% 5px 1%; }
+.fun_desc2 { width:98%; padding:0 1% 20px 1%; }
+
+.joinus_left { width:71%; float:left; padding:0 1.5% 0 1%; }
+
+
+
+/* ------- YT Belief and Values ------ */
+
+.belief_img1 { max-width:446px; width:60%; float:none; margin:7px 15% 15px 25%; text-align:center; clear:both; }
+.belief_parag1 { width:100%; float:left; clear:both; }
+
+.ytbelief_left { width:100%; float:left; text-align:center; padding:0 0 15px 0; }
+.ytbelief_right { width:100%; float:left; }
+ 
+.belief_row2_curr { margin:8px 0 20px 0; } 
+ 
+
+
+
+/* ------- YT Methodology ------ */
+ 
+.methodimg img {  max-width:310px; }
+
+ 
+/* ------- YT Practices ------ */
+
+.ytpractice_outer { width:50%; float:left; margin:7px 0; }
+
+.clear7 { clear:none; }
+.clear3, .clear5, .clear9 { clear:left; }
+
+
+
+/* ------- Fun Stop ------ */
+
+/* Gallery */
+
+.gallery_out { width:33.3%; }
+.gal_parag { font-size:15px; }
+
+#gall_popup { min-width:720px; max-width:780px;  }
+#galleriestab > img { max-width:600px; height:370px; margin:0 65px; text-align:center; }
+
+
+/* ------ Press ------ */
+
+.press_outer { width:50%; }
+
+
+/* ----- Philosophy ----- */
+
+#innerslide15 .parallax_inner { height:360px; }
+.philosophy_slide_ht { height:480px; }
+.philosophy_testimonial { font-size:30px; line-height:45px; }
+.philosophy_testimonial br { display:none; }
+ 
+.philosophy_left { width:100%; }
+.philosophy_right { width:100%; margin-left:0; }
+.philosophy_right img { width:40%; float:left; margin-left:30%; margin-top:15px; }
+ 
+ 
+/* ----- Garden Campus ----- */
+
+.garden_left { width:100%; }
+.garden_right { width:100%; margin-left:0; }
+.garden_right img { width:35%; float:left; margin-left:32%; margin-top:15px; }
+.garden_left > p { line-height:30px; }
+ 
+ 
+/* ----- Garden Rhytm ----- */
+
+.gd_rhythm { width:50%; float:left; }
+.gd_rhythm_inner { min-height:300px; }
+.gd_rhythm_inner img { max-height:300px; }
+ 
+}
+
+
+@media only screen and (min-width: 960px) and (max-width: 1023px) {
+
+
+.add_pad { padding-top:130px; }	
+
+.school_quote { bottom:140px; right:30px; font-size:28px; }
+.school_quote span { font-size:50px; }
+	
+.content { width:96%; }
+.pagetitle { font-size:39px; text-shadow:1px 1px 1px #fff; }
+.ourvalue_row_left { line-height:4; } 
+.about_quote { font-size:20px; height:99%; margin: 0 0 0 15px; line-height:1.45; background-color:rgba(232,232,232,0.7); padding-left:2%; padding-right:2%; padding-top:3%; }
+
+#innerslide2 .hsContainer { background-image: none; }
+.subhd { font-size:26px; padding-bottom:5px; margin-bottom:10px; }
+
+.founder_btn { width:100%; float:left; padding-top:15px; }
+
+.school_titlebar { background:url(../images/getknow_header_bg.png) no-repeat right center; font-size:40px; }
+
+.type_outer { width:100%; float:left; padding:30px 0 40px 0; }
+.school_type { max-width:33%; font-size:19px; line-height:2.2; }
+.school_type2 { margin-left:0.5%; } 
+
+
+.subhd1 { font-size:40px; }
+.row2_content1 img, .row2_content2 img { width:90%; } 
+.row2_content_inner { width:33.2%; float:left; border-right:1px dotted #ccc; text-align:center; }
+
+
+.photo_stream_container { padding-left:10px; border-left:1px dotted #ccc; float:left; }
+.photo_stream_hd { color:#666666; font-size:20px; padding-bottom:5px; text-align:left; }
+
+.photo_stream_outer { width:100%; }
+.photo_stream { max-width:85px; width:100%; float:left; text-align:left; padding-bottom:10px; }
+.photo_stream img { max-width:70px; border:3px solid #666666; }
+.row2_content2 { border-right:0; }
+
+
+.events_container { width:96%; margin:0 2% 6px 2%; padding-bottom:6px; font-size:14px; }
+.events_left { width:92px; font-size:16px; padding-top:5px; }
+.events_left span { font-size:11px; }
+.events_right h2 { color:#555555; font-size:15px; padding-bottom:5px; }
+
+
+/* ---- Footer ----- */
+
+.footer_top { background:#a8a89b; padding-top:10px; }
+.footer_content { width:33.33%; float:left; padding:20px 0; }
+.footer_content h2 { font-size:24px; }
+
+.footer2 { width:30.33%; padding-left:3%; }
+
+.footer2 ul { margin-left:20px; }
+.footer2 ul li { padding-bottom:13px; font-size:15px; }
+
+.footer_form { width:100%; float:left; padding:20px 0 0 0; }
+.txtbox_news { max-width:355px; width:98%; float:left; font-size:16px; margin-bottom:20px; padding:0 5px 0 40px;  } 
+
+
+/* menu */
+
+.nav_menu_outer { width:690px; float:right; border:0px solid red; }
+.wrapper { max-width:690px; border:0px solid red; }
+.nav { font-size:15px; }
+.nav-item > a { padding:0 10px; }
+
+
+/* ---- Home page Popup ----  */
+
+.yt_popup_outer { width:820px; float:left; font-family: 'LetterGothicMTStd';  position:relative; padding:15px 15px 5px 15px; background: url("../images/bg1.jpg") center center; background-size: cover; }
+.yt_popup_outer .whyakka_hd { width:100%; float:left; font-family: 'LetterGothicMTStd'; font-size:26px; color:#75b1cb; font-weight:600; border-bottom:1px dashed #cccccc; padding-bottom:5px; margin-bottom:15px; }
+.yt_popup_outer p { font-size:16px; text-align:justify; padding-bottom:15px; line-height:1.4; }
+.yt_popup_outer .whyakka_popup_desc { width:500px; float:left; background:url(../images/teacher_popup_bg.jpg) repeat; color:#000000; position:relative; left:-25px; margin-bottom:10px; padding:15px 15px 5px 25px; position:relative; }
+.yt_popup_outer .whyakka_popup_desc > p { line-height:22px; font-size:14px; }
+.yt_popup_outer .whyakkaimg { float:right; margin: 30px 0 0 0; position: absolute; right:20px; padding-top:45px; width:280px; top:-7px; }
+
+
+
+
+/* ----  Campus ----- */
+
+
+.page_menu_active { position: static; top:50px; padding-top:0; }
+.page_menutop { width:100%; float:left; padding:5px 0; background:url(../images/sub_header_split1.jpg) repeat-x bottom left; } 
+.page_menuhd { width:100%; float:left; font-size:42px; background: none; height: auto; line-height: normal; padding-top:0px; padding-right:0;  }
+.pagemenu_right { width:100%; float:left; padding-left:0; }
+.pagemenu_desctop { font-size:15px; padding-top:5px; text-align:justify; }
+.pagemenu_desctop br { display: none; }
+
+.page_menubtm ul { list-style:none; margin-top:0px; min-height:50px; }
+.page_menubtm ul li { display:inline; padding:7px 17px 0 0; float:left; font-size:15px; } 
+.page_menubtm ul li:last-child { padding-right:0; }
+.page_menubtm ul li a { color:#999999; padding:7px 0 15px 0; display:block; border-bottom:5px hidden #ffffff; }
+.page_menubtm ul li:hover a, .page_menubtm ul li a.active { background:url(../images/header_bottom.png) repeat-x bottom left; }
+.page_menu_pad { margin-top:280px; }
+
+
+.campus_row1_left { width:65%; }
+.campus_row1_right { width:33%; }
+.campus_row1_img img { max-width:380px; width:100%; float:right; margin-bottom:7px; }  
+.campus_quote { padding:15px 0; font-size:18px; margin-bottom:15px; }
+
+.campus_testimonial_desc { font-size:32px; text-align:center; margin-top:15px; line-height:1.5; }
+.campus_testimonial_author { font-size:32px; color:#75b1be;  }
+.campus_testimonial_img { width:330px; float:right; }
+.campus_testimonial_img img { width:80%; margin-top:35px; }
+#innerslide8 .parallax_inner { height:260px; }
+#innerslide8 .parallax_inner .content { max-width:1600px; }
+#slideall_hide .test_slide_ht { height:500px;   }
+.testimonial_slide { padding-bottom:0;  }
+
+
+#innerslide5 .parallax_inner, #innerslide6 .parallax_inner, #innerslide7 .parallax_inner { height:260px; }
+#innerslide5 .hsContainer, #innerslide6 .hsContainer, #innerslide7 .hsContainer { background-image: none; background-color: rgba(0,0,0,0.4); }
+.innerslide6_content, .innerslide5_content, .innerslide7_content  { font-size:17px; padding-top:80px; line-height:1.5; }
+
+
+.campus_events_board h2 { font-size:18px; padding-bottom:5px; } 
+.campus_events_board p { font-size:14px; }
+.campus_events_desc { padding-top:0; padding-bottom:10px; float:left; } 
+
+.akka_container { width:200px; margin:0 auto; }
+.akka_slide_img { padding-bottom:15px; } 
+.akka_slide_img img { max-width:275px; width:100%; }
+.akkas_desc h2 { font-size:20px; }
+.akkas_desc p { font-size:14px; padding-bottom:7px; line-height:1.5; }
+.akkas_desc .akka_readmore { font-size:14px; float:right; } 
+
+/*  -----  contact -----  */
+
+.contact_left { width:58%; float:left; padding:25px 2% 0 0; }
+.contact_right { width:40%; float:right; padding:10px 0 0 0; }
+.txtbox { padding-left:9%; }
+.msgbox { padding-left:9%; }  
+.contact_explore ul { margin:20px 0 0 30px; }
+
+ 
+/* ------  Funstop  ------ */
+
+.funstop_container { width:100%; float:left; padding:20px 0 0 0; }
+.funstop_content { width:100%; float:left; padding:30px 0 20px 0; }
+.gallery_left { width:100%; border-right:0; border-bottom:1px dotted #cccccc; margin-bottom:20px; }
+.funstop_content .gallery_right { width:275px; margin:0 auto; float:none; }
+.gallery_outer { width:33.3%; margin-bottom:40px; font-size:16px; }
+
+
+.gallery_popup_content { width:700px; float:left; } 
+.gallery_popup_top { width:100%; float:left; }
+.gallery_popup_img { width:405px; float:left; }
+.gallery_popup_img img { width:100%; }
+.gallery_right { width:275px; float:right; }
+.popup_outer { padding:15px 10px; }
+.gallery_popup_btm h1 { font-size:22px; }
+.gallery_popup_btm p { font-size:15px; }
+
+
+/* ------- Up Events ------- */
+
+.upevents_container { width:100%; float:left; }
+.upevents_left { width:100%; float:left; border-right:0; padding-right:0; }
+.upevents_right { width:100%; float:left; }
+#event_cal { width:310px; float:left; }
+
+/* ------ Events popup ------ */
+
+.events_popup_content { width:700px; float:left; padding:10px 0 0 0; }
+.events_popup_img { width:340px; float:left; }
+.events_popup_img img { width:340px; }
+.event_row1_right { margin-left:355px;  }
+
+.event_regdet {  width:98%; float:left; padding:0 1%; }
+.event_regdesc { width:75%; float:left; font-size:16px; padding:7px 0; padding-right:1%; }
+.event_regamt {  width:24%; float:right; font-size:26px; text-align:center; line-height:2.5; }
+
+.events_popup_content .popupbtn_group { display:none; }
+
+
+
+/* ---- Akka ----  */
+
+.teacher_details { width:47%; float:left; padding:0 1.5%; margin-bottom:32px;  }
+.teacher_details img { width:100%; float:left; }
+
+.teacher_head p { font-size:15px; line-height:20px; width:96%; padding:0 2%;  }
+.teacher_head h1 { text-align:left; margin-bottom:15px; padding-left:10px; }
+
+
+.teacher_roles { margin-left:20px; }
+.joinus_alldetail { margin-left:7px; }
+.teacher_join { margin-left:7px; }
+
+.page_menuhdd { font-size:30px; }
+.joinus_cntr p { width:96%; padding:0 2%; float:left; }
+.joinus_cntr h1 { width:96%; padding:0 2%; float:left; margin-bottom:7px; }
+
+
+/*--Join us Tab--*/
+
+#thankyou_akka { height:305px; }
+#thankyou_akka p { width:94%; padding:20px 3% 20px 3%; font-size:22px;}
+.strip_center { height:8px; }
+.subscribe_newsbtn { width:66%; float:left; margin:0 14% 0 20%; padding:7px 0; font-size:22px; }
+
+
+
+/*----- Akka Details Popup ------*/
+
+.akka_popuptbl { width:870px; float:left; }
+.popup_contact_left2 { width:60%; background-size:100% 100%; }
+.popup_contact_right2 { width:40%; background-size:100% 100%; }
+
+
+/*----- Contact ------*/
+
+.contact_left { width:98.5%; float:left; padding-right:1.5%; }
+.contact_right { width:98.5%; float:right; padding-left:1.5%; }
+
+#c_map { width:98%; height:250px; float:left; }
+
+
+/*----- Curriculum ------*/
+
+.arithmetic_cntr1 { width:42%; float:left; padding-right:2%; padding-bottom:17px; }
+.arithmetic_cntr2 { width:56%; float:left; padding-right:0%; padding-bottom:17px; }
+
+.english_cntr { width:44%; float:left; padding:0 3%; }
+.speech_cntr { padding-right:0; clear:left; margin-top:15px; }
+
+.what_explore h2 { margin:16px 0 0 87px; }
+.what_explore ul { margin:20px 0 0 140px;  }
+
+
+/*----- Event Registration ------*/
+
+.funhd2 { width:98%; padding:0 1% 5px 1%; }
+.fun_desc2 { width:98%; padding:0 1% 20px 1%; }
+
+.joinus_left { width:71%; float:left; padding:0 1.5% 0 1%; }
+
+
+
+/* ------- YT Belief and Values ------ */
+
+.belief_img1 { max-width:426px; width:60%; float:none; margin:7px 13% 15px 27%; text-align:center; clear:both; }
+.belief_parag1 { width:100%; float:left; clear:both; }
+
+.ytbelief_left { width:100%; float:left; text-align:center; padding:0 0 15px 0; }
+.ytbelief_right { width:100%; float:left; }
+ 
+.belief_row2_curr { margin:8px 0 20px 0; } 
+
+
+
+
+/* ------- YT Methodology ------ */
+ 
+.methodimg img {  max-width:300px; }
+
+
+/* ------- YT Practices ------ */
+
+.ytpractice_outer { width:50%; float:left; margin:7px 0; }
+
+.clear7 { clear:none; }
+.clear3, .clear5, .clear9 { clear:left; }
+
+
+/* ------- Fun Stop ------ */
+
+/* Gallery */
+
+.gallery_out { width:33.3%; }
+.gal_parag { font-size:15px; }
+
+#gall_popup { min-width:720px; max-width:780px;  }
+#galleriestab > img { max-width:600px; height:370px; margin:0 65px; text-align:center; }
+
+
+/* ------ Press ------ */
+
+.press_outer { width:50%; }
+
+
+
+
+/* --- Set Account --- */
+
+.sa_cancelbtn { margin-bottom:50px; }
+
+
+
+/* ----- Philosophy ----- */
+
+#innerslide15 .parallax_inner { height:360px; }
+.philosophy_slide_ht { height:480px; }
+.philosophy_testimonial { font-size:30px; line-height:45px; }
+.philosophy_testimonial br { display:none; }
+
+
+.philosophy_left { width:100%; }
+.philosophy_right { width:100%; margin-left:0; }
+.philosophy_right img { width:50%; float:left; margin-left:25%; margin-top:15px; }
+
+#philosophy_quote br { display:none; }
+
+
+/* ----- Garden Campus ----- */
+
+.garden_left { width:100%; }
+.garden_right { width:100%; margin-left:0; }
+.garden_right img { width:40%; float:left; margin-left:30%; margin-top:15px; }
+.garden_left > p { line-height:30px; }
+
+
+
+/* ----- Garden Rhytm ----- */
+
+.gd_rhythm { width:50%; float:left; }
+.gd_rhythm_inner { min-height:300px; }
+.gd_rhythm_inner img { max-height:300px; }
+
+
+
+/* ----- Garden Program ----- */
+
+.gd_program1 { line-height:11; }
+.gd_program2 { line-height:6; }
+.gd_program3 { line-height:7; }
+
+
+}
+
+
+@media only screen and (min-width: 800px) and (max-width: 959px) {
+
+
+.add_pad { padding-top:117px; }	
+
+.school_quote { bottom:140px; right:30px; font-size:24px; }
+.school_quote span { font-size:40px; }
+
+.nav_menu_outer { width:525px; }
+.wrapper { max-width:525px; }
+.nav { font-size:16px; }
+/*.nav-submenu { left:-90px; width:370px; }
+.nav-submenu-item a { width:350px; }
+*/
+.content { width:96%; }
+.pagetitle { font-size:34px; text-shadow:1px 1px 1px #fff; }
+.para { font-size:18px; }
+.ourvalue_row_left { line-height:5; } 
+.about_quote { font-size:19px; height:99%; margin: 0 0 0 15px; line-height:1.6; background-color:rgba(232,232,232,0.7); padding-left:2%; padding-right:2%; padding-top:3.5%; }
+
+
+#innerslide2 .parallax_inner { background-image:url(../images/inner_bg2.jpg); background-position: bottom center; background-attachment:fixed;  height:630px; }
+#innerslide2 .hsContainer { background-image: none; }
+.subhd { font-size:24px; padding-bottom:5px; margin-bottom:10px; }
+.about_row1_footer { font-size:20px; }
+
+.founder_btn { width:100%; float:left; padding-top:15px; padding-bottom:15px; }
+
+.school_titlebar { background:url(../images/getknow_header_bg.png) no-repeat right center; font-size:30px; }
+
+.type_outer { width:100%; float:left; padding:30px 0 35px 0; }
+.school_type { max-width:33%; font-size:16px; line-height:2.2; }
+.school_type2 { margin-left:0.5%; } 
+
+
+.subhd1 { font-size:30px; }
+.row2_content1 img, .row2_content2 img { width:90%; } 
+.row2_content1, .row2_content2 { padding:10px 0; }
+.row2_content_inner { width:49.2%; float:left; border-right:1px dotted #ccc; text-align:center; }
+.row2_content2 { border-right:1px dotted #ccc; }
+.row2_content3 { width:98.5%; border-top:1px dotted #aaaaaa; padding-top:10px; border-right:0;  }
+
+.photo_stream_container { padding-left:10px; border-left:1px dotted #ccc; float:left; }
+.photo_stream_hd { color:#666666; font-size:20px; padding-bottom:5px; text-align:left; }
+
+.photo_stream_outer { width:60%; float:left; }
+.photo_stream { max-width:85px; width:100%; float:left; text-align:left; padding-bottom:10px; }
+.photo_stream img { max-width:70px; border:3px solid #666666; }
+.row2_content2 { border-right:0; }
+
+.events_container { width:96%; margin:0 2% 6px 2%; padding-bottom:6px; font-size:14px; }
+.events_left { width:92px; font-size:16px; padding-top:5px; }
+.events_left span { font-size:11px; }
+.events_right h2 { color:#555555; font-size:15px; padding-bottom:5px; }
+
+
+/* ---- Footer ----- */
+
+.footer_top { background:#a8a89b; padding-top:10px; font-size:13px; }
+.footer_content { width:33.33%; float:left; padding:20px 0; }
+.footer_content h2 { font-size:22px; }
+
+.footer2 { width:32.33%; padding-left:2%; }
+.footer3 { width:30.33%; padding-left:2%; }
+
+.footer2 ul { margin-left:20px; }
+.footer2 ul li { padding-bottom:13px; font-size:13px; }
+
+.footer_form { width:100%; float:left; padding:20px 0 0 0; }
+.txtbox_news { max-width:355px; width:98%; float:left; font-size:16px; margin-bottom:20px; padding:0 5px 0 40px;  } 
+
+
+/* menu */
+.logo { top:-15px; }
+.logo img { width:105px; }
+.nav_menu_outer { width:640px; float:right; border:0px solid red; }
+.wrapper { max-width:640px; border:0px solid red; }
+.nav { font-size:14px; }
+.nav-item > a { padding:0 11px; }
+
+
+
+/* ---- Home page Popup ----  */
+
+.yt_popup_outer { width:500px; float:left; font-family: 'LetterGothicMTStd';  position:relative; padding:15px 15px 5px 15px; background: url("../images/bg1.jpg") center center; background-size: cover; }
+.yt_popup_outer .whyakka_hd { width:100%; float:left; font-family: 'LetterGothicMTStd'; font-size:26px; color:#75b1cb; font-weight:600; border-bottom:1px dashed #cccccc; padding-bottom:5px; margin-bottom:15px; }
+.yt_popup_outer p { font-size:16px; text-align:justify; padding-bottom:15px; line-height:1.4; }
+.yt_popup_outer .whyakka_popup_desc { width:500px; float:left; background:url(../images/teacher_popup_bg.jpg) repeat; color:#000000; position:relative; left:-25px; margin-bottom:10px; padding:15px 15px 5px 25px; position:relative; }
+.yt_popup_outer .whyakka_popup_desc > p { line-height:22px; font-size:14px; }
+.yt_popup_outer .whyakkaimg { display:none; }
+
+.indexpop_padd { width:100%; float:left; padding:5px 0; }
+
+
+/* ----  Campus ----- */
+
+.page_menu_active { position: static; top:50px; padding-top:0; }
+.page_menutop { width:100%; float:left; padding:5px 0; background:url(../images/sub_header_split1.jpg) repeat-x bottom left; } 
+.page_menuhd { width:100%; float:left; font-size:36px; background: none; height: auto; line-height: normal; padding-top:0px; padding-right:0;  }
+.pagemenu_right { width:100%; float:left; padding-left:0; }
+.pagemenu_desctop { font-size:15px; padding-top:5px; text-align:justify; }
+.pagemenu_desctop br { display: none; }
+.page_menubtm ul { list-style:none; margin-top:0px; min-height:50px; }
+.page_menubtm ul li { display:inline; padding:7px 17px 0 0; float:left; font-size:15px; } 
+.page_menubtm ul li:last-child { padding-right:0; }
+.page_menubtm ul li a { color:#999999; padding:7px 0 15px 0; display:block; border-bottom:5px hidden #ffffff; }
+.page_menubtm ul li:hover a, .page_menubtm ul li a.active { background:url(../images/header_bottom.png) repeat-x bottom left; }
+.page_menu_pad { margin-top:280px; }
+
+
+.campus_row1_left { width:65%; }
+.campus_row1_right { width:33%; }
+.campus_row1_img img { max-width:380px; width:100%; float:right; margin-bottom:7px; }  
+.campus_quote { padding:15px 0; font-size:18px; margin-bottom:15px; }
+
+.campus_quote { width:100%; float:left; background:#faf7c5; padding:15px 0; font-size:15px; text-align:center; margin-bottom:15px; }
+.campus_row1_left p { padding-bottom:15px; text-align:justify; font-size:14px; }
+
+
+.campus_testimonial_desc { font-size:36px; text-align:center; margin-top:25px; line-height:1.5; }
+.campus_testimonial_author { font-size:36px; color:#75b1be;  }
+.campus_testimonial_img { width:330px; float:right; }
+.campus_testimonial_img img { width:80%; margin-top:70px; }
+#innerslide8 .parallax_inner { height:220px; }
+#innerslide8 .parallax_inner .content { max-width:1600px; }
+#slideall_hide .test_slide_ht { height:600px; }
+.testimonial_slide { padding-bottom:0;  }
+
+
+#innerslide5 .parallax_inner, #innerslide6 .parallax_inner, #innerslide7 .parallax_inner { height:260px; }
+#innerslide5 .hsContainer, #innerslide6 .hsContainer, #innerslide7 .hsContainer { background-image: none; background-color: rgba(0,0,0,0.4); }
+.innerslide6_content, .innerslide5_content, .innerslide7_content  { font-size:17px; padding-top:80px; line-height:1.5; }
+
+.campus_events_board h2 { font-size:18px; padding-bottom:5px; } 
+.campus_events_board p { font-size:14px; }
+.campus_events_desc { padding-top:0; padding-bottom:10px; float:left; } 
+
+
+.campus_row3_outer { background:url(../images/pattern_2.jpg) repeat; }
+.campus_row3_left { width:100%; float:left; border-right:0; }
+.campus_row3_right { margin-left:0; }
+
+.campus_row3_left h2 { font-size:32px; color:#ce9f38; }
+.campus_row3_left h2 > br { display:none; }
+.campus_row3_left ul.pagination { list-style:none; margin:20px 0; }
+.campus_row3_left ul.pagination li { display:inline; padding:7px; font-size:18px; margin-right:10px; cursor:pointer; }
+.campus_row3_left ul.pagination li:hover { background:#faf7c5; border-radius:7px;  }
+.campus_row3_left p { font-size:14px; color:#666666; padding-bottom:15px; float:left;  }
+
+.pagination_desc { width:60%; float:right; font-size:18px; padding-bottom:15px; text-align:right; }
+.campus_row3_left .btn_yellow { float:right; }
+
+.akka_container { width:225px; margin:0 auto; }
+.akka_slide_img { padding-bottom:15px; } 
+.akka_slide_img img { max-width:275px; width:100%; }
+.akkas_desc h2 { font-size:20px; }
+.akkas_desc p { font-size:14px; padding-bottom:7px; line-height:1.5; }
+.akkas_desc .akka_readmore { font-size:14px; float:right; } 
+
+/*  -----  contact -----  */
+
+.contact_left { width:100%; float:left; padding:25px 0 0 0; }
+.contact_right { width:100%; float:right; padding:30px 0 0 0; }
+.txtbox { padding-left:9%; }
+.msgbox { padding-left:9%; }  
+.contact_explore ul { margin:20px 0 0 30px; }
+
+
+/* -----  YT Fund  ----- */
+.fund_footer { padding: 30px 0 0 0; }
+.fund_footer_explore { margin-top:-70px; margin-bottom:30px; }
+
+
+/* ------  Funstop  ------ */
+
+.funstop_container { width:100%; float:left; padding:110px 0 0 0; }
+.funstop_content { width:100%; float:left; padding:30px 0 20px 0; }
+.gallery_left { width:100%; border-right:0; border-bottom:1px dotted #cccccc; margin-bottom:20px; }
+.funstop_content .gallery_right { width:275px; margin:0 auto; float:none; }
+.gallery_outer { width:50%; margin-bottom:40px; font-size:16px; }
+
+
+.gallery_popup_content { width:700px; float:left; } 
+.gallery_popup_top { width:100%; float:left; }
+.gallery_popup_img { width:405px; float:left; }
+.gallery_popup_img img { width:100%; }
+.gallery_right { width:275px; float:right; }
+.popup_outer { padding:15px 10px; }
+.gallery_popup_btm h1 { font-size:18px; }
+.gallery_popup_btm p { font-size:14px; }
+
+
+/* ------- Up Events ------- */
+
+.upevents_container { width:100%; float:left; }
+.upevents_left { width:100%; float:left; border-right:0; padding-right:0; }
+.upevents_right { width:100%; float:left; }
+#event_cal { width:310px; float: none; margin:0 auto; }
+
+.event_row { width:100%; float:left; margin-bottom:25px; border-bottom:1px dotted #a3a3a3; padding-bottom:15px;  }
+.eventrow_right h2 span { width:100%; float: right; padding:5px 0 10px 0; color:#75b1be; } 
+.eventrow_right h2 { font-size:20px; }
+
+/* ------ Events popup ------ */
+
+.events_popup_content { width:700px; float:left; padding:10px 0 0 0; }
+.events_popup_img { width:340px; float:left; }
+.events_popup_img img { width:340px; }
+.event_row1_right { margin-left:355px;  }
+
+.event_regdet {  width:98%; float:left; padding:0 1%; }
+.event_regdesc { width:75%; float:left; font-size:16px; padding:7px 0; padding-right:1%; }
+.event_regamt {  width:24%; float:right; font-size:26px; text-align:center; line-height:2.5; }
+
+.events_popup_content .popupbtn_group { display:none; }
+
+
+
+/* ---- Akka ----  */
+.pagemenu_desctop2 { font-size:20px; text-align:justify; width:96%; padding:0 2%; margin-top:12px; }
+.pagemenu_desctop2 br { display:none; }
+.page_menuhdd { width:96%; float:left; padding:0 2%; margin:0; margin-top:10px; }
+
+.teacher_details { width:47%; float:left; padding:0 1.5%; margin-bottom:32px;  }
+.teacher_details img { width:100%; float:left; }
+
+.meet_akka_left { width:100%; float:left; border-right:0; margin:20px 0; }
+.meet_akka_right { width:98%; float:left; margin:5px 0 25px 0; padding:0 1%; }
+.why_akkabtn { background:#ce9f38; color:#FFFFFF; float:right; margin:10px 7px 0 0; padding:6px 5px; font-size:20px; cursor:pointer; }
+
+.teacher_head p { font-size:15px; line-height:20px; width:96%; padding:0 2%;  }
+.teacher_head h1 { text-align:center; margin-bottom:15px; }
+.meet_akka_right h3 { font-size:16px; padding-left:13px; }
+
+.teach_role_parag p { width:100%; float:left; font-size:15px; }
+.teacher_role_left { width:98%; float:left; border-right:0px dotted #000000; margin:20px 0; color:#666666; padding:0 1%; font-size:15px; }
+.teacher_role_right { width:98%; float:left; margin:20px 0; padding:0 1%; }
+
+.teacher_roles ul { border-bottom:1px dotted #cccccc; background:url(../images/tick_gray.png) no-repeat 0 16px; padding-left:22px; }
+.teacher_roles li { border-bottom:1px dotted #cccccc; background:url(../images/tick_gray.png) no-repeat 0 16px; padding-left:2px; }
+.teacher_roles li p { color:#666666; text-align:justify; padding:10px 0 10px 0; line-height:21px; font-size:15px; }
+
+.teacher_role_right p { color:#666666; font-size:15px; }
+.teacher_role_right h3 { color:#666666; padding:7px 0 10px 0; font-size:15px; }
+
+.joinas_akka { width:54%; float:left; margin:27px 23% 0 23%; }
+.joinas_akka > p { font-size:15px; width:96%; padding:0 2%; }
+
+.joinus_left { width:98%; float:left; margin:20px 0; color:#666666; padding:0 1.5% 0 0.5%; }
+.joinus_right { width:97%; float:left; margin:20px 0; padding:0 1% 0 2%; border:0; }
+
+.joinus_right p { color:#666666; text-align:justify; }
+.joinus_right h3 { color:#666666; padding:15px 0 10px 0; }
+
+
+/*--Join us Tab--*/
+
+.joinus_cntr div > h1 { width:97%; padding-left:1.5%; padding-right:1.5%; float:left; }
+.joinus_cntr div > p { width:97%; padding-left:1.5%; padding-right:1.5%; float:left; }
+.joinus_alldetail { width:97%; padding:0 1.5% 0 1.5%; margin-bottom:20px; }
+.txtbox_cntr { margin-top:5px; }
+
+/*--Join us Tab--*/
+
+#thankyou_akka { height:305px; }
+#thankyou_akka p { width:94%; padding:20px 3% 20px 3%; font-size:22px;}
+.strip_center { height:8px; }
+.subscribe_newsbtn { width:66%; float:left; margin:0 14% 0 20%; padding:7px 0; font-size:22px; }
+
+
+
+/*----- Akka Details Popup ------*/
+
+.akka_popuptbl { width:700px; float:left; }
+.popup_contact_left2 { width:60%; background-size:100% 100%; }
+.popup_contact_right2 { width:40%; background-size:100% 100%; }
+.popup_contact_left1 p { font-size:15px; line-height:20px; }
+
+.popup_contact_left2 h2 { padding:12px 0 0 28px; font-size:20px; }
+.popup_contact_left2 ul { list-style-type:none; margin-top:25px; }
+.view_akka_post { margin-top:35px; text-align:center; font-size:20px; }
+
+
+/*----- Contact ------*/
+
+.contact_left { width:98.5%; float:left; padding-right:1.5%; }
+.contact_right { width:98.5%; float:right; padding-left:1.5%; }
+
+#c_map { width:98%; height:250px; float:left; }
+
+
+
+/*----- Curriculum ------*/
+
+.arithmetic_cntr1 { width:39%; float:left; padding-right:2%; padding-bottom:17px; }
+.arithmetic_cntr2 { width:59%; float:left; padding-right:0%; padding-bottom:17px; }
+.arithmetic_cntr1 img { width:98%; float:left; }
+
+.english_cntr { width:45%; float:left; padding:0 2.5%; }
+.speech_cntr { padding-right:0; clear:left; margin-top:15px; }
+.what_explore h2 { margin:19px 0 0 22px; }
+.what_explore ul { margin:17px 0 0 60px;  }
+
+
+.blog_cntr12 h4 { text-align:justify; line-height:25px; letter-spacing:-1; padding-bottom:15px; }
+
+
+/*----- Event Registration ------*/
+
+.funhd2 { width:98%; padding:0 1% 5px 1%; }
+.fun_desc2 { width:98%; padding:0 1% 20px 1%; }
+#eventreg_right { width:60%; float:left; margin:20px 0; padding:0 20% 0 20%; border:0; }
+
+
+
+
+/* ---- Verification Form ----  */
+
+
+.verify_outer { width:750px; margin:0 auto; }
+.vfwidth1_50 { width:30%; }
+.vfwidth2_50 { width:70%; }
+
+
+
+
+/* ------- YT Belief and Values ------ */
+
+.belief_img1 { max-width:400px; width:60%; float:none; margin:7px 15% 15px 25%; text-align:center; clear:both; }
+.belief_parag1 { width:100%; float:left; clear:both; }
+
+.ytbelief_left { width:100%; float:left; text-align:center; padding:0 0 15px 0; }
+.ytbelief_right { width:100%; float:left; }
+ 
+.belief_row2_curr { margin:8px 0 20px 0; } 
+.belief_row2_curr_right { font-size:14px; }
+.belief_parag1 > p { font-size:16px; line-height:24px; letter-spacing:-2; }
+
+
+
+/* ------- YT Methodology ------ */
+ 
+.methodimg img {  max-width:240px; }
+
+
+/* ------- YT Practices ------ */
+
+.ytpractice_outer { width:48%; float:left; margin:4px 1%; }
+.ytpractice_outer img { margin:4px 0; }
+
+.clear7 { clear:none; }
+.clear3, .clear5, .clear9 { clear:left; }
+
+
+/* ------- Fun Stop ------ */
+
+/* Gallery */
+
+.gallery_out { width:50%; }
+.gallery_in { max-width:305px; margin:10px auto; cursor:pointer; }
+.gal_parag { font-size:15px; }
+.gallery_imgs { width:305px; }
+
+
+#gall_popup { min-width:690px; max-width:730px;  }
+#galleriestab > img { max-width:600px; height:370px; margin:0 35px; text-align:center; }
+
+
+.gallery_arrowcntr { width:98%; position:absolute; top:28%; z-index:10; float:left; padding:0 0% 0 0%; }
+.gallery_leftarrow { padding-left:1%; }
+.gallery_rightarrow { padding-right:1%; }
+
+
+
+/* ------ Press ------ */
+
+.press_outer { width:50%; }
+.press_inner { max-width:360px; }
+.press_desc h2 { font-size:20px; } 
+.press_desc { font-size:16px; } 
+
+
+
+/* --- Set Account --- */
+
+.sa_cancelbtn { margin-bottom:70px; }
+.sa_label { width:25%; }
+.sa_txt { width:75%; }
+
+
+
+
+
+
+/* ----- Philosophy ----- */
+
+
+#innerslide15 .parallax_inner { height:360px; }
+.philosophy_slide_ht { height:590px; }
+.philosophy_testimonial { font-size:36px; line-height:45px; }
+.philosophy_testimonial br { display:none; }
+.philosophy_testimonial { width:100%; float:left; }
+
+
+.philosophy_left { width:100%; }
+.philosophy_right { width:100%; margin-left:0; }
+.philosophy_right img { width:50%; float:left; margin-left:25%; margin-top:15px; }
+
+#philosophy_quote br { display:none; }
+
+
+
+/* ----- Garden Campus ----- */
+
+.garden_left { width:100%; }
+.garden_right { width:100%; margin-left:0; }
+.garden_right img { width:40%; float:left; margin-left:30%; margin-top:15px; }
+.garden_left > p { line-height:30px; letter-spacing:-0.2px; }
+#garden_quotes { letter-spacing:-0.2px; }
+
+
+/* ----- Garden Rhytm ----- */
+
+.gd_rhythm { width:50%; float:left; }
+.gd_rhythm_inner { min-height:300px; }
+.gd_rhythm_inner img { max-height:300px; }
+
+
+
+/* ----- Garden Program ----- */
+
+.gd_program1 { line-height:11; }
+.gd_program2 { line-height:6; }
+.gd_program3 { line-height:7; }
+.gd_program_left { width:288px; }
+.gd_program_right { margin-left:339px; }
+
+
+
+}
+
+
+@media only screen and (min-width: 768px) and (max-width: 799px) {
+
+
+.add_pad { padding-top:100px; }	
+
+.school_quote { bottom:140px; right:30px; font-size:24px; }
+.school_quote span { font-size:40px; }
+
+.nav_menu_outer { width:525px; }
+.wrapper { max-width:525px; }
+.nav { font-size:15px; }
+
+.nav-item > a { padding:0px 8px; }
+
+
+/*.nav-submenu { left:-90px; width:370px; }
+.nav-submenu-item a { width:350px; }*/
+
+.content { width:96%; }
+.pagetitle { font-size:34px; text-shadow:1px 1px 1px #fff; }
+.para { font-size:18px; }
+.ourvalue_row_left { line-height:5; } 
+.about_quote { font-size:18px; height:99%; margin: 0 0 0 15px; line-height:1.7; background-color:rgba(232,232,232,0.7); padding-left:2%; padding-right:2%; padding-top:3.5%; }
+
+
+#innerslide2 .parallax_inner { background-image:url(../images/inner_bg2.jpg); background-position: bottom center; background-attachment:fixed;  height:620px; }
+#innerslide2 .hsContainer { background-image: none; }
+.subhd { font-size:24px; padding-bottom:5px; margin-bottom:10px; }
+.about_row1_footer { font-size:20px; }
+
+.founder_btn { width:100%; float:left; padding-top:15px; padding-bottom:15px; }
+
+.school_titlebar { background:url(../images/getknow_header_bg.png) no-repeat right center; font-size:30px; }
+
+.type_outer { width:100%; float:left; padding:30px 0 35px 0; }
+.school_type { max-width:33%; font-size:16px; line-height:2.2; }
+.school_type2 { margin-left:0.5%; } 
+
+
+.subhd1 { font-size:30px; }
+.row2_content1 img, .row2_content2 img { width:90%; } 
+.row2_content1, .row2_content2 { padding:10px 0; }
+.row2_content_inner { width:49.2%; float:left; border-right:1px dotted #ccc; text-align:center; }
+.row2_content2 { border-right:1px dotted #ccc; }
+.row2_content3 { width:98.5%; border-top:1px dotted #aaaaaa; padding-top:10px;  }
+
+.photo_stream_container { padding-left:10px; border-left:1px dotted #ccc; float:left; }
+.photo_stream_hd { color:#666666; font-size:20px; padding-bottom:5px; text-align:left; }
+
+.photo_stream_outer { width:60%; float:left; }
+.photo_stream { max-width:85px; width:100%; float:left; text-align:left; padding-bottom:10px; }
+.photo_stream img { max-width:70px; border:3px solid #666666; }
+.row2_content2 { border-right:0; }
+
+
+.events_container { width:96%; margin:0 2% 6px 2%; padding-bottom:6px; font-size:14px; }
+.events_left { width:92px; font-size:16px; padding-top:5px; }
+.events_left span { font-size:11px; }
+.events_right h2 { color:#555555; font-size:15px; padding-bottom:5px; }
+
+
+/* ---- Footer ----- */
+
+.footer_top { background:#a8a89b; padding-top:10px; font-size:13px; }
+.footer_content { width:33.33%; float:left; padding:20px 0; }
+.footer_content h2 { font-size:22px; }
+
+.footer2 { width:32.33%; padding-left:2%; }
+.footer3 { width:30.33%; padding-left:2%; }
+
+
+.footer2 ul { margin-left:20px; }
+.footer2 ul li { padding-bottom:13px; font-size:13px; }
+.photo_stream { width:24%; padding-bottom:5px; margin:0 3%; }
+.photo_stream img { width:100%;  }
+
+.footer_form { width:100%; float:left; padding:20px 0 0 0; }
+.txtbox_news { max-width:355px; width:98%; float:left; font-size:16px; margin-bottom:20px; padding:0 5px 0 40px;  } 
+
+
+/* menu */
+.logo { top:-15px; }
+.logo img { width:105px; }
+.nav_menu_outer { width:610px; float:right; border:0px solid red; }
+.wrapper { max-width:610px; border:0px solid red; }
+.nav { font-size:14px; }
+/*.nav-item a { padding:0 12px; }*/
+
+
+/* ---- Home page Popup ----  */
+
+.yt_popup_outer { width:500px; float:left; font-family: 'LetterGothicMTStd';  position:relative; padding:15px 15px 5px 15px; background: url("../images/bg1.jpg") center center; background-size: cover; }
+.yt_popup_outer .whyakka_hd { width:100%; float:left; font-family: 'LetterGothicMTStd'; font-size:26px; color:#75b1cb; font-weight:600; border-bottom:1px dashed #cccccc; padding-bottom:5px; margin-bottom:15px; }
+.yt_popup_outer p { font-size:16px; text-align:justify; padding-bottom:15px; line-height:1.4; }
+.yt_popup_outer .whyakka_popup_desc { width:500px; float:left; background:url(../images/teacher_popup_bg.jpg) repeat; color:#000000; position:relative; left:-25px; margin-bottom:10px; padding:15px 15px 5px 25px; position:relative; }
+.yt_popup_outer .whyakka_popup_desc > p { line-height:22px; font-size:14px; }
+.yt_popup_outer .whyakkaimg { display:none; }
+
+
+.indexpop_padd { padding:5px 0; }
+#indexpop_parag1 > p { font-size:15px; line-height:21px; }
+#indexpop_parag2 > p { font-size:15px; line-height:21px; }
+#indexpop_parag3 > p{ font-size:15px; line-height:21px; }
+
+
+/* ----  Campus ----- */
+
+
+.page_menu_active { position: static; top:50px; padding-top:0; }
+.page_menutop { width:100%; float:left; padding:5px 0; background:url(../images/sub_header_split1.jpg) repeat-x bottom left; } 
+.page_menuhd { width:100%; float:left; font-size:36px; background: none; height: auto; line-height: normal; padding-top:20px; padding-right:0;  }
+.pagemenu_right { width:100%; float:left; padding-left:0; }
+.pagemenu_desctop { font-size:15px; padding-top:5px; text-align:justify; }
+.pagemenu_desctop br { display: none; }
+.page_menubtm ul { list-style:none; margin-top:0px; min-height:50px; }
+.page_menubtm ul li { display:inline; padding:7px 17px 0 0; float:left; font-size:15px; } 
+.page_menubtm ul li:last-child { padding-right:0; }
+.page_menubtm ul li a { color:#999999; padding:7px 0 15px 0; display:block; border-bottom:5px hidden #ffffff; }
+.page_menubtm ul li:hover a, .page_menubtm ul li a.active { background:url(../images/header_bottom.png) repeat-x bottom left; }
+.page_menu_pad { margin-top:280px; }
+
+.campus_row1_left { width:65%; }
+.campus_row1_right { width:33%; }
+.campus_row1_img img { max-width:380px; width:100%; float:right; margin-bottom:7px; }  
+.campus_quote { padding:15px 0; font-size:18px; margin-bottom:15px; }
+
+.campus_quote { width:100%; float:left; background:#faf7c5; padding:15px 0; font-size:15px; text-align:center; margin-bottom:15px; }
+.campus_row1_left p { padding-bottom:15px; text-align:justify; font-size:14px; }
+
+.campus_testimonial_desc { font-size:38px; text-align:center; margin-top:15px; line-height:1.5; }
+.campus_testimonial_author { font-size:38px; color:#75b1be;  }
+.campus_testimonial_img { width:330px; float:right; }
+.campus_testimonial_img img { width:80%; margin-top:70px; float:left; }
+#innerslide8 .parallax_inner { height:220px; }
+#innerslide8 .parallax_inner .content { max-width:1800px; }
+#slideall_hide .test_slide_ht { height:660px; }
+.testimonial_slide { padding-bottom:0;  }
+
+
+#innerslide5 .parallax_inner, #innerslide6 .parallax_inner, #innerslide7 .parallax_inner { height:260px; }
+#innerslide5 .hsContainer, #innerslide6 .hsContainer, #innerslide7 .hsContainer { background-image: none; background-color: rgba(0,0,0,0.4); }
+.innerslide6_content, .innerslide5_content, .innerslide7_content  { font-size:17px; padding-top:80px; line-height:1.5; }
+
+.campus_events_board h2 { font-size:18px; padding-bottom:5px; } 
+.campus_events_board p { font-size:14px; }
+.campus_events_desc { padding-top:0; padding-bottom:10px; float:left; } 
+
+.campus_row3_outer { background:url(../images/pattern_2.jpg) repeat; }
+.campus_row3_left { width:100%; float:left; border-right:0; }
+.campus_row3_right { margin-left:0; }
+
+.campus_row3_left h2 { font-size:32px; color:#ce9f38; }
+.campus_row3_left h2 > br { display:none; }
+.campus_row3_left ul.pagination { list-style:none; margin:20px 0; }
+.campus_row3_left ul.pagination li { display:inline; padding:7px; font-size:18px; margin-right:10px; cursor:pointer; }
+.campus_row3_left ul.pagination li:hover { background:#faf7c5; border-radius:7px;  }
+.campus_row3_left p { font-size:14px; color:#666666; padding-bottom:15px; float:left;  }
+
+.pagination_desc { width:60%; float:right; font-size:18px; padding-bottom:15px; text-align:right; }
+.campus_row3_left .btn_yellow { float:right; }
+
+.akka_container { width:225px; margin:0 auto; }
+.akka_slide_img { padding-bottom:15px; } 
+.akka_slide_img img { max-width:275px; width:100%; }
+.akkas_desc h2 { font-size:20px; }
+.akkas_desc p { font-size:14px; padding-bottom:7px; line-height:1.5; }
+.akkas_desc .akka_readmore { font-size:14px; float:right; } 
+
+/*  -----  contact -----  */
+
+.contact_left { width:100%; float:left; padding:25px 0 0 0; }
+.contact_right { width:100%; float:right; padding:30px 0 0 0; }
+.txtbox { padding-left:9%; }
+.msgbox { padding-left:9%; }  
+.contact_explore ul { margin:20px 0 0 30px; }
+
+/* -----  YT Fund  ----- */
+.fund_footer { padding: 30px 0 0 0; }
+.fund_footer_explore { margin-top:-70px; margin-bottom:30px; }
+
+
+/* ------  Funstop  ------ */
+.funstop_container { width:100%; float:left; padding:110px 0 0 0; }
+.funstop_content { width:100%; float:left; padding:30px 0 20px 0; }
+.gallery_left { width:100%; border-right:0; border-bottom:1px dotted #cccccc; margin-bottom:20px; }
+.funstop_content .gallery_right { width:275px; margin:0 auto; float:none; }
+.gallery_outer { width:50%; margin-bottom:40px; font-size:16px; }
+
+
+.gallery_popup_content { width:700px; float:left; } 
+.gallery_popup_top { width:100%; float:left; }
+.gallery_popup_img { width:405px; float:left; }
+.gallery_popup_img img { width:100%; }
+.gallery_right { width:275px; float:right; }
+.popup_outer { padding:15px 10px; }
+.gallery_popup_btm h1 { font-size:18px; }
+.gallery_popup_btm p { font-size:14px; }
+
+
+/* ------- Up Events ------- */
+
+.upevents_container { width:100%; float:left; }
+.upevents_left { width:100%; float:left; border-right:0; padding-right:0; }
+.upevents_right { width:100%; float:left; }
+#event_cal { width:310px; float: none; margin:0 auto; }
+
+.event_row { width:100%; float:left; margin-bottom:25px; border-bottom:1px dotted #a3a3a3; padding-bottom:15px;  }
+.eventrow_right h2 span { width:100%; float: right; padding:5px 0 10px 0; color:#75b1be; } 
+.eventrow_right h2 { font-size:20px; }
+
+
+/* ------ Events popup ------ */
+
+.events_popup_content { width:700px; float:left; padding:10px 0 0 0; }
+.events_popup_img { width:340px; float:left; }
+.events_popup_img img { width:340px; }
+.event_row1_right { margin-left:355px;  }
+
+.event_regdet {  width:98%; float:left; padding:0 1%; }
+.event_regdesc { width:75%; float:left; font-size:16px; padding:7px 0; padding-right:1%; }
+.event_regamt {  width:24%; float:right; font-size:26px; text-align:center; line-height:2.5; }
+
+.events_popup_content .popupbtn_group { display:none; }
+
+
+
+/* ---- Akka ----  */
+.pagemenu_desctop2 { font-size:20px; text-align:justify; width:96%; padding:0 2%; margin-top:12px; }
+.pagemenu_desctop2 br { display:none; }
+.page_menuhdd { width:96%; float:left; padding:0 2%; margin:0; margin-top:10px; }
+
+.teacher_details { width:47%; float:left; padding:0 1.5%; margin-bottom:32px;  }
+.teacher_details img { width:100%; float:left; }
+
+.meet_akka_left { width:100%; float:left; border-right:0; margin:20px 0; }
+.meet_akka_right { width:98%; float:left; margin:5px 0 25px 0; padding:0 1%; }
+.why_akkabtn { background:#ce9f38; color:#FFFFFF; float:right; margin:10px 7px 0 0; padding:6px 5px; font-size:20px; cursor:pointer; }
+
+.teacher_head p { font-size:15px; line-height:20px; width:96%; padding:0 2%;  }
+.teacher_head h1 { text-align:center; margin-bottom:15px; }
+.meet_akka_right h3 { font-size:16px; padding-left:13px; }
+
+.teach_role_parag p { width:100%; float:left; font-size:15px; }
+.teacher_role_left { width:98%; float:left; border-right:0px dotted #000000; margin:20px 0; color:#666666; padding:0 1%; font-size:15px; }
+.teacher_role_right { width:98%; float:left; margin:20px 0; padding:0 1%; }
+
+.teacher_roles ul { border-bottom:1px dotted #cccccc; background:url(../images/tick_gray.png) no-repeat 0 16px; padding-left:22px; }
+.teacher_roles li { border-bottom:1px dotted #cccccc; background:url(../images/tick_gray.png) no-repeat 0 16px; padding-left:2px; }
+.teacher_roles li p { color:#666666; text-align:justify; padding:10px 0 10px 0; line-height:21px; font-size:15px; }
+
+.teacher_role_right p { color:#666666; font-size:15px; }
+.teacher_role_right h3 { color:#666666; padding:7px 0 10px 0; font-size:15px; }
+
+.joinas_akka { width:54%; float:left; margin:27px 23% 0 23%; }
+.joinas_akka > p { font-size:15px; width:96%; padding:0 2%; }
+
+.joinus_left { width:97.8%; float:left; margin:20px 0; color:#666666; padding:0 1.5% 0 0.7%; }
+.joinus_right { width:97%; float:left; margin:20px 0; padding:0 1% 0 2%; border:0; }
+
+.joinus_right p { color:#666666; text-align:justify; }
+.joinus_right h3 { color:#666666; padding:15px 0 10px 0; }
+
+
+/*--Join us Tab--*/
+
+.joinus_cntr div > h1 { width:97%; padding-left:1.5%; padding-right:1.5%; float:left; }
+.joinus_cntr div > p { width:97%; padding-left:1.5%; padding-right:1.5%; float:left; }
+.joinus_alldetail { width:97%; padding:0 1.5% 0 1.5%; margin-bottom:20px; }
+.txtbox_cntr { margin-top:5px; }
+.joinus_right h3 { width:97%; padding:0 1.5% 0 1.5%; font-size:16px; }
+
+
+/*--Join us Tab--*/
+
+#thankyou_akka { height:305px; }
+#thankyou_akka p { width:94%; padding:20px 3% 20px 3%; font-size:22px;}
+.strip_center { height:8px; }
+.subscribe_newsbtn { width:66%; float:left; margin:0 14% 0 20%; padding:7px 0; font-size:22px; }
+
+
+
+/*----- Akka Details Popup ------*/
+
+.akka_popuptbl { width:675px; float:left; }
+.popup_contact_left2 { width:60%; background-size:100% 100%; }
+.popup_contact_right2 { width:40%; background-size:100% 100%; }
+.popup_contact_left1 p { font-size:15px; line-height:20px; }
+
+.popup_contact_left2 h2 { padding:12px 0 0 23px; font-size:20px; }
+.popup_contact_left2 ul { list-style-type:none; margin-top:25px; }
+.view_akka_post { margin-top:35px; text-align:center; font-size:20px; }
+.popup_contact_left2 ul li { display:inline; background:url(../images/tick_white.png) no-repeat center 0; padding-left:69px; }
+
+
+/*----- Contact ------*/
+
+.contact_left { width:98.5%; float:left; padding-right:1.5%; }
+.contact_right { width:98.5%; float:right; padding-left:1.5%; }
+
+#c_map { width:98%; height:250px; float:left; }
+
+
+/*----- Curriculum ------*/
+
+.curr_banner > h1 { font-size:42px; }
+.curr_banner > p { font-size:24px; }
+
+.arithmetic_cntr1 { width:39%; float:left; padding-right:2%; padding-bottom:17px; }
+.arithmetic_cntr2 { width:59%; float:left; padding-right:0%; padding-bottom:17px; }
+
+.arithmetic_cntr1 img { width:98%; float:left; }
+
+.english_cntr { width:45%; float:left; padding:0 2.5%; }
+.speech_cntr { padding-right:0; clear:left; margin-top:15px; }
+
+.what_explore h2 { margin:19px 0 0 10px; }
+.what_explore ul { margin:17px 0 0 43px;  }
+
+.blog_cntr12 h4 { text-align:justify; line-height:25px; letter-spacing:-1; padding-bottom:15px; }
+
+
+/*----- Event Registration ------*/
+
+.funhd2 { width:98%; padding:0 1% 5px 1%; }
+.fun_desc2 { width:98%; padding:0 1% 20px 1%; }
+#eventreg_right { width:50%; float:left; margin:20px 0; padding:0 25 0 25%; border:0; }
+
+
+
+/*----- Verification Form ------*/
+
+.verify_outer { width:720px; margin:0 auto; }
+.vfwidth1_50 { width:30%; }
+.vfwidth2_50 { width:70%; }
+
+.vftxt_width80 { width:85%; }
+.vftxt_width30 { width:30%; }
+
+
+
+/* ------- YT Belief and Values ------ */
+
+.belief_img1 { max-width:380px; width:60%; float:none; margin:7px 16% 15px 24%; text-align:center; clear:both; }
+.belief_parag1 { width:100%; float:left; clear:both; }
+
+.ytbelief_left { width:100%; float:left; text-align:center; padding:0 0 15px 0; }
+.ytbelief_right { width:100%; float:left; }
+ 
+.belief_row2_curr { margin:8px 0 20px 0; } 
+.belief_row2_curr_right { font-size:14px; }
+.belief_parag1 > p { font-size:15px; line-height:24px; letter-spacing:-2; }
+
+
+
+
+/* ------- YT Methodology ------ */
+ 
+.methodimg img {  max-width:237px; }
+.ytmethod_row1left > p, .ytmethod_row2out p { font-size:15px; line-height:24px; }
+
+
+/* ------- YT Methodology ------ */
+ 
+.methodimg img {  max-width:240px; }
+
+
+/* ------- YT Practices ------ */
+
+.ytpractice_outer { width:48%; float:left; margin:4px 1%; }
+.ytpractice_outer img { margin:9px 0; }
+.ytpractices_wrapper p { font-size:15px; }
+
+.clear7 { clear:none; }
+.clear3, .clear5, .clear9 { clear:left; }
+
+
+/* ------- Fun Stop ------ */
+
+/* Gallery */
+
+.gallery_out { width:50%; }
+.gallery_in { max-width:305px; margin:10px auto; cursor:pointer; }
+.gal_parag { font-size:15px; }
+.gallery_imgs { width:305px; }
+
+
+#gall_popup { min-width:670px; max-width:710px;  }
+#galleriestab > img { max-width:540px; height:370px; margin:0 5px; text-align:center; }
+
+.gallery_arrowcntr { width:98%; position:absolute; top:28%; z-index:10; float:left; padding:0 0% 0 0%; }
+.gallery_leftarrow { padding-left:1%; }
+.gallery_rightarrow { padding-right:1%; }
+
+
+/* ------ Press ------ */
+
+.press_outer { width:50%; }
+.press_inner { max-width:350px; }
+.press_desc h2 { font-size:19px; } 
+.press_desc { font-size:16px; } 
+
+
+
+/* --- Set Account --- */
+
+.sa_cancelbtn { margin-bottom:70px; }
+.sa_label { width:27%; }
+.sa_txt { width:73%; }
+
+
+
+/* ----- Philosophy ----- */
+
+
+#innerslide15 .parallax_inner { height:320px; }
+.philosophy_slide_ht { height:640px; }
+.philosophy_testimonial { font-size:40px; line-height:50px; }
+.philosophy_testimonial br { display:none; }
+.philosophy_testimonial { width:100%; float:left; }
+.philosophy_row1_outer p { font-size:16px; line-height:21px; }
+
+.philosophy_left { width:100%; }
+.philosophy_right { width:100%; margin-left:0; }
+.philosophy_right img { width:50%; float:left; margin-left:25%; margin-top:15px; }
+
+#philosophy_quote br { display:none; }
+
+#innerslide15 .hsContainer { position:relative; background-color:rgba(219,178,126,0.7); color:#000000; }
+
+
+/* ----- Garden Campus ----- */
+
+.garden_left { width:100%; }
+.garden_right { width:100%; margin-left:0; }
+.garden_right img { width:40%; float:left; margin-left:30%; margin-top:15px; }
+.garden_left > p { line-height:30px; letter-spacing:-0.2px; }
+#garden_quotes { letter-spacing:-0.2px; }
+
+
+/* ----- Garden Rhytm ----- */
+
+.gd_rhythm { width:50%; float:left; }
+.gd_rhythm_inner { min-height:300px; }
+.gd_rhythm_inner p { width:94%; float:left; padding:10px 3%; text-align:justify; line-height:21px; letter-spacing:-0.7px; font-size:15px; }
+
+
+
+/* ----- Garden Program ----- */
+
+.gd_program1 { line-height:42px; }
+.gd_program2 { line-height:42px; }
+.gd_program3 { line-height:42px; }
+.gd_program_left { width:96%; float:left; padding:0 2%; position:relative; height:42px; }
+.gd_program_right { width:96%; float:left; padding:15px 2%; margin-left:0; }
+
+
+}
+
+
+
+@media only screen and (min-width: 640px) and (max-width: 767px) {
+	
+.video_container { display: none; } 	
+.add_pad { padding-top:60px; }	
+	
+	
+	
+.school_quote { bottom:80px; right:30px; font-size:22px; }
+.school_quote span { font-size:32px; }
+	
+/* ------  Menu ----- */
+
+.menubg_top { top:-26px; z-index:999; height:26px; font-size:13px; line-height:26px; }
+.menubg_top img { width:160px; float:right; margin-top:5px; margin-right:2%; }
+
+.menu_container { width:100%; min-height:auto; height:40px; z-index:9999; transition: all 0.2s;   }
+.menu_pos_default { position:absolute; bottom:20px; }
+.fixed { position:fixed; top:20px; left:0; }
+
+
+.logo { float:left; position:relative; top:-20px; z-index:99999; }
+.nav_menu_outer { width:540px; float:right; border:0px solid red; }
+.logo img { width:78px; }
+	
+
+.content { width:96%; }
+.nav_menu_outer { width:525px; }
+.wrapper { max-width:525px; }
+.nav { font-size:16px; }
+.nav-submenu { left:-90px; width:370px; }
+.nav-submenu-item a { width:350px; }
+
+#slide1 .parallax { background-image:url(../images/bg1.jpg); padding-top:60px; }
+
+.content { width:96%; }
+.pagetitle { font-size:26px; text-shadow:1px 1px 1px #fff; }
+.para { font-size:15px; }
+.ourvalue_row_left { line-height:3; } 
+.about_quote { font-size:16px; height:99%; margin: 0 0 0 15px; line-height:1.45; background-color:rgba(232,232,232,0.7); padding-left:2%; padding-right:2%; padding-top:1%; }
+
+.btn_orange { padding:10px 30px; font-size:16px; color:#ffffff; float:right; position:absolute; right:0; top:220px; -webkit-border-radius:7px; -moz-border-radius:7px; border-radius:7px;  } 
+
+
+#innerslide1 .parallax_inner { background-image:url(../images/inner_bg1.jpg); background-position: bottom center; height:300px; }
+#innerslide2 .parallax_inner { background-image:url(../images/inner_bg2.jpg); background-position: bottom center; background-attachment:fixed; }
+#innerslide2 .hsContainer { background-image: none; }
+.subhd { font-size:24px; padding-bottom:5px; margin-bottom:10px; }
+.about_row1_footer { font-size:17px; }
+
+.about_row1_content p { font-size:16px; }
+
+
+.founder_desc { padding:15px 20px 0 20px; font-size:16px;  }
+.founder_desc p { text-align:justify; padding-bottom:12px; }
+.founder_desc p.no_padding { padding:0; } 
+.readmore { color:#ce9f38; }
+
+.founder_btn { width:100%; float:left; padding-top:15px; padding-bottom:15px; }
+
+.school_titlebar { background:url(../images/getknow_header_bg.png) no-repeat right center; font-size:26px; }
+
+.type_outer { width:100%; float:left; padding:30px 0 25px 0; }
+.school_type { max-width:33%; font-size:14px; line-height:2.2; }
+.school_type2 { margin-left:0.5%; } 
+
+
+.subhd1 { font-size:30px; }
+.row2_content1, .row2_content3 { display:none; }
+.row2_content_inner { border:0; } 
+.row2_content2 { width:100%; padding-top:10px;  }
+
+.events_container { width:96%; margin:0 2% 6px 2%; padding-bottom:6px; font-size:14px; }
+.events_left { width:92px; font-size:16px; padding-top:5px; }
+.events_left span { font-size:11px; }
+.events_right h2 { color:#555555; font-size:15px; padding-bottom:5px; }
+
+
+/* ---- Footer ----- */
+
+.footer_top { background:#a8a89b; padding-top:10px; font-size:13px; }
+.footer_content { width:50%; float:left; padding:20px 0; }
+.footer_content h2 { font-size:22px; }
+.footer3 { display:none; }
+.footer2 { width:45%; padding-left:5%; }
+
+.footer2 ul { margin-left:20px; }
+.footer2 ul li { padding-bottom:13px; font-size:13px; }
+
+.footer_form { width:100%; float:left; padding:20px 0 0 0; }
+.txtbox_news { max-width:355px; width:98%; float:left; font-size:16px; margin-bottom:20px; padding:0 5px 0 40px;  } 
+.footer_copyright { font-size:14px; }
+
+
+.footer_desc { font-size:14px; }
+
+
+
+
+
+/* ---- Home page Popup ----  */
+
+.yt_popup_outer { width:500px; float:left; font-family: 'LetterGothicMTStd';  position:relative; padding:15px 15px 5px 15px; background: url("../images/bg1.jpg") center center; background-size: cover; }
+.yt_popup_outer .whyakka_hd { width:100%; float:left; font-family: 'LetterGothicMTStd'; font-size:26px; color:#75b1cb; font-weight:600; border-bottom:1px dashed #cccccc; padding-bottom:5px; margin-bottom:15px; }
+.yt_popup_outer p { font-size:16px; text-align:justify; padding-bottom:15px; line-height:1.4; }
+.yt_popup_outer .whyakka_popup_desc { width:500px; float:left; background:url(../images/teacher_popup_bg.jpg) repeat; color:#000000; position:relative; left:-25px; margin-bottom:10px; padding:15px 15px 5px 25px; position:relative; }
+.yt_popup_outer .whyakka_popup_desc > p { line-height:22px; font-size:14px; }
+.yt_popup_outer .whyakkaimg { display:none; }
+
+.indexpop_padd { padding:5px 0; }
+#indexpop_parag1 > p { font-size:15px; line-height:21px; }
+#indexpop_parag2 > p { font-size:15px; line-height:21px; }
+#indexpop_parag3 > p{ font-size:15px; line-height:21px; }
+
+
+
+/* ----  Campus ----- */
+
+.page_menu_active { position: static; top:50px; padding-top:0; }
+.page_menutop { width:100%; float:left; padding:5px 0; background:url(../images/sub_header_split1.jpg) repeat-x bottom left; } 
+.page_menuhd { width:100%; float:left; font-size:20px; background: none; height: auto; line-height: normal;  padding:0; padding-top:20px; }
+.pagemenu_right { width:100%; float:left; padding-left:0; }
+.pagemenu_desctop { font-size:15px; padding-top:5px; text-align:justify; }
+.pagemenu_desctop br { display: none; }
+.page_menubtm ul { list-style:none; margin-top:0px; min-height:40px; }
+.page_menubtm ul li { display:inline; padding:2px 10px 0 0; width:30%; float:left; font-size:15px; } 
+.page_menubtm ul li:last-child { padding-right:0; }
+.page_menubtm ul li a { color:#999999; padding:7px 0 15px 0; display:block; border-bottom:5px hidden #ffffff; }
+.page_menubtm ul li:hover a, .page_menubtm ul li a.active { background:url(../images/header_bottom.png) repeat-x bottom left; }
+.page_menu_pad { margin-top:280px; }
+
+.campus_row1_left { width:100%; line-height:1.5; }
+.campus_row1_right { display:none; }
+.campus_quote { padding:15px 0; font-size:18px; margin-bottom:15px; }
+
+.campus_quote { width:100%; float:left; background:#faf7c5; padding:15px 0; font-size:15px; text-align:center; margin-bottom:15px; }
+.campus_row1_left p { padding-bottom:15px; text-align:justify; font-size:14px; }
+
+
+.campus_testimonial_desc { font-size:36px; text-align:center; margin-top:45px; line-height:1.5; }
+.campus_testimonial_author { font-size:36px; color:#75b1be;  }
+.campus_testimonial_img { width:330px; float:right; }
+.campus_testimonial_img img { width:80%; margin-top:50px; }
+#innerslide8 .parallax_inner { height:260px; }
+#innerslide8 .parallax_inner .content { max-width:1800px; }
+#slideall_hide .test_slide_ht { height:600px; }
+.testimonial_slide { padding-bottom:0; }
+
+.campus_row2_left { width:100%; float:left; padding-bottom:20px; }
+.campus_row2_left p, .campus_board ul li, .campus_row2_curr_left { font-size:15px; }
+.campus_board ul li { width:40%; float:left; padding-bottom:10px;  }
+.campus_board { width:97%; height: auto; min-height:120px; padding-right:0; background-image:none; }
+.campus_row2_right { margin-left:0; }
+.curr_row2, .curr_row4, .curr_row3 { line-height:4.5; }
+.curr_row1 { line-height:6; }
+
+.campus_row2_curr_left { width:170px; }
+.campus_row2_curr_right { margin-left:220px; font-size:14px; }
+
+
+#innerslide5 .parallax_inner, #innerslide6 .parallax_inner, #innerslide7 .parallax_inner { height:260px; }
+#innerslide5 .hsContainer, #innerslide6 .hsContainer, #innerslide7 .hsContainer { background-image: none; background-color: rgba(0,0,0,0.4); }
+.innerslide6_content, .innerslide5_content, .innerslide7_content  { font-size:14px; padding-top:90px; line-height:1.5; }
+
+.campus_events { width:50%; float:left; background:#ce9f38; color:#ffffff; margin-bottom:10px; margin-left:25%; margin-right:25%; }
+.campus_events_board h2 { font-size:18px; padding-bottom:5px; } 
+.campus_events_board p { font-size:14px; }
+.campus_events_desc { padding-top:0; padding-bottom:10px; float:left; } 
+
+
+.campus_row3_outer { background:url(../images/pattern_2.jpg) repeat; }
+.campus_row3_left { width:100%; float:left; border-right:0; }
+.campus_row3_right { margin-left:0; }
+
+.campus_row3_left h2 { font-size:32px; color:#ce9f38; }
+.campus_row3_left h2 > br { display:none; }
+.campus_row3_left ul.pagination { list-style:none; margin:20px 0; }
+.campus_row3_left ul.pagination li { display:inline; padding:7px; font-size:14px; margin-right:10px; cursor:pointer; }
+.campus_row3_left ul.pagination li:hover { background:#faf7c5; border-radius:7px;  }
+.campus_row3_left p { display:none;  }
+
+.pagination_desc { font-size:18px; padding-bottom:15px; margin-top:10px; text-align:right; float:left;  }
+.campus_row3_left .btn_yellow { float:right; margin-bottom:20px; }
+
+
+.akka_slider { width:50%; float:left; margin-bottom:20px; }
+.akka_container { width:275px;  margin:0 auto; }
+.akka_slide_img { padding-bottom:15px; } 
+.akka_slide_img img { max-width:275px; width:100%; }
+.akkas_desc h2 { font-size:20px; }
+.akkas_desc p { font-size:14px; padding-bottom:7px; line-height:1.5; }
+.akkas_desc .akka_readmore { font-size:14px; float:right; } 
+
+/*  -----  contact -----  */
+
+.contact_left { width:100%; float:left; padding:25px 0 0 0; }
+.contact_right { width:100%; float:right; padding:30px 0 0 0; }
+.txtbox { padding-left:9%; }
+.msgbox { padding-left:9%; }  
+.contact_explore ul { margin:10px 0 20px 30px; }
+.contact_explore ul li { font-size:14px; margin-right:20px;  }
+.contact_explore { height: auto; margin-top:30px;  }
+
+#campus_container .slide_container { display:none; } 
+#campus_container { padding-top:0; }
+#campus_container #campuslide { display:block; }
+
+
+/* -----  YT Fund  ----- */
+.ytfund_container { width:100%; float:left; padding:52px 0 0 0; }
+.fund_footer { padding: 0 0 0 0; }
+.fund_footer_explore { margin-top:-70px; margin-bottom:30px; }
+
+
+/* ------  Funstop  ------ */
+
+.funstop_container { width:100%; float:left; padding:50px 0 0 0; }
+.innerslide5_content h1 { font-size:26px; padding-bottom:10px; margin-top:80px; }
+.innerslide5_content p { font-size:18px; }
+.funstop_content { width:100%; float:left; padding:30px 0 20px 0; }
+.gallery_left { width:100%; border-right:0; border-bottom:1px dotted #cccccc; margin-bottom:20px; }
+.funstop_content .gallery_right { width:275px; margin:0 auto; float:none; }
+.gallery_outer { width:50%; margin-bottom:40px; font-size:16px; }
+
+
+.gallery_popup_content { width:540px; float:left; } 
+.gallery_popup_top { width:100%; float:left; }
+.gallery_popup_img { width:245px; float:left; }
+.gallery_popup_img img { width:100%; }
+.gallery_right { width:275px; float:right; }
+.popup_outer { padding:15px 10px; }
+.gallery_popup_btm h1 { font-size:18px; }
+.gallery_popup_btm p { font-size:14px; }
+
+
+/* ------- Up Events ------- */
+
+.upevents_container { width:100%; float:left; }
+.upevents_left { width:100%; float:left; border-right:0; padding-right:0; }
+.upevents_right { width:100%; float:left; }
+#event_cal { width:310px; float: none; margin:0 auto; }
+
+.event_row { width:100%; float:left; margin-bottom:25px; border-bottom:1px dotted #a3a3a3; padding-bottom:15px;  }
+.eventrow_right h2 span { width:100%; float: right; padding:5px 0 10px 0; color:#75b1be; } 
+.eventrow_right h2 { font-size:20px; }
+
+
+/* ------ Events popup ------ */
+
+.events_popup_content { width:540px; float:left; padding:10px 0 0 0; }
+.events_popup_img { width:240px; float:left; margin-right:10px; }
+.events_popup_img img { width:240px; }
+.event_row1_right { margin-left:0; float:none;  }
+.event_row1_right p { font-size:14px; }
+
+.events_popup_content .subhd { float:none; font-size:20px }
+.event_regdet {  width:98%; float:left; padding:0 1%; }
+.event_regdesc { width:100%; float:left; font-size:14px; padding:7px 0; padding-right:0; }
+.event_regamt {  width:100%; float:right; font-size:18px; text-align:center; line-height: normal; position: relative; height: auto; }
+.events_popup_content .popupbtn_group { display:none; }
+
+.event_pop_row2 .regbtn { width:70%; height:35px; line-height:35px; background:#40697d; float:right; font-size:18px; margin-top:20px; margin-left:15%; margin-right:15%;  }
+
+.popup_event_date { width:96%; float:left; background:#78bfe3; color:#FFF; padding:15px 2%; font-size:15px; text-shadow:-1px -1px 1px #333; margin-right:0; }
+.popup_event_date span { font-size:18px; line-height:1.2; }
+.popup_event_date hr { background:none; padding:0; border:1px dashed #ffffff; outline:0;    }
+
+.popup_event_date1 { width:auto; background:#3399cc; padding-top:22px; }
+.popup_event_date1 span { font-size:14px; line-height:1.2; }
+
+.event_pop_row3 { width:100%; float:left; margin-top:15px; }
+.event_regdethd { width:98%; float:left; padding:7px 1%; font-size:17px; }
+.event_regdethd span { float:right; font-size:14px; }
+
+/* ---- Akka ----  */
+.pagemenu_desctop2 { font-size:18px; text-align:justify; }
+.pagemenu_desctop2 br { display:none; }
+
+.page_menuhdd { width:97%; padding:0 1.5%; }
+.pagemenu_desctop2 { width:94%; padding:0 2%; float:left; margin-top:15px; }
+.teacher_details { width:48%; float:left; padding-right:2%; margin-bottom:32px;  }
+.teacher_details img { width:100%; float:left; }
+
+.meet_akka_left { width:100%; float:left; border-right:0; margin:20px 0; font-size:14px; }
+.meet_akka_right { width:98%; float:left; margin:5px 0 25px 0; padding:0 1%; font-size:14px; }
+.why_akkabtn { background:#ce9f38; color:#FFFFFF; float:right; margin:5px 10px 0 0; padding:6px 5px; font-size:19px; cursor:pointer; }
+
+.teacher_details p { font-size:15px; }
+.teacher_name { font-size:20px; }
+
+.meet_akka_right p { font-size:15px; }
+.teacher_head p { font-size:15px; line-height:20px; width:96%; padding:0 2%;  }
+.teacher_head h1 { text-align:center; margin-bottom:15px; }
+
+.teach_role_parag p { width:100%; float:left; font-size:15px; }
+.teacher_role_left { width:98%; float:left; border-right:0px dotted #000000; margin:20px 0; color:#666666; padding:0 1%; font-size:15px; }
+.teacher_role_right { width:98%; float:left; margin:20px 0; padding:0 1%; }
+
+.teacher_roles ul { border-bottom:1px dotted #cccccc; background:url(../images/tick_gray.png) no-repeat 0 16px; padding-left:22px; }
+.teacher_roles li { border-bottom:1px dotted #cccccc; background:url(../images/tick_gray.png) no-repeat 0 16px; padding-left:2px; }
+.teacher_roles li p { color:#666666; text-align:justify; padding:10px 0 10px 0; line-height:21px; font-size:15px; }
+
+.teacher_role_right p { color:#666666; font-size:15px; }
+.teacher_role_right h3 { color:#666666; padding:7px 0 10px 0; font-size:15px; }
+
+.joinas_akka { width:54%; float:left; margin:27px 23% 0 23%; }
+.joinas_akka > p { font-size:15px; width:96%; padding:0 2%; }
+
+.subscribe_newsbtn { float:left; font-size:22px; padding:8px 10px; border-radius:5px; text-align:center; margin:15px 0 15px 20%; cursor:pointer; }
+
+.joinus_left { width:97%; float:left; margin:20px 0; color:#666666; padding:0 1.5%; }
+.joinus_right { width:97%; float:left; margin:20px 0; padding:0 1% 0 2%; border:0; }
+
+.joinus_right p { color:#666666; text-align:justify; font-size:15px; }
+.joinus_right h3 { color:#666666; padding:15px 0 10px 0; font-size:15px; }
+
+.tabdetail_cntr h2 { margin-bottom:10px; }
+
+
+/*--Join us Tab--*/
+
+.joinus_cntr div > h1 { width:97%; padding-left:1.5%; padding-right:1.5%; float:left; }
+.joinus_cntr div > p { width:97%; padding-left:1.5%; padding-right:1.5%; float:left; }
+.joinus_alldetail { width:97%; padding:0 1.5% 0 1.5%; margin-bottom:20px; }
+.txtbox_cntr { margin-top:5px; }
+.joinus_right h3 { width:97%; padding:0 1.5% 0 1.5%; font-size:16px; }
+
+
+/*--Join us Tab--*/
+
+#thankyou_akka { height:305px; }
+#thankyou_akka p { width:94%; padding:20px 3% 20px 3%; font-size:18px;}
+.strip_center { height:8px; }
+.subscribe_newsbtn { width:50%; float:left; margin:0 23% 0 27%; padding:7px 0; font-size:18px; }
+
+
+
+/*----- Akka Details Popup ------*/
+
+.akka_popuptbl tr td { padding:12px 0; }
+.akka_popuptbl { width:525px; float:left; }
+.akka_images { float:left; padding:0 17px 10px 0; margin-top:25px; width:30%; }
+.popup_contact_left1 p { font-size:14px; line-height:18px; margin-top:10px; }
+
+.popup_contact_left2 { width:60%; background-image:none; height:68px; }
+.popup_contact_right2 { width:40%; background-image:none; height:68px; }
+
+.popup_contact_left2 ul { list-style-type:none; margin:12px 0 0 80px; }
+.popup_contact_left2 ul li { display:inline; background:url(../images/tick_white.png) no-repeat 0 0; padding:0 10px 5px 15px; }
+.view_akka_post { margin-top:35px; text-align:center; font-size:20px; }
+
+
+/*----- Contact ------*/
+
+.contact_left { width:98.5%; float:left; padding-right:1.5%; }
+.contact_right { width:98.5%; float:right; padding-left:1.5%; }
+
+#c_map { width:600px; height:215px; float:left; }
+
+.contact_txtleft { width:100%; float:left; margin-top:15px; }
+.contact_txtright { width:100%; float:left; margin-top:0px; }
+.contact_submitbtn { width:15%; float:right; color:#FFFFFF; background:#ce9f38; font-size:20px; text-align:center; padding:7px 0; margin-right:1%; cursor:pointer; }
+
+
+/*----- Curriculum ------*/
+
+.curr_banner > h1 { font-size:38px; }
+.curr_banner > p { font-size:22px; }
+
+.cognitive_develop p { font-size:16px; margin-bottom:15px; padding-top:5px; }
+.cognitive_develop h1 { font-size:24px; }
+
+.arithmetic_cntr1 { width:100%; float:left; padding-right:0%; padding-bottom:17px; }
+.arithmetic_cntr2 { width:100%; float:left; padding-right:0%; padding-bottom:17px; }
+
+.arithmetic_cntr1 img { width:48%; float:left; padding:0 26%; }
+
+.english_cntr { width:47%; float:left; padding:0 1.5%; }
+.speech_cntr { padding-right:0; clear:left; margin-top:15px; }
+
+.math_in_fun { padding:7px 10px; margin:10px 0; font-size:20px; float:right; }
+.observe_wonder_btn { padding:7px 10px; margin:10px 0; font-size:20px; float:right; }
+.artistic_btn { padding:7px 10px; margin:10px 0; font-size:20px; float:right; }
+
+
+.what_explore { background:#666666; width:100%; float:left; height:123px; color:#FFFFFF; margin-top:15px; }
+.what_explore h2 { margin:19px 0 0 10px; }
+.what_explore ul { margin:17px 0 0 43px;  }
+
+
+.blog_cntr12 h4 { text-align:justify; line-height:25px; letter-spacing:-1; padding-bottom:15px; font-size:17px;  }
+.blog_cntr12 { padding-bottom:14px; }
+.blog_cntr12 p { line-height:24px; font-size:16px; }
+
+
+
+
+/*----- Event Registration ------*/
+
+.funhd2 { width:98%; padding:0 1% 5px 1%; font-size:24px; }
+.fun_desc2 { width:98%; padding:0 1% 20px 1%; font-size:15px; }
+#eventreg_right { width:50%; float:left; margin:20px 0; padding:0 25 0 25%; border:0; }
+
+
+
+/*----- Verification Form ------*/
+
+.verify_inner > h1 { padding:15px 0; font-size:36px; }
+.verify_outer { width:580px; margin:0 auto; }
+.vfwidth1_50 { width:30%; }
+.vfwidth2_50 { width:70%; }
+
+.vftxt_width80 { width:85%; }
+.vftxt_width30 { width:30%; }
+
+.vfparent_detail1 { width:98.5%; float:left; margin:0 1% 0 0; }
+.vfparent_detail2 { width:98.5%; float:left; margin:0 0 0 1%; }
+
+.verfication_cntr { font-size:17px; }
+
+/* ---- ---*/
+
+
+/* ------- YT Belief and Values ------ */
+
+.belief_img1 { max-width:360px; width:60%; float:none; margin:7px 18% 15px 22%; text-align:center; clear:both; }
+.belief_parag1 { width:100%; float:left; clear:both; }
+
+.ytbelief_left { width:100%; float:left; text-align:center; padding:0 0 15px 0; }
+.ytbelief_right { width:100%; float:left; }
+ 
+.belief_row2_curr { margin:8px 0 20px 0; } 
+.belief_row2_curr_right { font-size:14px; }
+.belief_parag1 > p { font-size:15px; line-height:24px; letter-spacing:-2; }
+
+.belief_row1 { line-height:7; }
+.belief_row2 { line-height:6; }
+.belief_row3 { line-height:7; }
+
+
+
+/* ------- YT Methodology ------ */
+ 
+.ytmethod_row1left > p, .ytmethod_row2out p { font-size:15px; line-height:24px; }
+
+.methodimg { width:33.3%; float:left; text-align:center; }
+.methodimg img {  max-width:200px; }
+
+
+/* ------- YT Practices ------ */
+
+.ytpractice_outer { width:48%; float:left; margin:4px 1%; }
+.ytpractice_outer img { margin:30px 0 8px 0; }
+.ytpractices_wrapper { min-height:300px; }
+.ytpractices_wrapper p { font-size:14px; }
+
+.clear7 { clear:none; }
+.clear3, .clear5, .clear9 { clear:left; }
+
+
+/* ------- Fun Stop ------ */
+
+/* Gallery */
+
+.gallery_out { width:50%; }
+.gallery_in { max-width:285px; margin:10px auto; cursor:pointer; }
+.gal_parag { font-size:15px; }
+.gallery_imgs { width:285px; }
+
+
+#gall_popup { min-width:520px; max-width:560px;  }
+#galleriestab > img { max-width:400px; height:300px;  margin:0 5px; text-align:center; }
+
+.galleryimght { height:290px; }
+
+.gallery_arrowcntr { width:98%; position:absolute; top:25%; z-index:10; float:left; padding:0 0% 0 0%; }
+.gallery_leftarrow { padding-left:1%; }
+.gallery_rightarrow { padding-right:1%; }
+
+
+
+/* ------ Press ------ */
+
+.press_outer { width:50%; }
+.press_inner { max-width:290px; }
+.press_desc h2 { font-size:17px; } 
+.press_desc { font-size:15px; } 
+
+ /* --- FAQ --- */
+
+.subhd2 { font-size:17px; padding:15px 0 7px 0; }
+.faqcontent p { font-size:15px; line-height:1.3; }
+
+
+
+/* --- Set Account --- */
+
+.set_account { padding:120px 0 15px 0; }
+.sa_cancelbtn { margin-bottom:70px; }
+.sa_label { width:34%; }
+.sa_txt { width:66%; }
+
+
+
+/* ----- Philosophy ----- */
+
+
+#innerslide15 .parallax_inner { height:320px; }
+.philosophy_slide_ht { height:640px; }
+.philosophy_testimonial { font-size:36px; line-height:54px; }
+.philosophy_testimonial br { display:none; }
+.philosophy_testimonial { width:100%; float:left; }
+.philosophy_row1_outer p { font-size:16px; line-height:21px; }
+
+.philosophy_left { width:100%; }
+.philosophy_right { width:100%; margin-left:0; }
+.philosophy_right img { width:50%; float:left; margin-left:25%; margin-top:15px; }
+
+#philosophy_quote br { display:none; }
+
+
+/* ----- Garden Campus ----- */
+
+.garden_left { width:100%; }
+.garden_right { width:100%; margin-left:0; }
+.garden_right img { width:40%; float:left; margin-left:30%; margin-top:15px; }
+.garden_left > p { line-height:28px; letter-spacing:-0.2px; }
+#garden_quotes { letter-spacing:-0.2px; }
+
+
+/* ----- Garden Rhytm ----- */
+
+.gd_rhythm { width:100%; float:left; }
+.gd_rhythm_inner { min-height:266px; }
+.gd_rhythm_inner img { max-height:280px; width:60%; padding:0 20%; }
+.gd_rhythm_inner p { width:94%; float:left; padding:10px 3%; text-align:justify; line-height:21px; letter-spacing:-0.7px; font-size:15px; }
+
+
+/* ----- Garden Program ----- */
+
+.gd_program1 { line-height:42px; }
+.gd_program2 { line-height:42px; }
+.gd_program3 { line-height:42px; }
+.gd_program_left { width:96%; float:left; padding:0 2%; position:relative; height:42px; }
+.gd_program_right { width:96%; float:left; padding:15px 2%; margin-left:0; }
+
+
+
+
+}
+
+
+
+
+@media only screen and (min-width: 480px) and (max-width: 639px) {
+
+.video_container { display: none; } 	
+.add_pad { padding-top:50px; }	
+	
+	
+.school_quote { bottom:80px; right:20px; font-size:17px; }
+.school_quote span { font-size:24px; }
+
+/* ------  Menu ----- */
+
+.menubg_top { top:-26px; z-index:999; height:28px; font-size:12px; line-height:30px; }
+.menubg_top img { width:160px; float:right; margin-top:5px; margin-right:2%; }
+
+.menu_container { width:100%; min-height:auto; height:40px; z-index:9999; transition: all 0.2s;   }
+.menu_pos_default { position:absolute; bottom:20px; }
+.fixed { position:fixed; top:20px; left:0; }
+
+
+.logo { float:left; position:relative; top:-20px; z-index:99999; }
+.nav_menu_outer { width:540px; float:right; border:0px solid red; }
+.logo img { width:78px; }
+
+.content { width:96%; }
+.nav_menu_outer { width:525px; }
+.wrapper { max-width:525px; }
+.nav { font-size:16px; }
+.nav-submenu { left:-90px; width:370px; }
+.nav-submenu-item a { width:350px; }
+
+	
+.content { width:96%; }
+.pagetitle { font-size:22px; text-shadow:1px 1px 1px #fff; }
+.para { font-size:15px; }
+.ourvalue_row_left { line-height:3; } 
+.about_quote { font-size:15px; height:99%; margin: 0 0 0 15px; line-height:1.5; background-color:rgba(232,232,232,0.7); padding-left:2%; padding-right:2%; padding-top:1.9%; }
+#slide1 .parallax { background-image:url(../images/bg1.jpg); padding-top:60px; }
+
+
+.about_row1 { width:100%; float:left; padding:15px 0 0 0;  }
+.row1_left { width:100%; float:left; padding-right:0; padding-bottom:15px; }
+.row1_right { width:100%; float:left; padding-left:0; padding-bottom:0; }
+.btn_orange { padding:10px 30px; font-size:16px; float:right; position:absolute; right:0; top:200px; } 
+
+.subhd { font-size:24px; padding-bottom:5px; margin-bottom:10px; }
+.about_row1 p { font-size:15px; text-align:justify; padding-bottom:15px; }
+.about_row1_footer { font-size:15px; }
+
+.ourvalue_row { margin-bottom:10px; }
+.ourvalue_row_left { font-size:16px; padding-left:10px; line-height:5; } 
+.ourvalue_row_right { font-size:14px;  } 
+.ourvalue_row2 { line-height:5; }
+
+
+#innerslide1 .parallax_inner { background-image:url(../images/inner_bg1.jpg); background-position: bottom center; height:300px; }
+
+#innerslide2 .parallax_inner { background-image:url(../images/inner_bg2.jpg); background-position: bottom center; background-attachment:fixed; }
+#innerslide2 .hsContainer { background-image: none; }
+
+#innerslide8 .parallax_inner .content { max-width:1800px; }
+#slideall_hide .test_slide_ht { height:600px; }
+
+.founder_desc { padding:15px 20px 0 20px; font-size:16px;  }
+.founder_desc p { text-align:justify; padding-bottom:12px; }
+.founder_desc p.no_padding { padding:0; } 
+.readmore { color:#ce9f38; }
+.founder_btn { width:100%; float:left; padding-top:15px; padding-bottom:15px; }
+
+.school_titlebar { background:url(../images/getknow_header_bg.png) no-repeat right center; font-size:20px; }
+
+.type_outer { width:100%; float:left; padding:30px 0 25px 0; }
+.school_type { max-width:33%; font-size:11px; line-height:2.2; }
+.school_type2 { margin-left:0.5%; } 
+
+
+.subhd1 { font-size:30px; }
+.row2_content1, .row2_content3 { display:none; }
+.row2_content_inner { border:0; } 
+.row2_content2 { width:100%; padding-top:10px; }
+
+.events_container { width:96%; margin:0 2% 6px 2%; padding-bottom:6px; font-size:14px; }
+.events_left { width:92px; font-size:16px; padding-top:5px; }
+.events_left span { font-size:11px; }
+.events_right h2 { color:#555555; font-size:15px; padding-bottom:5px; }
+
+
+/* ---- Footer ----- */
+
+.footer_desc { width:100%; float:left; padding:15px 0 7px 0; text-align: center; }
+.footer_desc a { color:#000000; text-decoration:none; }
+.footer_desc2 { text-align: center; padding:0px 0 15px 0; }
+
+
+/*.footer_top { background:#a8a89b; padding-top:10px; font-size:13px; }
+.footer_content { width:50%; float:left; padding:20px 0; }
+.footer_content h2 { font-size:22px; }
+.footer3 { display:none; }
+.footer2 { width:45%; padding-left:5%; }
+
+.footer2 ul { margin-left:20px; }
+.footer2 ul li { padding-bottom:13px; font-size:13px; }
+
+.footer_form { width:100%; float:left; padding:20px 0 0 0; }
+.txtbox_news { max-width:355px; width:98%; float:left; font-size:16px; margin-bottom:20px; padding:0 5px 0 40px;  } 
+.footer_copyright { font-size:14px; }*/
+
+
+
+/* ---- Home page Popup ----  */
+
+.yt_popup_outer { width:260px; float:left; font-family: 'LetterGothicMTStd';  position:relative; padding:15px 5px 5px 5px; background: url("../images/bg1.jpg") center center; background-size: cover; }
+.yt_popup_outer .whyakka_hd { width:100%; float:left; font-family: 'LetterGothicMTStd'; font-size:20px; color:#75b1cb; font-weight:600; border-bottom:1px dashed #cccccc; padding-bottom:5px; margin-bottom:15px; text-align:center; }
+.yt_popup_outer p { font-size:16px; text-align:justify; padding-bottom:15px; line-height:1.4; }
+.yt_popup_outer .whyakka_popup_desc { width:270px; float:left; background:url(../images/teacher_popup_bg.jpg) repeat; color:#000000; position:relative; left:-15px; margin-bottom:10px; padding:15px 5px 5px 5px; position:relative; }
+.yt_popup_outer .whyakka_popup_desc > p { line-height:22px; font-size:14px; }
+.yt_popup_outer .whyakkaimg { display:none; }
+
+
+.indexpop_padd { padding:5px 0; }
+#indexpop_parag1 > p { font-size:14px; line-height:21px; }
+#indexpop_parag2 > p { font-size:14px; line-height:21px; }
+#indexpop_parag3 > p{ font-size:14px; line-height:21px; }
+
+#indexpop_parag1 > .poplast_parag { padding:15px 0 5px 0; }
+#indexpop_parag2 > .poplast_parag { padding:15px 0 5px 0; }
+#indexpop_parag3 > .poplast_parag { padding:15px 0 5px 0; }
+
+
+
+/* ----  Campus ----- */
+
+.page_menu_active { position: static; top:50px; padding-top:0px; box-shadow:0 0 0 #000; }
+.page_menutop { width:100%; float:left; padding:5px 0; background:url(../images/sub_header_split1.jpg) repeat-x bottom left; } 
+.page_menuhd { width:100%; float:left; font-size:18px; background: none; height: auto; line-height: normal;  padding:0; padding-top:20px;  }
+.pagemenu_right { width:100%; float:left; padding-left:0; }
+.pagemenu_desctop { font-size:15px; padding-top:5px; text-align:justify; }
+.pagemenu_desctop br { display: none; }
+.page_menubtm ul { list-style:none; margin-top:0px; min-height:40px; background:#FFFFFF; float:left; }
+.page_menubtm ul li { display: block; padding:2px 10px 0 0; width: 95%; float:left; font-size:14px; } 
+.page_menubtm ul li:last-child { padding-right:0; }
+.page_menubtm ul li a { color:#999999; padding:7px 0 15px 0; display: compact; float:left; border-bottom:5px hidden #ffffff; }
+.page_menubtm ul li:hover a, .page_menubtm ul li a.active { background:url(../images/header_bottom.png) repeat-x bottom left; }
+.page_menu_pad { margin-top:280px; }
+
+
+
+.campus_row1_left { width:100%; line-height:1.5; }
+.campus_row1_right { display:none; }
+.campus_quote { padding:15px 0; font-size:18px; margin-bottom:15px; }
+
+.campus_quote { width:96%; float:left; background:#faf7c5; padding:15px 0; font-size:15px; text-align:center; margin-bottom:15px; padding-left:2%; padding-right:2%; }
+.campus_row1_left p { padding-bottom:15px; text-align:justify; font-size:14px; }
+.campus_quote > br { display: none; }
+
+
+.campus_testimonial_desc { font-size:36px; text-align:center; margin-top:45px; line-height:1.5; }
+.campus_testimonial_author { font-size:36px; color:#75b1be;  }
+.campus_testimonial_img { width:330px; float:right; }
+.campus_testimonial_img img { width:80%; margin-top:50px; }
+#innerslide8 .parallax_inner { height:260px; }
+#slideall_hide .test_slide_ht { height:100%; }
+.testimonial_slide { padding-bottom:0;  }
+
+.campus_row2_left { width:100%; float:left; padding-bottom:20px; }
+.campus_row2_left p, .campus_board ul li, .campus_row2_curr_left { font-size:15px; }
+.campus_board ul li { width:40%; float:left; padding-bottom:10px;  }
+.campus_board { width:97%; height: auto; min-height:120px; padding-right:0; background-image:none; }
+.campus_row2_right { margin-left:0; }
+.curr_row2, .curr_row4, .curr_row3 { line-height:4.5; }
+.curr_row1 { line-height:6; }
+
+.campus_row2_curr_left { width:170px; }
+.campus_row2_curr_right { margin-left:220px; font-size:14px; }
+
+
+#innerslide5 .parallax_inner, #innerslide6 .parallax_inner, #innerslide7 .parallax_inner { height:260px; }
+#innerslide5 .hsContainer, #innerslide6 .hsContainer, #innerslide7 .hsContainer { background-image: none; background-color: rgba(0,0,0,0.4); }
+.innerslide6_content, .innerslide5_content, .innerslide7_content { font-size:14px; padding-top:60px; line-height:1.5; }
+
+.campus_events { width:70%; float:left; margin-bottom:10px; margin-left:15%; margin-right:15%; }
+.campus_events_board h2 { font-size:18px; padding-bottom:5px; } 
+.campus_events_board p { font-size:14px; }
+.campus_events_desc { padding-top:0; padding-bottom:10px; float:left; } 
+
+
+.campus_row3_outer { background:url(../images/pattern_2.jpg) repeat; }
+.campus_row3_left { width:100%; float:left; border-right:0; }
+.campus_row3_right { margin-left:0; }
+
+.campus_row3_left h2 { font-size:32px; color:#ce9f38; }
+.campus_row3_left h2 > br { display:none; }
+.campus_row3_left ul.pagination { list-style:none; margin:20px 0; }
+.campus_row3_left ul.pagination li { display:inline; padding:7px; font-size:14px; margin-right:10px; cursor:pointer; }
+.campus_row3_left ul.pagination li:hover { background:#faf7c5; border-radius:7px;  }
+.campus_row3_left p { display:none;  }
+
+.pagination_desc { font-size:18px; padding-bottom:15px; margin-top:10px; text-align:right; float:left;  }
+.campus_row3_left .btn_yellow { float:right; margin-bottom:20px; }
+
+
+.akka_slider { width:100%; float:left; margin-bottom:20px; }
+.akka_container { width:275px;  margin:0 auto; }
+.akka_slide_img { padding-bottom:15px; } 
+.akka_slide_img img { max-width:275px; width:100%; }
+.akkas_desc h2 { font-size:20px; }
+.akkas_desc p { font-size:14px; padding-bottom:7px; line-height:1.5; }
+.akkas_desc .akka_readmore { font-size:14px; float:right; } 
+
+/*  -----  contact -----  */
+
+.contact_left { width:100%; float:left; padding:10px 0 0 0; }
+.contact_right { width:100%; float:right; padding:30px 0 0 0; }
+
+.contact_row { width:96%; float:left; padding:0 0 0 4%; }
+.contact_row:last-child { padding-bottom:0; }
+.contact_rowleft { width:100%; float:left; padding-bottom:20px; }
+.contact_rowright { width:100%; float:left; padding-bottom:20px; }
+
+.txtbox { padding-left:12%; }
+.msgbox { padding-left:12%; }  
+.contact_explore h2 { margin:15px 0 0 20px; font-size:17px; }
+.contact_explore ul { list-style:none; margin:20px 0 10px 20px; font-size:18px; }
+.contact_explore ul li { display: block; background-position: 0 2px; padding:0 0 7px 20px; margin-right:0; font-size:15px; }
+.contact_explore { height: auto; margin-top:30px;  }
+
+#campus_container .slide_container { display:none; } 
+#campus_container { padding-top:0; }
+#campus_container #campuslide { display:block; }
+
+
+/* -----  YT Fund  ----- */
+.ytfund_container { width:100%; float:left; padding:52px 0 0 0; }
+.fund_footer { padding: 0 0 0 0; }
+.fund_footer_explore { margin-top:-80px; margin-bottom:15px; }
+
+
+/* ------  Funstop  ------ */
+.funstop_container { width:100%; float:left; padding:50px 0 0 0; }
+.innerslide5_content h1 { font-size:24px; padding-bottom:10px; margin-top:80px; }
+.innerslide5_content p { font-size:17px; }
+.funstop_content { width:100%; float:left; padding:30px 0 20px 0; }
+.gallery_left { width:100%; border-right:0; border-bottom:1px dotted #cccccc; margin-bottom:20px; }
+.funstop_content .gallery_right { width:275px; margin:0 auto; float:none; }
+.gallery_outer { width:100%; margin-bottom:20px; font-size:16px; border-bottom:1px solid #cccccc; }
+
+
+
+.gallery_popup_content { width:400px; float:left; } 
+.gallery_popup_top { width:100%; float:left; }
+.gallery_popup_img { width:100%; float:left; padding-bottom:20px; }
+.gallery_popup_img img { width:100%; }
+.gallery_right { width:275px; float: none; margin:0 auto; }
+.popup_outer { padding:15px 10px; }
+.gallery_popup_btm h1 { font-size:18px; }
+.gallery_popup_btm p { font-size:14px; }
+
+
+/* ------- Up Events ------- */
+
+.upevents_container { width:100%; float:left; }
+.upevents_left { width:100%; float:left; border-right:0; padding-right:0; }
+.upevents_right { width:100%; float:left; }
+#event_cal { width:310px; float: none; margin:0 auto; }
+
+
+.eventrow_left { width:100px; float:left; }
+.eventrow_right { margin-left:100px; }
+.eventrow_right p { font-size:16px; line-height:1.2; }
+.update_outer { width:100px; float:left; }
+.upevents_date { width:87px; height:101px; float:left; padding-top:20px; font-size:20px; }
+.upevents_date span { width:87px; font-size:14px; }
+.upevents_img { float:right; width:158px; height:121px; display:none; }
+.event_row { width:100%; float:left; margin-bottom:25px; border-bottom:1px dotted #a3a3a3; padding-bottom:15px;  }
+.eventrow_right h2 span { width:100%; float: right; padding:5px 0 10px 0; color:#75b1be; } 
+.eventrow_right h2 { font-size:18px; }
+
+
+/* ------ Events popup ------ */
+
+.events_popup_content { width:400px; float:left; padding:10px 0 0 0; }
+.events_popup_img {  display:none; }
+.event_row1_right { margin-left:0; float: left;  }
+.event_row1_right p { font-size:14px; }
+
+.events_popup_content .subhd { float:none; font-size:20px }
+.event_regdet {  width:98%; float:left; padding:0 1%; }
+.event_regdesc { width:100%; float:left; font-size:14px; padding:7px 0; padding-right:0; }
+.event_regamt {  width:100%; float:right; font-size:18px; text-align:center; line-height: normal; position: relative; height: auto; }
+.events_popup_content .popupbtn_group { display:none; }
+
+.event_pop_row2 .regbtn { width:70%; height:35px; line-height:35px; background:#40697d; float:right; font-size:18px; margin-top:20px; margin-left:15%; margin-right:15%;  }
+
+.popup_event_date { width:96%; float:left; background:#78bfe3; color:#FFF; padding:15px 2%; font-size:15px; text-shadow:-1px -1px 1px #333; margin-right:0; }
+.popup_event_date span { font-size:18px; line-height:1.2; }
+.popup_event_date hr { background:none; padding:0; border:1px dashed #ffffff; outline:0;    }
+
+.popup_event_date1 { width:auto; background:#3399cc; padding-top:22px; }
+.popup_event_date1 span { font-size:14px; line-height:1.2; }
+
+.event_pop_row3 { width:100%; float:left; margin-top:15px; }
+.event_regdethd { width:98%; float:left; padding:7px 1%; font-size:17px; }
+.event_regdethd span { float:right; font-size:14px; }
+
+
+/* ---- YT Rhythm ----- */
+
+.pole_container { width:16px; margin:75px; }
+.pole { width:16px; float:left; position:relative; }
+
+.pole_breakfast { background:#ce9f38; height:250px; }
+.pole_golden { background:#fdf459; height:250px; }
+.pole_morning { background:#9d6c47; height:250px; }
+.pole_lession { background:#28bebf; height:250px; }
+.pole_fruit { background:#f1627d; height:250px; }
+.pole_fundamentals { background:#666666; height:250px; }
+.pole_lang { background:#77b7a6; height:250px; }
+.pole_lunch { background:#9d6c47; height:250px; }
+.pole_art { background:#80b679; height:250px; }
+.pole_sports { background:#b69074; height:250px; }
+.pole_closure { background:#eda283; height:250px; }
+.pole_bus { background:#1cc5c0; height:250px; } 
+
+.pole > img { position:absolute; top:45%; display:none; }
+.pole_arrow_left { left:-12px; }
+.pole_arrow_right { right:-12px; }
+
+.rhythm_time { position:absolute; width:100px; font-size:20px; color:#3a3a3c; top:0; }
+.time_left { right:-120px; left:auto; }
+.time_right { right:-120px; }
+
+.pole_wrapper_outer { width:250px; height:250px; position:relative; right:-16px; } 
+.pole_wrapper_outer1 { left: auto; }
+
+.pole_wrapper { width:125px; height:125px; left:60px; top:62.5px; }
+.pole_wrapper1 { left: 60px; right: auto; } 	
+.pole_wrapper h2 { width:100%; float:left; text-align:center; font-size:17px; margin-top:40px; }
+.pole_wrapper h2.title_single { margin-top:52px; }
+.pole_wrapper h2.title_three { margin-top:30px; }
+
+.rhythm_desc_outer { width:100%; float:left; display:none; -webkit-transform: scale(0, 0); -moz-transform: scale(0, 0); -o-transform: scale(0, 0); -ms-transform: scale(0, 0); } 
+.rhythm_desc_img { width:100%; float:left; text-align:center; padding-bottom:3px; }
+.rhythm_desc { width:100%; float:left; text-align:center; font-size:15px; }
+ 
+.pole_wrapper:hover { width:250px; height:250px; top:0; z-index:10; overflow:hidden; box-shadow:0px 0px 10px #666666;  }
+.pole_wrapper:hover h2 { line-height: normal; margin-top:20px; margin-bottom:5px; }
+.pole_wrapper1:hover { top:0; }
+.top_max, .top_min { top:0; }
+
+
+/* ---- Akka ----  */
+.pagemenu_desctop2 { font-size:16px; text-align:justify; margin-top:15px; }
+.pagemenu_desctop2 br { display:none; }
+
+.teacher_details { width:48%; float:left; padding-right:2%; margin-bottom:32px;  }
+.teacher_details img { width:100%; float:left; }
+
+.meet_akka_left { width:100%; float:left; border-right:0; margin:20px 0; font-size:14px; }
+.meet_akka_right { width:100%; float:left; margin:5px 0 25px 0; padding:0 0%; font-size:14px; }
+.why_akkabtn { background:#ce9f38; color:#FFFFFF; float:right; margin-top:5px; padding:6px 5px; font-size:18px; cursor:pointer; }
+
+.teacher_details p { font-size:17px; }
+.teacher_name { font-size:18px; }
+
+.meet_akka_right p { font-size:14px; width:98%; padding:0 1%; float:left; color:#2b2b2b; }
+.teacher_head p { font-size:14px; line-height:19px; width:96%; padding:0 2%; color:#2b2b2b; }
+.teacher_head h1 { text-align:center; margin-bottom:15px; }
+.meet_akka_right h3 { font-size:14px; margin-left:10px; color:#2b2b2b; }
+
+.teach_role_parag p { width:100%; float:left; font-size:15px; }
+.teacher_role_left { width:98%; float:left; border-right:0px dotted #000000; margin:20px 0; color:#666666; padding:0 1%; font-size:15px; }
+.teacher_role_right { width:98%; float:left; margin:20px 0; padding:0 1%; }
+
+.teacher_roles ul { border-bottom:1px dotted #cccccc; background:url(../images/tick_gray.png) no-repeat 0 16px; padding-left:22px; }
+.teacher_roles li { border-bottom:1px dotted #cccccc; background:url(../images/tick_gray.png) no-repeat 0 16px; padding-left:2px; }
+.teacher_roles li p { color:#666666; text-align:justify; padding:10px 0 10px 0; line-height:21px; font-size:15px; }
+
+.teacher_role_right p { color:#666666; font-size:15px; }
+.teacher_role_right h3 { color:#666666; padding:7px 0 10px 0; font-size:15px; }
+
+.joinas_akka { width:54%; float:left; margin:27px 23% 0 23%; }
+.joinas_akka > p { font-size:14px; width:96%; padding:0 2%; }
+.joinus_cntr h1 { text-align:center; margin-bottom:15px; }
+
+.subscribe_newsbtn { float:left; font-size:20px; padding:8px 10px; border-radius:5px; text-align:center; margin:15px 0 15px 16%; cursor:pointer; }
+
+.joinus_cntr p { font-size:14px; text-align:justify; width:95%; padding:0 2.5%; }
+.joinus_left { width:97.7%; float:left; margin:20px 0 15px 0; color:#666666; padding:0 1.5% 0 0.8%; }
+.joinus_right { width:97%; float:left; margin:10px 0; padding:0 1% 0 2%; border:0; }
+
+.joinus_right p { color:#666666; text-align:justify; font-size:15px; }
+.joinus_right h3 { color:#666666; padding:15px 0 10px 0; font-size:15px; }
+
+.joinus_tab { width:64%; float:left; padding:8px 12px; margin:0 2px 7px 15%; background:#cccccc; cursor:pointer; text-align:center; }
+.joinus_tab.active { float:left; padding:7px 12px; margin-right:2px; background:#75b1be; cursor:pointer; color:#FFFFFF; }
+
+.teacher_banner { text-align:center; padding-top:64px; color:#FFF; }
+.teacher_banner > h1 { font-size:28px; }
+.teacher_banner > p { font-size:20px; margin-top:25px; }
+.teacher_join { width:90%; padding:15px 2% 15px 2%; float:left; margin:0 2% 25px 2%; }
+
+
+/*--Join us Tab--*/
+
+.joinus_cntr div > h1 { width:97%; padding-left:1.5%; padding-right:1.5%; float:left; }
+.joinus_cntr div > p { width:97%; padding-left:1.5%; padding-right:1.5%; float:left; }
+.joinus_alldetail { width:97%; padding:0 1.5% 0 1.5%; margin-bottom:20px; }
+.txtbox_cntr { margin-top:5px; }
+.joinus_right h3 { width:97%; padding:0 1.5% 0 1.5%; font-size:16px; }
+
+
+/*--Join us Tab--*/
+
+#thankyou_akka { height:265px; }
+#thankyou_akka p { width:94%; padding:20px 3% 20px 3%; font-size:16px;}
+.strip_center { height:8px; }
+.subscribe_newsbtn { width:50%; float:left; margin:0 23% 0 27%; padding:7px 0; font-size:16px; }
+
+
+
+/*----- Akka Details Popup ------*/
+
+.akka_popuptbl tr td { padding:12px 0; }
+.akka_popuptbl { width:375px; float:left; }
+.akka_images { float:left; padding:0 17px 10px 0; margin-top:25px; width:35%; }
+.popup_contact_left1 p { font-size:14px; line-height:18px; margin-top:10px; }
+
+.popup_contact_left2 { width:60%; background-image:none; height:96px; }
+.popup_contact_right2 { width:40%; background-image:none; height:96px; }
+
+.popup_contact_left2 ul { margin:12px 0 0 80px; }
+.popup_contact_left2 ul li { display:inline; background:url(../images/tick_white.png) no-repeat 0 0; padding:0 10px 5px 15px; }
+.view_akka_post { margin-top:35px; text-align:center; font-size:18px; }
+.popup_contact_left2 h2 { padding:5px 0 0 28px; font-size:18px; }
+
+
+/*----- Contact ------*/
+
+.contact_left { width:98.5%; float:left; padding-right:1.5%; font-size:13px; margin-top:15px; }
+.contact_right { width:98.5%; float:right; padding-left:1.5%; }
+
+#c_map { width:440px; height:185px; float:left; }
+.map_inner { margin:5px 0 0 0; }
+
+.contact_txtleft { width:100%; float:left; margin-top:15px; }
+.contact_txtright { width:100%; float:left; margin-top:0px; }
+.contact_submitbtn { width:17%; float:right; color:#FFFFFF; background:#ce9f38; font-size:18px; text-align:center; padding:7px 0; margin-right:1%; cursor:pointer; }
+
+.teacher_banner > h1 { font-size:32px; color:#FFFFFF; text-shadow:0px 0px 0px #d7d7d7; filter: }
+.teacher_banner > p { font-size:23px; color:#FFFFFF; margin-top:15px; text-shadow:0px 0px 0px #d7d7d7; }
+
+
+/*----- Curriculum ------*/
+
+.curr_banner > h1 { font-size:34px; margin-top:20px; }
+.curr_banner > p { font-size:18px; margin-top:20px; }
+
+.cognitive_develop p { font-size:15px; margin-bottom:15px; padding-top:5px; line-height:22px; }
+.cognitive_develop h1 { font-size:22px; }
+.subject_head h2 { margin-left:10px; font-size:19px; }
+
+.arithmetic_cntr1 { width:100%; float:left; padding-right:0%; padding-bottom:17px; }
+.arithmetic_cntr2 { width:100%; float:left; padding-right:0%; padding-bottom:17px; }
+
+.arithmetic_cntr1 img { width:88%; float:left; padding:0 6%; }
+
+.english_cntr { width:95%; float:left; padding:0 2.5%; margin-bottom:20px; }
+.speech_cntr { padding-right:0; clear:left; margin-top:15px; }
+
+.math_in_fun { padding:7px 10px; margin:10px 0; font-size:20px; float:right; }
+.observe_wonder_btn { padding:7px 10px; margin:10px 0; font-size:20px; float:right; }
+.artistic_btn { padding:7px 10px; margin:10px 0; font-size:20px; float:right; }
+
+.subject_head img { display:none; }
+
+
+.what_explore { background:#666666; width:100%; float:left; height:143px; color:#FFFFFF; margin-top:15px; }
+.what_explore h2 { margin:12px 0 0 25px; }
+.what_explore ul { margin:13px 0 0 63px;  }
+.what_explore ul li { display:block; padding-bottom:4px; padding-left:18px; margin-right:18px;   }
+
+.artist_parag3 p { text-align:justify; line-height:22px; }
+
+
+.blog_cntr12 h4 { text-align:justify; line-height:25px; letter-spacing:-1; padding-bottom:15px; font-size:16px;  }
+.blog_cntr12 { padding-bottom:14px; }
+.blog_cntr12 img { margin-left:30px; }
+.blog_cntr12 p { line-height:23px; font-size:15px; }
+
+
+/*----- Event Registration ------*/
+
+.funhd2 { width:98%; padding:0 1% 5px 1%; font-size:24px; }
+.fun_desc2 { width:98%; padding:0 1% 20px 1%; font-size:15px; }
+
+#eventreg_right { width:60%; float:left; margin:20px 0; padding:0 20 0 20%; border:0; }
+
+.detail_contentbx .tabdetail_cntr { min-height:167px; }
+
+.sessrow1_left { font-size:14px; }
+.sessrow1_right { float:right; font-size:20px; }
+.sessrow1_right span { font-size:15px; }
+.session_registerbtn { padding:8px 10px; margin:13px 0 0 0; font-size:17px; }
+.event_nextbtn { padding:5px 10px; font-size:17px; margin-top:15px; }
+
+
+/*----- Verification Form ------*/
+
+.verify_inner > h1 { padding:15px 0; font-size:36px; }
+
+.verify_outer { width:450px; margin:0 auto; }
+.vfwidth1_50 { width:30%; }
+.vfwidth2_50 { width:70%; }
+
+.vftxt_width80 { width:95%; }
+.vftxt_width30 { width:35%; }
+
+.verfication_cntr { font-size:16px; }
+.vfparent_detail1 { width:98.5%; float:left; margin:0 1% 0 0; }
+.vfparent_detail2 { width:98.5%; float:left; margin:0 0 0 1%; }
+
+.vfupdatebtn { font-size:15px; padding:10px; }
+.vfpersontbl tr td { padding:10px; font-size:15px; }
+
+
+
+
+/* ------- YT Belief and Values ------ */
+
+.belief_img1 { max-width:360px; width:80%; float:none; margin:7px 9% 15px 11%; text-align:center; clear:both; }
+.belief_parag1 { width:100%; float:left; clear:both; }
+
+.ytbelief_left { width:100%; float:left; text-align:center; padding:0 0 15px 0; }
+.ytbelief_right { width:100%; float:left; }
+.ytbelief_left img { max-width:295px; }
+ 
+.belief_row2_curr { margin:8px 0 20px 0; } 
+.belief_row2_curr_left { font-size:15px; }
+.belief_row2_curr_right { font-size:13px; }
+.belief_parag1 > p { font-size:14px; line-height:21px; letter-spacing:-1; }
+
+.belief_row1 { line-height:10; }
+.belief_row2 { line-height:7; }
+.belief_row3 { line-height:11; }
+
+
+
+/* ------- YT Methodology ------ */
+ 
+.ytmethod_row1left > p, .ytmethod_row2out p { font-size:14px; line-height:23px; letter-spacing:0; }
+
+.methodimg { width:100%; float:left; text-align:center; }
+.methodimg img {  max-width:296px; margin:7px 0 3px 0; }
+ 
+.method_float_left { float:none; display:none; }
+.method_float_right { float:none; display:none; }
+
+
+/* ------- YT Practices ------ */
+
+.ytpractice_outer { width:98%; float:left; margin:3px 1%; }
+.ytpractice_outer img { margin:0px 0 8px 0; }
+.ytpractices_wrapper { min-height:265px; }
+.ytpractices_wrapper p { font-size:14px; }
+
+.clear7 { clear:none; }
+.clear3, .clear5, .clear9 { clear:left; }
+
+
+
+/* ------- Fun Stop ------ */
+
+/* Gallery */
+
+.gallery_out { width:100%;  }
+.gallery_in { max-width:305px; margin:10px auto; cursor:pointer; }
+.gal_parag { width:96%; padding:12px 2%; line-height:19px; font-size:14px; background:#ffe7ca; min-height:60px; }
+.gallery_imgs { width:305px; height:210px; }
+
+#gall_popup { min-width:370px; max-width:390px;  }
+#galleriestab > img { max-width:270px; height:200px; margin:0 5px; text-align:center; }
+
+.gallpoptbl p { font-size:14px; }
+.gallpop_head { font-size:18px; }
+
+.galleryimght { height:210px; }
+
+.gallery_arrowcntr { width:98%; position:absolute; top:20%; z-index:10; float:left; padding:0 0% 0 0%; }
+.gallery_leftarrow { padding-left:0%; }
+.gallery_rightarrow { padding-right:0%; }
+
+.gallery_leftarrow img { width:90%; }
+.gallery_rightarrow img { width:90%; }
+
+
+
+/* ------ Press ------ */
+
+.press_outer { width:100%; }
+.press_inner { max-width:330px; }
+.press_desc h2 { font-size:17px; } 
+.press_desc { font-size:15px; } 
+
+
+ /* --- FAQ --- */
+
+.subhd2 { font-size:17px; padding:15px 0 7px 0; }
+.faqcontent p { font-size:14px; line-height:1.3; }
+
+
+
+
+/* --- Set Account --- */
+
+.set_account { padding:120px 0 15px 0; }
+.sa_cancelbtn { margin-bottom:70px; }
+.sa_label { width:100%; }
+.sa_txt { width:76%; }
+
+.set_accounttbl tr:nth-child(2) td { text-indent:5px; }
+.set_accounttbl tr:nth-last-child(2) td { text-indent:5px; }
+
+.passwordbox { width:75%; }
+.set_accounttbl tr:nth-last-child(2) td div { padding:4px 0; }
+
+
+
+/* ----- Philosophy ----- */
+
+
+#innerslide15 .parallax_inner { height:320px; }
+.philosophy_slide_ht { height:640px; }
+.philosophy_testimonial { font-size:36px; line-height:54px; }
+.philosophy_testimonial br { display:none; }
+.philosophy_testimonial { width:100%; float:left; }
+.philosophy_row1_outer p { font-size:15px; line-height:21px; }
+
+.philosophy_left { width:100%; }
+.philosophy_right { width:100%; margin-left:0; }
+.philosophy_right img { width:50%; float:left; margin-left:25%; margin-top:15px; }
+
+#philosophy_quote br { display:none; }
+
+#philosophy_quote.campus_quote { font-size:15px; }
+#philosophy_quote.campus_quote div { font-size:18px; }
+
+
+/* ----- Garden Campus ----- */
+
+.garden_left { width:100%; }
+.garden_right { width:100%; margin-left:0; }
+.garden_right img { width:60%; float:left; margin-left:20%; margin-top:15px; }
+.garden_left > p { line-height:28px; letter-spacing:-0.2px; }
+#garden_quotes { letter-spacing:-0.2px; }
+
+
+
+/* ----- Garden Rhytm ----- */
+
+.gd_rhythm { width:100%; float:left; }
+.gd_rhythm_inner { min-height:266px; }
+.gd_rhythm_inner img { max-height:280px; width:80%; padding:0 10%; }
+.gd_rhythm_inner p { width:94%; float:left; padding:10px 3%; text-align:justify; line-height:21px; letter-spacing:-0.7px; font-size:15px; }
+
+.rhythm_cnt { font-size:15px; letter-spacing:-0.7px; line-height:20px; }
+
+
+
+/* ----- Garden Program ----- */
+
+.gd_program1 { line-height:42px; }
+.gd_program2 { line-height:42px; }
+.gd_program3 { line-height:42px; }
+.gd_program_left { width:96%; float:left; padding:0 2%; position:relative; height:42px; }
+.gd_program_right { width:96%; float:left; padding:15px 2%; margin-left:0; }
+
+}
+
+
+
+
+@media only screen and (min-width: 320px) and (max-width: 479px) {
+
+.video_container { display: none; } 	
+.add_pad { padding-top:50px; }	
+
+
+.school_quote { bottom:80px; right:20px; font-size:13px; }
+.school_quote span { font-size:18px; }
+
+/* ------  Menu ----- */
+
+.menubg_top { top:-25px; z-index:999; height:28px; font-size:12px; line-height:32px;  }
+.menubg_top img { width:160px; float:right; margin-top:5px; margin-right:0; }
+
+.menu_container { width:100%; height:40px; z-index:9999; transition: all 0.2s;   }
+.menu_pos_default { position:absolute; bottom:20px; }
+.fixed { position:fixed; top:20px; left:0; }
+
+
+.logo { float:left; position:relative; top:-20px; z-index:99999; }
+.nav_menu_outer { width:540px; float:right; border:0px solid red; }
+.logo img { width:78px; }
+
+.content { width:96%; }
+.nav_menu_outer { width:525px; }
+.wrapper { max-width:525px; }
+.nav { font-size:16px; }
+.nav-submenu { left:-90px; width:370px; }
+.nav-submenu-item a { width:350px; }
+
+
+#slide1 .parallax { background-image:url(../images/bg1.jpg); padding-top:60px; }
+.content { width:94%; }
+.pagetitle { font-size:22px; text-shadow:1px 1px 1px #fff; }
+.para { font-size:14px; text-align:justify; }
+.ourvalue_row_left { line-height:3; } 
+.about_quote { width:260px; font-size:15px; height:99%; margin: 0 0 0 15px; line-height:1.7; background-color:rgba(232,232,232,0.7); padding-left:2%; padding-right:2%; padding-top:20px; }
+
+.about_row1 { width:100%; float:left; padding:15px 0 0 0;  }
+.row1_left { width:100%; float:left; padding-right:0; padding-bottom:15px; }
+.row1_right { width:100%; float:left; padding-left:0; padding-bottom:0; }
+.btn_orange { padding:10px 30px; font-size:16px; float:right; position:absolute; right:15%; top:300px; } 
+
+.subhd { font-size:20px; padding-bottom:5px; margin-bottom:10px; }
+.about_row1 p { font-size:15px; text-align:justify; padding-bottom:15px; }
+.about_row1_footer { font-size:15px; }
+
+.ourvalue_row { margin-bottom:10px; }
+.ourvalue_row_left { font-size:16px; padding-left:10px; line-height:7; } 
+.ourvalue_row_right { font-size:14px;  } 
+.ourvalue_row2 { line-height:8; }
+.ourvalue_row3 { line-height:9; }
+
+
+#innerslide1 .parallax_inner { background-image:url(../images/inner_bg1.jpg); background-position: bottom center; height:350px; }
+
+#innerslide2 .parallax_inner { background-image:url(../images/inner_bg2.jpg); background-position: bottom center; background-attachment:fixed; }
+#innerslide2 .hsContainer { background-image: none; }
+
+
+.founder_desc { padding:15px 15px 0 15px; font-size:15px;  }
+.founder_desc p { text-align:justify; padding-bottom:12px; }
+.founder_desc p.no_padding { padding:0; } 
+.readmore { color:#ce9f38; }
+.founder_btn { width:100%; float:left; padding-top:15px; padding-bottom:15px; }
+
+.school_titlebar { background:url(../images/getknow_header_bg.png) no-repeat right center; font-size:20px; }
+
+.type_outer { width:100%; float:left; padding:30px 0 15px 0; }
+.school_type { max-width:99%; font-size:11px; line-height:2.2; margin-bottom:10px; }
+.school_type2 { margin-left:0.5%; } 
+
+
+.subhd1 { font-size:30px; }
+.row2_content1, .row2_content3 { display:none; }
+.row2_content_inner { border:0; } 
+.row2_content2 { width:100%; padding-top:10px;  }
+
+.events_container { width:96%; margin:0 2% 6px 2%; padding-bottom:6px; font-size:14px; }
+.events_left { width:92px; font-size:16px; padding-top:5px; }
+.events_left span { font-size:11px; }
+.events_right h2 { color:#555555; font-size:15px; padding-bottom:5px; }
+
+
+/* ---- Footer ----- */
+
+/*.footer_top { background:#a8a89b; padding-top:10px; font-size:13px; }
+.footer_content { width:50%; float:left; padding:20px 0; }
+.footer_content h2 { font-size:22px; }
+
+.footer1, .footer3 { display:none; }
+.footer2 { width:90%; padding-left:10%; }
+
+.footer2 ul { margin-left:20px; }
+.footer2 ul li { padding-bottom:13px; font-size:13px; }
+
+.footer_form { width:100%; float:left; padding:20px 0 0 0; }
+.txtbox_news { max-width:355px; width:98%; float:left; font-size:16px; margin-bottom:20px; padding:0 5px 0 40px;  } 
+.footer_copyright { font-size:14px; }*/
+
+.footer_desc { width:100%; float:left; padding:15px 0 7px 0; text-align: center; font-size:14px; }
+.footer_desc2 { text-align: center; padding:0px 0 15px 0; }
+
+
+
+/* ---- Home page Popup ----  */
+
+.yt_popup_outer { width:260px; float:left; font-family: 'LetterGothicMTStd';  position:relative; padding:15px 5px 5px 5px; background: url("../images/bg1.jpg") center center; background-size: cover; }
+.yt_popup_outer .whyakka_hd { width:100%; float:left; font-family: 'LetterGothicMTStd'; font-size:20px; color:#75b1cb; font-weight:600; border-bottom:1px dashed #cccccc; padding-bottom:5px; margin-bottom:15px; text-align:center; }
+.yt_popup_outer p { font-size:16px; text-align:justify; padding-bottom:15px; line-height:1.4; }
+.yt_popup_outer .whyakka_popup_desc { width:270px; float:left; background:url(../images/teacher_popup_bg.jpg) repeat; color:#000000; position:relative; left:-15px; margin-bottom:10px; padding:15px 5px 5px 5px; position:relative; }
+.yt_popup_outer .whyakka_popup_desc > p { line-height:22px; font-size:14px; }
+.yt_popup_outer .whyakkaimg { display:none; }
+
+
+.indexpop_padd { padding:5px 0; }
+#indexpop_parag1 > p { font-size:14px; line-height:21px; }
+#indexpop_parag2 > p { font-size:14px; line-height:21px; }
+#indexpop_parag3 > p{ font-size:14px; line-height:21px; }
+
+#indexpop_parag1 > .poplast_parag { padding:12px 0 5px 0; }
+#indexpop_parag2 > .poplast_parag { padding:12px 0 5px 0; }
+#indexpop_parag3 > .poplast_parag { padding:12px 0 5px 0; }
+
+
+
+/* ----  Campus ----- */
+.page_menu_active { position: static; top:50px; padding-top:0px; box-shadow:0 0 0 #000; }
+.page_menutop { width:100%; float:left; padding:5px 0; background:url(../images/sub_header_split1.jpg) repeat-x bottom left; margin:0; } 
+.page_menuhd { width:100%; float:left; font-size:18px; background: none; height: auto; line-height: normal; padding:0; padding-top:20px;   }
+.pagemenu_right { width:100%; float:left; padding-left:0; }
+.pagemenu_desctop { font-size:15px; padding-top:5px; text-align:justify; }
+.pagemenu_desctop br { display: none; }
+.page_menubtm ul { list-style:none; margin-top:0px; min-height:40px; background:#FFFFFF; float:left; }
+.page_menubtm ul li { display: block; padding:2px 10px 0 0; width: 95%; float:left; font-size:14px; } 
+.page_menubtm ul li:last-child { padding-right:0; }
+.page_menubtm ul li a { color:#999999; padding:7px 0 15px 0; display: compact; float:left; border-bottom:5px hidden #ffffff; }
+.page_menubtm ul li:hover a, .page_menubtm ul li a.active { background:url(../images/header_bottom.png) repeat-x bottom left; }
+.page_menu_pad { margin-top:280px; }
+
+
+.campus_row1_left { width:100%; line-height:1.5; }
+.campus_row1_right { display:none; }
+.campus_quote { padding:15px 0; font-size:18px; margin-bottom:15px; }
+.campus_quote > br { display: none; }
+.campus_quote { width:100%; float:left; background:#faf7c5; padding:15px 0; font-size:15px; text-align:center; margin-bottom:15px; }
+.campus_row1_left p { padding-bottom:15px; text-align:justify; font-size:14px; }
+
+
+.campus_testimonial_desc { font-size:36px; text-align:center; margin-top:45px; line-height:1.5; }
+.campus_testimonial_author { font-size:36px; color:#75b1be;  }
+.campus_testimonial_img { width:330px; float:right; }
+.campus_testimonial_img img { width:80%; margin-top:50px; }
+#innerslide8 .parallax_inner { height:260px; }
+#slideall_hide .test_slide_ht { height:100%; }
+.testimonial_slide { padding-bottom:0;  }
+
+
+
+.campus_row2_left { width:100%; float:left; padding-bottom:20px; }
+.campus_row2_left p, .campus_board ul li, .campus_row2_curr_left { font-size:15px; }
+.campus_board ul li { padding-bottom:10px;  }
+.campus_board { width:95%; height: auto; min-height:120px; padding-right:0; background-image:none; }
+.campus_board h2 { font-size:17px; }
+.campus_row2_right { margin-left:0; }
+.curr_row1, .curr_row2, .curr_row4, .curr_row3, .curr_row5 { line-height:normal; }
+
+
+.campus_row2_curr { background:#faf7c5 none; } 
+.campus_row2_curr_left { width:96%; float:left; height:auto; position:relative; padding:5px 2%; text-align:center; }
+.campus_row2_curr_right { margin-left:0; font-size:14px; width:96%; float:left; padding: 7px 2%; }
+
+
+#innerslide5 .parallax_inner, #innerslide6 .parallax_inner, #innerslide7 .parallax_inner { height:260px; }
+#innerslide5 .hsContainer, #innerslide6 .hsContainer, #innerslide7 .hsContainer { background-image: none; background-color: rgba(0,0,0,0.4); }
+.innerslide6_content, .innerslide5_content, .innerslide7_content { font-size:14px; padding-top:60px; line-height:1.5; }
+
+.campus_events { width:96%; float:left; margin-bottom:15px; margin-left:2%; margin-right:2%; }
+.campus_events_board h2 { font-size:18px; padding-bottom:5px; } 
+.campus_events_board p { font-size:14px; }
+.campus_events_desc { padding-top:0; padding-bottom:10px; float:left; } 
+
+
+.campus_row3_outer { background:url(../images/pattern_2.jpg) repeat; }
+.campus_row3_left { width:100%; float:left; border-right:0; }
+.campus_row3_right { margin-left:0; }
+
+.campus_row3_left h2 { font-size:32px; color:#ce9f38; }
+.campus_row3_left h2 > br { display:none; }
+.campus_row3_left ul.pagination { list-style:none; margin:20px 0; }
+.campus_row3_left ul.pagination li { display:inline; padding:7px; font-size:14px; margin-right:10px; cursor:pointer; }
+.campus_row3_left ul.pagination li:hover { background:#faf7c5; border-radius:7px;  }
+.campus_row3_left p { display:none;  }
+
+.pagination_desc { font-size:18px; padding-bottom:15px; margin-top:10px; text-align:right; float:left;  }
+.campus_row3_left .btn_yellow { float:right; margin-bottom:20px; }
+
+
+.akka_slider { width:100%; float:left; margin-bottom:20px; }
+.akka_container { width:275px;  margin:0 auto; }
+.akka_slide_img { padding-bottom:15px; } 
+.akka_slide_img img { max-width:275px; width:100%; }
+.akkas_desc h2 { font-size:20px; }
+.akkas_desc p { font-size:14px; padding-bottom:7px; line-height:1.5; }
+.akkas_desc .akka_readmore { font-size:14px; float:right; } 
+
+
+/*  -----  contact -----  */
+
+.contact_left { width:100%; float:left; padding:10px 0 0 0; }
+.contact_right { width:100%; float:right; padding:30px 0 0 0; }
+
+.contact_row { width:96%; float:left; padding:0 0 0 4%; }
+.contact_row:last-child { padding-bottom:0; }
+.contact_rowleft { width:100%; float:left; padding-bottom:20px; }
+.contact_rowright { width:100%; float:left; padding-bottom:20px; }
+
+.txtbox { padding-left:12%; }
+.msgbox { padding-left:12%; }  
+.contact_explore ul { margin:10px 0 20px 30px; }
+.contact_explore ul li { font-size:14px; margin-right:20px;  }
+.contact_explore { height: auto; margin-top:30px; background-position: 90% 0; }
+
+#campus_container .slide_container { display:none; } 
+#campus_container { padding-top:0; }
+#campus_container #campuslide { display:block; }
+
+
+.contact_explore h2 { margin:15px 0 0 20px; font-size:17px; }
+.contact_explore ul { list-style:none; margin:20px 0 10px 20px; font-size:18px; }
+.contact_explore ul li { display: block; background-position:0 2px; padding:0 0 10px 20px; margin-right:0; }
+
+
+/* -----  YT Fund  ----- */
+.ytfund_container { width:100%; float:left; padding:52px 0 0 0; }
+.fund_footer { padding: 0 0 0 0; }
+.fund_footer_explore { margin-top:-95px; margin-bottom:15px; }
+
+
+/* ------  Funstop  ------ */
+
+.funstop_container { width:100%; float:left; padding:50px 0 0 0; }
+.innerslide5_content h1 { font-size:24px; padding-bottom:10px; margin-top:80px; }
+.innerslide5_content p { font-size:17px; }
+.funstop_content { width:100%; float:left; padding:30px 0 20px 0; }
+.gallery_left { width:100%; border-right:0; border-bottom:1px dotted #cccccc; margin-bottom:20px; }
+.funstop_content .gallery_right { width:275px; margin:0 auto; float:none; }
+.gallery_outer { width:100%; margin-bottom:20px; font-size:16px; border-bottom:1px solid #cccccc; }
+
+.gallery_popup_content { width:270px; float:left; } 
+.gallery_popup_top { width:100%; float:left; }
+.gallery_popup_img { width:100%; float:left; padding-bottom:20px; }
+.gallery_popup_img img { width:100%; }
+.gallery_right { width:275px; float: none; margin:0 auto; }
+.popup_outer { padding:15px 5px; }
+
+.gallery_popup_btm h1 { font-size:18px; }
+.gallery_popup_btm p { font-size:14px; }
+/* ------- Up Events ------- */
+
+.upevents_container { width:100%; float:left; }
+.upevents_left { width:100%; float:left; border-right:0; padding-right:0; }
+.upevents_right { width:100%; float:left; }
+#event_cal { width:310px; float: none; margin:0 auto; }
+
+.event_row { width:100%; float:left; margin-bottom:25px; border-bottom:1px dotted #a3a3a3; padding-bottom:15px;  }
+.eventrow_left { width:100%; float:left;  }
+.eventrow_right { width:100%; float:left; margin-left:0; }
+.eventrow_right p { font-size:14px; line-height:1.2; }
+.update_outer { width:265px; float: none; margin:0 auto; }
+.upevents_date { width:107px; height:101px; float:left; padding-top:20px; position:relative; background:#f7e900; font-size:24px; color:#333333; text-align:center; }
+.upevents_date span { width:107px; float:left; position:absolute; bottom:0; left:0; height:25px; line-height:25px; background:#faf7c5; font-size:18px; }
+.upevents_img { float:right; width:158px; height:121px; }
+.upevents_img img { width:158px; height:121px; }
+.eventrow_right { text-align:justify; margin-top:10px; }
+.eventrow_right h2 { border-bottom:1px solid #a3a3a3; margin-bottom:10px; font-size:19px; }
+.eventrow_right h2 span { font-size:14px; float:right; margin-top:8px; display:none; } 
+
+
+
+/* ------ Events popup ------ */
+
+.events_popup_content { width:270px; float:left; padding:10px 0 0 0; }
+.events_popup_img { width:140px; float:left; margin-right:10px; display:none; }
+.events_popup_img img { width:140px; }
+.event_row1_right { margin-left:0; float: left;  }
+.event_row1_right p { font-size:14px; }
+
+.events_popup_content .subhd { float:none; font-size:20px }
+.event_regdet {  width:98%; float:left; padding:0 1%; }
+.event_regdesc { width:100%; float:left; font-size:14px; padding:7px 0; padding-right:0; }
+.event_regamt {  width:100%; float:right; font-size:18px; text-align:center; line-height: normal; position: relative; height: auto; }
+.events_popup_content .popupbtn_group { display:none; }
+
+.event_pop_row2 .regbtn { width:70%; height:35px; line-height:35px; background:#40697d; float:right; font-size:18px; margin-top:20px; margin-left:15%; margin-right:15%;  }
+
+.popup_event_date { width:96%; float:left; background:#78bfe3; color:#FFF; padding:15px 2%; font-size:15px; text-shadow:-1px -1px 1px #333; margin-right:0; }
+.popup_event_date span { font-size:18px; line-height:1.2; }
+.popup_event_date hr { background:none; padding:0; border:1px dashed #ffffff; outline:0;    }
+
+.popup_event_date1 { width:auto; background:#3399cc; padding-top:22px; }
+.popup_event_date1 span { font-size:14px; line-height:1.2; }
+
+.event_pop_row3 { width:100%; float:left; margin-top:15px; }
+.event_regdethd { width:98%; float:left; padding:7px 1%; font-size:17px; }
+.event_regdethd span { float:right; font-size:14px; }
+
+
+/* ---- YT Rhythm ----- */
+
+.pole_container { width:16px; margin:0; }
+.pole { width:16px; float:left; position:relative; }
+
+.pole_breakfast { background:#ce9f38; height:250px; }
+.pole_golden { background:#fdf459; height:250px; }
+.pole_morning { background:#9d6c47; height:250px; }
+.pole_lession { background:#28bebf; height:250px; }
+.pole_fruit { background:#f1627d; height:250px; }
+.pole_fundamentals { background:#666666; height:250px; }
+.pole_lang { background:#77b7a6; height:250px; }
+.pole_lunch { background:#9d6c47; height:250px; }
+.pole_art { background:#80b679; height:250px; }
+.pole_sports { background:#b69074; height:250px; }
+.pole_closure { background:#eda283; height:250px; }
+.pole_bus { background:#1cc5c0; height:250px; } 
+
+.pole > img { position:absolute; top:45%; display:none; }
+.pole_arrow_left { left:-12px; }
+.pole_arrow_right { right:-12px; }
+
+.rhythm_time { position:absolute; width:100px; font-size:20px; color:#3a3a3c; top:0; }
+.time_left { right:-120px; left:auto; }
+.time_right { right:-120px; }
+
+.pole_wrapper_outer { width:250px; height:250px; position:relative; right:-16px; } 
+.pole_wrapper_outer1 { left: auto; }
+
+.pole_wrapper { width:125px; height:125px; left:60px; top:62.5px; }
+.pole_wrapper1 { left: 60px; right: auto; } 	
+.pole_wrapper h2 { width:100%; float:left; text-align:center; font-size:17px; margin-top:40px; }
+.pole_wrapper h2.title_single { margin-top:52px; }
+.pole_wrapper h2.title_three { margin-top:30px; }
+
+.rhythm_desc_outer { width:100%; float:left; display:none; -webkit-transform: scale(0, 0); -moz-transform: scale(0, 0); -o-transform: scale(0, 0); -ms-transform: scale(0, 0); } 
+.rhythm_desc_img { width:100%; float:left; text-align:center; padding-bottom:3px; }
+.rhythm_desc { width:100%; float:left; text-align:center; font-size:15px; }
+ 
+.pole_wrapper:hover { width:250px; height:250px; top:0; z-index:10; overflow:hidden; box-shadow:0px 0px 10px #666666;  }
+.pole_wrapper:hover h2 { line-height: normal; margin-top:20px; margin-bottom:5px; }
+.pole_wrapper1:hover { top:0; }
+.top_max, .top_min { top:0; }
+
+
+
+
+/* ---- Akka ----  */
+.pagemenu_desctop2 { font-size:16px; text-align:justify; margin-top:15px; }
+.pagemenu_desctop2 br { display:none; }
+
+.teacher_details { width:98%; float:left; padding:0 1%; margin-bottom:32px;  }
+.teacher_details img { width:100%; float:left; }
+
+.meet_akka_left { width:100%; float:left; border-right:0; margin:20px 0; font-size:14px; }
+.meet_akka_right { width:100%; float:left; margin:5px 0 25px 0; padding:0 0%; font-size:14px; }
+.why_akkabtn { background:#ce9f38; color:#FFFFFF; float:right; margin:5px 15px 0 0; padding:6px 5px; font-size:18px; cursor:pointer; }
+
+.teacher_details p { font-size:17px; }
+.teacher_name { font-size:18px; }
+
+.meet_akka_right p { font-size:14px; width:98%; padding:0 1%; float:left; color:#2b2b2b; }
+.teacher_head p { font-size:14px; line-height:19px; width:96%; padding:0 2%; color:#2b2b2b; }
+.teacher_head h1 { text-align:center; margin-bottom:15px; }
+.meet_akka_right h3 { font-size:14px; margin-left:10px; color:#2b2b2b; }
+
+.teach_role_parag p { width:96%; padding:0 2%; float:left; font-size:14px; }
+.teach_role_parag h1 { text-align:center; margin-bottom:15px; }
+.teacher_role_left { width:98%; float:left; border-right:0px dotted #000000; margin:20px 0; color:#666666; padding:0 1%; font-size:15px; }
+.teacher_role_right { width:98%; float:left; margin:20px 0; padding:0 1%; }
+
+.teacher_roles ul { border-bottom:1px dotted #cccccc; background:url(../images/tick_gray.png) no-repeat 0 16px; padding-left:22px; }
+.teacher_roles li { border-bottom:1px dotted #cccccc; background:url(../images/tick_gray.png) no-repeat 0 16px; padding-left:2px; }
+.teacher_roles li p { color:#666666; text-align:justify; padding:10px 0 10px 0; line-height:21px; font-size:15px; }
+
+.teacher_role_right p { color:#666666; font-size:15px; }
+.teacher_role_right h3 { color:#666666; padding:7px 0 10px 0; font-size:15px; }
+
+.joinas_akka { width:84%; float:left; margin:27px 8% 0 8%; }
+.joinas_akka > p { font-size:14px; width:96%; padding:0 2%; }
+
+.teach_role_parag  p { width:97%; padding:0 1.5%; float:left; }
+
+.subscribe_newsbtn { float:left; font-size:15px; padding:8px 10px; border-radius:5px; text-align:center; margin:15px 0 15px 14%; cursor:pointer; }
+
+.joinus_cntr p { width:96%; padding:0 2%; font-size:14px; text-align:justify; line-height:20px; }
+.joinus_cntr h1 { text-align:center; margin-bottom:15px; }
+.joinus_left { width:98.5%; float:left; margin:20px 0 15px 0; color:#666666; padding-right:1.5%; }
+.joinus_right { width:97%; float:left; margin:0px 0 10px 0; padding:0 1% 0 2%; border:0; }
+
+.joinus_right p { color:#666666; text-align:justify; font-size:14px; }
+.joinus_right h3 { color:#666666; padding:15px 0 10px 0; font-size:14px; }
+
+.joinus_tab { width:84%; float:left; padding:7px 12px; margin:0 2px 7px 6%; background:#cccccc; cursor:pointer; font-size:15px; text-align:center; }
+.joinus_tab.active { float:left; padding:7px 12px; margin-right:2px; background:#75b1be; cursor:pointer; color:#FFFFFF; }
+
+.backg_bluestrip { background:url(../images/blue_center.png) no-repeat center center; background-size:100% 100%; height:8px; margin:12px 0; }
+
+.teacher_banner { text-align:center; padding-top:64px; color:#FFF; }
+.teacher_banner > h1 { font-size:24px; }
+.teacher_banner > p { font-size:17px; margin-top:25px; }
+
+.teacher_join { width:90%; padding:15px 2% 15px 2%; float:left; margin:0 2% 25px 2%; }
+
+
+/*--Join us Tab--*/
+
+.joinus_cntr div > h1 { width:97%; padding-left:1.5%; padding-right:1.5%; float:left; }
+.joinus_cntr div > p { width:97%; padding-left:1.5%; padding-right:1.5%; float:left; }
+.joinus_alldetail { width:97%; padding:0 1.5% 0 1.5%; margin-bottom:20px; }
+.txtbox_cntr { margin-top:5px; }
+.joinus_right h3 { width:97%; padding:0 1.5% 0 1.5%; font-size:15px; }
+
+.quesleft_cntr { width:12%; }
+.quesmiddle_cntr { width:76%;  }
+.quesmiddle_cntr input { font-size:25px; padding:0 1.5%; }
+.quesright_cntr { width:12%; }
+.ques_inner > p { padding:2px 0 5px 0; min-height:30px; margin-top:15px; font-size:15px; }
+
+
+/*--Join us Tab--*/
+
+#thankyou_akka { height:285px; }
+#thankyou_akka p { width:94%; padding:20px 3% 20px 3%; font-size:14px; }
+.strip_center { height:8px; }
+.subscribe_newsbtn { width:50%; float:left; margin:0 23% 0 27%; padding:7px 0; font-size:14px; }
+
+
+/*----- Akka Details Popup ------*/
+
+.akka_popuptbl tr td { padding:12px 0; }
+.akka_popuptbl { width:245px; float:left; }
+.akka_images { float:left; padding:0 17px 10px 0; margin-top:25px; width:45%; }
+.popup_contact_left1 p { font-size:14px; line-height:19px; margin-top:11px; }
+
+.popup_contact_left1 h2 { font-size:17px; padding-top:15px; }
+
+.popup_contact_left2 { width:100%; background-image:none; height:86px; }
+.popup_contact_right2 { width:100%; background-image:none; height:56px; }
+
+.popup_contact_left2 ul { margin:12px 0 0 80px; }
+.popup_contact_left2 ul li { display:block; background:url(../images/tick_white.png) no-repeat 0 0; padding:0 17px 5px 15px; }
+.view_akka_post { margin-top:35px; text-align:center; font-size:18px; }
+.popup_contact_left2 h2 { padding:5px 0 0 28px; font-size:18px; }
+.akka_cancelbtn { font-size:17px; margin:-5px -6px 0 0; }
+
+
+/*----- Contact ------*/
+
+.contact_left { width:98.5%; float:left; padding-right:1.5%; font-size:13px; margin-top:15px; }
+.contact_right { width:98.5%; float:right; padding-left:1.5%; }
+
+#c_map { width:285px; height:185px; float:left; }
+.map_inner { margin:0px 0 0 0; }
+.contact_info { width:98%; padding:0 1%; float:left; margin-bottom:40px; }
+
+.contact_txtleft { width:100%; float:left; margin-top:15px; }
+.contact_txtright { width:100%; float:left; margin-top:0px; }
+.contact_submitbtn { width:24%; float:right; font-size:17px; padding:7px 0; margin-right:1%; }
+.contact_cntr h1 { font-size:23px; width:100%; float:left; text-align:center; padding:7px 0; }
+
+.teacher_banner > h1 { font-size:32px; color:#FFFFFF; text-shadow:0px 0px 0px #d7d7d7; filter: }
+.teacher_banner > p { font-size:18px; color:#FFFFFF; margin-top:35px; text-shadow:0px 0px 0px #d7d7d7; }
+
+
+/*----- Curriculum ------*/
+
+
+.curr_banner > h1 { font-size:30px; margin-top:20px; }
+.curr_banner > p { font-size:15px; margin-top:20px; line-height:24px; }
+
+.cognitive_develop p { font-size:14px; margin-bottom:15px; padding-top:5px; text-align:justify; line-height:21px; }
+.cognitive_develop h1 { font-size:20px; }
+.subject_head h2 { margin-left:10px; font-size:19px; }
+
+.arithmetic_cntr1 { width:100%; float:left; padding-right:0%; padding-bottom:17px; }
+.arithmetic_cntr2 { width:100%; float:left; padding-right:0%; padding-bottom:17px; }
+
+.arithmetic_cntr1 img { width:98%; float:left; padding:0 1%; }
+
+.english_cntr { width:95%; float:left; padding:0 2.5%; margin-bottom:20px; }
+.speech_cntr { padding-right:0; clear:left; margin-top:15px; }
+
+.math_in_fun { padding:7px 0; margin:5px 20% 10px 20%; font-size:16px; float:left; width:60%; text-align:center; }
+.observe_wonder_btn { padding:7px 0px; margin:5px 10% 10px 10%; font-size:16px; float:right; width:80%; text-align:center; }
+.artistic_btn { padding:7px 0px; margin:5px 25% 10px 25%; font-size:16px; float:left; text-align:center; width:50%; }
+
+.subject_head img { display:none; }
+
+
+.what_explore { background:#666666; width:100%; float:left; height:143px; color:#FFFFFF; margin-top:15px; }
+.what_explore h2 { margin:12px 0 0 15px; }
+.what_explore ul { margin:13px 0 0 33px;  }
+.what_explore ul li { display:block; padding-bottom:4px; padding-left:18px; margin-right:18px;   }
+
+
+.artist_parag3 p { text-align:justify; line-height:21px; }
+
+
+.blog_cntr12 h4 { text-align:justify; line-height:25px; letter-spacing:-1; padding-bottom:15px; font-size:15px;  }
+.blog_cntr12 { padding-bottom:14px; }
+.blog_cntr12 img { margin:0; width:100%; float:left; margin-bottom:15px; }
+.blog_cntr12 p { line-height:23px; font-size:15px; }
+
+
+
+
+/*----- Event Registration ------*/
+
+.funhd2 { width:98%; padding:0 1% 5px 1%; font-size:22px; }
+.fun_desc2 { width:98%; padding:0 1% 20px 1%; font-size:14px; }
+
+#eventreg_right { width:90%; float:left; margin:20px 0; padding:0 5% 0 5%; border:0; }
+
+.detail_contentbx .tabdetail_cntr { min-height:167px; }
+
+.sessrow1_left { font-size:14px; }
+.sessrow1_right { float:right; font-size:20px; }
+.sessrow1_right span { font-size:14px; }
+.sessrow1_left br { display:block; }
+
+.session_registerbtn { padding:8px 10px; margin:13px 0 7px 0; font-size:16px; }
+.event_nextbtn { padding:5px 10px; font-size:16px; margin-top:15px; }
+
+.hide_thankyou { margin-left:5px; }
+
+#session_detail { width:97%; padding:0 1.5%; margin:15px 0 0 0; }
+
+.eventregtbl tr td { padding:8px 0; font-size:14px; }
+.thanku_midparag { width:97%; background:#faf7c5; padding:10px 0 12px 0; margin:16px 1.5% 17px 1.5%; }
+
+
+
+
+/*----- Verification Form ------*/
+
+.verfication_cntr { font-size:14px; }
+.verify_inner > h1 { padding:15px 0; font-size:28px; }
+
+.verify_outer { width:300px; margin:0 auto; }
+.vfwidth1_50 { width:35%; }
+.vfwidth2_50 { width:65%; }
+
+.vftxt_width80 { width:97%; }
+.vftxt_width30 { width:45%; }
+
+
+.vfparent_detail1 { width:98.5%; float:left; margin:0 1% 0 0; }
+.vfparent_detail2 { width:98.5%; float:left; margin:0 0 0 1%; }
+
+.vfupdatebtn { font-size:15px; padding:7px 10px; width:280px; }
+
+.vfpersontbl tr td { padding:10px; font-size:14px; }
+.vftxt_box { font-size:14px; padding:3px 5px; }
+
+.vfparent_detail1 h2 { font-size:20px; text-align:center; padding:7px 0 3px 0; }
+.vfparent_detail2 h2 { font-size:20px; text-align:center; padding:7px 0 3px 0; }
+.vf_subheadh2 { font-size:20px; text-align:center; padding:7px 0 3px 0; }
+
+
+
+
+/* ------- YT Belief and Values ------ */
+
+.belief_img1 { max-width:390px; width:100%; float:none; margin:7px 0 15px 0; text-align:center; clear:both; }
+.belief_parag1 { width:100%; float:left; clear:both; }
+
+.ytbelief_left { width:100%; float:left; text-align:center; padding:0 0 15px 0; }
+.ytbelief_right { width:100%; float:left; }
+.ytbelief_left img { max-width:100%; }
+ 
+.belief_row2_curr { width:100%; float:left; background:url(../images/menu_mo.jpg) repeat; margin:8px 0 10px 0; position:relative; min-height:56px; z-index:0;  } 
+.belief_row2_curr_left { width:94%; float:left; height: auto; position: relative; background:url(../images/menu_bg.jpg) no-repeat; font-size:17px; padding: 7px 3%; text-align:left; z-index:0; }
+.belief_row2_curr_right { width:94%; float:left; margin-left:0; padding: 15px 3%; text-align:justify; font-size:14px; line-height:1.4; }
+
+.our_belief p { font-size:14px; line-height:21px; letter-spacing:-1; }
+.belief_parag1 > p { font-size:14px; line-height:21px; letter-spacing:-1; }
+.belief_row1, .belief_row2, .belief_row3 { line-height: normal; }
+ 
+ 
+ 
+/* ------- YT Methodology ------ */
+ 
+.ytmethod_row1left > p, .ytmethod_row2out p { width:98%; padding:7px 1%; font-size:14px; line-height:21px; letter-spacing:0; }
+
+.methodimg { width:100%; float:left; text-align:center; }
+.methodimg img {  max-width:282px; margin:7px 0 3px 0; }
+ 
+.method_float_left { float:none; display:none; }
+.method_float_right { float:none; display:none; }
+
+
+/* ------- YT Practices ------ */
+
+.ytpractice_outer { width:98%; float:left; margin:3px 1%; }
+.ytpractice_outer img { margin:0px 0 8px 0; }
+.ytpractices_wrapper { min-height:265px; }
+.ytpractices_wrapper p { font-size:14px; }
+
+.clear7 { clear:none; }
+.clear3, .clear5, .clear9 { clear:left; }
+
+
+/* ------- Fun Stop ------ */
+
+/* Gallery */
+
+.gallery_out { width:100%; margin:5px 0 10px 0;  }
+.gallery_in { max-width:285px; margin:10px auto; cursor:pointer; }
+.gal_parag { width:96%; padding:12px 2%; line-height:19px; font-size:14px; background:#ffe7ca; min-height:60px; }
+.gallery_imgs { width:285px; height:200px; }
+
+#gall_popup { min-width:100px; max-width:270px; display:none; }
+#gall_popup p{ text-align:justify; }
+#galleriestab > img { max-width:180px; height:140px; text-align:center; margin:0 5px; }
+
+.gallpoptbl p { font-size:13px; line-height:20px; }
+.gallpop_head { font-size:18px; margin-top:15px; }
+
+.galleryimght { height:160px; }
+
+.gallery_arrowcntr { width:98%; position:absolute; top:20%; z-index:10; float:left; padding:0 0% 0 0%; }
+.gallery_leftarrow { padding-left:0%; }
+.gallery_rightarrow { padding-right:0%; }
+
+.gallery_leftarrow img { width:90%; }
+.gallery_rightarrow img { width:90%; }
+
+
+
+/* ------ Press ------ */
+
+.press_outer { width:100%; }
+.press_inner { max-width:285px; }
+.press_desc h2 { font-size:16px; } 
+.press_desc { font-size:14px; } 
+
+
+/* ------ Contact ------ */
+
+.letterspac2 { letter-spacing:-1 }
+.letterspac3 { letter-spacing:-1 }
+ 
+ 
+ /* --- FAQ --- */
+
+.subhd2 { font-size:17px; padding:15px 0 7px 0; }
+.faqcontent p { font-size:14px; line-height:1.3; }
+
+ 
+ 
+/* --- Set Account --- */
+
+.set_account { padding:120px 0 15px 0; }
+.sa_cancelbtn { margin-bottom:50px; }
+.sa_label { width:100%; }
+.sa_txt { width:86%; }
+
+.set_accounttbl tr:nth-child(2) td { text-indent:0; }
+.set_accounttbl tr:nth-last-child(2) td { text-indent:0; }
+.setaccount_content ul { margin-left:35px; }
+.setaccount_content ul li { padding:3px 0; text-indent:0; }
+
+.passwordbox { width:95%; }
+.set_accounttbl tr:nth-last-child(2) td div { padding:4px 0; }
+ 
+.setaccount_title { font-size:18px; padding:0 0 10px 0; }
+.setaccount_content h3 { padding:12px 0 8px 0; font-size:18px; }
+.setpassword_title { font-size:18px; padding:0 0 7px 0; }
+
+.sa_updatebtn { width:110px; font-size:17px; }
+.sa_cancelbtn { width:110px; font-size:17px; }
+
+
+
+/* ----- Philosophy ----- */
+
+#innerslide15 .parallax_inner { height:320px; }
+.philosophy_slide_ht { height:640px; }
+.philosophy_testimonial { font-size:36px; line-height:54px; }
+.philosophy_testimonial br { display:none; }
+.philosophy_testimonial { width:100%; float:left; }
+.philosophy_row1_outer p { font-size:15px; line-height:21px; }
+
+.philosophy_left { width:100%; }
+.philosophy_right { width:100%; margin-left:0; }
+.philosophy_right img { width:80%; float:left; margin-left:10%; margin-top:15px; }
+
+#philosophy_quote br { display:none; }
+
+
+#philosophy_quote.campus_quote { font-size:15px; }
+#philosophy_quote.campus_quote div { font-size:18px; }
+
+
+/* ----- Garden Campus ----- */
+
+.garden_left { width:100%; }
+.garden_right { width:100%; margin-left:0; }
+.garden_right img { width:60%; float:left; margin-left:20%; margin-top:15px; }
+.garden_left > p { line-height:22px; letter-spacing:-0.4px; }
+#garden_quotes { letter-spacing:-0.5px; font-size:14px; }
+.garden_left h4 { letter-spacing:-0.7px; }
+ 
+.garden_left > p br { display:none; }
+#garden_quotes br { display:block; }
+ 
+ 
+ 
+/* ----- Garden Rhytm ----- */
+
+.gd_rhythm { width:100%; float:left; }
+.gd_rhythm_inner { min-height:256px; }
+.gd_rhythm_inner p { width:94%; float:left; padding:10px 3%; text-align:justify; line-height:20px; letter-spacing:-0.7px; font-size:14px; }
+.rhythm_cnt { font-size:15px; letter-spacing:-0.7px; line-height:20px; }
+
+
+/* ----- Garden Program ----- */
+
+.gd_program1 { line-height:42px; }
+.gd_program2 { line-height:42px; }
+.gd_program3 { line-height:42px; }
+.gd_program_left { width:96%; float:left; padding:0 2%; position:relative; height:42px; }
+.gd_program_right { width:96%; float:left; padding:15px 2%; margin-left:0; font-size:14px; line-height:21px; }
+.ytmethod_row1left h3 { font-size:15px; line-height:22px; }
+ 
+}
+
+
+
+/* ------- Menu ------ */
+
+@media only screen and (min-width: 768px){
+	.nav-list {
+		display: block;
+	}
+}
+
+@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+
+/* ----- Free Human Being ---- */
+.free_human_outer { margin-bottom:0; }
+
+}
+
+@media only screen and (max-width: 1199px){
+	#menuitem_rhythm { display:none; }
+}
+
+@media only screen and (max-width: 959px){
+.menufb { display:none; }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+	.submenu_desc > h2 { width:100%; float:left; font-size:14px; color:#75b1be; padding-bottom:5px; }
+	
+.founder_desc p br { display:none; }
+
+/* ----- Free Human Being ---- */
+.free_human_outer { margin-bottom:0; }
+
+}
+
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+
+	.view_film_btn .youtube-videogallery .youtube-videogallery-img { max-width:100%; width:95%; }
+	
+	.nav_menu_outer { width:100%; float:right; position:relative; top:-78px; margin-top:-4px; }
+	.nav-item a { display:block; color:#FFF; padding:10px 20px; height:auto; line-height:normal; }
+	#temp_menu { height:70px; background-color:transparent; }
+	
+	.caret { display:none; } 
+	.nav-mobile {
+		display:block;
+		top:7px;
+	}
+	.nav {
+		width:100%;
+		padding:40px 0 0;
+		/*background:#ce9f38;*/
+	}
+	.nav-item {
+		width:100%;
+		float:none;
+	}
+	.nav-item > a {
+		padding:10px;
+		border-top:1px solid #d0a570;
+		border-bottom:1px solid #d0a570;
+	}
+	.nav-list {
+		display:none;
+		background:#ce9f38;
+		background:#d0a570 url(../images/menu_bg.jpg) repeat;
+		border:1px solid #d0a570;
+		padding-top:20px;
+		position:relative;
+		max-height:380px;
+		overflow:scroll;
+	}
+	.nav-click {
+		display:block;
+	}
+	.nav-mobile-open {
+		border-radius:5px 5px 0 0;
+		-webkit-border-radius:5px 5px 0 0;
+		-moz-border-radius:5px 5px 0 0;
+	}
+	.nav-item:hover .nav-submenu, .nav-item:last-child:hover .nav-submenu {
+		display:none;
+		right:auto;
+		left:0;
+	}
+	.nav-submenu {
+		position:static;
+		width:100%;
+		left:0;
+		box-shadow: 0 0 0 #ffffff;
+		border:0;
+	}
+	.nav-submenu-item a {
+		border-bottom:1px dotted #aaaaaa;
+		display:block;
+		padding:15px 0;
+		line-height:1;
+		float: none;
+		width: 100%;
+		height: auto;
+	}
+	.wrapper {
+		max-width:100%;
+		width:100%;
+		margin:0 auto;
+		position:relative;
+		padding:0;
+	}
+	
+/*.submenu_img { width:80px; height:56px; float:left; margin-left:10px; }
+.submenu_img img { width:80px; height:56px; }*/
+.submenu_desc { margin-left:10px; color:#555555; padding-bottom:10px; }
+.submenu_desc > h2 { width:100%; float:left; font-size:15px; color:#75b1be; padding-bottom:5px; }
+.submenu_desc > span { width:100%; float:left; font-size:12px; line-height:1.3; background: url(../images/menu_arrow.png) no-repeat 96% 0px; }
+	
+.testimonial_slide { display:none; }
+	
+	
+.founder_desc p br { display:none; }
+	
+/* ----- Free Human Being ---- */
+.free_human_outer { margin-bottom:0; }
+
+
+}
+
+
+@media only screen and (min-width: 480px) and (max-width: 639px) {
+	
+	.nav-list {
+		display:none;
+		background:#ce9f38;
+		background:#d0a570 url(../images/menu_bg.jpg) repeat;
+		border:1px solid #d0a570;
+		padding-top:20px;
+		position:relative;
+		max-height:227px;
+		overflow:scroll;
+	}
+	
+}
+
+
+@media only screen and (min-width: 640px) and (max-width: 767px) {
+	
+	.nav-list {
+		display:none;
+		background:#ce9f38;
+		background:#d0a570 url(../images/menu_bg.jpg) repeat;
+		border:1px solid #d0a570;
+		padding-top:20px;
+		position:relative;
+		max-height:270px;
+		overflow:scroll;
+	}
+	
+}
+

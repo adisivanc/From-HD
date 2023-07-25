@@ -1,0 +1,27 @@
+{
+    "title": "Mr.",
+    "fname": "Ahmed ",
+    "lname": "Al-Ballushi",
+    "mname": "S",
+    "gender": "M",
+    "dob": "1971-10-03",
+    "panNo": "BBC12345Sd546",
+    "mobileNo": "8904131879",
+    "email": "ahmed@gmail.com",
+    "typeOfResident": "Owned",
+    "nationality": "Emirati",
+    "addressLine1": "Oman Commercial Centre",
+    "addressLine2": "4th floor, Suite 402/404",
+    "addressLine3": "Madinat al Sultan Qaboos",
+    "city": "Muscat",
+    "state": "Oman",
+    "pin": "112",
+    "maritalStatus": "S",
+    "typeOfID":"Emirates ID",
+    "passportNo":"123456",
+    "issueDate": "2020-10-03",
+    "passportExpiryDate": "2022-10-1",
+    "issuePlace":"Muscat",
+    "pep":"No"
+    
+}

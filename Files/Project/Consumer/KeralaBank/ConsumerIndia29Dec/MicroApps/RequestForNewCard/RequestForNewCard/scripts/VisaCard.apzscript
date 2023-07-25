@@ -1,0 +1,267 @@
+apz.crddtl.VisaCard = {};
+apz.crddtl.VisaCard.sParams = {};
+apz.crddtl.VisaCard.baseSixtyFour = "";
+apz.app.onShown_VisaCard = function(params) {
+    debugger;
+    $("#crddtl__VisaCard__Stage3AccNo").attr("type","tel");
+    $("#crddtl__VisaCard__Stage3MobileNo").attr("type","tel");
+    apz.crddtl.VisaCard.sParams = params;
+    // apz.crddtl.VisaCard.fnInitialise(params);
+    apz.show("crddtl__VisaCard__Stage1");
+};
+apz.crddtl.VisaCard.fnContinueStage1 = function(params) {
+    debugger;
+    var lValid = apz.crddtl.VisaCard.fnValidateStage1();
+    if (lValid) {
+        apz.data.buildData("NewCardRequest", "crddtl");
+        var lImage = $("#crddtl__NewCardRequest__i__cardReqDtl__custImageBase64").attr("src");
+        if (lImage == "") {
+            apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl.custImageBase64 = "";
+        }
+        apz.crddtl.VisaCard.fnGoToStage2();
+    }
+};
+apz.crddtl.VisaCard.fnNameonCard = function(params) {
+    debugger;
+    apz.setElmValue("crddtl__VisaCard__CustomerName", apz.getElmValue("crddtl__NewCardRequest__i__cardReqDtl__nameOnCard"));
+};
+apz.crddtl.VisaCard.fnGoToStage2 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl;
+    
+    apz.setElmValue("crddtl__VisaCard__Stage3Product", "Visa Credit Card");
+    apz.setElmValue("crddtl__VisaCard__Stage3CardType", lDetails.cardType);
+    apz.setElmValue("crddtl__VisaCard__Stage3AccNo", lDetails.accountNo);
+    apz.setElmValue("crddtl__VisaCard__Stage3NameOnCard", lDetails.nameOnCard);
+    apz.setElmValue("crddtl__VisaCard__Stage3CustomerName", lDetails.custName);
+    apz.setElmValue("crddtl__VisaCard__Stage3MobileNo", lDetails.mobileNo);
+    apz.setElmValue("crddtl__VisaCard__Stage3Email", lDetails.emailId);
+    apz.setElmValue("crddtl__VisaCard__Stage3Address", lDetails.address);
+    apz.setElmValue("crddtl__VisaCard__Stage3AddressProofDoc", lDetails.addressProofDoc);
+    apz.setElmValue("crddtl__VisaCard__Stage3AddressProofId", lDetails.addressProofDocID);
+    apz.setElmValue("crddtl__VisaCard__Stage3IdProofDoc", lDetails.idProofDoc);
+    apz.setElmValue("crddtl__VisaCard__Stage3IdProofId", lDetails.idProofDocID);
+    apz.setElmValue("crddtl__VisaCard__Stage3Amount", lDetails.amount);
+    apz.setElmValue("crddtl__VisaCard__Stage3Validity", lDetails.validity);
+    apz.hide("crddtl__VisaCard__Stage1");
+    apz.show("crddtl__VisaCard__Stage2");
+};
+apz.crddtl.VisaCard.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer('crddtl__VisaCard__Stage2Form');
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "ERR_MANDATORY"
+        }
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.crddtl.VisaCard.fnBack = function() {
+    var lParams = {
+        "appId": "crddtl",
+        "scr": "NewCardRequest",
+        "div": "crddtl__ManageCards__Stage2",
+        "userObj": {
+            "data": {
+                "customerID": apz.crddtl.managecards.sParams.data.customerID,
+                "accountCcy": "INR"
+            },
+            "callBack": apz.crddtl.managecards.fnBack
+        }
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.crddtl.VisaCard.fnBackStage1 = function() {
+    apz.crddtl.VisaCard.sParams.callBack();
+};
+/*apz.crddtl.VisaCard.fnRenderStage3 = function() {
+    debugger;
+    apz.hide("crddtl__ManageCards__Stage1");
+    apz.hide("crddtl__ManageCards__CardDtlsList");
+    apz.show("crddtl__ManageCards__Stage2");
+};*/
+apz.crddtl.VisaCard.fnCapturePhoto = function(pthis) {
+    debugger;
+    /*var lValid = apz.crddtl.VisaCard.fnFileSizeCheck('crddtl__VisaCard__CustomerPhotoBrowse');
+    if (lValid) {*/
+    var fileObj = pthis.files[0];
+    var apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        var binaryStr = apzFileReader.result;
+        var base64Str = btoa(binaryStr);
+        apz.crddtl.VisaCard.baseSixtyFour = base64Str;
+        apz.setElmValue("crddtl__VisaCard__TempImg", base64Str);
+        apz.startLoader();
+        setTimeout(function() {
+            apz.crddtl.VisaCard.fnGetImage(base64Str)
+        }, 1000);
+    }
+    apzFileReader.readAsBinaryString(fileObj);
+    // }
+};
+apz.crddtl.VisaCard.browser = function() {
+    if (apz.deviceGroup == "Mobile" || apz.deviceGroup == "Tablet") {
+        var json = {
+            "filter": "",
+            "fileCategory": "DEFAULT",
+            "location": "",
+            "openFile": "N"
+        };
+        json.id = "FILEBROWSER_ID";
+        json.callBack = apz.crddtl.newcardrequest.fileBrowserCallback;
+        apz.ns.fileBrowser(json);
+    }
+}
+apz.crddtl.VisaCard.fileBrowserCallback = function(jsonObj) {}
+apz.crddtl.VisaCard.fnCartType = function(params) {
+    debugger;
+    apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__cardType", params);
+    if (params == "Maestro") {
+        apz.setElmValue('crddtl__VisaCard__cardType', "mastro.png");
+    } else if (params == "Visa") {
+        apz.setElmValue('crddtl__VisaCard__cardType', "visa.png");
+    }
+};
+apz.crddtl.VisaCard.fnGetImage = function(base64Str) {
+    debugger;
+    var lImg = document.querySelector("#crddtl__VisaCard__TempImg");
+    var lHeight = lImg.naturalHeight;
+    var lWidth = lImg.naturalWidth;
+    apz.stopLoader();
+    // if (lHeight <= 230 && lWidth <= 230) {
+    apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__custImageBase64", base64Str);
+    apz.setElmValue("crddtl__VisaCard__BackgroundImge", base64Str);
+    // document.getElementById("crddtl__VisaCard__BackgroundImge").style.background = "url('data:image/png;base64," + base64Str + "') !important"
+    document.getElementById("crddtl__VisaCard__BackgroundImge").style.backgroundImage = "url('data:image/png;base64," + apz.crddtl.VisaCard.baseSixtyFour +
+        "')";
+    apz.show("crddtl__NewCardRequest__i__cardReqDtl__custImageBase64_ul");
+    apz.show("crddtl__NewCardRequest__i__cardReqDtl__custImageBase64");
+    /*} else {
+        alert("Height and width");
+        apz.crddtl.VisaCard.fnRemoveImage();
+    }*/
+}
+apz.crddtl.VisaCard.fnRemoveImage = function() {
+    debugger;
+    $("#crddtl__NewCardRequest__i__cardReqDtl__custImageBase64").attr("src", "")
+    apz.hide("crddtl__NewCardRequest__i__cardReqDtl__custImageBase64_ul");
+    document.getElementById("crddtl__VisaCard__BackgroundImge").style.background = "linear-gradient(to right, #fe8d24 0%, #fdb836 100%)";
+}
+apz.crddtl.VisaCard.fnFileSizeCheck = function(puploadid) {
+    debugger;
+    var lreturn = true;
+    var lidenObj = $('#' + puploadid).prop("files");
+    var lsize = lidenObj[0].size;
+    var ltype = lidenObj[0].type;
+    if (lsize > 200000) {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_200'
+        };
+        apz.dispMsg(msg);
+    } else if (lsize > 200000) {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_200'
+        };
+        apz.dispMsg(msg);
+    } else if (ltype == "application/pdf" || ltype == "image/jpeg" || ltype == "image/png") {} else {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_FORMAT'
+        };
+        apz.dispMsg(msg);
+    }
+    return lreturn;
+};
+apz.crddtl.VisaCard.fnConfirmStage2 = function() {
+    debugger;
+    var lReq = {
+        "action": "Confirm",
+        "cardReqDtl": apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl
+    };
+    var lServerParams = {
+        "ifaceName": "NewCardRequest",
+        "req": lReq,
+        "callBack": apz.crddtl.VisaCard.fnInsertCallBack
+    };
+    apz.crddtl.VisaCard.fnBeforeCallServer(lServerParams);
+};
+apz.crddtl.VisaCard.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.req,
+        "paintResp": "N",
+        "callBack": params.callBack
+    };
+    
+    //apz.server.callServer(lServerParams);
+                       jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("crddtl")+"/NewCardRequest.json"));
+apz.crddtl.VisaCard.fnInsertCallBack(jsondata);
+};
+apz.crddtl.VisaCard.fnInsertCallBack = function(params) {
+    debugger;
+    apz.data.loadJsonData("NewCardRequest", "crddtl");
+    apz.crddtl.VisaCard.sParams.OtpRes = params.crddtl__NewCardRequest_Res.cardReqDtl;
+    apz.crddtl.VisaCard.fnRenderOTP();
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "crddtl__VisaCard__Launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.crddtl__VisaCard_Res.cardReqDtl.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.crddtl.VisaCard.fnGotoStage4,
+                "destroyDiv": "crddtl__VisaCard__Launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+};
+apz.crddtl.VisaCard.fnRenderOTP = function() {
+    debugger;
+    apz.hide("crddtl__VisaCard__Stage1");
+    apz.hide("crddtl__VisaCard__Stage2");
+    apz.show("crddtl__VisaCard__Launcher");
+    apz.hide("crddtl__VisaCard__Stage3");
+};
+apz.crddtl.VisaCard.fnGotoStage4 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl;
+    apz.setElmValue("crddtl__VisaCard__Stage4Product", "Visa Credit Card");
+    apz.setElmValue("crddtl__VisaCard__Stage4CardType", lDetails.cardType);
+    apz.setElmValue("crddtl__VisaCard__Stage4AccNo", lDetails.accountNo);
+    apz.setElmValue("crddtl__VisaCard__Stage4NameOnCard", lDetails.nameOnCard);
+    apz.setElmValue("crddtl__VisaCard__Stage4CustomerName", lDetails.custName);
+    apz.setElmValue("crddtl__VisaCard__Stage4MobileNo", lDetails.mobileNo);
+    apz.setElmValue("crddtl__VisaCard__Stage4Email", lDetails.emailId);
+    apz.setElmValue("crddtl__VisaCard__Stage4Address", lDetails.address);
+    apz.setElmValue("crddtl__VisaCard__Stage4AddressProofDoc", lDetails.addressProofDoc);
+    apz.setElmValue("crddtl__VisaCard__Stage4AddressProofId", lDetails.addressProofDocID);
+    apz.setElmValue("crddtl__VisaCard__Stage4IdProofDoc", lDetails.idProofDoc);
+    apz.setElmValue("crddtl__VisaCard__Stage4IdProofId", lDetails.idProofDocID);
+    apz.setElmValue("crddtl__VisaCard__Stage4Amount", lDetails.amount);
+    apz.setElmValue("crddtl__VisaCard__Stage4Validity", lDetails.validity);
+    
+    apz.hide("crddtl__VisaCard__Stage1");
+    apz.hide("crddtl__VisaCard__Stage2");
+    apz.hide("crddtl__VisaCard__Launcher");
+    apz.show("crddtl__VisaCard__Stage3");
+};
+apz.crddtl.VisaCard.fnEditStage2 = function() {
+    debugger;
+    apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl = "";
+    debugger;
+    apz.show("crddtl__VisaCard__Stage1");
+    apz.hide("crddtl__VisaCard__Stage2");
+};

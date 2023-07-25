@@ -1,0 +1,277 @@
+apz.finant.FADetails = {};
+apz.finant.FADetails.sParams = {};
+apz.finant.FADetails.sGraphData;
+apz.finant.FADetails.month = "";
+duplicates = [];
+lMixArr = [];
+apz.finant.FADetails.sArrayLen = "";
+apz.finant.FADetails.lchart;
+apz.app.onLoad_FADetails = function(params) {
+    apz.finant.FADetails.sParams = params;
+    apz.finant.FADetails.setNavDetails(params);
+    apz.finant.FADetails.fnInitialize();
+    window.setTimeout(function() {
+        apz.finant.FADetails.fnInitialCarousel();
+    }, 1000);
+};
+apz.app.onShown_FADetails = function() {
+    $("body").removeClass("pri");
+    $("body").addClass("ter");
+    apz.finant.FADetails.fn_setGraphDesign();
+};
+apz.finant.FADetails.fn_setGraphDesign = function() {
+    for (var i = 0; i < apz.finant.FADetails.sArrayLen; i++) {
+        document.getElementById("finant__FADetails__ct_cht_2").childNodes[0].childNodes[3].childNodes[3].childNodes[1].childNodes[1].childNodes[i].setAttribute(
+            "rx", "30")
+        document.getElementById("finant__FADetails__ct_cht_2").childNodes[0].childNodes[3].childNodes[3].childNodes[1].childNodes[1].childNodes[i].setAttribute(
+            "ry", "25")
+    }
+};
+apz.app.extendChartConstructor = function(chartType, chartData, id, constructorProperties) {
+    constructorProperties.containerBackgroundOpacity = 0;
+    constructorProperties.events = {
+        "dataplotClick": function(eventObj, argsObj) {
+            apz.finant.AccountFAT.fnChartClick(eventObj, argsObj);
+        },
+        "labelClick": function(eventObj, argsObj) {
+            apz.finant.AccountFAT.fnChartClick(eventObj, argsObj);
+        }
+    };
+};
+apz.finant.FADetails.setNavDetails = function(params) {
+    if (params.Params.Param.Navigation) {
+        apz.finant.FADetails.fnsetNavi = params.Params.Param.Navigation.setNavigation;
+        var lParams = {};
+        lParams.showImage = "N";
+        lParams.showHome = "Y";
+        lParams.headerText = apz.lits['finant'][apz.language]['LIT_FinancialAnalytics'];
+        lParams.DashBd = false;
+        lParams.directHome = apz.finant.FADetails.fndirectHome;
+        lParams.backPressed = apz.finant.FADetails.fnBack;
+        apz.finant.FADetails.fnsetNavi(lParams);
+    }
+};
+apz.finant.FADetails.fndirectHome = function() {
+    apz.NBBA01.LandingPage.fnLaunchDashBd(apz.finant.FADetails.sParams.Params.Param, "#NBBA01__LandingPage__AccountSummaryRow");
+};
+apz.finant.FADetails.fnBack = function() {
+    var params = apz.finant.FADetails.sParams.Params;
+    if (apz.finant.FADetails.sParams.fromScr == "AccountFAT") {
+        apz.finant.FADetails.fnSetAccFAT(params);
+    }
+};
+apz.finant.FADetails.fnSetAccFAT = function(params) {
+    //$("#NBBA01__LandingPage__AccountSummaryRow").empty();
+    appId = "finant";
+    ScrName = "AccountFAT";
+    Div = "finant__AccountFAT__analytic_row";
+    apz.finant.AccountFAT.fnLaunchMicroApp(appId, ScrName, Div, params);
+}
+apz.finant.FADetails.fnInitialCarousel = function() {
+    apz.startLoader();
+    //$("#finant__FADetails__AccountsCarouselRow").addClass("swiper-container");
+    $("#finant__FADetails__AccRowList").addClass("swiper-container");
+    $("#finant__FADetails__AccRowList ul").removeClass("pri");
+    $("#finant__FADetails__AccRowList ul").addClass("swiper-wrapper");
+    $("#finant__FADetails__AccRowList ul > li").addClass("swiper-slide");
+    $("#finant__FADetails__carouselPagination").addClass("swiper-pagination");
+    apz.finant.FADetails.fnGraphData();
+    apz.stopLoader();
+};
+apz.finant.FADetails.fnInitialize = function() {
+    var params = apz.finant.FADetails.sParams;
+    apz.setElmValue("finant__FADetails__cardMCCType", apz.finant.FADetails.sParams.Arr[0].Spent_Type);
+    apz.data.scrdata.finant__FADetails_Req = {};
+    apz.data.scrdata.finant__FADetails_Req.FADetails = {};
+    apz.data.scrdata.finant__FADetails_Req.FADetails.title = params.SwipeDetails.heading;
+    apz.data.scrdata.finant__FADetails_Req.FADetails.availBal = apz.finant.FADetails.fn_FormatAmount(params.SwipeDetails.availBal);
+    apz.data.scrdata.finant__FADetails_Req.FADetails.currency = params.SwipeDetails.currency;
+    apz.data.scrdata.finant__FADetails_Req.FADetails.heading = params.SwipeDetails.title;
+    apz.data.scrdata.finant__FADetails_Req.FADetails.number = params.SwipeDetails.number;
+    apz.data.loadData("FADetails", "finant");
+};
+apz.finant.FADetails.fn_FormatAmount = function(amt) {
+    var lparams = {};
+    lparams.value = amt;
+    lparams.mask = apz.numberMask;
+    lparams.decimalPoints = 2;
+    lparams.decimalSep = ".";
+    var formatedAmt = apz.formatNumber(lparams);
+    return formatedAmt;
+};
+
+apz.finant.FADetails.fn_GetGraphData = function() {
+    var lData = [];
+    var lGraphData = apz.finant.FADetails.sGraphData;
+    apz.finant.FADetails.fn_setUniqueDate();
+    apz.finant.FADetails.lchart = apz.finant.FADetails.fn_DivideGraphData();
+    return apz.finant.FADetails.lchart;
+};
+apz.finant.FADetails.fn_setUniqueDate = function() {
+    apz.finant.FADetails.fn_getUniqueArr();
+    var lContent = apz.finant.FADetails.sGraphData;
+    for (var i = 0; i < duplicates.length; i++) {
+        lMixArr[i] = {};
+        lMixArr[i].TranDate = duplicates[i];
+        lMixArr[i].Amount = 0;
+        for (var j = 0; j < lContent.length; j++) {
+            if (duplicates[i] == lContent[j].TranDate) {
+                lMixArr[i].Amount += lContent[j].Amount;
+            }
+        }
+    }
+}
+apz.finant.FADetails.fn_getUniqueArr = function() {
+    var origData = apz.finant.FADetails.sGraphData;
+    duplicates = [];
+    for (var i = 0; i < origData.length; i++) {
+        if ((duplicates.lastIndexOf(origData[i].TranDate) != i) && (duplicates.indexOf(origData[i].TranDate) == -1)) {
+            duplicates.push(origData[i].TranDate);
+        }
+    }
+};
+apz.finant.FADetails.fn_DivideGraphData = function() {
+    var ldate1 = apz.finant.FADetails.sParams.FromDate;
+    var ldate2 = apz.finant.FADetails.sParams.ToDate;
+    var ldays = getDiffDays(ldate1, ldate2);
+    var lchartData = [];
+    if (ldays > 30) {
+        lchartData = formatDataMonths(true, ldays, ldate2);
+    } else {
+        lchartData = formatDataMonths(false, ldays, ldate2);
+    }
+    return lchartData;
+};
+
+function getDiffDays(ld1, ld2) {
+    var ldiff = (Date.parse(ld2).getTime()) - (Date.parse(ld1).getTime()); //new Date(ld2).getTime() - new Date(ld1).getTime();
+    var ldays = ldiff / (1000 * 60 * 60 * 24);
+    return ldays;
+};
+
+function getDiffWeeks(ld1, ld2) {
+    //   ld1 = ld1.split('-').join('/');
+    /*try {
+        ld1 = ld1.split('-')[0] + "/01/" + ld1.split('-')[1];
+    } catch(e) {
+        ld1 = ld1[0]+"/"+ ld1[1]+"/" +  (ld1[2].split(" ")[0]);
+    }*/
+    if (apz.finant.FADetails.sParams.Params.fromList == "Account") {
+        if (apz.finant.FADetails.sParams.accountAction == "Month") {
+            ld1 = ld1.split('-')[0] + "/01/" + ld1.split('-')[1];
+        } else if (apz.finant.FADetails.sParams.accountAction == "Days") {
+            ld1 = ld1.split(" ")[0];
+        }
+    } else {
+        ld1 = ld1.split(" ")[0];
+    }
+    var ldiff = (Date.parse(ld2).getTime()) - (Date.parse(ld1).getTime());
+    var ldays = ldiff / (1000 * 60 * 60 * 24 * 7);
+    return ldays;
+}
+
+function getDiffMonths(ld1, ld2) {
+    //ld1 = "01/" + ld1.split('-').join('/');
+    /*try {
+        ld1 = ld1.split('-')[0] + "/01/" + ld1.split('-')[1];
+    } catch (e) {
+        ld1 = ld1[0]+"/"+ ld1[1]+"/" +  (ld1[2].split(" ")[0]);
+    }*/
+    if (apz.finant.FADetails.sParams.Params.fromList == "Account") {
+        if (apz.finant.FADetails.sParams.accountAction == "Month") {
+            ld1 = ld1.split('-')[0] + "/01/" + ld1.split('-')[1];
+        } else if (apz.finant.FADetails.sParams.accountAction == "Days") {
+            ld1 = ld1.split(" ")[0]; //ld1[0] + "/" + ld1[1] + "/" + (ld1[2].split(" ")[0]);
+        }
+    } else {
+        ld1 = ld1.split(" ")[0];
+    }
+    var ldiff = (Date.parse(ld2).getTime()) - (Date.parse(ld1).getTime());
+    var ldays = ldiff / (1000 * 60 * 60 * 24 * 30);
+    return ldays;
+}
+
+function formatDataMonths(lmonths, ldays, ltoDt) {
+    //  var lplots = ldays/30;
+    var ldata = lMixArr;
+    var larr = [];
+    if (lmonths) {
+        for (var i = 0; i < ldata.length; i++) {
+            var ldif = getDiffMonths(ldata[i].TranDate, ltoDt);
+            var lobj = {};
+            lobj.TranDate = ldata[i].TranDate;
+            lobj.value = ldata[i].Amount;
+            lobj.label =  Math.ceil(ldif);
+            larr.push(lobj);
+        }
+    } else {
+        for (var i = 0; i < ldata.length; i++) {
+            var ldif = getDiffWeeks(ldata[i].TranDate, ltoDt);
+            var lobj = {};
+            lobj.TranDate = ldata[i].TranDate;
+            lobj.value = ldata[i].Amount;
+            lobj.value = Math.ceil(ldif);
+            larr.push(lobj);
+        }
+    }
+    apz.finant.FADetails.sArrayLen = larr.length;
+    return larr;
+};
+apz.finant.FADetails.fn_callFATransactions = function(data) {
+    apz.finant.FADetails.month = data;
+    var lData = apz.finant.FADetails.lchart;
+    for (var i = 0; i < lData.length; i++) {
+        var lType = lData[i].label.trim();
+        if (data == lType) {
+            apz.finant.FADetails.fn_getTranDetails(lData[i].TranDate);
+        }
+    }
+};
+apz.finant.FADetails.fn_getTranDetails = function(tranDate) {
+    var lArray = [];
+    var l = 0;
+    var lContent = apz.finant.FADetails.sGraphData;
+    for (var i = 0; i < lContent.length; i++) {
+        if (tranDate == lContent[i].TranDate) {
+            lArray[l] = lContent[i];
+            l++;
+        }
+    }
+    scrName = "FATransactions";
+    appId = "finant";
+    div = "finant__AccountFAT__analytic_row";
+    sendObj = {};
+    sendObj.SwipeDetails = apz.data.scrdata.finant__FADetails_Req.FADetails;
+    sendObj.Params = apz.finant.FADetails.sParams;
+    sendObj.fromList = apz.finant.FADetails.sParams.fromList
+    sendObj.Transactions = lArray;
+    sendObj.fromScr = apz.finant.FADetails.sParams.fromScr;
+    sendObj.expType = apz.finant.FADetails.month;
+    apz.finant.FADetails.fnLaunchScreen(sendObj, scrName, div);
+};
+apz.finant.FADetails.fnLaunchScreen = function(sendObj, scrName, div) {
+    var params = {};
+    params.scr = scrName;
+    params.div = div;
+    params.userObj = sendObj;
+    params.animation = 40;
+    apz.launchSubScreen(params);
+};
+apz.finant.FADetails.fnGraphData = function() {
+    var lContent = apz.finant.FADetails.sParams.Arr; //resp.res.finant__GetFinAnalytics_Res.FinancialAnalytics.Transaction;
+    apz.finant.FADetails.sGraphData = lContent;
+    apz.finant.FADetails.fn_setGraphDetails(lContent);
+};
+apz.finant.FADetails.fn_setGraphDetails = function(param) {
+    apz.data.scrdata.finant__Graph2_Req = {};
+    apz.data.scrdata.finant__Graph2_Req.AccountFATransaction = param;
+    apz.data.loadData("Graph2", "finant");
+    /*window.setTimeout(function() {
+        for (var i = 0; i < apz.finant.FADetails.sArrayLen; i++) {
+            document.getElementById("finant__FADetails__ct_cht_2").childNodes[0].childNodes[6].childNodes[3].childNodes[1].childNodes[1].childNodes[
+                i].setAttribute("rx", "30");
+            document.getElementById("finant__FADetails__ct_cht_2").childNodes[0].childNodes[6].childNodes[3].childNodes[1].childNodes[1].childNodes[
+                i].setAttribute("ry", "30");
+        }
+    }, 1000);*/
+};

@@ -1,0 +1,101 @@
+{
+    "tbDbmiCorpRoleEntity": [
+        {
+            "corporateId": "ENTID01",
+            "roleId": "Admin",
+            "entityId": "ENTID01",
+            "transactionLimit": 200000,
+            "authorizationLimit": "1000000",
+            "currency":"AED"
+        },
+        {
+            "corporateId": "ENTID02",
+            "roleId": "Admin",
+            "entityId": "ENTID02",
+            "transactionLimit": 500000,
+            "authorizationLimit": "1000000",
+            "currency":"AED"
+        }
+    ],
+    "tbDbmiCorpRoleAccount": [
+        {
+            "corporateId": "CITI001",
+            "roleId": "Admin",
+            "entityId": "ENTID01",
+            "accountType": "ACC1",
+            "accountNo": "0328998232",
+            "accessRights": "BOTH"
+        },
+        {
+            "corporateId": "CITI001",
+            "roleId": "Admin",
+            "entityId": "ENTID01",
+            "accountType": "ACC1",
+            "accountNo": "0328998232",
+            "accessRights": "TRANSACT"
+        },
+        {
+            "corporateId": "CITI001",
+            "roleId": "Admin",
+            "entityId": "ENTID02",
+            "accountType": "ACC1",
+            "accountNo": "0328998232",
+            "accessRights": "VIEW"
+        }
+    ],
+    "tbDbmiCorpRoleFiles": [
+        {
+            "roleId": "Admin",
+            "fileType": "salary",
+            "extension": "xlsx,xls",
+            "corporateId": "000FTAC4321"
+        },
+        {
+            "roleId": "Admin",
+            "fileType": "Bulk Transfer",
+            "extension": "xlsx,pdf",
+            "corporateId": "000FTAC4321"
+        }
+    ],
+    "tbDbmiCorpRoleOperations": [
+        {
+            "corporateId": "000FTAC4321",
+            "roleId": "Admin",
+            "function": "Loan",
+            "operation": "Create",
+            "functionDesc": "Loan"
+        },
+        {
+            "corporateId": "000FTAC4321",
+            "roleId": "Admin",
+            "function": "Loan",
+            "operation": "Approve",
+            "functionDesc": "Loan"
+        },
+        {
+            "corporateId": "000FTAC4321",
+            "roleId": "Admin",
+            "function": "Transfer",
+            "operation": "Limit Set",
+            "functionDesc": "Funds Transfer"
+        }
+    ],
+    "tbDbmiCorpRoleScr": [
+        {
+            "corporateId": "000FTAC4321",
+            "roleId": "Admin",
+            "screenId": "UserList",
+            "appId": "acus01",
+            "description": "Info",
+            "displayOrder":"1"
+        },
+        {
+            "corporateId": "000FTAC4321",
+            "roleId": "Admin",
+            "screenId": "CorporateProfile",
+            "appId": "acpr01",
+            "description": "Info",
+            "displayOrder":"2"
+        }
+    ]
+}

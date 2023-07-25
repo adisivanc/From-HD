@@ -1,0 +1,86 @@
+apz.crdlmt.SetUsageLimit = {};
+apz.app.onLoad_SetUsageLimit = function() {
+    apz.data.loadJsonData("cardUsageLimit");
+    var currentDeviceOS = apz.deviceOs;
+    if (currentDeviceOS == "ANDROID" || currentDeviceOS == "iOS") {
+        $("#crdlmt__cardUsageLimit__o__Limit__NewDailyATMLimit").prop("disabled", true);
+        $("#crdlmt__cardUsageLimit__o__Limit__NewMerchantOutletLimit").prop("disabled", true)
+    } else {
+        $("#crdlmt__cardUsageLimit__o__Limit__NewDailyATMLimit").prop("disabled", false);
+        $("#crdlmt__cardUsageLimit__o__Limit__NewMerchantOutletLimit").prop("disabled", false)
+    }
+    $("#crdlmt__SetUsageLimit__cardUsageLimit__o__Limit__NewDailyATMLimit").attr("step",500);
+    $("#crdlmt__SetUsageLimit__cardUsageLimit__o__Limit__NewMerchantOutletLimit").attr("step",500);
+}
+apz.app.onShown_SetUsageLimit = function()
+{
+    $("#crdlmt__SetUsageLimit__otp").attr("type","tel");
+
+
+}
+apz.app.fnSliderValueChange = function() {
+    debugger;
+   var dailyLimit =  apz.getElmValue("crdlmt__SetUsageLimit__cardUsageLimit__o__Limit__NewDailyATMLimit");
+    var param = {
+            "decimalSep": ".",
+            "value":  dailyLimit,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+     apz.setElmValue("crdlmt__cardUsageLimit__o__Limit__NewDailyATMLimit", apz.formatNumber(param));
+     var merchantOutletLimit = apz.getElmValue("crdlmt__SetUsageLimit__cardUsageLimit__o__Limit__NewMerchantOutletLimit");
+     var param = {
+            "decimalSep": ".",
+            "value":  merchantOutletLimit,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+      apz.setElmValue("crdlmt__cardUsageLimit__o__Limit__NewMerchantOutletLimit", apz.formatNumber(param));
+}
+apz.crdlmt.SetUsageLimit.fnContinue = function(){
+    debugger;
+    $("#crdlmt__SetUsageLimit__crdlimit").addClass("sno");
+    $("#crdlmt__SetUsageLimit__otp").removeClass("sno");
+      var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "crdlmt__SetUsageLimit__otp",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.crddtl__CardOperation_Res.CardDtls.data.OTPRefNo
+                "OTPRefNo":"23423482987237"
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.crdlmt.SetUsageLimit.fnSuccessScreen,
+                "destroyDiv": "crdlmt__SetUsageLimit__otp"
+            }
+        }
+    };
+       apz.launchApp(lLaunchParams);
+    
+    
+}
+apz.crdlmt.SetUsageLimit.fnSuccessScreen = function(){
+    debugger;
+     $("#crdlmt__SetUsageLimit__success").removeClass("sno");
+    $("#crdlmt__SetUsageLimit__otp").addClass("sno");
+}
+
+
+apz.crdlmt.SetUsageLimit.fnBack = function(){
+    debugger;
+   apz.landin.Landing.fnMenuClickInside("Manage Cards");
+
+
+// var lObj = {
+//         "scr": "ManageCards",
+//         "appId": "crddtl",
+//         "div": "csmrbk__LandingPage__microappLauncherCol",
+       
+//     }
+//       apz.launchApp(lObj);
+}

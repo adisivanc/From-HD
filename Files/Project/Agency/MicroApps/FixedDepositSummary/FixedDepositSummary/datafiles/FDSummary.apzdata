@@ -1,0 +1,63 @@
+{
+    "fdsumm__FDSummary_Res": {
+        "depositSummary": {
+            "txnRefNo": "123",
+            "status": true,
+            "respCd": "",
+            "extMsg": "",
+            "intMsgCd": "",
+            "depositDtls": [{
+                "accountNo": "100009312285",
+                "branchName": "Koramanagala, Bengaluru",
+                "interestType": "Compounded Interest",
+                "bookDate": "05/10/2018",
+                "tenor": "1 Year",
+                "interestRate": "5.00%",
+                "maturityType": "Credit to Acc",
+                "creditAccountNo": "100009312263",
+                "maturityAmount": "15000",
+                "maturityDate": "15/12/2021",
+                "seniorCitizen": "No",
+                "attachNominee": "No",
+                "accountCreationDate": "15/11/2016",
+                "depositAmount": "10000",
+                "LienAmount": "0",
+                "currency": "₹"
+            }, {
+                "accountNo": "100009312456",
+                "branchName": "Koramanagala, Bengaluru",
+                "interestType": "Compounded Interest",
+                "bookDate": "15/09/2019",
+                "tenor": "6 Months",
+                "interestRate": "6.00%",
+                "maturityType": "Credit to Acc",
+                "creditAccountNo": "100009312263",
+                "maturityAmount": "200000",
+                "maturityDate": "15/11/2021",
+                "seniorCitizen": "No",
+                "attachNominee": "No",
+                "accountCreationDate": "15/09/2017",
+                "depositAmount": "20000",
+                "LienAmount": "0",
+                "currency": "₹"
+            }, {
+                "accountNo": "100009312985",
+                "branchName": "Koramanagala, Bengaluru",
+                "interestType": "Compounded Interest",
+                "bookDate": "01/08/2018",
+                "tenor": "5 Years",
+                "interestRate": "6.00%",
+                "maturityType": "Credit to Acc",
+                "creditAccountNo": "100009312263",
+                "maturityAmount": "150000",
+                "maturityDate": "05/11/2022",
+                "seniorCitizen": "No",
+                "attachNominee": "No",
+                "accountCreationDate": "05/11/2017",
+                "depositAmount": "15000",
+                "LienAmount": "0",
+                "currency": "₹"
+            }]
+        }
+    }
+}

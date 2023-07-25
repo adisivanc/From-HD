@@ -1,0 +1,264 @@
+apz.cracop.CustomerInfo = {};
+apz.cracop.CustomerInfo.sData = {};
+apz.cracop.CustomerInfo.sCache = {};
+apz.cracop.CustomerInfo.sMenu = "";
+apz.cracop.CustomerInfo.sDetailfilled = "";
+apz.cracop.CustomerInfo.array = "";
+apz.cracop.CustomerInfo.category = "";
+apz.app.onLoad_CustomerInfo = function(params) {
+    debugger;
+    apz.cracop.CustomerInfo.sData = params;
+    apz.cracop.CustomerInfo.sCache = params;
+    apz.cracop.CustomerInfo.fnRender();
+};
+apz.app.onShown_CustomerInfo = function(params) {};
+apz.cracop.CustomerInfo.fnRender = function() {
+    debugger;
+    if (apz.cracop.CustomerInfo.sCache.Category.indexOf("primary") != -1) {
+        apz.cracop.CustomerInfo.category = "Primary";
+        $("#cracop__CustomerInfo__primarydiv").removeClass("sno").addClass("personalDetailsForm");
+        $("#cracop__CustomerInfo__contactdiv,#cracop__CustomerInfo__profdiv,#cracop__CustomerInfo__otherdiv").addClass("sno");
+        // if (apz.cracop.applySavingAccount.sCapturing == "DoneCapturing") {
+        apz.setElmValue("cracop__CustomerInfo__o__primary__firstname", apz.cracop.CustomerInfo.sData.data.firstName == "" ? "Girish" : apz.cracop.CustomerInfo
+            .sData.data.firstName);
+        apz.setElmValue("cracop__CustomerInfo__o__primary__middlename", apz.cracop.CustomerInfo.sData.data.middleName == "" ? "Kumar" : apz.cracop.CustomerInfo
+            .sData.data.middleName);
+        apz.setElmValue("cracop__CustomerInfo__o__primary__lastname", apz.cracop.CustomerInfo.sData.data.lastName == "" ? "Parameswaran" : apz.cracop
+            .CustomerInfo.sData.data.lastName);
+        apz.setElmValue("cracop__CustomerInfo__o__primary__dob", apz.cracop.CustomerInfo.sData.data.dateOfBirth == "" ? "15/08/1993" : apz.cracop.CustomerInfo
+            .sData.data.dateOfBirth);
+        apz.setElmValue("cracop__CustomerInfo__o__primary__email", apz.cracop.CustomerInfo.sData.data.emailId == "" ? "girish.kumar@gmail.com" : apz.cracop
+            .CustomerInfo.sData.data.emailId);
+        apz.setElmValue("cracop__CustomerInfo__o__primary__mobile", apz.cracop.CustomerInfo.sData.data.mobileNo == "" ? "9890989872" : apz.cracop.CustomerInfo
+            .sData.data.mobileNo);
+        apz.setElmValue("cracop__CustomerInfo__o__primary__mobile", apz.cracop.CustomerInfo.sData.data.mobileNo == "" ? "9890989872" : apz.cracop.CustomerInfo
+            .sData.data.mobileNo);
+        apz.setElmValue("cracop__CustomerInfo__o__primary__gender", apz.cracop.CustomerInfo.sData.data.sex == "" ? "Male" : apz.cracop.CustomerInfo.sData
+            .data.sex);
+        apz.setElmValue("cracop__CustomerInfo__o__primary__maritalstatus", apz.cracop.CustomerInfo.sData.data.maritalStatus == "" ? "Single" : apz.cracop
+            .CustomerInfo.sData.data.maritalStatus);
+        apz.setElmValue("cracop__CustomerInfo__o__primary__isminor", apz.cracop.CustomerInfo.sData.data.isminor == "" ? "Yes" : apz.cracop.CustomerInfo
+            .sData.data.isminor);
+        apz.setElmValue("cracop__CustomerInfo__o__primary__religion", apz.cracop.CustomerInfo.sData.data.religion == "" ? "Hindu" : apz.cracop.CustomerInfo
+            .sData.data.religion);
+        apz.setElmValue("cracop__CustomerInfo__o__primary__category", apz.cracop.CustomerInfo.sData.data.category == "" ? "General" : apz.cracop.CustomerInfo
+            .sData.data.category);
+        if (apz.cracop.CustomerInfo.sData.data.category !== "General" || apz.cracop.CustomerInfo.sData.data.category !== "ST" || apz.cracop.CustomerInfo
+            .sData.data.category !== "SC" || apz.cracop.CustomerInfo.sData.data.category !== "OBC") {
+            apz.setElmValue("cracop__CustomerInfo__o__primary__othercategory", apz.cracop.CustomerInfo.sData.data.category);
+            apz.setElmValue("cracop__CustomerInfo__o__primary__category", "Others");
+        }
+        apz.setElmValue("cracop__CustomerInfo__o__primary__fathername", apz.cracop.CustomerInfo.sData.data.fathername == "" ? "General" : apz.cracop.CustomerInfo
+            .sData.data.fathername);
+        document.getElementById("cracop__CustomerInfo__profileimg").src = apz.cracop.CustomerInfo.sSavedProfileImg;
+        $("#cracop__CustomerInfo__signimage").css({"display":"block !important"});
+        document.getElementById("cracop__CustomerInfo__signimage").src = apz.cracop.CustomerInfo.sSavedSignature;
+        // apz.cracop.CustomerInfo.fnCurrentLocation();
+        // }
+    } else if (apz.cracop.CustomerInfo.sCache.Category.indexOf("professional") != -1) {
+        apz.cracop.CustomerInfo.category = "Professional";
+        $("#cracop__CustomerInfo__profdiv").removeClass("sno").addClass("personalDetailsForm");
+        $("#cracop__CustomerInfo__contactdiv,#cracop__CustomerInfo__otherdiv,#cracop__CustomerInfo__primarydiv").addClass("sno");
+        apz.setElmValue("cracop__CustomerInfo__o__professional__occupation", apz.cracop.CustomerInfo.sData.data.occupation);
+        apz.setElmValue("cracop__CustomerInfo__o__professional__education", apz.cracop.CustomerInfo.sData.data.educqual);
+        apz.setElmValue("cracop__CustomerInfo__o__professional__income", apz.cracop.CustomerInfo.sData.data.incomeperannm);
+    } else if (apz.cracop.CustomerInfo.sCache.Category.indexOf("contact") != -1) {
+        apz.cracop.CustomerInfo.category = "Contact";
+        $("#cracop__CustomerInfo__contactdiv").removeClass("sno").addClass("personalDetailsForm");
+        $("#cracop__CustomerInfo__profdiv,#cracop__CustomerInfo__otherdiv,#cracop__CustomerInfo__primarydiv").addClass("sno");
+    } else if (apz.cracop.CustomerInfo.sCache.Category.indexOf("other") != -1) {
+        apz.cracop.CustomerInfo.category = "Other";
+        $("#cracop__CustomerInfo__otherdiv").removeClass("sno").addClass("personalDetailsForm");
+        $("#cracop__CustomerInfo__contactdiv,#cracop__CustomerInfo__profdiv,#cracop__CustomerInfo__primarydiv").addClass("sno");
+        apz.setElmValue("cracop__CustomerInfo__o__other__preferredlanguage", apz.cracop.CustomerInfo.sData.data.prefdlang);
+        apz.setElmValue("cracop__CustomerInfo__o__other__operationmode", apz.cracop.CustomerInfo.sData.data.modeofopn);
+        apz.setElmValue("cracop__CustomerInfo__o__other__wishlistCust", apz.cracop.CustomerInfo.sData.data.wishlistcust);
+        apz.setElmValue("cracop__CustomerInfo__o__other__panAvailable", apz.cracop.CustomerInfo.sData.data.ispanavail);
+        apz.setElmValue("cracop__CustomerInfo__o__other__photoProof", apz.cracop.CustomerInfo.sData.data.photoidproof);
+        apz.setElmValue("cracop__CustomerInfo__o__other__addrProof", apz.cracop.CustomerInfo.sData.data.addressproof);
+        apz.setElmValue("cracop__CustomerInfo__o__other__isBankEmp", apz.cracop.CustomerInfo.sData.data.iscustbankemp);
+        apz.setElmValue("cracop__CustomerInfo__o__other__politicalExposed", apz.cracop.CustomerInfo.sData.data.politicexppersn);
+        apz.setElmValue("cracop__CustomerInfo__o__other__residentialStatus", apz.cracop.CustomerInfo.sData.data.residentialaddr);
+    }
+    if (apz.data.scrdata.cracop__CustomerInfo_Res != undefined) {
+        // apz.data.loadData("CustomerInfo", "cracop");
+    }
+}
+apz.cracop.CustomerInfo.fnSignature = function() {
+    var lJson = {};
+    lJson.id = "SIGN",
+    lJson.callBack = apz.cracop.CustomerInfo.fnSignCallBack
+    apz.ns.signaturePad(lJson);
+}
+apz.cracop.CustomerInfo.fnSignCallBack = function(params) {
+    debugger;
+    if (params.status) {
+        apz.cracop.CustomerInfo.sSignature = "data:image/jpg;base64," + params.encodedImage;
+        $("#cracop__CustomerInfo__signimage").css({"display":"block !important"});
+        document.getElementById("cracop__CustomerInfo__signimage").src = apz.cracop.CustomerInfo.sSignature;
+    } else {
+        var lErrors = params.errorCode;
+        alert(lErrors);
+    }
+}
+// apz.cracop.CustomerInfo.fnCamera = function(params) {
+//     debugger;
+//     var lJsonObj = {};
+//     lJsonObj.action = "base64_Save";
+//     lJsonObj.fileName = "customerpic"
+//     lJsonObj.id = "CAMERA_ID";
+//     lJsonObj.targetWidth = "200";
+//     lJsonObj.targetHeight = "200";
+//     lJsonObj.encodingType = "JPG";
+//     lJsonObj.openNativeCamera = "Y";
+//     lJsonObj.sourceType = "Camera";
+//     lJsonObj.callBack = apz.cracop.CustomerInfo.fnCameraCB;
+//     apz.ns.openCamera(lJsonObj);
+// }
+// apz.cracop.CustomerInfo.fnCameraCB = function(params) {
+//     debugger;
+//     if (params.status) {
+//         apz.cracop.CustomerInfo.sProfileImg = "data:image/jpg;base64," + params.encodedImage;
+//         document.getElementById("cracop__CustomerInfo__profileimg").src = apz.cracop.CustomerInfo.sProfileImg;
+//     } else {
+//         var lErrors = params.errorCode;
+//         alert(lErrors);
+//     }
+// }
+apz.cracop.CustomerInfo.fnCancel = function() {
+    var lObj = {
+        "scr": "SelectedProducts",
+        "div": apz.cracop.CustomerInfo.sCache.destroyDiv,
+        "animation": 10,
+        "userObj": {
+            "action": "cancel",
+            "destroyDiv": apz.cracop.CustomerInfo.sCache.destroyDiv,
+            "data": apz.cracop.CustomerInfo.sData.data,
+            "parentAppId": "",
+            "leadDetails": apz.cracop.CustomerInfo.sCache.leadDetails
+        }
+    };
+    apz.launchSubScreen(lObj);
+}
+apz.cracop.CustomerInfo.fnSave = function() {
+    debugger;
+    var req = {};
+    req.tbAcopCustomerInfo = {};
+    req.tbAcopCustomerInfo.referenceNo = apz.cracop.CustomerInfo.sData.data.referenceNo;
+    if (apz.cracop.CustomerInfo.sCache.Category === "professional details") {
+        req.tbAcopCustomerInfo.occupation = apz.getElmValue("cracop__CustomerInfo__o__professional__occupation");
+        req.tbAcopCustomerInfo.educqual = apz.getElmValue("cracop__CustomerInfo__o__professional__education");
+        req.tbAcopCustomerInfo.incomeperannm = apz.getElmValue("cracop__CustomerInfo__o__professional__income");
+        var lServerParams = {
+            "ifaceName": "ProfessionalDet_Modify",
+            "buildReq": "N",
+            "appId": "cracop",
+            "req": req,
+            "paintResp": "N",
+            "async": "true",
+            "callBack": apz.cracop.CustomerInfo.callbackFn,
+            "callBackObj": "",
+        };
+    } else if (apz.cracop.CustomerInfo.sCache.Category === "other") {
+        req.tbAcopCustomerInfo.prefdlang = apz.getElmValue("cracop__CustomerInfo__o__other__preferredlanguage");
+        req.tbAcopCustomerInfo.modeofopn = apz.getElmValue("cracop__CustomerInfo__o__other__operationmode");
+        req.tbAcopCustomerInfo.wishlistcust = apz.getElmValue("cracop__CustomerInfo__o__other__wishlistCust");
+        req.tbAcopCustomerInfo.ispanavail = apz.getElmValue("cracop__CustomerInfo__o__other__panAvailable");
+        req.tbAcopCustomerInfo.photoidproof = apz.getElmValue("cracop__CustomerInfo__o__other__photoProof");
+        req.tbAcopCustomerInfo.addressproof = apz.getElmValue("cracop__CustomerInfo__o__other__addrProof");
+        req.tbAcopCustomerInfo.iscustbankemp = apz.getElmValue("cracop__CustomerInfo__o__other__isBankEmp");
+        req.tbAcopCustomerInfo.politicexppersn = apz.getElmValue("cracop__CustomerInfo__o__other__politicalExposed");
+        req.tbAcopCustomerInfo.residentialaddr = apz.getElmValue("cracop__CustomerInfo__o__other__residentialStatus");
+        var lServerParams = {
+            "ifaceName": "OtherDet_Modify",
+            "buildReq": "N",
+            "appId": "cracop",
+            "req": req,
+            "paintResp": "N",
+            "async": "true",
+            "callBack": apz.cracop.CustomerInfo.callbackFn,
+            "callBackObj": "",
+        };
+    } else if (apz.cracop.CustomerInfo.sCache.Category === "primary details") {
+        req.tbAcopCustomerInfo.maritalStatus = apz.getElmValue("cracop__CustomerInfo__o__primary__maritalstatus");
+        req.tbAcopCustomerInfo.sex = apz.getElmValue("cracop__CustomerInfo__o__primary__gender");
+        req.tbAcopCustomerInfo.religion = apz.getElmValue("cracop__CustomerInfo__o__primary__religion");
+        req.tbAcopCustomerInfo.nationality = apz.getElmValue("cracop__CustomerInfo__o__primary__nationality");
+        req.tbAcopCustomerInfo.fathername = apz.getElmValue("cracop__CustomerInfo__o__primary__fathername");
+        req.tbAcopCustomerInfo.category = apz.getElmValue("cracop__CustomerInfo__o__primary__category") === "Others" ? apz.getElmValue(
+            "cracop__CustomerInfo__o__primary__othercategory") : apz.getElmValue("cracop__CustomerInfo__o__primary__category")
+        req.tbAcopCustomerInfo.isminor = apz.getElmValue("cracop__CustomerInfo__o__primary__isminor");
+        req.tbAcopCustomerInfo.landline = apz.getElmValue("cracop__CustomerInfo__o__contact__landline");
+        var lServerParams = {
+            "ifaceName": "PrimaryDetails_Modify",
+            "buildReq": "N",
+            "appId": "cracop",
+            "req": req,
+            "paintResp": "N",
+            "async": "true",
+            "callBack": apz.cracop.CustomerInfo.callbackFn,
+            "callBackObj": "",
+        };
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.cracop.CustomerInfo.callbackFn = function(pResp) {
+    // if (apz.cracop.CustomerInfo.sCache.Category.indexOf("primary") != -1) {
+    // apz.cracop.CustomerInfo.sSavedProfileImg = apz.cracop.CustomerInfo.sProfileImg;
+    // apz.cracop.CustomerInfo.sSavedSignature = apz.cracop.CustomerInfo.sSignature;
+    // }
+    // var params = {
+    // "action": "C",
+    // "dataPointers": [],
+    // "containerId": $(".personalDetailsForm .crt-form").attr("id")
+    // };
+    // apz.data.setContainerData(params);
+    // var ltotalCount = $(".personalDetailsForm input").length;
+    // var lfilledCount = 0,
+    // lPercentageComplete = 0;
+    // $(".personalDetailsForm").find("input").each(function(index) {
+    // if (!apz.isNull($(this).val()) && $(this).val() !== "Please select") {
+    // lfilledCount++;
+    // }
+    // lPercentageComplete = lfilledCount / ltotalCount;
+    // });
+    // apz.data.scrdata.cracop__SelectedProducts_Res.progress[apz.cracop.CustomerInfo.category] = lPercentageComplete;
+    // $(".personalDetailsForm").removeClass("personalDetailsForm");
+    var msg = apz.cracop.CustomerInfo.category.split(" ")[0] + " Details updated successfully."
+    if (pResp.status) {
+        var lmsg = {
+            "message": msg,
+            "callBack": apz.cracop.CustomerInfo.fnLaunchSucc,
+            "type": "S"
+        };
+        apz.dispMsg(lmsg);
+    }
+}
+apz.cracop.CustomerInfo.fnLaunchSucc = function() {
+    var lObj = {
+        "scr": "SelectedProducts",
+        "div": apz.cracop.CustomerInfo.sCache.destroyDiv,
+        "animation": 10,
+        "userObj": {
+            "destroyDiv": apz.cracop.CustomerInfo.sCache.destroyDiv,
+            "parentAppId": "",
+            "data": apz.cracop.CustomerInfo.sData.data,
+            "listIndex": apz.cracop.CustomerInfo.sCache.listIndex,
+            // "percentageFilled": lPercentageComplete,
+            "leadDetails": apz.cracop.CustomerInfo.sCache.leadDetails
+        }
+    };
+    apz.launchSubScreen(lObj);
+};
+apz.cracop.CustomerInfo.fnCurrentLocation = function() {
+    var lParams = {
+        "scr": "Maps",
+        "div": "cracop__CustomerInfo__mapDiv",
+        "type": "CF",
+        "userObj": {
+            "destroyDiv": "cracop__CustomerInfo__mapDiv",
+            "leadDetails": apz.cracop.CustomerInfo.sCache.leadDetails
+        }
+    };
+    apz.launchSubScreen(lParams);
+}

@@ -1,0 +1,11 @@
+{
+    "acft01__OtherBankDOMChargeType_Res":{
+    "ChargeType": [{
+        "type": "Wire Transfer",
+        "charge":"$25.00"
+    }, {
+        "type": "ACH",
+        "charge":"$1.33"
+    }]
+    }
+}

@@ -1,0 +1,151 @@
+apz.prdsel.CreateCustomer = {};
+apz.prdsel.CreateCustomer.sParams = {};
+apz.flowNo=0;
+apz.docRefNo="";
+apz.panVerified=false;
+apz.isEmailValid=false;
+apz.isJumioChecked = false;
+apz.selfieImage = "";
+apz.app.onLoad_CreateCustomer = function(params) {
+    debugger;
+    apz.prdsel.CreateCustomer.sParams = params;
+    apz.prdsel.CreateCustomer.fnInitialise();
+}
+apz.app.onShown_CreateCustomer = function(params) {
+    debugger;
+}
+apz.prdsel.CreateCustomer.fnInitialise = function() {
+    debugger;
+}
+apz.prdsel.CreateCustomer.fnBack = function() {
+    debugger;
+    apz.prdsel.ProductLauncher.fnNavigate("CombinedProducts", {
+        "data": apz.prdsel.CreateCustomer.sParams
+    });
+}
+apz.prdsel.CreateCustomer.fnFloatMobileNo = function(el) {
+    var digits = el.value.match(/\d{1,10}/) || [""];
+    el.value = digits[0];
+}
+apz.prdsel.CreateCustomer.validateFormAndProceed = function() {
+    debugger;
+    // apz.dateFormat = "dd-MMM-yyyy";
+    // apz.dateFormat = "dd/MMM/yyyy";
+    var custMobileNo = apz.getElmValue("prdsel__CreateCustomer__mobile");
+    var custDob = apz.getElmValue("prdsel__CreateCustomer__dob");
+    apz.prdsel.CreateCustomer.sParams.custMobileNo = custMobileNo;
+    apz.prdsel.CreateCustomer.sParams.custDob = custDob;
+    if (custMobileNo.length != 10) {
+        apz.dispMsg({
+            message: "Enter a valid mobile number"
+        });
+    } else if (custDob == "") {
+        apz.dispMsg({
+            message: "Date of birth is required"
+        });
+    } else {
+        //functionality in AuthLauncher Screen
+        apz.prdsel.CreateCustomer.fnStartWorkflow()
+    }
+}
+apz.prdsel.CreateCustomer.fnStartWorkflow = function() {
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "StartWorkFlow",
+        "buildReq": "N",
+        "appId": "prdsel",
+        "req": {
+            "appId": "acdp01",
+            "workFlowId": "",
+            "userId": "CorpUser"
+        },
+        "paintResp": "N",
+        "callBack": apz.prdsel.CreateCustomer.fnStartWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+};
+apz.prdsel.CreateCustomer.fnStartWorkflowCB = function(pResp) {
+    debugger;
+    // action: null
+    // appId: "acdp01"
+    // instanceId: "CONSONB11671920558159064"
+    // msg: null
+    // remarks: null
+    // screenData: ""
+    // screenId: null
+    // stageId: "INPUT"
+    // stageSeqNo: 1
+    // stageType: null
+    // status: true
+    // userId: null
+    // workFlowDesc: null
+    // workFlowId: null
+
+    if (pResp.status) {
+        if (pResp.res.prdsel__StartWorkFlow_Res) {
+            apz.prdsel.CreateCustomer.sParams.refNo = pResp.res.prdsel__StartWorkFlow_Res.instanceId;
+            apz.refNo = apz.prdsel.CreateCustomer.sParams.refNo;
+            apz.prdsel.CreateCustomer.fnAddUser(apz.prdsel.CreateCustomer.sParams.refNo);
+        }
+    }
+}
+apz.prdsel.CreateCustomer.fnAddUser = function(refno) {
+    debugger;
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "ApplicationDetailsDB_New",
+        "buildReq": "N",
+        "appId": "prdsel",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                dob: apz.formatDate({
+                    val: apz.prdsel.CreateCustomer.sParams.custDob,
+                    // fromFormat: "dd-MMM-yyyy",
+                    fromFormat: "dd/MMM/yyyy",
+                    toFormat: "yyyy-MM-dd"
+                }),
+                mobileNo: apz.prdsel.CreateCustomer.sParams.custMobileNo,
+                refNo: refno,
+                mode: "ASSISTED",
+                subproduct: apz.prdsel.CreateCustomer.sParams.data.subProductName,
+                product: apz.prdsel.CreateCustomer.sParams.data.productName,
+                countryCode: apz.country
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.prdsel.CreateCustomer.fnLaunchDetailsApp
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.prdsel.CreateCustomer.fnLaunchDetailsApp = function(params) {
+    debugger;
+    if (params.status) {
+        var appId = "appdtl";
+        var screenName = "AppLauncher";
+        if (apz.country == "IND") {
+            var appId = "apptyp";
+            var screenName = "AppType";
+        }
+        apz.isWorkflowStarted = true;
+        apz.stopLoader();
+        var params = {};
+        params.appId = appId;
+        params.scr = screenName;
+        params.div = "menuap__Menu__MainLaunchArea";
+        params.userObj = {
+            "refNo": apz.prdsel.CreateCustomer.sParams.refNo,
+            "appId": "ONB",
+            "product": apz.prdsel.CreateCustomer.sParams.data.productName,
+            "subproduct": apz.prdsel.CreateCustomer.sParams.data.subProductName,
+            "dob": apz.prdsel.CreateCustomer.sParams.custDob,
+            "parentdiv": "menuap__Menu__MainLaunchArea",
+            "currentFlow": 0
+        };
+        apz.launchApp(params);
+    } else {
+        apz.dispMsg({
+            message: "Something went wrong! Please try again.",
+            type: "A"
+        })
+    }
+}

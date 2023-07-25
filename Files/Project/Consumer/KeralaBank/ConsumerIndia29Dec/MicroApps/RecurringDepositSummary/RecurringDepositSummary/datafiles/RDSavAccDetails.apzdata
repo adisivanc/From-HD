@@ -1,0 +1,23 @@
+ {
+     "rdsmry__RDSavAccDetails_Res": {
+         "SavingsAccount": [{
+             "accountNo": "100009312263",
+             "accountBal": "1000996",
+             "accountBrnName": "Koramangala, Bengaluru",
+             "accountBrnCd": "619",
+             "accountBrnIFSC": "7083"
+         }, {
+             "accountNo": "100009312401",
+             "accountBal": "188373",
+             "accountBrnName": "Koramangala, Bengaluru",
+             "accountBrnCd": "619",
+             "accountBrnIFSC": "7083"
+         }, {
+             "accountNo": "732510006721",
+             "accountBal": "264748",
+             "accountBrnName": "Koramangala, Bengaluru",
+             "accountBrnCd": "619",
+             "accountBrnIFSC": "7083"
+         }]
+     }
+ }

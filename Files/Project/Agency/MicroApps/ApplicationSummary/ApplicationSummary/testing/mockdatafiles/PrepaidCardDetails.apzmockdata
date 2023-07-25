@@ -1,0 +1,19 @@
+{
+    "tbPrepaidcardDetails": {
+        "refno": "23453456234",
+        "styleofcard": "MasterCard",
+        "amount": "4565",
+        "recipientofcard": "Others",
+        "beneficiaryname": "Anand",
+        "emailid": "anand@iexceed.com",
+        "mobilenumber": "9902615729",
+        "purpose": "Gift",
+        "relationshipwithpurchaser": "Family",
+        "addressline1": "No 342, North street",
+        "addressline2": "Eldoms road",
+        "city": "RK Nagar",
+        "country": "India",
+        "code": "345543",
+        "appid":"agency"
+    }
+}

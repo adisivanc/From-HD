@@ -1,0 +1,20 @@
+apz.budget.Launcher = {};
+apz.app.onLoad_Launcher = function() {
+    debugger;
+          apz.setElmValue("landin__Landing__heading", "BUDGET SUMMARY")
+
+    var params = {};
+    params.appId = "budget";
+    params.scr = "ChartScreen";
+     params.div = "budget__Launcher__JarChart";
+    apz.launchSubScreen(params);
+    
+      var params = {};
+    params.appId = "budget";
+    params.scr = "BudgetSummary";
+     params.div = "budget__Launcher__Summary";
+    apz.launchSubScreen(params);
+};
+apz.app.onShown_Launcher = function(){
+    debugger;
+}

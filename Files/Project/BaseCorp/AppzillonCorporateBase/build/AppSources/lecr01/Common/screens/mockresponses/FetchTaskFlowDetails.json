@@ -1,0 +1,21 @@
+{
+    "TaskSummary": [{
+        "actorId": "",
+        "appId": "lecr01",
+        "initiatedBy": "robert.langford",
+        "instanceId": "ILOC17173226",
+        "lastUser": "",
+        "referenceId": "000FTAC4321__ILOC",
+        "remarks": "",
+        "stageId": "DETAILS",
+        "stageSeqNo": 1,
+        "stageType": "USERTASK",
+        "startTs": "2019-09-26 17:00:47.0",
+        "status": "INPROGRESS",
+        "userName": "",
+        "versionNo": 1,
+        "workflowId": "ILOC",
+        "workflowName": "LetterofCredit",
+        "workflowType": "LetterofCredit"
+    }]
+}

@@ -1,0 +1,44 @@
+apz.upgcrd.UpgradeCard={};
+apz.app.onLoad_UpgradeCard = function() {
+    apz.data.loadJsonData("CardDetails","upgcrd");
+    apz.hide("upgcrd__UpgradeCard__ct_tbl_2_rem_btn");
+    apz.hide("upgcrd__UpgradeCard__ct_tbl_2_add_btn");
+     //  apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "UPGRADE CARD")
+
+}
+
+apz.upgcrd.UpgradeCard.confirm = function() {
+ 
+    
+        var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "upgcrd__Launcher__launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.upgcrd.UpgradeCard.confirmCB,
+                "destroyDiv": "upgcrd__Launcher__launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.upgcrd.UpgradeCard.confirmCB = function() {
+    var lLaunchParams = {
+        "appId": "sucscr",
+        "scr": "SuccessScreen",
+        "div": "upgcrd__Launcher__launcher",
+        "userObj": {
+            "text": "Your request for card upgrade has been submitted successfully."
+        }
+    }
+    apz.launchApp(lLaunchParams);
+}
+
+
+       

@@ -1,0 +1,21 @@
+{
+    "Status": true,
+    "category": [
+        {
+            "categoryId": "Business Cards",
+            "categoryDesc": "Business Cards"
+        },
+        {
+            "categoryId": "Corporate Cards",
+            "categoryDesc": "Corporate Cards"
+        },
+        {
+            "categoryId": "Travel Cards",
+            "categoryDesc": "Travel Cards"
+        },
+        {
+            "categoryId": "Virtual Cards",
+            "categoryDesc": "Virtual Cards"
+        }
+    ]
+}

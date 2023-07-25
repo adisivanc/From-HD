@@ -1,0 +1,4 @@
+apz.dpcalc.checkParams = function(Params) {
+    debugger;
+    Params.userObj = {};
+};

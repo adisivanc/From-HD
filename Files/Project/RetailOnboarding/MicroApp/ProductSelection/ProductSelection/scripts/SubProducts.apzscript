@@ -1,0 +1,186 @@
+apz.prdsel.SubProducts = {};
+apz.prdsel.SubProducts.sparams = {};
+apz.prdsel.SubProducts.scache = {
+    "count": 0,
+    "selected": []
+}
+apz.app.onLoad_SubProducts = function(params) {
+    debugger;
+    apz.prdsel.SubProducts.sparams = params;
+    apz.prdsel.SubProducts.fnInitialise(params);
+    $("body").removeClass("loginbgg")
+    $("#prdsel__SubProducts__producttype_txtcnt").text(params.product);
+    $("#prdsel__SubProducts__comparemodal").addClass("sno");
+    $("#apzonb__Navigator__mobretrieverow").addClass("sno");
+};
+apz.prdsel.SubProducts.fnInitialise = function(params) {
+    debugger;
+    apz.data.loadJsonData("SubProducts", "prdsel");
+    apz.data.buildData("SubProductsMap", "prdsel");
+    let data = {};
+    switch (params.product) {
+        case "Accounts":
+            data = apz.data.scrdata.prdsel__SubProducts_Res.Accounts;
+            $(".checkboxcol").removeClass("sno");
+            $(".simulatoricon").addClass("sno");
+            break;
+        case "Cards":
+            data = apz.data.scrdata.prdsel__SubProducts_Res.Cards;
+            $(".checkboxcol").removeClass("sno");
+            $(".simulatoricon").addClass("sno");
+            break;
+        case "Deposits":
+            data = apz.data.scrdata.prdsel__SubProducts_Res.Deposits;
+            $(".checkboxcol").addClass("sno");
+            $(".simulatoricon").removeClass("sno");
+            break;
+        case "Loans":
+            data = apz.data.scrdata.prdsel__SubProducts_Res.Loan;
+            $(".checkboxcol").addClass("sno");
+            $(".simulatoricon").removeClass("sno");
+            break;
+    };
+    apz.data.scrdata.prdsel__SubProductsMap_Res = data;
+    apz.data.loadData("SubProductsMap", "prdsel");
+}
+apz.prdsel.SubProducts.fnCompare = function() {
+    debugger;
+    if (apz.prdsel.SubProducts.scache.count >= 2 && apz.prdsel.SubProducts.scache.count <= 3) {
+        apz.prdsel.ProductLauncher.fnNavigate("CompareProducts", {
+            "selectedproducts": apz.prdsel.SubProducts.scache.selected,
+            "product": apz.prdsel.SubProducts.sparams.product
+        });
+    } else {
+        apz.dispMsg({
+            "message": "Please select 2 or 3 products to compare "
+        });
+    }
+}
+apz.prdsel.SubProducts.fnSimulate = function(ths) {
+    debugger;
+    let rowno = $(ths).attr("rowno");
+    title = apz.data.scrdata.prdsel__SubProductsMap_Res[rowno].title;
+    var appId=(apz.prdsel.SubProducts.sparams.product==="Loans") ? "lnsmlr" : "dpcalc";
+    var scrName=(apz.prdsel.SubProducts.sparams.product==="Loans") ? "LoanSimulation" : "FDCalculator";
+    
+    let lparams = {
+        "appId": appId,
+        "scr": scrName,
+        "div": "prdsel__ProductLauncher__productlauncher",
+        "userObj": {
+            "subtype": title,
+            "product": apz.prdsel.SubProducts.sparams.product,
+            "action": "new"
+        },
+    };
+    apz.launchApp(lparams);
+}
+apz.prdsel.SubProducts.fnlaunchAuth = function() {
+    debugger;
+    let lparams = {
+        "appId": "onbaut",
+        "scr": "AuthLauncher",
+        "div": "prdsel__ProductLauncher__productlauncher",
+        "userObj": {
+            "subtype": "Saving account"
+        },
+    };
+    apz.launchApp(lparams);
+}
+apz.prdsel.SubProducts.fnSelectproducts = function(ths) {
+    debugger
+    $("#prdsel__SubProducts__comparemodal").removeClass("sno");
+    let rowno = $(ths).attr("rowno");
+    if (apz.getElmValue($(ths).attr("id")) == 'y') {
+        apz.prdsel.SubProducts.scache.count += 1;
+        if (apz.prdsel.SubProducts.scache.count > 3) {
+            apz.dispMsg({
+                "message": "Maximum products reached to compare"
+            });
+            apz.setElmValue($(ths).attr("id"),"n");
+            apz.prdsel.SubProducts.scache.count--;
+        } else {
+            title = apz.data.scrdata.prdsel__SubProductsMap_Res[rowno].title;
+            var ele =
+                '<span id="prdsel__SubProducts__sc_compareRow_'+rowno+'" class="srb  pri"><span id="prdsel__SubProducts__sc_col_13_li" class=" pri "><p id="prdsel__SubProducts__el_txt_2" class="ett-para pri fs14"><span id="prdsel__SubProducts__el_txt_2_txtcnt_' +
+                rowno +
+                '"></span></p></span><span id="prdsel__SubProducts__sc_col_14_li" class=" cen pri " style=" width:40PX;"><svg aria-hidden="true" id="prdsel__SubProducts__compareIcn_'+rowno+'" class="ett-icon icon-close pri px16" rowno=' +
+                rowno + ' onclick="apz.prdsel.SubProducts.fnremoveCurrentProduct(this)"><use xlink:href="#icon-close"></use></svg></span></span>'
+            $("#prdsel__SubProducts__compareproducts_li").append(ele);
+            apz.setElmValue("prdsel__SubProducts__el_txt_2_txtcnt_" + rowno, title);
+            apz.prdsel.SubProducts.scache.selected.push(title);
+            apz.setElmValue("prdsel__SubProducts__badge", apz.prdsel.SubProducts.scache.count);
+        }
+    }
+    else{
+        $("#prdsel__SubProducts__compareIcn_"+rowno).trigger("click");
+    }
+    
+}
+apz.prdsel.SubProducts.fnApply = function(ths) {
+    debugger;
+    let rowno = $(ths).attr("rowno");
+    title = apz.data.scrdata.prdsel__SubProductsMap_Res[rowno].title;
+    apz.subProduct = title;
+    if(apz.prdsel.SubProducts.sparams.product!=="Deposits" && apz.prdsel.SubProducts.sparams.product!=="Cards"){
+        var params = {};
+        params.appId = "onbaut";
+        params.scr = "AuthLauncher";
+        params.div = "apzonb__Navigator__launchdiv";
+        params.userObj = {
+            "parentdiv": "apzonb__Navigator__launchdiv",
+            "subproduct": title,
+            "product": apz.prdsel.SubProducts.sparams.product,
+            "action": "new"
+        };
+        apz.launchApp(params);
+    }
+    else if((apz.prdsel.SubProducts.sparams.product ==="Cards") &&(title != "Prepaid Card")){
+        apz.prdsel.SubProducts.fnLaunchScreen(ths,"CardEligibility"); 
+    }
+        else if(title == "Prepaid Card")
+    {
+  var params = {};
+        params.appId = "onbaut";
+        params.scr = "AuthLauncher";
+        params.div = "apzonb__Navigator__launchdiv";
+        params.userObj = {
+            "parentdiv": "apzonb__Navigator__launchdiv",
+            "subproduct": title,
+            "product": apz.prdsel.SubProducts.sparams.product,
+            "action": "new"
+        };
+        apz.launchApp(params);
+    }
+    else{
+       apz.prdsel.SubProducts.fnLaunchScreen(ths,"Deposit"); 
+    }
+}
+apz.prdsel.SubProducts.fnLaunchScreen = function(ths,scrName) {
+    debugger;
+    let rowno = $(ths).attr("rowno");
+    title = apz.data.scrdata.prdsel__SubProductsMap_Res[rowno].title;
+    var params = {};
+    params.appId = "prdsel";
+    params.scr = scrName;
+    params.div = "prdsel__ProductLauncher__productlauncher";
+    params.userObj = {
+        "parentdiv": "prdsel__ProductLauncher__productlauncher",
+        "subproduct": title,
+        "product": apz.prdsel.SubProducts.sparams.product,
+        "action": "new"
+    };
+    apz.launchSubScreen(params);
+}
+apz.prdsel.SubProducts.fnremoveCurrentProduct = function(ths) {
+    debugger;
+    apz.prdsel.SubProducts.scache.count -= 1;
+    var rowNo=$(ths).attr("rowno");
+    $("#prdsel__SubProducts__sc_compareRow_"+rowNo).remove();
+    apz.setElmValue("prdsel__SubProducts__badge", apz.prdsel.SubProducts.scache.count);
+    apz.prdsel.SubProducts.scache.selected.splice(apz.prdsel.SubProducts.scache.count, 1);
+}
+apz.prdsel.SubProducts.fnBack = function() {
+    debugger;
+    apz.apzonb.Navigator.fnLunachHome();
+};

@@ -1,0 +1,19 @@
+{
+    "tbDbmiCorpCountry": [
+        {
+            "id": "1",
+            "countryVal": "INR",
+            "countryDesc": "India"
+        },
+        {
+            "id": "2",
+            "countryVal": "USA",
+            "countryDesc": "USA"
+        },
+        {
+            "id": "3",
+            "countryVal": "GER",
+            "countryDesc": "Germany"
+        }
+    ]
+}

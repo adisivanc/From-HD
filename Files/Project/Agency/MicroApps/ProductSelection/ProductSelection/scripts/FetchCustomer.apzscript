@@ -1,0 +1,128 @@
+apz.prdsel.FetchCustomer = {};
+apz.prdsel.FetchCustomer.sParams = {};
+apz.app.onLoad_FetchCustomer = function(params) {
+    debugger;
+    apz.prdsel.FetchCustomer.sParams = params;
+    apz.prdsel.FetchCustomer.fnInitialise();
+    $("#prdsel__FetchCustomer__customersTable_tbody>tr").click(function(arg1) {
+        apz.prdsel.FetchCustomer.fnFetchCustomersDetails(arg1);
+    })
+    apz.hide("prdsel__FetchCustomer__customersTableul_ttl");
+}
+apz.app.onShown_FetchCustomer = function(params) {
+    debugger;
+    $("#prdsel__FetchCustomer__customersTable_row_0").removeClass("sno");
+}
+apz.prdsel.FetchCustomer.fnInitialise = function() {
+    debugger;
+    apz.data.loadJsonData("CustomerDetails", "prdsel");
+}
+apz.prdsel.FetchCustomer.fnBack = function() {
+    debugger;
+    apz.prdsel.ProductLauncher.fnNavigate("CombinedProducts", {
+        "data": apz.prdsel.FetchCustomer.sParams
+    });
+}
+apz.prdsel.FetchCustomer.fnSearch = function() {
+    debugger;
+    var cId = apz.getElmValue("prdsel__FetchCustomer__cid");
+    var cName = apz.getElmValue("prdsel__FetchCustomer__name");
+    var dob = apz.getElmValue("prdsel__FetchCustomer__dob");
+    var nid = apz.getElmValue("prdsel__FetchCustomer__nid");
+    var cMobile = apz.getElmValue("prdsel__FetchCustomer__mobile");
+    var custName = "Praveen Kumar L";
+    if (cId != "" || cName != "" || dob != "" || nid != "" || cMobile != "") {
+        debugger;
+        if (cId == "22870912" || custName.includes(cName) || dob == "25-May-2019" || cMobile == "9910719896") {
+            apz.show("prdsel__FetchCustomer__customersDetailsDiv");
+            window.scrollTo(0, document.body.scrollHeight);
+        }else{
+        apz.dispMsg({
+            message: "There is no such a customer!",
+            type: "A",
+        });
+    }
+    }else{
+        apz.dispMsg({
+            message: "Please fill something!",
+            type: "A",
+        });
+    }
+}
+apz.prdsel.FetchCustomer.fnFetchCustomersDetails = function(ths) {
+    debugger;
+    var rowNo = ths.currentTarget.rowIndex - 1;
+    var record = apz.data.scrdata.prdsel__CustomerDetails_Req.tbCustDetails[0];
+    apz.prdsel.FetchCustomer.sParams.record = record;
+    apz.prdsel.FetchCustomer.fnStartWorkflow();
+}
+apz.prdsel.FetchCustomer.fnStartWorkflow = function() {
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "StartWorkFlow",
+        "buildReq": "N",
+        "appId": "prdsel",
+        "req": {
+            "appId": "acdp01",
+            "workFlowId": "",
+            "userId": "CorpUser"
+        },
+        "paintResp": "N",
+        "callBack": apz.prdsel.FetchCustomer.fnStartWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+};
+apz.prdsel.FetchCustomer.fnStartWorkflowCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        if (pResp.res.prdsel__StartWorkFlow_Res) {
+            apz.prdsel.FetchCustomer.sParams.refNo = pResp.res.prdsel__StartWorkFlow_Res.instanceId;
+            apz.refNo = apz.prdsel.FetchCustomer.sParams.refNo;
+            apz.prdsel.FetchCustomer.fnAddUser(apz.prdsel.FetchCustomer.sParams.refNo);
+        }
+    }
+}
+apz.prdsel.FetchCustomer.fnAddUser = function(refno) {
+    debugger;
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "ApplicationDetailsDB_New",
+        "buildReq": "N",
+        "appId": "prdsel",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                dob: apz.formatDate({
+                    val: apz.prdsel.FetchCustomer.sParams.record.custDob,
+                    fromFormat: "dd-MMM-yyyy",
+                    toFormat: "yyyy-MM-dd"
+                }),
+                mobileNo: apz.prdsel.FetchCustomer.sParams.record.custMobileNo,
+                refNo: refno,
+                subproduct: apz.prdsel.FetchCustomer.sParams.data.subProductName,
+                product: apz.prdsel.FetchCustomer.sParams.data.productName
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.prdsel.FetchCustomer.fnLaunchDetailsApp
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.prdsel.FetchCustomer.fnLaunchDetailsApp = function(params) {
+    debugger;
+    apz.isWorkflowStarted = true;
+    apz.stopLoader();
+    var params = {};
+    params.appId = "appdtl";
+    params.scr = "AppLauncher";
+    params.div = "menuap__Menu__MainLaunchArea";
+    params.userObj = {
+        "refNo": apz.prdsel.FetchCustomer.sParams.refNo,
+        "appId": "ONB",
+        "product": apz.prdsel.FetchCustomer.sParams.data.productName,
+        "subproduct": apz.prdsel.FetchCustomer.sParams.data.subProductName,
+        "dob": apz.prdsel.FetchCustomer.sParams.record.custDob,
+        "parentdiv": "menuap__Menu__MainLaunchArea",
+        "currentFlow": 0
+    };
+    apz.launchApp(params);
+}

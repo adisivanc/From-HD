@@ -1,0 +1,11 @@
+{
+    "tbDbmiDepositDetails": {
+        "investment": "2837707.00",
+        "timePeriod": "3",
+        "timePeriodMode": "MM",
+        "rateOfInterest": "0.35%",
+        "maturityValue": "2840190.00",
+        "totalInterest": "2483.00",
+        "paidFrequency": "Monthly"
+    }
+}

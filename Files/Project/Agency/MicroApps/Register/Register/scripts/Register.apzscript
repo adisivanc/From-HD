@@ -1,0 +1,51 @@
+// Properties declairation 
+
+apz.REGN01.Register = {};
+apz.REGN01.Register.autoAuthIsOn = false;
+apz.REGN01.Register.sCache = {};
+
+// Life cycle
+
+apz.app.onLoad_Register = function(params) {
+    debugger;
+    apz.REGN01.Register.sCache = params;
+    $("#REGN01__Register__ct_frm_1_title").attr("onclick", "apz.REGN01.Register.fnBackToLogin();");
+};
+apz.REGN01.Register.autoAuth = function() {
+    debugger;
+    if (apz.REGN01.Register.autoAuthIsOn == true) {
+        apz.REGN01.Register.autoAuthIsOn = false;
+        $("#REGN01__Register__pwdinput").attr("disabled", true);
+    } else {
+        apz.REGN01.Register.autoAuthIsOn = true;
+        $("#REGN01__Register__pwdinput").attr("disabled", false);
+    }
+};
+
+//Button click actions
+
+apz.REGN01.Register.fnRegister = function() {
+    var msg = {};
+    msg.code = "SUCC_REG";
+    msg.callBack = apz.REGN01.Register.fnBackToLogin;
+    apz.dispMsg(msg);
+};
+apz.REGN01.Register.fnBackToLogin = function() {
+    debugger;
+    // apz.REGN01.Register.sCache.callBack();
+    $("#AGLN01__Login__footer,#BSAP01__BaseApp__logfoot,#AGLN01__Login__logfoot1").removeClass("sno");
+    $("#AGLN01__Login__reglauncharea").addClass("sno");
+    $("#AGLN01__Login__reglauncharea").html("");
+    var lParams = {
+        "appId": "AGLN01",
+        "scr": "Login",
+        "div": apz.REGN01.Register.sCache.destroyDiv,
+        "type": "CF",
+        "userObj": {
+            "action": "",
+            "destroyDiv": apz.REGN01.Register.sCache.destroyDiv,
+            "parentAppId":apz.REGN01.Register.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+};

@@ -1,0 +1,144 @@
+apz.adsbrd = {};
+apz.adsbrd.Performance = {};
+apz.adsbrd.Performance.sCache = "";
+apz.app.onLoad_AgentPerformance = function(params) {
+    apz.startLoader();
+    apz.adsbrd.Performance.sCache = params;
+};
+apz.app.onShown_AgentPerformance = function() {
+    // apz.adsbrd.Performance.loadDataFromURL();
+    apz.adsbrd.Performance.loadDataFromLocal();
+    debugger;
+    apz.data.loadJsonData("AgentPerformanceDB","adsbrd");
+};
+apz.adsbrd.Performance.loadDataFromLocal = function(){
+    debugger;
+    try {
+    var filePath = apz.getDataFilesPath("adsbrd") + "/AgentPerformanceDB.json";
+    var content = apz.getFile(filePath);
+    var data = JSON.parse(content);
+    
+            let result = data.tbDbmiAgnPerformanceOverview;
+            apz.data.scrdata.adsbrd__AgentPerformanceDB_Res = {}
+            apz.data.scrdata.adsbrd__AgentPerformanceDB_Res.tbDbmiAgnPerformanceOverview = result
+            apz.data.loadData("AgentPerformanceDB","adsbrd");
+            
+            if (result !== undefined && typeof result === 'object' && result.constructor === Array) {
+                let summaryTypes = result.reduce((summary_obj, item) => {
+                    if (item.secType === "operationsSummary") {
+                        summary_obj.operationsSummary.push(item);
+                    } else if (item.secType === 'financialSummary') {
+                        summary_obj.financialSummary.push(item);
+                    }
+                    return summary_obj;
+                }, {
+                    operationsSummary: [],
+                    financialSummary: []
+                });
+                summaryTypes.operationsSummary = summaryTypes.operationsSummary.map(apz.adsbrd.Performance.fnModifySummaryTypesData);
+                summaryTypes.financialSummary = summaryTypes.financialSummary.map(apz.adsbrd.Performance.fnModifySummaryTypesData);
+            
+                apz.data.scrdata.adsbrd__AgentPerformance_Res = {
+                    "performance": summaryTypes
+                };
+                apz.data.loadData('AgentPerformance', 'adsbrd');
+            } else {
+                throw new Error('Invalid Response or Response is undefined');
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    $(".tabl tbody tr:first-child").addClass("current");
+    
+}
+apz.adsbrd.Performance.fnCancel = function() {
+    debugger;
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": "menuap__Menu__MainLaunchArea",
+            "parentAppId": "menuap",
+            "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+            "custImg": "menuap__Menu__custImg",
+            "custId": "menuap__Menu__custId_txtcnt"
+        }
+    }
+    apz.launchApp(lParams);
+}
+apz.adsbrd.Performance.loadDataFromURL = function() {
+    debugger;
+    var lrequest = {};
+    lrequest.appId = "adsbrd";
+    lrequest.ifaceName = "AgentPerformanceDB_Query";
+    lrequest.callBackObj = this;
+    lrequest.callBack = apz.adsbrd.Performance.loadJsonDataFromURLfnCallback;
+    lrequest.buildReq = "N";
+    lrequest.paintResp = "N";
+    lrequest.req = {
+        "agentDet": {
+            "agentId": "Agent01"
+        }
+    }
+    apz.server.callServer(lrequest);
+};
+apz.adsbrd.Performance.loadJsonDataFromURLfnCallback = function(params) {
+    debugger;
+    apz.stopLoader();
+    if (!params.errors) {
+        try {
+            let result = params.res.adsbrd__AgentPerformanceDB_Res.tbDbmiAgnPerformanceOverview;
+            if (result !== undefined && typeof result === 'object' && result.constructor === Array) {
+                let summaryTypes = result.reduce((summary_obj, item) => {
+                    if (item.secType === "operationsSummary") {
+                        summary_obj.operationsSummary.push(item);
+                    } else if (item.secType === 'financialSummary') {
+                        summary_obj.financialSummary.push(item);
+                    }
+                    return summary_obj;
+                }, {
+                    operationsSummary: [],
+                    financialSummary: []
+                });
+                summaryTypes.operationsSummary = summaryTypes.operationsSummary.map(apz.adsbrd.Performance.fnModifySummaryTypesData);
+                summaryTypes.financialSummary = summaryTypes.financialSummary.map(apz.adsbrd.Performance.fnModifySummaryTypesData);
+            
+                apz.data.scrdata.adsbrd__AgentPerformance_Res = {
+                    "performance": summaryTypes
+                };
+                apz.data.loadData('AgentPerformance', 'adsbrd');
+            } else {
+                throw new Error('Invalid Response or Response is undefined');
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    $(".tabl tbody tr:first-child").addClass("current");
+};
+apz.adsbrd.Performance.fnModifySummaryTypesData = function(item) {
+    lparams = {};
+    lparams.count = item.count;
+    lparams.type = item.type;
+    if (item.val !== 0) lparams.val = item.val;
+    if (item.secType === 'operationsSummary') {
+        lparams.operationsDetails = item.tbDbmiAgnPerformanceDrilldown.map(apz.adsbrd.Performance.fnModifyDrillDownData);
+    } else {
+        lparams.financialDetails = item.tbDbmiAgnPerformanceDrilldown.map(apz.adsbrd.Performance.fnModifyDrillDownData);
+    }
+    return lparams;
+}
+apz.adsbrd.Performance.fnModifyDrillDownData = function(item){
+      subparams = {};
+            subparams.date = item.date;
+            subparams.count = item.count;
+            if (item.value !== 0) subparams.val = item.value;
+            return subparams;
+}
+apz.app.postRowClicked = function(containerId, rowNo, event) {
+    $("#" + containerId + " .current").removeClass("current");
+    $("#" + containerId + " table tbody tr").eq(rowNo).addClass("current");
+}

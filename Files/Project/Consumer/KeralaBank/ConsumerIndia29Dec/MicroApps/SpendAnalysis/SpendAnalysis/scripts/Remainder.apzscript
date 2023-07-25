@@ -1,0 +1,9 @@
+apz.app.onLoad_Remainder = function(){
+    debugger;
+     var remainders = Remainders.getRemainders();
+    apz.data.scrdata.spndas__RemainderData_Res = {};
+    apz.data.scrdata.spndas__RemainderData_Res.remainders = remainders;
+    apz.data.loadData("RemainderData","spndas");
+    
+    
+}

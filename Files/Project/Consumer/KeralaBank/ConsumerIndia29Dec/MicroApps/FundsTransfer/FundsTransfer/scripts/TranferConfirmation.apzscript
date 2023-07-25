@@ -1,0 +1,81 @@
+apz.fndftr.TranferConfirmation = {};
+apz.app.onLoad_TranferConfirmation = function(params) {
+    debugger;
+    apz.fndftr.TranferConfirmation.sCache = params;
+    apz.data.scrdata.fndftr__TransferDetails_Res = {};
+    apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls = params.transferDetails
+    apz.data.loadData("TransferDetails", "fndftr");
+    if(apz.fndftr.isInternational){
+    $("#fndftr__TransferDetails__o__transferDtls__ifsc_grp_lbl").text("Swift Code");
+    }
+    $("#fndftr__TransferLauncher__ct_frm_4_title  h4").text("Transfer Confirmation");
+}
+// go to otp
+apz.fndftr.TranferConfirmation.fnConfirmation = function() {
+    debugger;
+    
+    apz.launchApp({
+        appId: "otpeng",
+        scr: "PaymentOTP",
+        div: "fndftr__FundsTransfer__ps_pls_5",
+        userObj: {
+            "action": "SetRefNo",
+             "transferDetails" :  apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls,
+            "data": {
+                "OTPRefNo": +new Date()
+            },
+            "back": apz.fndftr.TranferConfirmation.fnBackToHere,
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.fndftr.TranferConfirmation.fnLaunchingFavourites,
+                "destroyDiv": "bllpay__BillPay__Launcher"
+            }
+        }
+    })
+}
+//come to same screen from otp
+apz.fndftr.TranferConfirmation.fnBackToHere = function() {
+    debugger;
+    apz.launchSubScreen({
+        appId: "fndftr",
+        scr: "TranferConfirmation",
+        div: "fndftr__FundsTransfer__ps_pls_5",
+        userObj: {
+            transferDetails: apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls
+        }
+    })
+}
+//launching favourities
+apz.fndftr.TranferConfirmation.fnLaunchingFavourites = function() {
+    debugger;
+    if (apz.deviceGroup === "Mobile")  {
+        if (apz.fndftr.TranferConfirmation.sCache.from === "favourites") {
+            apz.launchApp({
+                appId: "favour",
+                scr: "FavouriteSummary",
+                div: apz.fndftr.TranferConfirmation.sCache.control.exitApp.div,
+                userObj: {...apz.fndftr.TranferConfirmation.sCache
+                }
+            })
+        } else {
+            apz.launchApp({
+                appId: "fndftr",
+                scr: "FundsTransfer",
+                div: apz.fndftr.TranferConfirmation.sCache.control.exitApp.div,
+                userObj: {}
+            })
+        }
+    }
+};
+//back to payment screen
+apz.fndftr.TranferConfirmation.fnBack = function() {
+    debugger;
+    apz.launchSubScreen({
+        appId: "fndftr",
+        scr: "TransferLauncher",
+        div: "fndftr__FundsTransfer__ps_pls_5",
+        userObj: {...apz.fndftr.TranferConfirmation.sCache,
+            transferDetails: apz.data.scrdata.fndftr__TransferDetails_Res.transferDtls
+        }
+    })
+}

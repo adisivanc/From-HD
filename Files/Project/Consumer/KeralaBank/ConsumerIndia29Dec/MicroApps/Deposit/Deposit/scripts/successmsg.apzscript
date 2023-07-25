@@ -1,0 +1,8 @@
+apz.chqdep.successmsg = {};
+apz.app.onLoad_successmsg = function(params) {
+    // params = {
+    //     "message": "Successfull",
+    //     "type":"S"
+    // }
+    // apz.dispMsg(params)
+}

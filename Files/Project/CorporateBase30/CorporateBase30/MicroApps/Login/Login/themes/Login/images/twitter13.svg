@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="52" height="52" viewBox="0 0 52 52">
+  <defs>
+    <clipPath id="clip-Artboard_8">
+      <rect width="52" height="52"/>
+    </clipPath>
+  </defs>
+  <g id="Artboard_8" data-name="Artboard – 8" clip-path="url(#clip-Artboard_8)">
+    <g id="_003-twitter-logo-on-black-background" data-name="003-twitter-logo-on-black-background" transform="translate(1 1)">
+      <g id="post-twitter">
+        <path id="Path_12" data-name="Path 12" d="M45,0H5A5.015,5.015,0,0,0,0,5V45a5.015,5.015,0,0,0,5,5H45a5.015,5.015,0,0,0,5-5V5A5.015,5.015,0,0,0,45,0ZM39.25,18.25c-.25,11.5-7.5,19.5-18.5,20C16.25,38.5,13,37,10,35.25a13.272,13.272,0,0,0,9.75-2.75,6.753,6.753,0,0,1-6.25-4.75,10.084,10.084,0,0,0,2.75,0c-3-1-5-2.75-5.25-6.75a5.04,5.04,0,0,0,2.75.75c-2.25-1.25-3.75-6-2-9,3.25,3.5,7.25,6.5,13.75,7-1.75-7,7.75-10.75,11.5-6a16.842,16.842,0,0,0,4.25-1.5A7.068,7.068,0,0,1,38.5,16,14.331,14.331,0,0,0,42,15C41.75,16.25,40.5,17.25,39.25,18.25Z" fill="#1da1f2"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,104 @@
+ apz.loanvg.ApplyloanPayment = {};
+    apz.loanvg.ApplyloanPayment.sCache={};
+ apz.app.onLoad_ApplyloanPayment = function(params) {
+     debugger;
+    apz.loanvg.ApplyloanPayment.sCache = params;
+     var loantype = apz.loanvg.Applyloan.loantype;
+     apz.setElmValue("loanvg__ApplyloanPayment__ddlloantype", apz.loanvg.Applyloan.loantype);
+     apz.setElmValue("loanvg__ApplyloanPayment__ddlvehicletype", apz.loanvg.Applyloan.vehicletype);
+     apz.setElmValue("loanvg__ApplyloanPayment__ddlvehiclemake", apz.loanvg.Applyloan.vehiclemake);
+     apz.setElmValue("loanvg__ApplyloanPayment__inpmodel", apz.loanvg.Applyloan.model);
+     apz.setElmValue("loanvg__ApplyloanPayment__inpamount", apz.loanvg.Applyloan.amount);
+     apz.setElmValue("loanvg__ApplyloanPayment__inptermofloan", apz.loanvg.Applyloan.termofloan);
+     apz.setElmValue("loanvg__ApplyloanPayment__inpapr", apz.loanvg.Applyloan.apr);
+     apz.setElmValue("loanvg__ApplyloanPayment__inpdebitaccount", apz.getElmValue("loanvg__ApplyloanPayment__ddldebitaccount"));
+     if (loantype == "2") {
+         $("#loanvg__ApplyloanPayment__rowvehicle").removeClass("sno");
+         $("#loanvg__ApplyloanPayment__colmodel").removeClass("sno");
+     } else {
+         $("#loanvg__ApplyloanPayment__rowvehicle").addClass("sno");
+         $("#loanvg__ApplyloanPayment__colmodel").addClass("sno");
+     }
+     $("#loanvg__ApplyloanPayment__progresStep_ext li").on("click", function() {
+         apz.loanvg.ApplyloanPayment.fnProgressClick(this)
+     })
+     $("#loanvg__ApplyloanPayment__progresStep_ext > li:nth-child(3)")[0].className="pgst-step pgs-100";
+ };
+ apz.loanvg.ApplyloanPayment.fnonPayment = function(){
+     var val = apz.getElmValue("loanvg__ApplyloanPayment__radPayment");
+    if (val == "yes") {
+        $("#loanvg__ApplyloanPayment__rowtoaccount").removeClass("sno");
+    } else {
+        $("#loanvg__ApplyloanPayment__rowtoaccount").addClass("sno");
+    }
+ }
+ apz.loanvg.ApplyloanPayment.fnondebitacc = function(){
+     apz.setElmValue("loanvg__ApplyloanPayment__inpdebitaccount", apz.getElmValue("loanvg__ApplyloanPayment__ddldebitaccount"));
+ }
+ apz.loanvg.ApplyloanPayment.gotoOTP = function() {
+     var div = apz.loanvg.Applyloan.sparams.control.exitApp.div;
+     var lLaunchParams = {
+         "appId": "otpeng",
+         "scr": "ProcessOTP",
+         "div": div,
+         "userObj": {
+             "action": "SetRefNo",
+             "data": {
+                 "OTPRefNo": "214"
+             },
+             "control": {
+                 "appId": "otpeng",
+                 "callBack": apz.loanvg.ApplyloanPayment.gotoOTPCB,
+                 "destroyDiv": div
+             }
+         }
+     };
+     apz.launchApp(lLaunchParams);
+ }
+ apz.loanvg.ApplyloanPayment.gotoOTPCB = function() {
+     var div = apz.loanvg.Applyloan.sparams.control.exitApp.div;
+     var lLaunchParams = {
+         "appId": "loanvg",
+         "scr": "SuccessScreen",
+         "div": div
+     };
+     apz.launchSubScreen(lLaunchParams);
+ }
+ apz.loanvg.ApplyloanPayment.fnProgressClick = function(pThis) {
+     debugger;
+     if (pThis.textContent == "Loan Details") {
+         var div = apz.loanvg.Applyloan.sparams.control.exitApp.div;
+         var lLaunchParams = {
+             "appId": "loanvg",
+             "scr": "Applyloan",
+             "div": div,
+              "userObj": {
+                "control": {
+                 "confirmationDetails":apz.loanvg.ApplyloanPayment.sCache.confirmationDetails,
+                    "exitApp": {
+                        "appId": "",
+                        "backFunction": "",
+                        "div": "landin__Landing__Launcher",
+                        "callBack": ""
+                    }
+                }
+            }
+         };
+         apz.launchSubScreen(lLaunchParams);
+     }
+     if (pThis.textContent == "Personal Info") {
+         var div = apz.loanvg.Applyloan.sparams.control.exitApp.div;
+         var lLaunchParams = {
+             "appId": "loanvg",
+             "scr": "Appluloanem",
+             "div": div,
+             "userObj":{
+                 "confirmationDetails":apz.loanvg.ApplyloanPayment.sCache.confirmationDetails
+             }
+         };
+         apz.launchSubScreen(lLaunchParams);
+     }
+     if (pThis.textContent == "Payment Details") {
+         //apz.loanvg.Appluloanem.gotoNext();
+     }
+ }

@@ -1,0 +1,11 @@
+apz.gstapp.launcher = {};
+apz.gstapp.launcher.sParams = {};
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+    apz.gstapp.launcher.sParams = params;
+    var lparams = {};
+    lparams.appId = "gstapp";
+    lparams.scr = "GST";
+    lparams.div = "gstapp__Launcher__launcher";
+    apz.launchSubScreen(lparams);
+}

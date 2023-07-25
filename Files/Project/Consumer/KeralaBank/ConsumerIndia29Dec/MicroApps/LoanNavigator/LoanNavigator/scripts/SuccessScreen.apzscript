@@ -1,0 +1,23 @@
+apz.loanvg.SuccessScreen = {};
+apz.app.onLoad_SuccessScreen = function(params) {
+    debugger;
+};
+apz.loanvg.SuccessScreen.fndone = function() {
+    var div = apz.loanvg.Applyloan.sparams.control.exitApp.div;
+    var lLaunchParams = {
+        "appId": "loanvg",
+        "scr": "Applyloan",
+        "div": div,
+        "userObj": {
+                "control": {
+                    "exitApp": {
+                        "appId": "",
+                        "backFunction": "",
+                        "div": "landin__Landing__Launcher",
+                        "callBack": ""
+                    }
+                }
+            }
+    };
+    apz.launchSubScreen(lLaunchParams);
+}

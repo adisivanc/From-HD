@@ -1,0 +1,47 @@
+{
+    "landin__widgetIcon_Req": {
+        "widgetDetails": [{
+            "icon": "icon-card",
+            "name": "Credit Card Payments",
+            "scr":"CreditCardDashboard"
+        },{
+            "icon": "icon-piechart",
+            "name": "Spend Analysis",
+            "scr":"SpendDashboard"
+        },{
+            "icon": "icon-bar-chart",
+            "name": "Earn and Spends",
+            "scr":"EarnAndSpend"
+        },
+        {
+            "icon": "icon-calendar",
+            "name": "Calendar",
+            "scr":"demonew"
+        },{
+            "icon": "icon-cardpayment",
+            "name": "Upcoming Payments",
+            "scr":"UpcomingDashboard"
+        },{
+            "icon": "icon-retweet",
+            "name": "Foreign Exchange Rates",
+            "scr":"feDashboard"
+        },{
+            "icon": "icon-email",
+            "name": "Messages",
+            "scr":"Messages"
+        },{
+            "icon": "icon-bullhorn",
+            "name": "Announcements",
+            "scr":"PromotionDashboard"
+        },{
+            "icon": "icon-money",
+            "name": "Expenses",
+            "scr":"expenses"
+        },
+        {
+            "icon": "icon-list",
+            "name": "Recent Transactions",
+            "scr":"recentTransaction"
+        }]
+    }
+}

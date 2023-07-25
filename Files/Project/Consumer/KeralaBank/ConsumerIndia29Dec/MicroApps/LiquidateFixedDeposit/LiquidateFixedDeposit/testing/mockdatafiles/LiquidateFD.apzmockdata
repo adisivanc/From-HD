@@ -1,0 +1,24 @@
+{
+    "depositDtls": {
+        "txnRefNo": "234634567",
+        "status": "",
+        "respCd": "",
+        "extMsg": "",
+        "intMsgCd": "",
+        "data": {
+            "depositDtls":{
+            "accountNo": "001234545545",
+            "branchName": "West Bay-30",
+            "interestType": "Compounded Interest",
+            "bookDate": "05/10/2017",
+            "tenor": "1 Year",
+            "interestRate": "5.00%",
+            "maturityType": "RenewPrincipleInt",
+            "creditAccountNo": "001245628971",
+            "maturityAmount": "15000",
+            "maturityDate": "15/10/2019",
+            "seniorCitizen": "No",
+            "attachNominee": "No"
+        }}
+    }
+}

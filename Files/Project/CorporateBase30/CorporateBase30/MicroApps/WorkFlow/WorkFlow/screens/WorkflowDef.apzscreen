@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"WorkflowDef","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"WorkflowDef","interfaces":[{"name":"WorkFlow","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

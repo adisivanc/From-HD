@@ -1,0 +1,8 @@
+apz.ftsmry.checkParams = function(params){
+    
+    params.userObj = {
+        "data" : {
+            "customerID" : "1234"
+        }
+    };
+};

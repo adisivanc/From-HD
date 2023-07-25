@@ -1,0 +1,43 @@
+{
+    "tbDbtpFavourite": [{
+        "amount": "200",
+        "moduleCode": "24356",
+        "toBenefNo": "acc No-539383933",
+        "customerId": "000004712",
+        "nickname": "Vijay1",
+        "id": 1,
+        "fromAccountNo": "753410000076",
+        "beneficiaryId": "1232",
+        "creationTs": "2018-03-10"
+    },{
+        "amount": "200",
+        "moduleCode": "24356",
+        "toBenefNo": "MMID-1234",
+        "customerId": "000004712",
+        "nickname": "John",
+        "id": 2,
+        "fromAccountNo": "732510006721",
+        "beneficiaryId": "54344",
+        "creationTs": "2018-03-10"
+    },{
+        "amount": "200",
+        "moduleCode": "24356",
+        "toBenefNo": "MMID-1234",
+        "customerId": "000004712",
+        "nickname": "Hari",
+        "id": 3,
+        "fromAccountNo": "753410000076",
+        "beneficiaryId": "4332",
+        "creationTs": "2018-03-10"
+    },{
+        "amount": "200",
+        "moduleCode": "24356",
+        "toBenefNo": "MMID-1234",
+        "customerId": "000004712",
+        "nickname": "Jason",
+        "id":4,
+        "fromAccountNo": "732510006721",
+        "beneficiaryId": "3553",
+        "creationTs": "2018-03-10"
+    }]
+}

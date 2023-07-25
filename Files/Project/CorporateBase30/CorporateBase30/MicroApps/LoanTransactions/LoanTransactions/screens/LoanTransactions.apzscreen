@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"LoanTransactions","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"LoanTransactions","jsfiles_list":["MicroAppSidebar"],"interfaces":[{"name":"LoanTransactions","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

@@ -1,0 +1,42 @@
+apz.paymts.CreditCardPaymentFinal = {};
+apz.paymts.CreditCardPaymentFinal.sCache = "";
+apz.paymts.CreditCardPaymentFinal.sAction = "";
+apz.app.onLoad_CreditCardPaymentFinal = function(params) {
+    debugger;
+    apz.paymts.CreditCardPaymentFinal.sCache = params;
+    apz.setElmValue("paymts__CreditCardPaymentFinal__succMsg", "Successfully paid ₹" + apz.paymts.CreditCardPaymentFinal.sCache.data.Amount + " for " +
+        "Card number " + apz.paymts.CreditCardPaymentFinal.sCache.data.creditCardNum);
+};
+apz.paymts.CreditCardPaymentFinal.fnYes = function() {
+    var lParams = {
+        "appId": "paymts",
+        "scr": "CreditCardPaymentDetails",
+        "div": apz.paymts.CreditCardPaymentFinal.sCache.destroyDiv,
+        "animation": 10,
+        "userObj": {
+            "action": apz.paymts.CreditCardPaymentFinal.sCache.action,
+            "data": {
+                "creditCardNum": $("#paymts__CreditCardPaymentVerify__verifyCardNum").val(),
+                "Amount": $("#paymts__CreditCardPaymentVerify__verifyAmt").val()
+            },
+            "destroyDiv": apz.paymts.CreditCardPaymentFinal.sCache.destroyDiv,
+            "parentId": apz.paymts.CreditCardPaymentFinal.sCache.parentAppId
+        }
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.paymts.CreditCardPaymentFinal.fnNo = function() {
+    apz.paymts.CreditCardPaymentFinal.sCache.callBack();
+}
+apz.paymts.CreditCardPaymentFinal.fnPhone = function() {
+    var msg = {
+        "code": "PHN-MSG"
+    }
+    apz.dispMsg(msg);
+};
+apz.paymts.CreditCardPaymentFinal.fnMail = function() {
+    var msg = {
+        "code": "MAIL-MSG"
+    }
+    apz.dispMsg(msg);
+};

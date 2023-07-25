@@ -1,0 +1,51 @@
+TransactionDetails = (function() {
+    debugger;
+    var Months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var monthsInReverse = [...Months].reverse();
+    var transactions = [];
+    var year = 1;
+    function getAmount(){
+        amount = Math.floor(Math.random() * 50000);
+        if(amount >=6000 && amount <=18000){
+            return amount;
+        }
+        return getAmount();
+    }
+    return {
+        getDetails : function(months) {
+            transactions = [];
+            
+             var i = 0;
+             var j = 0;
+             var startIndex = monthsInReverse.indexOf(Months[new Date().getMonth()]);
+             while(i<months){
+                  var obj = {};
+                    obj["label"] = monthsInReverse[startIndex].substring(0,3) + " " + (parseInt(new Date().getFullYear()) - j);
+                    obj["value"] = getAmount();
+                    transactions.push(obj);
+                    if(startIndex == monthsInReverse.length-1){
+                        startIndex = 0;
+                        j++;
+                    }else{
+                        startIndex++;
+                    }
+                 i++;
+             }
+            
+            return transactions;
+        },
+        getTodayMonth : function(){
+            return Months[new Date().getMonth()].substr(0,3);
+        },
+        getTodayYear : function(){
+            return new Date().getFullYear();
+        },
+        getIndexOfMonth : function(mon){
+              index =  Months.findIndex(function(m,index){ if(m.indexOf(mon) !=-1){return true}});
+            return index + 1;
+        },
+        setYear : function(year){
+            year = year;
+        }
+    };
+})();

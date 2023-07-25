@@ -1,0 +1,27 @@
+apz.gstapp.gst = {};
+apz.gstapp.gst.sParams = {};
+apz.app.onLoad_GST = function(params) {
+    debugger;
+    apz.gstapp.gst.loadgstAnswers();
+  //  apz.setElmValue("gstapp__GST__name", "Mr. Amit Khanna")
+}
+apz.gstapp.gst.loadgstAnswers = function() {
+    debugger;
+  //  apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "ADD/VIEW GST DETAILS");
+}
+apz.gstapp.gst.fnProceed = function(params) {
+    apz.hide("gstapp__GST__launcher")
+    apz.show("gstapp__GST__stage_two")
+    var account = apz.getElmValue("gstapp__GST__accNo");
+    apz.setElmValue("gstapp__GST__account",account)
+}
+apz.gstapp.gst.fnContinue = function(params) {
+    apz.dispMsg({
+        message: "GST details has been updated successfully!",
+        type: "S",
+        callBack: apz.landin.Landing.fnHome
+    });
+}
+apz.gstapp.gst.fnCancel = function(params) {
+   apz.landin.Landing.fnHome();
+}

@@ -1,0 +1,41 @@
+apz.appdtl.FldVerification = {};
+apz.appdtl.FldVerification.sCache = {};
+apz.app.onLoad_FldVerification = function(params) {
+    apz.appdtl.FldVerification.sCache = params;
+    apz.setElmValue("appdtl__AppLauncher__el_txt_17_txtcnt", "FIELD VERIFICATION");
+    apz.setElmValue("appdtl__AppLauncher__application_number", params.refNo);
+    
+}
+apz.appdtl.FldVerification.fnNationalIdVerification = function() {
+    debugger;
+    // $("#appdtl__FldVerification__nationalPanel").removeClass("sno").addClass("current");
+    $("#appdtl__FldVerification__nationalPanel").removeClass("sno");
+}
+apz.appdtl.FldVerification.fnCloseNationalPanel = function() {
+    $("#appdtl__FldVerification__nationalPanel").addClass("sno").removeClass("current");
+}
+apz.appdtl.FldVerification.fnProcessNationalId = function() {
+    debugger;
+    $("#appdtl__FldVerification__nationalPanel").addClass("sno").removeClass("current");
+    apz.startLoader();
+    setTimeout(function() {
+        apz.stopLoader();
+        lParams = {
+            "appId": "appdtl",
+            "scr": "NationalContact",
+            "div": "appdtl__AppLauncher__screenLauncher",
+            "userObj": apz.appdtl.FldVerification.sCache
+        };
+        apz.launchSubScreen(lParams);
+    }, 5000);
+}
+apz.appdtl.FldVerification.fnManualVerification = function() {
+    debugger;
+    lParams = {
+        "appId": "appdtl",
+        "scr": "ContactDetailsReadOnly",
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": apz.appdtl.FldVerification.sCache
+    };
+    apz.launchSubScreen(lParams);
+}

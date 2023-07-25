@@ -1,0 +1,59 @@
+apz.bnfsch.searchbyname = {};
+apz.app.onLoad_SearchByName = function(params) {
+    apz.bnfsch.searchbyname.sParams = params;
+    apz.bnfsch.searchbyname.fnInitialise();
+};
+apz.bnfsch.searchbyname.fnInitialise = function() {};
+apz.bnfsch.searchbyname.fnSearch = function() {
+    debugger;
+    var lSearchStr =apz.getElmValue("bnfsch__SearchByName__BeneName");
+    if (apz.isNull(lSearchStr)) {
+        lSearchStr = "%";
+    }else{
+        lSearchStr = "%"+lSearchStr+"%";
+    }
+    var lReq = {
+        "tbDbtpBeneficiaryDetails": {
+            "beneficiaryShortName": lSearchStr,
+            "customerId": apz.bnfsch.searchbyname.sParams.data.customerId,
+            "beneficiaryStatus":"A",
+            "beneficiaryType":"%",
+            "txnType":"%"
+        }
+    };
+    var lServerParams = {
+        "ifaceName": "BeneficiarySelection_Query",
+        "buildReq": "N",
+        "req": lReq,
+        "callBack": apz.bnfsch.searchbyname.fnSearchCallBack
+    };
+    apz.bnfsch.searchbyname.fnBeforeCallServer(lServerParams);
+};
+apz.bnfsch.searchbyname.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": params.buildReq,
+        "req": params.req,
+        "paintResp": "Y",
+        "callBack": params.callBack,
+        "appId": "bnfsch",
+        "internal": false
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.bnfsch.searchbyname.fnSearchCallBack = function(params) {
+    debugger;
+    if (params.errors) {
+        var param = {
+            'code': params.errors[0].errorCode
+        };
+        apz.dispMsg(param);
+    } else {
+        if (apz.bnfsch.searchbyname.sParams.data.paintResp == "Y") {
+            //paintResponse
+        } else if (apz.bnfsch.searchbyname.sParams.data.paintResp == "N") {
+            apz.bnfsch.searchbyname.sParams.control.callBack(params.res.bnfsch__BeneficiarySelection_Res);
+        }
+    }
+};

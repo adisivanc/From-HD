@@ -1,0 +1,16 @@
+apz.reqnoc.NOCLetter = {};
+apz.app.onLoad_NOCLetter = function() {
+           // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "REQUEST FOR NOC LETTER");
+
+}
+apz.reqnoc.NOCLetter.dispMsg = function(pResp, type) {
+    var params = {};
+    params.message = pResp;
+    params.type = type;
+    params.callBack = apz.app.displayMessageCallBack;
+    apz.dispMsg(params);
+}
+apz.reqnoc.NOCLetter.request = function() {
+ apz.dispMsg({message:"Your request for NOC letter has been submitted. We will get in touch with you shortly.", type:"S",callBack: apz.landin.Landing.fnHome});
+
+} 

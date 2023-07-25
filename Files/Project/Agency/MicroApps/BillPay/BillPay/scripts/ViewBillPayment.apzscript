@@ -1,0 +1,264 @@
+apz.bllpay.ViewBillPayment = {};
+apz.bllpay.ViewBillPayment.sParams = {};
+//onload function
+apz.app.onShown_ViewBillPayment = function(params) {
+    debugger;
+    apz.bllpay.ViewBillPayment.sParams = params;
+    if (!apz.data.scrdata.bllpay__BillPaymentSummary_Res) {
+        apz.data.scrdata.bllpay__BillPaymentSummary_Res = {};
+        apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary = [];
+    }
+    if (params.from == "billPayment") {
+        apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary = params.summary;
+        apz.data.loadData("BillPaymentSummary", "bllpay");
+        var paymentDetails = apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary;
+        var amount = 0;
+        for (var i = 0, len = paymentDetails.length; i < len; i++) {
+            if (paymentDetails[i].billType === "Mobile") {
+                $("#bllpay__ViewBillPayment__mobile_no_label_" + i).removeClass("sno");
+                $("#bllpay__ViewBillPayment__cust_id_label_" + i).addClass("sno");
+            }
+            amount += parseInt(paymentDetails[i].amount.replace(",", ""));
+        }
+        $("#bllpay__ViewBillPayment__el_inp_2").val(apz.formatNumber({
+            "value": amount,
+            decimalPoints: "2",
+            decimalSep: ".",
+            mask: "MILLION"
+        }));
+        apz.setElmValue("bllpay__ViewBillPayment__amount", amount + ".00");
+        apz.setElmValue("bllpay__ViewBillPayment__el_inp_2", amount + ".00")
+    } else if (params.from == "multipleBillPay") {
+        apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary = params.summary;
+        apz.data.loadData("BillPaymentSummary", "bllpay");
+        var paymentDetails = apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary;
+        var amount = 0;
+        // for (var i = 0, len = paymentDetails.length; i < len; i++) {}
+        amount += parseInt(paymentDetails[0].Amount.replace(",", ""));
+        $("#bllpay__ViewBillPayment__el_inp_2").val(apz.formatNumber({
+            "value": amount,
+            decimalPoints: "2",
+            decimalSep: ".",
+            mask: "MILLION"
+        }));
+        apz.setElmValue("bllpay__ViewBillPayment__amount", amount + ".00");
+        apz.setElmValue("bllpay__BillPaymentSummary__o__summary__providerCategory_0", paymentDetails[0].ServiceName);
+        apz.setElmValue("bllpay__BillPaymentSummary__o__summary__amount_0", paymentDetails[0].Amount);
+        apz.setElmValue("bllpay__BillPaymentSummary__o__summary__subsriberId_0", paymentDetails[0].ConsumerNumber);
+    } else if (params.from == "Dashboard") {
+        apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary = params.summary;
+        apz.data.loadData("BillPaymentSummary", "bllpay");
+        var paymentDetails = apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary;
+        var amount = 0;
+        // for (var i = 0, len = paymentDetails.length; i < len; i++) {}
+        amount += parseInt(paymentDetails[0].Amount.replace(",", ""));
+        $("#bllpay__ViewBillPayment__el_inp_2").val(amount);
+        apz.setElmValue("bllpay__ViewBillPayment__amount", amount + ".00");
+        apz.setElmValue("bllpay__BillPaymentSummary__o__summary__amount_0", paymentDetails[0].Amount);
+    } else if (params.from == "favourites") {
+        apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary = params.summary;
+        apz.data.loadData("BillPaymentSummary", "bllpay");
+        var paymentDetails = apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary;
+        var amount = paymentDetails[0].amount;
+        // for (var i = 0, len = paymentDetails.length; i < len; i++) {}
+        // amount += parseInt(.replace(",", ""));
+        // amount = paymentDetails.Amount
+        $("#bllpay__ViewBillPayment__el_inp_2").val(amount);
+        apz.setElmValue("bllpay__ViewBillPayment__amount", amount + ".00");
+        apz.setElmValue("bllpay__BillPaymentSummary__o__summary__amount_0", paymentDetails[0].amount);
+    } else if (params.from == "Search") {
+        providername = params.entities.entities[0]["extractedValue"][0];
+        amount = params.entities.entities[4]["extractedValue"][0];
+        apz.setElmValue("bllpay__BillPaymentSummary__o__summary__providerCategory_0", providername);
+        $("#bllpay__BillPaymentSummary__o__summary__providerImg").attr("src",
+            "data:image/png;base64,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"
+        )
+        $("#bllpay__ViewBillPayment__el_inp_2").val(amount);
+        apz.setElmValue("bllpay__ViewBillPayment__amount", amount + ".00");
+        apz.setElmValue("bllpay__BillPaymentSummary__o__summary__amount_0", amount);
+        apz.setElmValue("bllpay__BillPaymentSummary__o__summary__subsriberId_0", params.data.customerID);
+    }
+    var AccountArray = [{
+        val: "",
+        desc: "Select Account no"
+    }, {
+        val: "65000",
+        desc: "100009312401"
+    }, {
+        val: "60000",
+        desc: "100009312274"
+    }, {
+        val: "50000",
+        desc: "100009312263"
+    }];
+    apz.populateDropdown($("#bllpay__ViewBillPayment__el_dpd_1")[0], AccountArray)
+}
+//get remarks
+apz.bllpay.ViewBillPayment.fnGetRemarks = function(element, targetId) {
+    debugger;
+    var fieldValue = $(element).val();
+    apz.setElmValue("bllpay__ViewBillPayment__" + targetId, fieldValue);
+}
+//get account number
+apz.bllpay.ViewBillPayment.fnGetAccountNumber = function(element) {
+    debugger;
+    var accountNumber = $(element).val();
+    apz.bllpay.accno = accountNumber;
+    var elementId = $(element).attr('id');
+    var balance = apz.getElmValue(elementId);
+    apz.setElmValue("bllpay__ViewBillPayment__avail_bal", apz.formatNumber({
+        "value": balance,
+        decimalPoints: "2",
+        decimalSep: ".",
+        mask: "MILLION"
+    }));
+    apz.setElmValue("bllpay__ViewBillPayment__acc_no", accountNumber);
+}
+//go to confirmation screen
+apz.bllpay.ViewBillPayment.fnGotoConfirmation = function() {
+    debugger;
+    var result = apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary;
+    apz.bllpay.billpayments = result.reduce((temp, item) => {
+        obj = {};
+        /*obj["providerName"] = item.providerName;
+
+        obj["customerId"] = item.subsriberId;
+
+        obj["amount"] = item.amount;
+        obj["remarks"] = apz.getElmValue("bllpay__ViewBillPayment__el_txa_1");
+        obj["accountNumber"] = apz.bllpay.accno;*/
+        
+        if (apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary[0].providerName) {
+            obj["providerName"] = apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary[0].providerName;
+        } else {
+            obj["providerName"] = apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary[0].ServiceName;
+        }
+        
+        
+        if (apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary[0].providerName) {
+        obj["customerId"] = apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary[0].subsriberId;
+        } else {
+        obj["customerId"] = apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary[0].ConsumerNumber;
+        }
+        
+        
+        if (apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary[0].providerName) {
+        obj["amount"] = apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary[0].amount;
+        } else {
+        obj["amount"] = apz.data.scrdata.bllpay__BillPaymentSummary_Res.summary[0].Amount;
+        }
+        
+        
+        obj["remarks"] = apz.getElmValue("bllpay__ViewBillPayment__el_txa_1");
+        obj["accountNumber"] = $("#bllpay__ViewBillPayment__el_dpd_1")[0].value;
+        temp.push(obj);
+        return temp;
+    }, [])
+    $("#bllpay__ViewBillPayment__confirm_form,#bllpay__ViewBillPayment__el_btn_3").removeClass("sno");
+    $("#bllpay__ViewBillPayment__payment_form,#bllpay__ViewBillPayment__el_btn_2").addClass("sno");
+}
+// go to otp screen
+apz.bllpay.ViewBillPayment.fnGotoOtp = function() {
+    debugger;
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "PaymentOTP",
+        "div": apz.bllpay.ViewBillPayment.sParams.control.exitApp.div,
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                "OTPRefNo": +new Date(),
+                "billpayments": apz.bllpay.billpayments
+            },
+            "back": apz.bllpay.ViewBillPayment.fnBackToCurrentApp,
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.bllpay.ViewBillPayment.fnBackToPrviousScreen,
+                "destroyDiv": apz.bllpay.ViewBillPayment.sParams.control.exitApp.div
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+//from OTP to  summary screen
+apz.bllpay.ViewBillPayment.fnBackToPrviousScreen = function() {
+    if (apz.bllpay.ViewBillPayment.sParams.from === "favourites") {
+        apz.launchApp({
+            appId: "favour",
+            scr: "FavouriteSummary",
+            div: apz.bllpay.ViewBillPayment.sParams.control.exitApp.div,
+            userObj: {...apz.bllpay.ViewBillPayment.sParams,
+                from: "BillPay"
+            }
+        })
+    } else {
+        apz.launchApp({
+            appId: "bllpay",
+            scr: "BillPaymentSummary",
+            div: apz.bllpay.ViewBillPayment.sParams.control.exitApp.div,
+            userObj: {...apz.bllpay.ViewBillPayment.sParams
+            }
+        })
+    }
+}
+//from OTP to same screen
+apz.bllpay.ViewBillPayment.fnBackToCurrentApp = function() {
+    apz.launchApp({
+        appId: "bllpay",
+        scr: "ViewBillPayment",
+        div: apz.bllpay.ViewBillPayment.sParams.control.exitApp.div,
+        userObj: {...apz.bllpay.ViewBillPayment.sParams
+        }
+    })
+}
+//back to screen
+apz.bllpay.ViewBillPayment.fnBacktoScreen = function() {
+    if (apz.bllpay.ViewBillPayment.sParams.from === "favourites") {
+        apz.launchApp({
+            appId: "favour",
+            scr: "FavouriteSummary",
+            div: apz.bllpay.ViewBillPayment.sParams.control.exitApp.div,
+            userObj: {...apz.bllpay.ViewBillPayment.sParams,
+                from: "BillPay"
+            }
+        })
+    } else if (apz.bllpay.ViewBillPayment.sParams.from === "Dashboard") {
+        var screenName;
+        if (apz.deviceGroup == "Mobile") {
+            apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "RELATIONSHIP OVERVIEW")
+            screenName = "Home";
+        } else {
+            apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "RELATIONSHIP OVERVIEW")
+            screenName = "Dashboard"
+        }
+        apz.launchApp({
+            "scr": screenName,
+            "div": "cmrnav__Launcher__Launcher",
+            "appId": "csmrbk",
+            "userObj": {
+                "control": {
+                    "exitApp": {
+                        "appId": "",
+                        "div": "cmrnav__Launcher__Launcher",
+                        "callBack": ""
+                    }
+                }
+                //apz.csmrbk.landingpage.fnInitialise();
+            }
+        });
+    } else {
+        if ($("#bllpay__ViewBillPayment__payment_form").hasClass("sno")) {
+            $("#bllpay__ViewBillPayment__confirm_form,#bllpay__ViewBillPayment__el_btn_3").addClass("sno");
+            $("#bllpay__ViewBillPayment__payment_form,#bllpay__ViewBillPayment__el_btn_2").removeClass("sno");
+        } else {
+            delete apz.bllpay.ViewBillPayment.sParams.summary
+            apz.launchSubScreen({
+                appId: "bllpay",
+                scr: "BillPaymentSummary",
+                div: apz.bllpay.ViewBillPayment.sParams.control.exitApp.div,
+                userObj: {...apz.bllpay.ViewBillPayment.sParams
+                }
+            })
+        }
+    }
+}

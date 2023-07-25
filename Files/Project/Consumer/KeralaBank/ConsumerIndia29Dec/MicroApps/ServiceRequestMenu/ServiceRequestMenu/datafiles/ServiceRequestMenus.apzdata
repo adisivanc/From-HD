@@ -1,0 +1,322 @@
+{
+   "srmenu__ServiceRequestMenus_Res":{
+	"menuList": {
+		"Account Services": [{
+			"name": "Cash Delivery and Pickup",
+			"scr": "Launcher",
+			"appId": "cashdp",
+			"country":"India"
+		}, {
+			"name": "Change Home Branch",
+			"scr": "ChangeBranch",
+			"appId": "change",
+			"country":"India"
+		},{
+			"name": "Change Branch",
+			"scr": "ChangeBranch",
+			"appId": "change",
+			"country":"Global"
+		},  {
+			"name": "Demand Draft",
+			"scr": "DemandDraft",
+			"appId": "dmddft",
+			"country":"India and Global"
+		}, {
+			"name": "Download Deposit Slip",
+			"scr": "DepositSlip",
+			"appId": "deslip",
+			"country":"India and Global"
+		}, {
+			"name": "Generate / View MMID",
+			"scr": "GenerateMMID",
+			"appId": "genmid",
+			"country":"India"
+		}, {
+			"name": "Nominee Maintenance",
+			"scr": "NomineeSummary",
+			"appId": "nomimt",
+			"country":"India"
+		}, {
+			"name": "Request for e-Statement",
+			"scr": "RequesteStatement",
+			"appId": "estreq",
+			"country":"India and Global"
+		}, {
+			"name": "Request for Printed Statement",
+			"scr": "Launcher",
+			"appId": "prtstm",
+			"country":"India and Global"
+		}, {
+			"name": "Passbook Request",
+			"scr": "Launcher",
+			"appId": "passbk",
+			"country":"India"
+		}, {
+			"name": "QR Code",
+			"scr": "QRGenerator",
+			"appId": "accsnp",
+			"userObj" : {
+			    "customerDetail": {
+                "customerID": "000004712"
+            }
+			},
+			"country":"India and Global"
+		}],
+		"Loan Services": [{
+			"name": "Request NOC Letter",
+			"scr": "NOCLetter",
+			"appId": "reqnoc",
+			"country":"India and Global"
+		}],
+		"Card Services": [{
+			"name": "Request for Change in Billing Cycle",
+			"scr": "Launcher",
+			"appId": "chgbil",
+			"country":"India and Global"
+		}, {
+			"name": "Upgrade Card",
+			"scr": "Launcher",
+			"appId": "upgcrd",
+			"country":"India and Global"
+		}],	
+		"Social Security Schemes": [{
+			"name": "Atal Pension Yojana",
+			"scr": "APY",
+			"appId": "atpsyj",
+			"country":"India",
+			"userObj" : {
+			    "data": {
+                "accounts": [{
+                    "accountNo": "100009312263",
+                    "accountType": "Savings",
+                    "accountBalance": "10,00,996"
+                }, {
+                    "accountNo": "100009312401",
+                    "accountType": "Savings",
+                    "accountBalance": "1,88,373"
+                }, {
+                    "accountNo": "100009312274",
+                    "accountType": "Current",
+                    "accountBalance": "2,84,748"
+                }],
+                "customerID": "1"
+            },
+            "customerID": "1"
+			}
+		}, {
+			"name": "LPG ID update for DBTL",
+			"scr": "EnrollDBTLPG",
+			"appId": "dbtlpg",
+			"country":"India"
+		}, {
+			"name": "Jeevan Jyoti Bima",
+			"scr": "BimaYojana",
+			"appId": "bmyjna",
+			"country":"India",
+			"userObj" : {
+			    "data": {
+                "customerID": "2",
+                "typeOfBima": "PMJJBY",
+                "SavingsAccount": [{
+                    "accountNo": "100009312263",
+                    "accountType": "Savings",
+                    "accountBalance": "10,00,996",
+                    "Branch": "West Bay-30",
+                    "BranchCd": "612"
+                }, {
+                    "accountNo": "100009312401",
+                    "accountType": "Savings",
+                    "accountBalance": "1,88,373",
+                    "Branch": "West Bay-30",
+                    "BranchCd": "613"
+                }, {
+                    "accountNo": "100009312274",
+                    "accountType": "Current",
+                    "accountBalance": "2,84,748",
+                    "Branch": "West Bay-30",
+                    "BranchCd": "610"
+                }]
+            }
+			}
+		}, {
+			"name": "Suraksha Bima",
+			"scr": "BimaYojana",
+			"appId": "bmyjna",
+			"country":"India",
+			"userObj" : {
+			    "data": {
+                "customerID": "2",
+                "typeOfBima": "PMSBY",
+                "SavingsAccount": [{
+                    "accountNo": "100009312263",
+                    "accountType": "Savings",
+                    "accountBalance": "10,00,996",
+                    "Branch": "West Bay-30",
+                    "BranchCd": "612"
+                }, {
+                    "accountNo": "100009312401",
+                    "accountType": "Savings",
+                    "accountBalance": "1,88,373",
+                    "Branch": "West Bay-30",
+                    "BranchCd": "613"
+                }, {
+                    "accountNo": "100009312274",
+                    "accountType": "Current",
+                    "accountBalance": "2,84,748",
+                    "Branch": "West Bay-30",
+                    "BranchCd": "610"
+                }]
+            }
+			}
+		}, {
+			"name": "Sukanya Samriddhi Yojana",
+			"scr": "Launcher",
+			"appId": "yojna",
+			"country":"India"
+		}],
+		"Cheque Services": [{
+			"name": "Cheque Book Request",
+			"scr": "ChequeBookRequest",
+			"appId": "nchqbk",
+			"country":"India and Global",
+			"userObj" : {
+			      "customerID": "1234"
+			}
+		}, {
+			"name": "Cheque Status Enquiry",
+			"scr": "ChequeStatusEnquiry",
+			"appId": "chqsts",
+			"country":"India and Global"
+		}, {
+			"name": "Inward Clearing",
+			"scr": "ClearingChequeSummary",
+			"appId": "chqsts",
+			"country":"India and Global",
+			"userObj" : {
+			     "customerID": "000004712",
+            "SavingsAccount": [{
+                "accountNo": "100009312263",
+                "accountBal": "50000",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }, {
+                "accountNo": "100009312401",
+                "accountBal": "65000",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }, {
+                "accountNo": "100009312274",
+                "accountBal": "60000",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }],
+            "CurrentAccount": []
+			}
+		}, {
+			"name": "Outward Clearing",
+			"scr": "OutwardSummary",
+			"appId": "chqsts",
+			"country":"India and Global",
+			"userObj": {
+			    "customerID": "000004712",
+            "SavingsAccount": [{
+                "accountNo": "100009312263",
+                "accountBal": "50000",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }, {
+                "accountNo": "100009312401",
+                "accountBal": "65000",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }, {
+                "accountNo": "100009312274",
+                "accountBal": "60000",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }],
+            "CurrentAccount": []
+			}
+		}, {
+			"name": "Stop Cheque Payment",
+			"scr": "StopCheque",
+			"appId": "stpchq",
+			"country":"India and Global"
+		}],
+		"Customer Services": [{
+			"name": "Account Management",
+			"scr": "CustAccPort",
+			"appId": "cuacpf",
+			"country":"India and Global"
+		},  {
+			"name": "My Appointment",
+			"scr": "MyAppointments",
+			"appId": "srvreq",
+			"country":"India and Global"
+		},  {
+			"name": "Travel Notice",
+			"scr": "Launcher",
+			"appId": "travel",
+			"country":"India and Global"
+
+		},{
+			"name": "Update Contact Details",
+			"scr": "UpdateContact",
+			"appId": "update",
+			"country":"Global",
+			"userObj": {
+			    "action": "fromService"}
+		}],
+		"Tax Corner": [{
+			"name": "CBDT",
+			"scr": "TaxTransaction",
+			"appId": "cbdtax",
+			"country":"India"
+
+		}, {
+			"name": "Form 60",
+			"scr": "PANForm",
+			"appId": "pannad",
+			"country":"India"
+
+		}, {
+			"name": "Form 15G/H",
+			"scr": "Launcher",
+			"appId": "tdsfrm",
+			"userObj":{"type":"Form15"},
+			"country":"India"
+
+		}, {
+			"name": "Form 16A",
+			"scr": "Form16A",
+			"appId": "form16",
+			"country":"India"
+
+		}, {
+			"name": "Generic Forms",
+			"scr": "Summary",
+			"appId": "genfrm",
+			"country":"India"
+
+		}, {
+			"name": "GST",
+			"scr": "Launcher",
+			"appId": "gstapp",
+			"country":"India"
+
+		}, {
+			"name": "Tax Payment",
+			"scr": "InputTaxPayment",
+			"appId": "taxpay",
+			"country":"India"
+
+		}]
+	}
+}
+}

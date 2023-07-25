@@ -1,0 +1,119 @@
+apz.dbcommon = {};
+apz.bnfmnt.checkParams = function(params) {
+    debugger;
+    params.userObj = {"data":{
+        "customerId": "11",
+        "customerName": "JackSparrow"
+    }
+    };
+};
+apz.dbcommon.fnAadhaarNumberPattern = function(lAadhaar) {
+    var lAadharNo = lAadhaar;
+    var lMsg;
+    if ((!isNaN(lAadharNo))) {
+        var d = [
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
+            [2, 3, 4, 0, 1, 7, 8, 9, 5, 6],
+            [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
+            [4, 0, 1, 2, 3, 9, 5, 6, 7, 8],
+            [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],
+            [6, 5, 9, 8, 7, 1, 0, 4, 3, 2],
+            [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],
+            [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
+            [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+        ];
+        var p = [
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
+            [5, 8, 0, 3, 7, 9, 6, 1, 4, 2],
+            [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],
+            [9, 4, 5, 3, 1, 2, 6, 8, 7, 0],
+            [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],
+            [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],
+            [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
+        ];
+        var j = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9];
+        var lnumber = new String(lAadharNo);
+        var c = 0;
+        lnumber.replace(/\D+/g, "").split("").reverse().join("").replace(/[\d]/g, function(u, i, o) {
+            c = d[c][p[i & 7][parseInt(u, 10)]];
+        });
+        if (c === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+};
+apz.dbcommon.fnValidateNickName = function(poj) {
+    var lError = apz.val.validateInputAct(document.getElementById(poj.id), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            "code": 'VAL-001'
+        };
+        apz.dispMsg(lErrorParams);
+    }
+};
+apz.dbcommon.fnValidateEmail = function(obj) {
+    var lError = apz.val.validateInputAct(document.getElementById(obj.id), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            'code': 'VAL-002'
+        };
+        apz.dispMsg(lErrorParams);
+    }
+};
+apz.dbcommon.fnValidConfirmAccountNumber = function(params) {
+    debugger;
+    if (params.AccountNo == params.ConfirmAccNo) {
+        return true;
+    } else {
+        var msg = {
+            'code': 'VAL-003'
+        };
+        apz.dispMsg(msg);
+        return false
+    }
+}
+apz.dbcommon.fnValidSameMMID = function(params) {
+    debugger;
+    if (params.MMID == params.ConfirmMMID) {
+        return true;
+    } else {
+        var msg = {
+            'code': 'VAL-009'
+        };
+        apz.dispMsg(msg);
+        return false;
+    }
+}
+apz.dbcommon.fnValidateMobile = function(obj) {
+    var lError = apz.val.validateInputAct(document.getElementById(obj.id), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            'code': 'VAL-004'
+        };
+        apz.dispMsg(lErrorParams);
+    }
+}
+apz.dbcommon.fnValidateMMID = function(obj) {
+    var lError = apz.val.validateInputAct(document.getElementById(obj.id), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            'code': 'VAL-005'
+        };
+        apz.dispMsg(lErrorParams);
+    }
+}
+apz.dbcommon.fnValidateAccountNumber = function(obj) {
+    var lError = apz.val.validateInputAct(document.getElementById(obj.id), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            'code': 'VAL-008'
+        };
+        apz.dispMsg(lErrorParams);
+    }
+}

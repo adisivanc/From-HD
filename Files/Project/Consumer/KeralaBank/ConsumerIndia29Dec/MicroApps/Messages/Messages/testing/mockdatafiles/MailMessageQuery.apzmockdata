@@ -1,0 +1,103 @@
+{
+    "tbDbtpMailMessage": [
+        {
+            "readStatus": "UNREAD",
+            "userMsgStatus": "ENABLED",
+            "messageId": "324412",
+            "message": "Received the Cheque Book request! Will dispatch shortly",
+            "adminMsgStatus": "ENABLED",
+            "messageStatus": "SENT",
+            "originatingFrom": "BANK",
+            "adminUser": "",
+            "txnRefNo": "2345465",
+            "customerId": "12",
+            "modificationTs": "2018-02-20",
+            "creationTs": "2018-02-20",
+            "status": "OPEN"
+        }, {
+            "readStatus": "UNREAD",
+            "userMsgStatus": "ENABLED",
+            "messageId": "45646",
+            "message": "Thank you for submitting your valuable feedback",
+            "adminMsgStatus": "ENABLED",
+            "messageStatus": "SENT",
+            "originatingFrom": "BANK",
+            "adminUser": "",
+            "txnRefNo": "2345465",
+            "customerId": "12",
+            "modificationTs": "2018-02-20",
+            "creationTs": "2018-02-20",
+            "status": "OPEN"
+        }, {
+            "readStatus": "UNREAD",
+            "userMsgStatus": "ENABLED",
+            "messageId": "123456789",
+            "message": "Received the Cheque Book request! Will dispatch shortly",
+            "adminMsgStatus": "ENABLED",
+            "messageStatus": "SENT",
+            "originatingFrom": "BANK",
+            "adminUser": "",
+            "txnRefNo": "876564",
+            "customerId": "12",
+            "modificationTs": "2018-02-20",
+            "creationTs": "2018-02-20",
+            "status": "OPEN"
+        }, {
+            "readStatus": "UNREAD",
+            "userMsgStatus": "ENABLED",
+            "messageId": "123456789",
+            "message": "Received the Cheque Book request! Will dispatch shortly",
+            "adminMsgStatus": "ENABLED",
+            "messageStatus": "SENT",
+            "originatingFrom": "BANK",
+            "adminUser": "",
+            "txnRefNo": "1241422",
+            "customerId": "12",
+            "modificationTs": "2018-02-20",
+            "creationTs": "2018-02-20",
+            "status": "OPEN"
+        }, {
+            "readStatus": "UNREAD",
+            "userMsgStatus": "ENABLED",
+            "messageId": "123456789",
+            "message": "Received the Cheque Book request! Will dispatch shortly",
+            "adminMsgStatus": "ENABLED",
+            "messageStatus": "SENT",
+            "originatingFrom": "BANK",
+            "adminUser": "",
+            "txnRefNo": "21442",
+            "customerId": "12",
+            "modificationTs": "2018-02-20",
+            "creationTs": "2018-02-20",
+            "status": "OPEN"
+        }, {
+            "readStatus": "UNREAD",
+            "userMsgStatus": "ENABLED",
+            "messageId": "123456789",
+            "message": "Received the Cheque Book request! Will dispatch shortly",
+            "adminMsgStatus": "ENABLED",
+            "messageStatus": "SENT",
+            "originatingFrom": "BANK",
+            "adminUser": "",
+            "txnRefNo": "23414",
+            "customerId": "12",
+            "modificationTs": "2018-02-20",
+            "creationTs": "2018-02-20",
+            "status": "OPEN"
+        }, {
+            "readStatus": "UNREAD",
+            "userMsgStatus": "ENABLED",
+            "messageId": "123456789",
+            "message": "Received the Cheque Book request! Will dispatch shortly",
+            "adminMsgStatus": "ENABLED",
+            "messageStatus": "SENT",
+            "originatingFrom": "BANK",
+            "adminUser": "",
+            "txnRefNo": "124142",
+            "customerId": "12",
+            "modificationTs": "2018-02-20",
+            "creationTs": "2018-02-20",
+            "status": "OPEN"
+        }
+    ]
+}

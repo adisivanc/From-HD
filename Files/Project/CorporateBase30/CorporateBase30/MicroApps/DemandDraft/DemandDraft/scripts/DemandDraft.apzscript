@@ -1,0 +1,306 @@
+apz.dmddft.demanddraft = {};
+apz.dmddft.demanddraft.sParams = {};
+apz.dmddft.demanddraft.sAction = {};
+apz.app.onLoad_DemandDraft = function(params) {
+    debugger;
+    apz.dmddft.demanddraft.fnInitialise(params);
+     
+};
+apz.dmddft.demanddraft.fnInitialise = function(params) {
+    debugger;
+    apz.dmddft.demanddraft.sParams = params;
+    apz.data.loadJsonData("Accounts","dmddft");
+    apz.dmddft.demanddraft.sParams.accounts = apz.data.scrdata.dmddft__Accounts_Res.accounts;
+   
+    apz.dmddft.demanddraft.fnSetValueStage1();
+    apz.dmddft.demanddraft.fnGoToStage1();
+};
+apz.app.onShown_DemandDraft = function() {
+    debugger;
+    $("#dmddft__DemandDraft__i__demandDraftDtls__creditAccountNo").attr("type","tel");
+
+
+    $(".crt-form.ver .ecn > .syl > span").text("");
+};
+
+apz.dmddft.demanddraft.fnGoToStage1 = function() {
+    debugger;
+    apz.dmddft.demanddraft.fnRenderStage1();
+};
+apz.dmddft.demanddraft.fnSetValueStage1 = function() {
+    debugger;
+    var lToday = apz.dmddft.demanddraft.fnCurrentDate();
+    
+    apz.setElmValue("dmddft__DemandDraft__i__demandDraftDtls__draftIssueDate", lToday);
+    var lAccounts = apz.dmddft.demanddraft.sParams.accounts;
+    var lDropObj = [];
+    var lObj = [{
+        "val": "",
+        "desc": "Select Account"
+    }];
+    
+    for (var i = 0; i < lAccounts.length; i++) {
+        var strlen = lAccounts[i].accountNo;
+        strlen = strlen.substr(0, strlen.length - 4).replace(/[0-9]/g, 'X') + strlen.substr(strlen.length - 4, strlen.length).replace(/[0-9]/g, '9');
+        var laccNo = lAccounts[i].accountNo;
+        var result = apz.getMaskedValue(strlen, laccNo);
+        var lObj = {
+            "val": lAccounts[i].accountNo,
+            "desc":   lAccounts[i].accountType + " - " + result
+        };
+        lDropObj.push(lObj);
+    }
+    
+    
+    // for (var i = 0; i < lAccounts.length; i++) {
+    //     var lObj = {
+    //         "val": lAccounts[i].accountNo,
+    //         "desc": lAccounts[i].accountType + " - " + lAccounts[i].accountNo
+    //     };
+    //     lDropObj.push(lObj);
+    // }
+    
+    
+    apz.populateDropdown(document.getElementById("dmddft__DemandDraft__i__demandDraftDtls__debitAccountNo"), lDropObj);
+    apz.dmddft.demanddraft.fnSetAmount();
+};
+apz.dmddft.demanddraft.fnSetAmount = function() {
+    debugger;
+    var lAccNum = apz.getElmValue("dmddft__DemandDraft__i__demandDraftDtls__debitAccountNo").trim();
+   // var lIndex = $("#dmddft__DemandDraft__i__demandDraftDtls__debitAccountNo_div li[value='" + lAccNum + "']").index();
+    apz.data.loadJsonData("Accounts","dmddft");
+    apz.dmddft.demanddraft.sParams.accounts = apz.data.scrdata.dmddft__Accounts_Res.accounts;
+    var lAccounts = apz.dmddft.demanddraft.sParams.accounts;
+     var selectedAccount  = lAccounts.filter(function(item){if(item.accountNo == lAccNum){return item}});
+    var lAmount = selectedAccount[0].accountBalance;
+     var param = {
+            "decimalSep": ".",
+            "value": lAmount,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    apz.setElmValue("dmddft__DemandDraft__Stage1Amount", apz.formatNumber(param));
+    apz.show("dmddft__DemandDraft__Stage1Amount_ul");
+};
+apz.dmddft.demanddraft.fnCurrentDate = function() {
+    debugger;
+    var lCurrentDate = new Date();
+    var dd = lCurrentDate.getDate();
+    var mm = lCurrentDate.getMonth() +1;
+    var yyyy = lCurrentDate.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    var lMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    //var lToday = dd + '-' + lMonths[mm] + '-' + yyyy;
+    var lToday = dd + '/' + mm + '/' + yyyy;
+    return lToday;
+};
+apz.dmddft.demanddraft.fnRenderStage1 = function() {
+    debugger;
+    apz.show("dmddft__DemandDraft__Stage1");
+    apz.hide("dmddft__DemandDraft__Stage2");
+    apz.hide("dmddft__DemandDraft__OtpLauncher");
+    apz.hide("dmddft__DemandDraft__Stage3");
+};
+apz.dmddft.demanddraft.fnShowAccBalance = function(pthis) {
+    debugger;
+  
+          //lAccNum = $(pthis).val().split("-")[1].trim();
+          lAccNum = apz.getElmValue("dmddft__DemandDraft__i__demandDraftDtls__debitAccountNo");
+    
+   
+     var lAccounts = apz.dmddft.demanddraft.sParams.accounts;
+     
+     var selectedAccount  = lAccounts.filter(function(item){if(item.accountNo == lAccNum){return item}});
+    var lAmount = selectedAccount[0].accountBalance;
+    apz.setElmValue("dmddft__DemandDraft__Stage1Amount", lAmount);
+    apz.show("dmddft__DemandDraft__Stage1Amount_ul");
+    
+};
+apz.dmddft.demanddraft.fnAmountCheck = function() {
+    debugger;
+    var lTotalAmount = parseInt(apz.getElmValue("dmddft__DemandDraft__Stage1Amount").replace(/,/g, ''));
+    var lEnteredAmount = parseInt(apz.getElmValue("dmddft__DemandDraft__i__demandDraftDtls__amount"));
+    if (lTotalAmount < lEnteredAmount) {
+        var lMsg = {
+            "code": "ERR_AMT"
+        };
+        apz.dispMsg(lMsg);
+        apz.setElmValue("dmddft__DemandDraft__i__demandDraftDtls__amount", '');
+    }
+};
+apz.dmddft.demanddraft.fnContinueStage1 = function() {
+    debugger;
+    var lValid = apz.dmddft.demanddraft.fnValidateStage1();
+    if (lValid) {
+        apz.dmddft.demanddraft.fnGoToStage2();
+    }
+};
+apz.dmddft.demanddraft.fnGoToStage2 = function() {
+    debugger;
+    apz.data.buildData("DemandDraft", "dmddft");
+    apz.dmddft.demanddraft.fnSetValueStage2();
+    apz.dmddft.demanddraft.fnRenderStage2();
+};
+apz.dmddft.demanddraft.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("dmddft__DemandDraft__Stage1Form");
+    lValid = true;
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "ERR_MAN"
+        };
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.dmddft.demanddraft.fnSetValueStage2 = function() {
+    debugger;
+    
+    var strlen =apz.getElmValue("dmddft__DemandDraft__i__demandDraftDtls__debitAccountNo");
+        strlen = strlen.substr(0, strlen.length - 4).replace(/[0-9]/g, 'X') + strlen.substr(strlen.length - 4, strlen.length).replace(/[0-9]/g, '9');
+        var laccNo = apz.getElmValue("dmddft__DemandDraft__i__demandDraftDtls__debitAccountNo");
+        var result = apz.getMaskedValue(strlen, laccNo);
+    
+    
+    apz.setElmValue("dmddft__DemandDraft__debitAccNo", result);
+    apz.setElmValue("dmddft__DemandDraft__amount", apz.getElmValue("dmddft__DemandDraft__i__demandDraftDtls__amount"));
+    apz.setElmValue("dmddft__DemandDraft__PayAtBank", apz.getElmValue("dmddft__DemandDraft__i__demandDraftDtls__payableBank"));
+    apz.setElmValue("dmddft__DemandDraft__payAtBranchName", apz.getElmValue("dmddft__DemandDraft__i__demandDraftDtls__payableBranchName"));
+    apz.setElmValue("dmddft__DemandDraft__draftIssueDate", apz.getElmValue("dmddft__DemandDraft__i__demandDraftDtls__draftIssueDate"));
+    apz.setElmValue("dmddft__DemandDraft__InFavourOf", apz.getElmValue("dmddft__DemandDraft__i__demandDraftDtls__inFavourOf"));
+    if (!apz.isNull("dmddft__DemandDraft__i__demandDraftDtls__draftIssueDate")) {
+        apz.show("dmddft__DemandDraft__CreditAccNo_ctrl_grp_div");
+        apz.setElmValue("dmddft__DemandDraft__CreditAccNo", apz.getElmValue("dmddft__DemandDraft__i__demandDraftDtls__creditAccountNo"));
+    }
+};
+apz.dmddft.demanddraft.fnRenderStage2 = function() {
+    debugger;
+    apz.hide("dmddft__DemandDraft__Stage1");
+    apz.show("dmddft__DemandDraft__Stage2");
+    apz.hide("dmddft__DemandDraft__OtpLauncher");
+    apz.hide("dmddft__DemandDraft__Stage3");
+};
+apz.dmddft.demanddraft.fnEditStage2 = function() {
+    debugger;
+    apz.dmddft.demanddraft.fnRenderStage1();
+};
+apz.dmddft.demanddraft.fnConfirmStage2 = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "DemandDraft",
+        "req": {
+            "demandDraftDtls": apz.data.scrdata.dmddft__DemandDraft_Req.demandDraftDtls,
+            "action": "Confirm"
+        },
+        "callBack": apz.dmddft.demanddraft.fnCallServerCallBack
+    };
+   // apz.dmddft.demanddraft.fnBeforeCallServer(lParams);
+    apz.data.loadJsonData("DemandDraft","dmddft");
+    if (apz.data.scrdata.dmddft__DemandDraft_Res.demandDraftDtls.respCd == "app") {
+            apz.dmddft.demanddraft.sParams.RefNum = apz.data.scrdata.dmddft__DemandDraft_Res.demandDraftDtls.txnRefNo;
+            apz.dmddft.demanddraft.fnRenderOtpScreen();
+             //apz.dmddft.demanddraft.fnGoToStage3();
+             
+              apz.dispMsg({
+        "message": "Demand Draft Created Successfully",
+        "type": "S",
+        "callBack":apz.dmddft.demanddraft.fnConfirmStage2CB
+    })
+           
+        }
+};
+
+
+
+
+apz.dmddft.demanddraft.fnConfirmStage2CB = function(params){
+     var params = {};
+    params.appId = "dmddft";
+    params.scr = "DemandDraft";
+    params.layout = "All";
+    params.description = "";
+    params.div = "ACNR01__Navigator__launchPad";
+   
+    apz.launchApp(params);
+}
+
+
+apz.dmddft.demanddraft.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": "N",
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": params.callBack
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.dmddft.demanddraft.fnCallServerCallBack = function(params) {
+    debugger;
+    if (!params.errors) {
+        if (params.res.dmddft__DemandDraft_Res.demandDraftDtls.respCd == "app") {
+            apz.dmddft.demanddraft.sParams.RefNum = params.res.dmddft__DemandDraft_Res.demandDraftDtls.txnRefNo;
+            apz.dmddft.demanddraft.fnRenderOtpScreen();
+          apz.dmddft.demanddraft.fnGoToStage3();
+        }
+    }
+};
+apz.dmddft.demanddraft.fnRenderOtpScreen = function() {
+    debugger;
+    apz.hide("dmddft__DemandDraft__Stage1");
+    apz.hide("dmddft__DemandDraft__Stage2");
+    apz.show("dmddft__DemandDraft__OtpLauncher");
+    apz.hide("dmddft__DemandDraft__Stage3");
+};
+apz.dmddft.demanddraft.fnOtpCB = function() {
+    debugger;
+    apz.dmddft.demanddraft.fnGoToStage3();
+};
+apz.dmddft.demanddraft.fnGoToStage3 = function() {
+    debugger;
+    apz.dmddft.demanddraft.fnRenderStage3();
+    apz.dmddft.demanddraft.fnSetValueStage3();
+};
+apz.dmddft.demanddraft.fnSetValueStage3 = function() {
+    debugger;
+    
+    var strlen =apz.data.scrdata.dmddft__DemandDraft_Req.demandDraftDtls.debitAccountNo;
+        strlen = strlen.substr(0, strlen.length - 4).replace(/[0-9]/g, 'X') + strlen.substr(strlen.length - 4, strlen.length).replace(/[0-9]/g, '9');
+        var laccNo = apz.data.scrdata.dmddft__DemandDraft_Req.demandDraftDtls.debitAccountNo;
+        var result = apz.getMaskedValue(strlen, laccNo);
+    
+    
+    apz.setElmValue("dmddft__DemandDraft__debitaccStage3", result);
+    apz.setElmValue("dmddft__DemandDraft__amountStage3", apz.data.scrdata.dmddft__DemandDraft_Req.demandDraftDtls.amount);
+    var lRefNo = "Your Reference no is " + apz.dmddft.demanddraft.sParams.RefNum;
+    apz.setElmValue("dmddft__DemandDraft__refNoStage3", lRefNo);
+};
+apz.dmddft.demanddraft.fnRenderStage3 = function() {
+    debugger;
+    apz.hide("dmddft__DemandDraft__Stage1");
+    apz.hide("dmddft__DemandDraft__Stage2");
+    apz.show("dmddft__DemandDraft__OtpLauncher");
+    apz.show("dmddft__DemandDraft__Stage3");
+};
+
+apz.dmddft.demanddraft.fnDone = function(){
+    //   var params = {};
+    // params.appId = "dmddft";
+    // params.scr = "DemandDraft";
+    // params.div = "ACNR01__Navigator__launchPad";
+    // params.layout = "All";
+    // //apz.launchSubScreen(params);
+    // apz.launchApp(params);
+            apz.ACNR01.Navigator.launchApp("dmddft", "DemandDraft", "All", "DemandDraft");
+
+}

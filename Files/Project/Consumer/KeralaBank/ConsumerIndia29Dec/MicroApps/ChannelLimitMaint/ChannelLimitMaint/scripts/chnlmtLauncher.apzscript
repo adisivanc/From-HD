@@ -1,0 +1,5 @@
+apz.chnlmt.checkParams = function(params) {
+    params.userObj = {
+        "customerID": "C001"
+    }
+};

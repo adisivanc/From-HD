@@ -1,0 +1,300 @@
+apz.appdtl.NewDocumentDetails = {};
+apz.appdtl.NewDocumentDetails.DocType = ""
+apz.appdtl.NewDocumentDetails.sDocData = {};
+apz.appdtl.NewDocumentDetails.progress = 0;
+apz.appdtl.NewDocumentDetails.progressInterval = "";
+apz.appdtl.NewDocumentDetails.navAction = "";
+apz.data.scrdata.appdtl__DocumentDetail_Req = {
+    tbDbmiCustomerDocuments: []
+}
+apz.appdtl.NewDocumentDetails.fingerPrintPreviewId = "";
+apz.app.onLoad_NewDocumentDetails = function(params) {
+    debugger;
+    apz.appdtl.NewDocumentDetails.refNo = params.refNo;
+    apz.setElmValue("appdtl__DocumentDetail__i__tbDbmiCustomerDocuments__refNo", apz.appdtl.NewDocumentDetails.refNo);
+    apz.appdtl.NewDocumentDetails.fetchDocument(params);
+    apz.appdtl.NewDocumentDetails.manageHeaders();
+}
+apz.app.onShown_NewDocumentDetails = function(params) {
+    apz.appdtl.currenctScreen = "document_details";
+}
+apz.appdtl.NewDocumentDetails.allowDrop = function(e) {
+    e.preventDefault();
+}
+apz.appdtl.NewDocumentDetails.fnShowDocument = function(param, type) {
+    debugger;
+    console.log(param)
+    // var id = $(param).attr("id");
+    var id = $(param).attr("rowno");
+    var value = apz.getElmValue("" + $(param).attr("id"));
+    $("#appdtl__NewDocumentDetails__DocumentPreview").removeClass("sno")
+    var img = ""
+    var docName = ""
+    var records = [];
+    if (type == "photoIdDocuments") {
+        img = apz.data.scrdata.appdtl__DocumentsTypes_Res.photoIdDocuments[id].docData;
+        docName = apz.data.scrdata.appdtl__DocumentsTypes_Res.photoIdDocuments[id].docName;
+    } else if (type == "addressDocuments") {
+        img = apz.data.scrdata.appdtl__DocumentsTypes_Res.addressDocuments[id].docData;
+        docName = apz.data.scrdata.appdtl__DocumentsTypes_Res.addressDocuments[id].docName;
+    } else if (type == "additionalDocuments") {
+        img = apz.data.scrdata.appdtl__DocumentsTypes_Res.additionalDocuments[id].docData;
+        docName = apz.data.scrdata.appdtl__DocumentsTypes_Res.additionalDocuments[id].docName;
+    } else if (type == "photoDocuments") {
+        img = apz.data.scrdata.appdtl__DocumentsTypes_Res.photoDocuments[id].docData;
+        docName = apz.data.scrdata.appdtl__DocumentsTypes_Res.photoDocuments[id].docName;
+    } else if (type == "signatureDocuments") {
+        img = apz.data.scrdata.appdtl__DocumentsTypes_Res.signatureDocuments[id].docData;
+        docName = apz.data.scrdata.appdtl__DocumentsTypes_Res.signatureDocuments[id].docName;
+    }
+    /*for (var i = 0; i < records.length; i++) {
+        if (records[i].fileName == value) {
+            img = records[i].docData;
+            docName = records[i].docType;
+        }
+    }*/
+    if (type == "photoDocuments" || type == "signatureDocuments") {
+        $("#appdtl__NewDocumentDetails__PreviewImage").attr("src", img); //set image into container
+    } else {
+        $("#appdtl__NewDocumentDetails__PreviewImage").attr("src", "data:image;base64," + img); //set image into container
+    }
+    apz.setElmValue("appdtl__NewDocumentDetails__PreviewDocumentName", docName);
+}
+apz.appdtl.NewDocumentDetails.fnHideDocument = function() {
+    debugger;
+    $("#appdtl__NewDocumentDetails__DocumentPreview").addClass("sno")
+}
+apz.appdtl.NewDocumentDetails.fetchDocument = function(params) {
+    debugger;
+    apz.startLoader();
+    apz.data.buildData("ApplicationInfoDB", "appdtl");
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.refNo = params.refNo;
+    apz.data.scrdata.appdtl__DocumentsTypes_Res = {
+        photoIdDocuments: [],
+        addressDocuments: [],
+        additionalDocuments: [],
+        signatureDocuments: [],
+        photoDocuments: []
+    };
+    var lParams = {
+        "ifaceName": "DocumentDetail_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": {
+                "refNo": apz.appdtl.NewDocumentDetails.refNo
+            }
+        },
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.NewDocumentDetails.fetchDocumentCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.appdtl.NewDocumentDetails.fetchDocumentCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    if (params.errors == undefined && params.status) {
+        if (params.res.appdtl__DocumentDetail_Req) {
+            var lidProof = params.res.appdtl__DocumentDetail_Req.tbDbmiCustomerDocuments;
+        } else {
+            var lidProof = params.res.appdtl__DocumentDetail_Res.tbDbmiCustomerDocuments;
+        }
+        lidProof.forEach(function(lobj) {
+            if (lobj.docData != "") {
+                if (lobj.docType === "IdentityDocuments") {
+                    apz.data.scrdata.appdtl__DocumentsTypes_Res.photoIdDocuments.push(lobj);
+                } else if (lobj.docType === "AddressDocuments") {
+                    apz.data.scrdata.appdtl__DocumentsTypes_Res.addressDocuments.push(lobj);
+                } else if (lobj.docType === "OtherDocuments") {
+                    apz.data.scrdata.appdtl__DocumentsTypes_Res.additionalDocuments.push(lobj);
+                } else if (lobj.docType === "PhotoSignature") {
+                    if (lobj.docName == "Upload your photo") {
+                        lobj.docName = "Photo"
+                    } else {
+                        lobj.docName = "Signature"
+                    }
+                    apz.data.scrdata.appdtl__DocumentsTypes_Res.photoDocuments.push(lobj);
+                }
+            }
+        });
+        if (lidProof.length > 0) {
+            $(
+                "#appdtl__NewDocumentDetails__bottom_fileUpload,#appdtl__NewDocumentDetails__uploadNav,#appdtl__NewDocumentDetails__DocumentDetail__i__tbDbmiCustomerDocuments__docType_span,#appdtl__NewDocumentDetails__mandatory_err"
+            ).addClass("sno");
+            $("#appdtl__NewDocumentDetails__el_btn_6").removeClass("sno");
+        }
+        if (apz.data.scrdata.appdtl__DocumentsTypes_Res.photoIdDocuments.length > 0) {
+            $("#appdtl__NewDocumentDetails__photoProof_lst").removeClass("sno");
+        }
+        if (apz.data.scrdata.appdtl__DocumentsTypes_Res.addressDocuments.length > 0) {
+            $("#appdtl__NewDocumentDetails__addressProof_lst").removeClass("sno");
+        }
+        if (apz.data.scrdata.appdtl__DocumentsTypes_Res.additionalDocuments.length > 0) {
+            $("#appdtl__NewDocumentDetails__additionalProof_lst").removeClass("sno");
+        }
+        apz.data.loadData("DocumentsTypes", "appdtl");
+        var uploadDocuments = apz.data.scrdata.appdtl__DocumentsTypes_Res;
+        for (var key in uploadDocuments) {
+            if (uploadDocuments[key].length > 0) {
+                for (var i = 0, len = uploadDocuments[key].length; i < len; i++) {
+                    $("#appdtl__NewDocumentDetails__" + uploadDocuments[key][i].docType + "_ProgressBar_" + i + "_div").removeClass("sno")
+                    $("#appdtl__NewDocumentDetails__" + uploadDocuments[key][i].docType + "_ProgressBar_" + i).css("width", "100%").addClass("suc");
+                    $("#appdtl__NewDocumentDetails__" + uploadDocuments[key][i].docType + "_StatusMsg_" + i).removeClass("sno");
+                }
+            }
+        }
+    }
+}
+apz.appdtl.NewDocumentDetails.manageHeaders = function() {
+    $("#appdtl__AppLauncher__document_div").addClass('active');
+    $("#appdtl__AppLauncher__product_div").removeClass('active');
+    $("#appdtl__AppLauncher__employment_div").removeClass('active');
+}
+apz.appdtl.NewDocumentDetails.fnCancel = function(params) {
+    debugger;
+    apz.appdtl.NewDocumentDetails.navAction = "cancel";
+    apz.appdtl.NewDocumentDetails.saveApplicationDetails();
+    // apz.appdtl.AppLauncher.onCancel();
+}
+apz.appdtl.NewDocumentDetails.saveApplicationDetails = function() {
+    debugger;
+    var action = apz.appdtl.NewDocumentDetails.navAction;
+    if (action && action != "") {
+        if (action == "next") {
+            apz.appdtl.NewDocumentDetails.navAction = "";
+            apz.appdtl.NewDocumentDetails.fnSaveAndGoNextScreen();
+        } else if (action == "back") {
+            apz.appdtl.NewDocumentDetails.navAction = "";
+            apz.appdtl.NewDocumentDetails.fnSaveAndGoBackScreen();
+        } else if (action == "cancel") {
+            apz.appdtl.NewDocumentDetails.navAction = "";
+            apz.appdtl.AppLauncher.onCancel();
+        }
+    }
+    /*apz.startLoader();
+    apz.appdtl.NewDocumentDetails.sDocData = apz.copyJSONObject(apz.data.scrdata.appdtl__DocumentDetail_Req);
+    var lParams = {
+        "ifaceName": "DocumentDetail_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": {
+                "refNo": apz.appdtl.NewDocumentDetails.refNo
+            }
+        },
+        "appId": "appdtl",
+        "paintResp": "N",
+        "callBack": apz.appdtl.NewDocumentDetails.saveApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);*/
+};
+apz.appdtl.NewDocumentDetails.saveApplicationDetailsCB = function(params) {
+    debugger;
+    apz.appdtl.NewDocumentDetails.insertDocument();
+};
+apz.appdtl.NewDocumentDetails.insertDocument = function() {
+    debugger;
+    var lDocumentArray = [];
+    var lSignature = $("#appdtl__NewDocumentDetails__signature").attr("src");
+    var lPhoto = $("#appdtl__NewDocumentDetails__profillePic").attr("src");
+    // var llPhoto = lPhoto.split(",").pop();
+    // var llSignature = lSignature.split(",").pop();
+    /*if ($("#appdtl__NewDocumentDetails__profillePic").attr("src") != "apps/styles/themes/BranchBase/img/photo-camera.png") {
+        var lPhotoObj = {
+            "refNo": apz.appdtl.NewDocumentDetails.refNo,
+            "docType": "Photo",
+            "docData": lPhoto,
+            "docName": "Photo",
+            "fileName": "Photo.png"
+        };
+        lDocumentArray.push(lPhotoObj);
+    }
+    if ($("#appdtl__NewDocumentDetails__signature").attr("src") != "apps/styles/themes/BranchBase/img/img1.png") {
+        var lSignatureObj = {
+            "refNo": apz.appdtl.NewDocumentDetails.refNo,
+            "docType": "Signature",
+            "docData": lSignature,
+            "docName": "Signature",
+            "fileName": "Signature.png"
+        };
+        lDocumentArray.push(lSignatureObj);
+    }*/
+    var idDocument = apz.copyJSONObject(apz.data.scrdata.appdtl__DocumentsTypes_Res);
+    var lDocArray = lDocumentArray.concat(idDocument.photoIdDocuments).concat(idDocument.addressDocuments).concat(idDocument.additionalDocuments).concat(
+        idDocument.photoDocuments).concat(idDocument.signatureDocuments);
+    lDocArray.forEach(function(doc, i) {
+        doc.refNo = apz.appdtl.NewDocumentDetails.refNo;
+        if (doc.seqNo) {
+            delete doc.seqNo;
+        }
+        if (!doc.docId) {
+            doc.docId = +new Date() + i
+        }
+    });
+    var lParams = {
+        "ifaceName": "DocumentDetail_New",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": lDocArray
+        },
+        "appId": "appdtl",
+        "paintResp": "N",
+        "callBack": apz.appdtl.NewDocumentDetails.insertDocumentCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.appdtl.NewDocumentDetails.insertDocumentCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    var action = apz.appdtl.NewDocumentDetails.navAction;
+    if (action && action != "") {
+        if (action == "next") {
+            apz.appdtl.NewDocumentDetails.navAction = "";
+            apz.appdtl.NewDocumentDetails.fnSaveAndGoNextScreen();
+        } else if (action == "back") {
+            apz.appdtl.NewDocumentDetails.navAction = "";
+            apz.appdtl.NewDocumentDetails.fnSaveAndGoBackScreen();
+        } else if (action == "cancel") {
+            apz.appdtl.NewDocumentDetails.navAction = "";
+            apz.appdtl.AppLauncher.onCancel();
+        }
+    }
+}
+apz.appdtl.NewDocumentDetails.nextScreen = function() {
+    debugger;
+    apz.appdtl.NewDocumentDetails.navAction = "next";
+    apz.appdtl.NewDocumentDetails.saveApplicationDetails();
+}
+apz.appdtl.NewDocumentDetails.fnSaveAndGoNextScreen = function() {
+    debugger;
+    apz.appdtl.AppLauncher.sCache.screen = "product";
+    var params = {};
+    params.appId = "appdtl";
+    params.scr = "ProductLauncher";
+    params.div = "appdtl__AppLauncher__screenLauncher";
+    params.userObj = {
+        "refNo": apz.appdtl.NewDocumentDetails.refNo,
+        "subproduct": apz.appdtl.AppLauncher.sCache.subproduct,
+        "product": apz.appdtl.AppLauncher.sCache.product,
+        "appId": apz.appdtl.AppLauncher.sCache.appId,
+        "screen": "product"
+    };
+    apz.launchSubScreen(params);
+}
+apz.appdtl.NewDocumentDetails.preScreen = function() {
+    debugger;
+    apz.appdtl.NewDocumentDetails.navAction = "back";
+    apz.appdtl.NewDocumentDetails.saveApplicationDetails();
+}
+apz.appdtl.NewDocumentDetails.fnSaveAndGoBackScreen = function() {
+    debugger;
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "IdentityDetail",
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.appdtl.NewDocumentDetails.refNo,
+            "div": "appdtl__AppLauncher__screenLauncher"
+        }
+    };
+    apz.launchSubScreen(lParams);
+}

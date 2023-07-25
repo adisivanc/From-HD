@@ -1,0 +1,28 @@
+{
+    "dashbo__persistedwidgets_Res":[{
+        "name":"Foreign Exchange Rates",
+        "icon":"icon-money"
+    },{
+        "name":"Messages",
+        "icon":"icon-email"
+    },{
+        "name":"Credit Card Payments",
+        "icon":"icon-card"
+    }, {
+        "name":"Expenses",
+        "icon":"icon-money"
+    },{
+        "name":"Upcoming Payments",
+        "icon":"icon-cardpayment"
+    },{
+        "name":"Announcements",
+        "icon":"icon-bullhorn"
+    },{
+        "name":"Spend Analysis",
+        "icon":"icon-piechart"
+    },{
+        "name":"Calendar",
+        "icon":"icon-calendar"
+    }]
+    
+}

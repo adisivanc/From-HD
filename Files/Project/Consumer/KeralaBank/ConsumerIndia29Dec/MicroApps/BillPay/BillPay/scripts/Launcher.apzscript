@@ -1,0 +1,34 @@
+apz.app.onLoad_Launcher = function(params){
+    debugger;
+     $("#csmrbk__LandingPage__gr_row_16").addClass("sno");
+  $("#csmrbk__LandingPage__sidebar").removeClass("sno");
+  $("#header").addClass("expandnav");
+   $("#csmrbk__LandingPage__ct_nav_15").addClass("sno");
+    var action = params.data.actionscr;
+    var lparams ={}
+    lparams["appId"] = "bllpay"
+    if(action!=undefined){
+        if(action == "BP" && params.from == undefined ){
+              lparams["scr"] = "BillPaymentSummary";
+        } else if(action == "BP" && params.from == "favourites" || params.from == "favAndDash"){
+              lparams["scr"] = "ViewBillPayment";
+             
+        }else if(action == "BP" && params.from == "UpcomingPayments"){
+              lparams["scr"] = "ViewBillPayment";
+             
+        }else{
+            lparams["scr"] = "ViewOneTimeBillPaymeny";
+            
+        }
+    }
+    lparams["div"] = "bllpay__Launcher__launcher";
+    params.control.exitApp = {};
+    params.control.exitApp.div = "bllpay__Launcher__launcher"
+    lparams["userObj"] = params;
+    
+    apz.launchSubScreen(lparams);
+    
+};
+apz.app.onShown_Launcher = function(){
+    debugger;
+}

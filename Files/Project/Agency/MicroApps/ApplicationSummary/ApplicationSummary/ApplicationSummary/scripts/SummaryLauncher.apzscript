@@ -1,0 +1,16 @@
+apz.appsum.SummaryLauncher = {};
+apz.appsum.SummaryLauncher.sParam = {}
+apz.app.onLoad_SummaryLauncher = function(params){
+    debugger;
+    apz.appsum.SummaryLauncher.fnNavigate("ApplicationSummary",params)
+}
+apz.appsum.SummaryLauncher.fnNavigate = function(scr,params){
+    debugger;
+         var lparams = {};
+    lparams.appId = "appsum";
+    lparams.scr = scr;
+    lparams.div = "appsum__SummaryLauncher__launcher";
+    lparams.userObj = params
+    apz.launchSubScreen(lparams);
+      
+}

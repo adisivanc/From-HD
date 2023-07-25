@@ -1,0 +1,21 @@
+{
+    "error": {
+        "error_code": "",
+        "error_message": ""
+    },
+    "extracted_entities": [
+        {
+            "name": "Name",
+            "value": "Sikder Ashfaq Sayeed"
+        },
+        {
+            "name": "Date Of Birth",
+            "value": "05 Dec 1981"
+        },
+        {
+            "name": "ID NO",
+            "value": "19812693624000014 || |"
+        }
+    ],
+    "status": true
+}

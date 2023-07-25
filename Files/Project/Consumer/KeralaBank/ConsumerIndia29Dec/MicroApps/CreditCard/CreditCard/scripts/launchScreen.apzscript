@@ -1,0 +1,11 @@
+apz.cdtcrd.launchScreen={};
+apz.app.onLoad_launchScreen=function()
+{
+    debugger;
+     $("#csmrbk__LandingPage__sc_col_55").addClass("sno");
+    apz.launchSubScreen ({
+          appId: "cdtcrd",
+        scr: "CreditCardDetails",
+        div: "cdtcrd__launchScreen__ps_pls_1",
+    })
+}

@@ -1,0 +1,60 @@
+.emailtxt { word-wrap: break-word; }
+.max250 { max-height: 250px; overflow: hidden;}
+
+.plt-caro.pri .crt-list > ul.pri > li { background-color: rgba(0,0,0,0); }
+.slide01 { background-image:url(../img/slide01.png); }
+.slide02 { background-image:url(../img/slide02.png); }
+.pnt-head.sec svg .st0 { fill: #FFF !important; }
+
+.micro-c1 .ett-bttn.ter { font-size: 11px; min-width: 130px;}
+.badge-theme { padding: 5px 0 0; }
+.listhd-t1 .lbl { display:block !important; }
+.listhd-t1 { padding:0;}
+
+.badge-theme .ett-bttn.pri { font-size: 13px; padding: 8px 10px; min-width: 84px; min-height: 132px; border:none; width: 94%; }
+.badge-theme .ett-bttn.pri.selected { border-bottom: 3px solid #0cc27e; }
+.badge-theme ul.tsp { font-size: 10px; padding: 2px; }
+.badge-theme > span { position:relative; }
+.badge-theme > span .ett-badg.sqr { position: absolute; top: -9px; right: -1px; color: #FFF; border: none; border-radius: 50%; width: 24px; height: 24px; line-height: 20px; font-size: 13px; }
+.badge-theme .ett-bttn.pri > div { white-space: pre-wrap; padding-top: 5px; max-width: 76px;}
+
+.gray-theme { background-color: #f9f9f9; }
+.gray-theme .plt-simp { margin-top:0; }
+.gray-theme .pst-simp { background-color: #FFF; padding: 10px; }
+
+.icon-calendar01 { background-image:url(../img/accountSummary.png); }
+.icon-calendar02 { background-image:url(../img/cardTransaction.png); }
+.icon-calendar03 { background-image:url(../img/fundtransfer.png); }
+.icon-calendar04 { background-image:url(../img/relationshipoverview.png); }
+.icon-calendar05 { background-image:url(../img/talkback-accounting.png); }
+.icon-calendar06 { background-image:url(../img/accountSummary.png); }
+
+.badge-theme .ett-bttn.pri svg { width: 64px; height: 64px; background-repeat: no-repeat; background-size: cover; }
+.applyrt { background-color: #23383D !important; border-color: #23383D !important; color: #FFF !important;}
+.pnavbar { background-color: #f7f7f7; padding: 7px 10px !important; }
+
+.ttl-ctr li { min-width:250px; }
+.pnavbar h4 { color: #5C9EBC !important; font-weight: 500 !important; text-transform: uppercase; font-size: 1.05rem; }
+.pnavbar .ett-bttn.inf { color: #23383D; border-color: #23383D; padding:3px 12px 4px 12px; font-size:14px; }
+
+.crt-list.tsp.var7 { padding-top: 5px; padding-bottom: 0; background-color: #E9E9E9; }
+.crt-list.tsp.var7 .ttl-ctr { min-height: 35px !important; margin-bottom:0 !important; text-transform: uppercase; }
+
+.gray-theme .crt-tabl .ttl-ctr { min-height: 22px !important; }
+.gray-theme .crt-tabl .ttl-ctr h4 { color: #5C9EBC !important; font-weight: 500 !important; font-size: 1.05rem; }
+.gray-theme .crt-tabl.sec .ttl { border-bottom: 0; }
+.gray-theme .crt-tabl.sec .plbl > li > span { padding-right: 10px; }
+.gray-theme .crt-tabl.sec .tabl-ctr table th { background-color: #23383D; }
+
+.pri > .pbtn > li > .ett-bttn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.dashboardMain.gray-theme .crt-list > ul > li > span { width: 33.3%; }
+
+#custdb__Dashboard__cardTransactions pst-simp.tsp > .ttl li { padding: 0; }
+
+#custdb__Dashboard__cardTransactions .ttl + .crt-list > ul.pri li { background-color: #23383D; color: #FFF; }
+
+#custdb__Dashboard__cardTransactions .ttl + .crt-list + .crt-list > ul.pri li:nth-child(2n) { background-color: #f2f2f2; }

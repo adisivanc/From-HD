@@ -1,0 +1,17 @@
+{
+    "withinBank" : [{
+        
+        "beneficiaryMobilenumber":"9900253623",
+        "beneficiaryAccountNo":"343456000895",
+        "beneficiaryName":"Girish Kumar",
+        "beneficiaryShortName":"Girish",
+        "beneficiaryEmail":"girishkumar@gmail.com"
+    },{
+        
+        "beneficiaryMobilenumber":"7411140495",
+        "beneficiaryAccountNo":"723125312274",
+        "beneficiaryName":"Mohammed Sohail",
+        "beneficiaryShortName":"Sohail",
+        "beneficiaryEmail":"mohammedSohail@gmail.com"
+    }]     
+}

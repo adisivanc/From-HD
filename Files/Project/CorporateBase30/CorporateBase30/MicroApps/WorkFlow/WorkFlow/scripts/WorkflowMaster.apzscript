@@ -1,0 +1,34 @@
+apz.acwf01.WorkflowMaster = {};
+apz.app.onLoad_WorkflowMaster = function() {
+    apz.acwf01.WorkflowMaster.fetchWorkflows();
+}
+apz.acwf01.WorkflowMaster.fetchWorkflows = function() {
+    apz.server.callServer({
+        ifaceName: 'WorkflowMaster',
+        appId: 'acwf01',
+        buildReq: 'Y',
+        paintResp: 'Y',
+        callBack: apz.acwf01.WorkflowMaster.fetchWorkflowsCB
+    });
+};
+apz.acwf01.WorkflowMaster.fetchWorkflowsCB = function(pResp) {
+    debugger;
+};
+apz.acwf01.WorkflowMaster.launchWorkflowDetails = function(pObj) {
+    var rowno = $(pObj).attr("rowno");
+    var wf_id = $(pObj).parent().parent().children().find("span[id*='WORKFLOW_ID']").text();
+    var app_id = $(pObj).parent().parent().children().find("span[id*='APP_ID']").text()
+    var desc = $(pObj).parent().parent().children().find("span[id*='WORKFLOW_DESC']").text()
+    var userObj = {
+        workflowId: wf_id,
+        appId: app_id,
+        desc:desc
+    };
+    apz.launchSubScreen({
+        scr: "WorkflowDef",
+        div: "ACNR01__Navigator__launchPad",
+        userObj: userObj,
+        layout: "All",
+        appId: "acwf01"
+    });
+};

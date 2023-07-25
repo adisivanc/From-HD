@@ -1,0 +1,1 @@
+{"typeclass":"WORKFLOW","name":"ModifyAddressWf","type":"WORKFLOW","workflows":[{"stageid":"1","stagedescription":"Save","screen":"ModifyAddress","sequence":"1"},{"stageid":"2","stagedescription":"Approval","screen":"ViewAddress","sequence":"2"}]}

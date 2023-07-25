@@ -1,0 +1,58 @@
+{
+    "CollateralsList": [
+        {
+            "referenceNumber": "3287923472323",
+            "customerName": "Jane",
+            "collateralCode": "WED387DFJSE273BMJDW",
+            "collateralCurrency": "USD",
+            "collateralValue": "82843221",
+            "limitContribution": "23986293",
+            "collateralType": "Deposit"
+        },
+        {
+            "referenceNumber": "3287923472323",
+            "customerName": "Jane",
+            "collateralCode": "WED387DFJSE273WSDER",
+            "collateralCurrency": "USD",
+            "collateralValue": "92845436",
+            "limitContribution": "23986293",
+            "collateralType": "Savings"
+        },
+        {
+            "referenceNumber": "3287923472323",
+            "customerName": "Jane",
+            "collateralCode": "WED387DFJSE273ESALE",
+            "collateralCurrency": "USD",
+            "collateralValue": "62845438",
+            "limitContribution": "23986293",
+            "collateralType": "Savings"
+        },
+        {
+            "referenceNumber": "3287923472323",
+            "customerName": "Jane",
+            "collateralCode": "WED387DFJSE273BMJDW",
+            "collateralCurrency": "USD",
+            "collateralValue": "72844367",
+            "limitContribution": "23986293",
+            "collateralType": "Deposit"
+        }
+       
+    ],
+    "CollateralsDetails": {
+        "referenceNumber": "3287923472323",
+        "customerName": "Jane",
+        "collateralCode": "WED387DFJSE273BMJDW",
+        "collateralCurrency": "USD",
+        "collateralValue": "92843221",
+        "limitContribution": "23986293",
+        "customerNumber": "BOGPG2702C",
+        "collateralName": "Collateral_1",
+        "collateralType": "deposit",
+        "startDate": "2018-02-12",
+        "endDate": "2020-03-07",
+        "margin": "13",
+        "remarks": "Certificate of Deposit",
+        "status": "Active"
+    },
+    "Status":"true"
+}

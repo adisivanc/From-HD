@@ -1,0 +1,25 @@
+{
+    "recrep__ReconciliationReportDetails_Res":{
+        "ReportSummaryDetails":[
+        {"sequenceNumber":"10112",
+        "uniqueId":"0110201801",
+        "status":"Matched",
+        "remarks":""
+        },
+        {
+            "sequenceNumber":"10113",
+        "uniqueId":"0210201803",
+        "status":"Matched",
+        "remarks":""
+        },
+        
+        {
+            "sequenceNumber":"10115",
+        "uniqueId":"0312201810",
+        "status":"Unmatched",
+        "remarks":"Amount Check failed"
+        }
+        
+        ]
+}
+    }

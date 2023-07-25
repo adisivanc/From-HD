@@ -1,0 +1,31 @@
+
+apz.Rates.MainScreen={};
+
+apz.app.onLoad_MainScreen = function(params) {
+    apz.Rates.MainScreen.scache = params;
+    apz.Rates.MainScreen.fnLaunchScr("foreignExchange");
+    apz.Rates.MainScreen.from = (params.from!= undefined)?params.from:"postlogin";
+    $("#Rates__MainScreen__sc_col_3").addClass("current")
+    if(apz.Rates.MainScreen.from == "postlogin"){
+        $("#Rates__MainScreen__gr_row_5,#Rates__MainScreen__sc_row_5").addClass("sno");
+        
+    }
+    $("body").removeClass("loginby");
+};
+apz.Rates.MainScreen.fnLaunchScr = function(scr,ths) {
+    debugger;
+    $("#Rates__MainScreen__ct_frm_3>ul>li").removeClass("current");
+     $(ths).parents("ul").eq(0).parent("li").addClass("current")
+    apz.launchSubScreen({
+        appId: "Rates",
+        scr: scr,
+        div: "Rates__MainScreen__ps_pls_4",
+    })
+}
+apz.Rates.MainScreen.fnGoBack = function(){
+    debugger;
+   apz.Rates.MainScreen.scache.callBack();
+    
+};
+
+ 

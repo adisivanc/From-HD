@@ -1,0 +1,12 @@
+{
+    "details":{
+        "eStmt":"Monthly",
+        "CIBFrom":"6545",
+        "CIBTo":"9876",
+        "OFPPFrom":"3456",
+        "OFPPTo":"7654",
+        "userRole":"",
+        "emailNotify":"y",
+        "smsNotify":"y"
+    }
+}

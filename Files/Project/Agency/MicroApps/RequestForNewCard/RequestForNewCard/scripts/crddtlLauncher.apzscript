@@ -1,0 +1,9 @@
+apz.crddtl.checkParams = function(params){
+    debugger;
+    params.userObj = {
+        "data" :{
+            "customerId" : "1"
+        }
+    };
+};
+apz.mockServer=true;

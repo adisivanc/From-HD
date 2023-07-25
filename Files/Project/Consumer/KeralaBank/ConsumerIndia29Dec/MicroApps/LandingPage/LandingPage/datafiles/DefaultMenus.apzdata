@@ -1,0 +1,552 @@
+{
+	"vwUserRoleMenu": [{
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "",
+		"id": "90",
+		"type": "Main",
+		"userId": "John",
+		"parentMenu": "Accounts"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Account Summary",
+		"id": "91",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Accounts"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Sweep Setup",
+		"id": "92",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Accounts"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "",
+		"id": "93",
+		"type": "Main",
+		"userId": "John",
+		"parentMenu": "Deposits"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Fixed Deposit",
+		"id": "94",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Deposits"
+	},{
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Recurring Deposit",
+		"id": "94",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Deposits"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "Fixed Deposit Summary",
+		"childMenu": "Fixed Deposit",
+		"id": "95",
+		"type": "Kid",
+		"userId": "John",
+		"parentMenu": "Deposits"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "Book Fixed Deposit",
+		"childMenu": "Fixed Deposit",
+		"id": "96",
+		"type": "Kid",
+		"userId": "John",
+		"parentMenu": "Deposits"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "Modify Fixed Deposit",
+		"childMenu": "Fixed Deposit",
+		"id": "96",
+		"type": "Kid",
+		"userId": "John",
+		"parentMenu": "Deposits"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "Liquidation of Fixed Deposit",
+		"childMenu": "Fixed Deposit",
+		"id": "97",
+		"type": "Kid",
+		"userId": "John",
+		"parentMenu": "Deposits"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "Overdraft on Fixed Deposit",
+		"childMenu": "Fixed Deposit",
+		"id": "98",
+		"type": "Kid",
+		"userId": "John",
+		"parentMenu": "Deposits"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "Deposit Calculator",
+		"childMenu": "Fixed Deposit",
+		"id": "99",
+		"type": "Kid",
+		"userId": "John",
+		"parentMenu": "Deposits"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "Recurring Deposit Summary",
+		"childMenu": "Recurring Deposit",
+		"id": "100",
+		"type": "Kid",
+		"userId": "John",
+		"parentMenu": "Deposits"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "Book Recurring Deposit",
+		"childMenu": "Recurring Deposit",
+		"id": "101",
+		"type": "Kid",
+		"userId": "John",
+		"parentMenu": "Deposits"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "Liquidation of Recurring Deposit",
+		"childMenu": "Recurring Deposit",
+		"id": "102",
+		"type": "Kid",
+		"userId": "John",
+		"parentMenu": "Deposits"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "",
+		"id": "103",
+		"type": "Main",
+		"userId": "John",
+		"parentMenu": "Loans"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Summary",
+		"id": "104",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Loans"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Statement",
+		"id": "105",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Loans"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Payment",
+		"id": "106",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Loans"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Apply",
+		"id": "107",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Loans"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Collateral Summary",
+		"id": "108",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Loans"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Simulator",
+		"id": "109",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Loans"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "",
+		"id": "110",
+		"type": "Main",
+		"userId": "John",
+		"parentMenu": "Cards"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Credit Card Summary",
+		"id": "111",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Cards"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Manage Cards",
+		"id": "112",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Cards"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Reward Summary",
+		"id": "113",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Cards"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "",
+		"id": "114",
+		"type": "Main",
+		"userId": "John",
+		"parentMenu": "Transfers"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Send Money",
+		"id": "116",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Transfers"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Fund Transfer Summary",
+		"id": "117",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Transfers"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Standing Instruction",
+		"id": "118",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Transfers"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Direct Debit Mandates",
+		"id": "119",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Transfers"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Saved Transactions",
+		"id": "120",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Transfers"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Quick Transfer",
+		"id": "121",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Transfers"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Beneficiary Maintenance",
+		"id": "122",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Transfers"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "Add Beneficiary",
+		"childMenu": "Beneficiary Maintenance",
+		"id": "123",
+		"type": "Kid",
+		"userId": "John",
+		"parentMenu": "Transfers"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "Beneficiary Summary",
+		"childMenu": "Beneficiary Maintenance",
+		"id": "124",
+		"type": "Kid",
+		"userId": "John",
+		"parentMenu": "Transfers"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "",
+		"id": "125",
+		"type": "Main",
+		"userId": "John",
+		"parentMenu": "Payments"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Bill Payment",
+		"id": "126",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Payments"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Bill Payment History",
+		"id": "127",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Payments"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "One Time Bill Pay",
+		"id": "128",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Payments"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Manage Biller",
+		"id": "129",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Payments"
+	},{
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Peer Payments",
+		"id": "126",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Payments"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Cardless Cash",
+		"id": "130",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Payments"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "",
+		"id": "131",
+		"type": "Main",
+		"userId": "John",
+		"parentMenu": "Service Requests"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "",
+		"id": "132",
+		"type": "Main",
+		"userId": "John",
+		"parentMenu": "Promotions"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "",
+		"id": "133",
+		"type": "Main",
+		"userId": "John",
+		"parentMenu": "Financial Management"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Spend Analysis",
+		"id": "134",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Financial Management"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Cash flow",
+		"id": "135",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Financial Management"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Setup Budget",
+		"id": "136",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Financial Management"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Track Budget",
+		"id": "137",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Financial Management"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Setup Goal",
+		"id": "138",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Financial Management"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Track Goal",
+		"id": "139",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "Financial Management"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "",
+		"id": "140",
+		"type": "Main",
+		"userId": "John",
+		"parentMenu": "Messages"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "",
+		"id": "140",
+		"type": "Main",
+		"userId": "John",
+		"parentMenu": "Events"
+	},{
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "",
+		"id": "141",
+		"type": "Main",
+		"userId": "John",
+		"parentMenu": "My Profile"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Profile",
+		"id": "142",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "My Profile"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Favourites",
+		"id": "143",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "My Profile"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Limits",
+		"id": "144",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "My Profile"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Security Questions",
+		"id": "145",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "My Profile"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Notifications",
+		"id": "146",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "My Profile"
+	}, {
+		"roleId": "HNI",
+		"appId": "csmrbk",
+		"kidMenu": "",
+		"childMenu": "Change Password",
+		"id": "147",
+		"type": "Sub",
+		"userId": "John",
+		"parentMenu": "My Profile"
+	}]
+}

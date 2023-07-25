@@ -1,0 +1,15 @@
+{
+    "tbRecidentCountryDetails": [{
+        "companyid": "08880881",
+        "question": "Are you a resident of tax in uk? If yes; please fill details in below table",
+        "value": "Y"
+    }, {
+        "companyid": "08880881",
+        "question": "Are you a citizen of US? If yes; please fill w9 form and enter details in below table",
+        "value": "N"
+    }, {
+        "companyid": "08880881",
+        "question": "Are you a resident for tax in any other country? If yes; please fill details in below table",
+        "value": "N"
+    }]
+}

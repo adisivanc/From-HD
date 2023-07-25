@@ -1,0 +1,175 @@
+apz.kidacc.KidAccount = {};
+apz.kidacc.KidAccount.sParams = {};
+apz.kidAccountFlag = "";
+apz.app.onLoad_KidAccount = function(params) {
+    debugger;
+    var isMobile = /iPhone|iPad|iPod|Android|Mozilla|Chrome|Safari/i.test(navigator.userAgent);
+    if(isMobile){
+        $("#kidacc__KidAccount__sc_row_42").removeClass("sno")
+        $("#kidacc__KidAccount__sc_row_37").addClass("sno")
+        //kidacc__KidAccount__sc_row_37
+    }
+};
+apz.kidacc.KidAccount.onclick = function() {
+    debugger;
+    var lObj = {
+        "targetId": "kidacc__KidAccount__option"
+    };
+    apz.toggleModal(lObj);
+    var jsonobj = {
+        "zoomLevel": "20",
+        "targetWidth": "200",
+        "targetHeight": "200",
+        "crop": "Y", //Y or N 
+        "flash": "N",
+        "action": "base64_Save", // save,base64
+        "fileName": 'Sample',
+        "quality": "50",
+        "encodingType": "JPG",
+        "sourceType": "camera" // photo
+    };
+    jsonobj.id = "CAMERA_ID";
+    jsonobj.callBack = cameraCallback;
+    apz.ns.openCamera(jsonobj);
+};
+cameraCallback = function(pjson) {
+    debugger;
+    if (pjson.status) {
+        document.getElementById("kidacc__KidAccount__civilImage").src = "data:image/jpg;base64," + pjson.encodedImage;
+         $("#kidacc__KidAccount__sc_row_41").removeClass("sno");
+        //  apz.prfinf.profileinfo.sParams.profilepicture = pjson.encodedImage;
+    } else {
+        // alert("Failure");
+    }
+}
+apz.kidacc.KidAccount.upload = function() {
+    debugger;
+    $("#kidacc__KidAccount__browse").attr("accept", "image/*");
+    if (apz.deviceGroup == "Web") {
+        $("#kidacc__KidAccount__browse").trigger('click');
+    } else {
+        var lObj = {
+            "targetId": "kidacc__KidAccount__option"
+        };
+        apz.toggleModal(lObj);
+    }
+};
+$("#kidacc__KidAccount__browse").change(function() {
+    debugger;
+    //apz.prfinf.profileinfo.fileSelected(this);
+    apz.kidacc.KidAccount.imageFileSected(this);
+});
+var binaryStr, base64Str, fileObj;
+/*apz.prfinf.profileinfo.fileSelected = function(inputObj) {
+    debugger;*/
+apz.kidacc.KidAccount.imageFileSected = function(pthis, event) {
+    debugger;
+    $("#kidacc__KidAccount__sc_row_41").removeClass("sno");
+    var fileObj = pthis.files[0];
+    var apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        var binaryStr = apzFileReader.result;
+        var base64Str = btoa(binaryStr);
+        // apz.admin.appglobals.base64Str = base64Str;
+        apz.setElmValue("kidacc__KidAccount__civilImage", base64Str);
+        binaryStr = "";
+        base64Str = "";
+    };
+    apzFileReader.readAsBinaryString(fileObj);
+    //$("#prfinf__profileinfo__update_row").removeClass("sno");
+};
+
+function converBase64toBlob(content, contentType) {
+    debugger;
+    contentType = contentType || '';
+    var sliceSize = 512;
+    var byteCharacters = window.atob(content); //method which converts base64 to binary
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    }); //statement which creates the blob
+    return blob;
+};
+apz.kidacc.KidAccount.fnSetDataStage2 = function() {
+    debugger;
+    $("#kidacc__KidAccount__Stage1").addClass("sno");
+    $("#kidacc__KidAccount__Stage2").removeClass("sno");
+    apz.data.buildData("KidAccountDetails", "kidacc");
+    apz.setElmValue("kidacc__KidAccount__Stage2FirstName", apz.data.scrdata.kidacc__KidAccountDetails_Req.depositDtls.firstName);
+    apz.setElmValue("kidacc__KidAccount__Stage2LastName", apz.data.scrdata.kidacc__KidAccountDetails_Req.depositDtls.lastName);
+    apz.setElmValue("kidacc__KidAccount__Stage2DOB", apz.getElmValue("kidacc__KidAccount__Stage1DOB"));
+    apz.setElmValue("kidacc__KidAccount__Stage2birth", apz.data.scrdata.kidacc__KidAccountDetails_Req.depositDtls.birthcountry);
+    apz.setElmValue("kidacc__KidAccount__Stage2email", apz.data.scrdata.kidacc__KidAccountDetails_Req.depositDtls.email);
+    apz.setElmValue("kidacc__KidAccount__Stage2amount", apz.data.scrdata.kidacc__KidAccountDetails_Req.depositDtls.amount);
+    apz.setElmValue("kidacc__KidAccount__Stage2accNum", apz.getElmValue("kidacc__KidAccount__Stage1accNum"));
+        apz.setElmValue("kidacc__KidAccount__Stage2Mobile", apz.getElmValue("kidacc__KidAccount__Stage1Mobile"));
+
+}
+
+
+apz.kidacc.KidAccount.fnEdit = function() {
+    debugger;
+      $("#kidacc__KidAccount__Stage1").removeClass("sno");
+    $("#kidacc__KidAccount__Stage2").addClass("sno");
+}
+
+
+apz.kidacc.KidAccount.fnSetDataStage3 = function() {
+    debugger;
+    apz.kidAccountFlag = "true";
+
+ $("#kidacc__KidAccount__Stage2").addClass("sno");
+    $("#kidacc__KidAccount__Stage3").removeClass("sno");
+    apz.data.buildData("KidAccountDetails", "kidacc");
+    apz.setElmValue("kidacc__KidAccount__Stage3FirstName", apz.data.scrdata.kidacc__KidAccountDetails_Req.depositDtls.firstName);
+    apz.setElmValue("kidacc__KidAccount__Stage3LastName", apz.data.scrdata.kidacc__KidAccountDetails_Req.depositDtls.lastName);
+    apz.setElmValue("kidacc__KidAccount__Stage3DOB", apz.getElmValue("kidacc__KidAccount__Stage1DOB"));
+    apz.setElmValue("kidacc__KidAccount__Stage3birth", apz.data.scrdata.kidacc__KidAccountDetails_Req.depositDtls.birthcountry);
+        apz.setElmValue("kidacc__KidAccount__Stage3Mobile", apz.getElmValue("kidacc__KidAccount__Stage1Mobile"));
+    apz.setElmValue("kidacc__KidAccount__Stage3email", apz.data.scrdata.kidacc__KidAccountDetails_Req.depositDtls.email);
+    apz.setElmValue("kidacc__KidAccount__Stage3amount", apz.data.scrdata.kidacc__KidAccountDetails_Req.depositDtls.amount);
+    apz.setElmValue("kidacc__KidAccount__Stage3accNum", apz.getElmValue("kidacc__KidAccount__Stage1accNum"));
+}
+apz.kidacc.KidAccount.Fnclick = function() {
+    debugger;
+  var lObj = {
+        "targetId": "kidacc__KidAccount__option"
+    };
+    apz.toggleModal(lObj);
+    var jsonobj = {
+        "zoomLevel": "20",
+        "targetWidth": "200",
+        "targetHeight": "200",
+        "crop": "Y", //Y or N 
+        "flash": "N",
+        "action": "base64_Save", // save,base64
+        "fileName": 'Sample',
+        "quality": "50",
+        "encodingType": "JPG",
+        "sourceType": "photo" // photo
+    };
+    jsonobj.id = "CAMERA_ID";
+    jsonobj.callBack = cameraCallback;
+    apz.ns.openCamera(jsonobj);
+};
+cameraCallback = function(pjson) {
+    debugger;
+    if (pjson.status) {
+        //$("#prfinf__profileinfo__update_row").removeClass("sno");
+          document.getElementById("kidacc__KidAccount__civilImage").src = "data:image/jpg;base64," + pjson.encodedImage;
+         $("#kidacc__KidAccount__sc_row_41").removeClass("sno");
+        //apz.prfinf.profileinfo.sParams.profilepicture = pjson.encodedImage;
+    } else {
+        // alert("Failure");
+    }
+}

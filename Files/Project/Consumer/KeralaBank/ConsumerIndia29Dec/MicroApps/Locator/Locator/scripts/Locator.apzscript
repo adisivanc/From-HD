@@ -1,0 +1,164 @@
+/*
+--------------------------------------------Note-----------------------------------------
+1.Use "apz.services.addMarker("long","lat","desc")" to add a pont a location and a marker to the map.
+2.Use  "apz.services.getDirection("long","lat","desc")"  to get direction from source to destination. Source is your current location, pass destination latitude, longitude and description as part of the app
+*/
+apz.locator = {}
+apz.app.onShown_Locator = function() {
+    debugger;
+    apz.services.updateMapHtmlOn('lcteus__Locator__mapdiv')
+    apz.services.configureMap()
+    apz.locator.getBranchDetails()
+}
+apz.locator.showAllMarkers = function() {
+    debugger;
+    apz.data.scrdata.lcteus__PopulateBranch_Req = {}
+    apz.data.scrdata.lcteus__PopulateBranch_Req = apz.locator.alldata
+    apz.services.currentPositionFound ? apz.locator.updateMarkers() : null
+}
+//Update location markers
+apz.locator.updateMarkers = function() {
+    debugger;
+    apz.data.loadData("PopulateBranch", "lcteus");
+    for (var i = 0; i < apz.data.scrdata.lcteus__PopulateBranch_Req.tbDbtpLocations.length; i++) {
+        apz.services.addMarker(apz.data.scrdata.lcteus__PopulateBranch_Req.tbDbtpLocations[i].longitude, apz.data.scrdata.lcteus__PopulateBranch_Req.tbDbtpLocations[
+            i].latitude, apz.data.scrdata.lcteus__PopulateBranch_Req.tbDbtpLocations[i].address)
+    }
+}
+apz.locator.getDirection=function(pThis){
+   apz.services.configureMap()
+   let long =  apz.data.scrdata.lcteus__PopulateBranch_Req.tbDbtpLocations[parseInt($(pThis).attr("rowno"))].longitude
+   let lat =  apz.data.scrdata.lcteus__PopulateBranch_Req.tbDbtpLocations[parseInt($(pThis).attr("rowno"))].latitude
+   let desc =  apz.data.scrdata.lcteus__PopulateBranch_Req.tbDbtpLocations[parseInt($(pThis).attr("rowno"))].address
+   apz.services.getDirection(long,lat,desc)
+}
+apz.locator.getBranchDetails = function() {
+    apz.startLoader()
+    apz.server.callServer({
+        "ifaceName": "BranchLocatorQuery_Query",
+        "req": {
+            "tbDbtpLocations": {
+                "area": "%%",
+                "partCity": "%%",
+                "city": "%%",
+                "state": "%%",
+                "pincode": "%%",
+                "type": "%%"
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.locator.getBranchDetailsCB
+    });
+}
+apz.locator.getBranchDetailsCB = function(params) {
+    apz.stopLoader()
+    debugger;
+    if (params.res.lcteus__BranchLocatorQuery_Res || params.res.lcteus__BranchLocatorQuery_Req) {
+        params.res.lcteus__BranchLocatorQuery_Res ? apz.locator.data = params.res.lcteus__BranchLocatorQuery_Res : apz.locator.data = params.res.lcteus__BranchLocatorQuery_Req;
+        params.res.lcteus__BranchLocatorQuery_Res ? apz.locator.alldata = params.res.lcteus__BranchLocatorQuery_Res : apz.locator.alldata = params.res.lcteus__BranchLocatorQuery_Req;
+        var state = [{
+            "val": "",
+            "desc": "Select State"
+        }];
+        var statearr = apz.locator.removeDuplicates(apz.locator.data.tbDbtpLocations, ['state']);
+        for (var i = 0; i < statearr.length; i++) {
+            var lObj = {
+                "val": statearr[i].state,
+                "desc": statearr[i].state,
+            }
+            state.push(lObj);
+        }
+        apz.populateDropdown(document.getElementById("lcteus__Locator__state"), state);
+    }
+    apz.data.scrdata.lcteus__PopulateBranch_Req = {}
+    apz.data.scrdata.lcteus__PopulateBranch_Req = apz.locator.data
+    apz.locator.updateMarkers()
+}
+apz.locator.stateChange = function(lObj) {
+    debugger;
+    var city = [{
+        "val": "",
+        "desc": "Select City"
+    }];
+    apz.data.scrdata.lcteus__BranchLocatorQuery_Req ? apz.data.scrdata.lcteus__BranchLocatorQuery_Req.tbDbtpLocations = apz.locator.data.tbDbtpLocations :
+        apz.data.scrdata.lcteus__BranchLocatorQuery_Res.tbDbtpLocations = apz.locator.data.tbDbtpLocations
+    var allbranches = apz.data.scrdata.lcteus__BranchLocatorQuery_Req.tbDbtpLocations;
+    var bystates = allbranches.filter(function(item) {
+        if (item.state == lObj.value) {
+            return true;
+        }
+    });
+    apz.data.scrdata.lcteus__PopulateBranch_Req = {}
+    apz.data.scrdata.lcteus__PopulateBranch_Req.tbDbtpLocations = bystates;
+    apz.locator.updateMarkers()
+    var cityArr = apz.locator.removeDuplicates(apz.locator.data.tbDbtpLocations, ['city']);
+    for (var i = 0; i < cityArr.length; i++) {
+        if (cityArr[i].state == lObj.value) {
+            var lTemp = {
+                "val": cityArr[i].city,
+                "desc": cityArr[i].city,
+            };
+            city.push(lTemp);
+        }
+    }
+    apz.populateDropdown(document.getElementById("lcteus__Locator__city"), city);
+    var cityPart = [{
+        "val": "",
+        "desc": "Select Part of City"
+    }];
+    // apz.populateDropdown(document.getElementById("lcteus__Locator__cityPartDropdown"), cityPart);
+};
+apz.locator.cityChange = function(lTemp) {
+    debugger;
+    var cityPart = [{
+        "val": "",
+        "desc": "Select Part of City"
+    }];
+    var allbranches = apz.locator.data.tbDbtpLocations; //apz.data.scrdata.lcteus__BranchLocatorQuery_Req.tbDbtpLocations;
+    var bycity = allbranches.filter(function(item) {
+        if (item.city == lTemp.value) {
+            return true;
+        }
+    });
+    apz.data.scrdata.lcteus__PopulateBranch_Req = {}
+    apz.data.scrdata.lcteus__PopulateBranch_Req.tbDbtpLocations = bycity;
+    apz.locator.updateMarkers()
+    var cityPartArr = apz.locator.removeDuplicates(apz.locator.data.tbDbtpLocations, ['partCity']);
+    for (var i = 0; i < cityPartArr.length; i++) {
+        if (cityPartArr[i].city == lTemp.value) {
+            var lPart = {
+                "val": cityPartArr[i].partCity,
+                "desc": cityPartArr[i].partCity,
+            };
+            cityPart.push(lPart);
+        }
+    }
+    // apz.populateDropdown(document.getElementById("lcteus__BranchLocator__cityPartDropdown"), cityPart);
+};
+apz.locator.removeDuplicates = function(originalArray, properties) {
+    var newArray = [];
+    var index = 0;
+    var lookupObject = {};
+    var totalProperties = properties.length;
+    for (var i = 0; i < originalArray.length; i++) {
+        var exists = false;
+        for (var a = 0; a < newArray.length; a++) {
+            var propsFound = 0;
+            for (var b = 0; b < totalProperties; b++) {
+                if (originalArray[i][properties[b]] == newArray[a][properties[b]]) {
+                    propsFound++;
+                }
+            } //If there is a match then break the for loop
+            if (propsFound == totalProperties) {
+                exists = true;
+                break;
+            }
+        } //End of New Array
+        if (!exists) {
+            newArray[index] = originalArray[i];
+            index++;
+        }
+    } //End of originalArray
+    return newArray;
+};
+

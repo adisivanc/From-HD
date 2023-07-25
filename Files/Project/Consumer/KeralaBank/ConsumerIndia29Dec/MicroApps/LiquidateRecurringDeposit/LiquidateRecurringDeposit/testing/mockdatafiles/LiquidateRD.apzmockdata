@@ -1,0 +1,24 @@
+{
+    "depositDtls": {
+        "data": {
+            "depositDtls": {
+                "accountNo": "543985494322",
+                "branchName": "West Bay",
+                "interestType": "Compounded Interest",
+                "bookDate": "05/10/2017",
+                "tenor": "4 months",
+                "interestRate": "5.00%",
+                "maturityType": "Maturity Proceeds to FD (Principle + Interest)",
+                "creditAccountNo": "001234541574",
+                "maturityAmount": "15000",
+                "maturityDate": "15/10/2019",
+                "interestEarned": "5.00%",
+                "seniorCitizen": "No",
+                "attachNominee": "No",
+                "dueDate": "5",
+                "installmentAmount": "1000",
+                "debitAccountNo" : "001234545512"
+            }
+        }
+    }
+}

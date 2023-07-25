@@ -1,0 +1,233 @@
+apz.nomimt.addeditnominee = {};
+apz.app.onLoad_AddEditNominee = function(params) {
+    debugger;
+    apz.nomimt.addeditnominee.sparams = params;
+    apz.setElmValue("nomimt__AddEditNominee__accNo", apz.nomimt.addeditnominee.sparams.accountNumber)
+    if (params.Navigation) {
+        apz.nomimt.addeditnominee.fnSetNavigation(params);
+    }
+    apz.nomimt.addeditnominee.fnInitialise(params);
+};
+apz.nomimt.addeditnominee.fnSetNavigation = function(params) {
+    debugger;
+    apz.nomimt.addeditnominee.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.showBack = "N";
+    if (params.action == "Edit") {
+        lParams.headerText = "EDIT NOMINEE";
+    } else if (params.action == "Add") {
+        lParams.headerText = "ADD NOMINEE";
+    } else if (params.action == "Delete") {
+        lParams.headerText = "DELETE NOMINEE";
+    }
+    apz.nomimt.addeditnominee.Navigation(lParams);
+};
+apz.nomimt.addeditnominee.fnInitialise = function(params) {
+    debugger;
+    $(".guardDtls").addClass("sno");
+    apz.nomimt.addeditnominee.fnGotoStage1(params);
+};
+apz.nomimt.addeditnominee.fnCancel = function() {
+    debugger;
+    var params = {};
+    params.scr = "NomineeSummary";
+    params.div = "nomimt__AddEditNominee__LaunchDiv";A
+    apz.launchScreen(params);
+};
+apz.nomimt.addeditnominee.fnGotoStage1 = function(params) {
+    apz.nomimt.addeditnominee.fnSetDataInStage1(params);
+    apz.nomimt.addeditnominee.fnRenderStage1();
+};
+apz.nomimt.addeditnominee.fnSetDataInStage1 = function(params) {
+    $("#nomimt__AddEditNominee__Add_form input").removeAttr("readonly");
+    $("#nomimt__NomineeDetail__i__nomineeDtls__nomineeDob").removeAttr("disabled");
+    if (params.action == "Edit" || params.action == "Delete") {
+        apz.data.scrdata.nomimt__NomineeDetail_Req = {};
+        apz.data.scrdata.nomimt__NomineeDetail_Req.nomineeDtls = params.data;
+        apz.data.loadData("NomineeDetail", "nomimt");
+    } else {}
+    if (params.action == "Delete") {
+        $("#nomimt__AddEditNominee__Add_form input").attr("readonly", "readonly");
+        $("#nomimt__NomineeDetail__i__nomineeDtls__nomineeDob").attr("disabled", "disabled");
+    }
+    apz.setElmValue("nomimt__NomineeDetail__i__nomineeDtls__authenticationType", "OTP");
+    apz.setElmValue("nomimt__NomineeDetail__i__nomineeDtls__customerid", apz.nomimt.addeditnominee.sparams.data.customerID);
+};
+apz.nomimt.addeditnominee.fnRenderStage1 = function() {
+    debugger;
+    apz.show("nomimt__AddEditNominee__stage1");
+    apz.hide("nomimt__AddEditNominee__stage2");
+    apz.hide("nomimt__AddEditNominee__otpLaunchDiv");
+    apz.hide("nomimt__AddEditNominee__stage3");
+};
+apz.nomimt.addeditnominee.fnGotoStage2 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("nomimt__AddEditNominee__Add_form");
+    if (lValid) {
+        apz.nomimt.addeditnominee.fnSetDataInStage2();
+    } else {
+        var param = {
+            'code': "ERR_MAND"
+        };
+        apz.dispMsg(param);
+    }
+};
+apz.nomimt.addeditnominee.fnSetDataInStage2 = function() {
+    if (apz.nomimt.addeditnominee.sparams.action == "Delete") {
+        apz.nomimt.addeditnominee.fnConfirm();
+    } else {
+        apz.setElmValue("nomimt__AddEditNominee__conf_nomName", apz.getElmValue("nomimt__NomineeDetail__i__nomineeDtls__nomineeName"));
+        apz.setElmValue("nomimt__AddEditNominee__conf_nomAddr", apz.getElmValue("nomimt__NomineeDetail__i__nomineeDtls__nomineeAddress"));
+        apz.setElmValue("nomimt__AddEditNominee__conf_nomRel", apz.getElmValue("nomimt__NomineeDetail__i__nomineeDtls__nomineeRelation"));
+        apz.setElmValue("nomimt__AddEditNominee__conf_nomDOB", apz.getElmValue("nomimt__NomineeDetail__i__nomineeDtls__nomineeDob"));
+        apz.setElmValue("nomimt__AddEditNominee__conf_nomPhNo", apz.getElmValue("nomimt__NomineeDetail__i__nomineeDtls__nomineePhno"));
+        apz.setElmValue("nomimt__AddEditNominee__conf_nomEmail", apz.getElmValue("nomimt__NomineeDetail__i__nomineeDtls__nomineeEmlid"));
+        apz.setElmValue("nomimt__AddEditNominee__conf_guardName", apz.getElmValue("nomimt__NomineeDetail__i__nomineeDtls__guardianName"));
+        apz.setElmValue("nomimt__AddEditNominee__conf_guardAddr", apz.getElmValue("nomimt__NomineeDetail__i__nomineeDtls__guardianAddress"));
+        apz.setElmValue("nomimt__AddEditNominee__conf_nomPerc", apz.getElmValue("nomimt__NomineeDetail__i__nomineeDtls__percOfNomination"));
+        apz.hide("nomimt__AddEditNominee__stage1");
+        apz.show("nomimt__AddEditNominee__stage2");
+        apz.hide("nomimt__AddEditNominee__stage3");
+    }
+};
+apz.nomimt.addeditnominee.fnBack = function() {
+    apz.nomimt.addeditnominee.fnRenderStage1();
+};
+apz.nomimt.addeditnominee.fnOnchangeDate = function() {
+    debugger;
+    var lDate = apz.getElmValue("nomimt__NomineeDetail__i__nomineeDtls__nomineeDob");
+    var lDOB = apz.formatDate({
+        "val": lDate,
+        "fromFormat": "dd-MMM-yyyy",
+        "toFormat": "dd/MM/yyyy"
+    });
+    var dob = new Date(lDOB);
+    var diff_ms = Date.now() - dob.getTime();
+    var age_dt = new Date(diff_ms);
+    var age = Math.abs(age_dt.getUTCFullYear() - 1970);
+    if (age < 18) {
+        $(".guardDtls").removeClass("sno");
+    } else {
+        $(".guardDtls").addClass("sno");
+    }
+};
+apz.nomimt.addeditnominee.fnConfirm = function() {
+    debugger;
+    apz.data.buildData("NomineeDetail", "nomimt");
+    var lServerParams = {
+        "ifaceName": "NomineeSummary",
+        "buildReq": "N",
+        "req": {
+            "action": "",
+            "nomineeDtls": apz.data.scrdata.nomimt__NomineeDetail_Req.nomineeDtls
+        },
+        "paintResp": "N",
+        "callBack": apz.nomimt.addeditnominee.fnCallServerCallBack,
+        "appId": "nomimt",
+        "internal": false
+    };
+    lServerParams.req.action = apz.nomimt.addeditnominee.sparams.action;
+    apz.server.callServer(lServerParams);
+};
+apz.nomimt.addeditnominee.fnCallServerCallBack = function(params) {
+    debugger;
+    if (params.errors) {
+        var param = {
+            'code': params.errors[0].errorCode
+        };
+        apz.dispMsg(param);
+    } else {
+        apz.nomimt.addeditnominee.fnGotoStage3();
+        var lLaunchParams = {
+            "appId": "otpeng",
+            "scr": "ProcessOTP",
+            "div": "nomimt__AddEditNominee__otpLaunchDiv",
+            "userObj": {
+                "action": "SetRefNo",
+                "data": {
+                    "OTPRefNo": params.res.nomimt__NomineeSummary_Res.nomineeDtls.data.OTPRefNo
+                },
+                "control": {
+                    "appId": "otpeng",
+                    "callBack": apz.nomimt.addeditnominee.fnGotoStage4,
+                    "destroyDiv": "nomimt__AddEditNominee__otpLaunchDiv"
+                }
+            }
+        };
+        apz.launchApp(lLaunchParams);
+    }
+};
+apz.nomimt.addeditnominee.fnGotoStage3 = function() {
+    apz.nomimt.addeditnominee.fnRenderStage3();
+};
+apz.nomimt.addeditnominee.fnRenderStage3 = function() {
+    apz.hide("nomimt__AddEditNominee__stage1");
+    apz.hide("nomimt__AddEditNominee__stage2");
+    apz.show("nomimt__AddEditNominee__otpLaunchDiv");
+    apz.hide("nomimt__AddEditNominee__stage3");
+};
+apz.nomimt.addeditnominee.fnGotoStage4 = function(params) {
+    apz.resetCurrAppId("nomimt");
+    apz.nomimt.addeditnominee.fnSetDataInStage4(params);
+    apz.nomimt.addeditnominee.fnRenderStage4();
+};
+apz.nomimt.addeditnominee.fnSetDataInStage4 = function(params) {
+    debugger;
+    if (params.errors) {
+        var param = {
+            'code': params.errors[0].errorCode
+        };
+        apz.dispMsg(param);
+        apz.hide("nomimt__AddEditNominee__ackSucc");
+        apz.show("nomimt__AddEditNominee__ackfail");
+        apz.show("nomimt__AddEditNominee__nomFail_img");
+        apz.hide("nomimt__AddEditNominee__nomSucc_img")
+        apz.setElmValue("nomimt__AddEditNominee__ackfail", "Failed to " + apz.nomimt.addeditnominee.sparams.action + " Nominee")
+    } else {
+        var lRec = apz.data.scrdata.nomimt__NomineeDetail_Req.nomineeDtls;
+        apz.setElmValue("nomimt__AddEditNominee__ack_nomName", lRec.nomineeName);
+        apz.setElmValue("nomimt__AddEditNominee__ack_nomAddr", lRec.nomineeAddress);
+        apz.setElmValue("nomimt__AddEditNominee__ack_nomRel", lRec.nomineeRelation);
+        apz.setElmValue("nomimt__AddEditNominee__ack_nomDOB", lRec.nomineeDob);
+        apz.setElmValue("nomimt__AddEditNominee__ack_nomPhNo", lRec.nomineePhno);
+        apz.setElmValue("nomimt__AddEditNominee__ack_nomEmail", lRec.nomineeEmlid);
+        apz.setElmValue("nomimt__AddEditNominee__ack_guardName", lRec.guardianName);
+        apz.setElmValue("nomimt__AddEditNominee__ack_guardAddr", lRec.guardianAddress);
+        apz.setElmValue("nomimt__AddEditNominee__ack_nomPerc", lRec.percOfNomination)
+        if (apz.nomimt.addeditnominee.sparams.action == "Edit") {
+            apz.setElmValue("nomimt__AddEditNominee__ackSucc", "Nominee Edited Successfully!")
+        }
+        if (apz.nomimt.addeditnominee.sparams.action == "Add") {
+            apz.setElmValue("nomimt__AddEditNominee__ackSucc", "Nominee Added Successfully!")
+        }
+        if (apz.nomimt.addeditnominee.sparams.action == "Delete") {
+            apz.setElmValue("nomimt__AddEditNominee__ackSucc", "Nominee Deleted Successfully!")
+        }
+        var lResponse = "Your reference number is " + params.nomineeDtls.txnRefNo;
+        apz.setElmValue('nomimt__AddEditNominee__txnRefNo', lResponse);
+    }
+};
+apz.nomimt.addeditnominee.fnRenderStage4 = function() {
+    apz.hide("nomimt__AddEditNominee__stage1");
+    apz.hide("nomimt__AddEditNominee__stage2");
+    apz.hide("nomimt__AddEditNominee__otpLaunchDiv");
+    apz.show("nomimt__AddEditNominee__stage3");
+    $("#nomimt__AddEditNominee__el_btn_11").removeAttr("disabled");
+
+};
+apz.nomimt.addeditnominee.fnNomineeSummary = function() {
+    debugger;
+    apz.nomimt.addeditnominee.sparams.callBack();
+};
+
+
+  apz.nomimt.addeditnominee.fnValidateMob = function() {
+    debugger;
+     var MobNo = /^[0-9]{10}$/;
+     var Mob = apz.getElmValue("nomimt__AddEditNominee__NomineeDetail__i__nomineeDtls__nomineePhno")
+    if (MobNo.test(Mob)) {
+        var status = true;
+    }if (status != true) {
+        apz.dispMsg({"message" : "Invalid Mobile Number"});
+    } 
+}

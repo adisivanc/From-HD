@@ -1,0 +1,23 @@
+{
+    "travel__TravelDetailsInterface_Res": {
+        "data": [{
+            "Travellingto" : "Thailand",
+            "Departuredate" : "10/12/2019",
+            "Returndate" : "12/12/2019",
+            "credit card to be used" : "Credit Card"
+            
+        },
+        {
+           "Travellingto" : "Malaysia",
+            "Departuredate" : "26/12/2019",
+            "Returndate" : "30/12/2019",
+            "credit card to be used" : "Credit Card" 
+        },
+        {
+            "Travellingto" : "UK",
+            "Departuredate" : "20/01/2020",
+            "Returndate" : "26/01/2020",
+            "credit card to be used" : "Credit Card"
+        }]
+    }
+}

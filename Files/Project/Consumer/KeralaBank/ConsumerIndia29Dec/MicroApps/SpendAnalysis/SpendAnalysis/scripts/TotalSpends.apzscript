@@ -1,0 +1,180 @@
+var Months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+apz.app.onLoad_TotalSpends = function() {
+    debugger;
+    apz.data.loadJsonData("TotalSpends", "spndas");
+    apz.data.loadJsonData("SpendDetails", "spndas");
+    
+    apz.spndas.fnSetCurrantMonth();
+    apz.spndas.fnisMobile();
+};
+apz.spndas.fnisMobile = function(){
+    debugger;
+    if(apz.deviceGroup == "Mobile"){
+        $("#spndas__TotalSpends__mobilereminder").removeClass("sno");
+        apz.spndas.Launcher.fnLaunchScreen("spndas","Remainder","spndas__TotalSpends__launchRemainder");
+    }
+}
+apz.app.updateChartBeforeRender = function(gChartType, gChartData, gId, gChart) {
+    debugger;
+    //console.log(gChartType);
+    if (gChartType === "Doughnut2D") {
+        var value = apz.spndas.fngetTotalSpends(apz.data.scrdata.spndas__TotalSpends_Res.spends);
+        var formatedvalue = apz.formatNumber({
+            value: value,
+            mask: "MILLION",
+            decimalPoints: "1",
+            decimalSep: ".",
+            displayAsLiteral: "Y"
+        });
+        gChartData.chart.defaultCenterLabel = "Total Spends $ " + formatedvalue.replace(/\.[0-9]/, "");
+        gChartData.chart.centerLabel = "Total Spend on $label : $value";
+        gChartData.chart.enableMultiSlicing = "0";
+        gChartData.chart.minAngleForLabel = "75";
+        gChart.addEventListener("dataPlotClick", apz.spndas.fnOnPlotClick);
+    } else if (gChartType == "ScrollColumn2D") {
+        gChartData.chart.scrollheight = "5";
+        gChartData.chart.caption = "Spends on " + apz.spndas.Launcher.columColor.name;
+        gChartData.chart.flatScrollBars = "1";
+        gChartData.chart.palettecolors = apz.spndas.Launcher.columColor.color;
+          gChartData.chart.usePlotGradientColor ="0";
+        gChart.addEventListener("dataPlotClick", apz.spndas.fnOnColumnPlotClick);
+    }
+};
+apz.spndas.fnOnColumnPlotClick = function(e, data) {
+    debugger;
+   // console.log(data.categoryLabel);
+    TransactionSummary.setMonthYear(data.categoryLabel);
+    TransactionSummary.setAmount(data.dataValue);
+    summary = TransactionSummary.getSummary();
+    apz.spndas.Launcher.fnLoadSummaryData(summary);
+}
+apz.spndas.Launcher.fnLoadSummaryData = function(summary) {
+    debugger;
+    apz.data.scrdata.spndas__TransactionSummary_Res = {};
+    apz.data.scrdata.spndas__TransactionSummary_Res.summary = summary;
+    apz.data.loadData("TransactionSummary", "spndas");
+}
+apz.spndas.fngetTotalSpends = function(spends) {
+    debugger;
+    var total = spends.reduce(function(temp, item) {
+        temp = temp + parseInt(item.value);
+        return temp;
+    }, 0);
+    return total;
+}
+apz.spndas.fnSetCurrantMonth = function() {
+    debugger;
+    var d = new Date();
+    apz.setElmValue("spndas__TotalSpends__el_inp_4", Months[d.getMonth()] + "/" + d.getFullYear());
+    apz.spndas.fnOnMonthChange();
+}
+apz.spndas.fnOnPlotClick = function(e, data) {
+    debugger;
+    var category = data.displayValue.split(",")[0].trim();
+     var value = data.dataValue;
+     var datemonth = apz.getElmValue("spndas__TotalSpends__el_inp_4");
+    var [month,year]=     datemonth.split("/");
+    apz.spndas.dateMonth = [month,year];
+    TransactionSummary.setCategory(category);
+     summary = TransactionSummary.getSummary();
+    apz.spndas.Launcher.fnLoadSummaryData(summary);
+    switch (category) {
+        case "Bills and Utilities":
+            apz.spndas.Launcher.columColor = {
+                name: "Bills and Utilities",
+                color: "E23800"
+            };
+            break;
+        case "Food and Dining":
+            apz.spndas.Launcher.columColor = {
+                name: "Food and Dining",
+                color: "F1D500"
+            };
+            break;
+        case "Health and Fitness":
+            apz.spndas.Launcher.columColor = {
+                name: "Health and Fitness",
+                color: "00907B"
+            };
+            break;
+        case "Entertainment":
+            apz.spndas.Launcher.columColor = {
+                name: "Entertainment",
+                color: "25CAAD"
+            };
+            break;
+        case "Investments":
+            apz.spndas.Launcher.columColor = {
+                name: "Investments",
+                color: "D0FF17"
+            };
+            break;
+              case "Auto and Transport":
+            apz.spndas.Launcher.columColor = {
+                name: "Auto and Transport",
+                color: "F9AE01"
+            };
+            break;
+              case "Others":
+            apz.spndas.Launcher.columColor = {
+                name: "Others",
+                color: "888884"
+            };
+            break;
+    }
+    if(apz.deviceGroup == "Mobile"){
+         apz.spndas.Launcher.fnLaunchScreen("spndas","TransactionDetails","spndas__Launcher__doughnutLauncher");
+    }
+    
+    apz.spndas.Launcher.fnLoadTranaction(month.substr(0,3)+" "+year,value,apz.spndas.Launcher.monthsFilter);
+    e.stopPropagation();
+};
+
+apz.spndas.fnOnMonthChange = function() {
+    debugger;
+    var datevalue = apz.getElmValue("spndas__TotalSpends__el_inp_4");
+    var accno = apz.getElmValue("spndas__TotalSpends__el_inp_1");
+    var [month, year] = datevalue.split("/");
+    apz.spndas.fnfilterAccountDetails(accno, month);
+};
+apz.spndas.fnfilterAccountDetails = function(accno, month) {
+    debugger;
+    var accountDetails = apz.data.scrdata.spndas__SpendDetails_Res.details;
+    var selectedAccountDetail = accountDetails.filter(function(acc) {
+        if (acc.account == accno) {
+            return acc;
+        }
+    });
+    if (selectedAccountDetail.length >= 1) {
+        var transactionDetails = selectedAccountDetail[0].transactions.filter(function(tran) {
+            if (tran.month == month) {
+                return tran;
+            }
+        })
+        apz.data.scrdata.spndas__TotalSpends_Res.spends = transactionDetails[0].spends;
+        apz.data.loadData("TotalSpends", "spndas");
+    }
+}
+apz.spndas.fnOnMonthFilter = function() {
+    debugger;
+    $('#spndas__TotalSpends__el_inp_4').mobiscroll().date({
+        theme: 'auto',
+        themeVariant: 'auto',
+        dateWheels: 'MM YY',
+        dateFormat: 'MM/yy',
+        min: new Date(2015, 01, 01),
+        max: new Date(),
+        closeOnOverlayTap: "true",
+        display: "bubble",
+        touchUi: true,
+        responsive: {
+            small: {
+                display: "bubble"
+            },
+            large: {
+                display: "bubble"
+            }
+        }
+    });
+    $("#spndas__TotalSpends__el_inp_4").trigger("blur");
+}

@@ -1,0 +1,24 @@
+{
+    "depositDtls": {
+        "data": {
+            "depositDtls": {
+                "accountNo": "543985494322",
+                "branchName": "Koramangala, Bengaluru",
+                "interestType": "Compounded Interest",
+                "bookDate": "18/06/2018",
+                "tenor": "24 months",
+                "interestRate": "2.00%",
+                "maturityType": "Maturity Proceeds to FD (Principle + Interest)",
+                "creditAccountNo": "001234541574",
+                "maturityAmount": "15000",
+                "maturityDate": "18/06/2021",
+                "interestEarned": "5.00%",
+                "seniorCitizen": "No",
+                "attachNominee": "No",
+                "dueDate": "5",
+                "installmentAmount": "1000",
+                "debitAccountNo" : "001234545512"
+            }
+        }
+    }
+}

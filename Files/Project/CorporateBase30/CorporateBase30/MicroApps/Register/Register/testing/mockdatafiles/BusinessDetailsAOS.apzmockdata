@@ -1,0 +1,27 @@
+{
+    "tbConstitutionDetails": {
+        "country": "GB",
+        "countryIncorporation": "United Kingdom",
+        "companyid": " 08880881",
+        "businessName": "GLOBAL FUNDS AXIS LTD",
+        "registrationNo": "AB985643219",
+        "companyType": "Limited Company",
+        "constitutionType": "Private limited with share capital",
+        "establishmentDate": "2014-10-07",
+        "city": "London",
+        "postalCode": "NW2 2PY",
+        "faxNo": "656466",
+        "telephoneNo": "235354",
+        "daytimeContactNo": "765656",
+        "mobileNo": "7655444",
+        "email1": "Darren.Lansterman@gmail.com",
+        "email2": "Darren.Lansterman@gmail.com",
+        "other": "not applicable",
+        "annualTurnover": "656565",
+        "networth": "456667",
+        "noOfEmployees": "6",
+        "businessPurpose": "Business",
+        "creditTransactions": "45455",
+        "debitTransaction": "3554"
+    }
+}

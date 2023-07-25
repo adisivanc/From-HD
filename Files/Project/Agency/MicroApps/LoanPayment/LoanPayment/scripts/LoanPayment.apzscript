@@ -1,0 +1,370 @@
+apz.lnpymt.loanpayment = {};
+apz.app.onLoad_LoanPayment = function(params) {
+    debugger;
+    apz.lnpymt.loanpayment.fnInitialise(params);
+};
+apz.lnpymt.loanpayment.fnInitialise = function(params) {
+    debugger;
+    apz.lnpymt.loanpayment.sParams = params;
+    if (params.Navigation) {
+        apz.lnpymt.loanpayment.fnSetNavigation(params);
+    }
+    apz.lnpymt.loanpayment.fnGoToStage1();
+};
+apz.app.onShown_LoanPayment = function() {
+    debugger;
+    $(".crt-form.ver .ecn > .syl > span").text("");
+};
+apz.lnpymt.loanpayment.fnSetNavigation = function(params) {
+    debugger;
+    apz.lnpymt.loanpayment.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.showBack = "N";
+    lParams.headerText = "PAYMENT";
+    apz.lnpymt.loanpayment.Navigation(lParams);
+};
+apz.lnpymt.loanpayment.fnGoToStage1 = function() {
+    debugger;
+    apz.lnpymt.loanpayment.fnSetValueStage1();
+    apz.lnpymt.loanpayment.fnQueryStage1();
+    apz.lnpymt.loanpayment.fnRenderStage1();
+};
+apz.lnpymt.loanpayment.fnSetValueStage1 = function() {
+    debugger;
+    apz.setElmValue("lnpymt__LoanPayment__i__LoanPaymentDtls__customerId", apz.lnpymt.loanpayment.sParams.data.customerID);
+};
+apz.lnpymt.loanpayment.fnQueryStage1 = function() {
+    debugger;
+    apz.lnpymt.loanpayment.sAction = "Query"
+    var lReq = {
+        "loanSummary": {
+            "customerID": apz.lnpymt.loanpayment.sParams.data.customerID
+        }
+    };
+    var lParams = {
+        "ifaceName": "LoanSumm",
+        "paintResp": "N",
+        "req": lReq
+    };
+    apz.lnpymt.loanpayment.fnBeforeCallServer(lParams);
+};
+apz.lnpymt.loanpayment.fnRenderStage1 = function() {
+    debugger;
+    apz.show("lnpymt__LoanPayment__Stage1");
+    apz.hide("lnpymt__LoanPayment__Stage2");
+    apz.hide("lnpymt__LoanPayment__Stage3");
+    apz.hide("lnpymt__LoanPayment__Stage4");
+};
+apz.lnpymt.loanpayment.fnGetDetails = function(pthis) {
+    debugger;
+    var lRowIndex = $("#" + pthis.id).attr("rowno");
+    apz.lnpymt.loanpayment.Values = $.extend(apz.data.scrdata.lnpymt__LoanSumm_Res.loanSummary.loanDtls[apz.getRecordNumber(
+        "lnpymt__LoanPayment__SummaryList", parseInt(lRowIndex))], {}, true);
+    $(".fields").each(function() {
+        $(this).find("input").val('');
+        $(this).find("textarea").val('');
+    });
+    apz.lnpymt.loanpayment.fnGotoStage2();
+};
+apz.lnpymt.loanpayment.fnGotoStage2 = function() {
+    debugger;
+    apz.lnpymt.loanpayment.fnSetValueStage2();
+    apz.lnpymt.loanpayment.fnRenderStage2();
+};
+apz.lnpymt.loanpayment.fnSetValueStage2 = function() {
+    debugger;
+    var lSummaryDetails = apz.lnpymt.loanpayment.Values;
+    apz.setElmValue("lnpymt__LoanPayment__i__LoanPaymentDtls__loanAccountNo", lSummaryDetails.loanAccountNo);
+    apz.setElmValue("lnpymt__LoanPayment__i__LoanPaymentDtls__branch", lSummaryDetails.branch);
+    //apz.setElmValue("lnpymt__LoanPayment__i__LoanPaymentDtls__currency", "K");
+    var param = {
+        "decimalSep": ".",
+        "value": lSummaryDetails.outstandingAmount,
+        "mask": "MILLION",
+        "decimalPoints": "2",
+        "displayAsLiteral": "N"
+    };
+    apz.setElmValue("lnpymt__LoanPayment__i__LoanPaymentDtls__outstandingBalance", apz.formatNumber(param));
+    var principal = parseInt(lSummaryDetails.outstandingAmount) - parseInt(lSummaryDetails.currEMI);
+    var param = {
+        "decimalSep": ".",
+        "value": principal,
+        "mask": "MILLION",
+        "decimalPoints": "2",
+        "displayAsLiteral": "N"
+    };
+    apz.setElmValue("lnpymt__LoanPayment__i__LoanPaymentDtls__principal", apz.formatNumber(param));
+    var param = {
+        "decimalSep": ".",
+        "value": lSummaryDetails.currEMI,
+        "mask": "MILLION",
+        "decimalPoints": "2",
+        "displayAsLiteral": "N"
+    };
+    apz.setElmValue("lnpymt__LoanPayment__i__LoanPaymentDtls__amountDue", apz.formatNumber(param));
+    var param = {
+        "decimalSep": ".",
+        "value": lSummaryDetails.currROI,
+        "mask": "MILLION",
+        "decimalPoints": "2",
+        "displayAsLiteral": "N"
+    };
+    apz.setElmValue("lnpymt__LoanPayment__i__LoanPaymentDtls__interest", apz.formatNumber(param));
+    apz.setElmValue("lnpymt__LoanPayment__i__LoanPaymentDtls__amountDueDate", lSummaryDetails.lastInstallmentDt);
+    apz.lnpymt.loanpayment.fnPopulateDropdown();
+    var lCurrentDate = apz.lnpymt.loanpayment.fnCurrentDate();
+    apz.setElmValue("lnpymt__LoanPayment__i__LoanPaymentDtls__payableDueDate", lCurrentDate);
+    // apz.setElmValue("lnpymt__LoanPayment__paymentdate", lCurrentDate);
+    var param = {
+        "decimalSep": ".",
+        "value": lSummaryDetails.outstandingAmount,
+        "mask": "MILLION",
+        "decimalPoints": "2",
+        "displayAsLiteral": "N"
+    };
+    apz.setElmValue("lnpymt__LoanPayment__i__LoanPaymentDtls__paymentAmount", apz.formatNumber(param));
+};
+apz.lnpymt.loanpayment.fnPopulateDropdown = function() {
+    debugger;
+    var lAccounts = apz.lnpymt.loanpayment.sParams.data.accounts;
+    var lObj = [];
+    var lOption;
+    for (i = 0; i < lAccounts.length; i++) {
+        if (i === 0) {
+            lOption = {
+                "val": "",
+                "desc": "Please Select"
+            };
+        } else {
+            lOption = {
+                "val": lAccounts[i].accountNo,
+                "desc": lAccounts[i].accountType + " - " + lAccounts[i].accountNo
+            };
+        }
+        lObj.push(lOption);
+    }
+    apz.populateDropdown(document.getElementById("lnpymt__LoanPayment__i__LoanPaymentDtls__paymentAccountNo"), lObj);
+};
+apz.lnpymt.loanpayment.fnCurrentDate = function() {
+    debugger;
+    var lCurrentDate = new Date();
+    var dd = lCurrentDate.getDate();
+    var mm = lCurrentDate.getMonth();
+    var yyyy = lCurrentDate.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    var lMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var lToday = dd + '/' + [mm + 1] + '/' + yyyy;
+    return lToday;
+};
+apz.lnpymt.loanpayment.fnRenderStage2 = function() {
+    debugger;
+    apz.hide("lnpymt__LoanPayment__Stage1");
+    apz.show("lnpymt__LoanPayment__Stage2");
+    apz.hide("lnpymt__LoanPayment__Stage3");
+    apz.hide("lnpymt__LoanPayment__Stage4");
+};
+apz.lnpymt.loanpayment.fnBackStage2 = function() {
+    apz.lnpymt.loanpayment.fnRenderStage1();
+};
+apz.lnpymt.loanpayment.fnContinueStage2 = function() {
+    debugger;
+    var lValid = apz.lnpymt.loanpayment.fnValidateStage2();
+    if (lValid) {
+        apz.data.buildData("LoanPayment", "lnpymt");
+        apz.lnpymt.loanpayment.fnGotoStage3();
+    }
+};
+apz.lnpymt.loanpayment.fnGotoStage3 = function() {
+    debugger;
+    apz.lnpymt.loanpayment.fnSetValueStage3();
+    apz.lnpymt.loanpayment.fnRenderStage3();
+};
+apz.lnpymt.loanpayment.fnSetValueStage3 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.lnpymt__LoanPayment_Req.LoanPaymentDtls;
+    apz.setElmValue("lnpymt__LoanPayment__Stage3LoanAccNo", lDetails.loanAccountNo);
+    apz.setElmValue("lnpymt__LoanPayment__Stage3LoanAccBranch", lDetails.branch);
+    apz.setElmValue("lnpymt__LoanPayment__Stage3Currency", lDetails.currency);
+    apz.setElmValue("lnpymt__LoanPayment__Stage3OutstandingBal", lDetails.outstandingBalance);
+    apz.setElmValue("lnpymt__LoanPayment__Stage3Principal", lDetails.principal);
+    apz.setElmValue("lnpymt__LoanPayment__Stage3AmountDue", lDetails.amountDue);
+    apz.setElmValue("lnpymt__LoanPayment__Stage3Interest", lDetails.interest);
+    apz.setElmValue("lnpymt__LoanPayment__Stage3AmountDueDt", lDetails.amountDueDate);
+    apz.setElmValue("lnpymt__LoanPayment__Stage3PayableAmt", lDetails.paymentAmount);
+    apz.setElmValue("lnpymt__LoanPayment__Stage3PayableAccNo", lDetails.paymentAccountNo);
+    apz.setElmValue("lnpymt__LoanPayment__Stage3Remarks", lDetails.remarks);
+    // lDetails.payableDueDate = apz.getElmValue("lnpymt__LoanPayment__paymentdate");
+    var lObj = {
+        "val": lDetails.payableDueDate,
+        "fromFormat": "yyyy-MM-dd",
+        "toFormat": "dd-MMM-yyyy"
+    }
+    var lPaymentDueDate = apz.formatDate(lObj);
+    apz.setElmValue("lnpymt__LoanPayment__Stage3PayableDueDate", lPaymentDueDate);
+    if (apz.isNull(lDetails.remarks)) {
+        apz.hide("lnpymt__LoanPayment__Stage3Remarks_ctrl_grp_div");
+    } else {
+        apz.show("lnpymt__LoanPayment__Stage3Remarks_ctrl_grp_div");
+    }
+};
+apz.lnpymt.loanpayment.fnRenderStage3 = function() {
+    debugger;
+    apz.hide("lnpymt__LoanPayment__Stage1");
+    apz.hide("lnpymt__LoanPayment__Stage2");
+    apz.show("lnpymt__LoanPayment__Stage3");
+    apz.hide("lnpymt__LoanPayment__Stage4");
+};
+apz.lnpymt.loanpayment.fnEditStage3 = function() {
+    debugger;
+    apz.lnpymt.loanpayment.fnRenderStage2();
+};
+apz.lnpymt.loanpayment.fnConfirmStage3 = function() {
+    debugger;
+    //apz.mockServer = false;
+    apz.lnpymt.loanpayment.sAction = "Insert";
+    var lParams = {
+        "ifaceName": "LoanPayment",
+        "req": {
+            "LoanPaymentDtls": apz.data.scrdata.lnpymt__LoanPayment_Req.LoanPaymentDtls,
+            "action": "Confirm"
+        },
+        "paintResp": "Y",
+        "callBack": apz.lnpymt.loanpayment.fnCallServerCallBack
+    };
+    apz.lnpymt.loanpayment.fnBeforeCallServer(lParams);
+};
+apz.lnpymt.loanpayment.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": params.paintResp,
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": apz.lnpymt.loanpayment.fnCallServerCallBack
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.lnpymt.loanpayment.fnCallServerCallBack = function(params) {
+    debugger;
+    //loading JSON data as there is no external service! comment below condition while integrating with external service
+    if (apz.lnpymt.loanpayment.sAction == "Query") {
+        var filePath = apz.getDataFilesPath("lnpymt") + "/LoanSumm.json";
+        var content = apz.getFile(filePath);
+        content = JSON.parse(content);
+        apz.data.appendData(content);
+        apz.data.loadData("LoanSumm", "lnpymt");
+        //   / apz.data.loadJsonData("LoanSumm");
+    }
+    if (!params.errors) {
+        if (apz.lnpymt.loanpayment.sAction == "Insert") {
+            if (params.res.lnpymt__LoanPayment_Res.LoanPaymentDtls.respCd == "app") {
+                apz.lnpymt.loanpayment.sParams.RefNum = params.res.lnpymt__LoanPayment_Res.LoanPaymentDtls.txnRefNo;
+                apz.lnpymt.loanpayment.fnRenderOTP();
+                var lLaunchParams = {
+                    "appId": "otpeng",
+                    "scr": "ProcessOTP",
+                    "div": "lnpymt__LoanPayment__launcher",
+                    "userObj": {
+                        "action": "SetRefNo",
+                        "data": {
+                            "OTPRefNo": params.res.lnpymt__LoanPayment_Res.LoanPaymentDtls.data.OTPRefNo
+                        },
+                        "control": {
+                            "appId": "otpeng",
+                            "callBack": apz.lnpymt.loanpayment.fnOtpCallBack,
+                            "destroyDiv": "lnpymt__LoanPayment__launcher"
+                        }
+                    }
+                };
+                apz.launchApp(lLaunchParams);
+            }
+        }
+    }
+};
+apz.lnpymt.loanpayment.fnRenderOTP = function() {
+    debugger;
+    apz.hide("lnpymt__LoanPayment__Stage1");
+    apz.hide("lnpymt__LoanPayment__Stage2");
+    apz.hide("lnpymt__LoanPayment__Stage3");
+    apz.hide("lnpymt__LoanPayment__Stage4");
+    apz.show("lnpymt__LoanPayment__launcher");
+};
+apz.lnpymt.loanpayment.fnOtpCallBack = function() {
+    debugger;
+    apz.lnpymt.loanpayment.fnGotoStage4();
+};
+apz.lnpymt.loanpayment.fnGotoStage4 = function() {
+    debugger;
+    apz.lnpymt.loanpayment.fnSetValueStage4();
+    apz.lnpymt.loanpayment.fnRenderStage4();
+};
+apz.lnpymt.loanpayment.fnSetValueStage4 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.lnpymt__LoanPayment_Req.LoanPaymentDtls;
+    apz.setElmValue("lnpymt__LoanPayment__Stage4LoanAccNo", lDetails.loanAccountNo);
+    apz.setElmValue("lnpymt__LoanPayment__Stage4LoanAccBranch", lDetails.branch);
+    apz.setElmValue("lnpymt__LoanPayment__Stage4Currency", lDetails.currency);
+    apz.setElmValue("lnpymt__LoanPayment__Stage4OutstandingBal", lDetails.outstandingBalance);
+    apz.setElmValue("lnpymt__LoanPayment__Stage4Principal", lDetails.principal);
+    apz.setElmValue("lnpymt__LoanPayment__Stage4AmountDue", lDetails.amountDue);
+    apz.setElmValue("lnpymt__LoanPayment__Stage4Interest", lDetails.interest);
+    apz.setElmValue("lnpymt__LoanPayment__Stage4AmountDueDt", lDetails.amountDueDate);
+    apz.setElmValue("lnpymt__LoanPayment__Stage4PayableAmt", lDetails.paymentAmount);
+    apz.setElmValue("lnpymt__LoanPayment__Stage4PayableAccNo", lDetails.paymentAccountNo);
+    apz.setElmValue("lnpymt__LoanPayment__Stage4Remarks", lDetails.remarks);
+    var lObj = {
+        // "val": lDetails.payableDueDate,
+        "val": lDetails.amountDueDate,
+        "fromFormat": "yyyy-MM-dd",
+        "toFormat": "dd-MMM-yyyy"
+    }
+    var lPaymentDueDate = apz.formatDate(lObj);
+    apz.setElmValue("lnpymt__LoanPayment__Stage4PayableDueDate", lPaymentDueDate);
+    var lRefNo = "Your Reference no is " + apz.lnpymt.loanpayment.sParams.RefNum;
+    apz.setElmValue("lnpymt__LoanPayment__Stage4RefNo", lRefNo);
+    if (apz.isNull(lDetails.remarks)) {
+        apz.hide("lnpymt__LoanPayment__Stage4Remarks_ctrl_grp_div");
+    } else {
+        apz.show("lnpymt__LoanPayment__Stage4Remarks_ctrl_grp_div");
+    }
+};
+apz.lnpymt.loanpayment.fnRenderStage4 = function() {
+    debugger;
+    apz.hide("lnpymt__LoanPayment__Stage1");
+    apz.hide("lnpymt__LoanPayment__Stage2");
+    apz.hide("lnpymt__LoanPayment__Stage3");
+    apz.hide("lnpymt__LoanPayment__launcher");
+    apz.show("lnpymt__LoanPayment__Stage4");
+    var country = apz.getElmValue("menuap__Menu__countryDropdown")
+    if (country == "IND") {
+        apz.setElmValue("lnpymt__LoanPayment__Stage4Currency", "₹");
+    } else if (country == "UK") {
+        apz.setElmValue("lnpymt__LoanPayment__Stage4Currency", "£");
+    } else {
+        apz.setElmValue("lnpymt__LoanPayment__Stage4Currency", "$");
+    }
+};
+apz.lnpymt.loanpayment.fnValidateStage2 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("lnpymt__LoanPayment__PaymentForm");
+    lValid = true;
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "VAL_MAND"
+        }
+        apz.dispMsg(lMsg);
+        return false
+    }
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+}
+apz.lnpymt.loanpayment.fnDone = function() {
+    // apz.csmrbk.landingpage.fnHome()
+    apz.cmrnav.fnLaunchConsumerHome()
+};

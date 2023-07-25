@@ -1,0 +1,82 @@
+apz.chqdep.account = {};
+apz.app.onLoad_account = function(params) {
+    if (params.Navigation) {
+        apz.chqdep.account.fnSetNavigation(params);
+    }
+    $("#chqdep__account__btnCaptureFront").prop('disabled', true);
+}
+
+apz.chqdep.account.fnSetNavigation = function(params) {
+    debugger;
+    apz.chqdep.account.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "Remote Cheque Deposit";
+    }
+    lParams.backPressed = apz.chqdep.account.fnBack;
+    apz.chqdep.account.Navigation(lParams);
+};
+apz.chqdep.account.fnSelectAccount = function(pthis) {
+    debugger;
+    apz.chqdep.account.accountno = pthis.value;
+    var val = apz.getElmValue("chqdep__account__ddlaccount");
+    if (val == "") {
+        $("#chqdep__account__inpamount").prop('disabled', true);
+        $("#chqdep__account__btnCaptureFront").prop('disabled', true);
+    } else {
+        $("#chqdep__account__inpamount").prop('disabled', false);
+        $("#chqdep__account__btnCaptureFront").prop('disabled', false);
+        $("#chqdep__account__ddlaccount option:selected").text();
+    }
+}
+apz.chqdep.account.formatno = function() {
+    var amt = apz.getElmValue("chqdep__account__inpamount");
+    var obj = {};
+    obj.value = amt;
+    obj.mask = "MILLION";
+    obj.decimalPoints = 2;
+    obj.decimalSep = ".";
+    var result = apz.formatNumber(obj);
+    console.log(result);
+    apz.setElmValue("chqdep__account__inpamount",result)
+}
+apz.chqdep.account.fngotoCaptureFront = function() {
+    debugger;
+    //if (apz.deviceType === "ANDROID" || apz.deviceType === "IOS") {
+        
+        apz.chqdep.account.mobcamera();
+    //} 
+}
+apz.chqdep.account.mobcamera = function() {
+    var jsonobj = {
+        "zoomLevel": "20",
+        "targetWidth": "400",
+        "targetHeight": "400",
+        "crop": "Y", //Y or N  
+        "flash": "N",
+        "action": "base64_Save", // save,base64 
+        "fileName": "Sample",
+        "quality": "50",
+        "encodingType": "JPG",
+        "sourceType": "camera" // photo 
+    };
+    jsonobj.id = "CAMERA_ID";
+    jsonobj.callBack = apz.chqdep.account.mobcameraCallback;
+    apz.ns.openCamera(jsonobj);
+}
+apz.chqdep.account.mobcameraCallback = function(pjson) {
+    if (pjson.status) {
+        $("#chqdep__account__rowaccount").addClass("sno");
+        var lparams = {
+            "appId": "chqdep",
+            "scr": "captureFront",
+            "div": "chqdep__account__launchdiv",
+            "userObj": pjson
+        }
+        apz.launchSubScreen(lparams);
+    } else {
+        //alert("Failure");
+    }
+};

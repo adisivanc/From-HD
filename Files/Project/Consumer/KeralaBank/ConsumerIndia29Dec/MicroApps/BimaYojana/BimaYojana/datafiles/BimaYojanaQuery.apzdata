@@ -1,0 +1,20 @@
+{
+    "tbDbtpByDet": {
+        "customerId":"1000001",
+		"fromAccountNo":"100009312263",
+		"gender":"Male",
+		"aadhaarNo":"123412341234",
+		"nomineeName":"M B Bhat",
+		"nomineeRelation":"Son",
+		"nomineeAddress":"Koramangala",
+		"nomineeDob":"23-02-2012",
+		"guardianName":"B M Jain",
+		"guardianAddress":"Koramangala",
+		"mobileNo":"9988776655",
+		"emailId":"san@gmial.com",
+		"amount":"10",
+		"typeOfBima":"PMJJBY",
+		"athenticationType":"OTP",
+		"txnRefNo":"12312312312312312"
+    }
+}

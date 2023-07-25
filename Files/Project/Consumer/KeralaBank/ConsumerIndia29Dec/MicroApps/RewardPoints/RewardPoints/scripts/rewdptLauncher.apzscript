@@ -1,0 +1,19 @@
+apz.rewdpt.checkParams = function(params) {
+    debugger;
+    params.userObj = {
+        "data": {
+            "customerID": "000004712",
+            "CardDtls": [{
+                "accountNumber": "753410001234",
+                "cardType": "Credit Card",
+                "cardProduct": "Capital One",
+                "cardNumber": "100xxxxx3282398",
+            }, {
+                "accountNumber": "753410002071",
+                "cardType": "Debit Card",
+                "cardProduct": "Contactless Debit Card",
+                "cardNumber": "123xxxxx2341233",
+            }]
+        }
+    }
+}

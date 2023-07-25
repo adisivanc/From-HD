@@ -1,0 +1,15 @@
+{"nchqbk__ChequeAccountDetails_Res": {
+ 	"accounts": [{
+ 		"accountNo": "5785936513734",
+ 		"accountType": "Checking",
+ 		"accountBalance": "10,00,996"
+ 	}, {
+ 		"accountNo": "7356329872139",
+ 		"accountType": "Checking",
+ 		"accountBalance": "1,88,373"
+ 	}, {
+ 		"accountNo": "8274239482711",
+ 		"accountType": "Checking",
+ 		"accountBalance": "2,84,748"
+ 	}]
+ }}

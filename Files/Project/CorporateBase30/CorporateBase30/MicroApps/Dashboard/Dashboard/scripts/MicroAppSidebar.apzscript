@@ -1,0 +1,13 @@
+apz.app.toggleSidebar = function(pSideBarId) {
+    if (!$("#"+pSideBarId).hasClass('apz-nav-open')) {
+        apz.app.openSidebar(pSideBarId);
+    } else {
+        apz.app.closeSidebar(pSideBarId);
+    }
+};
+apz.app.openSidebar = function(pSideBarId) {
+    $("#"+pSideBarId).addClass('apz-nav-open');
+};
+apz.app.closeSidebar = function(pSideBarId) {
+    $("#"+pSideBarId).removeClass('apz-nav-open');
+};

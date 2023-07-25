@@ -1,0 +1,118 @@
+apz.searchRecords = function(pcontainer, psearchcontent, filterObj) {
+    var lsearchcontent = psearchcontent.toUpperCase();
+    var params = {};
+    var searchRecords = true;
+    if (apz.isFunction(apz.app.presearchRecords)) {
+        searchRecords = apz.app.presearchRecords(pcontainer, lsearchcontent)
+    }
+    if (searchRecords) {
+        var lsearchcontent = psearchcontent.toUpperCase();
+        var params = {};
+        /*params.containerId = pcontainer;
+      params.action = "C";
+      params.tracker = [];
+      params.dataPointers = [];
+      this.data.setData(params);*/
+        if (this.isObjectEmpty(this.data.scrDataBackup)) {
+            this.data.scrDataBackup = {};
+            var ifacesArr = this.scrMetaData.containersMap[pcontainer].ifaces;
+            for (i = 0; i < ifacesArr.length; i++) {
+                if (!apz.isNull(this.data.scrdata[ifacesArr[i]])) {
+                    this.data.scrDataBackup[ifacesArr[i]] = this.copyJSONObject(this.data.scrdata[ifacesArr[i]]);
+                }
+                if (!apz.isNull(this.data.scrdata[ifacesArr[i] + "_Req"])) {
+                    this.data.scrDataBackup[ifacesArr[i] + "_Req"] = this.copyJSONObject(this.data.scrdata[ifacesArr[i] + "_Req"]);
+                }
+                if (!apz.isNull(this.data.scrdata[ifacesArr[i] + "_Res"])) {
+                    this.data.scrDataBackup[ifacesArr[i] + "_Res"] = this.copyJSONObject(this.data.scrdata[ifacesArr[i] + "_Res"]);
+                }
+            }
+        } else {
+            this.data.appendData(this.copyJSONObject(this.data.scrDataBackup));
+        }
+        var lcontainerobj = this.scrMetaData.containersMap[pcontainer];
+        var lcontainertype = lcontainerobj.type;
+        var lnodes = lcontainerobj.nodes;
+        if (!this.isNull(psearchcontent)) {
+            var lnode;
+            var lnoofnodes = lnodes.length;
+            var actNodes = new Array();
+            for (var m = 0; m < lnoofnodes; m++) {
+                var allParents = this.scrMetaData.nodesMap[lnodes[m]].parents;
+                if (allParents.length > 0) {
+                    for (var x = 0; x < allParents.length; x++) {
+                        if ($.inArray(apz.getNodeName(allParents[x]), actNodes) == -1) {
+                            actNodes.push(apz.getNodeName(allParents[x]));
+                        }
+                    }
+                }
+                actNodes.push(apz.getNodeName(lnodes[m]));
+            }
+            var lsearchednodes = new Array();
+            var mrParentNodes = new Array();
+            var indexArr = new Array();
+            if (lcontainertype == "TABLE" || lcontainertype == "LIST" && !this.isNull(psearchcontent)) {
+                var lfinaloutput = this.getAllRecords(lcontainerobj);
+                for (var x = 0; x < lnoofnodes; x++) {
+                    lnode = lnodes[x];
+                    if ($.inArray(this.scrMetaData.nodesMap[lnode].mrParent, mrParentNodes) == -1) {
+                        mrParentNodes.push(this.scrMetaData.nodesMap[lnode].mrParent);
+                    }
+                }
+                for (var r = 0; r < mrParentNodes.length; r++) {
+                    indexArr = [];
+                    var mrParNode = mrParentNodes[r];
+                    if (!this.containsKey(lsearchednodes, mrParNode) && lfinaloutput[mrParNode]) {
+                        lfinaloutput[mrParNode] = $.grep(lfinaloutput[mrParNode], function(n, i) {
+                            lsearchednodes.push(mrParNode);
+                            var params = {};
+                            params.parentObj = n;
+                            params.obj = n;
+                            params.searchContent = lsearchcontent;
+                            params.actNodes = actNodes;
+                            params.searchedNodes = lsearchednodes;
+                            params.indexArr = indexArr;
+                            params.index = i;
+                            params.containerId = pcontainer;
+                            params.mrParentNode = mrParNode;
+                            params.currentNode = mrParNode;
+                            return apz.searchNodeRecords(params);
+                        }, false);
+                        if (!this.scrMetaData.containersMap[pcontainer].searchIndex) {
+                            this.scrMetaData.containersMap[pcontainer].searchIndex = {};
+                        }
+                        this.scrMetaData.containersMap[pcontainer].searchIndex[mrParNode] = indexArr;
+                        //var mrParent = this.scrMetaData.nodesMap[lnode].mrParent;
+                        var parPointer = this.getParentPointer(mrParNode);
+                        if (!this.isNull(parPointer)) {
+                            parPointer[apz.getNodeName(mrParNode)] = lfinaloutput[mrParNode];
+                        }
+                    }
+                }
+            }
+        } else {
+            this.scrMetaData.containersMap[pcontainer].searchIndex = null;
+        }
+        params = {};
+        params.containerId = pcontainer;
+        params.dataRecNo = 0;
+        params.action = "C";
+        params.tracker = [];
+        this.data.getData(params);
+        var ifacesArr = this.scrMetaData.containersMap[pcontainer].ifaces;
+        for (i = 0; i < ifacesArr.length; i++) {
+            if (!apz.isNull(this.data.scrDataBackup[ifacesArr[i]])) {
+                this.data.scrdata[ifacesArr[i]] = this.copyJSONObject(this.data.scrDataBackup[ifacesArr[i]]);
+            }
+            if (!apz.isNull(this.data.scrDataBackup[ifacesArr[i] + "_Req"])) {
+                this.data.scrdata[ifacesArr[i] + "_Req"] = this.copyJSONObject(this.data.scrDataBackup[ifacesArr[i] + "_Req"]);
+            }
+            if (!apz.isNull(this.data.scrDataBackup[ifacesArr[i] + "_Res"])) {
+                this.data.scrdata[ifacesArr[i] + "_Res"] = this.copyJSONObject(this.data.scrDataBackup[ifacesArr[i] + "_Res"]);
+            }
+        }
+    }
+    if (apz.isFunction(apz.app.postsearchRecords)) {
+        apz.app.postsearchRecords(pcontainer, lsearchcontent)
+    }
+}

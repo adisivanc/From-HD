@@ -1,0 +1,47 @@
+{
+    "branches" : [
+        {
+            "branchCode" : "123",
+            "branchName" : "BRANCH-1",
+            "branchShort" : "BRANCH-1",
+            "address1" : "BRANCH-1",
+            "address2" : "BRANCH-1",
+            "address3" : "BRANCH-1",
+            "city" : "Bangalore",
+            "state" : "KARNATAKA",
+            "pin" : "567889",
+            "country" : "India",
+            "email" : "branch1@gmail.com",
+            "regionCode" : "Region1"
+        },
+        {
+            "branchCode" : "456",
+            "branchName" : "BRANCH-2",
+            "branchShort" : "BRANCH-2",
+            "address1" : "BRANCH-2",
+            "address2" : "BRANCH-2",
+            "address3" : "BRANCH-2",
+            "city" : "Bangalore",
+            "state" : "KARNATAKA",
+            "pin" : "567990",
+            "country" : "India",
+            "email" : "branch2@gmail.com",
+            "regionCode" : "Region2"
+        },
+        {
+            "branchCode" : "789",
+            "branchName" : "BRANCH-3",
+            "branchShort" : "BRANCH-3",
+            "address1" : "BRANCH-3",
+            "address2" : "BRANCH-3",
+            "address3" : "BRANCH-3",
+            "city" : "Bangalore",
+            "state" : "KARNATAKA",
+            "pin" : "568890",
+            "country" : "India",
+            "email" : "branch3@gmail.com",
+            "regionCode" : "Region3"
+        }]
+    
+    
+}

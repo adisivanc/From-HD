@@ -1,0 +1,29 @@
+{
+    "agencybankingtransactions": [
+        {
+            "accountNumber": "209871678897-Savings",
+            "accountType": "Savings",
+            "balance": "50000"
+        },
+        {
+            "accountNumber": "265765768768-Current",
+            "accountType": "Current",
+            "balance": "27000"
+        },
+        {
+            "accountNumber": "298715670986",
+            "accountType": "Loan",
+            "balance": "15000"
+        },
+        {
+            "accountNumber": "374857676868",
+            "accountType": "Investments",
+            "balance": "5000"
+        },
+        {
+            "accountNumber": "7654987624515679",
+            "accountType": "Credit Card",
+            "balance": "2500"
+        }
+    ]
+}

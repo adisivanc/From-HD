@@ -1,0 +1,48 @@
+apz.spndas.Launcher = {};
+apz.spndas.Launcher.columColor ={"name":"Bills and Utilities","color":"E23800"};
+apz.spndas.Launcher.monthsFilter = 12;
+apz.app.onLoad_Launcher = function(params){
+    debugger;
+    //        apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "SPEND ANALYSIS")
+
+    apz.data.loadJsonData("CategoryDescription", "spndas");
+    TransactionSummary.copyDescriptions(apz.data.scrdata.spndas__CategoryDescription_Res.category);
+    apz.spndas.Launcher.fnLaunchScreen("spndas","TotalSpends","spndas__Launcher__doughnutLauncher");
+    apz.spndas.Launcher.fnLaunchScreen("spndas","TransactionDetails","spndas__Launcher__transactionLauncher");
+    apz.spndas.Launcher.fnLaunchScreen("spndas","Remainder","spndas__Launcher__remainderLauncher");
+  
+    todayMonth = TransactionDetails.getTodayMonth();
+    todayyear = TransactionDetails.getTodayYear();
+    TransactionSummary.setMonthYear(todayMonth+" "+todayyear);
+    summary = TransactionSummary.getSummary();
+    apz.spndas.Launcher.fnLoadSummaryData(summary);
+};
+apz.app.onShown_Launcher = function(){
+    debugger;
+}
+apz.spndas.Launcher.fnLaunchScreen = function(appId,scr,div){
+    debugger;
+    apz.launchSubScreen({appId,scr,div})
+}
+apz.spndas.Launcher.fnLoadSummaryData = function(summary){
+    debugger;
+    apz.data.scrdata.spndas__TransactionSummary_Res = {};
+    apz.data.scrdata.spndas__TransactionSummary_Res.summary = summary;
+    apz.data.loadData("TransactionSummary","spndas");
+}
+apz.spndas.Launcher.fnLoadTranaction = function(monthYear,value,monthsfilter){
+    debugger;
+    apz.data.scrdata.spndas__CategoryTransaction_Res = {};
+    transactions = TransactionDetails.getDetails(monthsfilter);
+    transactionsUpdateSelected = transactions.map(function(transaction){
+                  if(transaction.label == monthYear){
+                      transaction.value = value;
+                  }
+                  return transaction;
+    })
+    apz.data.scrdata.spndas__CategoryTransaction_Res.Transactions = transactionsUpdateSelected.reverse();
+    setTimeout(function(){
+        apz.data.loadData("CategoryTransaction", "spndas");
+    },200)
+    
+};

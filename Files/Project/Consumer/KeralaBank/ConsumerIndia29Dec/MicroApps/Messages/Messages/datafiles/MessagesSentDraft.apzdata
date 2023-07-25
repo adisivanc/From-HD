@@ -1,0 +1,64 @@
+{
+    "messag__MsgInbox_Req":{
+        "Messages":[
+    {
+        "MESSAGE": "cheque",
+        "READ_STATUS": "UNREAD",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "messageId1519303578231750894",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Cheque Book issue",
+        "ADMIN_USER": "ADMIN1",
+        "PARENT_ID": "messageId1519302126429246773",
+        "MODIFICATION_TS": "2018-09-26 02:30:04"
+    },
+    {
+        "MESSAGE": "Cheque Book received",
+        "READ_STATUS": "UNREAD",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "messageId1519303345814287684",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Cheque Book issue",
+        "ADMIN_USER": "",
+        "PARENT_ID": "123456789",
+        "MODIFICATION_TS": "2018-09-26 02:30:04"
+    },
+    {
+        "MESSAGE": "Cheque book enquiry",
+        "READ_STATUS": "UNREAD",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "messageId1519302126429246773",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Cheque book",
+        "ADMIN_USER": "ADMIN1",
+        "PARENT_ID": "123456789",
+        "MODIFICATION_TS": "2018-09-26 02:30:04"
+    },{
+        "MESSAGE": "Passbook enquiry",
+        "READ_STATUS": "UNREAD",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "messageId1519302126429246773",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Passbook",
+        "ADMIN_USER": "ADMIN1",
+        "PARENT_ID": "123456789",
+        "MODIFICATION_TS": "2018-09-26 02:30:04"
+    },{
+        "MESSAGE": "Cheque book not received",
+        "READ_STATUS": "UNREAD",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "messageId1519302126429246773",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Cheque book",
+        "ADMIN_USER": "ADMIN1",
+        "PARENT_ID": "123456789",
+        "MODIFICATION_TS": "2018-09-26 02:30:04"
+    }
+]
+}
+}

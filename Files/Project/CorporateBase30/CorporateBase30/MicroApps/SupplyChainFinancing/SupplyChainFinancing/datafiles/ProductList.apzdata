@@ -1,0 +1,23 @@
+{
+    "acsf01__ProductList_Res": {
+        "products": [{
+            "slno": "1",
+            "description": "Sterilizer",
+            "quantity": "5",
+            "unitprice": "6,000.00",
+            "amount": "30,000.00"
+        }, {
+            "slno": "2",
+            "description": "Nebulizer",
+            "quantity": "3",
+            "unitprice": "7,000.00",
+            "amount": "21,000.00"
+        }, {
+            "slno": "3",
+            "description": "Disposable Syringe",
+            "quantity": "4",
+            "unitprice": "4,200.00",
+            "amount": "16,800.00"
+        }]
+    }
+}

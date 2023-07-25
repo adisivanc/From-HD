@@ -1,0 +1,94 @@
+apz.asntsk.assignTask = {};
+apz.asntsk.assignTask.sCurrentTask = {};
+apz.app.onLoad_AssignTask = function(params) {
+    if (apz.Login) {
+        apz.asntsk.assignTask.sCorporateId = apz.Login.sCorporateId;
+    }
+    apz.asntsk.assignTask.sCurrentTask = params.taskObj;
+    apz.asntsk.assignTask.getUsersList();
+};
+apz.app.onShown_AssignTask = function(params) {
+    debugger;
+};
+apz.asntsk.assignTask.getUsersList = function() {
+    var lServerParams = {
+        "ifaceName": "UsersList_Query",
+        "buildReq": "N",
+        "req": "",
+        "paintResp": "Y",
+        "async": "true",
+        "callBack": apz.asntsk.assignTask.getUsersListCB,
+        "callBackObj": "",
+    };
+    var req = {};
+    req.tbDbmiCorpUserMaster = {};
+    req.tbDbmiCorpUserMaster.corporateId = apz.asntsk.assignTask.sCorporateId;
+    lServerParams.req = req;
+    apz.server.callServer(lServerParams);
+};
+apz.asntsk.assignTask.getUsersListCB = function(pResp) {
+    debugger;
+    if (!pResp.errors) {
+        var lUserNames = pResp.res.asntsk__UsersList_Res.tbDbmiCorpUserMaster;
+        var lUserNamesLength = lUserNames.length;
+        var lArr = [];
+        var lObjVal = {
+            "val": "Please Select",
+            "desc": "Please Select"
+        };
+        lArr.push(lObjVal);
+        for (var i = 0; i < lUserNamesLength; i++) {
+            var lObj = {
+                "val": lUserNames[i].userId,
+                "desc": lUserNames[i].firstName + " " + lUserNames[i].lastName,
+            };
+            lArr.push(lObj);
+        }
+        apz.populateDropdown(document.getElementById("asntsk__TaskDetails__o__vwWorkflowMaster__actorId"), lArr);
+        apz.data.scrdata.asntsk__TaskDetails_Res = {};
+        apz.data.scrdata.asntsk__TaskDetails_Res.vwWorkflowMaster = apz.asntsk.assignTask.sCurrentTask;
+        apz.data.loadData('TaskDetails', 'asntsk');
+        if (apz.asntsk.assignTask.sCurrentTask.status == "COMPLETED") {
+            $("#asntsk__AssignTask__AssignBtn").addClass('sno');
+        }
+    }
+};
+apz.asntsk.assignTask.assignTaskToUser = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "AssignTask_Modify",
+        "buildReq": "N",
+        "req": "",
+        "paintResp": "Y",
+        "async": "true",
+        "callBack": apz.asntsk.assignTask.assignTaskToUserCB,
+        "callBackObj": "",
+    };
+    var req = {};
+    req.tbDbmiWorkflowMaster = apz.data.scrdata.asntsk__TaskDetails_Res.vwWorkflowMaster;
+    req.tbDbmiWorkflowMaster.actorId = apz.getElmValue('asntsk__TaskDetails__o__vwWorkflowMaster__actorId');
+    lServerParams.req = req;
+    apz.server.callServer(lServerParams);
+};
+apz.asntsk.assignTask.assignTaskToUserCB = function(pResp) {
+    debugger;
+    if (!pResp.errors) {
+        $('.details').addClass('sno');
+        $('.summary').removeClass('sno');
+        var msg = {
+            "code": 'ASSIGNED_SUCCESS',
+            "callBack": apz.asntsk.tasksList.queryTasks
+        };
+        apz.dispMsg(msg);
+    }
+};
+apz.asntsk.assignTask.reLoadTasksList = function() {
+    $('.details').addClass('sno');
+    $('.summary').removeClass('sno');
+    apz.asntsk.tasksList.queryTasks();
+};
+apz.asntsk.assignTask.Back = function() {
+    debugger;
+    $('.details').addClass('sno');
+    $('.summary').removeClass('sno');
+};

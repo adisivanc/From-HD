@@ -1,0 +1,14 @@
+apz.ddinst.EcsLauncher = {};
+apz.app.onLoad_EcsLauncher = function(params) {
+    debugger;
+    var lParams = {
+        "appId": "ddinst",
+        "scr": "EcsSummary",
+        "div": "ddinst__EcsLauncher__row1",
+        "userObj": params
+    }
+    if (params.Navigation) {
+        lParams.userObj.Navigation = params.Navigation
+    }
+    apz.launchSubScreen(lParams);
+}

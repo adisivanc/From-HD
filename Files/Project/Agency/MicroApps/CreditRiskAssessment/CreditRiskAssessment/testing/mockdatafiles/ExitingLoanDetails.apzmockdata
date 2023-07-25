@@ -1,0 +1,30 @@
+{
+    "tbDbmiExitLoanDetails":[
+        {
+            "refno":"CONSONB3021573586086",
+            "nameOfInstitution":"Smarty Life.",
+            "loanType":"Home loan",
+            "sanctionedAmount":200000,
+            "presentOutstanding":"50000",
+            "tenor":"2",
+            "emi":"4500"
+        },
+        {
+            "refno":"CONSONB3021573586086",
+            "nameOfInstitution":"My Budget Bee.",
+            "loanType":"Vechile Loan",
+            "sanctionedAmount":100000,
+            "presentOutstanding":"20000",
+            "tenor":"4",
+            "emi":"2000"
+        },
+        {
+            "refno":"CONSONB3021573586086",
+            "nameOfInstitution":"My Backlinks.",
+            "loanType":"Auto Loan",
+            "sanctionedAmount":500000,
+            "presentOutstanding":"100000",
+            "tenor":"3",
+            "emi":"9000"
+        }]
+}

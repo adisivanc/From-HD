@@ -1,0 +1,90 @@
+apz.favour.favorites = {};
+apz.app.onShown_favorites = function(params) {
+    debugger;
+    if(apz.deviceGroup == "Mobile")
+    
+    {
+        $("#favour__favorites__gr_row_3").addClass("sno");
+    }
+   
+            apz.data.loadJsonData("FavouritePayment", "favour");
+     $("#landin__Landing__TitleRow").removeClass("sno");
+    apz.data.loadJsonData("favTransfer", "favour");
+    apz.data.loadJsonData("billPayment", "favour");
+    apz.data.loadJsonData("accountDetails", "favour");
+    $("#favour__favorites__ct_lst_2 ul>li").click(function() {
+        var rowno = $(this).attr("rowno");
+        var paymentName = apz.data.scrdata.favour__billPayment_Req.payment[rowno].paymentName;
+        apz.landin.Landing.fnMenuClickInside("One Time Bill Pay", {
+            "paymentName": paymentName,
+            "from": "dashboard"
+        });
+    })
+ var favIcon =     apz.data.scrdata.favour__FavouritePayment_Res.summary;
+ for(let i = 0; i < favIcon.length ; i++)
+ {
+var iconClass = favIcon[i].providerImg;
+    $("#favour__favorites__favIcon_" + i).html('<svg aria-hidden="true" role="presentation" class="ett-icon '+iconClass+' px20"><use xlink:href="#'+iconClass+'"></use></svg>');
+    $("#favour__favorites__favIcon_" + i ).removeAttr("disabled");
+
+ }
+    
+}
+apz.favour.favorites.fnGoToTransfer = function(element) {
+    debugger;
+                   $("body").removeClass("landingtheme2");
+
+    // var rowno = $(element).attr("rowno");
+    // var paymentObj = apz.data.scrdata.favour__FavouritePayment_Res.summary[rowno];
+    // $("#favour__LandingPage__ScreenNmeLandingTxt_txtcnt").text("BILL PAYMENT");
+    // apz.launchApp({
+    //     appId: "bllpay",
+    //     div: "csmrbk__LandingPage__microappLauncherCol",
+    //     scr: "Launcher",
+    //     userObj: {
+    //         data :{
+    //           "actionscr" : "BP" 
+    //         } ,
+    //         summary: paymentObj,
+    //         from : "favourites",
+    //         control: {
+    //             exitApp: {
+    //                 "div": "csmrbk__LandingPage__microappLauncherCol"
+    //             }
+    //         }
+    //     }
+    // })
+    
+    
+    
+    
+          $("#landin__Landing__gr_row_16").removeClass("expandmenu");
+     $("#landin__Landing__gr_row_17").addClass("xband"); 
+    //$("#moblan__Home__gr_row_1").toggleClass("expandmenu")
+    $("#landin__Landing__gr_row_16").addClass("sno");
+    $("#landin__Landing__launcher").addClass("expandmenu")
+    $("#landin__Landing__sidebar").removeClass("sno");
+    $("#landin__Landing__TitleRow").removeClass("sno");
+     $("#landin__Landing__TitleRow").removeClass("sno");
+    $("body").removeClass("loginby");
+    var rowNo = $(element).attr("rowno");
+    var paymentArr = []
+    paymentArr.push(apz.data.scrdata.favour__FavouritePayment_Res.summary[rowNo]);
+  //  $("#csmrbk__LandingPage__ScreenNmeLandingTxt_txtcnt").text("BILL PAYMENT");
+    apz.launchApp({
+        appId: "bllpay",
+        div: "landin__Landing__launcher",
+        scr: "Launcher",
+        userObj: {
+            data:{"actionscr":"BP"},
+            summary: paymentArr,
+            from: "favAndDash",
+            fromScreen : "Dashboard",
+            control: {
+                exitApp: {
+                    "div": "landin__Landing__launcher"
+                }
+            }
+        }
+    })
+}

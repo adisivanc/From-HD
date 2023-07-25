@@ -1,0 +1,69 @@
+{
+    "loanst__LoanTransactions_Res":{
+    "loanTranc": {
+        "txnRefNo": "98765434524",
+        "status": "true",
+        "respCd": "",
+        "extMsg": "",
+        "intMsgCd": "",
+        "loanTrancDtls": {
+            "name": "Mr. Phan YangTong ",
+            "accountNo": "001234545545",
+            "branch": "Koramangala, Bengaluru",
+            "address": "Koramangala, Bengaluru",
+            "accountType": "Vehicle loan",
+            "InterestRate": "8.00%",
+            "balance": "234567",
+            "TrancDtls": [
+                {
+                    "transactionDt": "28-Jun-2020",
+                    "description": "Interest",
+                    "ref_cheqNo": "",
+                    "debitAmount": "4000",
+                    "creditAmount": "",
+                    "balance": "102746"
+                },
+                {
+                    "transactionDt": "15-Jun-2020",
+                    "description": "Deposit-Transfer-2345678",
+                    "ref_cheqNo": "",
+                    "debitAmount": "",
+                    "creditAmount": "20000",
+                    "balance": "82746"
+                }, {
+                    "transactionDt": "18-Jun-2020",
+                    "description": "Interest",
+                    "ref_cheqNo": "",
+                    "debitAmount": "4000",
+                    "creditAmount": "",
+                    "balance": "86746"
+                },
+                {
+                    "transactionDt": "16-Jun-2020",
+                    "description": "Deposit-Transfer-65432234",
+                    "ref_cheqNo": "",
+                    "debitAmount": "",
+                    "creditAmount": "20000",
+                    "balance": "66746"
+                }, {
+                    "transactionDt": "19-Jun-2020",
+                    "description": "Interest",
+                    "ref_cheqNo": "",
+                    "debitAmount": "4000",
+                    "creditAmount": "",
+                    "balance": "70746"
+                },
+                {
+                    "transactionDt": "28-Jun-2018",
+                    "description": "Deposit-Transfer-23456787",
+                    "ref_cheqNo": "",
+                    "debitAmount": "",
+                    "creditAmount": "20000",
+                    "balance": "50746"
+                }
+            ]
+        }
+    }
+}
+
+}

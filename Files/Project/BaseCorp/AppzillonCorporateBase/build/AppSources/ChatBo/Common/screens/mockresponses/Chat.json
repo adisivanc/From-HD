@@ -1,0 +1,23 @@
+{
+  "botId": "viola",
+  "conversationId": "20",
+  "state": "INTENT_ACTION, DIALOG_ACTION",
+  "dialog": {
+    "prompt": {
+        "objectFormat": "HIDDEN",
+        "message": "Please enter the 6 digit pin has been sent to your registered mobile. ",
+        "objectType": "TEXT"
+      },
+    "options": [],
+    
+    "entity": []
+
+  },
+  "status": true,
+  "errors": [
+    {
+      "errorMessage": "",
+      "errorCode": ""
+    }
+  ]
+}

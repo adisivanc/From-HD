@@ -1,0 +1,14 @@
+{
+    "bllpay__Accounts_Res": {
+        "accounts": [{
+            "accountNo": "100009312263",
+            "accountType": "Savings",
+            "accountBalance": "50000"
+        }, {
+            "accountNo": "100009312401",
+            "accountType": "Savings",
+            "accountBalance": "60000"
+        }],
+        "operatorName":"Savings"
+    }
+}

@@ -1,0 +1,304 @@
+apz.app.icaosm.MandatesAOS = {};
+apz.app.icaosm.MandatesAOS.sCache = {};
+apz.app.icaosm.MandatesAOS.sAction = "";
+apz.app.icaosm.MandatesAOS.sFlag = false;
+apz.app.onLoad_MandatesAOS = function(params) {
+    debugger;
+     $("#icaosm__MandatesAOS__ct_frm_2").prepend(
+        '<span class="srb pri" id="icaosm__MandatesAOS__sc_row_5845"><p>I,</p><input class="ett-inpt ter lft" type="text" id = "entityName" value="" enabled="enabled" placeholder="Name of the Authorizer 1" maxlength="" formula="" ><p>hereby declare that I am  conducting business in the name</p><input class="ett-inpt ter lft" type="text" value="" enabled="enabled" placeholder="Entity Name" maxlength="" formula="" ><p>, and I am the Sole Proprietor/Self Employed of the said firm. I request bank (hereinafter referred to as “the Bank”) to open an account in the above name. The Bank is hereby authorized to use this application form to open any new account as and when required by me, until and unless I specifically opt to provide a new application form. I hereby declare that the above information is true and correct to the best of my knowledge. I understand that the account will be opened on the basis of the information provided by me.</p></span>'
+    );
+    $("#icaosm__MandatesAOS__sc_row_15").after(
+        '<span class="srb pri" id="icaosm__MandatesAOS__sc_row_5434"><p>We the undersigned, (insert names of all partners)</p><input class="ett-inpt ter lft" type="text" value="" enabled="enabled" placeholder="Name of the Authorizer 1" maxlength="" formula="" id = "authorizerName" class="" id="icaosm__MandatesAOS__o__details__mandateauth11"><p>being all partners in the firm of</p><input class="ett-inpt ter lft" type="text" value="" enabled="enabled" placeholder="Entity Name" maxlength="" formula="" class=""><p>    (the “Firm”),here by request bank to open Current Account/Fixed Deposit Account(s)/Bank Accounts in the name of the Firm on the basis of the above information.We hereby declare that the above information is true and correct to the best of our knowledge.</p></span>'
+    );
+    apz.app.icaosm.MandatesAOS.fnClearData();
+    apz.app.icaosm.MandatesAOS.sCache = params;
+    apz.app.manageCrub(9);
+    var UserID = apz.retrieve("CurrentUser");
+    $("#icaosm__MandatesAOS__ct_frm_4").removeClass("shownone");
+    $("#icaosm__MandatesAOS__el_btn_3").css("display", "block");
+    if (apz.data.scrdata.icaosm__CustomerInfo_Res != undefined) {
+        $(".auth1 input").val(apz.data.scrdata.icaosm__CustomerInfo_Res.details.FirstName + " " + apz.data.scrdata.icaosm__CustomerInfo_Res.details.LastName);
+    }
+    if (params.action == "submitted") {
+        var lpath = apz.getDataFilesPath();
+        var lData = apz.getFile(lpath + "/MandatesAOS.json")
+        lData = JSON.parse(lData);
+        apz.data.buildData("MandatesAOS", "icaosm");
+        apz.data.scrdata.icaosm__MandatesAOS_Res.details = lData.details;
+        apz.data.loadData("MandatesAOS", "icaosm");
+    } else if (params.action == "New") {
+        if (apz.app.icaosm.Common.addmandateControl == "") {
+            apz.data.scrdata.icaosm__MandatesAOS_Res = [];
+            apz.data.scrdata.icaosm__MandatesAOS_Res.details = {};
+            apz.data.loadData("MandatesAOS", "icaosm");
+        }
+    }
+   
+    apz.app.icaosm.MandatesAOS.fnQueryData();
+};
+apz.app.icaosm.MandatesAOS.fnClearData = function() {
+    apz.data.clearMRMV("icaosm__MandatesAOS__ct_frm_2");
+    apz.data.clearMRMV("icaosm__MandatesAOS__ct_frm_3");
+    apz.setElmValue("entityName", "");
+    apz.setElmValue("authorizerName", "");
+};
+apz.app.icaosm.MandatesAOS.fnQueryData = function() {
+    apz.app.icaosm.MandatesAOS.sAction = "query";
+    var req = {};
+    req.tbLetterOfUndertaking = {
+        "companyid": apz.icaosm.Home.sCompanyID
+    };
+    var lParams = {
+        "ifaceName": "MandatesAOS_Query",
+        "paintResp": "Y",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.MandatesAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.MandatesAOS.fnBeforCallServer = function(params) {
+    var lReq = {
+        "ifaceName": params.ifaceName,
+        "paintResp": params.paintResp,
+        "buildReq": params.buildReq,
+        "req": params.lReq,
+        "appId": params.appId,
+        "async": false,
+        "callBack": apz.app.icaosm.MandatesAOS.callServerCB,
+        "callBackObj": ""
+    };
+    apz.server.callServer(lReq);
+};
+apz.app.icaosm.MandatesAOS.callServerCB = function(params) {
+    debugger;
+    if (apz.app.icaosm.MandatesAOS.sAction == "query") {
+        apz.app.icaosm.MandatesAOS.fnQueryDataCB(params);
+    } else if (apz.app.icaosm.MandatesAOS.sAction == "modifySave" || apz.app.icaosm.MandatesAOS.sAction == "newSave") {
+        apz.app.icaosm.MandatesAOS.fnModifySaveMandatesAOSCB(params);
+    } else if (apz.app.icaosm.MandatesAOS.sAction == "modifyNext" || apz.app.icaosm.MandatesAOS.sAction == "newNext") {
+        apz.app.icaosm.MandatesAOS.fnModifySubmitMandatesAOSCB(params);
+    }
+};
+apz.app.icaosm.MandatesAOS.fnQueryDataCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.MandatesAOS.sFlag = true;
+    } else {
+        apz.app.icaosm.MandatesAOS.sFlag = false;
+    }
+    apz.setElmValue("authorizerName", apz.data.scrdata.icaosm__MandatesAOS_Req.tbLetterOfUndertaking.authorizerNameAlias1);
+    apz.setElmValue("entityName", apz.data.scrdata.icaosm__MandatesAOS_Req.tbLetterOfUndertaking.entityNameAlias1)
+};
+apz.app.icaosm.MandatesAOS.fnSave = function() {
+    debugger;
+    if (apz.app.icaosm.MandatesAOS.sFlag) {
+        apz.app.icaosm.MandatesAOS.sAction = "modifySave";
+    } else {
+        apz.app.icaosm.MandatesAOS.sAction = "newSave";
+    }
+    apz.app.icaosm.MandatesAOS.fnModifySaveMandatesAOS();
+    /*
+    if (apz.app.icaosm.MandatesAOS.sCache.action == "submitted") {
+        apz.app.icaosm.Common.addmandateControl = "";
+        apz.launchSubScreen({
+            "scr": "Home",
+            "div": "icaosm__LandingHeader__scrlaunchingdiv",
+            "userObj": {
+                "percentage": "",
+                "val": "Mandates/Resolution",
+                "action": apz.app.icaosm.MandatesAOS.sCache.action,
+                "accNum": apz.app.icaosm.MandatesAOS.sCache.accNum,
+                "appNo": apz.app.icaosm.MandatesAOS.sCache.appNo
+            }
+        });
+    } else {
+        apz.app.icaosm.Common.addmandateControl = "Saved"
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__MandatesAOS__main input[type='text'],#scr__icaosm__MandatesAOS__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[8].progress = percentage;
+        apz.data.buildData("MandatesAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "Home",
+            "div": "icaosm__LandingHeader__scrlaunchingdiv",
+            "userObj": {
+                "percentage": percentage,
+                "val": "Mandates/Resolution",
+                "action": apz.app.icaosm.MandatesAOS.sCache.action,
+                "accNum": apz.app.icaosm.MandatesAOS.sCache.accNum,
+                "appNo": apz.app.icaosm.MandatesAOS.sCache.appNo
+            }
+        });
+    }
+    */
+}
+apz.app.icaosm.MandatesAOS.fnSubmit = function() {
+    apz.app.icaosm.MandatesAOS.fnModifySubmitMandatesAOS();
+    /*
+    
+    var lObj = {
+        "targetId": "icaosm__MandatesAOS__pu_mdl_1"
+    };
+    apz.toggleModal(lObj);
+    */
+};
+apz.app.icaosm.MandatesAOS.fnModifySubmitMandatesAOS = function() {
+    if (apz.app.icaosm.MandatesAOS.sFlag) {
+        apz.app.icaosm.MandatesAOS.sAction = "modifyNext";
+    } else {
+        apz.app.icaosm.MandatesAOS.sAction = "newNext";
+    }
+    apz.data.buildData("MandatesAOS", "icaosm");
+    var req = {};
+    req.tbLetterOfUndertaking = apz.data.scrdata.icaosm__MandatesAOS_Req.tbLetterOfUndertaking;
+    req.tbLetterOfUndertaking.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.MandatesAOS.sAction == "modifyNext") {
+        lParams.ifaceName = "MandatesAOS_Modify";
+    } else if (apz.app.icaosm.MandatesAOS.sAction == "newNext") {
+        lParams.ifaceName = "MandatesAOS_New";
+    }
+    apz.app.icaosm.MandatesAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.MandatesAOS.fnModifySubmitMandatesAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.MandatesAOS.sFlag = false;
+        var lObj = {
+            "targetId": "icaosm__MandatesAOS__pu_mdl_1"
+        };
+        apz.toggleModal(lObj);
+    } else {
+        lmsg = {
+            "message": "Mandate details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.MandatesAOS.fnOK = function() {
+    var lObj = {
+        "targetId": "icaosm__MandatesAOS__pu_mdl_1"
+    };
+    apz.toggleModal(lObj);
+    /*
+    apz.launchSubScreen({
+        "scr": "Home",
+        "div": "Regist__RegisterPage__launchrow1",
+        "userObj": {
+            "action": apz.app.icaosm.MandatesAOS.sCache.action,
+            "accNum": apz.app.icaosm.MandatesAOS.sCache.accNum,
+            "appNo": apz.app.icaosm.MandatesAOS.sCache.appNo
+        }
+    });
+    */
+    apz.app.icaosm.Common.addmandateControl = "Saved"
+    var lTotCount = 0;
+    var lFilled = 0,
+        lRadio = 0;
+    $("#scr__icaosm__MandatesAOS__main input[type='text'],#scr__icaosm__MandatesAOS__main select").each(function() {
+        lTotCount++;
+        if ($(this).val() != "" && $(this).val() != "Select") {
+            lFilled++;
+        }
+    });
+    percentage = (lFilled / lTotCount);
+    apz.data.scrdata.icaosm__Home_Req.Home[8].progress = percentage;
+    apz.data.buildData("MandatesAOS", "icaosm");
+    apz.launchSubScreen({
+        "scr": "Home",
+        "div": "Regist__RegisterPage__launchrow1",
+        "userObj": {
+            "percentage": percentage,
+            "val": "Mandates/Resolution",
+            "action": apz.app.icaosm.MandatesAOS.sCache.action,
+            "accNum": apz.app.icaosm.MandatesAOS.sCache.accNum,
+            "appNo": apz.app.icaosm.MandatesAOS.sCache.appNo,
+            "companyID": apz.icaosm.Home.sCompanyID
+        }
+    });
+};
+apz.app.icaosm.MandatesAOS.fnModifySaveMandatesAOS = function() {
+    apz.data.buildData("MandatesAOS", "icaosm");
+    var req = {};
+    req.tbLetterOfUndertaking = apz.data.scrdata.icaosm__MandatesAOS_Req.tbLetterOfUndertaking;
+    req.tbLetterOfUndertaking.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.MandatesAOS.sAction == "modifySave") {
+        lParams.ifaceName = "MandatesAOS_Modify";
+    } else if (apz.app.icaosm.MandatesAOS.sAction == "newSave") {
+        lParams.ifaceName = "MandatesAOS_New";
+    }
+    apz.app.icaosm.MandatesAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.MandatesAOS.fnModifySaveMandatesAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.MandatesAOS.sFlag = false;
+        if (apz.app.icaosm.MandatesAOS.sCache.action == "submitted") {
+            apz.app.icaosm.Common.addmandateControl = "";
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": "",
+                    "val": "Mandates/Resolution",
+                    "action": apz.app.icaosm.MandatesAOS.sCache.action,
+                    "accNum": apz.app.icaosm.MandatesAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.MandatesAOS.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        } else {
+            apz.app.icaosm.Common.addmandateControl = "Saved"
+            var lTotCount = 0;
+            var lFilled = 0,
+                lRadio = 0;
+            $("#scr__icaosm__MandatesAOS__main input[type='text'],#scr__icaosm__MandatesAOS__main select").each(function() {
+                lTotCount++;
+                if ($(this).val() != "" && $(this).val() != "Select") {
+                    lFilled++;
+                }
+            });
+            percentage = (lFilled / lTotCount);
+            apz.data.scrdata.icaosm__Home_Req.Home[8].progress = percentage;
+            apz.data.buildData("MandatesAOS", "icaosm");
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": percentage,
+                    "val": "Mandates/Resolution",
+                    "action": apz.app.icaosm.MandatesAOS.sCache.action,
+                    "accNum": apz.app.icaosm.MandatesAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.MandatesAOS.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        }
+    } else {
+        lmsg = {
+            "message": "Mandates details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};

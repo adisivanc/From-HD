@@ -1,0 +1,17 @@
+apz.prdsel.ProductLauncher = {};
+apz.app.onLoad_ProductLauncher = function(params){
+    debugger;
+    apz.prdsel.ProductLauncher.fnNavigate("Products",params);
+    $("#apzonb__Navigator__mobretrieverow").removeClass("sno");
+}
+apz.prdsel.ProductLauncher.fnNavigate = function(scr,params){
+    debugger;
+   let lparams = {
+        "appId": "prdsel",
+        "scr": scr,
+        "div": "prdsel__ProductLauncher__productlauncher",
+        "userObj": params
+    };
+    apz.launchSubScreen(lparams);
+   
+};

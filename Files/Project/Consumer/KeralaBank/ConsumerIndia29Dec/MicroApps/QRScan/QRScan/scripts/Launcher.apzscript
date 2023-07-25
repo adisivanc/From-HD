@@ -1,0 +1,12 @@
+apz.app.onLoad_Launcher = function(params){
+    debugger;
+   apz.launchSubScreen({
+       appId:"qrscan",
+       scr:"QRScan",
+       div:"qrscan__Launcher__ps_pls_1",
+       userObj:{...params}
+   });
+};
+apz.app.onShown_Launcher = function(){
+    debugger;
+}

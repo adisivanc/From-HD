@@ -1,0 +1,34 @@
+{
+	"tbLeadDetails":[{"leadName":"Abhishek Mishra","referenceNo":15985678,"leadDob":"20/03/1969","leadImage":"","productCategory":"Savings Bank","productType":"Savings bank - Basic","leadMobile":"9912378940","firstName":"Abhishek","middleName":"Mishra"
+}
+,{
+	"leadName":"Chandra Shekhar","referenceNo":88761982,"leadDob":"12/05/1972","leadImage":"","productCategory":"Home Loan","productType":"Secured ready purchase","leadMobile":"8910928976","firstName":"Chandra","middleName":"Shekhar"
+}
+,{
+	"leadName":"Jones Aldo","referenceNo":92345009,"leadDob":"19/01/1965","leadImage":"","productCategory":"Vehicle Loan","productType":"Used Private","leadMobile":"9912378940","firstName":"Jones","middleName":"Aldo"
+}
+,{
+	"leadName":"David","referenceNo":29084874,"leadDob":"23/07/1971","leadImage":"","productCategory":"Recurring Deposit","productType":"Recurring deposit - QUATERLY - COUMPOUNDING","leadMobile":"8910368490","firstName":"David","middleName":""
+}
+,{
+	"leadName":"Zakir Hussain","referenceNo":34129856,"leadDob":"22/07/1973","leadImage":"","productCategory":"Savings Bank","productType":"Savings bank - Basic small savings","leadMobile":"8162722390","firstName":"Zakir","middleName":"Hussain"
+}
+,{
+	"leadName":"Danish Kumar","referenceNo":32980923,"leadDob":"20/11/1962","leadImage":"","productCategory":"Home Loan","productType":"Secured ready purchase","leadMobile":"7891029023","firstName":"Danish","middleName":"Kumar"
+}
+,{
+	"leadName":"Umar Gul","referenceNo":19245128,"leadDob":"17/03/1980","leadImage":"","productCategory":"Vehicle Loan","productType":"Used Private","leadMobile":"8934578290","firstName":"Umar","middleName":"Gul"
+}
+,{
+	"leadName":"Kane Williamson","referenceNo":56342897,"leadDob":"26/02/1954","leadImage":"","productCategory":"Savings Bank","productType":"Savings bank - Staff","leadMobile":"7815270926","firstName":"Kane","middleName":"Williamson"
+}
+,{
+	"leadName":"James","referenceNo":87126709,"leadDob":"09/12/1993","leadImage":"","productCategory":"Fixed Deposit","productType":"Fixed deposits - Traditional - MONTHLY","leadMobile":"9810239202","firstName":"James","middleName":""
+}
+,{
+	"leadName":"Alexander","referenceNo":99236709,"leadDob":"27/11/1996","leadImage":"","productCategory":"Fixed Deposit","productType":"Fixed deposits - Traditional - MONTHLY","leadMobile":"9672901829","firstName":"Alexander","middleName":""
+}
+,{
+	"leadName":"Noah","referenceNo":26983429,"leadDob":"24/06/1995","leadImage":"","productCategory":"Home Loan","productType":"Secured ready purchase","leadMobile":"9182978267","firstName":"Noah","middleName":""
+}
+]}

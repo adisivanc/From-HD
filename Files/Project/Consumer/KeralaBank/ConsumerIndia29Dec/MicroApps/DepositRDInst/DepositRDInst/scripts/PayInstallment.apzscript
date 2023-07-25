@@ -1,0 +1,270 @@
+apz.insprd.payinstallment = {};
+apz.insprd.payinstallment.sParams = {};
+apz.insprd.payinstallment.sAction = {};
+apz.insprd.payinstallment.sParams.data = {};
+apz.app.onLoad_PayInstallment = function(params) {
+    debugger;
+    apz.insprd.payinstallment.sParams = params;
+    if (params.Navigation) {
+        apz.insprd.payinstallment.fnSetNavigation(params);
+    }
+    apz.insprd.payinstallment.sParams.data = params.data;
+    apz.insprd.payinstallment.fnGoToStage1();
+};
+apz.insprd.payinstallment.fnSetNavigation = function(params) {
+    debugger;
+    apz.insprd.payinstallment.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "PAY INSTALLMENT";
+    }
+    lParams.backPressed = apz.insprd.payinstallment.fnBack;
+    apz.insprd.payinstallment.Navigation(lParams);
+};
+apz.insprd.payinstallment.fnGoToStage1 = function() {
+    apz.insprd.payinstallment.fnSetValueStage1();
+    apz.insprd.payinstallment.fnRenderStage1();
+};
+apz.insprd.payinstallment.fnSetValueStage1 = function() {
+    var savingsAccountData = apz.insprd.payinstallment.sParams.data.SavingsAccount;
+    apz.insprd.payinstallment.populateAccountData(savingsAccountData);
+    debugger;
+    apz.setElmValue("insprd__PayRDInstallment__i__depRDInstDtls__customerId", apz.insprd.payinstallment.sParams.data.customerID);
+    apz.setElmValue("insprd__PayRDInstallment__i__depRDInstDtls__accountNo", apz.insprd.payinstallment.sParams.data.accountNo);
+     var param = {
+            "decimalSep": ".",
+            "value": apz.insprd.payinstallment.sParams.data.installmentAmount,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    apz.setElmValue("insprd__PayRDInstallment__i__depRDInstDtls__instAmt", apz.formatNumber(param));
+    apz.setElmValue("insprd__PayRDInstallment__i__depRDInstDtls__instDate", apz.insprd.payinstallment.sParams.data.installmentDueDate);
+    apz.setElmValue("insprd__PayRDInstallment__i__depRDInstDtls__instPaidDate", new Date().toJSON().slice(0, 10));
+    // apz.setElmValue("insprd__PayRDInstallment__i__depRDInstDtls__brnName", apz.insprd.payinstallment.sParams.data.branchName);
+    apz.setElmValue("insprd__PayRDInstallment__i__depRDInstDtls__brnCode", apz.insprd.payinstallment.sParams.data.branchCode);
+};
+apz.insprd.payinstallment.populateAccountData = function(accountsData) {
+    debugger;
+    var jsonArray = [];
+    for (var i = 0; i < accountsData.length; i++) {
+        item = {};
+        item["desc"] = accountsData[i].accountNo;
+        item["val"] = accountsData[i].accountNo;
+        jsonArray.push(item);
+    }
+    apz.populateDropdown(document.getElementById("insprd__PayRDInstallment__i__depRDInstDtls__fromAccountNo"), jsonArray);
+};
+apz.insprd.payinstallment.fnRenderStage1 = function() {
+    apz.show("insprd__PayInstallment__Stage1");
+    apz.hide("insprd__PayInstallment__Stage2");
+    apz.hide("insprd__PayInstallment__Stage3");
+};
+apz.insprd.payinstallment.fnContinueBtn = function() {
+    debugger;
+    var lValid = apz.insprd.payinstallment.fnValidateStage1();
+    if (lValid) {
+        apz.data.buildData("PayRDInstallment", "insprd");
+        apz.insprd.payinstallment.fnGoToStage2();
+    }
+};
+apz.insprd.payinstallment.fnBackToBase = function() {
+    debugger;
+    apz.insprd.payinstallment.sParams.back();
+};
+apz.insprd.payinstallment.fnGoToStage2 = function() {
+    apz.insprd.payinstallment.fnSetValueStage2();
+    apz.insprd.payinstallment.fnRenderStage2();
+}
+apz.insprd.payinstallment.fnSetValueStage2 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.insprd__PayRDInstallment_Req.depRDInstDtls;
+    if (lDetails.accountNo != '') {
+        apz.show("insprd__PayInstallment__stage2AccountNumber_ctrl_grp_div");
+        apz.setElmValue("insprd__PayInstallment__stage2AccountNumber", lDetails.accountNo);
+    } else {
+        apz.hide("insprd__PayInstallment__stage2AccountNumber_ctrl_grp_div");
+    }
+    if (lDetails.instAmt != '') {
+        apz.show("insprd__PayInstallment__stage2InsAmt_ctrl_grp_div");
+        apz.setElmValue("insprd__PayInstallment__stage2InsAmt", lDetails.instAmt);
+    } else {
+        apz.hide("insprd__PayInstallment__stage2InsAmt_ctrl_grp_div");
+    }
+    if (lDetails.instDate != '') {
+        apz.show("insprd__PayInstallment__stage2InsDate_ctrl_grp_div");
+        apz.setElmValue("insprd__PayInstallment__stage2InsDate", lDetails.instDate);
+    } else {
+        apz.hide("insprd__PayInstallment__stage2InsDate_ctrl_grp_div");
+    }
+    if (lDetails.fromAccountNo != '') {
+        apz.show("insprd__PayInstallment__stage2FrmAccNo_ctrl_grp_div");
+        apz.setElmValue("insprd__PayInstallment__stage2FrmAccNo", lDetails.fromAccountNo);
+    } else {
+        apz.hide("insprd__PayInstallment__stage2FrmAccNo_ctrl_grp_div");
+    }
+    if (lDetails.instPaidAmt != '') {
+        apz.show("insprd__PayInstallment__stage2InsPaidAmt_ctrl_grp_div");
+        apz.setElmValue("insprd__PayInstallment__stage2InsPaidAmt", lDetails.instPaidAmt);
+    } else {
+        apz.hide("insprd__PayInstallment__stage2InsPaidAmt_ctrl_grp_div");
+    }
+    if (lDetails.remarks != '') {
+        apz.show("insprd__PayInstallment__stage2Remarks_ctrl_grp_div");
+        apz.setElmValue("insprd__PayInstallment__stage2Remarks", lDetails.remarks);
+    } else {
+        apz.hide("insprd__PayInstallment__stage2Remarks_ctrl_grp_div");
+    }
+};
+apz.insprd.payinstallment.fnRenderStage2 = function() {
+    apz.hide("insprd__PayInstallment__Stage1");
+    apz.show("insprd__PayInstallment__Stage2");
+    apz.hide("insprd__PayInstallment__Stage3");
+};
+apz.insprd.payinstallment.fnEditBtn = function() {
+    apz.insprd.payinstallment.fnRenderStage1();
+};
+apz.insprd.payinstallment.fnConfirmBtn = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "PayRDInstallment",
+        "req": {
+            "depRDInstDtls": apz.data.scrdata.insprd__PayRDInstallment_Req.depRDInstDtls,
+            "action": "Confirm"
+        },
+        "callBack": apz.insprd.payinstallment.fnCallServerCallBack
+    };
+    apz.insprd.payinstallment.fnBeforeCallServer(lParams);
+};
+apz.insprd.payinstallment.fnBeforeCallServer = function(params) {
+    debugger;
+    /*var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": "N",
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": params.callBack
+    };
+    apz.server.callServer(lServerParams);*/
+    apz.data.loadJsonData(params.ifaceName, "insprd");
+    apz.insprd.payinstallment.fnCallServerCallBack(apz.data.scrdata.insprd__PayRDInstallment_Res);
+};
+apz.insprd.payinstallment.fnCallServerCallBack = function(params) {
+    debugger;
+    /* if (!params.errors) {
+        if (params.depRDInstDtls.respCd == "app") {*/
+    apz.insprd.payinstallment.sParams.RefNum = params.depRDInstDtls.txnRefNo;
+    apz.insprd.payinstallment.fnRenderOtpScreen();
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "insprd__PayInstallment__launchMicroApp",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.insprd__PayRDInstallment_Res.depRDInstDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.insprd.payinstallment.fnOtpCB,
+                "destroyDiv": "insprd__PayInstallment__launchMicroApp"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+    /*  }
+    } else {}*/
+};
+apz.insprd.payinstallment.fnRenderOtpScreen = function() {
+    apz.hide("insprd__PayInstallment__Stage1");
+    apz.hide("insprd__PayInstallment__Stage2");
+    apz.hide("insprd__PayInstallment__Stage3");
+    apz.show("insprd__PayInstallment__launchMicroApp");
+};
+apz.insprd.payinstallment.fnOtpCB = function(params) {
+    debugger;
+    apz.insprd.payinstallment.fnSetValueStage3();
+    apz.insprd.payinstallment.fnRenderStage3();
+};
+apz.insprd.payinstallment.fnSetValueStage3 = function() {
+    debugger;
+    var status = "Success";
+    var lDetails = apz.data.scrdata.insprd__PayRDInstallment_Req.depRDInstDtls;
+    if (status == "Success") {
+        apz.hide("insprd__PayInstallment__transactionFailure");
+        apz.show("insprd__PayInstallment__transactionSuccess");
+    } else {
+        apz.hide("insprd__PayInstallment__transactionSuccess");
+        apz.show("insprd__PayInstallment__transactionFailure");
+    }
+    // var lRefno = "Your Reference no is " + params.res.insprd__PayInstallmentIFace_Res.RentForSDLDtls.txnRefNo;
+    var lRefno = "Your Reference no is TXN12897ZK23";
+    apz.setElmValue("insprd__PayInstallment__referenceNumber", lRefno);
+    if (lDetails.accountNo != '') {
+        apz.show("insprd__PayInstallment__stage3AccountNumber_ctrl_grp_div");
+        apz.setElmValue("insprd__PayInstallment__stage3AccountNumber", lDetails.accountNo);
+    } else {
+        apz.hide("insprd__PayInstallment__stage3AccountNumber_ctrl_grp_div");
+    }
+    if (lDetails.instAmt != '') {
+        apz.show("insprd__PayInstallment__stage3InsAmt_ctrl_grp_div");
+        apz.setElmValue("insprd__PayInstallment__stage3InsAmt", lDetails.instAmt);
+    } else {
+        apz.hide("insprd__PayInstallment__stage3InsAmt_ctrl_grp_div");
+    }
+    if (lDetails.instDate != '') {
+        apz.show("insprd__PayInstallment__stage3InsDate_ctrl_grp_div");
+        apz.setElmValue("insprd__PayInstallment__stage3InsDate", lDetails.instDate);
+    } else {
+        apz.hide("insprd__PayInstallment__stage3InsDate_ctrl_grp_div");
+    }
+    if (lDetails.fromAccountNo != '') {
+        apz.show("insprd__PayInstallment__stage3FrmAccNo_ctrl_grp_div");
+        apz.setElmValue("insprd__PayInstallment__stage3FrmAccNo", lDetails.fromAccountNo);
+    } else {
+        apz.hide("insprd__PayInstallment__stage3FrmAccNo_ctrl_grp_div");
+    }
+    if (lDetails.instPaidAmt != '') {
+        apz.show("insprd__PayInstallment__stage3InsPaidAmt_ctrl_grp_div");
+        apz.setElmValue("insprd__PayInstallment__stage3InsPaidAmt", lDetails.instPaidAmt);
+    } else {
+        apz.hide("insprd__PayInstallment__stage3InsPaidAmt_ctrl_grp_div");
+    }
+    if (lDetails.remarks != '') {
+        apz.show("insprd__PayInstallment__stage3Remarks_ctrl_grp_div");
+        apz.setElmValue("insprd__PayInstallment__stage3Remarks", lDetails.remarks);
+    } else {
+        apz.hide("insprd__PayInstallment__stage3Remarks_ctrl_grp_div");
+    }
+};
+apz.insprd.payinstallment.fnRenderStage3 = function() {
+    apz.hide("insprd__PayInstallment__Stage1");
+    apz.hide("insprd__PayInstallment__Stage2");
+    apz.show("insprd__PayInstallment__Stage3");
+};
+apz.insprd.payinstallment.fnPrintBtn = function() {
+    debugger;
+};
+apz.insprd.payinstallment.fnDoneBtn = function() {
+    debugger;
+    apz.insprd.payinstallment.sParams.callBack()
+};
+apz.insprd.payinstallment.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("insprd__PayInstallment__Stage1Form");
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "ERR_MAND"
+        };
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};

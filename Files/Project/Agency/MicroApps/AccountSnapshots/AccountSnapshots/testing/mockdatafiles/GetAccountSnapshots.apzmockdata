@@ -1,0 +1,23 @@
+{
+    "relovr__RelationshipOverview_Res": {
+        "tbDbtpAccountSnapshots": [{
+            "branchCode": "619",
+            "accountType": "Current Account",
+            "customerId": "000004712",
+            "branchName": "Madivala",
+            "bankName": "Appzillon Bank",
+            "accountNumber": "732510006721",
+            "branchIfsc": "IOB00000619",
+            "qrText": "iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AXHiAAAABHNCSVQICAgIfAhkiAAABNlJREFU\neJzt3c1u4zAMReFmMO//yplVAS0qDBneI9vF+ZaFI7spQVa/fr3f7/eXFPbn6gfQ72RgCWFgCWFg\nCWFgCWFgCWFgCWFgCWFgCWFgCWFgCWFgCfH3kw+9Xq/0c3ytc+Fr+7ufdz+7U2mzi37+bvsTn34P\nZiwhDCwhPiqFq1TJ2LXZLQ27n3dLBlEiK5/tlr/JvXYSJdWMJYSBJcS4FK4qKfTkSuhuj2yVKq+V\n6ye9v0nPd5X+u5ixhDCwhIiWQtqkBKR6c2ubkx7rpEw/gRlLCANLiEeVwlWqfEzaSfUoiWe7mhlL\nCANLiGgppFN0t/TsTOYQiaUs9NKgK0qnGUsIA0uIcSkkVi0Sc2T0itDJClhiRSjxd+kwYwlhYAnx\nUSm8aoBuUm527XTv2zV5Hvr3IpmxhDCwhIjuK0wN9E16RpUlLt3PpkpnZclNqidI9II7zFhCGFhC\njHuFk9SdKj2V9isqA5i79ivXEHOIxKaMxPdvxhLCwBLiyGkzqRRNl6rKzys9TbqX1/0eKm2mmbGE\nMLCEiM4VplY2EnN5xDOnSnnlXqnnOcWMJYSBJcS4V0js4+sO3E1WnE4GLSf3Wk226u+c6v3tmLGE\nMLCEeE3fCT05enrS5snDylKHm1Wkyhaxn7HDjCWEgSXER6WQmCskTFa0EvcipHqa6SVMZiwhDCwh\noitIU72tVE+Tbqd7ze763TMQZ5ye+rfEjCWEgSXEkZc0dTcCTJaLdK/ZOblHL/UvRGruMsGMJYSB\nJcSRLfapXlJFqvx13e3ANHIesMKMJYSBJQS2bKZyzR2WpkwGUVO9UfpfhZMn7XwzYwlhYAlx/NW9\nK2L+KzWvRw/AEvsBJ5tQ0psvzFhCGFhCROcKifm4VA+L3kwx2V+ZKvHd+3afrcOMJYSBJcR4gLR9\nQ+AkFrrXVkHPMxLPQ5Tab2YsIQwsIaKnzaR6Xqn5R7qspFaE7hArS7uf/ZQZSwgDS4gjvULioLad\nq8pQ5bNEz/Gq03j+x4wlhIElRLQUntxAkSpD9J5B4rO7dro8eE2PY2AJMT54jVjW0nWHXlgKfV9i\nydBPzFhCGFhCRDdTEAeOTdqfDB6eXGaT+r26z+NcoR7HwBICe4v95JrJIOdkKQs5d/aJVG+XLus/\nMWMJYWAJceQt9pN2iKUg3ZJKzAlOyg3R43PZjB7BwBICGyClB+6I8keU+Mnz7xA9XAdI9QgGlhDR\n9xUSy1fo9olyefJ7IOZeXTaj2zKwhDhyBinRE9y1P0njRGk4OU9aQW6gWJmxhDCwhIiWwtVk0DJ1\nlindgyPOUJ2UxRR7hbotA0uI42eQVkx6UpOzNyuuGqTtPs/KAVL9GgaWENG5wok7zAPuEHOIqeuJ\nfw8SzFhCGFhCRF/S1EWXg8o1qa3rxCkxxLb6yvX2CnVbBpYQx1/dO1lCQ5wXenKPZGpVZ/e+Feme\nvhlLCANLCGzZDCG1l7DbftfJpTuTfYsevKbHMbCEuGUpnGwP767S7N6X3qpPzOulVq52mLGEMLCE\nOH4cd8VVmynoQc4d4mC3rvT5q2YsIQwsIW65gjQ14DlJ78SbI1LPs7rifNEKM5YQBpYQt9xXqOcz\nYwlhYAlhYAlhYAlhYAlhYAlhYAlhYAlhYAlhYAlhYAlhYAlhYAnxDw6f0DTJlrMlAAAAAElFTkSu\nQmCC\n"
+        }, {
+            "branchCode": "619",
+            "accountType": "Savings Account",
+            "customerId": "000004712",
+            "branchName": "Koramangala",
+            "bankName": "Appzillon Bank",
+            "accountNumber": "753410000076",
+            "branchIfsc": "IOB00000619",
+            "qrText": "iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AXHiAAAABHNCSVQICAgIfAhkiAAABNZJREFU\neJzt3ctuGzEMQNFM0f//ZXdVYBYVTA55KU1xz9KQx0pCkNHT1+fz+fxIzX7t7oD+TwaWEAaWEAaW\nEAaWEAaWEAaWEAaWEAaWEAaWEAaWEAaWEL+fvOm6ru5+/KzWwu+flW0Teb3Sz8hzIn3Ots8+s+Lp\nHgUzlhAGlhCPSuFdZTvXKnVH0n5EpGxFSueqb6vnrNqv2hD9JP4uGWYsIQwsIcql8K4ySoq0WZWA\nbNrPto/8XNkSuXrvquRVylPX3yXDjCWEgSVEaynsUhkZVSZUs8+JyJahXROh3cxYQhhYQhxZCiuj\ntko5i0zYdqHXNHczYwlhYAnRWgq7JtmypSG7BldZm1vJjuCyZbpSIndcz2HGEsLAEqJcCneNXCqT\npZVRWKR9V38qdo8ozVhCGFhCXKff6Ees2VV2h9JriF07V3czYwlhYAnxqBSedi6va2RHlJWuCdgI\nYqT8lBlLCANLiPFRYdc6YPazKrrW6Yhdr5E2xHnJb8xYQhhYQozsIO3amdm1bSbSprIV526y/EVM\nTbSasYQwsIQoX7xWmWSrHI2fPOAQaZ9tE/m9da1pRvrmqFCvYGAJ0TpBSt/5WelDtk0FsQbaZWpr\nkBlLCANLCGyClF77q6zB0be40PemVt47dYTfjCWEgSXE+DdTTH57AjF527U+mHXCdQEZZiwhDCwh\nsAnSlV07JLOIG112nSWkJ13/xYwlhIElROttM5VykG1DvJfY6tO1wzPSJjI6Xj3HHaR6BQNLiK2H\nKejbWrrKNH3/Z9cz6bXFDDOWEAaWENhhipWuNa8TrtSevHitS3bk+JQZSwgDS4iRUWE2/WZHUrt2\nbHat/VVU+kCWXTOWEAaWEK13kBITiW+5a/SOuJyNQI5MzVhCGFhCbL2Oe/XMyhrW5FXh2edU+rzr\nph3XCnUUA0uIY26bOaG0TR5qOOE5JDOWEAaWENhhisndm9lDEJXbaSJXi3ed+9v1TEeFOpaBJcTI\nBCmRcif7QNwws2sHLHmA4s6MJYSBJUR5VDi5e7PrIAC9LkmMXiv9qbRxVKijGFhCjNw2Q4+Ysv2M\nvN41kr23n9xuFOlP5PlPmbGEMLCEOPIO0mz7yRIw+Y0bXSb/5fjLjCWEgSVEea2QXuO765pQJZy2\ndhnhWqFex8ASYrwUEs8nztlFTO72jHxuxNTlcmYsIQwsIVovXqMn4iKHHbJ9W6Encumrs6e2x6yY\nsYQwsIRoLYVdux+7zsERZTfSPvtZXTtjV+9dbd0hL3wzYwlhYAmBjQorR9qznxV5Pfv8bD+7bsuZ\nXId1VKjXMbCEaN1B2oXeOjJ53ym91jk5OZxhxhLCwBKi/H2FXSqTlpX+dJW/yoTkCr32R/4XZMYS\nwsASYuttM8RkZuSzukpAZSsLUfpPOttoxhLCwBJiZAfpXdeE3q5rwLOvZ6/vpg+SdI2mvzFjCWFg\nCTHyLfZdKuUm8nqkTFS20Kxky2LXliSyLJqxhDCwhHhVKbzbtR2la8QaeW9EpXxXyv03ZiwhDCwh\nsHOFhK7R0x29BrdCrCFGeK5Qr2ZgCdH6zRQE+rrsroMbXSMvesKTLH93ZiwhDCwhjjxXqPczYwlh\nYAlhYAlhYAlhYAlhYAlhYAlhYAlhYAlhYAlhYAlhYAlhYAnxB8p5lj4DfVHnAAAAAElFTkSuQmCC\n"
+        }]
+    }
+}

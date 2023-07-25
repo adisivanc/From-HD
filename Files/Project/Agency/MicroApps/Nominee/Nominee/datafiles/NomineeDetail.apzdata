@@ -1,0 +1,33 @@
+{
+    "nomimt__NomineeSummary_Res": {
+        "nomineeDtls": {
+            "data": {
+                "nomineeData": [{
+                    "nomineeId":"276543223456",
+                    "nomineeName": "Dhruv",
+                    "nomineeAddress": "Koramangala, Bengaluru",
+                    "nomineeRelation": "Brother",
+                    "nomineeDob": "20-Feb-1990",
+                    "nomineePhno": "9575849373",
+                    "nomineeEmlid": "dhruv56@gmail.com",
+                    "guardianName": "Jay",
+                    "guardianAddress": "Koramangala, Bengaluru",
+                    "percOfNomination": "40",
+                    "accountNo":"5432xxxxx575"
+                }, {
+                    "nomineeId":"6543234567",
+                    "nomineeName": "Deepika",
+                    "nomineeAddress": "Koramangala, Bengaluru",
+                    "nomineeRelation": "Sister",
+                    "nomineeDob": "20-Feb-1990",
+                    "nomineePhno": "9562736585",
+                    "nomineeEmlid": "deepikaa@gmail.com",
+                    "guardianName": "Jay",
+                    "guardianAddress": "Koramangala, Bengaluru",
+                    "percOfNomination": "20",
+                    "accountNo":"5432xxxxx988"
+                }]
+            }
+        }
+    }
+}

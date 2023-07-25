@@ -1,0 +1,132 @@
+apz.appdtl.FingerPrint = {};
+apz.appdtl.FingerPrint.sCache = {};
+apz.appdtl.FingerPrint.fingerPrintPreviewId = "";
+apz.app.onLoad_FingerPrint = function(params) {
+    apz.appdtl.FingerPrint.sCache = params;
+    apz.appdtl.FingerPrint.refNo = params.refNo;
+    if (apz.appdtl.FingerPrint.sCache.from != "TermsScreen") {
+        apz.setElmValue("appdtl__AppLauncher__el_txt_17_txtcnt", "FIELD VERIFICATION");
+    }
+    apz.appdtl.scannedFingers.forEach(function(lobj) {
+        apz.setElmValue("" + lobj, "afterFingerPrint.jpeg")
+    });
+}
+apz.app.onShown_FingerPrint = function(params) {
+    debugger;
+    if (apz.appdtl.FingerPrint.sCache.from === "TermsScreen") {
+        $("#appdtl__FingerPrint__el_btn_6").addClass("sno");
+    }
+}
+apz.appdtl.FingerPrint.nextScreen = function(pResp) {
+    // Success
+}
+apz.appdtl.FingerPrint.preScreen = function(pResp) {
+    debugger;
+    var scr = "NationalContact";
+    apz.appdtl.FingerPrint.launchScreen(scr);
+}
+apz.appdtl.FingerPrint.launchScreen = function(pResp) {
+    debugger;
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "" + pResp,
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo")
+        }
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.appdtl.FingerPrint.fnOpenFingerPrintPanel = function(pthis) {
+    debugger;
+    var id = $(pthis).attr("id");
+    apz.appdtl.FingerPrint.fingerPrintPreviewId = id;
+    $("#appdtl__FingerPrint__fingerPrintScanPanel").removeClass("sno").addClass("current");
+    $("#appdtl__FingerPrint__scanFingerPrint").removeClass("sno");
+}
+apz.appdtl.FingerPrint.fnScanFingerPrint = function() {
+    apz.setElmValue("appdtl__FingerPrint__scanningFingerPrint", "afterFingerPrint.gif")
+    setTimeout(function() {
+        $("#appdtl__FingerPrint__scanFingerPrint").addClass("sno");
+        $("#appdtl__FingerPrint__successFingerPrint").removeClass("sno");
+        apz.setElmValue("appdtl__FingerPrint__scanningFingerPrint", "beforeFingerPrint.jpeg")
+        apz.setElmValue("appdtl__FingerPrint__scannedFingerPrint", "afterFingerPrint.jpeg")
+    }, 3000);
+}
+apz.appdtl.FingerPrint.fnCloseFingerPrintPanel = function() {
+    $("#appdtl__FingerPrint__fingerPrintScanPanel").addClass("sno").removeClass("current");
+    $("#appdtl__FingerPrint__successFingerPrint").addClass("sno");
+    $("#appdtl__FingerPrint__failureFingerPrint").addClass("sno");
+}
+apz.appdtl.FingerPrint.fnSuccessCloseFingerPrintPanel = function() {
+    debugger;
+    $("#appdtl__FingerPrint__successFingerPrint").addClass("sno");
+    $("#appdtl__FingerPrint__fingerPrintScanPanel").addClass("sno").removeClass("current");
+    var fingerPrint = $("#appdtl__FingerPrint__scannedFingerPrint").attr("src");
+    apz.setElmValue("" + apz.appdtl.FingerPrint.fingerPrintPreviewId, "afterFingerPrint.jpeg")
+    apz.appdtl.scannedFingers.push(apz.appdtl.FingerPrint.fingerPrintPreviewId);
+}
+apz.appdtl.FingerPrint.manageHeaders = function() {
+    $("#appdtl__AppLauncher__document_div").addClass('active');
+    $("#appdtl__AppLauncher__product_div").removeClass('active');
+    $("#appdtl__AppLauncher__employment_div").removeClass('active');
+}
+apz.appdtl.FingerPrint.fnDeleteFinger = function(pThis, param) {
+    debugger;
+    apz.setElmValue("appdtl__FingerPrint__" + pThis, param)
+}
+apz.appdtl.FingerPrint.fnCallNextStateWorkFlow = function() {
+    debugger;
+    if (apz.appdtl.FingerPrint.sCache.from === "TermsScreen") {
+        apz.appdtl.PersonalDetails.fnAadhaarCallback();
+        $("#appdtl__PersonalDetails__biometricModal_close").click();
+    } else {
+        apz.startLoader();
+        var lServerParams = {
+            "ifaceName": "NextWFStage",
+            "buildReq": "N",
+            "appId": "appdtl",
+            "req": {
+                "appId": "acdp01",
+                "instanceId": apz.appdtl.FingerPrint.refNo,
+                "userId": "CorpUser",
+                "screenData": "",
+                "action": "SUBMIT"
+            },
+            "paintResp": "N",
+            "callBack": apz.appdtl.FingerPrint.fnNexttWorkflowCB
+        }
+        apz.server.callServer(lServerParams);
+    }
+}
+apz.appdtl.FingerPrint.fnNexttWorkflowCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        apz.appdtl.FingerPrint.fnApprove();
+        /*apz.toggleModal({
+            "targetId": "appdtl__FingerPrint__ApproveModel"
+        });*/
+    }
+}
+apz.appdtl.FingerPrint.fnCancel = function() {
+    debugger;
+    if (apz.appdtl.FingerPrint.sCache.from === "TermsScreen") {
+        $("#appdtl__PersonalDetails__biometricModal_close").click();
+    } else {
+        apz.appdtl.AppLauncher.fnCancel();
+    }
+}
+apz.appdtl.FingerPrint.fnApprove = function() {
+    debugger;
+    setTimeout(function() {
+        apz.stopLoader();
+        apz.dispMsg({
+            "message": "The KYC details have been verified succesfully!",
+            "type": "S",
+            "callBack": apz.appdtl.FingerPrint.fnApproveCB
+        })
+    }, 3000);
+}
+apz.appdtl.FingerPrint.fnApproveCB = function() {
+    apz.appdtl.AppLauncher.fnCancel();
+}

@@ -1,0 +1,23 @@
+{
+    "tbDebitCardDetails": [{
+        "userName": "Nayan",
+        "mobileNo": "7645378614",
+        "email": "Nayan@gmail.com"
+    }, {
+        "userName": "Joe",
+        "mobileNo": "9711378614",
+        "email": "Joe@gmail.com"
+    }],
+    "tbCibUserDetails": [],
+    "tbHomeRegistration": {
+        "companyid": "",
+        "cibFrom": "6545",
+        "cibTo": "9876",
+        "userRole": "",
+        "ofppFrom": "3456",
+        "ofppTo": "7654",
+        "ownerEmailNotification": "y",
+        "ownerSmsNotification": "y",
+        "signature": ""
+    }
+}

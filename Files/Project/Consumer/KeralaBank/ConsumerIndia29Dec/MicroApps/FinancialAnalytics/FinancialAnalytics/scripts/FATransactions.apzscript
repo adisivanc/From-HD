@@ -1,0 +1,173 @@
+apz.finant.FATransactions = {};
+apz.finant.FATransactions.sParams = {};
+apz.app.onLoad_FATransactions = function(params) {
+    debugger;
+    apz.finant.FATransactions.sParams = params;
+    apz.finant.FATransactions.setNavDetails(params);
+    apz.finant.FATransactions.fnInitialize();
+};
+apz.finant.FATransactions.setNavDetails = function(params) {
+    if (params.Params.Params.Param.Navigation) {
+        apz.finant.FATransactions.fnsetNavi = params.Params.Params.Param.Navigation.setNavigation;
+        var lParams = {};
+        lParams.showImage = "N";
+        lParams.showHome = "Y";
+        lParams.headerText = apz.lits['finant'][apz.language]['LIT_Transactions'];
+        lParams.DashBd = false;
+        lParams.directHome = apz.finant.FATransactions.fndirectHome;
+        lParams.backPressed = apz.finant.FATransactions.fnBack;
+        apz.finant.FATransactions.fnsetNavi(lParams);
+    }
+};
+apz.finant.FATransactions.fndirectHome = function() {
+    $("#scr__finant__FATransactions__main").empty();
+    apz.NBBA01.LandingPage.fnLaunchDashBd(apz.finant.FATransactions.sParams.Params.Params.Param, "#finant__AccountFAT__analytic_row");
+};
+apz.finant.FATransactions.fnBack = function() {
+    var params = apz.finant.FATransactions.sParams.Params;
+    if (apz.finant.FATransactions.sParams.Params.fromScr == "AccountFAT") {
+        apz.finant.FATransactions.fnSetAccFAT(params);
+    }
+};
+apz.finant.FATransactions.fnSetAccFAT = function(params) {
+    //$("#NBBA01__LandingPage__AccountSummaryRow").empty();
+    appId = "finant";
+    ScrName = "FADetails";
+    Div = "finant__AccountFAT__analytic_row";
+    apz.finant.AccountFAT.fnLaunchMicroApp(appId, ScrName, Div, params);
+}
+apz.app.onShown_FATransactions = function() {
+    debugger;
+    $("body").removeClass("pri");
+    $("body").addClass("ter");
+    apz.finant.FATransactions.fn_callFATransactions();
+};
+apz.finant.FATransactions.fnInitialize = function() {
+    apz.setElmValue("finant__FADetails__i__FADetails__title", apz.finant.FATransactions.sParams.SwipeDetails.title);
+    apz.setElmValue("finant__FADetails__i__FADetails__availBal", apz.finant.FATransactions.fn_FormatAmount(apz.finant.FATransactions.sParams.SwipeDetails
+        .availBal));
+    apz.setElmValue("finant__FADetails__i__FADetails__currency", apz.finant.FATransactions.sParams.SwipeDetails.currency);
+    apz.setElmValue("finant__FADetails__i__FADetails__heading", apz.finant.FATransactions.sParams.SwipeDetails.heading);
+    apz.setElmValue("finant__FADetails__i__FADetails__title", apz.finant.FATransactions.sParams.SwipeDetails.title);
+    apz.setElmValue("finant__FADetails__i__FADetails__number", apz.finant.FATransactions.sParams.SwipeDetails.number);
+    apz.setElmValue("finant__FATransactions__weekExp", apz.lits['finant'][apz.language]['LIT_Expenditure']);
+};
+apz.finant.FATransactions.fn_FormatAmount = function(amt) {
+    var lparams = {};
+    lparams.value = amt;
+    lparams.mask = apz.numberMask;
+    lparams.decimalPoints = 2;
+    lparams.decimalSep = ".";
+    var formatedAmt = apz.formatNumber(lparams);
+    return formatedAmt;
+};
+apz.finant.FATransactions.fn_callFATransactions = function() {
+    /*var lreq = {};
+    lreq.action = "AccountTransaction";
+    lreq.AccountTransaction = {};
+    lreq.AccountTransaction.AccountNumber = apz.finant.FATransactions.sParams.SwipeDetails.number;
+    lreq.AccountTransaction.StartDateTime = apz.finant.FATransactions.sParams.Params.StartDate;
+    lreq.AccountTransaction.EndDateTime = apz.finant.FATransactions.sParams.Params.EndDate;
+    var lparams = {};
+    lparams.appId = "finant";
+    lparams.ifaceName = "GetFinAnalytics";
+    lparams.async = false;
+    lparams.req = lreq;
+    lparams.callBack = apz.finant.FATransactions.fn_callFATransactionsCB;
+    apz.server.callServer(lparams);*/
+    if (apz.finant.FATransactions.sParams.Params.fromList == "Account") {
+        apz.hide("finant__FATransactions__cardTransactionList");
+        apz.show("finant__FATransactions__accountTransactionList");
+        var lreq = {};
+        lreq.action = "AccountTransaction";
+        lreq.AccountTransaction = {};
+        var AccNo = apz.getElmValue("finant__FADetails__i__FADetails__number");
+        lreq.AccountTransaction.AccountNumber = AccNo.replace(/ /g, ""); //"00102311700032";
+        lreq.AccountTransaction.StartDateTime = apz.finant.FATransactions.sParams.Params.StartDate; //"03-Dec-2017";
+        lreq.AccountTransaction.EndDateTime = apz.finant.FATransactions.sParams.Params.EndDate; //"03-Mar-2018";
+    } else {
+        apz.show("finant__FATransactions__cardTransactionList");
+        apz.hide("finant__FATransactions__accountTransactionList");
+        var lreq = {};
+        lreq.action = "CardTransaction";
+        lreq.CardTransaction = {};
+        var CardNum = apz.getElmValue("finant__FADetails__i__FADetails__number");
+        lreq.CardTransaction.CardNumber = CardNum.replace(/ /g, ""); //"00102311700032";
+        lreq.CardTransaction.StartDateTime = apz.finant.FATransactions.sParams.Params.StartDate; //"03-Dec-2017";
+        lreq.CardTransaction.EndDateTime = apz.finant.FATransactions.sParams.Params.EndDate; //"03-Mar-2018";
+    }
+    var lparams = {};
+    lparams.appId = "finant";
+    lparams.ifaceName = "GetFinAnalytics";
+    lparams.async = true;
+    lparams.req = lreq;
+    lparams.callBack = apz.finant.FATransactions.fn_callFATransactionsCB;
+    apz.startLoader();
+    apz.server.callServer(lparams);
+};
+apz.finant.FATransactions.fn_callFATransactionsCB = function(resp) {
+    apz.stopLoader();
+    debugger;
+    if (resp.resFull.appzillonHeader.status) {
+        apz.data.scrdata.finant__FATransactions_Req = {};
+        var paintResp = [];
+        var pResp = resp.res.finant__GetFinAnalytics_Res.FinancialAnalytics.Transaction;
+        if (apz.finant.FATransactions.sParams.Params.fromList == "Account") {
+            for (var i = 0; i < pResp.length; i++) {
+              
+                if (pResp[i].DRCR_IND =="D") {
+                    var lobj = {};
+                    lobj = pResp[i];
+                    lobj.Amount = pResp[i].Amount;
+                    lobj.Date = pResp[i].TranDate;
+                   /* var date1 = lobj.Date.split(" ")[0];
+                    lobj.Date = new Date(date1).format('d M Y');*/
+                    lobj.TransactionDetails = pResp[i].Spent_Type;
+                    lobj.Reference = pResp[i].Reference;
+                    //delete lobj.Amount;
+                    lobj.Flag = 'icon-Credit-Arrow_1';
+                    lobj.Amount_Curr = apz.getElmValue("finant__FADetails__i__FADetails__currency");
+                } else {
+                    var lobj = {};
+                    lobj = pResp[i];
+                     lobj.Date = pResp[i].TranDate;
+                      lobj.TransactionDetails = pResp[i].Spent_Type;
+                      lobj.Reference = pResp[i].Reference;
+                  /*  var date1 = lobj.Date.split(" ")[0];
+                    lobj.Date = new Date(date1).format('d M Y');*/
+                    lobj.Amount = pResp[i].Amount;
+                    //delete lobj.Amount;
+                    lobj.Flag = 'icon-debit-arrow2';
+                    lobj.Amount_Curr = apz.getElmValue("finant__FADetails__i__FADetails__currency");
+                }
+                paintResp.push(lobj);
+                apz.data.scrdata.finant__FATransactions_Req.FATrans = paintResp;
+                apz.data.loadData('FATransactions', 'finant');
+            }
+        } else {
+            apz.data.scrdata.finant__CreditCardStmt_Res = {};
+            var j = 0;
+            pResp = resp.res.finant__GetFinAnalytics_Res //params.res.finant__CreditCardStmt_Res.Transaction;
+            for (i = 0; i < pResp.length; i++) {
+                paintResp[j] = {};
+                paintResp[j].TransactionDate = Date.parse(pResp[i].TransactionDate).format('d M Y');
+                if (pResp[i].TransactionAmount >= 0) {
+                    paintResp[j].Flag = "icon-Credit-Arrow_1";
+                } else {
+                    paintResp[j].Flag = 'icon-debit-arrow2';
+                }
+                j++;
+            }
+            apz.data.scrdata.finant__CreditCardStmt_Res = {};
+            apz.data.scrdata.finant__CreditCardStmt_Res.CardStmt = paintResp; //params.res.finant__CreditCardStmt_Res;
+            apz.data.loadData("CreditCardStmt", "finant");
+        }
+    } else {
+        var lmsg = {
+            "message": resp.resFull.appzillonErrors[0].errorMessage
+        };
+        if (resp.errors[0].errorCode !== "$APZ-SMS-EX-003") {
+            apz.dispMsg(lmsg);
+        }
+    }
+}

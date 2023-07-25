@@ -1,0 +1,12 @@
+{
+    "nomineeDtls": {
+        "txnRefNo": "2653456",
+        "status": "",
+        "respCd": "app",
+        "extMsg": "",
+        "intMsgCd": "",
+        "data": {
+            "OTPRefNo": 34567
+        }
+    }
+}

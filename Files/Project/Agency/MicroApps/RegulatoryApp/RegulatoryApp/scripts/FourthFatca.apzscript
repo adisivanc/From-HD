@@ -1,0 +1,125 @@
+apz.regapp.FourthFatca = {};
+apz.regapp.FourthFatca.sParams = {};
+apz.regapp.FourthFatca.signatorylist = [];
+apz.regapp.FourthFatca.shareholderslist = [{
+    "Name": "John Stephen",
+    "SignatoryDetails":{
+        "dualCitizenship":"No",
+        "stayedInUS":"No",
+        "greenCard":"Yes",
+        "americanCitizen":"Yes",
+        "Tin":"",
+        "placeOfBirth":"",
+        "renouncementCitizenship":"",
+        "shareMoreFifty":""
+    }
+}, {
+    "Name": "Michel Clark",
+    "SignatoryDetails":{
+        "dualCitizenship":"",
+        "stayedInUS":"",
+        "greenCard":"",
+        "americanCitizen":"",
+        "Tin":"",
+        "placeOfBirth":"",
+        "renouncementCitizenship":"",
+        "shareMoreFifty":""
+    }
+}, {
+    "Name": "David Miller",
+    "SignatoryDetails":{
+        "dualCitizenship":"",
+        "stayedInUS":"",
+        "greenCard":"",
+        "americanCitizen":"",
+        "Tin":"",
+        "placeOfBirth":"",
+        "renouncementCitizenship":"",
+        "shareMoreFifty":""
+    }
+}];
+var isEdit = false;
+var arrCount = "";
+apz.app.onLoad_FourthFatca = function(params) {
+    debugger;
+};
+apz.app.onShown_FourthFatca = function(params) {
+    debugger;
+    apz.regapp.FourthFatca.sParams = params;
+    apz.data.scrdata.regapp__AddSignatory_Res = {
+        "Signatory": apz.regapp.FourthFatca.shareholderslist
+    }
+    apz.data.loadData("AddSignatory", "regapp");
+};
+apz.regapp.FourthFatca.fnCancel = function() {
+    debugger;
+}
+apz.regapp.FourthFatca.launchNextApp = function() {
+    var lParams = {
+        "appId": "regapp",
+        "scr": "FirstFatca",
+        "div": "regapp__Launcher__launcher"
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.regapp.FourthFatca.launchThirdFatca = function() {
+    debugger;
+    var lParams = {
+        "appId": "regapp",
+        "scr": "ThirdFatca",
+        "div": "regapp__Launcher__launcher"
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.regapp.FourthFatca.fnAddSignatories = function() {
+    debugger;
+    var lscrData = apz.data.buildData("AddSignatory", "regapp");
+    apz.regapp.FourthFatca.fnAppendSignatoryValues(lscrData.regapp__AddSignatory_Res.Signatory);
+}
+apz.regapp.FourthFatca.fnAppendSignatoryValues = function(lscrData) {
+    debugger;
+    if (isEdit == false) {
+        apz.regapp.FourthFatca.signatorylist.push(lscrData);
+        apz.data.scrdata.regapp__SignatoryList_Res = {};
+        apz.data.scrdata.regapp__SignatoryList_Res.Signatory = apz.regapp.FourthFatca.signatorylist;
+        apz.data.loadData("SignatoryList", "regapp");
+        var getname = "";
+        for (var i = 0; i < apz.regapp.FourthFatca.signatorylist.length; i++) {
+            //getname = getname + ","+apz.regapp.FourthFatca.signatorylist[i].Name;
+            getname = apz.regapp.FourthFatca.shareholderslist[i].Name;
+        }
+        apz.setElmValue("regapp__FourthFatca__signtagInput_tag", "");
+        apz.setElmValue("regapp__FourthFatca__signtagInput_tag", getname);
+    } else if (isEdit == true) {
+        apz.regapp.FourthFatca.signatorylist[arrCount] = lscrData;
+        apz.data.scrdata.regapp__SignatoryList_Res = {};
+        apz.data.scrdata.regapp__SignatoryList_Res.Signatory = apz.regapp.FourthFatca.signatorylist;
+        var lName = apz.regapp.FourthFatca.signatorylist[arrCount].Name;
+        var lCount = Number(arrCount + 1);
+        $("#regapp__FourthFatca__signtagInput_tagsinput span:nth-child(" + lCount + ") span").text(lName);
+    }
+    $("#regapp__FourthFatca__rownameAddr input").val("");
+    isEdit = false;
+    $("#regapp__FourthFatca__signtagInput_tag").focus();
+    setTimeout(function() {
+        $("#regapp__FourthFatca__signtagInput_tag").blur();
+        $("#regapp__FourthFatca__signtagInput_tagsinput span").not(".tag").each(function() {
+            regapp__FourthFatca__signtagInput_tagsinput
+            $(this).on("click", function() {
+                apz.regapp.FourthFatca.tagclick(this);
+            })
+        });
+    }, 100)
+}
+apz.regapp.FourthFatca.tagclick = function(pThis) {
+    debugger;
+    isEdit = true;
+    var lName = pThis.innerText.trim();
+    for (var i = 0; i < apz.regapp.FourthFatca.signatorylist.length; i++) {
+        if (apz.regapp.FourthFatca.signatorylist[i].Name == lName) {
+            arrCount = i;
+            apz.data.scrdata.lendng__AddSignatory_Res.Signatory = apz.regapp.FourthFatca.signatorylist[i];
+            apz.data.loadData("AddSignatory", "regapp");
+        }
+    }
+}

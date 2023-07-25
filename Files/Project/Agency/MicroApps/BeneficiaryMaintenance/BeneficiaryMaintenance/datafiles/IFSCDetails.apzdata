@@ -1,0 +1,15 @@
+{
+    "bnfmnt__IFSCDetails_Res": [{
+        "ifscCode": "APZ000234",
+        "bankName": "APZ Bank",
+        "address": "Koramanagala, Bengaluru"
+    },{
+        "ifscCode": "APZ000014",
+        "bankName": "APZ Bank",
+        "address": "Koramanagala, Bengaluru"
+    },{
+        "ifscCode": "APZ000052",
+        "bankName": "APZ Bank",
+        "address": "Koramanagala, Bengaluru"
+    }]
+}

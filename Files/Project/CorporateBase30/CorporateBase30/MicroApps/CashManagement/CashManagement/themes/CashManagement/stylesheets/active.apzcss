@@ -1,0 +1,1 @@
+{"typeclass":"STYLESHEET","name":"active","type":"STYLESHEET","cssfiletype":"CUSTOMCSS","csstype":"css","content":".selected {\n    background-color:#FEF6F3 !important;\n}\n.deleted {\n    background-color:red !important;\n}\n.selnode {\n    color:#FFF;   background: #F17241 !important;\n}\n"}

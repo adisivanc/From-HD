@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"SCFTemplateDetails","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"SCFTemplateDetails","interfaces":[{"name":"SCFTemplate","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

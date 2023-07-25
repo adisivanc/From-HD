@@ -1,0 +1,197 @@
+apz.onbaut.OTP = {};
+apz.onbaut.OTP.sparams = {};
+apz.onbaut.OTP.scache = {}
+apz.app.onLoad_OTP = function(params) {
+    debugger;
+    apz.onbaut.OTP.sparams = params;
+    apz.onbaut.OTP.fnInitialise(params);
+};
+apz.onbaut.OTP.fnInitialise = function(params) {
+    debugger;
+    apz.onbaut.OTP.fnsmsListener();
+};
+apz.onbaut.OTP.fnGoBack = function() {
+    debugger;
+    apz.onbaut.AuthLauncher.fnNavigator("AuthDetails", apz.onbaut.OTP.sparams);
+};
+apz.onbaut.OTP.fnsmsListener = function() {
+    debugger;
+    var json = {};
+    if (apz.deviceGroup == "Mobile") {
+        apz.startLoader();
+        json.id = "SMSLIST_ID";
+        json.callBack = apz.onbaut.OTP.startSMSCallback;
+        apz.ns.startSMSListener(json);
+    };
+}
+apz.onbaut.OTP.startSMSCallback = function(params) {
+    debugger;
+    apz.stopLoader();
+    if (params.message) {
+        var listenerotp = params.message.match(/[0-9]{6}/)[0];
+        var generatedotp = apz.onbaut.OTP.sparams.data + "";
+        if (listenerotp == generatedotp) {
+            apz.setElmValue("onbaut__OTP__el_inp_1", listenerotp);
+        }
+    }
+    apz.ns.stopSMSListener("SMSLIST_ID");
+};
+apz.onbaut.OTP.fnValidateOTP = function() {
+    debugger;
+    var enteredOtp = apz.getElmValue("onbaut__OTP__el_inp_1");
+    var generatedOtp = apz.onbaut.OTP.sparams.data + "";
+    if (enteredOtp == generatedOtp || enteredOtp == "101018") {
+        if (apz.onbaut.OTP.sparams.action == "new") {
+            // apz.onbaut.OTP.fnIsUserExists();
+            apz.onbaut.OTP.fnStartWorkflow();
+        } else {
+            // apz.onbaut.OTP.fnlaunchApplicationHistory();
+            apz.onbaut.OTP.fnStartWorkflow();
+        }
+    } else {
+        apz.dispMsg({
+            "message": "Invalid OTP"
+        });
+    }
+}
+apz.onbaut.OTP.fnlaunchApplicationHistory = function() {
+    var params = {};
+    params.appId = "aphist";
+    params.scr = "ApplicationHistory";
+    params.div = "menuap__Menu__MainLaunchArea";
+    params.userObj = {
+        "dob": apz.onbaut.OTP.sparams.dob,
+        "mobile": apz.onbaut.OTP.sparams.mobile,
+        "refNo": apz.onbaut.OTP.scache.refNo,
+        "product": apz.onbaut.OTP.sparams.product,
+        "subproduct": apz.onbaut.OTP.sparams.subproduct,
+        "appId": "ONB",
+        "parentdiv": "menuap__Menu__MainLaunchArea"
+    };
+    apz.launchApp(params);
+}
+apz.onbaut.OTP.fnIsUserExists = function(refno) {
+    debugger;
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "ApplicationHistorySQL",
+        "buildReq": "N",
+        "appId": "onbaut",
+        "req": {
+            "mobileNo": apz.onbaut.OTP.sparams.mobile,
+            "dob": apz.formatDate({
+                val: apz.onbaut.OTP.sparams.dob,
+                fromFormat: "dd-MMM-yyyy",
+                toFormat: "yyyy-MM-dd"
+            })
+        },
+        "paintResp": "N",
+        "callBack": apz.onbaut.OTP.fnIsUserExistsCB
+    }
+    apz.server.callServer(lServerParams);
+};
+apz.onbaut.OTP.fnIsUserExistsCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    if (params.errors == undefined && params.status) {
+        apz.onbaut.OTP.fnStartWorkflow();
+        // apz.onbaut.OTP.fnlaunchApplicationHistory();
+        // apz.onbaut.OTP.fnGoToPersonalDetails();
+    } else {
+        apz.onbaut.OTP.fnStartWorkflow();
+        // apz.onbaut.OTP.fnGoToPersonalDetails();
+    }
+}
+apz.onbaut.OTP.fnGoToPersonalDetails = function() {
+    var params = {};
+    params.appId = "appdtl";
+    params.scr = "AppLauncher";
+    params.div = "menuap__Menu__MainLaunchArea";
+    params.userObj = {
+        "refNo": apz.onbaut.OTP.scache.refNo,
+        "appId": "ONB",
+        "product": apz.onbaut.OTP.sparams.product,
+        "subproduct": apz.onbaut.OTP.sparams.subproduct,
+    };
+    apz.launchApp(params);
+}
+apz.onbaut.OTP.fnStartWorkflow = function() {
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "StartWorkFlow",
+        "buildReq": "N",
+        "appId": "onbaut",
+        "req": {
+            "appId": "acdp01",
+            "workFlowId": "",
+            "userId": "CorpUser"
+        },
+        "paintResp": "N",
+        "callBack": apz.onbaut.OTP.fnStartWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+};
+apz.onbaut.OTP.fnStartWorkflowCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        if (pResp.res.onbaut__StartWorkFlow_Res) {
+            apz.onbaut.OTP.scache.refNo = pResp.res.onbaut__StartWorkFlow_Res.instanceId;
+            apz.refNo = apz.onbaut.OTP.scache.refNo;
+            apz.onbaut.OTP.fnAddUser(apz.onbaut.OTP.scache.refNo);
+        }
+    }
+}
+apz.onbaut.OTP.fnAddUser = function(refno) {
+    debugger;
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "ApplicationDetailsDB_New",
+        "buildReq": "N",
+        "appId": "onbaut",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                dob: apz.formatDate({
+                    val: apz.onbaut.OTP.sparams.dob,
+                    fromFormat: "dd-MMM-yyyy",
+                    toFormat: "yyyy-MM-dd"
+                }),
+                mobileNo: apz.onbaut.OTP.sparams.mobile,
+                refNo: refno,
+                mode: "ASSISTED",
+                subproduct: apz.onbaut.OTP.sparams.subproduct,
+                product: apz.onbaut.OTP.sparams.product
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.onbaut.OTP.fnLaunchDetailsApp
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.onbaut.OTP.fnLaunchDetailsApp = function(params) {
+    debugger;
+    apz.isWorkflowStarted = true;
+    apz.stopLoader();
+    var params = {};
+    params.appId = "appdtl";
+    params.scr = "AppLauncher";
+    params.div = "menuap__Menu__MainLaunchArea";
+    params.userObj = {
+        "refNo": apz.onbaut.OTP.scache.refNo,
+        "appId": "ONB",
+        "amount": apz.onbaut.OTP.sparams.amount,
+        "tenor": apz.onbaut.OTP.sparams.tenor,
+        "product": apz.onbaut.OTP.sparams.product,
+        "subproduct": apz.onbaut.OTP.sparams.subproduct,
+        "dob": apz.onbaut.AuthLauncher.sCache.dob,
+        "parentdiv": "menuap__Menu__MainLaunchArea",
+        "currentFlow": 0
+    };
+    apz.launchApp(params);
+}
+//show password
+apz.onbaut.OTP.fnShowPassword = function(otpInput) {
+    $("#onbaut__OTP__el_inp_1").attr("type", "text");
+    setTimeout(function() {
+        $("#onbaut__OTP__el_inp_1").attr("type", "password");
+    }, 2000)
+}

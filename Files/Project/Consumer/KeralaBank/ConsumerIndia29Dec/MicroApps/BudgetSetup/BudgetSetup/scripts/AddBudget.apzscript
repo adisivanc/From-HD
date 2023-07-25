@@ -1,0 +1,106 @@
+apz.budget.AddBudget = {};
+apz.budget.AddBudget.sParams = {};
+var lValid = "";
+apz.app.onLoad_AddBudget = function(params) {
+    debugger;
+    apz.budget.AddBudget.sParams = params;
+            $("#budget__AddBudget__gr_row_1").removeClass("editBudget");
+
+        $("#budget__AddBudget__gr_row_1").addClass("addBudget");
+        $("#budget__AddBudget__gr_row_1").removeClass("sno");
+
+
+
+
+      
+       
+    };
+
+apz.budget.AddBudget.fnCancel = function() {
+    debugger;
+    $("#budget__AddBudget__gr_row_1").addClass("sno");
+    var params = {
+        "appId": "budget",
+        "scr": "BudgetSummary",
+        "div": "budget__Launcher__Summary",
+    };
+    apz.launchSubScreen(params)
+}
+apz.budget.AddBudget.fnSubmit = function() {
+    debugger;
+        apz.budget.AddBudget.fnLinkAccount();
+        if (lValid == true) {
+            apz.dispMsg({
+                message: "Budget added successfully",
+                type: "S",
+                callBack: apz.budget.AddBudget.fnSubmitData
+            })
+        }
+    
+}
+apz.budget.AddBudget.fnLinkAccount = function() {
+    debugger;
+    var obj = {};
+    var category = apz.getElmValue("budget__AddBudget__el_dpd_1");
+    var budgetto = apz.getElmValue("budget__AddBudget__el_inp_3");
+    var lObj1 = {
+        "value": budgetto,
+        "decimalSep": '.',
+        "displayAsLiteral": 'N',
+        "mask": "MILLION",
+    };
+    var budgetspend = apz.formatNumber(lObj1);
+    var budgetplan = apz.getElmValue("budget__AddBudget__budgetplan");
+    if (category != "Select") {
+        if (budgetto != "") {
+            if (budgetplan != "") {
+                obj["budgetCategory"] = category;
+                obj["budgetTo"] = budgetspend;
+                obj["budgetfrom"] = "0";
+                obj["budgetleft"] = budgetspend + " left";
+                obj["budgetEx"] = 
+                { "example" : budgetplan
+                    };
+                apz.data.scrdata.budget__SetupBudget_Res.Budget.push(obj);
+                apz.data.loadData("Summary", "budget");
+                lValid = true;
+            } else {
+                apz.dispMsg({
+                    "message": "Please enter budget plan",
+                    callBack: function() {
+                        $("#budget__AddBudget__budgetplan").focus();
+                    }
+                });
+            }
+        } else {
+            apz.dispMsg({
+                "message": "Please enter budget ",
+                callBack: function() {
+                    $("#budget__AddBudget__el_inp_3").focus();
+                }
+            });
+        }
+    } else {
+        apz.dispMsg({
+            "message": "Please choose budget category ",
+            callBack: function() {
+                $("#budget__AddBudget__el_dpd_1").focus();
+            }
+        });
+    }
+}
+apz.budget.AddBudget.fnSubmitData = function() {
+    debugger;
+    $("#budget__AddBudget__gr_row_1").addClass("sno");
+    var params = {
+        "appId": "budget",
+        "scr": "BudgetSummary",
+        "div": "budget__Launcher__Summary",
+        "userObj": {
+            "data": apz.data.scrdata.budget__SetupBudget_Res.Budget,
+            "from": "AddBudget"
+        }
+    };
+    apz.launchSubScreen(params)
+}
+

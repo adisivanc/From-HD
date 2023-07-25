@@ -1,0 +1,43 @@
+apz.asntsk = {};
+apz.asntsk.tasksList = {};
+apz.asntsk.tasksList.sCurrentTask = {};
+apz.app.onLoad_TasksList = function() {
+    if (apz.Login) {
+        apz.asntsk.tasksList.sCorporateId = apz.Login.sCorporateId;
+    }
+    $("#asntsk__TasksList__TasksSummaryul_ttl").addClass('sno');
+    apz.asntsk.tasksList.queryTasks();
+};
+apz.asntsk.tasksList.queryTasks = function() {
+    var lServerParams = {
+        "ifaceName": "TasksList_Query",
+        "appId": "asntsk",
+        "buildReq": "N",
+        "req": "",
+        "paintResp": "Y",
+        "async": "true",
+        "callBack": apz.asntsk.tasksList.queryTasksCB,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.asntsk.tasksList.queryTasksCB = function(pResp) {
+    debugger;
+};
+apz.asntsk.tasksList.taskDetails = function(pObj) {
+    debugger;
+    var lPage = apz.scrMetaData.containersMap['asntsk__TasksList__TasksSummary'].currPage;
+    var lRecord = (lPage - 1) * apz.scrMetaData.containersMap['asntsk__TasksList__TasksSummary'].pageSize + parseInt($(pObj).attr('rowno'));
+    var lTaskObj = apz.data.scrdata.asntsk__TasksList_Req.vwWorkflowMaster[lRecord];
+    $('.details').removeClass('sno');
+    $('.summary').addClass('sno');
+    var params = {};
+    params.appId = "asntsk";
+    params.scr = "AssignTask";
+    params.layout = "All";
+    params.div = "asntsk__TasksList__LaunchDetailsHere";
+    params.userObj = {
+        "taskObj": lTaskObj
+    };
+    apz.launchSubScreen(params);
+};

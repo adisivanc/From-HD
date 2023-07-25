@@ -1,0 +1,75 @@
+{
+    "accstm__MiniStatement_Res": {
+        "miniStmtMaster": {
+            "txnRefNo": "",
+            "status": "",
+            "respCd": "",
+            "intMsgCd": "",
+            "extMsg": "",
+            "miniStmtDtls": [{
+                "trnId": "",
+                "accountNo": "100009312263",
+                "trnDescription": "Withdrawal Transfer",
+                "trnAmount": "250",
+                "runningBalance": "50000",
+                "trnDate": "12/06/2020",
+                "drcrInd": "D",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "100009312263",
+                "trnDescription": "Transfer To Deposit",
+                "trnAmount": "100",
+                "runningBalance": "50250",
+                "trnDate": "14/06/2020",
+                "drcrInd": "D",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "100009312263",
+                "trnDescription": "Withdrawal Transfer",
+                "trnAmount": "220",
+                "runningBalance": "50350",
+                "trnDate": "18/06/2020",
+                "drcrInd": "D",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "100009312263",
+                "trnDescription": "Cash Deposit",
+                "trnAmount": "140",
+                "runningBalance": "50570",
+                "trnDate": "20/06/2020",
+                "drcrInd": "C",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "100009312263",
+                "trnDescription": "Transfer To Deposit",
+                "trnAmount": "25000",
+                "runningBalance": "50430",
+                "trnDate": "27/06/2020",
+                "drcrInd": "C",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "100009312274",
+                "trnDescription": "Withdrawal Transfer",
+                "trnAmount": "1000",
+                "runningBalance": "25430",
+                "trnDate": "26/06/2020",
+                "drcrInd": "D",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "100009312274",
+                "trnDescription": "C.A.S Inward Clearning-M",
+                "trnAmount": "7000",
+                "runningBalance": "26430",
+                "trnDate": "25/06/2020",
+                "drcrInd": "C",
+                "pageNo": ""
+            }]
+        }
+    }
+}

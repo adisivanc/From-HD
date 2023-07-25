@@ -1,0 +1,63 @@
+[
+    {
+        "MESSAGE": "Received the Cheque Book request! Will dispatch shortly",
+        "READ_STATUS": "READ",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "123456789",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Cheque!",
+        "ADMIN_USER": "",
+        "MODIFICATION_TS": "2018-09-26 02:30:04"
+    },{
+        "MESSAGE": "Thank you for your valuable feedback",
+        "READ_STATUS": "READ",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "123456789",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Feedback",
+        "ADMIN_USER": "",
+        "MODIFICATION_TS": "2018-09-26 02:30:04"
+    },{
+        "MESSAGE": "Issue regarding cheque submission resolved",
+        "READ_STATUS": "READ",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "123456789",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Complaint regarding cheque",
+        "ADMIN_USER": "",
+        "MODIFICATION_TS": "2018-09-26 02:30:04"
+    },{
+        "MESSAGE": "We will get back to you shortly regarding the passbook enquiry",
+        "READ_STATUS": "READ",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "123456789",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Passbook enquiry",
+        "ADMIN_USER": "",
+        "MODIFICATION_TS": "2018-09-26 02:30:04"
+    },{
+        "MESSAGE": "We have received your complaint regarding cash deposit. We will get back to you shortly",
+        "READ_STATUS": "READ",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "123456789",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Complaint",
+        "ADMIN_USER": "",
+        "MODIFICATION_TS": "2018-09-26 02:30:04"
+    },{
+        "MESSAGE": "Thank you for your valuable feedback",
+        "READ_STATUS": "READ",
+        "TXN_REF_NO": "2345465",
+        "MESSAGE_ID": "123456789",
+        "CUSTOMER_ID": "12",
+        "MESSAGE_TYPE": "Enquiry",
+        "SUBJECT": "Feedback",
+        "ADMIN_USER": "",
+        "MODIFICATION_TS": "2018-09-26 02:30:04"
+    }
+]

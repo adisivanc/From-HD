@@ -1,0 +1,315 @@
+apz.cracop.OtherDetails = {};
+apz.cracop.OtherDetails.sCache = "";
+apz.cracop.OtherDetails.sRow = "";
+apz.cracop.OtherDetails.category = "";
+apz.cracop.OtherDetails.sDocDetails = [];
+apz.app.onLoad_OtherDetails = function(params) {
+    var filePath = apz.getDataFilesPath("cracop") + "/" + "ProductDetails" + ".json";
+    var content = apz.getFile(filePath);
+    if (!apz.isNull(content)) {
+        content = JSON.parse(content);
+    }
+    apz.data.scrdata.ProductDetails = [];
+    apz.data.scrdata.ProductDetails = content.ProductDetails;
+    apz.cracop.OtherDetails.sData = params;
+    apz.cracop.OtherDetails.sCache = params;
+    apz.cracop.OtherDetails.fnRender();
+};
+apz.cracop.OtherDetails.populateProductDetails = function() {
+    debugger;
+    for (var i = 0; i < apz.data.scrdata.ProductDetails.length; i++) {
+        if ($("#cracop__ProductDetails__i__ProductDesc__productCategory").val() == apz.data.scrdata.ProductDetails[i].Category) {
+            apz.populateDropdown(document.getElementById("cracop__ProductDetails__i__ProductDesc__productNames"), apz.data.scrdata.ProductDetails[i].Type);
+        }
+    }
+}
+apz.cracop.OtherDetails.fnRender = function() {
+    $("#BSAP01__BaseApp__backButton").attr("onclick", "apz.cracop.OtherDetails.fnGoToCustInfo(this)");
+    if (apz.cracop.OtherDetails.sCache.Category.indexOf("address") != -1) {
+        apz.cracop.OtherDetails.category = "Address";
+        apz.setElmValue("cracop__OtherDetails__o__address__addrLine1", apz.cracop.OtherDetails.sData.data.address1);
+        apz.setElmValue("cracop__OtherDetails__o__address__addrLine2", apz.cracop.OtherDetails.sData.data.address2);
+        apz.setElmValue("cracop__OtherDetails__o__address__addrLine3", apz.cracop.OtherDetails.sData.data.address3);
+        apz.setElmValue("cracop__OtherDetails__o__address__city", apz.cracop.OtherDetails.sData.data.city);
+        apz.setElmValue("cracop__OtherDetails__o__address__state", apz.cracop.OtherDetails.sData.data.state);
+        apz.setElmValue("cracop__OtherDetails__o__address__pincode", apz.cracop.OtherDetails.sData.data.pincode);
+        apz.setElmValue("cracop__OtherDetails__o__address__landmark", apz.cracop.OtherDetails.sData.data.landmark);
+        apz.setElmValue("cracop__OtherDetails__o__address__country", apz.cracop.OtherDetails.sData.data.country);
+        $("#cracop__OtherDetails__addressrow").removeClass("sno").addClass("personalDetailsForm");
+        $(
+            "#cracop__OtherDetails__documentrow,#cracop__OtherDetails__minorrow,#cracop__OtherDetails__nomineerow,#cracop__OtherDetails__servicesRow,#cracop__OtherDetails__productDetailsRow"
+        ).addClass("sno");
+    } else if (apz.cracop.OtherDetails.sCache.Category.indexOf("document") != -1) {
+        apz.cracop.OtherDetails.category = "Document";
+        $("#cracop__OtherDetails__documentrow").removeClass("sno").addClass("personalDetailsForm");
+        $(
+            "#cracop__OtherDetails__addressrow,#cracop__OtherDetails__minorrow,#cracop__OtherDetails__nomineerow,#cracop__OtherDetails__servicesRow,#cracop__OtherDetails__productDetailsRow"
+        ).addClass("sno");
+    } else if (apz.cracop.OtherDetails.sCache.Category.indexOf("minor") != -1) {
+        apz.cracop.OtherDetails.category = "Minor";
+        $("#cracop__OtherDetails__minorrow").removeClass("sno").addClass("personalDetailsForm");
+        $(
+            "#cracop__OtherDetails__documentrow,#cracop__OtherDetails__addressrow,#cracop__OtherDetails__nomineerow,#cracop__OtherDetails__servicesRow,#cracop__OtherDetails__productDetailsRow"
+        ).addClass("sno");
+    } else if (apz.cracop.OtherDetails.sCache.Category.indexOf("nominee") != -1) {
+        apz.cracop.OtherDetails.category = "Nominee";
+        $("#cracop__OtherDetails__nomineerow").removeClass("sno").addClass("personalDetailsForm");
+        $(
+            "#cracop__OtherDetails__minorrow,#cracop__OtherDetails__addressrow,#cracop__OtherDetails__documentrow,#cracop__OtherDetails__servicesRow,#cracop__OtherDetails__productDetailsRow"
+        ).addClass("sno");
+    } else if (apz.cracop.OtherDetails.sCache.Category.indexOf("ekyc") != -1) {
+        apz.cracop.OtherDetails.category = "Services";
+        $("#cracop__OtherDetails__servicesRow").removeClass("sno").addClass("personalDetailsForm");
+        $(
+            "#cracop__OtherDetails__nomineerow,#cracop__OtherDetails__minorrow,#cracop__OtherDetails__addressrow,#cracop__OtherDetails__documentrow,#cracop__OtherDetails__productDetailsRow"
+        ).addClass("sno");
+        $("#cracop__OtherDetails__minorsubmit").prop("disabled", true);
+    } else if (apz.cracop.OtherDetails.sCache.Category.indexOf("product") != -1) {
+        apz.cracop.OtherDetails.category = "Product";
+        $("#cracop__OtherDetails__productDetailsRow").removeClass("sno").addClass("personalDetailsForm");
+        $(
+            "#cracop__OtherDetails__nomineerow,#cracop__OtherDetails__minorrow,#cracop__OtherDetails__addressrow,#cracop__OtherDetails__documentrow,#cracop__OtherDetails__servicesRow"
+        ).addClass("sno");
+        apz.setElmValue("cracop__ProductDetails__i__ProductDesc__productCategory", apz.cracop.OtherDetails.sData.data.productcat);
+        // apz.cracop.OtherDetails.populateProductDetails();
+        apz.setElmValue("cracop__ProductDetails__i__ProductDesc__productNames", apz.cracop.OtherDetails.sData.data.producttype);
+        apz.setElmValue("cracop__ProductDetails__i__ProductDesc__sourceOfLead", apz.cracop.OtherDetails.sData.data.sourceoflead);
+        if (apz.cracop.OtherDetails.sCache.data.productCategory == "Vehicle Loan") {
+            apz.show("cracop__OtherDetails__vehicleLoanRow");
+        } else {
+            apz.hide("cracop__OtherDetails__vehicleLoanRow");
+        }
+        if (apz.cracop.OtherDetails.sCache.data.productCategory == "Fixed Deposit" || apz.cracop.OtherDetails.sCache.data.productCategory ==
+            "Recurring Deposit") {
+            apz.show("cracop__OtherDetails__fixedRow");
+        } else {
+            apz.hide("cracop__OtherDetails__fixedRow");
+        }
+        if (apz.cracop.OtherDetails.sCache.data.productCategory == "Savings Account") {
+            apz.show("cracop__OtherDetails__savings");
+        } else {
+            apz.hide("cracop__OtherDetails__savings");
+        }
+        if (apz.cracop.OtherDetails.sCache.data.productCategory == "Home Loan") {
+            apz.data.scrdata.cracop__HomeLoan_Res = {};
+            apz.data.scrdata.cracop__HomeLoan_Res.details = [{
+                "name": apz.cracop.OtherDetails.sCache.data.firstName,
+                "type": "Primary"
+            }];
+            apz.data.loadData("HomeLoan", "cracop")
+            apz.show("cracop__OtherDetails__homeloan");
+        } else {
+            apz.hide("cracop__OtherDetails__homeloan");
+        }
+        // apz.setElmValue("cracop__OtherDetails__el_inp_1", apz.cracop.ProductSelection.gEligibleLoanAmount);
+    }
+    if (apz.data.scrdata.cracop__OtherDetails_Res != undefined) {
+        // apz.data.loadData("OtherDetails", "cracop");
+    }
+};
+apz.cracop.OtherDetails.fnCancel = function() {
+    var lObj = {
+        "scr": "SelectedProducts",
+        "div": apz.cracop.OtherDetails.sCache.destroyDiv,
+        "animation": 10,
+        "userObj": {
+            "action": "cancel",
+            "destroyDiv": apz.cracop.OtherDetails.sCache.destroyDiv,
+            "data": apz.cracop.OtherDetails.sCache.data,
+            "parentAppId": "",
+            "leadDetails": apz.cracop.OtherDetails.sCache.leadDetails
+        }
+    };
+    apz.launchSubScreen(lObj);
+};
+apz.cracop.OtherDetails.fnClickSubmit = function() {
+    debugger;
+    apz.startLoader();
+    setTimeout(apz.cracop.OtherDetails.fnFinal, 1000);
+};
+apz.cracop.OtherDetails.fnFinal = function() {
+    debugger;
+    $("#cracop__OtherDetails__blackListCheckbox").prop("disabled", false);
+    $('#cracop__OtherDetails__blackListCheckbox').prop('checked', true);
+    $("#cracop__OtherDetails__dedupeCheckbox").prop("disabled", false);
+    $('#cracop__OtherDetails__dedupeCheckbox').prop('checked', true);
+    $("#cracop__OtherDetails__cibilScoreCheckbox").prop("disabled", false);
+    $('#cracop__OtherDetails__cibilScoreCheckbox').prop('checked', true);
+    $("#cracop__OtherDetails__minorsubmit").prop("disabled", false);
+    apz.stopLoader();
+};
+apz.cracop.OtherDetails.fnSave = function() {
+    var req = {};
+    req.tbAcopCustomerInfo = {};
+    req.tbAcopCustomerInfo.referenceNo = apz.cracop.OtherDetails.sData.data.referenceNo;
+    if (apz.cracop.OtherDetails.category == "Document") {
+        if (apz.cracop.OtherDetails.sDocDetails.length > 0) {
+            lPercentageComplete = 1;
+            apz.data.scrdata.cracop__SelectedProducts_Res.progress[apz.cracop.OtherDetails.category] = lPercentageComplete;
+            $(".personalDetailsForm").removeClass("personalDetailsForm");
+        }
+    } else if (apz.cracop.OtherDetails.category == "Product") {
+        /* var params = {
+ "action": "C",
+ "dataPointers": [],
+ "containerId": $(".personalDetailsForm .crt-form").attr("id")
+ };
+ //apz.data.setContainerData(params);
+ var ltotalCount = $(".personalDetailsForm input").length;
+ var lfilledCount = 0;
+ var test = 0;
+ lPercentageComplete = 0;
+ $(".personalDetailsForm").find("input").each(function(index) {
+ if (!apz.isNull($(this).val()) && $(this).val() !== "Please select") {
+ lfilledCount++;
+ }
+
+ });
+ $(".personalDetailsForm").find("input").each(function(index) {
+ if ($("#" + this.id).prop("checked") == true) {
+ // lfilledCount++;
+ test++;
+ }
+
+ });
+ if (test != 0) {
+ lfilledCount = lfilledCount + 3;
+ }
+ lPercentageComplete = lfilledCount / ltotalCount;
+ apz.data.scrdata.cracop__SelectedProducts_Res.progress[apz.cracop.OtherDetails.category] = lPercentageComplete;
+ $(".personalDetailsForm").removeClass("personalDetailsForm");*/
+        req.tbAcopCustomerInfo.productcat = apz.getElmValue("cracop__ProductDetails__i__ProductDesc__productCategory");
+        req.tbAcopCustomerInfo.sourceoflead = apz.getElmValue("cracop__ProductDetails__i__ProductDesc__sourceOfLead");
+        req.tbAcopCustomerInfo.producttype = apz.getElmValue("cracop__ProductDetails__i__ProductDesc__productNames");
+        var lServerParams = {
+            "ifaceName": "ProductDet_Modify",
+            "buildReq": "N",
+            "appId": "cracop",
+            "req": req,
+            "paintResp": "N",
+            "async": "true",
+            "callBack": apz.cracop.OtherDetails.callbackFn,
+            "callBackObj": "",
+        };
+        apz.server.callServer(lServerParams);
+    } else if (apz.cracop.OtherDetails.category == "Services") {
+        debugger;
+        var ltotalCount = $(".personalDetailsForm input").length;
+        var lfilledCount = 0,
+            lPercentageComplete = 0;
+        $(".personalDetailsForm").find("input").each(function(index) {
+            if ($("#" + this.id).prop("checked") == true) {
+                lfilledCount++;
+            }
+            lPercentageComplete = lfilledCount / ltotalCount;
+        });
+        apz.data.scrdata.cracop__SelectedProducts_Res.progress[apz.cracop.OtherDetails.category] = lPercentageComplete;
+        $(".personalDetailsForm").removeClass("personalDetailsForm");
+    } else if (apz.cracop.OtherDetails.category === "Address") {
+        req.tbAcopCustomerInfo.address1 = apz.getElmValue("cracop__OtherDetails__o__address__addrLine1");
+        req.tbAcopCustomerInfo.address2 = apz.getElmValue("cracop__OtherDetails__o__address__addrLine2");
+        req.tbAcopCustomerInfo.address3 = apz.getElmValue("cracop__OtherDetails__o__address__addrLine3");
+        req.tbAcopCustomerInfo.state = apz.getElmValue("cracop__OtherDetails__o__address__state");
+        req.tbAcopCustomerInfo.city = apz.getElmValue("cracop__OtherDetails__o__address__city");
+        req.tbAcopCustomerInfo.landmark = apz.getElmValue("cracop__OtherDetails__o__address__landmark");
+        req.tbAcopCustomerInfo.country = apz.getElmValue("cracop__OtherDetails__o__address__country");
+        req.tbAcopCustomerInfo.pincode = apz.getElmValue("cracop__OtherDetails__o__address__pincode");
+        var lServerParams = {
+            "ifaceName": "AddressDetails_Modify",
+            "buildReq": "N",
+            "appId": "cracop",
+            "req": req,
+            "paintResp": "N",
+            "async": "true",
+            "callBack": apz.cracop.OtherDetails.callbackFn,
+            "callBackObj": "",
+        };
+        apz.server.callServer(lServerParams);
+    } else {
+        var params = {
+            "action": "C",
+            "dataPointers": [],
+            "containerId": $(".personalDetailsForm .crt-form").attr("id")
+        };
+        apz.data.setContainerData(params);
+        var ltotalCount = $(".personalDetailsForm input").length;
+        var lfilledCount = 0,
+            lPercentageComplete = 0;
+        $(".personalDetailsForm").find("input").each(function(index) {
+            if (!apz.isNull($(this).val()) && $(this).val() !== "Please select") {
+                lfilledCount++;
+            }
+            lPercentageComplete = lfilledCount / ltotalCount;
+        });
+        apz.data.scrdata.cracop__SelectedProducts_Res.progress[apz.cracop.OtherDetails.category] = lPercentageComplete;
+        $(".personalDetailsForm").removeClass("personalDetailsForm");
+    }
+}
+apz.cracop.OtherDetails.callbackFn = function(pResp) {
+    var msg = apz.cracop.OtherDetails.category.split(" ")[0] + " Details updated successfully."
+    if (pResp.status) {
+        var lmsg = {
+            "message": msg,
+            "callBack": apz.cracop.OtherDetails.fnLaunchSucc,
+            "type": "S"
+        };
+        apz.dispMsg(lmsg);
+    }
+}
+apz.cracop.OtherDetails.fnLaunchSucc = function() {
+    var lObj = {
+        "scr": "SelectedProducts",
+        "div": apz.cracop.OtherDetails.sCache.destroyDiv,
+        "animation": 10,
+        "userObj": {
+            "destroyDiv": apz.cracop.OtherDetails.sCache.destroyDiv,
+            "parentAppId": "",
+            "data": apz.cracop.OtherDetails.sCache.data,
+            "listIndex": apz.cracop.OtherDetails.sCache.listIndex,
+            // "percentageFilled": lPercentageComplete,
+            "leadDetails": apz.cracop.OtherDetails.sCache.leadDetails
+        }
+    };
+    apz.launchSubScreen(lObj);
+}
+apz.cracop.OtherDetails.fnCamera = function(params) {
+    debugger;
+    var lRowNo = params.id.split("_")[5];
+    apz.cracop.OtherDetails.sPicRow = lRowNo;
+    var lJsonObj = {};
+    lJsonObj.action = "base64_Save";
+    lJsonObj.fileName = "fileNumber";
+    lJsonObj.id = "CAMERA_ID";
+    lJsonObj.targetWidth = "200";
+    lJsonObj.targetHeight = "200";
+    lJsonObj.encodingType = "JPG";
+    lJsonObj.openNativeCamera = "Y";
+    lJsonObj.sourceType = "Camera";
+    lJsonObj.callBack = apz.cracop.OtherDetails.fnCameraCB;
+    apz.ns.openCamera(lJsonObj);
+};
+apz.cracop.OtherDetails.fnCameraCB = function(params) {
+    debugger;
+    if (params.status) {
+        var lobj = {};
+        lobj.ImageName = "data:image/jpg;base64," + params.encodedImage;
+        lobj.RowNo = apz.cracop.OtherDetails.sPicRow;
+        apz.cracop.OtherDetails.sDocDetails.push(lobj);
+    } else {
+        var lErrors = params.errorCode;
+        alert(lErrors);
+    }
+};
+apz.cracop.OtherDetails.fnViewPic = function(params) {
+    var lRowNo = params.id.split("_")[5];
+    for (i = 0; i < apz.cracop.OtherDetails.sDocDetails.length; i++) {
+        if (lRowNo == apz.cracop.OtherDetails.sDocDetails[i].RowNo) {
+            document.getElementById("cracop__OtherDetails__docImage").src = apz.cracop.OtherDetails.sDocDetails[i].ImageName;
+        }
+    }
+    var lObj = {};
+    lObj.targetId = "cracop__OtherDetails__PhotoView";
+    apz.toggleModal(lObj);
+    var lModalHeading = $("#cracop__OtherDetails__o__document__type_" + lRowNo).val();
+    $("#cracop__OtherDetails__PhotoView_window h1").text(lModalHeading);
+};

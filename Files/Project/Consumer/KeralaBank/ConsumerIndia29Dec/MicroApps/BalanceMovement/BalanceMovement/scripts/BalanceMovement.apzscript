@@ -1,0 +1,8 @@
+apz.app.onLoad_BalanceMovement = function(){
+    debugger;
+    
+     apz.data.scrdata.balmvt__Balance_Res = {};
+     apz.data.scrdata.balmvt__Balance_Res.Transactions = (TransactionDetails.getDetails(6)).reverse();
+    apz.data.loadData("Balance","balmvt");
+    
+}

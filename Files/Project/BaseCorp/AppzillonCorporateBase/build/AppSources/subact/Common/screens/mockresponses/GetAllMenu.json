@@ -1,0 +1,58 @@
+{
+    "tbDbmiScreenMaster": [
+        {
+            "appId": "accdtl",
+            "displayOrder": 7,
+            "groupName": "Accounts",
+            "language": "en",
+            "screenDesc": "Accounts ",
+            "screenIcon": "icon-cm-account_details",
+            "screenId": "AccountSummary"
+        },
+        {
+            "appId": "accdtl",
+            "displayOrder": 7,
+            "groupName": "Company Profile",
+            "language": "en",
+            "screenDesc": "Company Profile ",
+            "screenIcon": "icon-cm-account_details",
+            "screenId": "AccountSummary"
+        },
+        {
+             "appId": "accdtl",
+            "displayOrder": 7,
+            "groupName": "Change Password",
+            "language": "en",
+            "screenDesc": "Change Password ",
+            "screenIcon": "icon-cm-account_details",
+            "screenId": "AccountSummary"
+        },
+        {
+             "appId": "accdtl",
+            "displayOrder": 7,
+            "groupName": "Cards",
+            "language": "en",
+            "screenDesc": "Cards ",
+            "screenIcon": "icon-cm-account_details",
+            "screenId": "AccountSummary"
+        },
+        {
+             "appId": "accdtl",
+            "displayOrder": 7,
+            "groupName": "Bill Payments",
+            "language": "en",
+            "screenDesc": "Bill Payments ",
+            "screenIcon": "icon-cm-account_details",
+            "screenId": "AccountSummary"
+        },
+        {
+             "appId": "accdtl",
+            "displayOrder": 7,
+            "groupName": "Liquidate FD",
+            "language": "en",
+            "screenDesc": "Liquidate FD ",
+            "screenIcon": "icon-cm-account_details",
+            "screenId": "AccountSummary"
+        }
+    ]
+}

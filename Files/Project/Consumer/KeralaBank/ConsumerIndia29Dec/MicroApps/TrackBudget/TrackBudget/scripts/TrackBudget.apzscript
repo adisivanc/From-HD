@@ -1,0 +1,20 @@
+apz.trackb.trackBudget = {};
+apz.trackb.trackBudget.sParams = {};
+
+apz.app.onLoad_TrackBudget = function(params){
+    debugger;
+      if (params.Navigation) {
+        apz.trackb.trackBudget.fnSetNavigation(params);
+    }
+};
+
+apz.trackb.trackBudget.fnSetNavigation = function(params){
+    apz.trackb.trackBudget.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "TRACK BUDGET";
+    }
+    apz.trackb.trackBudget.Navigation(lParams);
+};

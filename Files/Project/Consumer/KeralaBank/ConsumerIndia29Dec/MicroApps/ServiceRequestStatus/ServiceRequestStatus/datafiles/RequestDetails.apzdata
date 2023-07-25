@@ -1,0 +1,40 @@
+{
+    "servic__RequestDetailsInterface_Res": {
+        "data": [{
+            "Request No": "98709",
+            "Creation Date": "23/12/2020",
+            "Category": "ChequeBook Request ",
+            "Sub Category": "Customer Transaction",
+            "Description": "Issuance of chequebook",
+            "Status": "Resolved"
+        }, {
+            "Request No": "98809",
+            "Creation Date": "20/12/2020 ",
+            "Category": "PassBook Request",
+            "Sub Category": "Customer Transaction",
+            "Description": "Issuance of passbook",
+            "Status": "Assigned to Dept"
+        }, {
+            "Request No": "98719",
+            "Creation Date": "15/12/2020",
+            "Category": "Liabilities",
+            "Sub Category": "Account Modification",
+            "Description": "Customer profile updation",
+            "Status": "Resolved"
+        }, {
+            "Request No": "98729",
+            "Creation Date": "24/12/2020",
+            "Category": "Card Request",
+            "Sub Category": "Credit Card Request",
+            "Description": "Block credit card",
+            "Status": "Resolved"
+        }, {
+            "Request No": "98739",
+            "Creation Date": "25/12/2020",
+            "Category": "Card Request",
+            "Sub Category": "Debit Card Request",
+            "Description": "Issuance of debit card",
+            "Status": "Resolved"
+        }]
+    }
+}

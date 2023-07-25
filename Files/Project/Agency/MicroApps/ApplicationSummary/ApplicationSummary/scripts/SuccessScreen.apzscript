@@ -1,0 +1,92 @@
+apz.appsum.SuccessScreen = {};
+apz.appsum.SuccessScreen.sParams = {};
+apz.app.onLoad_SuccessScreen = function(params) {
+    debugger;
+    apz.appsum.SuccessScreen.sParams = params;
+    apz.hide("appdtl__AppLauncher__top_header");
+    apz.hide("appdtl__AppLauncher__navigator");
+    apz.appsum.SuccessScreen.fnSendSuccessMsg(params);
+    $("#appdtl__AppLauncher__gr_row_2").addClass("sno");
+};
+apz.app.onShown_SuccessScreen = function(params) {
+    debugger;
+    if (apz.appdtl.AppLauncher.sCache.appId == "Agency") {
+        if (params.message != "The application has been rejected.") {
+            $("#appsum__SuccessScreen__preApprovalLetter").removeClass("sno");
+        }
+    }
+}
+apz.appsum.SuccessScreen.fnPreApprovalLetter = function(param, fileType) {
+    debugger;
+    var jsonFilePath = apz.getDataFilesPath("appsum") + "/PreApprovalLetter.json";
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    for (var i = 0; i < ljsondata.data.length; i++) {
+        var mimetype = ljsondata.data[i].mimeType;
+        var lMimeType = mimetype.slice(-3);
+        if (fileType == lMimeType.toLowerCase()) {
+            apz.appsum.SuccessScreen.ReportdwnldMethod(ljsondata.data[i]);
+        }
+    }
+}
+apz.appsum.SuccessScreen.ReportdwnldMethod = function(lbodyobj) {
+    debugger;
+    var blob;
+    var fileType = "";
+    if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+        blob = apz.appsum.SuccessScreen.b64toBlob(lbodyobj.content, "application/pdf");
+        fileType = ".pdf";
+    }
+    var blobUrl = URL.createObjectURL(blob);
+    if (apz.deviceOs === "iOS" || apz.deviceOs === "ANDROID") {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.appsum.SuccessScreen.base64tofilecallBack;
+        json.base64 = lbodyobj.content;
+        json.fileName = "Application" + fileType;
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    } else {
+        window.open(blobUrl);
+    }
+};
+apz.appsum.SuccessScreen.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.appsum.SuccessScreen.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.appsum.SuccessScreen.openFileCallback = function(params) {
+    debugger;
+};
+apz.appsum.SuccessScreen.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};
+apz.appsum.SuccessScreen.fnSendSuccessMsg = function(params) {
+    debugger;
+    $("#appsum__SuccessScreen__el_txt_6_txtcnt").text(params.message);
+    $("#appsum__SuccessScreen__el_txt_8_txtcnt").text(params.refNo);
+};

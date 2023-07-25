@@ -1,0 +1,39 @@
+Options +FollowSymLinks
+RewriteEngine On
+RewriteBase /
+
+RewriteRule ^index.html$ /mms/index.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^our-services$ /mms/services.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^portfolio$ /mms/portfolio.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^methodology$ /mms/methodology.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^contact-mastermind-solutions$ /mms/contact.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^about-mastermind-solutions$ /mms/about.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^careers-mastermind-solutions$ /mms/career.php?%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^we-build-websites$ /mms/service_detail.php?Type=WEB%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^internet-marketing$ /mms/service_detail.php?Type=INTERNET%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^mobile-app-development$ /mms/service_detail.php?Type=MOBILE%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^visual-branding$ /mms/service_detail.php?Type=VISUAL%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^careers-php-developer$ /mms/career_form.php?Type=PHPDEV%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^careers-junior-php-developer$ /mms/career_form.php?Type=JPHPDEV%{QUERY_STRING} [QSA,L]
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/mms/(.+)/css/(.*)$ /mms/css/$2 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/mms/(.+)/secure/images/(.*)$ /mms/secure/images/$2 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/mms/(.+)/images/(.*)$ /mms/images/$2 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/mms/(.+)/js/(.*)$ /mms/js/$2 [QSA,L]

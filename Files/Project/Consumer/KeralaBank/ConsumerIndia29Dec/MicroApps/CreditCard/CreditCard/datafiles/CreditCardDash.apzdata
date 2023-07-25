@@ -1,0 +1,18 @@
+{"cdtcrd__CCDetailsDash_Res":{
+             "creditCardDtls": [{
+                  "image": "credit-card.png",
+                  "text": "Visa Card",
+                 "minamount" : "1000",
+                  "amount": "10000",
+                 "duedate": "28 Oct 2020",
+                 "number":"7349 XX7X X8XX 2345"
+             },{
+                  "image": "debit-card.png",
+                  "text": "Master Card",
+                                   "minamount" : "1500",
+
+                  "amount": "20000",
+                 "duedate": "30 Oct 2020",
+                 "number" : "6493 XX3X X2XX 1143"
+             }]
+}} 

@@ -1,0 +1,43 @@
+apz.navgtn.MobileNavigation = {};
+apz.app.onLoad_MobileNavigation = function(params) {
+    debugger;
+    apz.data.scrdata.navgtn__NavigationSidebar_Res = {
+        Content: params.navigationList
+    }
+    apz.data.loadData("NavigationSidebar", "navgtn");
+}
+apz.navgtn.MobileNavigation.fnGotoScreen = function(element) {
+    debugger;
+    var isActive = $(element).hasClass("active");
+    var navigationFlow;
+    if (apz.subProduct === "Prepaid Card") {
+        navigationFlow = JSON.parse(apz.getFile(apz.getDataFilesPath("navgtn") + "/PrepaidCardNavigation.json"))
+    } else {
+        navigationFlow = JSON.parse(apz.getFile(apz.getDataFilesPath("navgtn") + "/" + apz.product + "Navigation.json"))
+    }
+    if (apz.country === "US") {
+        navigationFlow = navigationFlow.filter(obj => obj.screenName !== "IdentityDetail");
+    } else if (apz.country === "UAE") {
+        navigationFlow = navigationFlow.filter(obj => obj.screenName !== "AdditionalPersonalDetails");
+    }
+    var rowno = $(element).attr("rowno");
+    if (isActive) {
+        $("#navgtn__Navigator__gr_row_3").addClass("sno");
+        var params = {};
+        params.appId = navigationFlow[rowno].appId;
+        params.scr = navigationFlow[rowno].screenName;
+        params.div = "navgtn__Navigator__launcher";
+        params.userObj = {
+            "refNo": apz.refNo,
+            "appId": "ONB",
+            "product": apz.product,
+            "subproduct": apz.subProduct,
+            "currentFlow": navigationFlow[rowno].flowNo
+        };
+        apz.launchApp(params);
+    } else {
+        apz.dispMsg({
+            message: "Please fill the previous details"
+        });
+    }
+}

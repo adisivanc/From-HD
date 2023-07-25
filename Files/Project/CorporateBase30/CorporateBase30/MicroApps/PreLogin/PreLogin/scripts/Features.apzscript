@@ -1,0 +1,24 @@
+apz.Features = {};
+
+apz.app.onLoad_Features = function() {
+    debugger;
+    var lServerParams = {
+        "action": "Features"
+    };
+    apz.Features.beforeCallServer(lServerParams);
+};
+apz.Features.beforeCallServer = function(Params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "Features",
+        "buildReq": "N",
+        "req": "",
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.Features.callServerCallBack,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.Features.callServerCallBack = function(params) {
+};

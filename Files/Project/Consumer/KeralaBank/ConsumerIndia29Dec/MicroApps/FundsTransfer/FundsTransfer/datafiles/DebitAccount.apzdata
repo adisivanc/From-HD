@@ -1,0 +1,24 @@
+{
+    "fndftr__DebitAccount_Res":{
+            "SavingsAccount": [{
+                "accountNo": "100009312263",
+                "accountBal": "50000",
+                "accountBrnName": "Koramangala, Bengaluru",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "7083"
+            }, {
+                "accountNo": "100009312401",
+                "accountBal": "60000",
+                "accountBrnName": "Koramangala, Bengaluru",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "7083"
+            }],
+            "CurrentAccount": [{
+                "accountNo": "100009312274",
+                "accountBal": "65000",
+                "accountBrnName": "Koramangala, Bengaluru",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "7083"
+            }]
+    }
+}

@@ -1,0 +1,43 @@
+{
+    "CRAC01__ProductDescription_Req": {
+        "ProductDetails": [
+            {
+                "icon": "icon-savingAccount",
+                "productCategory": "Savings Bank",
+                "colorCode": "#60BE7A"
+               
+            },
+            {
+                "icon": "icon-fixedDeposit",
+                "productCategory": "Fixed Deposit",
+                 "colorCode": "#8870CE"
+                
+               
+            },
+            {
+                "icon": "icon-rd",
+                "productCategory": "Recurring Deposit",
+                "colorCode": ""
+               
+            },
+            {
+                "icon": "icon-businessLoan",
+                "productCategory": "Business Loan",
+                "colorCode": "#5BAFF4"
+               
+            },
+            {
+                "icon": "icon-housingLoan",
+                "productCategory": "Housing Loan",
+                "colorCode": "#E5AF42"
+               
+            },
+             {
+                "icon": "icon-housingLoan",
+                "productCategory": "Vehicle Loan",
+                "colorCode": "#E5AF42"
+               
+            }
+        ]
+    }
+}

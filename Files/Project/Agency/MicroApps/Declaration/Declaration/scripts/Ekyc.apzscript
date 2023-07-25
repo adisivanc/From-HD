@@ -1,0 +1,22 @@
+apz.declar.Ekyc = {};
+apz.declar.Ekyc.sCache = {};
+apz.app.onShown_Ekyc = function(params) {
+    debugger;
+    apz.declar.Ekyc.sCache = params;
+    $("body").removeClass("modal-open");
+    $("#declar__Launcher__launcherModel_content").scrollTop(0).css("overflow","auto");
+}
+apz.declar.Ekyc.fnAgree = function() {
+    var params = {};
+    params.appId = "declar";
+    params.scr = "Terms";
+    params.div = "declar__Launcher__modelLauncher";
+    params.userObj=apz.declar.Ekyc.sCache;
+    apz.launchSubScreen(params);
+}
+apz.declar.Ekyc.fnBack = function() {
+    apz.toggleModal({
+        targetId: "declar__Launcher__launcherModel"
+    })
+    $("#appdtl__PersonalDetails__declarationCol").addClass("sno");
+}

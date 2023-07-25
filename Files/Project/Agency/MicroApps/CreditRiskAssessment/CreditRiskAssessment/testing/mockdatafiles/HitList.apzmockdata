@@ -1,0 +1,11 @@
+{
+	"amlHitlistDowjones" : [{
+		"description":"Entity SOC",
+		"documentName":"ACME Corporation HOLDINGS LLC_AML.pdf",
+		"entityIndividualName":"ACME Corporation",
+		"status":"HIT",
+		"systemId":"DOWJONES",
+		"systemName":"AML",
+		"type":"E"
+	}] 
+}

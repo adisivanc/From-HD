@@ -1,0 +1,27 @@
+{
+    "accm01__NotionalPoolSummary_Req": {
+        "tbDbmiCorpNotionalPool": [
+            {
+                "corporateId": "000FTAC4321",
+                "poolId": "22215512",
+                "desc": "first level",
+                "status": "Active",
+                "balance": 250000
+            },
+            {
+                "corporateId": "000FTAC4321",
+                "poolId": "22215513",
+                "desc": "second level",
+                "status": "Active",
+                "balance": 250000
+            },
+            {
+                "corporateId": "000FTAC4321",
+                "poolId": "22215514",
+                "desc": "third level",
+                "status": "Active",
+                "balance": 250000
+            }
+        ]
+    }
+}

@@ -1,0 +1,76 @@
+{
+    "tbDbmiCustomerDocuments": [
+        {
+            "refNo": "CONSONB34417872082120",
+            "docType": "IdentityDocuments",
+            "docData": "",
+            "fileName": "Front",
+            "docName": "Passport",
+            "docId": 1605091297833
+        },
+        {
+            "refNo": "CONSONB34417872082120",
+            "docType": "IdentityDocuments",
+            "docData": "",
+            "fileName": "Back",
+            "docName": "Passport",
+            "docId": 1605091297834
+        },
+        {
+            "refNo": "CONSONB34417872082120",
+            "docType": "IdentityDocuments",
+            "docData": "",
+            "fileName": "Front",
+            "docName": "National ID",
+            "docId": 1605091297835
+        },
+        {
+            "refNo": "CONSONB34417872082120",
+            "docType": "IdentityDocuments",
+            "docData": "",
+            "fileName": "Back",
+            "docName": "National ID",
+            "docId": 1605091297836
+        },
+        {
+            "refNo": "CONSONB34417872082120",
+            "docType": "OtherDocuments",
+            "docData": "",
+            "fileName": "",
+            "docName": "Latest Salary Slip",
+            "docId": 1605091297839
+        },
+        {
+            "refNo": "CONSONB34417872082120",
+            "docType": "AddressDocuments",
+            "docData": "",
+            "fileName": "Front",
+            "docName": "Driving License",
+            "docId": 1605091297840
+        },
+        {
+            "refNo": "CONSONB34417872082120",
+            "docType": "AddressDocuments",
+            "docData": "",
+            "fileName": "Back",
+            "docName": "Driving License",
+            "docId": 1605091297841
+        },
+        {
+            "refNo": "CONSONB34417872082120",
+            "docType": "PhotoSignature",
+            "docData": "",
+            "fileName": "",
+            "docName": "Upload your photo",
+            "docId": 1605091297844
+        },
+        {
+            "refNo": "CONSONB34417872082120",
+            "docType": "PhotoSignature",
+            "docData": "",
+            "fileName": "",
+            "docName": "Upload your signature",
+            "docId": 1605091297845
+        }
+    ]
+}

@@ -1,0 +1,39 @@
+apz.TermsConditions = {};
+apz.TermsConditions.sparams = {};
+apz.app.onLoad_TermsConditions = function(params)
+{
+    debugger;
+    apz.TermsConditions.sparams = params;
+}
+apz.TermsConditions.fnContinue = function()
+{
+    debugger;
+    var check = apz.getElmValue("onbaut__TermsConditions__el_cbx_4");
+    if(check == "n")
+    {
+        apz.dispMsg({"message" : "Please agree to the terms and conditions" })
+    }
+    else if(check == "y")
+    {
+        $("body").removeClass("loginby");
+     var userObj= {
+            data :{
+              userId:  apz.TermsConditions.sparams.data.userId
+            },
+             control:{
+                  "distroyDiv": apz.TermsConditions.sparams.data.div
+             }
+        };
+     apz.common.launchApp("landin","Landing",userObj,apz.TermsConditions.sparams.data.div);
+    }
+}
+
+apz.TermsConditions.fnBacktoLogin = function()
+{
+    debugger;
+    apz.loginFlag = true;
+     if (apz.common.isMobile) {
+        apz.toggleFooter();
+    }
+    apz.common.launchApp("login", "Launcher", {...apz.TermsConditions.sparams.sCache}, apz.TermsConditions.sparams.sCache.control.parentDiv);
+}

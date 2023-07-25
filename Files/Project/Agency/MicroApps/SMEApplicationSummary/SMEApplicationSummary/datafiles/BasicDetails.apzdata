@@ -1,0 +1,20 @@
+{
+    "corsum__BasicDetails_Res": {
+        "CompanyDetails":{
+            "yearOfBusiness": "8",
+            "annualTurnover":"2.5M",
+            "lastYearTurnover":"5M",
+            "AccountCurrency":"USD",
+            "CompanyName":"I-Exceed Technology Solutions Private Limited",
+            "CompanyType":"Private Limited",
+            "CompanyRegNo":"17905",
+            "IndustryType":"Software",
+            "registeredAddress":"SJR Padukone Towers, 51, 100 Feet Rd, Santhosapuram, 2nd Block, Koramangala, Bengaluru, Karnataka 560034",
+            "webAddress": "www.iexceed.com",
+            "issueDate": "12-Jan-1990",
+            "expiryDate": "18-Mar-2020",
+            "outOfUK":"NO",
+            "CountryName":"SJR Padukone Towers, 51, 100 Feet Rd, Santhosapuram, 2nd Block, Koramangala, Bengaluru, Karnataka 560034"
+        }
+    }
+}

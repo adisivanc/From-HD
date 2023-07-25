@@ -1,0 +1,153 @@
+{
+	"fndftr__FundsTransferDetails_Res": {
+		"summary": {
+			"userId": "Jay",
+			"userPic": "ProfilePic.jpg",
+			"totalBalance": "175,000.00",
+			"paymentOption": {
+				"domestic": [{
+						"value": "FAST"
+					},
+					{
+						"value": "IntraBank"
+					},
+					{
+						"value": "InterBank"
+					}
+
+				],
+				"international": [{
+					"value": "Telegraphic Transfer"
+				}, {
+					"value": "Speed Send"
+				}, {
+					"value": "Swift"
+				}]
+
+			},
+			"accounts": [{
+				"accountNo": 100009312263,
+				"accountType": "Savings",
+				"branchName": "Koramangala, Bengaluru",
+				"ifsc": "7083",
+				"availBalance": "50,000.00",
+				"HolderName": "Jay",
+				"benificiaryPic": "j.png",
+				"bankName": "APZ Bank",
+				"status": "Active",
+				"currency": "INR"
+			}, {
+				"accountNo": 100009312401,
+				"accountType": "Savings",
+				"branchName": "Koramangala, Bengaluru",
+				"ifsc": "7083",
+				"availBalance": "60,000.00",
+				"HolderName": "Jay",
+				"benificiaryPic": "j.png",
+				"bankName": "APZ Bank",
+				"status": "Active",
+				"currency": "INR"
+			}, {
+				"accountNo": 100009312274,
+				"accountType": "Current",
+				"branchName": "Koramangala, Bengaluru",
+				"ifsc": "7083",
+				"availBalance": "65,000.00",
+				"HolderName": "Jay",
+				"benificiaryPic": "j.png",
+				"bankName": "APZ Bank",
+				"status": "Active",
+				"currency": "INR"
+			}],
+			"apzBankBenificiary": [{
+				"accountNo": 645783931241,
+				"branchName": "Koramangala, Bengaluru",
+				"ifsc": "7083",
+				"HolderName": "Gaurav",
+				"benificiaryPic": "g.png",
+				"bankName": "APZ Bank",
+				"status": "Active",
+				"currency": "INR"
+			}, {
+				"accountNo": 723125312274,
+				"branchName": "Koramangala, Bengaluru",
+				"ifsc": "7083",
+				"HolderName": "Naman",
+				"benificiaryPic": "n.png",
+				"bankName": "APZ Bank",
+				"status": "Active",
+				"currency": "INR"
+			}, {
+				"accountNo": 343456000895,
+				"branchName": "Koramangala, Bengaluru",
+				"ifsc": "7083",
+				"HolderName": "Meghana",
+				"benificiaryPic": "m.png",
+				"bankName": "APZ Bank",
+				"status": "Active",
+				"currency": "INR"
+			}],
+			"otherBankBenificiary": [{
+				"accountNo": 563728394088,
+				"branchName": "Koramangala, Bengaluru",
+				"ifsc": "7463",
+				"HolderName": "Ashish",
+				"benificiaryPic": "a.png",
+				"bankName": "HDFC Bank",
+				"status": "Active",
+				"currency": "INR"
+			}, {
+				"accountNo": 867823134590,
+				"branchName": "Koramangala, Bengaluru",
+				"ifsc": "7463",
+				"HolderName": "Sakshi",
+				"benificiaryPic": "s.png",
+				"bankName": "ICICI",
+				"status": "Active",
+				"currency": "INR"
+			}, {
+				"accountNo": 453347890254,
+				"branchName": "Koramangala, Bengaluru",
+				"ifsc": "7302",
+				"HolderName": "Ray",
+				"benificiaryPic": "r.png",
+				"bankName": "Axis Bank",
+				"status": "Active",
+				"currency": "INR"
+			}, {
+				"accountNo": 7231982356245,
+				"branchName": "Koramangala, Bengaluru",
+				"ifsc": "7135",
+				"HolderName": "Ashwin",
+				"benificiaryPic": "a.png",
+				"bankName": "City Bank",
+				"status": "Active",
+				"currency": "INR"
+			}],
+			"internationalRemittance": [{
+					"accountNo": 7231982358712,
+					"ifsc": "DBSSSGSG",
+					"HolderName": "sheak",
+					"benificiaryPic": "s.png",
+					"bankName": "DBS Singapore",
+					"status": "Active",
+					"currency": "SGD",
+					"nodeName": "internationalRemittance",
+					"beneficiaryType": "internationalRemittance"
+				},
+				{
+					"accountNo": 7231982357843,
+					"ifsc": "BOFAMY2XLBN",
+					"HolderName": "Sam",
+					"benificiaryPic": "s.png",
+					"bankName": "Bank of America",
+					"status": "Active",
+					"currency": "MYR",
+					"nodeName": "internationalRemittance",
+					"beneficiaryType": "internationalRemittance"
+
+				}
+			]
+		}
+	}
+}

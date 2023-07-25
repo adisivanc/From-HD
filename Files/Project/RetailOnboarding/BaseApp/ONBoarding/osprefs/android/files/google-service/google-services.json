@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "419159385237",
+    "firebase_url": "https://iexceedsefiecheck.firebaseio.com",
+    "project_id": "iexceedsefiecheck",
+    "storage_bucket": "iexceedsefiecheck.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419159385237:android:81552641243b3adde5e79c",
+        "android_client_info": {
+          "package_name": "com.iexceed.onbonline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "419159385237-kampfjfkkk2qa3v5e9jmbalgse759p1o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTeGceX0ClO6smpvU0DPYzvsLCfrvJlbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419159385237-kampfjfkkk2qa3v5e9jmbalgse759p1o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

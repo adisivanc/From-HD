@@ -1,0 +1,12 @@
+[
+    {
+        "corporate_id": "000287",
+        "function_id": "OAFT",
+        "WORKFLOW_DESC": "Funds Transfer"
+    },
+    {
+        "corporate_id": "000288",
+        "function_id": "CPMR",
+        "WORKFLOW_DESC": "Modify Role"
+    }
+]

@@ -1,0 +1,21 @@
+apz.chqdep.captureBack = {};
+apz.app.onLoad_captureBack = function(params) {
+    apz.chqdep.captureBack.backimg = params.encodedImage;
+     document.getElementById("chqdep__captureBack__backimg").src = "data:image/jpg;base64," + params.encodedImage;
+}
+
+apz.chqdep.captureBack.fnCancel = function(){
+    $("#chqdep__account__frmaccount input").val("");
+    $("#chqdep__account__rowaccount").removeClass("sno");
+    $("#chqdep__captureBack__rowcaptureback").addClass("sno");
+}
+
+apz.chqdep.captureBack.fnSubmit = function(){
+     var lparams = {
+        "appId": "chqdep",
+        "scr": "summary",
+        "div": "chqdep__account__launchdiv",
+       
+    }
+    apz.launchSubScreen(lparams);
+}

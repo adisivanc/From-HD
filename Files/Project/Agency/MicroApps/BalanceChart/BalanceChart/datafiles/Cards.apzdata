@@ -1,0 +1,86 @@
+{
+    "balanc__QuarterlyBalance_Res": {
+        "datasets": [
+        {
+            "Months": "Sapphire Preferred",
+            "Amount": "11",
+            "Account": "New"
+        }, {
+            "Months": "Sapphire Preferred",
+            "Amount": "8",
+            "Account": "Existing"
+        }, {
+            "Months": "Sapphire Preferred",
+            "Amount": "30",
+            "Account": "Approved"
+        }, {
+            "Months": "Sapphire Preferred",
+            "Amount": "20",
+            "Account": "Pending"
+        }, {
+            "Months": "Sapphire Preferred",
+            "Amount": "10",
+            "Account": "Rejected"
+        },{
+            "Months": "Premier World Elite",
+            "Amount": "11",
+            "Account": "New"
+        }, {
+            "Months": "Premier World Elite",
+            "Amount": "27",
+            "Account": "Existing"
+        }, {
+            "Months": "Premier World Elite",
+            "Amount": "25",
+            "Account": "Approved"
+        }, {
+            "Months": "Premier World Elite",
+            "Amount": "22",
+            "Account": "Pending"
+        }, {
+            "Months": "Premier World Elite",
+            "Amount": "3",
+            "Account": "Rejected"
+        },{
+            "Months": "Travel Rewards",
+            "Amount": "13",
+            "Account": "New"
+        }, {
+            "Months": "Travel Rewards",
+            "Amount": "23",
+            "Account": "Existing"
+        }, {
+            "Months": "Travel Rewards",
+            "Amount": "12",
+            "Account": "Approved"
+        }, {
+            "Months": "Travel Rewards",
+            "Amount": "19",
+            "Account": "Pending"
+        }, {
+            "Months": "Travel Rewards",
+            "Amount": "13",
+            "Account": "Rejected"
+        },{
+            "Months": "Business Unlimited",
+            "Amount": "26",
+            "Account": "New"
+        }, {
+            "Months": "Business Unlimited",
+            "Amount": "5",
+            "Account": "Existing"
+        }, {
+            "Months": "Business Unlimited",
+            "Amount": "13",
+            "Account": "Approved"
+        }, {
+            "Months": "Business Unlimited",
+            "Amount": "19",
+            "Account": "Pending"
+        }, {
+            "Months": "Business Unlimited",
+            "Amount": "24",
+            "Account": "Rejected"
+        }]
+    }
+}

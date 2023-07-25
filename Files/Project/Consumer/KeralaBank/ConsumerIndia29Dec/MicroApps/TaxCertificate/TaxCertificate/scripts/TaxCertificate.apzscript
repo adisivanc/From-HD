@@ -1,0 +1,162 @@
+apz.taxcer.taxcertificate = {};
+apz.taxcer.taxcertificate.sParams = {};
+apz.app.onLoad_TaxCertificate = function(params) {
+    debugger;
+    apz.taxcer.taxcertificate.sParams = params;
+    if (params.Navigation) {
+        apz.taxcer.taxcertificate.fnSetNavigation(params);
+    }
+    // apz.sdlrnt.payrent.sParams.data = params.data;
+    apz.taxcer.taxcertificate.fnGoToStage1();
+};
+apz.taxcer.taxcertificate.fnSetNavigation = function(params) {
+    debugger;
+    apz.taxcer.taxcertificate.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "Loan Certificate";
+    }
+    // lParams.backPressed = apz.taxcer.taxcertificate.fnBack;
+    apz.taxcer.taxcertificate.Navigation(lParams);
+};
+apz.taxcer.taxcertificate.fnGoToStage1 = function() {
+    apz.taxcer.taxcertificate.fnCalenderFromDate();
+    $("#taxcer__TaxCertificateIFace__i__certificateData__toDate").prop('disabled', true);
+    apz.taxcer.taxcertificate.fnSetValueStage1();
+};
+apz.taxcer.taxcertificate.fnSetValueStage1 = function() {
+    var accountsData = apz.taxcer.taxcertificate.sParams.data.LoanAccount;
+    apz.taxcer.taxcertificate.populateAccountData(accountsData);
+};
+apz.taxcer.taxcertificate.populateAccountData = function(accountsData) {
+    debugger;
+    var jsonArray = [];
+    var item;
+    for (var i = 0; i < accountsData.length+1; i++) {
+        if (i === 0) {
+            item = {
+                "val": "",
+                "desc": "Please Select"
+            };
+        } else {
+            item = {
+                "val": accountsData[i-1].accountNo,
+                "desc": accountsData[i-1].loanType + " - " + accountsData[i-1].accountNo
+            };
+        }
+        jsonArray.push(item);
+    }
+    apz.populateDropdown(document.getElementById("taxcer__TaxCertificateIFace__i__certificateData__loanAccNumber"), jsonArray);
+};
+apz.taxcer.taxcertificate.fnSubmit = function() {
+    debugger;
+    var lValid = apz.taxcer.taxcertificate.fnValidateStage1();
+    if (lValid) {
+        apz.taxcer.taxcertificate.getDocument();
+    }
+    
+};
+apz.taxcer.taxcertificate.getDocument = function() {
+    debugger;
+    var jsonFilePath = apz.getDataFilesPath("taxcer") + "/TaxCertificate.json";
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    apz.taxcer.taxcertificate.getDocumentCB(ljsondata);
+};
+apz.taxcer.taxcertificate.getDocumentCB = function(pbody) {
+    var blob = apz.taxcer.taxcertificate.b64toBlob(pbody.data.content, "application/pdf");
+    var blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl);
+};
+apz.taxcer.taxcertificate.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};
+apz.taxcer.taxcertificate.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("taxcer__TaxCertificate__Stage1Form");
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "ERR_MAND"
+        };
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.taxcer.taxcertificate.fnCalenderFromDate = function() {
+    debugger;
+    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var ldate = new Date();
+    ldate.setFullYear(ldate.getFullYear());
+    var lobj = {};
+    lobj.maxMonth = (monthNames[ldate.getMonth()]).substring(0, 3);
+    lobj.maxdata = ("0" + ldate.getDate()).slice(-2) + "-" + lobj.maxMonth + "-" + ldate.getFullYear()
+    var params = {};
+    params.id = "taxcer__TaxCertificateIFace__i__certificateData__fromDate";
+    params.dataType = "DATE";
+    params.lookAndFeel = "GENERIC";
+    params.parentDisplay = "CENTER";
+    params.style = "MATERIAL";
+    params.parentPreset = "CALENDAR";
+    params.parentMinDate = "";
+    params.parentMaxDate = lobj.maxdata;
+    params.closeOnSel = "Y";
+    params.multiSel = "N";
+    params.parentStartYear = "";
+    params.parentEndYear = "";
+    params.parentRangePick = "N";
+    params.secInputId = "";
+    params.parentMultiInput = "N";
+    params.dateType = "GENERIC";
+    apz.initDates(params);
+};
+apz.taxcer.taxcertificate.fnCalenderForTodate = function() {
+    debugger;
+    $("#taxcer__TaxCertificateIFace__i__certificateData__toDate").prop('disabled', false);
+    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var lobj = {};
+    var ldate = new Date();
+    ldate.setFullYear(ldate.getFullYear());
+    var lobj = {};
+    lobj.maxMonth = (monthNames[ldate.getMonth()]).substring(0, 3);
+    lobj.maxdata = ("0" + ldate.getDate()).slice(-2) + "-" + lobj.maxMonth + "-" + ldate.getFullYear()
+    lobj.mindata = apz.getElmValue("taxcer__TaxCertificateIFace__i__certificateData__fromDate");
+    var params = {};
+    params.id = "taxcer__TaxCertificateIFace__i__certificateData__toDate";
+    params.dataType = "DATE";
+    params.lookAndFeel = "GENERIC";
+    params.parentDisplay = "CENTER";
+    params.style = "MATERIAL";
+    params.parentPreset = "CALENDAR";
+    params.parentMinDate = lobj.mindata;
+    params.parentMaxDate = lobj.maxdata;
+    params.closeOnSel = "Y";
+    params.multiSel = "N";
+    params.parentStartYear = "";
+    params.parentEndYear = "";
+    params.parentRangePick = "N";
+    params.secInputId = "";
+    params.parentMultiInput = "N";
+    params.dateType = "GENERIC";
+    apz.initDates(params);
+};

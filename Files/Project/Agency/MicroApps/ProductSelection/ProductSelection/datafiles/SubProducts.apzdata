@@ -1,0 +1,83 @@
+{
+    "prdsel__SubProducts_Res": {
+        "Accounts": [{
+            "title": "Savings Account",
+            "description": "An account that provides a competitive savings rate.",
+            "type": "accounts",
+            "icon":"savings-account.svg"
+        }, {
+            "title": "Premier Savings",
+            "description": "An exclusive account that offers higher rates as you save more.",
+            "type": "accounts",
+             "icon":"premier-savings.svg"
+        }, {
+            "title": "Total Checking",
+            "description": "Ideal when you are looking for value and convenience.",
+            "type": "accounts",
+             "icon":"total-checking.svg"
+        }, {
+            "title": "Premier Plus Checking",
+            "description": "Ideal when you need exclusive products and services you can access globally.",
+            "type": "accounts",
+             "icon":"premier-plus-checking.svg"
+        }],
+        "Cards": [{
+            "title": "Sapphire Preferred",
+            "description": "Premium travel & dining rewards. Earn 2X points on travel and dining at restaurants.",
+            "type": "cards",
+             "icon":"sapphire.svg"
+        }, {
+            "title": "Premier World Elite",
+            "description": "Offering our richest rewards and access to elite travel benefits. Enjoy a credit card that compliments the way you live and travel.",
+            "type": "cards",
+             "icon":"world.svg"
+        }, {
+            "title": "Prepaid Card",
+            "description": "Benefits include 2X miles at restaurants and on hotel accommodations and a free checked bag.",
+            "type": "cards",
+             "icon":"airplane.svg"
+        }, {
+            "title": "Business Unlimited",
+            "description": "Unlimited 1.5% cash back. Earn unlimited 1.5% Cash Back rewards on every purchase made for your business.",
+            "type": "cards",
+             "icon":"planning.svg"
+        }],
+         "Deposits": [{
+            "title": "3 Month Deposit",
+            "description": "0.40% APY for 3 months.",
+            "type": "deposits",
+             "icon":"deposit.svg"
+        }, {
+            "title": "6 Month Deposit",
+            "description": "0.75% APY for 6 months.",
+            "type": "deposits",
+             "icon":"wallet1.svg"
+        }, {
+            "title": "12 Month Deposit",
+            "description": "0.75% APY for 12 months.",
+            "type": "deposits",
+             "icon":"wallet2.svg"
+        },{
+            "title": "24 Month Deposit",
+            "description": "1.30% APY for 24 months.",
+            "type": "deposits",
+             "icon":"wallet3.svg"
+        }], 
+"Loan": [{
+            "title": "Personal Line of Credit",
+            "description": "Be ready for life’s changes and the changes you want to make in life, with a personal line of credit.",
+            "type": "loans",
+             "icon":"loan.svg"
+        }, {
+            "title": "Home Loan",
+            "description": "First home, new home, investment property, condo – we're here to help with your mortgage needs.",
+            "type": "loans",
+             "icon":"mortgage.svg"
+        }, {
+            "title": "Auto Loan",
+            "description": "Get a low rate on purchase, refinance and lease buyout loans.",
+            "type": "loans",
+             "icon":"auto-loan.svg"
+        }]
+    }
+}

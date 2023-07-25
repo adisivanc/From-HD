@@ -1,0 +1,23 @@
+{
+    "rolovr__CustomerDetails_Res": {
+        "LIstItem": [
+            {
+                "CustomerID": "8903456723",
+                "CustomerName": "ACME Corp"
+               
+            },
+            {
+                "CustomerID": "7834245786",
+                "CustomerName": "ACME Pharma"
+            },
+            {
+                 "CustomerID": "6734562398",
+                "CustomerName": "ACME Food Processing"
+            },
+            {
+                "CustomerID": "7834562390",
+                "CustomerName": "ACME Cosmetics"
+            }
+        ]
+    }
+}

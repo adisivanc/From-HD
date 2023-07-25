@@ -1,0 +1,342 @@
+{
+    "icaosm__ChartList_Res": {
+        "List":[
+            {
+                "ApplicationNo": "000024554AA2212",
+                "CompanyName": "Bio Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920191010"
+            },
+            {
+                "ApplicationNo": "000024554AA2213",
+                "CompanyName": "Biomas Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Approved",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2214",
+                "CompanyName": "Trio Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2215",
+                "CompanyName": "Arvindo Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Approved",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2216",
+                "CompanyName": "Paro Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2217",
+                "CompanyName": "Tero Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Rejected",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA22Current Account",
+                "CompanyName": "Nono Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Approved",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2219",
+                "CompanyName": "Nata Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Rejected",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2220",
+                "CompanyName": "KAV Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2221",
+                "CompanyName": "Ashwo Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Approved",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2222",
+                "CompanyName": "Ujju Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Rejected",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2223",
+                "CompanyName": "Sheel Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2224",
+                "CompanyName": "KBK Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Rejected",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2225",
+                "CompanyName": "LSD Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2226",
+                "CompanyName": "SLS Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Approved",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2227",
+                "CompanyName": "RSH Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2228",
+                "CompanyName": "LSH Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Rejected",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2229",
+                "CompanyName": "HPR Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Approved",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2230",
+                "CompanyName": "SG Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2231",
+                "CompanyName": "APZ Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Rejected",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2232",
+                "CompanyName": "Lenovo Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2233",
+                "CompanyName": "Dell Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Approved",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2234",
+                "CompanyName": "IND Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2235",
+                "CompanyName": "Mont Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Rejected",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2236",
+                "CompanyName": "Casio Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2237",
+                "CompanyName": "Tag Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Approved",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2238",
+                "CompanyName": "Rolex Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2239",
+                "CompanyName": "Hanoi Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Rejected",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2240",
+                "CompanyName": "CEC Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2241",
+                "CompanyName": "Sale Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Approved",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2242",
+                "CompanyName": "RCB Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2243",
+                "CompanyName": "MI Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Rejected",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2244",
+                "CompanyName": "RR Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2245",
+                "CompanyName": "DC Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2246",
+                "CompanyName": "Tupper Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Approved",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2247",
+                "CompanyName": "Bio Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Rejected",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2248",
+                "CompanyName": "BRU Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2249",
+                "CompanyName": "SKype Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2250",
+                "CompanyName": "Blanc Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Rejected",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2251",
+                "CompanyName": "Aarmani Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2252",
+                "CompanyName": "Zoho Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Submitted",
+                "custAccNum":"571928920162010"
+            },
+            {
+                "ApplicationNo": "000024554AA2253",
+                "CompanyName": "SAM Tech. Solution Pvt Ltd",
+                "ProductType": "Current Account",
+                "DateOfSubmission": "12-Dec-2017",
+                "Status":"Rejected",
+                "custAccNum":"571928920162010"
+            }
+    ]
+    }
+}

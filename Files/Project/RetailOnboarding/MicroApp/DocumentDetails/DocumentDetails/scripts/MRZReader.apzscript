@@ -1,0 +1,72 @@
+MRZ = (function(){
+    mrzContent = "";
+    [first,second,third] = ["","",""];
+      function getDocType(){
+            return first.substr(0,2);
+        }
+        getCountry = function(){
+            return first.substr(2,3);
+        };
+        getDocumentNumber = function(){
+            return first.substr(5,9);
+        };
+        
+        getBirthDate = function(){
+            return second.substr(0,6);
+        };
+        getExpiryDate = function(){
+            return second.substr(8,6);
+        };
+        getGender = function(){
+            return second[7];
+        };
+        getNationality = function(){
+            return second.substr(15,3);
+        };
+        getName = function(){
+            [surname,givenName,...others] = third.split("<<");
+            return {
+             surname : surname,
+             givenName : givenName
+            };
+        };
+    return {
+        store : function(rawstr){
+            if(rawstr !== undefined && typeof rawstr === "string"){
+             arrystr = rawstr.replace(/^\s*\n/img,"").split("\n");
+             len = arrystr.length;
+             mrzContent =`${arrystr[len-3]}\n${arrystr[len-2]}\n ${arrystr[len-1]}`;
+             [first,second,third] = [arrystr[len-3].replace(/\s/g,""),arrystr[len-2].replace(/\s/g,""),arrystr[len-1].replace(/\s/g,"")];
+            }
+             
+        },
+        getjson : function(){
+            return {
+                "MRZ" : mrzContent,
+                "Documenttype" : getDocType(),
+                "Country" : getCountry(),
+                "Lastname" : getName().surname,
+                "Firstname" : getName().givenName,
+                "Documentno" : getDocumentNumber(),
+                "Documentchecknumber":first[14],
+                "Correctdocumentchecknumber" : first[14],
+                "Nationality" : getNationality(),
+                "Dateofbirth":getBirthDate(),
+                "Birthchecknumber":second[6],
+                "Correctbirthchecknumber": second[6],
+                "Sex" : getGender(),
+                "Dateofexpiry" : getExpiryDate(),
+                "Expirychecknumber":second[14],
+                "Correctexpirychecknumber": second[14],
+                "Otherid": first.substr(15,14),
+                "Otherid checknumber" :"",
+                "Secondrowchecknumber":second[29],
+                "Correctsecondrowchecknumber":second[29],
+                "Flag":"1",
+                "Result":"Correct MRZ"
+                
+            };
+        }
+        
+    };
+})();

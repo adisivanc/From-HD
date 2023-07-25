@@ -1,0 +1,85 @@
+{
+    "bilpay__ServiceName_Req": {
+        "tbRbBillpServicename": [{
+            "responseTag": "TransactionId,TransactionType,ServiceType,AmountDue,ReplyDateStamp,TransactionDateStamp",
+            "serviceName": "HDFC",
+            "serviceId": "1",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,AmountDue,ReplyDateStamp,TransactionDateStamp",
+            "serviceName": "SBI",
+            "serviceId": "2",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,AmountDue,ReplyDateStamp,TransactionDateStamp",
+            "serviceName": "BSNL",
+            "serviceId": "3",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,AmountDue,ReplyDateStamp,TransactionDateStamp",
+            "serviceName": "Airtel",
+            "serviceId": "4",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,AmountDue,ReplyDateStamp,TransactionDateStamp",
+            "serviceName": "Adani Gas",
+            "serviceId": "5",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,ReplyDateStamp,TransactionDateStamp,MinimumAmount,MaximumAmount",
+            "serviceName": "Jio",
+            "serviceId": "6",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,ReplyDateStamp,TransactionDateStamp,RenewalAmount",
+            "serviceName": "Vodafone",
+            "serviceId": "7",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,TransactionDateStamp,OutstandingAmount,BillDate",
+            "serviceName": "DISH TV",
+            "serviceId": "8",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "IsValid",
+            "serviceName": "BESCOM",
+            "serviceId": "9",
+            "requestTag": "ConsumerNumber,ConsumerPIN"
+        }, {
+            "responseTag": "TransactionId,Balance",
+            "serviceName": "Namma Metro",
+            "serviceId": "10",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "OutstandingAmount,LastBilledAmount,LastPaidDate,Severance,PaymentAmount,DistributedAmount",
+            "serviceName": "Tata Power",
+            "serviceId": "11",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "OutstandingAmount,LastBilledAmount,LastPaidDate,Severance,PaymentAmount,DistributedAmount",
+            "serviceName": "Mutual Fund",
+            "serviceId": "12",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "OutstandingAmount,LastBilledAmount,LastPaidDate,Severance,PaymentAmount,DistributedAmount",
+            "serviceName": "HDFC Mutual Fund",
+            "serviceId": "13",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,AmountDue,ReplyDateStamp",
+            "serviceName": "BWSSB",
+            "serviceId": "14",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,AmountDue,ReplyDateStamp",
+            "serviceName": "MTNL",
+            "serviceId": "15",
+            "requestTag": "ConsumerNumber"
+        }, {
+            "responseTag": "TransactionId,TransactionType,ServiceType,AmountDue,ReplyDateStamp",
+            "serviceName": "Tata TeleServices",
+            "serviceId": "16",
+            "requestTag": "ConsumerNumber"
+        }]
+    }
+}

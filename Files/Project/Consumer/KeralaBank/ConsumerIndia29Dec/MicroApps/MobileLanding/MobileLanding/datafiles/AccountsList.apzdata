@@ -1,0 +1,40 @@
+{"moblan__AccountsInterface_Res":{
+    "AccountDetails": [{
+        "title": "Savings",
+        "accno": "100009312263",
+        "totalBalance" : "50000",
+        "cardNumber" : "5432 XXXX XXXX 9876",
+        "cardHolderName" : "John",
+        "validDate" : " Valid Till 02/24",
+        "bankAddress" : "One Wall Street,New York,United States",
+        "linkedMobile" : "9686736454",
+        "bankCode" : "7803",
+        "status" : "Active"
+        
+        
+    }, {
+        "title": "Savings",
+        "accno": "100009312401",
+        "totalBalance" : "60000",
+        "cardNumber" : " 6543 XXXX XXXX 8765",
+        "cardHolderName" : "John",
+        "validDate" : "Valid Till 04/24",
+         "bankAddress" : "One Wall Street,New York,United States",
+        "linkedMobile" : "9686736353",
+        "bankCode" : "7463",
+        "status" : "Active"
+    },
+    {
+         "title": "Current",
+        "accno": "100009312274",
+        "totalBalance" : "65000",
+        "cardNumber" : "John",
+        "cardHolderName" : "7654 XXXX XXXX 7654",
+        "validDate" : "Valid Till 05/24",
+         "bankAddress" : "One Wall Street,New York,United States",
+        "linkedMobile" : "9686736353",
+        "bankCode" : "7508",
+        "status" : "Active"
+    }]
+}
+}

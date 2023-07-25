@@ -1,0 +1,8 @@
+apz.travel.Launcher={};
+apz.app.onLoad_Launcher = function() {
+    var params = {};
+    params.div = 'travel__Launcher__launcher';
+    params.scr = 'ViewScreen';
+    params.appId = "travel";
+    apz.launchSubScreen(params);
+}

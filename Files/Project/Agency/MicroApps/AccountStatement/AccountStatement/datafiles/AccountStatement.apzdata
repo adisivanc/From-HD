@@ -1,0 +1,84 @@
+{
+    "accstm__AccountStatement_Res": {
+        "accStmtMaster": {
+            "txnRefNo": "",
+            "status": "",
+            "respCd": "",
+            "intMsgCd": "",
+            "extMsg": "",
+            "accStmtDtls": [{
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "RF-Shoppers Stop",
+                "trnAmount": "6200",
+                "runningBalance": "50000",
+                "trnDate": "10/06/2020",
+                "drcrInd": "C",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "NEFT-56XXXXXX03",
+                "trnAmount": "4600",
+                "runningBalance": "43800",
+                "trnDate": "15/06/2020",
+                "drcrInd": "D",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "POS-Services",
+                "trnAmount": "3406",
+                "runningBalance": "48400",
+                "trnDate": "17/06/2020",
+                "drcrInd": "C",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "More",
+                "trnAmount": "1400",
+                "runningBalance": "44994",
+                "trnDate": "16/06/2020",
+                "drcrInd": "D",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "IMPS-56XXXXXX03",
+                "trnAmount": "4500",
+                "runningBalance": "46394",
+                "trnDate": "20/06/2020",
+                "drcrInd": "D",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "POS-Services",
+                "trnAmount": "1659",
+                "runningBalance": "50894",
+                "trnDate": "24/06/2020",
+                "drcrInd": "C",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "RF-Shoppers Stop",
+                "trnAmount": "1324",
+                "runningBalance": "49235",
+                "trnDate": "26/06/2020",
+                "drcrInd": "C",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "S- Big Bazar",
+                "trnAmount": "1324",
+                "runningBalance": "47911",
+                "trnDate": "25/06/2020",
+                "drcrInd": "D",
+                "pageNo": ""
+            }]
+        }
+    }
+}

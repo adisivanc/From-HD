@@ -1,0 +1,126 @@
+apz.navgtn.Navigator = {};
+apz.navgtn.Navigator.sCache = {}
+apz.app.onLoad_Navigator = function(params) {
+    debugger;
+    apz.navgtn.Navigator.sCache = params;
+    $("#apzonb__Navigator__el_dpd_1_ext").removeAttr("enabled").attr("disabled", "disabled");
+    apz.navgtn.Navigator.fnGenerateSideMenuNavigation();
+}
+apz.navgtn.Navigator.nextScreen = function() {
+    apz.navgtn.Navigator.navigate = "Next";
+    $("#navgtn__Navigator__el_btn_3").attr("disabled", "disabled");
+    var index = apz.flowNo;
+    var screenName = apz.navigation[index].screenName;
+    var appId = apz.navigation[index].appId;
+    apz.flowNo++;
+    apz.startLoader();
+    setTimeout(function() {
+        apz[appId][screenName].saveApplicationDetails();
+    }, 10)
+}
+apz.navgtn.Navigator.preScreen = function() {
+    apz.navgtn.Navigator.navigate = "Previous";
+    $("#navgtn__Navigator__el_btn_2").attr("disabled", "disabled");
+    var index = apz.flowNo;
+    var screenName = apz.navigation[index].screenName;
+    var appId = apz.navigation[index].appId;
+    apz.flowNo--;
+    apz.startLoader();
+    setTimeout(function() {
+        apz[appId][screenName].saveApplicationDetails();
+    }, 10)
+}
+apz.navgtn.Navigator.fnCacel = function() {
+    apz.apzonb.Navigator.fnSaveFlow();
+}
+apz.navgtn.Navigator.fnLaunchApp = function() {
+    $("#navgtn__Navigator__el_btn_2,#navgtn__Navigator__el_btn_3").removeAttr("disabled");
+    apz.stopLoader();
+    var index = apz.flowNo;
+    apz.navgtn.Navigator.sCache.currentFlow = index;
+    $('html, body').animate({
+        scrollTop: 0
+    }, 0);
+    var params = {};
+    params.appId = apz.navigation[index].appId;
+    params.scr = apz.navigation[index].screenName;
+    params.div = "navgtn__Navigator__launcher";
+    params.userObj = apz.navgtn.Navigator.sCache;
+    apz.launchApp(params);
+}
+apz.navgtn.Navigator.fnGenerateSideMenuNavigation = function() {
+    debugger;
+    var navigationFlow;
+    if (apz.subProduct === "Prepaid Card") {
+        navigationFlow = JSON.parse(apz.getFile(apz.getDataFilesPath("navgtn") + "/PrepaidCardNavigation.json"))
+    } else {
+        navigationFlow = JSON.parse(apz.getFile(apz.getDataFilesPath("navgtn") + "/" + apz.product + "Navigation.json"))
+    }
+    if (apz.country === "US") {
+        navigationFlow = navigationFlow.filter(obj => obj.screenName !== "IdentityDetail");
+    } else if (apz.country === "UAE") {
+        navigationFlow = navigationFlow.filter(obj => obj.screenName !== "AdditionalPersonalDetails");
+    }
+    for (var i = 0, leng = navigationFlow.length; i < leng; i++) {
+        navigationFlow[i].position = i + 1;
+        navigationFlow[i].flowNo = i;
+    }
+    apz.navigation = navigationFlow;
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        $(".MenuFixed").removeClass("sno");
+        apz.navgtn.Navigator.fnLaunchMobileNavigation(navigationFlow);
+    } else {
+        $("#apzonb__Navigator__el_progressstep_1_ext").removeClass("sno").html("");
+        for (var i = 0, len = navigationFlow.length; i < len; i++) {
+            $("#apzonb__Navigator__el_progressstep_1_ext").append('<li class="pgst-step pgs-100 sno" scrname="Launcher" appid="' + navigationFlow[i].appId +
+                '" title="' + navigationFlow[i].title + '" currentFlow="' + navigationFlow[i].flowNo + '" id="navigation_' + navigationFlow[i].flowNo +
+                '"><span></span><span></span></li>');
+            if (i <= apz.flowNo) {
+                $("#navigation_" + i).removeClass("sno");
+            }
+        }
+        apz.navgtn.Navigator.fnAppendClickEvent();
+    }
+    apz.navgtn.Navigator.fnLaunchApp();
+}
+apz.navgtn.Navigator.fnAppendClickEvent = function() {
+    debugger;
+    $("#apzonb__Navigator__el_progressstep_1_ext").unbind('click').on("click", "li", function() {
+        apz.setElmValue("navgtn__Navigator__el_btn_3", "Next");
+        $("#navgtn__Navigator__el_btn_2").removeClass("sno");
+        apz.flowNo = $(this).attr("currentFlow");
+        $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+            if ($(this).hasClass("active")) {
+                var title = $(this).attr("title");
+                if (title !== "Summary" && title !== "Email Validation" && title !== "Funding Details") {
+                    var index = $(this).attr("currentFlow");
+                    var appId = apz.navigation[index].appId;
+                    var screenName = apz.navigation[index].screenName;
+                    apz[appId][screenName].saveApplicationDetails();
+                } else {
+                    apz.navgtn.Navigator.fnLaunchApp();
+                }
+            };
+        })
+    })
+}
+apz.navgtn.Navigator.fnLaunchMobileNavigation = function(navigationList) {
+    debugger;
+    var params = {};
+    params.appId = "navgtn";
+    params.scr = "MobileNavigation";
+    params.div = "navgtn__Navigator__slider_launcher";
+    params.userObj = {
+        navigationList
+    };
+    apz.launchSubScreen(params);
+}
+apz.navgtn.Navigator.fnLaunchSideNavigation = function() {
+    debugger;
+    $("#navgtn__Navigator__gr_row_3").removeClass("sno")
+}
+apz.navgtn.Navigator.fnCloseSlider = function() {
+    debugger;
+    $("#navgtn__Navigator__gr_row_3").addClass("sno");
+}

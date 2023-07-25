@@ -1,0 +1,52 @@
+Corousel = (function(){
+    
+       var data = [];
+       var commonId = "";
+       pointer  = 0 ;
+      
+       return {
+           init : function(id){
+             commonId = id;  
+               $("#"+commonId+"left").attr("disabled","disabled");
+           },
+           setData : function(d,id){
+               data = d;
+           },
+           forward : function(){
+               if(pointer < data.length-1){
+                   
+                   pointer++;
+                   if(pointer == data.length -1 ){
+                       $("#"+commonId+"right").attr("disabled","disabled");
+                       $("#"+commonId+"left").removeAttr("disabled","disabled");
+                   }else if(pointer > 0){
+                       $("#"+commonId+"left").removeAttr("disabled","disabled");
+                   }
+               }else{
+                   $("#"+commonId+"right").attr("disabled","disabled");
+               }
+               return pointer;
+               
+           },
+           previous : function(){
+                if(pointer >= 0){
+                  
+                   pointer--;
+                   if(pointer ==0){
+                       $("#"+commonId+"left").attr("disabled","disabled");
+                        $("#"+commonId+"right").removeAttr("disabled","disabled");
+                   }else if(pointer < data.length -1 ){
+                         $("#"+commonId+"right").removeAttr("disabled","disabled");
+                   }
+               }else{
+                   $("#"+commonId+"left").attr("disabled","disabled");
+               }
+               return pointer;
+           },
+           getIndex : function(){
+               return pointer;
+           }
+           
+       }
+    
+})();

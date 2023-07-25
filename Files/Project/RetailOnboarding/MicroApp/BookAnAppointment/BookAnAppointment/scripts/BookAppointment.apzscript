@@ -1,0 +1,65 @@
+apz.bkapt.BookAppointment = {};
+apz.app.onLoad_BookAppointment = function(params) {
+    debugger;
+    apz.bkapt.BookAppointment.sparams = params;
+    if (apz.bkapt.BookAppointment.sparams.from == "landing") {
+        $("body").removeClass("loginbgg");
+        $("#bkapt__BookAppointment__rowLanding").removeClass("sno");
+        $("#bkapt__BookAppointment__rowSuccess").addClass("sno");
+    }
+    if (apz.bkapt.BookAppointment.sparams.from == "success") {
+        $("#bkapt__BookAppointment__rowLanding").addClass("sno");
+        $("#bkapt__BookAppointment__rowSuccess").removeClass("sno");
+        $("#bkapt__BookAppointment__pl_pnl_2_div").removeClass("book1");
+    }
+    $("#apzonb__Navigator__mobretrieverow").addClass("sno");
+    $("#bkapt__BookAppointment__el_inp_2").removeAttr("onblur");
+    $('#bkapt__BookAppointment__el_inp_2').mobiscroll().time({
+        min: new Date(new Date().setHours(9, 00, 0, 0)),
+        max: new Date(new Date().setHours(16, 00, 0, 0)),
+        steps: {
+            minute: 60
+        },
+    });
+    $("#bkapt__BookAppointment__el_inp_14").removeAttr("onblur");
+    $('#bkapt__BookAppointment__el_inp_14').mobiscroll().time({
+        min: new Date(new Date().setHours(9, 00, 0, 0)),
+        max: new Date(new Date().setHours(16, 00, 0, 0)),
+        steps: {
+            minute: 60
+        },
+    });
+}
+apz.bkapt.BookAppointment.fnValidateMobileno = function(el) {
+    debugger;
+    var digits = el.value.match(/\d{1,12}/) || [""];
+    el.value = digits[0];
+}
+apz.bkapt.BookAppointment.fnCancel = function() {
+    debugger;
+    var appId, scrName, divName, screenFrom = apz.bkapt.BookAppointment.sparams.from;
+    (screenFrom === "landing") ? (appId = "prdsel", scrName = "ProductLauncher", divName = "apzonb__Navigator__launchdiv") : (appId = "appsum", scrName =
+        "SuccessScreen", divName = "navgtn__Navigator__launcher");
+    var params = {};
+    params.appId = appId;
+    params.scr = scrName;
+    params.div = divName;
+    apz.launchApp(params);
+}
+apz.bkapt.BookAppointment.fnSubmit = function() {
+    debugger;
+    var params = {};
+    params.type = "S";
+    params.message = "Your appointment has been booked successfully. We look forward to your visit.";
+    params.callBack = apz.bkapt.BookAppointment.fnCancel;
+    apz.dispMsg(params);
+}
+apz.bkapt.BookAppointment.fnGetAppointmentType = function(element) {
+    debugger;
+    var appointmentType = apz.getElmValue(element.id);
+    if (appointmentType === "Branchvisit") {
+        $("#bkapt__BookAppointment__el_dpd_3_ul,#bkapt__BookAppointment__el_inp_8_ul").removeClass("sno");
+    } else {
+        $("#bkapt__BookAppointment__el_dpd_3_ul,#bkapt__BookAppointment__el_inp_8_ul").addClass("sno");
+    }
+}

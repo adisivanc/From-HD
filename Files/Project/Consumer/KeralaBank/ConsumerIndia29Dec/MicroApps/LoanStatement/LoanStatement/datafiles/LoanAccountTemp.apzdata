@@ -1,0 +1,18 @@
+{
+    "loanst__LoanAccountTemp_Res":{
+    "LoanAccount": [{
+        "accountNo": "001234545545",
+        "loanType": "Vehicle",
+        "branch": "Koramangala, Bengaluru",
+        "loanAmount": "100000",
+        "outstandingAmount": "123756"
+    }, {
+        "accountNo": "001234590880",
+        "loanType": "Home",
+        "branch": "Koramangala, Bengaluru",
+        "loanAmount": "200000",
+        "outstandingAmount": "457594"
+    }]
+}
+
+}

@@ -1,0 +1,9 @@
+{
+    "tbDbmiCorpDashboard": {
+        "defaultWidgetList": "ACDB01__Dashboard__balance_summary_row,ACDB01__Dashboard__recent_transactions_row,ACDB01__Dashboard__relationship_summary_row,ACDB01__Dashboard__payable_receivables_row,ACDB01__Dashboard__networth_summary_row",
+        "dashboardId": "dash0001",
+        "dashboardDesc": "",
+        "widgetsList": "ACDB01__Dashboard__balance_summary_row,ACDB01__Dashboard__recent_transactions_row,ACDB01__Dashboard__relationship_summary_row,ACDB01__Dashboard__task_summary_row,ACDB01__Dashboard__information_row,ACDB01__Dashboard__balance_movement_row,ACDB01__Dashboard__payable_receivables_row,ACDB01__Dashboard__networth_summary_row",
+        "corporateId": "000FTAC4321"
+    }
+}

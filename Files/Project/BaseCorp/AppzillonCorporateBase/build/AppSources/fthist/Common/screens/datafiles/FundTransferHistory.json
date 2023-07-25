@@ -1,0 +1,25 @@
+{
+    "fthist__FundTransferHistory_Res": [{
+        "ref": "FTDOM762414818",
+        "txn_date": "",
+        "txn_type": "Domestic Transfer",
+        "acc_no": "XXXXXXXXXX3712",
+        "beneficiary": "Albertson Heavy Machinery-1221978739",
+        "amount": "2000",
+        "currency": "USD",
+        "initiated_by": "mohammad.nawaz",
+        "status": "COMPLETED",
+        "drcr":"Dr"
+    }, {
+        "ref": "FTDOM762414932",
+        "txn_date": "",
+        "txn_type": "Domestic Transfer",
+        "acc_no": "XXXXXXXXXX3712",
+        "beneficiary": "Norton Lumber and Building Materials-1221978766",
+        "amount": "1000",
+        "currency": "USD",
+        "initiated_by": "mohammad.nawaz",
+        "status": "COMPLETED",
+        "drcr":"Dr"
+    }]
+}

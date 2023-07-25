@@ -1,0 +1,5 @@
+
+apz.app.onLoad_RiskAssessmentAOS = function(){
+    apz.app.manageCrub(10);
+    
+}

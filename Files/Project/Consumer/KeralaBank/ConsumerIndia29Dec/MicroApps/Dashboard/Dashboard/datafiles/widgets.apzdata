@@ -1,0 +1,10 @@
+{
+    "dashbo__widgets_Res":[{
+        "name":"Recent Transactions",
+        "icon":"icon-list"
+    },{
+        "name":"Earn and Spends",
+        "icon":"icon-bar-chart"
+    }]
+    
+}

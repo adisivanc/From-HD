@@ -1,0 +1,395 @@
+apz.sdlrnt.payrent = {};
+apz.sdlrnt.payrent.sParams = {};
+apz.sdlrnt.payrent.sAction = {};
+apz.sdlrnt.payrent.sParams.data = {};
+apz.app.onLoad_PayRent = function(params) {
+    debugger;
+    apz.sdlrnt.payrent.sParams = params;
+    if (params.Navigation) {
+        apz.sdlrnt.payrent.fnSetNavigation(params);
+    }
+    apz.sdlrnt.payrent.sParams.data = params.data;
+    apz.sdlrnt.payrent.fnGoToStage1();
+};
+apz.sdlrnt.payrent.fnSetNavigation = function(params) {
+    debugger;
+    apz.sdlrnt.payrent.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "PAY RENT FOR LOCKER";
+    }
+    lParams.backPressed = apz.sdlrnt.payrent.fnBack;
+    apz.sdlrnt.payrent.Navigation(lParams);
+};
+apz.sdlrnt.payrent.fnGoToStage1 = function() {
+    apz.sdlrnt.payrent.fnSetValueStage1();
+    apz.sdlrnt.payrent.fnRenderStage1();
+};
+apz.sdlrnt.payrent.fnSetValueStage1 = function() {
+    var savingsAccountData = apz.sdlrnt.payrent.sParams.data.SavingsAccount;
+    apz.sdlrnt.payrent.populateAccountData(savingsAccountData);
+    apz.setElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__customerId", apz.sdlrnt.payrent.sParams.data.customerID);
+    apz.setElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__lockerId", apz.sdlrnt.payrent.sParams.data.lockerId);
+    apz.setElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__rentDueDate", apz.sdlrnt.payrent.sParams.data.rentDueDate);
+    apz.setElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__rentAmount", apz.sdlrnt.payrent.sParams.data.rentAmount);
+    apz.setElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__penlRate", apz.sdlrnt.payrent.sParams.data.penlRate);
+    apz.setElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__penlAmount", apz.sdlrnt.payrent.sParams.data.penlAmount);
+    var totalAmount = parseInt(apz.sdlrnt.payrent.sParams.data.rentAmount) + parseInt(apz.sdlrnt.payrent.sParams.data.penlRate) + parseInt(apz.sdlrnt.payrent.sParams.data.penlAmount); 
+    apz.setElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__totalAmount", totalAmount);
+    apz.setElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__paidDate", new Date().toJSON().slice(0,10));
+    
+    apz.setElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__branchName", apz.sdlrnt.payrent.sParams.data.branchName);
+    apz.setElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__brnCode", apz.sdlrnt.payrent.sParams.data.branchCode);
+    
+};
+apz.sdlrnt.payrent.populateAccountData = function(accountsData){
+    debugger;
+    var jsonArray = [];
+    for (var i = 0; i < accountsData.length; i++) {
+        item = {}
+        item ["desc"] = accountsData[i].accountNo;
+        item ["val"] = accountsData[i].accountNo;
+        jsonArray.push(item);
+    }
+    apz.populateDropdown(document.getElementById("sdlrnt__PayRentIFace__i__RentForSDLDtls__accountNo"),jsonArray);
+    apz.sdlrnt.payrent.fnSelectAccount();
+};
+apz.sdlrnt.payrent.fnRenderStage1 = function() {
+    apz.show("sdlrnt__PayRent__Stage1");
+    apz.hide("sdlrnt__PayRent__Stage2");
+    apz.hide("sdlrnt__PayRent__Stage3");
+};
+apz.sdlrnt.payrent.fnSelectAccount = function(){
+    debugger;
+    // var lValue = apz.getElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__accountNo");
+    // var data = apz.sdlrnt.payrent.sParams.data.SavingsAccount;
+    // var branchData = "";
+    // for (var i = 0; i < data.length; i++) {
+    //     if(data[i].accountNo == lValue){
+    //         // branchData.branchName = data[i].accountBrnName;
+    //         // branchData.branchCode = data[i].accountBrnCd;
+    //         apz.setElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__branchName", data[i].accountBrnName);
+    //         apz.setElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__brnCode", data[i].accountBrnCd);
+    //     }
+    // }
+    // if(branchCode.length > 1){
+    //     $("#sdlrnt__PayRentIFace__i__RentForSDLDtls__brnCode_ul").removeClass("sno");
+    //     apz.setElmValue("sdlrnt__PayRentIFace__i__RentForSDLDtls__brnCode", branchCode);
+    // }else{
+    //      $("#sdlrnt__PayRentIFace__i__RentForSDLDtls__brnCode_ul").addClass("sno");
+    // }
+};
+apz.sdlrnt.payrent.fnContinueBtn = function() {
+    debugger;
+    var lValid = apz.sdlrnt.payrent.fnValidateStage1();
+    if (lValid) {
+        apz.data.buildData("PayRentIFace", "sdlrnt");
+        apz.sdlrnt.payrent.fnGoToStage2();
+    }
+};
+apz.sdlrnt.payrent.fnBackToBase = function() {
+    debugger;
+    apz.sdlrnt.payrent.sParams.back();
+};
+apz.sdlrnt.payrent.fnGoToStage2 = function() {
+    apz.sdlrnt.payrent.fnSetValueStage2();
+    apz.sdlrnt.payrent.fnRenderStage2();
+}
+apz.sdlrnt.payrent.fnSetValueStage2 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.sdlrnt__PayRentIFace_Req.RentForSDLDtls;
+    
+    if (lDetails.branchName != '') {
+        apz.show("sdlrnt__PayRent__stage2BranchName_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage2BranchName", lDetails.branchName);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage2BranchName_ctrl_grp_div");
+    }
+    
+    // if (lDetails.brnCode != '') {
+    //     apz.show("sdlrnt__PayRent__stage2BranchCode_ctrl_grp_div");
+    //     apz.setElmValue("sdlrnt__PayRent__stage2BranchCode", lDetails.brnCode);
+    // } else {
+    //     apz.hide("sdlrnt__PayRent__stage2BranchCode_ctrl_grp_div");
+    // }
+    
+    // if (lDetails.customerId != '') {
+    //     apz.show("sdlrnt__PayRent__stage2CustomerId_ctrl_grp_div");
+    //     apz.setElmValue("sdlrnt__PayRent__stage2CustomerId", lDetails.customerId);
+    // } else {
+    //     apz.hide("sdlrnt__PayRent__stage2CustomerId_ctrl_grp_div");
+    // }
+    
+    if (lDetails.accountNo != '') {
+        apz.show("sdlrnt__PayRent__stage2AccNo_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage2AccNo", lDetails.accountNo);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage2AccNo_ctrl_grp_div");
+    }
+    
+    // if (lDetails.lockerId != '') {
+    //     apz.show("sdlrnt__PayRent__stage2LockerId_ctrl_grp_div");
+    //     apz.setElmValue("sdlrnt__PayRent__stage2LockerId", lDetails.lockerId);
+    // } else {
+    //     apz.hide("sdlrnt__PayRent__stage2LockerId_ctrl_grp_div");
+    // }
+    
+    if (lDetails.rentDueDate != '') {
+        apz.show("sdlrnt__PayRent__stage2RentDueDate_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage2RentDueDate", lDetails.rentDueDate);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage2RentDueDate_ctrl_grp_div");
+    }
+    
+    if (lDetails.rentAmount != '') {
+        apz.show("sdlrnt__PayRent__stage2RentAmt_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage2RentAmt", lDetails.rentAmount);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage2RentAmt_ctrl_grp_div");
+    }
+    
+    if (lDetails.penlRate != '') {
+        apz.show("sdlrnt__PayRent__stage2PenRate_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage2PenRate", lDetails.penlRate);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage2PenRate_ctrl_grp_div");
+    }
+    
+    if (lDetails.penlAmount != '') {
+        apz.show("sdlrnt__PayRent__stage2PenAmt_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage2PenAmt", lDetails.penlAmount);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage2PenAmt_ctrl_grp_div");
+    }
+    
+    // if (lDetails.paidDate != '') {
+    //     apz.show("sdlrnt__PayRent__stage2RentPaidOn_ctrl_grp_div");
+    //     apz.setElmValue("sdlrnt__PayRent__stage2RentPaidOn", lDetails.paidDate);
+    // } else {
+    //     apz.hide("sdlrnt__PayRent__stage2RentPaidOn_ctrl_grp_div");
+    // }
+    
+    if (lDetails.totalAmount != '') {
+        apz.show("sdlrnt__PayRent__stage2TotalAmt_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage2TotalAmt", lDetails.totalAmount);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage2TotalAmt_ctrl_grp_div");
+    }
+    
+    if (lDetails.remarks != '') {
+        apz.show("sdlrnt__PayRent__stage2Remarks_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage2Remarks", lDetails.remarks);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage2Remarks_ctrl_grp_div");
+    }
+    
+    
+};
+apz.sdlrnt.payrent.fnRenderStage2 = function() {
+    apz.hide("sdlrnt__PayRent__Stage1");
+    apz.show("sdlrnt__PayRent__Stage2");
+    apz.hide("sdlrnt__PayRent__Stage3");
+};
+apz.sdlrnt.payrent.fnEditBtn = function() {
+    apz.sdlrnt.payrent.fnRenderStage1();
+};
+// apz.sdlrnt.payrent.fnBackBtn = function() {
+//     debugger;
+//     $("#sdlrnt__Summary__Stage1").removeClass('sno');
+//     $("#sdlrnt__Summary__Stage2").addClass('sno');
+// };
+apz.sdlrnt.payrent.fnConfirmBtn = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "PayRentIFace",
+        "req": {
+            "RentForSDLDtls": apz.data.scrdata.sdlrnt__PayRentIFace_Req.RentForSDLDtls,
+            "action": "Confirm"
+        },
+        "callBack": apz.sdlrnt.payrent.fnCallServerCallBack
+    };
+    apz.sdlrnt.payrent.fnBeforeCallServer(lParams);
+};
+apz.sdlrnt.payrent.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": "N",
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": params.callBack
+    };
+      jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("sdlrnt")+"/PayRentIFace.json"));
+       apz.data.scrdata.sdlrnt__PayRentIFace_Res = {};
+                      apz.data.scrdata.sdlrnt__PayRentIFace_Res  = jsondata;
+                    //  apz.data.loadData("Transaction", "cbdtax");
+        apz.sdlrnt.payrent.fnCallServerCallBack(jsondata);
+    //apz.server.callServer(lServerParams);
+};
+apz.sdlrnt.payrent.fnCallServerCallBack = function(params) {
+    debugger;
+   
+        if ( apz.data.scrdata.sdlrnt__PayRentIFace_Res.RentForSDLDtls.respCd == "app") {
+            apz.sdlrnt.payrent.sParams.RefNum = apz.data.scrdata.sdlrnt__PayRentIFace_Res.RentForSDLDtls.txnRefNo;
+            apz.sdlrnt.payrent.fnRenderOtpScreen();
+            var lLaunchParams = {
+                "appId": "otpeng",
+                "scr": "ProcessOTP",
+                "div": "sdlrnt__PayRent__launchMicroApp",
+                "userObj": {
+                    "action": "SetRefNo",
+                    "data": {
+                        "OTPRefNo":  apz.data.scrdata.sdlrnt__PayRentIFace_Res.RentForSDLDtls.data.OTPRefNo
+                    },
+                    "control": {
+                        "appId": "otpeng",
+                        "callBack": apz.sdlrnt.payrent.fnOtpCB,
+                        "destroyDiv": "sdlrnt__PayRent__launchMicroApp"
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        }
+    
+};
+apz.sdlrnt.payrent.fnRenderOtpScreen = function() {
+    apz.hide("sdlrnt__PayRent__Stage1");
+    apz.hide("sdlrnt__PayRent__Stage2");
+    apz.hide("sdlrnt__PayRent__Stage3");
+    apz.show("sdlrnt__PayRent__launchMicroApp");
+};
+apz.sdlrnt.payrent.fnOtpCB = function(params) {
+    debugger;
+    apz.sdlrnt.payrent.fnSetValueStage3();
+    apz.sdlrnt.payrent.fnRenderStage3();
+};
+apz.sdlrnt.payrent.fnSetValueStage3 = function() {
+    debugger;
+    var status = "Success";
+    var lDetails = apz.data.scrdata.sdlrnt__PayRentIFace_Req.RentForSDLDtls;
+    
+    if(status == "Success"){
+        apz.hide("sdlrnt__PayRent__transactionFailure");
+        apz.show("sdlrnt__PayRent__transactionSuccess");
+    }else{
+        apz.hide("sdlrnt__PayRent__transactionSuccess");
+        apz.show("sdlrnt__PayRent__transactionFailure");
+    }
+    // var lRefno = "Your Reference no is " + params.res.sdlrnt__PayRentIFace_Res.RentForSDLDtls.txnRefNo;
+    var lRefno = "Your Reference no is TXN12897ZK23";
+    apz.setElmValue("sdlrnt__PayRent__referenceNumber", lRefno);
+    
+    if (lDetails.branchName != '') {
+        apz.show("sdlrnt__PayRent__stage3BranchName_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage3BranchName", lDetails.branchName);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage3BranchName_ctrl_grp_div");
+    }
+    
+    // if (lDetails.brnCode != '') {
+    //     apz.show("sdlrnt__PayRent__stage3BranchCode_ctrl_grp_div");
+    //     apz.setElmValue("sdlrnt__PayRent__stage3BranchCode", lDetails.brnCode);
+    // } else {
+    //     apz.hide("sdlrnt__PayRent__stage3BranchCode_ctrl_grp_div");
+    // }
+    
+    // if (lDetails.customerId != '') {
+    //     apz.show("sdlrnt__PayRent__stage3CustomerId_ctrl_grp_div");
+    //     apz.setElmValue("sdlrnt__PayRent__stage3CustomerId", lDetails.customerId);
+    // } else {
+    //     apz.hide("sdlrnt__PayRent__stage3CustomerId_ctrl_grp_div");
+    // }
+    
+    if (lDetails.accountNo != '') {
+        apz.show("sdlrnt__PayRent__stage3AccNo_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage3AccNo", lDetails.accountNo);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage3AccNo_ctrl_grp_div");
+    }
+    
+    // if (lDetails.lockerId != '') {
+    //     apz.show("sdlrnt__PayRent__stage3LockerId_ctrl_grp_div");
+    //     apz.setElmValue("sdlrnt__PayRent__stage3LockerId", lDetails.lockerId);
+    // } else {
+    //     apz.hide("sdlrnt__PayRent__stage3LockerId_ctrl_grp_div");
+    // }
+    
+    if (lDetails.rentDueDate != '') {
+        apz.show("sdlrnt__PayRent__stage3RentDueDate_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage3RentDueDate", lDetails.rentDueDate);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage3RentDueDate_ctrl_grp_div");
+    }
+    
+    if (lDetails.rentAmount != '') {
+        apz.show("sdlrnt__PayRent__stage3RentAmt_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage3RentAmt", lDetails.rentAmount);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage3RentAmt_ctrl_grp_div");
+    }
+    
+    if (lDetails.penlRate != '') {
+        apz.show("sdlrnt__PayRent__stage3PenRate_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage3PenRate", lDetails.penlRate);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage3PenRate_ctrl_grp_div");
+    }
+    
+    if (lDetails.penlAmount != '') {
+        apz.show("sdlrnt__PayRent__stage3PenAmt_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage3PenAmt", lDetails.penlAmount);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage3PenAmt_ctrl_grp_div");
+    }
+    
+    // if (lDetails.paidDate != '') {
+    //     apz.show("sdlrnt__PayRent__stage3RentPaidOn_ctrl_grp_div");
+    //     apz.setElmValue("sdlrnt__PayRent__stage3RentPaidOn", lDetails.paidDate);
+    // } else {
+    //     apz.hide("sdlrnt__PayRent__stage3RentPaidOn_ctrl_grp_div");
+    // }
+    
+    if (lDetails.totalAmount != '') {
+        apz.show("sdlrnt__PayRent__stage3TotalAmt_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage3TotalAmt", lDetails.totalAmount);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage3TotalAmt_ctrl_grp_div");
+    }
+    
+    if (lDetails.remarks != '') {
+        apz.show("sdlrnt__PayRent__stage3Remarks_ctrl_grp_div");
+        apz.setElmValue("sdlrnt__PayRent__stage3Remarks", lDetails.remarks);
+    } else {
+        apz.hide("sdlrnt__PayRent__stage3Remarks_ctrl_grp_div");
+    }
+};
+apz.sdlrnt.payrent.fnRenderStage3 = function() {
+    apz.hide("sdlrnt__PayRent__Stage1");
+    apz.hide("sdlrnt__PayRent__Stage2");
+    apz.show("sdlrnt__PayRent__Stage3");
+};
+apz.sdlrnt.payrent.fnPrintBtn = function() {
+    debugger;
+};
+apz.sdlrnt.payrent.fnDoneBtn = function() {
+    debugger;
+};
+apz.sdlrnt.payrent.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("sdlrnt__PayRent__Stage1Form");
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "ERR_MAND"
+        };
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};

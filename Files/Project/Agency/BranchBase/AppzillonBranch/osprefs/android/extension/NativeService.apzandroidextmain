@@ -1,0 +1,23 @@
+package com.iexceed.plugins.nativeextensibility;
+import android.app.Activity;
+import android.webkit.WebView;
+import com.iexceed.appzillon.evolute.EvoluteMainActivity;
+import android.content.Intent;
+import org.json.JSONObject;
+public class NativeService {
+	public static JSONObject nativeServiceEntry(WebView wv, Activity act, JSONObject jsonText) {
+		try {
+			final String callbackId = jsonText.getString("id");
+			final String action = jsonText.getString("action");
+			if(action.equalsIgnoreCase("myKAD")){
+				EvoluteMainActivity.init(act, wv, jsonText);
+				Intent intent = new Intent(act, EvoluteMainActivity.class);
+				act.startActivity(intent);
+			}					
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+}

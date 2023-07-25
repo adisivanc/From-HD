@@ -1,0 +1,20 @@
+apz.taxcer.checkParams = function(params){
+    params.userObj={
+        "data": {
+            "LoanAccount": [{
+                    "accountNo": "753410000076",
+                    "loanType": "Vehicle",
+                    "branch": "Koramangala",
+                    "loanAmount": "10000",
+                    "outstandingAmount": "34567"
+                }, {
+                    "accountNo": "732510006721",
+                    "loanType": "Home",
+                    "branch": "Madivala",
+                    "loanAmount": "200000",
+                    "outstandingAmount": "87575"
+                }],
+            "customerID": "134"
+        }
+    };
+};

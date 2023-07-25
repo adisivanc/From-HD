@@ -1,0 +1,802 @@
+apz.moblan.home = {};
+apz.moblan.home.speechToText = true;
+apz.app.onLoad_Home = function(params) {
+    debugger;
+    $("body").css("background-image", 'url("apps/styles/themes/ConsumerBank/img/bgn.jpg")');
+    $("body").addClass("landingby");
+    $("body").addClass("landingtheme2");
+    $("#landin__Landing__ps_pls_27").addClass("sno");
+    apz.moblan.home.sCache = params;
+    apz.data.loadJsonData("Promotions", "moblan");
+    apz.data.loadJsonData("HomePageAccounts", "moblan");
+    apz.data.loadJsonData("AccountsList", "moblan");
+    apz.data.loadJsonData("DepositsList", "moblan");
+   
+   
+    // apz.moblan.home.fnSwipe();
+    apz.moblan.home.fnInitialise(params);
+    $("#moblan__Home__liabilitiesvalue").hide();
+    //  apz.setElmValue("moblan__Home__greetuser", "Hello " +   apz.customeruId )
+    $("#landin__Landing__el_img_1").css("visibility", "visible");
+};
+apz.app.onShown_Home = function() {
+    // apz.moblan.landingpage.OpenSideBar();
+    // if ($(window).height() > 600 && $(window).height() <= 700) {
+    //     var wht = [$(window).height()] / 30;
+    //     $("#moblan__Home__pl_pnl_2_div").css({
+    //         "margin-top": "" + wht + "px"
+    //     });
+    // } else if ($(window).height() > 700 && $(window).height() < 800) {
+    //     var wht = [$(window).height()] / 18;
+    //     $("#moblan__Home__pl_pnl_2_div").css({
+    //         "margin-top": "" + wht + "px"
+    //     });
+    // } else if ($(window).height() >= 800) {
+    //     var wht = [$(window).height()] / 14;
+    //     $("#moblan__Home__pl_pnl_2_div").css({
+    //         "margin-top": "" + wht + "px"
+    //     });
+    // }
+    //apz.moblan.home.addLongPressEventForMoreIcon();
+    $("body").addClass("loginby");
+    //apz.setElmValue("moblan__Home__radioheader", "Accounts");
+    // apz.moblan.home.fnloadRadioSection();
+    //apz.toggleFooter();
+    $("#footer").addClass("sno");
+    //  apz.moblan.home.getNextUserAction();
+    apz.moblan.home.launchfavfn();
+    apz.moblan.home.launchTransferfn();
+    apz.moblan.home.launchCreditCardfn();
+    $("#moblan__Home__accountsList").addClass("swiper-container");
+    $("#moblan__Home__accountsList > ul").addClass("swiper-wrapper");
+    //  $("#moblan__Home__depositsList").addClass("swiper-container");
+    // $("#moblan__Home__depositsList > ul").addClass("swiper-wrapper");
+    //  $("#moblan__Home__ct_lst_2").addClass("swiper-container");
+    // $("#moblan__Home__ct_lst_2 > ul").addClass("swiper-wrapper");
+    //  $("#moblan__Home__ct_lst_3").addClass("swiper-container");
+    // $("#moblan__Home__ct_lst_3 > ul").addClass("swiper-wrapper");
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1.25,
+        spaceBetween: 20,
+        centeredSlides: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+     apz.launchApp({
+        appId: "accstm",
+        scr: "OffersSlider",
+        div: "moblan__Home__offersSlider"
+    })
+};
+apz.moblan.home.addLongPressEventForMoreIcon = function() {
+    debugger;
+    var pressTimer;
+    $("#moblan__Home__el_btn_14").mouseup(function() {
+        clearTimeout(pressTimer);
+        return false;
+    }).mousedown(function() {
+        pressTimer = window.setTimeout(function() {
+            $('#moblan__Home__moreFeatures').removeClass('sno');
+            $('#moblan__Home__moreFeatures').addClass('animm');
+        }, 1000);
+        return false;
+    });
+}
+apz.moblan.home.fnloadRadioSection = function() {
+    debugger;
+    var lparams = {
+        "scr": "Accounts",
+        "appId": "moblan",
+        "userObj": apz.moblan.home.sParams,
+        "div": "moblan__Home__radiogrouplauncher"
+    };
+    apz.launchSubScreen(lparams);
+}
+apz.moblan.home.fnOnmousedown = function(e) {
+    debugger;
+    //   e.preventDefault();
+    $("#moblan__Home__moreFeatures").removeClass("sno");
+};
+apz.moblan.home.fnOnChangeRadioSection = function() {
+    debugger;
+    let val = apz.getElmValue("moblan__Home__radioheader");
+    lparams = {};
+    switch (val) {
+        case "Accounts":
+            lparams = {
+                "scr": "Accounts",
+                "appId": "moblan"
+            }
+            break;
+        case "Recent Transactions":
+            lparams = {
+                "scr": "recentTransaction",
+                "appId": "accstm"
+            }
+            break;
+        case "Upcoming Payments":
+            lparams = {
+                "scr": "UpcomingPayments",
+                "appId": "moblan"
+            }
+            break;
+    }
+    lparams["userObj"] = apz.moblan.home.sParams;
+    lparams["div"] = "moblan__Home__radiogrouplauncher";
+    if (val == "Recent Transactions") {
+        apz.launchApp(lparams);
+    } else {
+        apz.launchSubScreen(lparams);
+    }
+    apz.landin.Landing.toggleQuicklinkStrip();
+};
+apz.moblan.home.getNextUserAction = function() {
+    if (apz.deviceType != 'SIMULATOR') {
+        apz.mockServer = false;
+    }
+    const lServerParams = {
+        "appId": "moblan",
+        "ifaceName": "NextUserAction",
+        "buildReq": "N",
+        "paintResp": "N",
+        "req": apz.moblan.home.sParam.loginData,
+        "callBack": apz.moblan.home.getNextUserActionCB
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.moblan.home.getNextUserActionCB = function(params) {
+    debugger;
+    apz.mockServer = true;
+    if (!params.errors && params.res) {
+        let buttons = $(".sortableRow button");
+        Object.entries(params.res.moblan__NextUserAction_Res).sort((x, y) => x[1] > y[1] ? -1 : 1).forEach(function(sortedObj, index) {
+            const currentButton = buttons.filter("." + sortedObj[0]);
+            if (buttons[index] && currentButton.length) buttons[index].outerHTML = currentButton[0].outerHTML;
+        });
+        $(".sortableRow button:lt(5)").removeClass("sno");
+    }
+    if (apz.moblan.home.sParam.loginData.fromLogin) {
+        apz.moblan.home.showPromotionModal();
+        setTimeout(function() {
+            $("#moblan__Home__promotionPopup:visible").length && apz.moblan.home.showPromotionModal();
+        }, 6500);
+    }
+}
+apz.moblan.home.showPromtionImage = function() {
+    debugger;
+    let currentDate = apz.moblan.home.sParam.loginData.date || "2019-Jan-10",
+    date = new Date(currentDate).getDate() || currentDate.split("-").pop(), promotionImageKey;
+    if (date > 0 && date < 11) promotionImageKey = "start";
+    else if (date > 10 && date < 21) promotionImageKey = "middle";
+    else if (date > 20 && date < 32) promotionImageKey = "end";
+    promotionImageKey += apz.moblan.home.sParam.loginData.txn_loc || "base";
+    const li = $("[id^=moblan__Home__ct_lst] li:eq(0)").removeClass('ssp').removeAttr("onclick")
+    let list = '';
+    apz.data.scrdata.moblan__Promotions__Res[promotionImageKey] && apz.data.scrdata.moblan__Promotions__Res[promotionImageKey].forEach(function(obj) {
+        li.find("img[id*=UserPromotions__o__moblan__UserPromotions_Res__img]").attr("src", "data:image/png;base64," + obj.img);
+        li.find("span[id*=UserPromotions__o__moblan__UserPromotions_Res__header]").html(obj.header)
+        li.find("span[id*=UserPromotions__o__moblan__UserPromotions_Res__msg]").html(obj.msg)
+        list += li[0].outerHTML;
+    })
+    $("[id^=moblan__Home__ct_lst] ul.pri").html(list);
+    $("#moblan__Home__ct_lst_2 >ul.pri").responsiveSlides();
+}
+apz.moblan.home.showPromotionModal = function() {
+    apz.toggleModal({
+        targetId: "moblan__Home__promotionPopup"
+    })
+    apz.moblan.home.showPromtionImage();
+}
+apz.moblan.home.showSearchModal = function() {
+    apz.toggleModal({
+        targetId: "moblan__Home__searchmodal"
+    })
+    // apz.moblan.home.showPromtionImage();
+}
+apz.moblan.home.fnInitialise = function(params) {
+    apz.moblan.home.sParam = params;
+    apz.moblan.home.fndisplayChart();
+};
+apz.moblan.home.fndisplayChart = function() {
+    debugger;
+    apz.data.loadJsonData("LandingChart", "moblan")
+}
+apz.moblan.home.fnSpeechToText = function() {
+    debugger;
+    if (apz.moblan.home.speechToText) {
+        apz.moblan.home.speechToText = false;
+        var json = {};
+        json.id = "NATIVE";
+        json.action = "speechToText";
+        json.callBack = apz.moblan.home.fnSpeechToTextCB;
+    }
+}
+apz.moblan.home.fnSpeechToTextCB = function(params) {
+    debugger;
+    apz.moblan.home.speechToText = true
+    apz.setElmValue("moblan__Home__el_inp_1", params.speechResult)
+    $('#moblan__Home__el_inp_1').removeClass('var1');
+    // apz.startLoader();
+    //apz.moblan.SearchChat.fnSearchChat();
+    apz.moblan.home.fnEnableSearchButton();
+}
+apz.moblan.home.fnchangeAssets = function(ths) {
+    debugger;
+    let value = apz.getElmValue("moblan__Home__type");
+    if (value == "off") {
+        $("#moblan__Home__liabilitiesvalue").show();
+        $("#moblan__Home__assetsvalue").hide();
+    } else {
+        $("#moblan__Home__assetsvalue").show();
+        $("#moblan__Home__liabilitiesvalue").hide();
+    }
+}
+apz.moblan.onclickAssets = function() {
+    var lparams = {
+        "scr": "AccountSummary",
+        "appId": "accsum",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "data": apz.moblan.home.sParams.data,
+            "control": {
+                "exitApp": {
+                    "appId": "",
+                    "backFunction": apz.moblan.home.sParams.control.exitApp.backFunction,
+                    "div": "landin__Landing__launcher",
+                    "callBack": ""
+                }
+            }
+        }
+    };
+    apz.launchApp(lparams);
+    apz.landin.Landing.toggleQuicklinkStrip();
+};
+apz.moblan.onclickLeftFoot = function() {
+    $("#moblan__Home__gr_row_7").removeClass("sno");
+};
+apz.moblan.onclickRightFoot = function() {
+    $("#moblan__Home__gr_row_8").removeClass("sno");
+};
+apz.moblan.onclickLeftClose = function() {
+    $("#moblan__Home__gr_row_7").addClass("sno");
+};
+apz.moblan.onclickRightClose = function() {
+    $("#moblan__Home__gr_row_8").addClass("sno");
+};
+apz.moblan.onclickLiabilities = function() {
+    var lparams = {
+        "scr": "Liabilities",
+        "appId": "moblan",
+        "userObj": apz.moblan.home.sParams,
+        "div": "ladin__Landing__launcher"
+    };
+    apz.launchSubScreen(lparams);
+};
+apz.moblan.fnOrbialLaunch = function(params) {
+    debugger;
+    $("#header").addClass("expandnav");
+    $("#landin__Landing__gr_row_16").addClass("sno");
+    $("#landin__Landing__sidebar").removeClass("sno");
+    var lParams = {};
+    lParams.textContent = params;
+    apz.moblan.home.sParam.control.menuFunction(lParams);
+};
+apz.moblan.home.launchChatBot = function() {
+    debugger;
+    apz.mockServer = false;
+    $("#footer").addClass("sno");
+    $("body").removeClass("loginby");
+    //  $("#moblan__LandingPage__AppsRow").addClass('sno');
+    var lparams = {
+        "div": "landin__Landing__launcher",
+        "appId": "ChatBo",
+        "scr": "chatScreen",
+        "userObj": {
+            "parentAppId": "moblan",
+            "callBack": apz.landin.Landing.fnHome
+        },
+    };
+    apz.launchApp(lparams);
+    apz.landin.Landing.toggleQuicklinkStrip();
+};
+apz.moblan.home.fnOrbitLaunch = function(params, data) {
+    debugger;
+    var lParams = {};
+    lParams.textContent = params;
+    lParams.custdata = data;
+    apz.landin.Landing.fnMenuClickInside(data);
+};
+apz.moblan.home.fnD1launchMicroApp = function(ths) {
+    debugger;
+    $("#landin__Landing__gr_row_16").removeClass("expandmenu");
+    $("#landin__Landing__gr_row_17").addClass("xband");
+    //$("#moblan__Home__gr_row_1").toggleClass("expandmenu")
+    $("#landin__Landing__gr_row_16").addClass("sno");
+    $("#landin__Landing__launcher").addClass("expandmenu")
+    $("#landin__Landing__sidebar").removeClass("sno");
+    $("#landin__Landing__TitleRow").removeClass("sno");
+    $("body").removeClass("dashbody");
+    $("body").removeClass("dashbody");
+    $("body").removeClass("landingby");
+    $("body").removeClass("landingtheme2");
+    $("body").removeClass("loginby");
+    $(".srbtn1").addClass("sno")
+    $(".srbtn").addClass("sno")
+    var rowno = $(ths).attr("rowno");
+    $("#landin__Landing__TitleRow").removeClass("sno");
+    //let selectedAcc = apz.data.scrdata.moblan__HomePageAccounts_Res[rowno];
+    let selectedAcc = ths;
+    data = {
+        "data": {
+            "customerID": "1",
+        },
+        "control": {
+            "exitApp": {
+                "appId": "moblan",
+                "div": "landin__Landing__launcher",
+                "callBack": apz.landin.Landing.fnHome
+            }
+        },
+        from: "dashboard"
+    }
+    switch (selectedAcc) {
+        case "Savings":
+            data["type"] = "Savings";
+            //apz.moblan.home.fnOrbitLaunch("Account Summary",data)
+            apz.launchApp({
+                appId: "accsum",
+                scr: "AccountDetails",
+                div: "landin__Landing__launcher",
+                userObj: data
+            })
+            break;
+        case "Current":
+            data["type"] = "Current";
+            apz.launchApp({
+                appId: "accsum",
+                scr: "AccountDetails",
+                div: "landin__Landing__launcher",
+                userObj: data
+            })
+            break;
+        case "KidAccount":
+            data["type"] = "KidAccount";
+            apz.kidAccountFlag = "true";
+            apz.launchApp({
+                appId: "accsum",
+                scr: "AccountDetails",
+                div: "landin__Landing__launcher",
+                userObj: data
+            })
+            break;
+        case "Loans":
+            apz.landin.Landing.fnMenuClickInside("Summary", data);
+            break;
+        case "Deposits":
+            apz.landin.Landing.fnMenuClickInside("Fixed Deposit Summary", data);
+            break;
+        case "Cards":
+            apz.launchApp({
+                appId: "cdtcrd",
+                scr: "CreditCardDetails",
+                div: "landin__Landing__launcher",
+            })
+            break;
+    }
+    // apz.landin.Landing.toggleQuicklinkStrip();
+}
+apz.moblan.home.fnEnableSearchButton = function() {
+    debugger;
+    $("#moblan__Home__searchrow").removeClass("sno");
+    $("#moblan__Home__microw").addClass("sno");
+}
+apz.moblan.home.onclickspend = function() {
+    $("#moblan__LandingPage__TitleRow").removeClass("sno");
+    $("body").removeClass("dashbody");
+    $("body").removeClass("dashbody");
+    $("body").removeClass("landingby");
+    $("body").removeClass("landingtheme2");
+    $("body").removeClass("loginby");
+    $(".srbtn1").addClass("sno")
+    $(".srbtn").addClass("sno")
+    //apz.setElmValue("moblan__LandingPage__ScreenNmeLandingTxt", "SPEND ANALYSIS")
+    var lparams = {
+        "scr": "AccountFAT",
+        "appId": "finant",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "fromList": "Account"
+        }
+    };
+    apz.launchApp(lparams);
+};
+apz.moblan.home.launchNotification = function() {
+    debugger;
+    apz.toggleModal({
+        targetId: "moblan__Home__notification"
+    })
+}
+apz.moblan.home.CloseSideBar = function() {
+    debugger;
+    $("#moblan__Home__gr_row_1").addClass("expandmenu");
+    $("#landin__Landing__launcher").addClass("expandmenu")
+    $("#header").addClass("expandnav");
+    $("#landin__Landing__sidebar").removeClass("sno");
+}
+apz.moblan.home.OpenSideBar = function() {
+    debugger;
+    $("#moblan__Home__gr_row_1").removeClass("expandmenu");
+    $("#header").removeClass("expandnav");
+    $("#landin__Landing__launcher").removeClass("expandmenu")
+    $("#landin__Landing__sidebar").addClass("sno");
+}
+apz.moblan.home.launchfavfn = function() {
+    debugger;
+    var lparams = {
+        "scr": "favorites",
+        "div": "moblan__Home__upcomingpayments",
+        "appId": "favour",
+        "userObj": {
+            "userId": LandingCommon.getLoggedInUser()
+        }
+    };
+    apz.launchApp(lparams);
+}
+apz.moblan.home.launchTransferfn = function() {
+    debugger;
+    var lparams = {
+        "scr": "transferDashboard",
+        "div": "moblan__Home__transfers",
+        "appId": "favour"
+    };
+    apz.launchApp(lparams);
+}
+apz.moblan.home.launchCreditCardfn = function() {
+    debugger;
+    var lparams = {
+        "scr": "CreditCardMobile",
+        "div": "moblan__Home__creditcardpay",
+        "appId": "cdtcrd"
+    };
+    apz.launchApp(lparams);
+}
+apz.moblan.home.fnlaunchMicroAppTransfer = function(ths) {
+    debugger;
+    $("#landin__Landing__gr_row_16").removeClass("expandmenu");
+    $("#landin__Landing__gr_row_17").addClass("xband");
+    //$("#moblan__Home__gr_row_1").toggleClass("expandmenu")
+    $("#landin__Landing__gr_row_16").addClass("sno");
+    $("#landin__Landing__launcher").addClass("expandmenu")
+    $("#landin__Landing__sidebar").removeClass("sno");
+    $("body").removeClass("dashbody");
+    $("body").removeClass("dashbody");
+    $("body").removeClass("landingby");
+    $("body").removeClass("landingtheme2");
+    $("body").removeClass("loginby");
+    $(".srbtn1").addClass("sno")
+    $(".srbtn").addClass("sno")
+    $("#landin__Landing__TitleRow").removeClass("sno");
+    //var rowno = $(ths).attr("rowno");
+    // let selectedAcc = apz.data.scrdata.moblan__HomePageAccounts_Res[rowno];
+    let selectedAcc = ths;
+    switch (selectedAcc) {
+        case "Savings":
+            //apz.moblan.home.fnOrbitLaunch("Account Summary",data)
+            apz.launchApp({
+                appId: "fndftr",
+                scr: "FundsTransfer",
+                div: "landin__Landing__launcher",
+                userObj: {
+                    from: "DashboardSavings",
+                    data: {
+                        userId: apz.moblan.home.sCache.data.userId
+                    }
+                }
+            })
+            break;
+        case "Current":
+            apz.launchApp({
+                appId: "fndftr",
+                scr: "FundsTransfer",
+                div: "landin__Landing__launcher",
+                userObj: {
+                    from: "DashboardCurrent",
+                    data: {
+                        userId: apz.moblan.home.sCache.data.userId
+                    }
+                }
+            })
+            break;
+        case "Loans":
+            var accounts = [];
+            accounts[0] = {
+                accountNo: "100009312263",
+                accountType: "Savings",
+                accountBalance: "65000"
+            }
+            accounts[1] = {
+                accountNo: "100009312401",
+                accountType: "Savings",
+                accountBalance: "60000"
+            }
+            accounts[2] = {
+                accountNo: "100009312274",
+                accountType: "Current",
+                accountBalance: "50000"
+            }
+            apz.launchApp({
+                appId: "lnpymt",
+                scr: "LoanPayment",
+                div: "landin__Landing__launcher",
+                userObj: {
+                    from: "DashboardLoans",
+                    data: {
+                        customerID: "001",
+                        accounts: accounts
+                    }
+                }
+            })
+            break;
+        case "Deposits":
+            apz.landin.Landing.fnMenuClickInside("Book Fixed Deposit");
+            break;
+        case "Cards":
+            apz.launchApp({
+                appId: "cdtcrd",
+                scr: "CreditCardDetails",
+                div: "landin__Landing__launcher",
+                userObj: {
+                    from: "DashboardCreditCard"
+                }
+            })
+            break;
+    }
+}
+apz.moblan.home.fnlaunchChart = function(product) {
+    debugger;
+    $("#moblan__Home__" + product + "Chart").removeClass("sno");
+    $("#moblan__Home__" + product + "List").addClass("sno");
+    lparams = {
+        appId: "balmvt",
+        scr: "BalanceMovement",
+        div: "moblan__Home__" + product + "Launch",
+        userObj: {
+            from: "DashboardCreditCard"
+        }
+    }
+    if (product == "current") {
+        lparams.scr = "BalanceMovementCurrent"
+    }
+    apz.launchApp(lparams)
+}
+apz.moblan.home.fnCloseChart = function(product) {
+    debugger;
+    $("#moblan__Home__" + product + "Chart").addClass("sno");
+    $("#moblan__Home__" + product + "List").removeClass("sno");
+}
+apz.moblan.home.fnLaunchPeer = function() {
+    debugger;
+    $("#header").addClass("expandnav");
+    $("#landin__Landing__gr_row_16").addClass("sno");
+    $("#landin__Landing__sidebar").removeClass("sno");
+    lParams = {};
+    lParams.textContent = "Request for Money";
+    apz.landin.Landing.fnMenuClickInside("Request for Money");
+}
+apz.moblan.home.fnLaunchApps = function(ths) {
+    debugger;
+    lParams = {};
+    lParams.textContent = ths;
+    apz.landin.Landing.fnMenuClickInside(ths);
+}
+apz.moblan.home.fnFundTransfer = function() {
+    debugger
+    paymentObj = {
+        "amount": "20",
+        "moduleCode": "24356",
+        "toBenefNo": "acc No-21239383324",
+        "customerId": "000004712",
+        "nickname": "Armaan",
+        "id": 1,
+        "fromAccountNo": "100009312263",
+        "beneficiaryId": "1232",
+        "creationTs": "2018-03-10",
+        "toAccountNo": "129562399110",
+        "beneficiaryImage": "a.png",
+        "ifsc": "679475",
+        "bankName": "National Bank of Kuwait"
+    }
+    apz.launchApp({
+        appId: "fndftr",
+        div: "landin__Landing__launcher",
+        scr: "FundsTransfer",
+        userObj: {
+            fromAccontCurrency: "MUR",
+            transfer: paymentObj,
+            from: "favourites",
+            data: {
+                userId: LandingCommon.getLoggedInUser()
+            },
+            control: {
+                exitApp: {
+                    "div": "landin__Landing__launcher"
+                }
+            }
+        }
+    })
+}
+// apz.moblan.home.fnSwipe = function()
+// {
+//     debugger;
+// //  var swiper = new Swiper('.swiper-container', {
+// //       slidesPerView: 1.2,
+// //       spaceBetween:20,
+// //       centeredSlides: true,
+// //     });
+// var swiper = new Swiper('.swiper-container', {
+//       slidesPerView: 1.25,
+//       spaceBetween: 20,
+//       centeredSlides: true,
+//       pagination: {
+//         el: '.swiper-pagination',
+//         clickable: true,
+//       },
+//     });
+// }
+apz.moblan.home.fnHideShowLists = function(element) {
+    debugger;
+    $("#moblan__Home__carouselRow").removeClass("sno");
+    $("#moblan__Home__expandLaunch").addClass("sno");
+      $("#moblan__Home__payments").removeClass("sno");
+    $("#moblan__Home__offersSlider").removeClass("sno");
+
+
+    if (element == "accountsList") {
+                            $("#moblan__Home__sc_col_1>button").removeClass("active");
+apz.setElmValue("moblan__Home__el_tgl_1_0", "off");
+apz.setElmValue("moblan__Home__el_tgl_1_1", "off");
+apz.setElmValue("moblan__Home__el_tgl_1_2", "off");
+
+
+
+        $("#moblan__Home__el_btn_1").addClass("active");
+        $("#moblan__Home__accountsListRow").removeClass("sno");
+        $("#moblan__Home__depositLaunch").addClass("sno");
+                $("#moblan__Home__loansLaunch").addClass("sno");
+                        $("#moblan__Home__cardsLaunch").addClass("sno");
+
+
+      
+    } else if (element == "depositsList") {
+                            $("#moblan__Home__sc_col_1>button").removeClass("active");
+
+                $("#moblan__Home__el_btn_2").addClass("active");
+
+        $("#moblan__Home__accountsListRow").addClass("sno");
+        $("#moblan__Home__depositLaunch").removeClass("sno");
+             $("#moblan__Home__loansLaunch").addClass("sno");
+                        $("#moblan__Home__cardsLaunch").addClass("sno");
+
+         apz.launchApp({
+        appId: "fdsumm",
+        scr: "FDDashboard",
+        div: "moblan__Home__depositLaunch"
+    });
+     
+     
+    } else if (element == "loansList") {
+                            $("#moblan__Home__sc_col_1>button").removeClass("active");
+
+                $("#moblan__Home__el_btn_3").addClass("active");
+
+        $("#moblan__Home__accountsListRow").addClass("sno");
+        $("#moblan__Home__depositLaunch").addClass("sno");
+             $("#moblan__Home__loansLaunch").removeClass("sno");
+                        $("#moblan__Home__cardsLaunch").addClass("sno");
+                          apz.launchApp({
+        appId: "loansm",
+        scr: "LoanDashboard",
+        div: "moblan__Home__loansLaunch"
+    });
+     
+
+
+      
+    } else if (element == "cardsList") {
+                            $("#moblan__Home__sc_col_1>button").removeClass("active");
+
+                $("#moblan__Home__el_btn_4").addClass("active");
+
+        $("#moblan__Home__accountsListRow").addClass("sno");
+        $("#moblan__Home__depositLaunch").addClass("sno");
+             $("#moblan__Home__loansLaunch").addClass("sno");
+                        $("#moblan__Home__cardsLaunch").removeClass("sno");
+                         apz.launchApp({
+        appId: "cdtcrd",
+        scr: "CreditCardNewDash",
+        div: "moblan__Home__cardsLaunch"
+    });
+   
+      
+    }
+}
+apz.moblan.home.fnExpandAccounts = function(ths, element, row) {
+    debugger;
+    var rowno = $(ths).attr("rowno");
+    $("#moblan__Home__carouselRow").addClass("sno");
+    $("#moblan__Home__expandLaunch").removeClass("sno");
+    $("#moblan__Home__payments").addClass("sno");
+    $("#moblan__Home__offersSlider").addClass("sno");
+            var data = apz.data.scrdata.moblan__AccountsInterface_Res.AccountDetails[rowno];
+        apz.launchApp({
+            "appId": "accstm",
+            "scr": "AccountsExpand",
+            "div": "moblan__Home__expandRow",
+            "userObj": {
+                "data": data,
+                "callback": apz.moblan.home.fnCloseExpandRow
+            }
+        });
+  
+    }
+apz.moblan.home.fnCloseExpandRow = function() {
+    debugger;
+    $("#moblan__Home__carouselRow").removeClass("sno");
+    $("#moblan__Home__expandLaunch").addClass("sno");
+     $("#moblan__Home__payments").removeClass("sno");
+    $("#moblan__Home__offersSlider").removeClass("sno");
+}
+
+apz.moblan.home.fnLaunchFooterMicroApps = function(text)
+{
+    debugger;
+    if(text == "Stop Cheque")
+    {
+                    apz.landin.Landing.fnMenuClickInside("Service Requests", "dashboardStopCheque");
+
+    }
+    else if(text == "Cheque Book Request")
+    {
+                            apz.landin.Landing.fnMenuClickInside("Service Requests", "dashboardChqueBook");
+
+    }
+    else
+    {
+            apz.landin.Landing.fnMenuClickInside(text);
+
+    }
+    }
+
+
+apz.moblan.home.fnBlockCard = function()
+{
+    apz.dispMsg({"message" : "Block card request recieved succesfully ", "type" : "S", "callback" : apz.landin.Landing.fnHome});
+}
+
+apz.moblan.home.fnScan = function() {
+    debugger;
+    var lLaunchParams = {
+        "appId": "qrscan",
+        "scr": "Launcher",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "fromAccount": "100009312263",
+            "data": {
+                "customerID": "000004712"
+            },
+            "control": {
+                "exitApp": {
+                    "appId": "landin",
+                    "div": "landin__Landing__Launcher",
+                    "callBack": apz.landin.Landing.fnHome
+                }
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+  
+};
+
+

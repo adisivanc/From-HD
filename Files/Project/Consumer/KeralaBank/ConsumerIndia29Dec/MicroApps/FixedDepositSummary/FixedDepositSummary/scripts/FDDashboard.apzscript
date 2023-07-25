@@ -1,0 +1,81 @@
+apz.fdsumm.FDDashboard = {};
+apz.app.onLoad_FDDashboard = function()
+{
+    debugger;
+    apz.data.loadJsonData("FixedDepositDash", "fdsumm");
+}
+apz.app.onShown_FDDashboard = function()
+{
+    debugger;
+     $("#fdsumm__FDDashboard__depositLists").addClass("swiper-container");
+    $("#fdsumm__FDDashboard__depositLists > ul").addClass("swiper-wrapper");
+   
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1.25,
+        spaceBetween: 20,
+        centeredSlides: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+       apz.launchApp({
+        appId: "accstm",
+        scr: "OffersSlider",
+        div: "moblan__Home__offersSlider"
+    })
+   
+}
+apz.fdsumm.FDDashboard.fnExpandDeposits = function(ths)
+{
+debugger;
+    var rowno = $(ths).attr("rowno");
+
+// $("#fdsumm__FDDashboard__gr_row_3").addClass("sno");
+//         $("#fdsumm__FDDashboard__gr_row_6").removeClass("sno");
+
+//         var data = apz.data.scrdata.fdsumm__FDDashboard_Res;
+//         apz.launchSubScreen({
+//             "appId": "fdsumm",
+//             "scr": "FDExpand",
+//             "div": "fdsumm__FDDashboard__expandRow",
+//             "userObj": {
+//                 "data": data,
+//                 "rowno": rowno,
+//                 "callback": apz.fdsumm.FDDashboard.fnClose
+//             }
+//         });
+if(rowno == "0")
+{
+   apz.landin.Landing.fnMenuClickInside("Fixed Deposit Summary"); 
+}
+else
+{
+     apz.landin.Landing.fnMenuClickInside("Recurring Deposit Summary"); 
+}
+}
+
+apz.fdsumm.FDDashboard.fnClose = function()
+{
+    debugger;
+    $("#fdsumm__FDDashboard__gr_row_3").removeClass("sno");
+        $("#fdsumm__FDDashboard__gr_row_6").addClass("sno");
+
+    
+}
+
+apz.fdsumm.FDDashboard.fnLaunchBookDeposit = function(ths)
+{
+    debugger;
+    $("body").removeClass("loginby");
+    var rowNo = $(ths).attr("rowno");
+    if(rowNo == "0")
+    {
+        apz.landin.Landing.fnMenuClickInside("Book Fixed Deposit");
+    }
+    else if(rowNo == "1")
+    {
+                apz.landin.Landing.fnMenuClickInside("Book Recurring Deposit");
+
+    }
+}

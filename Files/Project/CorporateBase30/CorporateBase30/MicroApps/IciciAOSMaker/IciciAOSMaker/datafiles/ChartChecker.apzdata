@@ -1,0 +1,18 @@
+{
+    "icaosm__ChartChecker_Res": {
+        "chart":[
+            {
+                "label": "Submitted",
+                "value": "18"
+            },
+            {
+                "label": "Rejected",
+                "value": "7"
+            },
+            {
+                "label": "Approved",
+                "value": "23"
+            }
+    ]
+    }
+}

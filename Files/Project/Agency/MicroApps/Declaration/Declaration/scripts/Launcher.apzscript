@@ -1,0 +1,30 @@
+apz.declar.Launcher = {};
+apz.declar.Launcher.sCache = {}
+apz.app.onShown_Launcher = function(params) {
+    debugger;
+    apz.declar.Launcher.sCache = params;
+    apz.toggleModal({
+        targetId: "declar__Launcher__launcherModel"
+    })
+    apz.declar.Launcher.fnInitialize();
+}
+apz.declar.Launcher.fnInitialize = function() {
+    debugger;
+    var params = {};
+    params.appId = "declar";
+    params.scr = "Ekyc";
+    params.div = "declar__Launcher__modelLauncher";
+    params.userObj=apz.declar.Launcher.sCache;
+    apz.launchSubScreen(params);
+}
+apz.declar.Launcher.fnAgree = function() {
+    debugger;
+    var params = {};
+    params.appId = "declar";
+    params.scr = "Terms";
+    params.div = "declar__Launcher__modelLauncher";
+    apz.launchSubScreen(params);
+}
+$("#declar__Launcher__launcherModel_close").click(function(){
+    $("#appdtl__PersonalDetails__declarationCol").addClass("sno");
+})

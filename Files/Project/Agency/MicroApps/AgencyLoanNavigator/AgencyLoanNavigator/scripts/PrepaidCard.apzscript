@@ -1,0 +1,267 @@
+apz.agloan.PrepaidCard = {};
+apz.agloan.PrepaidCard.sparams = {};
+apz.agloan.PrepaidCard.saveIt = false;
+apz.agloan.PrepaidCard.navAction = "";
+apz.app.onLoad_PrepaidCard = function(params) {
+    debugger;
+    apz.agloan.PrepaidCard.sparams = params;
+    apz.agloan.PrepaidCard.manageHeaders();
+    apz.agloan.PrepaidCard.fetchApplicationDetails();
+}
+apz.app.onShown_PrepaidCard = function() {
+    debugger;
+    apz.agloan.PrepaidCard.saveIt = true;
+    apz.appdtl.currenctScreen = "prepaid_details";
+    $("#agloan__PrepaidCardDetails__i__tbDbmiPrepaidcardDetails__amount").attr("type", "tel");
+    $("#agloan__PrepaidCardDetails__i__tbDbmiPrepaidcardDetails__mobilenumber").attr("type", "tel");
+}
+apz.agloan.PrepaidCard.manageHeaders = function() {
+    $("#appdtl__AppLauncher__document_div").removeClass('active');
+    $("#appdtl__AppLauncher__product_div").addClass('active');
+    $("#appdtl__AppLauncher__employment_div").removeClass('active');
+}
+apz.agloan.PrepaidCard.fngetPurpose = function(element) {
+    debugger;
+    var purpose = element;
+    $("#agloan__PrepaidCard__purpose_col>ul").removeClass("selected");
+    $("#agloan__PrepaidCard__" + purpose + "btn_ul").addClass("selected");
+    apz.setElmValue("agloan__PrepaidCardDetails__i__tbDbmiPrepaidcardDetails__purpose", purpose);
+}
+apz.agloan.PrepaidCard.fngetRelationship = function(element) {
+    debugger;
+    var relationship = element;
+    $("#agloan__PrepaidCard__purchaser_col>ul").removeClass("selected");
+    $("#agloan__PrepaidCard__" + relationship + "btn_ul").addClass("selected");
+    apz.setElmValue("agloan__PrepaidCardDetails__i__tbDbmiPrepaidcardDetails__relationshipwithpurchaser", relationship);
+}
+apz.agloan.PrepaidCard.fnShowBeneficiaryDetails = function(element) {
+    debugger;
+    var recipient = element;
+    apz.setElmValue("agloan__PrepaidCardDetails__i__tbDbmiPrepaidcardDetails__recipientofcard", recipient);
+    $("#agloan__PrepaidCard__recipient_col>ul").removeClass("selected");
+    if (element == "Others") {
+        $("#agloan__PrepaidCard__othersRecipientbtn_ul").addClass("selected");
+        $("#agloan__PrepaidCard__beneficiary_details").removeClass("sno");
+    } else if (element == "Self") {
+        $("#agloan__PrepaidCard__selfbtn_ul").addClass("selected");
+        $("#agloan__PrepaidCard__beneficiary_details").addClass("sno");
+    }
+}
+apz.agloan.PrepaidCard.fngetTypeofCard = function(pthis, element) {
+    debugger;
+    var typeOfCard = element;
+    $("#agloan__PrepaidCard__visa_col>ul").removeClass("selected");
+    $("#agloan__PrepaidCard__master_col>ul").removeClass("selected");
+    $("#agloan__PrepaidCard__platinum_col>ul").removeClass("selected");
+    $("#" + pthis.id + "_ul").addClass("selected");
+    apz.setElmValue("agloan__PrepaidCardDetails__i__tbDbmiPrepaidcardDetails__styleofcard", typeOfCard);
+}
+apz.agloan.PrepaidCard.fnFloatMobileNo = function(el) {
+    debugger;
+    var digits = el.value.match(/\d{1,10}/) || [""];
+    el.value = digits[0];
+}
+apz.agloan.PrepaidCard.fnformatAmount = function() {
+    debugger;
+    var param = {
+        "decimalSep": ".",
+        "value": apz.getElmValue("agloan__PrepaidCardDetails__i__tbDbmiPrepaidcardDetails__amount"),
+        "mask": "MILLION",
+        "decimalPoints": "2",
+        "displayAsLiteral": "N"
+    };
+    apz.setElmValue("agloan__PrepaidCardDetails__i__tbDbmiPrepaidcardDetails__amount", apz.formatNumber(param));
+}
+apz.agloan.PrepaidCard.fetchApplicationDetails = function() {
+    debugger;
+    apz.startLoader();
+    var lParams = {
+        "ifaceName": "PrepaidCardDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiPrepaidcardDetails": {
+                "refno": apz.agloan.PrepaidCard.sparams.refNo
+            }
+        },
+        "appId": "agloan",
+        "paintResp": "Y",
+        "callBack": apz.agloan.PrepaidCard.fnfetchApplicationCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.agloan.PrepaidCard.fnfetchApplicationCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    if (params.status && !params.errors) {
+        var recipientofCard = params.res.agloan__PrepaidCardDetails_Req.tbDbmiPrepaidcardDetails.recipientofcard;
+        if (recipientofCard == "Self") {
+            $("#agloan__PrepaidCard__beneficiary_details").addClass("sno");
+            $("#agloan__PrepaidCard__selfbtn_ul").addClass("selected");
+        } else {
+            $("#agloan__PrepaidCard__othersRecipientbtn_ul").addClass("selected");
+            $("#agloan__PrepaidCard__beneficiary_details").removeClass("sno");
+            var addr1 = params.res.agloan__PrepaidCardDetails_Req.tbDbmiPrepaidcardDetails.addressline1;
+            var addr2 = params.res.agloan__PrepaidCardDetails_Req.tbDbmiPrepaidcardDetails.addressline2;
+            var address = addr1 + ", " + addr2;
+            // apz.setElmValue("agloan__PrepaidCard__address", address);
+        }
+        var purpose = params.res.agloan__PrepaidCardDetails_Req.tbDbmiPrepaidcardDetails.purpose;
+        $("#agloan__PrepaidCard__" + purpose + "btn_ul").addClass("selected");
+        var relationship = params.res.agloan__PrepaidCardDetails_Req.tbDbmiPrepaidcardDetails.relationshipwithpurchaser;
+        $("#agloan__PrepaidCard__" + relationship + "btn_ul").addClass("selected");
+        var typeOfCard = params.res.agloan__PrepaidCardDetails_Req.tbDbmiPrepaidcardDetails.styleofcard;
+        $("#agloan__PrepaidCard__" + typeOfCard + "btn_ul").addClass("selected");
+    }
+    apz.agloan.PrepaidCard.fnformatAmount();
+}
+apz.agloan.PrepaidCard.fnShowDispatchedAddress = function() {
+    debugger;
+    apz.toggleModal({
+        targetId: "agloan__PrepaidCard__dispatchAddressModal"
+    })
+}
+apz.agloan.PrepaidCard.saveApplicationDetails = function() {
+    debugger;
+    apz.agloan.PrepaidCard.fnDeleteCardDetails();
+};
+apz.agloan.PrepaidCard.fnDeleteCardDetails = function() {
+    var lParams = {
+        "ifaceName": "PrepaidCardDetails_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiPrepaidcardDetails": {
+                "refno": apz.agloan.PrepaidCard.sparams.refNo
+            }
+        },
+        "appId": "agloan",
+        "paintResp": "N",
+        "callBack": apz.agloan.PrepaidCard.fnInsertCardDetails
+    }
+    apz.server.callServer(lParams);
+}
+apz.agloan.PrepaidCard.fnInsertCardDetails = function(pResp) {
+    debugger;
+    apz.setElmValue("agloan__PrepaidCardDetails__i__tbDbmiPrepaidcardDetails__refno", apz.agloan.PrepaidCard.sparams.refNo);
+    var d = new Date();
+    apz.setElmValue("agloan__PrepaidCardDetails__i__tbDbmiPrepaidcardDetails__appid", d.getTime());
+    var lParams = {
+        "ifaceName": "PrepaidCardDetails_New",
+        "buildReq": "Y",
+        "appId": "agloan",
+        "paintResp": "N",
+        "callBack": apz.agloan.PrepaidCard.fnInsertCardDetailsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.agloan.PrepaidCard.fnInsertCardDetailsCB = function(params) {
+    debugger;
+    var action = apz.agloan.PrepaidCard.navAction;
+    if (action && action != "") {
+        if (action == "next") {
+            apz.agloan.PrepaidCard.navAction = ""
+            apz.agloan.PrepaidCard.fnNext();
+        } else if (action == "back") {
+            apz.agloan.PrepaidCard.navAction = ""
+            apz.agloan.PrepaidCard.fnBack();
+        } else if (action == "cancel") {
+            apz.agloan.PrepaidCard.navAction = "";
+            apz.appdtl.AppLauncher.onCancel();
+        }
+    }
+}
+apz.agloan.PrepaidCard.fnSearchCountry = function(pthis) {
+    debugger;
+    $("#agloan__PrepaidCard__ct_lst_1 li").removeClass("current");
+    apz.searchRecords("agloan__PrepaidCard__ct_lst_1", pthis.value);
+    var searchrecords = apz.data.scrdata.agloan__CountryList_Res.ListItem;
+    var textrecord = apz.getElmValue("agloan__PrepaidCardDetails__i__tbDbmiPrepaidcardDetails__country");
+    for (var i = 0; i < searchrecords.length; i++) {
+        if (searchrecords[i].CountryName == textrecord) {
+            $("#agloan__PrepaidCard__ct_lst_1_row_" + i).addClass("current");
+            break;
+        }
+    }
+}
+apz.agloan.PrepaidCard.fnCheckDropdwonClass = function(element) {
+    debugger;
+    $("body").removeClass("hasb");
+}
+apz.agloan.PrepaidCard.fnOpenCountryModal = function(ptype) {
+    debugger;
+    if (ptype == "open") {
+        $("#agloan__PrepaidCard__countryModal").removeClass("sno");
+        var Country = JSON.parse(apz.getFile(apz.getDataFilesPath("agloan") + "/CountryList.json"));
+        apz.data.scrdata.agloan__CountryList_Res = {
+            ListItem: Country
+        }
+        apz.data.loadData("CountryList", "agloan");
+        $("#agloan__PrepaidCard__ct_lst_1 li").removeClass("current");
+        apz.setElmValue("agloan__PrepaidCard__inpSearch", "");
+        var inpCountry = apz.getElmValue("agloan__PrepaidCardDetails__i__tbDbmiPrepaidcardDetails__country");
+        //var occupationName = $("#agloan__ApplicationInfoDB__i__tbDbmiCustomerMaster__occupation").val();
+        var lLength = apz.data.scrdata.agloan__CountryList_Res.ListItem.length;
+        for (var i = 0; i < lLength; i++) {
+            var countryListName = apz.getElmValue("agloan__CountryList__o__ListItem__CountryName_" + i);
+            if (inpCountry == countryListName) {
+                $("#agloan__PrepaidCard__ct_lst_1_row_" + i).addClass("current");
+                break;
+            }
+        }
+    }
+    if (ptype == "close") {
+        $("#agloan__PrepaidCard__countryModal").addClass("sno");
+    }
+}
+apz.agloan.PrepaidCard.fnSelectCountry = function(pthis) {
+    debugger;
+    var lrowno = $(pthis).attr("rowno");
+    var countryname = apz.getElmValue("agloan__CountryList__o__ListItem__CountryName_" + lrowno);
+    apz.setElmValue("agloan__PrepaidCardDetails__i__tbDbmiPrepaidcardDetails__country", countryname);
+    // $("#agloan__AdditionalPersonalDetails__inpOccupation").val(occupation);
+    $("#agloan__PrepaidCard__countryModal").addClass("sno");
+}
+apz.agloan.PrepaidCard.gotoNext = function() {
+    debugger;
+    apz.agloan.PrepaidCard.saveIt = false;
+    apz.agloan.PrepaidCard.navAction = "next"
+    apz.agloan.PrepaidCard.saveApplicationDetails();
+}
+apz.agloan.PrepaidCard.gotoBack = function() {
+    debugger;
+    apz.agloan.PrepaidCard.saveIt = false;
+    apz.agloan.PrepaidCard.navAction = "back"
+    apz.agloan.PrepaidCard.saveApplicationDetails();
+}
+apz.agloan.PrepaidCard.fnCancel = function(params) {
+    debugger;
+    apz.agloan.PrepaidCard.navAction = "cancel";
+    apz.agloan.PrepaidCard.saveApplicationDetails();
+}
+apz.agloan.PrepaidCard.fnBack = function() {
+    debugger;
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "DocumentSelection",
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.agloan.PrepaidCard.sparams.refNo,
+            "product": apz.agloan.PrepaidCard.sparams.product,
+            "subproduct": apz.agloan.PrepaidCard.sparams.subproduct,
+            "appId": apz.agloan.PrepaidCard.sparams.appId
+        }
+    };
+    apz.launchApp(lParams);
+}
+apz.agloan.PrepaidCard.fnNext = function() {
+    debugger;
+    var params = {};
+    params.appId = "declar";
+    params.scr = "Dbt";
+    params.div = "appdtl__AppLauncher__screenLauncher";
+    params.userObj = {
+        "product": apz.agloan.PrepaidCard.sparams.product,
+        "subproduct": apz.agloan.PrepaidCard.sparams.subproduct,
+        "refNo": apz.agloan.PrepaidCard.sparams.refNo
+    }
+    apz.launchApp(params);
+}

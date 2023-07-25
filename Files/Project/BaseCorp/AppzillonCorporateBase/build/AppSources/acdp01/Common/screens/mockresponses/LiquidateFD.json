@@ -1,0 +1,39 @@
+{
+    "tbDbmiCorpDeposits": [
+        {
+            "corporateId": "000FTAC4321",
+            "refNum": "150100159221",
+            "depositCurrency": "USD",
+            "fromAccount": "1654765668",
+            "startDate": "01/12/2018",
+            "maturityInstructions": "2",
+            "interestPayableMode": "10",
+            "roi": "6",
+            "maturityDate": "06/10/2018",
+            "depositAmount": "1,300.00",
+            "interestPayable": "12",
+            "interestAmount": "10.00",
+            "finalAmount": "1,010.00",
+            "principalCreditAcno": "000288122232",
+            "status": "Active"
+            
+        },
+        {
+            "corporateId": "000FTAC4321",
+            "refNum": "150100159222",
+            "depositCurrency": "USD",
+            "fromAccount": "1654765668",
+            "startDate": "01/12/2018",
+            "maturityInstructions": "2",
+            "interestPayableMode": "10",
+            "roi": "6",
+            "maturityDate": "06/10/2018",
+            "depositAmount": "2,000.00",
+            "interestPayable": "12",
+            "interestAmount": "20.00",
+            "finalAmount": "2020.00",
+            "principalCreditAcno": "000288122232",
+            "status": "Active"
+        }
+    ]
+}

@@ -1,0 +1,113 @@
+apz.pmtapp.PromotionDashboard = {};
+apz.pmtapp.PromotionDashboard.sCache = {};
+
+apz.app.onLoad_PromotionDashboard = function(params) {
+     //  apz.mockServer = true;
+//apz.data.loadJsonData("PromotionList", "pmtapp");
+apz.pmtapp.PromotionDashboard.sCache = params;
+    cp = new CorouselD.initialise();
+      cp.init("pmtapp__PromotionDashboard__");
+
+       if(apz.baseap.promotions != undefined && apz.baseap.ptmuserId == apz.pmtapp.PromotionDashboard.sCache.userId){
+        apz.data.scrdata.pmtapp__PromotionList_Req = {};
+        apz.data.scrdata.pmtapp__PromotionList_Req =apz.baseap.promotions;
+          cp.setData(JSON.parse(JSON.stringify(apz.data.scrdata.pmtapp__PromotionList_Req.vwUserPromotion)));
+            apz.data.loadData("PromotionList","pmtapp");
+        }
+       else{
+         apz.pmtapp.PromotionDashboard.fnGetViewPromotion();
+       }
+      
+   $(".widgetArea").find(".annonceMent25").parents("li").addClass("annoM25");
+    setTimeout(function(){
+        $("#pmtapp__PromotionDashboard__ct_lst_1 > ul >li").addClass("sno");
+      $("#pmtapp__PromotionDashboard__ct_lst_1 > ul >li").eq(0).removeClass("sno");},100);
+
+}
+    
+
+
+apz.pmtapp.PromotionDashboard.fnForward = function(){
+    debugger;
+     index = cp.forward();
+     $("#pmtapp__PromotionDashboard__ct_lst_1 > ul >li").addClass("sno");
+    $("#pmtapp__PromotionDashboard__ct_lst_1 > ul >li").eq(index).removeClass("sno");
+};
+apz.pmtapp.PromotionDashboard.fnPrevious = function(){
+    debugger;
+     index = cp.previous();
+     $("#pmtapp__PromotionDashboard__ct_lst_1 > ul >li").addClass("sno");
+    $("#pmtapp__PromotionDashboard__ct_lst_1 > ul >li").eq(index).removeClass("sno");
+};
+
+
+apz.pmtapp.PromotionDashboard.fnGetViewPromotion=function(){
+    var lServerParams = {
+        "ifaceName": "PromotionList_Query",
+        "buildReq": "N",
+        "paintResp": "Y",
+        "appId":"pmtapp",
+        "req":{
+            vwUserPromotion:{
+                appId:"baseap",
+                userId:apz.pmtapp.PromotionDashboard.sCache.userId
+            }
+        },
+        "callBack": apz.pmtapp.PromotionDashboard.fnGetViewPromotionCB
+    };
+    apz.server.callServer(lServerParams);
+    apz.startLoader();
+}
+//callback function for get view details
+apz.pmtapp.PromotionDashboard.fnGetViewPromotionCB=function(params){
+    debugger;
+   
+    if(apz.data.scrdata.pmtapp__PromotionList_Req == undefined){
+        apz.data.scrdata.pmtapp__PromotionList_Req = apz.data.scrdata.pmtapp__PromotionList_Res
+    }
+     cp.setData(JSON.parse(JSON.stringify(apz.data.scrdata.pmtapp__PromotionList_Req.vwUserPromotion)));
+   //  apz.data.scrdata.pmtapp__PromotionList_Req = apz.data.scrdata.pmtapp__PromotionList_Res;
+       apz.baseap.promotions = apz.data.scrdata.pmtapp__PromotionList_Req;
+       apz.baseap.ptmuserId   = apz.pmtapp.PromotionDashboard.sCache.userId
+     apz.data.loadData("PromotionList","pmtapp");
+      apz.stopLoader();
+    if(!params.errors && params.res){
+        // params.res.pmtapp__PromotionList_Req.vwUserPromotion.forEach(function(obj,index){
+        //     $("#pmtapp__PromotionList__i__vwUserPromotion__msg_"+index+"_txtcnt").html(obj.msg.replace(/-/g,"</br>$&"))
+        // })
+    //   var result =  params.res.pmtapp__PromotionList_Req.vwUserPromotion.filter(function(item){
+    //         if(item.name == apz.pmtapp.ViewPromotion.sCache.userId){
+    //             return item
+    //         }
+    //     });
+        // params.res.pmtapp__PromotionList_Req.vwUserPromotion =  params.res.pmtapp__PromotionList_Req.vwUserPromotion;
+        // apz.data.loadData("PromotionList", "pmtapp")
+        $("#pmtapp__PromotionDashboard__gr_row_3").show();
+    }else{
+        $("#pmtapp__PromotionDashboard__gr_row_3").hide();
+        apz.dispMsg({
+            message:"No promotions found"
+        });
+    }
+}
+
+apz.pmtapp.PromotionDashboard.fnApply = function(){
+    debugger;
+  //apz.dispMsg({"message":"Your request has been submitted","type":"S","callBack":    apz.landin.Landing.fnHome});
+      apz.landin.Landing.fnMenuClickInside("Promotions");
+
+    
+}
+
+
+apz.pmtapp.PromotionDashboard.fnOnPromoClick = function(ths){
+    debugger;
+    
+  $(ths).parent("ul").find("li").removeClass("promoteanimate");
+    $(ths).toggleClass("promoteanimate");
+  //  $(ths).children().children().eq(0).addClass("sno")
+ 
+
+}
+
+

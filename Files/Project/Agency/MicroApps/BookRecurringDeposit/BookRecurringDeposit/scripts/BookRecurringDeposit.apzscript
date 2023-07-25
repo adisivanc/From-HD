@@ -1,0 +1,313 @@
+apz.bookrd.bookrecurringdeposit = {};
+apz.bookrd.bookrecurringdeposit.sParams = {};
+apz.bookrd.bookrecurringdeposit.sAction = {};
+apz.app.onLoad_BookRecurringDeposit = function(params) {
+    debugger;
+    if (params.Navigation) {
+        apz.bookrd.bookrecurringdeposit.fnSetNavigation(params);
+    }
+    apz.bookrd.bookrecurringdeposit.fnInitialise(params);
+    if (params.data.type == "transaction") {
+        // apz.setElmValue("bookfd__BookFixedDeposit__i__depositDtls__debitAccountNo",params.data.toAcc);
+        apz.setElmValue("bookrd__BookRecurringDeposit__i__depositDtls__installmentAmount", params.data.amount);
+    }
+};
+apz.app.onShown_BookRecurringDeposit = function() {
+    debugger;
+    $(".crt-form.ver .ecn > .syl > span").text("");
+};
+apz.bookrd.bookrecurringdeposit.fnInitialise = function(params) {
+    debugger;
+    apz.bookrd.bookrecurringdeposit.sParams = params;
+    apz.data.loadJsonData("AccountDetails", "bookrd");
+    apz.bookrd.bookrecurringdeposit.sParams.data.accounts = apz.data.scrdata.bookrd__AccountDetails_Res.accounts;
+    apz.bookrd.bookrecurringdeposit.fnGoToStage1();
+};
+apz.bookrd.bookrecurringdeposit.fnSetNavigation = function(params) {
+    debugger;
+    apz.bookrd.bookrecurringdeposit.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.headerText = "BOOK RD";
+    apz.bookrd.bookrecurringdeposit.Navigation(lParams);
+};
+apz.bookrd.bookrecurringdeposit.fnGoToStage1 = function() {
+    debugger;
+    apz.bookrd.bookrecurringdeposit.fnPopulateAccNo();
+    apz.bookrd.bookrecurringdeposit.fnRenderStage1();
+};
+apz.bookrd.bookrecurringdeposit.fnPopulateAccNo = function() {
+    debugger;
+    var lAccounts = apz.bookrd.bookrecurringdeposit.sParams.data.accounts;
+    var lDropObj = [{
+        "val": "",
+        "desc": "Select Account"
+    }];
+    for (var i = 0; i < lAccounts.length; i++) {
+        var lObj = {
+            "val": lAccounts[i].accountNo,
+            "desc": lAccounts[i].accountType + " - " + lAccounts[i].accountNo
+        };
+        lDropObj.push(lObj);
+    }
+    apz.populateDropdown(document.getElementById('bookrd__BookRecurringDeposit__i__depositDtls__debitAccountNo'), lDropObj);
+    if (apz.bookrd.bookrecurringdeposit.sParams.data.type == "transaction") {
+        apz.setElmValue("bookrd__BookRecurringDeposit__i__depositDtls__debitAccountNo", apz.bookrd.bookrecurringdeposit.sParams.data.toAcc);
+    }
+    apz.populateDropdown(document.getElementById('bookrd__BookRecurringDeposit__i__depositDtls__creditAccountNo'), lDropObj);
+    lDropObj = [{
+        "val": "",
+        "desc": "Years"
+    }];
+    for (var i = 1; i <= 10; i++) {
+        var lObj = {
+            "val": i,
+            "desc": i
+        };
+        lDropObj.push(lObj);
+    }
+    apz.populateDropdown(document.getElementById("bookrd__BookRecurringDeposit__i__depositDtls__numOfYears"), lDropObj);
+    lDropObj = [{
+        "val": "",
+        "desc": "Months"
+    }];
+    for (var i = 1; i <= 12; i++) {
+        var lObj = {
+            "val": i,
+            "desc": i
+        };
+        lDropObj.push(lObj);
+    }
+    apz.populateDropdown(document.getElementById("bookrd__BookRecurringDeposit__i__depositDtls__numOfMonths"), lDropObj);
+    lDropObj = [{
+        "val": "",
+        "desc": "Days"
+    }];
+    for (var i = 1; i < 31; i++) {
+        var lObj = {
+            "val": i,
+            "desc": i
+        };
+        lDropObj.push(lObj);
+    }
+    apz.populateDropdown(document.getElementById("bookrd__BookRecurringDeposit__i__depositDtls__dueDay"), lDropObj);
+};
+apz.bookrd.bookrecurringdeposit.fnCalculate = function() {}
+apz.bookrd.bookrecurringdeposit.fnRenderStage1 = function() {
+    debugger;
+    apz.show("bookrd__BookRecurringDeposit__Stage1");
+    apz.hide("bookrd__BookRecurringDeposit__Stage2");
+    apz.hide("bookrd__BookRecurringDeposit__Stage3");
+};
+apz.bookrd.bookrecurringdeposit.fnCancelStage1 = function() {
+    $("input[type=text]").val("");
+    apz.bookrd.bookrecurringdeposit.fnGoToStage1();
+};
+apz.bookrd.bookrecurringdeposit.fnChangeMaturityType = function() {
+    debugger;
+    var lType = apz.getElmValue("bookrd__BookRecurringDeposit__i__depositDtls__maturityType");
+    if (lType == "Maturity Proceeds to FD (Principle + Interest)" || lType == "Maturity Proceeds to FD (Principle Only)") {
+        $(".maturityToAcc").removeClass("sno");
+    } else {
+        $(".maturityToAcc").addClass("sno");
+    }
+};
+apz.bookrd.bookrecurringdeposit.fnContinueStage1 = function() {
+    debugger;
+    apz.data.buildData("BookRecurringDeposit", "bookrd")
+   // var lValid = apz.bookrd.bookrecurringdeposit.fnValidateStage1();
+  
+        var lRec = apz.data.scrdata.bookrd__BookRecurringDeposit_Req.depositDtls;
+        if (apz.isNull(lRec.dueDay)) {
+            lRec.dueDay = "0";
+        }
+        if (apz.isNull(lRec.numOfMonths)) {
+            lRec.numOfMonths = "0";
+        }
+        if (apz.isNull(lRec.numOfYears)) {
+            lRec.numOfYears = "0";
+        }
+        apz.data.scrdata.bookrd__BookRecurringDeposit_Req.depositDtls = lRec;
+        apz.bookrd.bookrecurringdeposit.fnGoToStage2();
+    
+};
+apz.bookrd.bookrecurringdeposit.fnGoToStage2 = function() {
+    debugger;
+    apz.bookrd.bookrecurringdeposit.fnSetDataToStage2();
+    apz.bookrd.bookrecurringdeposit.fnRenderStage2();
+};
+apz.bookrd.bookrecurringdeposit.fnSetDataToStage2 = function() {
+    debugger;
+    var lDepositDtls = apz.data.scrdata.bookrd__BookRecurringDeposit_Req.depositDtls;
+    apz.setElmValue("bookrd__BookRecurringDeposit__Stage2InstallmentFreq", apz.getElmValue(
+        "bookrd__BookRecurringDeposit__i__depositDtls__instalmentFrequency"));
+    apz.setElmValue("bookrd__BookRecurringDeposit__Stage2DebitAccNo", apz.getElmValue("bookrd__BookRecurringDeposit__i__depositDtls__debitAccountNo"));
+    apz.setElmValue("bookrd__BookRecurringDeposit__Stage2Amount", apz.getElmValue("bookrd__BookRecurringDeposit__i__depositDtls__installmentAmount"));
+    apz.setElmValue("bookrd__BookRecurringDeposit__Stage2MaturityInst", apz.getElmValue("bookrd__BookRecurringDeposit__i__depositDtls__maturityType"));
+    apz.setElmValue("bookrd__BookRecurringDeposit__Stage2InterestRate", apz.getElmValue("bookrd__BookRecurringDeposit__i__depositDtls__interestRate"));
+    apz.setElmValue("bookrd__BookRecurringDeposit__Stage2CreditAcc", apz.getElmValue("bookrd__BookRecurringDeposit__i__depositDtls__creditAccountNo"));
+    apz.setElmValue("bookrd__BookRecurringDeposit__Stage2InstallmentNo", apz.getElmValue(
+        "bookrd__BookRecurringDeposit__i__depositDtls__noOfInstallment"));
+    apz.setElmValue("bookrd__BookRecurringDeposit__Stage2MaturityAmt", apz.getElmValue("bookrd__BookRecurringDeposit__i__depositDtls__maturityAmount"));
+    apz.setElmValue('bookrd__BookRecurringDeposit__Stage2CreditAcc', lDepositDtls.creditAccountNo);
+    var lToday = apz.bookrd.bookrecurringdeposit.fnCurrentDate();
+    var lTenorVal = "";
+    if (!apz.isNull(lDepositDtls.numOfYears) && lDepositDtls.numOfYears > 0) {
+        lTenorVal = lTenorVal + lDepositDtls.numOfYears + " Years ";
+    }
+    if (!apz.isNull(lDepositDtls.numOfMonths) && lDepositDtls.numOfMonths > 0) {
+        lTenorVal = lTenorVal + lDepositDtls.numOfMonths + " Months ";
+    }
+    if (!apz.isNull(lDepositDtls.dueDay) && lDepositDtls.dueDay > 0) {
+        lTenorVal = lTenorVal + lDepositDtls.dueDay + " Days";
+    }
+    apz.setElmValue('bookrd__BookRecurringDeposit__Stage2Tenor', lTenorVal);
+    if (lDepositDtls.attachNominee == "Y") {
+        apz.setElmValue('bookrd__BookRecurringDeposit__Stage2NomineeReq', "Yes");
+    } else if (lDepositDtls.attachNominee == "N") {
+        apz.setElmValue('bookrd__BookRecurringDeposit__Stage2NomineeReq', "No");
+    }
+};
+apz.bookrd.bookrecurringdeposit.fnCurrentDate = function() {
+    debugger;
+    var lCurrentDate = new Date();
+    var dd = lCurrentDate.getDate();
+    var mm = lCurrentDate.getMonth() + 1; //January is 0!
+    var yyyy = lCurrentDate.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    var lToday = yyyy + '/' + mm + '/' + dd;
+    return lToday;
+};
+apz.bookrd.bookrecurringdeposit.fnAgreeStage2 = function() {
+    debugger;
+    var lValid = apz.getElmValue("bookrd__BookRecurringDeposit__agree");
+    if (lValid == 'y') {
+        $("#bookrd__BookRecurringDeposit__confirmStage2").prop("disabled", false);
+    } else {
+        $("#bookrd__BookRecurringDeposit__confirmStage2").prop("disabled", true);
+    }
+}
+apz.bookrd.bookrecurringdeposit.fnRenderStage2 = function() {
+    debugger;
+    apz.hide("bookrd__BookRecurringDeposit__Stage1");
+    apz.show("bookrd__BookRecurringDeposit__Stage2");
+    apz.hide("bookrd__BookRecurringDeposit__Stage3");
+};
+apz.bookrd.bookrecurringdeposit.fnEditStage2 = function() {
+    debugger;
+    apz.bookrd.bookrecurringdeposit.fnRenderStage1();
+};
+apz.bookrd.bookrecurringdeposit.fnConfirmStage2 = function() {
+    debugger;
+    apz.data.loadJsonData("BookRecurringDeposit", "bookrd");
+    apz.bookrd.bookrecurringdeposit.fnLaunchOTP();
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "bookrd__BookRecurringDeposit__otpLauncher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                // "OTPRefNo": apz.data.scrdata.bookrd__BookRecurringDeposit_Res.depositDtls.data.OTPRefNo
+                "OTPRefNo": "4709347020001"
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.bookrd.bookrecurringdeposit.fnOtpCB,
+                "destroyDiv": "bookrd__BookRecurringDeposit__otpLauncher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+};
+apz.bookrd.bookrecurringdeposit.fnLaunchOTP = function() {
+    debugger;
+    apz.bookrd.bookrecurringdeposit.fnRenderOTP();
+};
+apz.bookrd.bookrecurringdeposit.fnRenderOTP = function() {
+    debugger;
+    apz.hide("bookrd__BookRecurringDeposit__Stage1");
+    apz.hide("bookrd__BookRecurringDeposit__Stage2");
+    apz.hide("bookrd__BookRecurringDeposit__Stage3");
+    apz.show("bookrd__BookRecurringDeposit__otpLauncher");
+};
+apz.bookrd.bookrecurringdeposit.fnOtpCB = function(params) {
+    debugger;
+    apz.bookrd.bookrecurringdeposit.fnGotoStage3(params);
+};
+apz.bookrd.bookrecurringdeposit.fnGotoStage3 = function(params) {
+    apz.bookrd.bookrecurringdeposit.fnSetDataStage3(params);
+    apz.bookrd.bookrecurringdeposit.fnRenderStage3();
+};
+apz.bookrd.bookrecurringdeposit.fnSetDataStage3 = function(params) {
+    lDepositDtls = apz.data.scrdata.bookrd__BookRecurringDeposit_Req.depositDtls;
+    apz.setElmValue('bookrd__BookRecurringDeposit__Stage3AccNo', lDepositDtls.debitAccountNo);
+    var lTenor = "";
+    if (!apz.isNull(lDepositDtls.numOfYears) && lDepositDtls.numOfYears !== 0) {
+        lTenor = lTenor + lDepositDtls.numOfYears + " Years ";
+    }
+    if (!apz.isNull(lDepositDtls.numOfMonths) && lDepositDtls.numOfMonths !== 0) {
+        lTenor = lTenor + lDepositDtls.numOfMonths + " Months";
+    }
+    apz.setElmValue('bookrd__BookRecurringDeposit__Stage3Tenor', lTenor);
+    apz.setElmValue('bookrd__BookRecurringDeposit__Stage3InterestRate', lDepositDtls.interestRate);
+    apz.setElmValue('bookrd__BookRecurringDeposit__Stage3MatType', lDepositDtls.maturityType);
+    apz.setElmValue('bookrd__BookRecurringDeposit__Stage3CredAccNo', lDepositDtls.creditAccountNo);
+    apz.setElmValue('bookrd__BookRecurringDeposit__Stage3InstallmentFreq', lDepositDtls.instalmentFrequency);
+    apz.setElmValue('bookrd__BookRecurringDeposit__Stage3MaturityAmt', lDepositDtls.maturityAmount);
+    apz.setElmValue('bookrd__BookRecurringDeposit__Stage3NoOfInstlment', lDepositDtls.noOfInstallment);
+    apz.setElmValue('bookrd__BookRecurringDeposit__Stage3InstallemntAmt', " " + apz.getElmValue(
+        "bookrd__BookRecurringDeposit__i__depositDtls__installmentAmount"));
+    apz.setElmValue('bookrd__BookRecurringDeposit__Stage4NomineeReq', apz.getElmValue("bookrd__BookRecurringDeposit__Stage2NomineeReq"));
+    if (lDepositDtls.maturityType == "CreditAcccount") {
+        $(".maturityToAcc").removeClass("sno");
+    }
+    // var lRefNo = "Your Reference no is " + params.depositDtls.txnRefNo;
+    var lRefNo = "Your Reference no is 4709347020001"
+    apz.setElmValue('bookrd__BookRecurringDeposit__Stage3_RefNo', lRefNo);
+};
+apz.bookrd.bookrecurringdeposit.fnRenderStage3 = function() {
+    debugger;
+    apz.hide("bookrd__BookRecurringDeposit__Stage1");
+    apz.hide("bookrd__BookRecurringDeposit__Stage2");
+    apz.show("bookrd__BookRecurringDeposit__otpLauncher");
+    apz.show("bookrd__BookRecurringDeposit__Stage3");
+};
+apz.bookrd.bookrecurringdeposit.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer('bookrd__BookRecurringDeposit__Stage1Form');
+    var lDepositDtls = apz.data.scrdata.bookrd__BookRecurringDeposit_Req.depositDtls;
+    if (lValid) {
+        /*if (apz.isNull(lDepositDtls.numOfYears) && apz.isNull(lDepositDtls.numOfMonths) && apz.isNull(lDepositDtls.dueDay)) {
+            var lMsg = {
+                "code": "ERR_ENTER_TENOR"
+            };
+            apz.dispMsg(lMsg);
+            lValid = false;
+        } else if (apz.getElmValue("bookrd__BookRecurringDeposit__agree") == "n") {*/
+        if (apz.getElmValue("bookrd__BookRecurringDeposit__agree") == "n") {
+            var lMsg = {
+                "code": "ERR_AGREE_TERMS"
+            };
+            apz.dispMsg(lMsg);
+            lValid = false;
+        } else {
+            lValid = true;
+        }
+    } else {
+        var lMsg = {
+            "code": "ERR_MAN"
+        };
+        apz.dispMsg(lMsg);
+        lValid = false;
+    }
+    return lValid;
+};
+apz.bookrd.bookrecurringdeposit.fnDone = function() {
+//   apz.csmrbk.landingpage.fnHome();
+    apz.cmrnav.fnLaunchConsumerHome()
+}

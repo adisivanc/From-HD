@@ -1,0 +1,1 @@
+{"typeclass":"WORKFLOW","name":"CUMU","type":"WORKFLOW","workflows":[{"stageid":"SUBMIT","stagedescription":"SUBMIT MODIFY USER DETAILS","screen":"CorporateUsers","sequence":"1"},{"stageid":"APPROVE","stagedescription":"APPROVE MODIFY USER DETAILS","screen":"ViewUser","sequence":"2"}]}

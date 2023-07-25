@@ -1,0 +1,12 @@
+{
+    "EcsMandateRes" : {
+        "txnRefNo" : "23457",
+        "status" : "",
+        "respCd" : "app",
+        "extMsg" : "",
+        "intMsgCd" : "",
+        "data" : {
+
+        }
+    }
+}

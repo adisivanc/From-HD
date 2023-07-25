@@ -1,0 +1,42 @@
+{
+    "CorporateDocs": [
+        {
+            "documentType": "VAT Certificate"
+        },
+        {
+            "documentType": "Trade License"
+        },
+        {
+            "documentType": "Memorandum & Articles of Association"
+        },
+        {
+            "documentType": "Resolution of Board of Directors"
+        },
+        {
+            "documentType": "Audited Accounts"
+        },
+        {
+            "documentType": "Others"
+        }
+    ],
+    "SignatoryDocs": [
+        {
+            "documentType": "Passport front side"
+        },
+        {
+            "documentType": "Passport back side"
+        },
+        {
+            "documentType": "National ID front side"
+        },
+        {
+            "documentType": "National ID back side"
+        },
+        {
+            "documentType": "Resident visa"
+        },
+        {
+            "documentType": "Signature"
+        }
+    ]
+}

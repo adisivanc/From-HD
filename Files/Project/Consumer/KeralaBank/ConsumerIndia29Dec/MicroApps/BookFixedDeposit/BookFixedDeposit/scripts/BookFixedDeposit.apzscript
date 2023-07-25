@@ -1,0 +1,433 @@
+apz.bookfd.bookfixeddeposit = {};
+apz.bookfd.bookfixeddeposit.sParams = {};
+apz.app.onLoad_BookFixedDeposit = function(params) {
+    debugger;
+    apz.bookfd.bookfixeddeposit.sParams = params;
+    if (params.Navigation) {
+        apz.bookfd.bookfixeddeposit.fnSetNavigation(params);
+    }
+    apz.bookfd.bookfixeddeposit.fnInitialise();
+    apz.data.scrdata.bookfd__BookFixedDeposit_Req={};
+    apz.data.scrdata.bookfd__BookFixedDeposit_Req.depositDtls = {};
+    apz.data.loadData("BookFixedDeposit","bookfd");
+    if (params.data.type == "transaction") {
+        // apz.setElmValue("bookfd__BookFixedDeposit__i__depositDtls__debitAccountNo",params.data.toAcc);
+        apz.setElmValue("bookfd__BookFixedDeposit__i__depositDtls__depositAmountt", params.data.amount);
+    }
+};
+apz.app.onShown_BookFixedDeposit = function() {
+    debugger;
+    // $(".crt-form.ver .ecn > .syl > span").text("Rs.");
+};
+apz.bookfd.bookfixeddeposit.fnInitialise = function() {
+    apz.setElmValue("bookfd__BookFixedDeposit__i__depositDtls__customerId", apz.bookfd.bookfixeddeposit.sParams.data.customerID);
+    apz.bookfd.bookfixeddeposit.fnGotoStage1();
+};
+apz.bookfd.bookfixeddeposit.fnSetNavigation = function(params) {
+    debugger;
+    apz.bookfd.bookfixeddeposit.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.headerText = "BOOK FIXED DEPOSIT";
+    apz.bookfd.bookfixeddeposit.Navigation(lParams);
+}
+apz.bookfd.bookfixeddeposit.fnGotoStage1 = function() {
+    debugger;
+    apz.bookfd.bookfixeddeposit.fnSetDataInStage1();
+    apz.bookfd.bookfixeddeposit.fnRenderStage1();
+    //Praveen
+    debugger;
+    if (apz.bookfd.bookfixeddeposit.sParams.data.selectAcc != undefined) {
+        $("#csmrbk__LandingPage__TitleRow").removeClass("sno");
+        $("[id='csmrbk__LandingPage__ct_mnu_2_Book Fixed Deposit_li']").addClass('current');
+        if (!$("[id='csmrbk__LandingPage__ct_mnu_2_Book Fixed Deposit_li']").find("ul").length) {
+            $("#csmrbk__LandingPage__ct_mnu_2_Deposits_ul").css("display", "block");
+            $("[id='csmrbk__LandingPage__ct_mnu_2_Fixed Deposit_ul']").css("display", "block");
+            $("[id='csmrbk__LandingPage__ct_mnu_2_Book Fixed Deposit_li']").addClass('current');
+        }
+    }
+};
+apz.bookfd.bookfixeddeposit.fnSetDataInStage1 = function(params) {
+    debugger;
+    apz.data.loadJsonData("Accounts", "bookfd");
+    var lAccounts = apz.data.scrdata.bookfd__Accounts_Res.accounts;
+    var lDropObj = [{
+        "val": "",
+        "desc": "Select Account"
+    }];
+    for (var i = 0; i < lAccounts.length; i++) {
+        var lObj = {
+            "val": lAccounts[i].accountNo,
+            "desc": lAccounts[i].accountType + " - " + lAccounts[i].accountNo
+        };
+        lDropObj.push(lObj);
+    }
+    apz.populateDropdown(document.getElementById("bookfd__BookFixedDeposit__i__depositDtls__debitAccountNo"), lDropObj);
+    apz.populateDropdown(document.getElementById("bookfd__BookFixedDeposit__i__depositDtls__creditAccountNo"), lDropObj);
+    lDropObj = [{
+        "val": "",
+        "desc": "Years"
+    }];
+    for (var i = 1; i <= 10; i++) {
+        var lObj = {
+            "val": i,
+            "desc": i
+        };
+        lDropObj.push(lObj);
+    }
+    apz.populateDropdown(document.getElementById("bookfd__BookFixedDeposit__i__depositDtls__numOfYears"), lDropObj);
+    lDropObj = [{
+        "val": "",
+        "desc": "Months"
+    }];
+    for (var i = 1; i <= 12; i++) {
+        var lObj = {
+            "val": i,
+            "desc": i
+        };
+        lDropObj.push(lObj);
+    }
+    apz.populateDropdown(document.getElementById("bookfd__BookFixedDeposit__i__depositDtls__numOfMonths"), lDropObj);
+    lDropObj = [{
+        "val": "",
+        "desc": "Days"
+    }];
+    for (var i = 1; i < 31; i++) {
+        var lObj = {
+            "val": i,
+            "desc": i
+        };
+        lDropObj.push(lObj);
+    }
+    debugger;
+    apz.populateDropdown(document.getElementById("bookfd__BookFixedDeposit__i__depositDtls__numOfDays"), lDropObj);
+    if (apz.bookfd.bookfixeddeposit.sParams.data.type == "transaction") {
+        apz.setElmValue("bookfd__BookFixedDeposit__i__depositDtls__debitAccountNo", apz.bookfd.bookfixeddeposit.sParams.data.toAcc);
+    }
+};
+apz.bookfd.bookfixeddeposit.fnBack = function() {
+    debugger;
+    // apz.bookfd.bookfixeddeposit.sParams.control.exitApp.callBack()
+    // var lObj = {
+    //     "scr": "LandingPage",
+    //     "appId": "csmrbk",
+    //     "userObj": {
+    //         "userId": apz.csmrbk.userId
+    //     }
+    // };
+    // apz.launchScreen(lObj);
+     //apz.csmrbk.landingpage.fnInitialise();
+      apz.bookfd.bookfixeddeposit.sParams.control.callBack(); 
+}
+apz.bookfd.bookfixeddeposit.fnRenderStage1 = function() {
+    apz.show('bookfd__BookFixedDeposit__stage1');
+    apz.hide('bookfd__BookFixedDeposit__stage2');
+    apz.hide('bookfd__BookFixedDeposit__stage3');
+    apz.hide('bookfd__BookFixedDeposit__stage4');
+};
+apz.bookfd.bookfixeddeposit.fnCancelStage1 = function() {
+    // $("input[type=text]").val("");
+    // apz.bookfd.bookfixeddeposit.fnSetDataInStage1();
+   // apz.csmrbk.landingpage.fnInitialise();
+    apz.landin.Landing.fnHome();
+};
+apz.bookfd.bookfixeddeposit.fnViewInterestRate = function() {
+    debugger;
+    apz.bookfd.bookfixeddeposit.sParams.sAction = 'InterestRate'
+    apz.data.buildData("BookFixedDeposit","bookfd");
+    var lServerParams = {
+        "ifaceName": "InterestRate",
+        "buildReq": "Y",
+        "paintResp": "Y",
+        "req": {}
+    };
+    apz.bookfd.bookfixeddeposit.fnBeforeCallServer(lServerParams);
+};
+apz.bookfd.bookfixeddeposit.fnContinueStage1 = function(params) {
+    debugger;
+    apz.bookfd.bookfixeddeposit.sAction = 'Continue';
+    apz.data.buildData('BookFixedDeposit', 'bookfd');
+    //var lProceed = apz.bookfd.bookfixeddeposit.fnValidateStage1();
+    
+        var lRec = apz.data.scrdata.bookfd__BookFixedDeposit_Req.depositDtls;
+        if (apz.isNull(lRec.numOfDays)) {
+            lRec.numOfDays = "0";
+        }
+        if (apz.isNull(lRec.numOfMonths)) {
+            lRec.numOfMonths = "0";
+        }
+        if (apz.isNull(lRec.numOfYears)) {
+            lRec.numOfYears = "0";
+        }
+        apz.data.scrdata.bookfd__BookFixedDeposit_Req.depositDtls = lRec;
+        apz.bookfd.bookfixeddeposit.fnGotoStage2();
+   
+};
+apz.bookfd.bookfixeddeposit.fnValidateStage1 = function(params) {
+    var lResp = {
+        "ErrCode": "APZ-CNT-099"
+    };
+    lResp.lStatus = apz.val.validateContainer('bookfd__BookFixedDeposit__ct_frm_stage1');
+    var lDepositDtls = apz.data.scrdata.bookfd__BookFixedDeposit_Req.depositDtls;
+    if (lResp.lStatus && (apz.isNull(lDepositDtls.numOfYears) && apz.isNull(lDepositDtls.numOfMonths) && apz.isNull(lDepositDtls.numOfDays))) {
+        lResp.lStatus = false;
+        lResp.ErrCode = "ERR_ENTER_TENOR";
+        return lResp;
+    }
+    if (lResp.lStatus && apz.getElmValue("bookfd__BookFixedDeposit__el_cbx_4") == "n") {
+        lResp.lStatus = false;
+        lResp.ErrCode = "ERR_AGREE_TERMS";
+        return lResp;
+    }
+    return lResp;
+};
+apz.bookfd.bookfixeddeposit.fnGotoStage2 = function(params) {
+    apz.bookfd.bookfixeddeposit.fnSetDataInStage2();
+    apz.bookfd.bookfixeddeposit.fnRenderStage2();
+};
+apz.bookfd.bookfixeddeposit.fnSetDataInStage2 = function(params) {
+    debugger;
+    var lDepositDtls = apz.data.scrdata.bookfd__BookFixedDeposit_Req.depositDtls;
+    apz.setElmValue('bookfd__BookFixedDeposit__stage2_natureDeposit', $("#bookfd__BookFixedDeposit__i__depositDtls__interestType").val());
+    apz.setElmValue('bookfd__BookFixedDeposit__stage2_DebAccNo', lDepositDtls.debitAccountNo);
+    apz.setElmValue('bookfd__BookFixedDeposit__stage2_MatureType', $("#bookfd__BookFixedDeposit__i__depositDtls__maturityType").val());
+    apz.setElmValue('bookfd__BookFixedDeposit__stage2_Amount', " " + apz.getElmValue("bookfd__BookFixedDeposit__i__depositDtls__depositAmountt"));
+    var lTenorVal = "";
+    if (!apz.isNull(lDepositDtls.numOfYears) && lDepositDtls.numOfYears > 0) {
+        lTenorVal = lTenorVal + lDepositDtls.numOfYears + " Years ";
+    }
+    if (!apz.isNull(lDepositDtls.numOfMonths) && lDepositDtls.numOfMonths > 0) {
+        lTenorVal = lTenorVal + lDepositDtls.numOfMonths + " Months ";
+    }
+    if (!apz.isNull(lDepositDtls.numOfDays) && lDepositDtls.numOfDays > 0) {
+        lTenorVal = lTenorVal + lDepositDtls.numOfDays + " Days";
+    }
+    apz.setElmValue('bookfd__BookFixedDeposit__stage2_tenor', lTenorVal);
+    apz.setElmValue('bookfd__BookFixedDeposit__stage2_CredAccNo', lDepositDtls.creditAccountNo);
+    var status = apz.getElmValue("bookfd__BookFixedDeposit__attachNominee");
+    if (status == "y") {
+        apz.setElmValue('bookfd__BookFixedDeposit__stage2_NomReq', "Yes");
+    } else if (status == "n") {
+        apz.setElmValue('bookfd__BookFixedDeposit__stage2_NomReq', "No");
+    }
+    if (apz.bookfd.bookfixeddeposit.sParams.Navigation) {
+        var lParams = {};
+        lParams.headerText = "FIXED DEPOSIT DETAILS";
+        apz.bookfd.bookfixeddeposit.Navigation(lParams);
+    }
+};
+apz.bookfd.bookfixeddeposit.fnRenderStage2 = function() {
+    apz.hide('bookfd__BookFixedDeposit__stage1');
+    apz.show('bookfd__BookFixedDeposit__stage2');
+    apz.hide('bookfd__BookFixedDeposit__stage3');
+    apz.hide('bookfd__BookFixedDeposit__stage4');
+};
+apz.bookfd.bookfixeddeposit.fnEdit = function(params) {
+    apz.bookfd.bookfixeddeposit.sAction = 'Edit';
+    apz.bookfd.bookfixeddeposit.fnRenderStage1();
+};
+apz.bookfd.bookfixeddeposit.fnChangeMaturityType = function() {
+    var lType = apz.getElmValue("bookfd__BookFixedDeposit__i__depositDtls__maturityType");
+    if (lType == "TransferAcc" || lType == "RenewPrincipal") {
+        $(".maturityToAcc").removeClass("sno");
+    } else {
+        $(".maturityToAcc").addClass("sno");
+    }
+};
+apz.bookfd.bookfixeddeposit.fnConfirmStage2 = function() {
+    apz.bookfd.bookfixeddeposit.sParams.sAction = "confirm";
+    var lReq = {
+        "action": "Confirm",
+        "depositDtls": apz.data.scrdata.bookfd__BookFixedDeposit_Req.depositDtls
+    };
+    var lServerParams = {
+        "ifaceName": "BookFixedDeposit",
+        "buildReq": "N",
+        "paintResp": "Y",
+        "req": lReq
+    };
+    apz.bookfd.bookfixeddeposit.fnBeforeCallServer(lServerParams);
+};
+apz.bookfd.bookfixeddeposit.fnGotoStage3 = function() {
+    apz.bookfd.bookfixeddeposit.fnRenderStage3();
+};
+apz.bookfd.bookfixeddeposit.fnRenderStage3 = function() {
+    apz.hide('bookfd__BookFixedDeposit__stage1');
+    apz.hide('bookfd__BookFixedDeposit__stage2');
+    apz.show('bookfd__BookFixedDeposit__stage3');
+    apz.hide('bookfd__BookFixedDeposit__stage4');
+};
+apz.bookfd.bookfixeddeposit.fnGotoStage4 = function(params) {
+    apz.resetCurrAppId("bookfd");
+    apz.bookfd.bookfixeddeposit.fnSetDataInStage4(params);
+    apz.bookfd.bookfixeddeposit.fnRenderStage4();
+};
+apz.bookfd.bookfixeddeposit.fnRenderStage4 = function() {
+    apz.hide('bookfd__BookFixedDeposit__stage1');
+    apz.hide('bookfd__BookFixedDeposit__stage2');
+    apz.hide('bookfd__BookFixedDeposit__stage3');
+    apz.show('bookfd__BookFixedDeposit__stage4');
+};
+apz.bookfd.bookfixeddeposit.fnSetDataInStage4 = function(params) {
+    debugger;
+    var lDepositDtls = apz.data.scrdata.bookfd__BookFixedDeposit_Req.depositDtls;
+    apz.setElmValue('bookfd__BookFixedDeposit__stage4_natureDeposit', $("#bookfd__BookFixedDeposit__i__depositDtls__interestType").val());
+    apz.setElmValue('bookfd__BookFixedDeposit__stage4_DebAccNo', lDepositDtls.debitAccountNo);
+    apz.setElmValue('bookfd__BookFixedDeposit__stage4_MatureType', $("#bookfd__BookFixedDeposit__i__depositDtls__maturityType").val());
+    apz.setElmValue('bookfd__BookFixedDeposit__stage4_Amount', "" + apz.getElmValue("bookfd__BookFixedDeposit__i__depositDtls__depositAmountt"));
+    var lResponse = "Your reference number is " + params.depositDtls.txnRefNo;
+    apz.setElmValue('bookfd__BookFixedDeposit__o__depositDtls__txnRefNo', lResponse);
+    /*var lTenorVal = "";
+    if (!apz.isNull(lDepositDtls.numOfYears) ) {
+        lTenorVal = lTenorVal + lDepositDtls.numOfYears + " Years";
+    }
+    if (!apz.isNull(lDepositDtls.numOfMonths)) {
+        lTenorVal = lTenorVal + lDepositDtls.numOfMonths + " Months";
+    }
+    if (!apz.isNull(lDepositDtls.numOfDays)) {
+        lTenorVal = lTenorVal + lDepositDtls.numOfDays + " Days";
+    }*/
+    apz.setElmValue('bookfd__BookFixedDeposit__stage4_tenor', apz.getElmValue("bookfd__BookFixedDeposit__stage2_tenor"));
+    var lMaturityType = $("#bookfd__BookFixedDeposit__i__depositDtls__maturityType").val();
+    if (lMaturityType == "Transfer to Account" || lMaturityType == "Renew Principle") {
+        apz.setElmValue('bookfd__BookFixedDeposit__stage4_CredAccNo', lDepositDtls.creditAccountNo);
+        apz.show("bookfd__BookFixedDeposit__stage4_CredAccNo_ctrl_grp_div");
+    } else {
+        apz.hide("bookfd__BookFixedDeposit__stage4_CredAccNo_ctrl_grp_div");
+    }
+     var status = apz.getElmValue("bookfd__BookFixedDeposit__attachNominee");
+    if (status == "y") {
+        apz.setElmValue('bookfd__BookFixedDeposit__stage4_NomReq', "Yes");
+    } else if (status == "n") {
+        apz.setElmValue('bookfd__BookFixedDeposit__stage4_NomReq', "No");
+    }
+    
+    
+    
+    
+    // if (lDepositDtls.attachNominee == "Y") {
+    //     apz.setElmValue('bookfd__BookFixedDeposit__stage4_NomReq', "Yes");
+    // } else if (lDepositDtls.attachNominee == "N") {
+    //     apz.setElmValue('bookfd__BookFixedDeposit__stage4_NomReq', "No");
+    // }
+};
+apz.bookfd.bookfixeddeposit.fnBeforeCallServer = function(params) {
+    debugger;
+    apz.data.loadJsonData(params.ifaceName, "bookfd");
+    debugger;
+    if (apz.bookfd.bookfixeddeposit.sParams.sAction == 'confirm') {
+        debugger;
+        apz.bookfd.bookfixeddeposit.fnGotoStage3();
+        var lLaunchParams = {
+            "appId": "otpeng",
+            "scr": "ProcessOTP",
+            "div": "bookfd__BookFixedDeposit__stage3_col",
+            "userObj": {
+                "action": "SetRefNo",
+                "data": {
+                    //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+                },
+                "control": {
+                    "appId": "otpeng",
+                    "callBack": apz.bookfd.bookfixeddeposit.fnGotoStage4,
+                    "destroyDiv": "bookfd__BookFixedDeposit__stage3_col"
+                }
+            }
+        };
+        apz.launchApp(lLaunchParams);
+    } else if (apz.bookfd.bookfixeddeposit.sParams.sAction == 'InterestRate') {
+        var lParams = {
+            "targetId": "bookfd__BookFixedDeposit__InterestRateModal",
+            "callBack":function(){ apz.data.loadData("BookFixedDeposit","bookfd");}
+        };
+        apz.toggleModal(lParams);
+    }
+};
+apz.bookfd.bookfixeddeposit.fnTermYear = function() {
+    var year = apz.getElmValue("bookfd__BookFixedDeposit__i__depositDtls__numOfYears") - 0;
+    if (year > 0) {
+        apz.setElmValue("bookfd__BookFixedDeposit__interestrate", "Interest Rate : 6.50%")
+    }
+};
+apz.bookfd.bookfixeddeposit.fnTermMonth = function() {
+    var month = apz.getElmValue("bookfd__BookFixedDeposit__i__depositDtls__numOfMonths") - 0;
+    var year = apz.getElmValue("bookfd__BookFixedDeposit__i__depositDtls__numOfYears") - 0;
+    if (month == 1 && year == 0) {
+        apz.setElmValue("bookfd__BookFixedDeposit__interestrate", "Interest Rate : 5.00%")
+    } else if (month >= 2 && year == 0) {
+        apz.setElmValue("bookfd__BookFixedDeposit__interestrate", "Interest Rate : 5.50%")
+    } else if (month >= 9 && year == 0) {
+        apz.setElmValue("bookfd__BookFixedDeposit__interestrate", "Interest Rate : 6.00%")
+    } else if (month == 12 && year == 0) {
+        apz.setElmValue("bookfd__BookFixedDeposit__interestrate", "Interest Rate : 6.50%")
+    }
+};
+apz.bookfd.bookfixeddeposit.fnTermDays = function() {
+    var days = apz.getElmValue("bookfd__BookFixedDeposit__i__depositDtls__numOfDays") - 0;
+    var month = apz.getElmValue("bookfd__BookFixedDeposit__i__depositDtls__numOfMonths") - 0;
+    var year = apz.getElmValue("bookfd__BookFixedDeposit__i__depositDtls__numOfYears") - 0;
+    if (days >= 1 && month == 0 && year == 0) {
+        apz.setElmValue("bookfd__BookFixedDeposit__interestrate", "Interest Rate : 5.00%")
+    }
+};
+
+
+
+
+
+
+apz.bookfd.bookfixeddeposit.fnPrint = function() {
+    debugger;
+    debugger;
+    var jsonFilePath = apz.getDataFilesPath("bookfd") + "/FDCertificate.json";
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    var blob = apz.bookfd.bookfixeddeposit.b64toBlob(ljsondata.data.content, "application/pdf");
+    var blobUrl = URL.createObjectURL(blob);
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.bookfd.bookfixeddeposit.base64tofilecallBack;
+        json.base64 = ljsondata.data.content;
+        json.fileName = "bookfdary.pdf";
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    } else {
+        window.open(blobUrl);
+    }
+};
+apz.bookfd.bookfixeddeposit.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.bookfd.bookfixeddeposit.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.bookfd.bookfixeddeposit.openFileCallback = function(params) {
+    debugger;
+};
+apz.bookfd.bookfixeddeposit.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};

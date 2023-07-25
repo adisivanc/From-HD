@@ -1,0 +1,40 @@
+{
+    "upgcrd__CardDetailsInterface_Res": {
+        "data": [{
+            "Card Type": "JETDC",
+            "Fee": "500",
+            "Benefits": "Earn JP miles on shopping. Also get insurance cover upto RS 25 lakhs. First year free for classic preferred and imperia customers only. "
+            
+        },
+        {
+             "Card Type": "Platinum debit card",
+            "Fee": "750",
+            "Benefits": "Platinum debit card gives upto RS 1 cashback for every RS 100 spent at merchants outlets and online. Free personal accidental death insurance cover of upto RS 10 lakhs."
+            
+        },
+        {
+             "Card Type": "Timespoints debit card",
+            "Fee": "650",
+            "Benefits": "Enjoy high discounts on select merchant categories. Earn times points on shopping and surfing at times internet websites. Free personal accidental death insurance cover of upto RS 10 lakhs."
+            
+        },
+        {
+             "Card Type": "Rupay premium debit card",
+            "Fee": "200",
+            "Benefits": "350000 domestic shopping limit. 5 percent cashback on utility bills. 2 lakhs personal accidental death insurance cover. Airport longue access. concierge facility"
+            
+        },
+        {
+             "Card Type": "Business debit card",
+            "Fee": "250",
+            "Benefits": "Specially designed for current account business. Debit card gives upto RS 1 cashback for every RS 200 spent at merchant outlets and online. Get free accidental insurance cover upto RS 10 lakhs."
+            
+        },
+        {
+             "Card Type": "Rewards debit card",
+            "Fee": "500",
+            "Benefits": "5 percent saving on your everyday shopping at partner merchant outlets. Free personal accidental death insurance cover upto RS 5 lakhs. Zero fuel surcharge at BPCL outlets using HDFC bank POS machines "
+            
+        }]
+    }
+}

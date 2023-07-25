@@ -1,0 +1,361 @@
+apz.liqdfd.liquidatefd = {};
+apz.app.onLoad_LiquidateFD = function(params) {
+    debugger;
+    apz.liqdfd.liquidatefd.sParams = apz.copyJSONObject(params);
+    if (params.Navigation) {
+        apz.liqdfd.liquidatefd.fnSetNavigation(params);
+    }
+    apz.liqdfd.liquidatefd.fnInitialise(params);
+};
+apz.liqdfd.liquidatefd.fnInitialise = function(params) {
+    debugger;
+    apz.liqdfd.liquidatefd.fnGotoStage1();
+};
+apz.liqdfd.liquidatefd.fnSetNavigation = function(params) {
+    debugger;
+    apz.liqdfd.liquidatefd.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.showBack = "N";
+    lParams.headerText = "LIQUIDATE FD";
+    apz.liqdfd.liquidatefd.Navigation(lParams);
+};
+apz.liqdfd.liquidatefd.fnGotoStage1 = function() {
+    apz.liqdfd.liquidatefd.fnGetAccDetails();
+    apz.liqdfd.liquidatefd.fnSetDataInStage1();
+    apz.liqdfd.liquidatefd.fnRenderStage1();
+};
+apz.liqdfd.liquidatefd.fnGetAccDetails = function() {
+    debugger;
+    apz.liqdfd.liquidatefd.sParams.sAction = 'GetAccountDetails';
+    var lReq = {
+        "fixedDeposit": {
+            "customerId": apz.liqdfd.liquidatefd.sParams.data.userId
+        }
+    };
+    var lParams = {
+        "appId": "liqdfd",
+        "ifaceName": "AccountDetails",
+        "req": lReq,
+        "paintResp": "N",
+        "buildReq": "N",
+        "callBack": apz.liqdfd.liquidatefd.fnGetAccDetailsCB
+    };
+    //apz.server.callServer(lParams);
+    jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("liqdfd")+"/AccountDetails.json"));
+    apz.liqdfd.liquidatefd.fnGetAccDetailsCB(jsondata)
+    //apz.liqdfd.liquidatefd.fnBeforeCallServer(lParams);
+};
+apz.liqdfd.liquidatefd.fnCalculateMonths = function(accountCreationDate,maturitydate,istoday){
+    debugger;
+     var  current_Date;
+           if(istoday){
+               current_Date = new Date();
+           }else{
+                maturitydate = apz.formatDate({val:maturitydate,fromFormat:"dd/MM/yyyy",toFormat:"yyyy-MM-dd"})
+                current_Date = new Date(maturitydate)
+           }
+            accountCreationDate = apz.formatDate({val:accountCreationDate,fromFormat:"dd/MM/yyyy",toFormat:"yyyy-MM-dd"})
+
+            var initialisedDate = new Date(accountCreationDate)
+            var milliseconds = current_Date.getTime() - initialisedDate.getTime()
+            var days = Math.floor(milliseconds / (1000 * 24 * 3600));
+            var months = Math.floor(days / 31);
+            return months;
+}
+
+apz.liqdfd.liquidatefd.fnGetAccDetailsCB = function(pResp) {
+    debugger;
+   // if (pResp.status && (pResp.res.liqdfd__AccountDetails_Res != undefined)) {
+        var accounts = pResp.fixedDeposit.depositDtls;
+        accountDetails = accounts.map(function(account) {
+            var compounding = 12;
+            var interest1 = 0.05;
+            var amount = account.depositAmount;
+            var months = apz.liqdfd.liquidatefd.fnCalculateMonths(account.accountCreationDate,"",true);
+            var maturityAmountPre = apz.getFloat(amount) * Math.pow((1 + (interest1 / compounding)), (compounding * (months/12)));
+             var months1 = apz.liqdfd.liquidatefd.fnCalculateMonths(account.accountCreationDate,account.maturityDate,false);
+              var maturityAmount = apz.getFloat(amount) * Math.pow((1 + (interest1 / compounding)), (compounding * (months1/12)));
+            account.maturityAmount = maturityAmount;
+            account.preclosure = maturityAmountPre - (amount *0.005)
+            return account;
+        });
+        apz.data.scrdata.liqdfd__AccountDetails_Res = {};
+        apz.data.scrdata.liqdfd__AccountDetails_Res.fixedDeposit={};
+        apz.data.scrdata.liqdfd__AccountDetails_Res.fixedDeposit.depositDtls = accountDetails;
+         apz.liqdfd.liquidatefd.sParams.AccDetails = apz.data.scrdata.liqdfd__AccountDetails_Res.fixedDeposit.depositDtls;
+        apz.data.loadData("AccountDetails","liqdfd");
+        
+        
+   // }
+}
+apz.liqdfd.liquidatefd.fnSetDataInStage1 = function() {
+    var lAccountNo = apz.liqdfd.liquidatefd.sParams.data.accountNo;
+    var lDropObj = [{
+        "val": "",
+        "desc": "Select"
+    }];
+    var lObj = {};
+    for (i = 0; i < lAccountNo.length; i++) {
+        lObj = {
+            "val": lAccountNo[i],
+            "desc": lAccountNo[i]
+        };
+        lDropObj.push(lObj);
+    }
+    // apz.populateDropdown(document.getElementById("liqdfd__LiquidateFD__liquidateFD_accountNo"), lDropObj);
+};
+apz.liqdfd.liquidatefd.fnLaunchDetails = function(pthis) {
+    debugger;
+    var lRowIndex = $("#" + pthis.id).attr("rowno");
+    
+  //  var lRec = apz.liqdfd.liquidatefd.sParams.AccDetails[apz.getRecordNumber("liqdfd__LiquidateFD__AccDetailsList", parseInt(lRowIndex))]
+     apz.liqdfd.liquidatefd.record = apz.liqdfd.liquidatefd.sParams.AccDetails[parseInt(lRowIndex)]
+    apz.liqdfd.liquidatefd.sParams.sAction = "Query";
+    
+    // var lReq = {
+    //     "depositDtls": {
+    //         "accountNo": lRec.accountNo
+    //     },
+    //     "action": "Query"
+    // };
+    // var lParams = {
+    //     "ifaceName": "LiquidateFD",
+    //     "req": lReq,
+    //     "paintResp": "N"
+    // };
+    apz.liqdfd.liquidatefd.fnCallServerCallBack({errors:false});
+};
+apz.liqdfd.liquidatefd.fnRenderStage1 = function() {
+    debugger;
+    if (apz.liqdfd.liquidatefd.sParams.Navigation) {
+        var lParams = {};
+        lParams.showBack = "N";
+        lParams.headerText = "LIQUIDATE FD";
+        apz.liqdfd.liquidatefd.Navigation(lParams);
+    };
+    apz.show("liqdfd__LiquidateFD__Stage1");
+    apz.hide("liqdfd__LiquidateFD__Stage2");
+    apz.hide("liqdfd__LiquidateFD__Stage3");
+    apz.hide("liqdfd__LiquidateFD__Stage4");
+    // apz.liqdfd.liquidatefd.fnCheck();
+};
+apz.liqdfd.liquidatefd.fnCheck = function() {
+    debugger;
+    var lValue = apz.getElmValue("liqdfd__LiquidateFD__checkTC");
+    if (!apz.isNull(apz.getElmValue("liqdfd__LiquidateFD__liquidateFD_accountNo")) && lValue == 'y') {
+        apz.setElmValue("liqdfd__LiquidateFD__Stage4_accNo", apz.getElmValue("liqdfd__LiquidateFD__liquidateFD_accountNo"));
+        $("#liqdfd__LiquidateFD__confirm").prop("disabled", false);
+    } else {
+        $("#liqdfd__LiquidateFD__confirm").prop("disabled", true);
+    }
+};
+apz.liqdfd.liquidatefd.fnContinueStage1 = function() {
+    debugger;
+    apz.liqdfd.liquidatefd.sParams.sAction = "Query";
+    var lReq = {
+        "depositDtls": {
+            "accountNo": apz.getElmValue("liqdfd__LiquidateFD__liquidateFD_accountNo")
+        },
+        "action": "Query"
+    };
+    var lParams = {
+        "ifaceName": "LiquidateFD",
+        "req": lReq,
+        "paintResp": "N"
+    };
+    apz.liqdfd.liquidatefd.fnBeforeCallServer(lParams);
+};
+
+apz.liqdfd.liquidatefd.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "liqdfd": "N",
+        "paintResp": params.paintResp,
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": apz.liqdfd.liquidatefd.fnCallServerCallBack
+    };
+    //apz.server.callServer(lServerParams);
+    if(apz.liqdfd.liquidatefd.sParams.sAction == 'GetAccountDetails'){
+        jsondata= JSON.parse(apz.getFile(apz.getDataFilesPath("liqdfd")+"/AccountDetails.json"));
+    }else if(apz.liqdfd.liquidatefd.sParams.sAction == 'Confirm'){
+         jsondata= JSON.parse(apz.getFile(apz.getDataFilesPath("liqdfd")+"/LiquidateFD.json"));
+    }
+    apz.liqdfd.liquidatefd.fnCallServerCallBack(jsondata) 
+   
+};
+apz.liqdfd.liquidatefd.fnCallServerCallBack = function(params) {
+    debugger;
+    if (params.errors) {
+        var param = {
+            'code': params.errors[0].errorCode
+        };
+        apz.dispMsg(param);
+    } else {
+        if (apz.liqdfd.liquidatefd.sParams.sAction == 'Query') {
+            apz.data.scrdata.liqdfd__LiquidateFD_Req = {};
+            apz.data.scrdata.liqdfd__LiquidateFD_Req.depositDtls = apz.liqdfd.liquidatefd.record;
+            apz.liqdfd.liquidatefd.fnLaunchDetailsScreen();
+        } else if (apz.liqdfd.liquidatefd.sParams.sAction == 'GetAccountDetails') {
+            apz.liqdfd.liquidatefd.sParams.AccDetails = params.fixedDeposit.depositDtls
+        } else if (apz.liqdfd.liquidatefd.sParams.sAction == 'Confirm') {
+            apz.setElmValue("liqdfd__LiquidateFD__o__depositDtls__txnRefNo", params.liqdfd__LiquidateFD_Req.depositDtls.txnRefNo);
+            apz.liqdfd.liquidatefd.fnGotoStage3();
+            var lLaunchParams = {
+                "appId": "otpeng",
+                "scr": "ProcessOTP",
+                "div": "liqdfd__LiquidateFD__otpLauncher",
+                "userObj": {
+                    "action": "SetRefNo",
+                    "data": {
+                        "OTPRefNo": Math.floor(Math.random()*100000)
+                    },
+                    "control": {
+                        "appId": "otpeng",
+                        "callBack": apz.liqdfd.liquidatefd.fnGotoStage4,
+                        "destroyDiv": "liqdfd__LiquidateFD__otpLauncher"
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        }
+    }
+};
+apz.liqdfd.liquidatefd.fnLaunchDetailsScreen = function() {
+    debugger;
+    userObj = {
+        "data": apz.liqdfd.liquidatefd.record,
+        "action": "Summary",
+    };
+    apz.liqdfd.liquidatefddetails.fnSetData(userObj);
+    apz.liqdfd.liquidatefd.fnGotoStage2();
+};
+apz.liqdfd.liquidatefd.fnGotoStage2 = function() {
+    apz.liqdfd.liquidatefd.fnRenderStage2();
+};
+apz.liqdfd.liquidatefd.fnRenderStage2 = function() {
+    debugger;
+    if (apz.liqdfd.liquidatefd.sParams.Navigation) {
+        var lParams = {};
+        lParams.showBack = "N";
+        lParams.headerText = "LIQUIDATE DETAILS";
+        apz.liqdfd.liquidatefd.Navigation(lParams);
+    }
+    var maturityType = apz.getElmValue("liqdfd__LiquidateFD__i__depositDtls__maturityType");
+    if (maturityType == "TransferAcc" || maturityType == "RenewPrinciple") {
+        apz.show("liqdfd__LiquidateFD__i__depositDtls__creditAccountNo_ctrl_grp_div");
+    } else {
+        apz.hide("liqdfd__LiquidateFD__i__depositDtls__creditAccountNo_ctrl_grp_div");
+    }
+    apz.show("liqdfd__LiquidateFD__Stage2");
+    apz.hide("liqdfd__LiquidateFD__Stage1");
+    apz.hide("liqdfd__LiquidateFD__Stage3");
+    apz.hide("liqdfd__LiquidateFD__Stage4");
+};
+apz.liqdfd.liquidatefd.fnGotoStage3 = function() {
+    apz.liqdfd.liquidatefd.fnRenderStage3();
+};
+apz.liqdfd.liquidatefd.fnRenderStage3 = function() {
+    debugger;
+    apz.hide("liqdfd__LiquidateFD__Stage2");
+    apz.hide("liqdfd__LiquidateFD__Stage1");
+    apz.show("liqdfd__LiquidateFD__Stage3");
+    apz.hide("liqdfd__LiquidateFD__Stage4");
+};
+apz.liqdfd.liquidatefd.fnGotoStage4 = function(params) {
+    apz.resetCurrAppId("liqdfd");
+    apz.liqdfd.liquidatefd.fnSetDataInStage4(params);
+    apz.liqdfd.liquidatefd.fnRenderStage4();
+};
+apz.liqdfd.liquidatefd.fnSetDataInStage4 = function(params) {
+    debugger;
+    var lDetails = apz.data.scrdata.liqdfd__LiquidateFD_Req.depositDtls;
+    var lRefValue = "Your reference no is " + params.depositDtls.txnRefNo;
+    apz.setElmValue('liqdfd__LiquidateFD__o__depositDtls__txnRefNo', lRefValue);
+    apz.setElmValue("liqdfd__LiquidateFD__Stage4_accNo", lDetails.accountNo);
+    apz.setElmValue("liqdfd__LiquidateFD__Stage4_BranchName", lDetails.branchName);
+    apz.setElmValue("liqdfd__LiquidateFD__Stage4_Tenor", lDetails.tenor);
+    apz.setElmValue("liqdfd__LiquidateFD__Stage4_InterestRate", lDetails.interestRate);
+    apz.setElmValue("liqdfd__LiquidateFD__Stage4CreditNo", lDetails.creditAccountNo);
+    apz.setElmValue("liqdfd__LiquidateFD__Stage4_MaturityIns", lDetails.maturityType);
+    // apz.hide("liqdfd__LiquidateFD__i__depositDtls__creditAccountNo")
+    var lObj1 = {
+        "value": lDetails.maturityAmount,
+        "decimalSep": '.',
+        "displayAsLiteral": 'N',
+        "mask": "LAKH"
+    }
+    apz.setElmValue("liqdfd__LiquidateFD__Stage4_Amount", " " + apz.formatNumber(lObj1));
+    apz.setElmValue("liqdfd__LiquidateFD__Stgae4_MaturityDate", lDetails.maturityDate);
+};
+apz.liqdfd.liquidatefd.fnRenderStage4 = function() {
+    debugger;
+    var maturityType = apz.getElmValue("liqdfd__LiquidateFD__Stage4_MaturityIns");
+    if (maturityType == "TransferAcc" || maturityType == "RenewPrinciple") {
+        apz.show("liqdfd__LiquidateFD__Stage4CreditNo_ctrl_grp_div");
+    } else {
+        apz.hide("liqdfd__LiquidateFD__Stage4CreditNo_ctrl_grp_div");
+    }
+    apz.hide("liqdfd__LiquidateFD__Stage2");
+    apz.hide("liqdfd__LiquidateFD__Stage1");
+    apz.hide("liqdfd__LiquidateFD__Stage3");
+    apz.show("liqdfd__LiquidateFD__Stage4");
+};
+apz.liqdfd.liquidatefd.fnConfirmStage2 = function() {
+    apz.liqdfd.liquidatefd.sParams.sAction = "Confirm";
+    lReq = {
+        "action": "Confirm",
+        "depositDtls": {
+            "txnRefNo": "",
+            "customerId": "2343",
+            "accountNo": "001234545545",
+            "branchName": "Koramangala",
+            "interestType": "Interest",
+            "tenor": "1 Year",
+            "interestRate": "0",
+            "maturityType": "Credit to Acc",
+            "creditAccountNo": "001234545545",
+            "maturityAmount": "23",
+            "depositAmount": "334",
+            "interestEarned": "234",
+            "penalty": "23",
+            "authenticationType": "OTP",
+            "authenticationTarget": ""
+        }
+    };
+    /* var lReq = {
+        "depositDtls": apz.data.scrdata.liqdfd__LiquidateFD_Req.depositDtls,
+        "action": "Confirm"
+    };*/
+    var lParams = {
+        "ifaceName": "LiquidateFD",
+        "req": lReq,
+        "paintResp": "Y"
+    };
+    apz.liqdfd.liquidatefd.fnBeforeCallServer(lParams);
+};
+/*apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};*/
+apz.liqdfd.liquidatefd.fnDone = function() {
+    // var lObj = {
+    //     "scr": "LandingPage",
+    //     "appId": "csmrbk",
+    //     "userObj": {
+    //         "userId": apz.csmrbk.userId
+    //     }
+    // };
+    // apz.launchScreen(lObj);
+     apz.landin.Landing.fnHome();
+}
+/*var current_Date = new Date();
+var x=apz.getElmValue("liqdfd__LiquidateFDDetails__")
+var initialisedDate = new Date("2018-12-24")
+milliseconds =  current_Date.getTime()-initialisedDate.getTime()
+days = Math.floor(milliseconds/(1000*24*3600));
+months = Math.floor(days/31);
+val = apz.getFloat(amount) * Math.pow((1 + (interest1 / compounding)), (compounding * (months/12)));
+
+*/

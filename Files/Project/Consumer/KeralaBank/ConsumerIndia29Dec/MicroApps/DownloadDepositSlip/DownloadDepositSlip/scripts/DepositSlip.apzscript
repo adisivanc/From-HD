@@ -1,0 +1,84 @@
+apz.deslip.DepositSlip = {};
+apz.app.onLoad_DepositSlip = function() {
+   // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "DOWNLOAD PRE-FILLED DEPOSIT SLIPS");
+}
+apz.deslip.DepositSlip.fnDownload = function(params, fileType) {
+    debugger;
+    var file = apz.getElmValue("deslip__DepositSlip__depositSlip");
+    if (file == "Two") {
+        var jsonFilePath = apz.getDataFilesPath("deslip") + "/DepositSlip.json";
+    } else {
+        var jsonFilePath = apz.getDataFilesPath("deslip") + "/BlankDepositSlip.json";
+    }
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    for (var i = 0; i < ljsondata.data.length; i++) {
+        var mimetype = ljsondata.data[i].mimeType;
+        var lMimeType = mimetype.slice(-3);
+        if (fileType == lMimeType.toLowerCase()) {
+            apz.deslip.DepositSlip.ReportdwnldMethod(ljsondata.data[i]);
+        }
+    }
+}
+apz.deslip.DepositSlip.ReportdwnldMethod = function(lbodyobj) {
+    debugger;
+    var file = apz.getElmValue("deslip__DepositSlip__depositSlip");
+    var blob;
+    var fileType = "";
+    if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+        blob = apz.deslip.DepositSlip.b64toBlob(lbodyobj.content, "application/pdf");
+        fileType = ".pdf";
+    }
+    var blobUrl = URL.createObjectURL(blob);
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.deslip.DepositSlip.base64tofilecallBack;
+        json.base64 = lbodyobj.content;
+        if (file == "Two") {
+            json.fileName = "DepositSlip" + fileType;
+        } else {
+            json.fileName = "BlankDepositSlip" + fileType;
+        }
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    } else {
+        window.open(blobUrl);
+    }
+};
+apz.deslip.DepositSlip.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};
+apz.deslip.DepositSlip.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.deslip.DepositSlip.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.deslip.DepositSlip.openFileCallback = function(params) {
+    debugger;
+};

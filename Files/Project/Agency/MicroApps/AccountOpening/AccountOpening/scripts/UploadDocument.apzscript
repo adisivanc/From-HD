@@ -1,0 +1,461 @@
+apz.upldoc.UploadDocument = {};
+apz.upldoc.UploadDocument.sCache = {};
+apz.upldoc.UploadDocument.UAEIDParsedResult = {}
+var counter = 1;
+apz.app.onLoad_UploadDocument = function(params) {
+    apz.upldoc.UploadDocument.sCache = params;
+    debugger;
+    if (apz.upldoc.UploadDocument.sCache.action == "fromExaminee") {
+        $("#upldoc__UploadDocument__uploadDocForm_title").text(apz.upldoc.UploadDocument.sCache.medicalexamType);
+        apz.setElmValue("upldoc__UploadDocument__customerId", apz.upldoc.UploadDocument.sCache.data.detailsInsurerAppnum);
+        apz.setElmValue("upldoc__UploadDocument__type", apz.upldoc.UploadDocument.sCache.medicalexamType);
+        apz.hide("upldoc__UploadDocument__docUpldCancelBtn");
+    } else if (apz.upldoc.UploadDocument.sCache.action == "fromCustomerImage") {
+        apz.hide("upldoc__UploadDocument__ct_nav_6");
+        apz.setElmValue("upldoc__UploadDocument__uploadTypeRadio", "capture");
+        apz.hide("upldoc__UploadDocument__uploadTypeDefRow");
+        apz.hide("upldoc__UploadDocument__docUpldCancelBtn");
+    } else {
+        $(".filebox").next().addClass("sno");
+        $("#upldoc__UploadDocument__uploadDocForm_title").text("Upload Document");
+    }
+    $("#PMTS01__ExamineeDetails__uploadDoc_close").click(function() {
+        Webcam.reset()
+    });
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        apz.show("upldoc__UploadDocument__CaptureBtn");
+    }
+    apz.upldoc.UploadDocument.fnOnChangeUploadType();
+};
+apz.upldoc.UploadDocument.fnOnChangeUploadType = function() {
+    if (apz.getElmValue("upldoc__UploadDocument__uploadTypeRadio") == "files") {
+        $("#upldoc__UploadDocument__filesColumn").removeClass("sno");
+        $("#upldoc__UploadDocument__CaptureColumn").addClass("sno");
+        Webcam.reset();
+        $("#upldoc__UploadDocument__captureImg1").attr("src", "");
+    } else {
+        $("#upldoc__UploadDocument__filesColumn").addClass("sno");
+        $("#upldoc__UploadDocument__CaptureColumn").removeClass("sno");
+        //alert(apz.deviceType);
+        if (apz.deviceType === "ANDROID" || apz.deviceType === "IOS") {
+            $("#upldoc__UploadDocument__cameraPreview").addClass("sno");
+            apz.upldoc.UploadDocument.mobcamera();
+        } else {
+            Webcam.set({
+                width: 320,
+                height: 240,
+                image_format: 'jpeg',
+                jpeg_quality: 90
+            });
+            Webcam.attach('#upldoc__UploadDocument__cameraPreview');
+        }
+    }
+}
+apz.upldoc.UploadDocument.fnDocumentScanner = function() {
+    Webcam.snap(function(data_uri) {
+        document.getElementById("upldoc__UploadDocument__captureImg" + counter).src = data_uri;
+        $("#upldoc__UploadDocument__captureImg1_ul").removeClass("sno");
+    });
+};
+
+apz.upldoc.UploadDocument.fnDocumentScannerCB = function(params) {
+    debugger;
+    if (params.status) {
+        document.getElementById("upldoc__UploadDocument__captureImg" + counter).src = "data:image/jpg;base64," + params.encodedImage;
+        $("#upldoc__UploadDocument__captureImg" + counter).removeClass("sno");
+        $("#upldoc__UploadDocument__captureIcon" + counter).removeClass("sno");
+        counter++;
+    } else {
+        alert("Failure");
+    }
+};
+
+apz.upldoc.UploadDocument.fnSubmitDetails = function() {
+    debugger;
+    if (apz.getElmValue("upldoc__UploadDocument__ocrTextUploadCheck") == "y") {
+        apz.upldoc.UploadDocument.OCRParse();
+    } else if (apz.getElmValue("upldoc__UploadDocument__uploadTypeRadio") == "files" && apz.getElmValue("upldoc__UploadDocument__ocrTextUploadCheck") ==
+        "n") {
+        apz.upldoc.UploadDocument.fnUploadDocuments();
+    } else if (apz.upldoc.UploadDocument.sCache.action == "fromCustomerImage") {
+        var lreq = {};
+        lreq.data_uri = $("#upldoc__UploadDocument__captureImg1").attr("src").replace("data:image/jpeg;base64,", "");
+        Webcam.reset();
+        apz.upldoc.UploadDocument.sCache.onSubmitCB(lreq);
+    } else if (apz.getElmValue("upldoc__UploadDocument__uploadTypeRadio") == "capture" && apz.getElmValue(
+        "upldoc__UploadDocument__ocrTextUploadCheck") == "n") {
+        apz.upldoc.UploadDocument.fnGetSelectedTestDetails();
+    }
+};
+apz.upldoc.UploadDocument.fnCancelDetails = function() {
+    apz.upldoc.UploadDocument.sCache.onOCRUPloadCBmethod(apz.upldoc.UploadDocument.sCache.scrdata);
+}
+apz.upldoc.UploadDocument.fnUploadDocuments = function() {
+    //apz.upldoc.UploadDocument.fnGetSelectedTestDetails();
+    if ($("#upldoc__UploadDocument__fileUpload").prop("files").length > 0) {
+        var json = {};
+        json.fieldID = "upldoc__UploadDocument__fileUpload";
+        json.callBack = apz.upldoc.UploadDocument.fnUploadDocumentsCB;
+        json.fileName = "";
+        json.overWrite = "Y";
+        json.destination = "Test";
+        apz.ns.uploadFile(json);
+    } else {
+        var msg = {};
+        msg.code = "APZ-CNT-009";
+        apz.dispMsg(msg);
+    }
+};
+apz.upldoc.UploadDocument.fnUploadDocumentsCB = function(params) {
+    debugger;
+};
+apz.upldoc.UploadDocument.fnGetSelectedTestDetails = function() {
+    var lreq = {};
+    //lreq.temp = {};
+    lreq.insuredId = apz.getElmValue("upldoc__UploadDocument__customerId");
+    lreq.testReportType = apz.getElmValue("upldoc__UploadDocument__type");
+    lreq.destination = "/home/i-exceed.com/hari.prasad/Music/upload/Test";
+    lreq.base64image = $("#upldoc__UploadDocument__captureImg1").attr("src").replace("data:image/jpeg;base64,", "");
+    var lActionParams = {
+        "ifaceName": "CaputredImages",
+        "req": lreq,
+        "paintResp": "Y",
+        "async": false
+    };
+    apz.upldoc.UploadDocument.fnBeforeCallServer(lActionParams);
+};
+apz.upldoc.UploadDocument.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.req,
+        "paintResp": params.paintResp,
+        "async": false,
+        "callBack": apz.upldoc.UploadDocument.fnCallServerCallBack,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.upldoc.UploadDocument.fnCallServerCallBack = function(params) {
+    debugger;
+    if (params.status == true) {
+        var msg = {};
+        msg.code = "APZ-SUC-IMG01";
+        apz.dispMsg(msg);
+    }
+};
+apz.upldoc.UploadDocument.OCRParse = function() {
+    debugger;
+	var files = $("#upldoc__UploadDocument__fileUpload").prop("files").length;
+    if ( files > 0) {
+	for(i=0;i<files;i++)
+        	apz.upldoc.UploadDocument.getBase64($("#upldoc__UploadDocument__fileUpload").prop("files")[i],i);
+    } else if (apz.getElmValue("upldoc__UploadDocument__uploadTypeRadio") == "capture") {
+        apz.upldoc.UploadDocument.fnOCRServerCall($("#upldoc__UploadDocument__captureImg1").attr("src").replace("data:image/jpeg;base64,", ""));
+    } else {
+        var msg = {};
+        msg.code = "APZ-CNT-009";
+        apz.dispMsg(msg);
+        apz.upldoc.UploadDocument.sCache.onOCRUPloadCBmethod(apz.upldoc.UploadDocument.sCache.scrdata);
+    }
+};
+apz.upldoc.UploadDocument.getBase64 = function(file,i) {
+    debugger;
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function() {
+        var res = reader.result;
+        var n = res.indexOf(",");
+        var res1 = res.substring(n + 1);
+        apz.upldoc.UploadDocument.fnOCRServerCall(res1,i);
+    };
+    reader.onerror = function(error) {
+        console.log('Error: ', error);
+    };
+};
+apz.upldoc.UploadDocument.fnOCRServerCall = function(response,i) {
+    // if(apz.getElmValue("upldoc__UploadDocument__ocrTextOnlineCheck") == "y"){
+    //apz.mockServer = false;
+    //apz.mockServer = true;
+    // }
+    var file = "";
+    var filetype = "";
+    if ($("#upldoc__UploadDocument__fileUpload").prop("files").length > 0) {
+        file = $("#upldoc__UploadDocument__fileUpload").prop("files")[i];
+        filetype = file.name.split('.').pop();
+    } else if (apz.getElmValue("upldoc__UploadDocument__uploadTypeRadio") == "capture") {
+        filetype = "jpeg";
+    }
+    //var drdnVal = apz.getObjValue($("#SOAPFU__soapFileUpload__i__GetExtratedText__language")[0]); 
+    var str = '{ "ns1:GetExtratedText": {"ns1:Key":"IEXEEDKEY1109lvc","ns1:file":"' + response + '","ns1:f":"' + filetype + '","ns1:language":"' +
+        "English" + '"}}';
+    var req1 = JSON.parse(str);
+    /*var req1 = str;
+    var req1 = str;
+    */
+    apz.startLoader();
+    var params = {};
+    params.callBackObj = {"index":i};
+    params.buildReq = 'N';
+    params.paintResp = 'N';
+    params.req = req1;
+    params.ifaceName = 'soapFileUpload';
+    params.async = true;
+    params.callBack = apz.upldoc.UploadDocument.fnOCRServerCallCB;
+    params.internal = false;
+    apz.server.callServer(params);
+};
+apz.upldoc.UploadDocument.fnOCRServerCallCB = function(params) {
+    debugger;
+    try {
+        var response = params.res.upldoc__soapFileUpload_Res.GetExtratedTextResponse.GetExtratedTextResult;
+        var extrText = JSON.parse(response).ExtractedText;
+        //var extrText = response.ExtractedText;
+        //var htmlData = JSON.parse(response).HTMLData;
+        // if(apz.getElmValue("upldoc__UploadDocument__ocrTextOnlineCheck") == "y"){
+        //apz.mockServer = true;
+        // }
+        apz.stopLoader();
+  apz.toggleModal({targetId:"ACOP01__AccountOpening__uploadfile"});
+        if (params.status) {
+            var lobj = {
+                "extrText": extrText
+            }
+            if(/T= Tar a a/gim.test(extrText)){
+                apz.upldoc.UploadDocument.parseNIC(lobj);
+            }else if(/DEMOCRATIC SOCIALIST REPUBLIC/img.test(extrText)){
+		apz.upldoc.UploadDocument.parseSrilankanDomestricPasspord(lobj);
+	    }else if(/SRI LANKAN/img.test(extrText)){
+                apz.upldoc.UploadDocument.parseSRILANKANPASSPORD(lobj);
+            }else if(/United Arab Emirates/img.test(extrText)){
+		if(params.callBackObj.index == 0)
+                	apz.upldoc.UploadDocument.parseUAEIDFront(lobj);
+		else if(params.callBackObj.index == 1){
+			apz.upldoc.UploadDocument.parseUAEIDBack(lobj);
+		}
+            }
+            else{
+                apz.upldoc.UploadDocument.parseAndPaintData(lobj);
+            }
+        } else if (params.errorMessage) {
+            var msg = {};
+            msg.code = "FL-UPL-FLDLOC";
+            apz.dispMsg(msg);
+        }
+    } catch (e) {
+        apz.upldoc.UploadDocument.sCache.onOCRUPloadCBmethod(apz.upldoc.UploadDocument.sCache.scrdata);
+    }
+};
+
+apz.upldoc.UploadDocument.parseNIC=function(params){
+    var lines=params.extrText.split("\n"),
+    aadhaarId=lines[4].replace(/\W+/ig,"");
+    apz.upldoc.UploadDocument.sCache.callBack([{
+          aadhaarId  
+    }],params)
+}
+apz.upldoc.UploadDocument.parseUAEIDFront=function(params){
+    debugger;
+   var lines=params.extrText.trim().split("\n"),
+    aadhaarId = lines[3].split(" ")[2].trim(),
+    name = lines[5].split(":")[1].trim(),
+    nationality = lines[7].split(":")[1].trim();
+	apz.upldoc.UploadDocument.UAEIDParsedResult = {aadhaarId,name,nationality,dateOfIssued:"",dateOfExpired:"",passportNo:"",dob:""};
+	if ($("#upldoc__UploadDocument__fileUpload").prop("files").length == 1){
+ 		apz.upldoc.UploadDocument.sCache.callBack([apz.upldoc.UploadDocument.UAEIDParsedResult],params);
+	}
+   
+    
+}
+
+apz.upldoc.UploadDocument.parseUAEIDBack= function(params){
+debugger;
+  var lines=params.extrText.trim().split("\n"),
+    aadhaarId = lines[3].split(" ")[2].trim(),
+    name = lines[5].split(":")[1].trim(),
+    nationality = lines[7].split(":")[1].trim();
+apz.upldoc.UploadDocument.UAEIDParsedResult.passportNo = aadhaarId;				
+apz.upldoc.UploadDocument.sCache.callBack([apz.upldoc.UploadDocument.UAEIDParsedResult],params);
+}
+
+apz.upldoc.UploadDocument.parseSRILANKANPASSPORD=function(params){
+        
+    var lines=params.extrText.split("\n"),
+    name=lines[7].split(" ").slice(2,-4).join(" "),
+    dob=lines[10].split(" ")[2],
+    nationality=lines[8].split(" ").slice(2,-3).join(" "),
+    dateOfIssued=lines[15].split(" ")[1],
+    dateOfExpired=lines[16].split(" ")[3],
+    passportNo=lines[3].split(" ").pop();
+   apz.upldoc.UploadDocument.sCache.callBack([{
+         dob,name,nationality,dateOfIssued,dateOfExpired,passportNo
+    }],params);
+}
+
+
+apz.upldoc.UploadDocument.parseSrilankanDomestricPasspord=function(params){
+   var lines=params.extrText.split("\n"),
+    name=lines[5].match(/\w+(\s+)?(\w+)?/ig,"")[0].trim(),
+    dob=lines[11].split(" ")[0],
+    nationality="SRI LANKAN",
+    dateOfIssued=lines[17].split(" ")[0],
+    dateOfExpired=lines[19].split(" ")[0],
+    passportNo=lines[11].split(" ").pop();
+   apz.upldoc.UploadDocument.sCache.callBack([{
+         dob,name,nationality,dateOfIssued,dateOfExpired,passportNo
+    }],params);
+}
+apz.upldoc.UploadDocument.parseAndPaintData = function(params) {
+    debugger;
+    var extractedText = params.extrText; // Input text
+    var lines = [];
+      lines=extractedText.split("\n");
+    var numLines = lines.length;
+    var i;
+    var currentSection;
+    var lDetails = [];
+    var fromAccount = "";
+    var accountName = "";
+    var pattern = new RegExp("RTGS/NEFT");
+    var passportPattern = new RegExp("Passport No.");
+    var checkPassport=lines[0].split("/");
+    if (pattern.test(lines[2])) {
+        
+                   //Get transaction ammount
+                    var larray1 = lines[6].split(" ");
+                    var trAmount = larray1[6];
+                    //Get account name and beneficary name
+                    var larray2 = lines[10].split(":");
+                    var userArray = larray2[1].split(/\d/);
+                    accountName = userArray[0].trim();
+                     var benfName = larray[larray.length - 1].trim();
+                    //Get from account no
+                    var larray3 = lines[11].split(" ");
+                    fromAccount = larray3[1];
+                   //Get beneficary account no
+                    var larray4 = lines[i].split(".");
+                    var benfAccNo = larray4[larray.length - 1].trim();
+           
+        lDetails.push({
+            "fromAccount": fromAccount,
+            "accountName": accountName,
+            "type": "Intra Bank",
+            "benificiaryName": benfName,
+            "beneficiaryAccount": benfAccNo,
+            "amount": trAmount
+        });
+    }
+    else if(passportPattern.test(checkPassport[checkPassport.length-1].trim())){
+            //Passport no
+            var larray1=lines[1].split(" ");
+            var passportNo=larray1[larray1.length-1].trim();
+            //Nationality
+            var larray2=lines[5].split(" ");
+            var nationality=larray2[2].trim();
+            //DoB
+            var larray3=lines[7].split(" ");
+            var dob=larray3[2].trim()+" "+larray3[3].trim()+" "+larray3[4].trim();
+            var placeOfBirth=larray3[larray3.length-1].trim();
+            //Gender
+            var larray4=lines[9].split("-");
+            var genderArray=larray4[2].split(" ");
+            if(genderArray[0]=="M"){
+               var gender="Male";
+            }
+            else{
+               var gender="Female";
+            }
+            //Date of issue and Date of expired
+            var larray5=lines[11].split(" ");
+            var dateOfIssued=larray5[1].trim()+" "+larray5[2].trim()+" "+larray5[3].trim();
+            var dateOfExpired=larray5[4].trim()+" "+larray5[5].trim()+" "+larray5[6].trim();
+            //Place of issued
+            var larray6=lines[13].split(" ");
+            var placeOfIssued=larray6[0].trim()+" "+larray6[1].trim();
+            lDetails.push({
+		    "name": lines[3],
+		    "passportNo": passportNo,
+		    "nationality": nationality,
+		    "dob": dob,
+		    "placeOfBirth": placeOfBirth,
+		    "gender": gender,
+		    "dateOfIssued": dateOfIssued,
+		    "dateOfExpired": dateOfExpired,
+		    "placeOfIssued": placeOfIssued
+           });
+    } 
+     else {
+        for (var i in lines) {
+            if (lines[i] != "") {
+                if (i == 1) {
+                    var larray = lines[i].split(" ");
+                    fromAccount = larray[0];
+                    accountName = apz.upldoc.UploadDocument.getFromAccName(larray);
+                } else if (i > 2) {
+                    var larray = lines[i].split(" ");
+                    lDetails.push({
+                        "fromAccount": fromAccount,
+                        "accountName": accountName,
+                        "type": "Intra Bank",
+                        "benificiaryName": apz.upldoc.UploadDocument.getToAccName(larray),
+                        "beneficiaryAccount": larray[1].trim(),
+                        "amount": larray[larray.length - 1].trim()
+                    });
+                }
+            }
+        }
+    }
+    console.log(lDetails);
+   
+   // lParams.destroyDiv = apz.upldoc.UploadDocument.sCache.destroyDiv;
+    //lParams.parentAppId = apz.upldoc.UploadDocument.sCache.parentAppId;
+    apz.upldoc.UploadDocument.sCache.callBack(lDetails, lParams)
+};
+apz.upldoc.UploadDocument.getFromAccName = function(accArray) {
+    var frmAccStr = "";
+    for (var i = 0; i < accArray.length; i++) {
+        if (i != "0") {
+            frmAccStr += accArray[i] + " ";
+        }
+    }
+    return frmAccStr.trim();
+};
+apz.upldoc.UploadDocument.getToAccName = function(accArray) {
+    var toAccStr = "";
+    for (var i = 0; i < accArray.length; i++) {
+        if (i != "0" && i != "1" && i != accArray.length - 1) {
+            toAccStr += accArray[i] + " ";
+        }
+    }
+    return toAccStr.trim();
+};
+apz.upldoc.UploadDocument.mobcamera = function() {
+    var jsonobj = {
+        "zoomLevel": "20",
+        "targetWidth": "200",
+        "targetHeight": "200",
+        "crop": "Y", //Y or N  
+        "flash": "N",
+        "action": "base64_Save", // save,base64 
+        "fileName": "Sample",
+        "quality": "50",
+        "encodingType": "JPG",
+        "sourceType": "camera" // photo 
+    };
+    jsonobj.id = "CAMERA_ID";
+    jsonobj.callBack = apz.upldoc.UploadDocument.mobcameraCallback;
+    apz.ns.openCamera(jsonobj);
+}
+apz.upldoc.UploadDocument.mobcameraCallback = function(pjson) {
+    if (pjson.status) {
+        document.getElementById("upldoc__UploadDocument__captureImg1").src = "data:image/jpg;base64," + pjson.encodedImage;
+        $("#upldoc__UploadDocument__captureImg1_ul").removeClass("sno");
+    } else {
+        //alert("Failure");
+    }
+};
+apz.upldoc.UploadDocument.fnBack = function() {
+    apz.upldoc.UploadDocument.sCache.backFunction();
+}

@@ -1,0 +1,127 @@
+apz.accstm.ministatement = {};
+apz.app.onLoad_MiniStatement = function(params) {
+    debugger;
+    apz.accstm.ministatement.sParams = params;
+    apz.accstm.ministatement.fnInitialise(params);
+    $("#csmrbk__LandingPage__ScreenNmeLandingTxt_txtcnt").text("STATEMENT");
+};
+apz.accstm.ministatement.fnInitialise = function(params) {
+    
+    if (params.Navigation) {
+        apz.accstm.ministatement.fnSetNavigation(params);
+    }
+    apz.accstm.ministatement.fnSetDataStage1();
+   
+    apz.accstm.ministatement.fnAccountStmt();
+};
+apz.accstm.ministatement.fnSetDataStage1 = function(){
+    debugger;
+     if (apz.accstm.ministatement.sParams.action == "Mini") {
+        apz.show("accstm__MiniStatement__BackNav");
+        apz.show("accstm__MiniStatement__AccNoForm");
+        var lObj = {
+            "value": apz.accstm.ministatement.sParams.data.accountBal,
+            "decimalSep": ".",
+            "mask": "LAKH",
+            "displayAsLiteral": "N",
+            "decimalPoints": "2"
+        }
+        var lAccNo = apz.formatNumber(lObj);
+        apz.setElmValue("accstm__MiniStatement__AvailableBalaance", lAccNo)
+        apz.setElmValue("accstm__MiniStatement__AccNo", apz.accstm.ministatement.sParams.data.accountNo)
+    } else {
+        apz.hide("accstm__MiniStatement__BackNav");
+        apz.hide("accstm__MiniStatement__AccNoForm");
+    }
+}
+apz.accstm.ministatement.fnSetNavigation = function(params) {
+    debugger;
+    apz.accstm.ministatement.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "STATEMENT";
+    }
+    lParams.backPressed = apz.accstm.ministatement.fnBack;
+    apz.accstm.ministatement.Navigation(lParams);
+};
+apz.accstm.ministatement.fnBack = function() {
+    debugger;
+    apz.accstm.ministatement.sParams.callBack();
+};
+apz.accstm.ministatement.fnAccountStmt = function() {
+    var lServerParams = {
+        "ifaceName": "MiniStatement",
+        "buildReq": "N",
+        "req": {
+            "customerId": apz.accstm.ministatement.sParams.customerID,
+            "stmtType": "MINI",
+            "accountNo": apz.accstm.ministatement.sParams.accountNo
+        }
+    };
+    apz.accstm.ministatement.fnBeforeCallServer(lServerParams);
+};
+apz.accstm.ministatement.fnBeforeCallServer = function(params) {
+    apz.data.loadJsonData(params.ifaceName,"accstm");
+    debugger;
+    if (params.errors) {
+        var param = {
+            'code': params.errors[0].errorCode
+        };
+        apz.dispMsg(param);
+    } else {
+        var lminiStmt = apz.data.scrdata.accstm__MiniStatement_Res.miniStmtMaster.miniStmtDtls;
+        for (var i = 0; i < lminiStmt.length; i++) {
+            if (lminiStmt[i].drcrInd == "C") {
+                $("#accstm__MiniStatement__o__miniStmtDtls__trnAmount_" + i).addClass("suc");
+            } else if (lminiStmt[i].drcrInd == "D") {
+                $("#accstm__MiniStatement__o__miniStmtDtls__trnAmount_" + i).addClass("err");
+            }
+        }
+        
+    }
+};
+/*
+apz.accstm.ministatement.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": params.buildReq,
+        "req": params.req,
+        "paintResp": "Y",
+        "callBack": apz.accstm.ministatement.fnCallServerCallBack,
+        "appId": "accstm",
+        "internal": false
+    };
+    //apz.server.callServer(lServerParams);
+    
+};*/
+apz.accstm.ministatement.fnSortByDate = function(pArray) {
+    /*    pArray.sort(function(a, b) {
+        MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+        var aa = a.split('-'),
+            bb = b.split('-');
+        return aa[2] - bb[2] || MONTHS[aa[1]] - MONTHS[bb[1]] || aa[0] - bb[0];
+    });*/
+    MONTHS = {
+        jan: 1,
+        feb: 2,
+        mar: 3,
+        apr: 4,
+        may: 5,
+        jun: 6,
+        jul: 7,
+        aug: 8,
+        sep: 9,
+        oct: 10,
+        nov: 11,
+        dec: 12
+    };
+    pArray.sort(function(a, b) {
+        var aa = a.trnDate.split('-'),
+            bb = b.trnDate.split('-');
+        return bb[2] - aa[2] || MONTHS[bb[1]] - MONTHS[aa[1]] || bb[0] - aa[0];
+    });
+    return pArray;
+};

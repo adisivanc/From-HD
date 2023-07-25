@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"ApplyLoanMobile","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","screencategory":"NONE","displayname":"ApplyLoanMobile","interfaces":[{"name":"Liabilities","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

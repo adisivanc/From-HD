@@ -1,0 +1,33 @@
+apz.declar.Terms = {};
+apz.declar.Terms.sCache = {}
+apz.app.onLoad_Terms = function(params) {
+    debugger;
+    apz.declar.Terms.sCache = params;
+}
+apz.app.onShown_Terms = function(params) {
+    debugger;
+    $("#declar__Launcher__launcherModel_content").scrollTop(0);
+}
+apz.declar.Terms.fnAgree = function() {
+    var params = {};
+    params.appId = "declar";
+    params.scr = "FourthFatca";
+    params.div = "declar__Launcher__modelLauncher";
+    params.userObj=apz.declar.Terms.sCache;
+    params.userObj.from="TermsScreen";
+    apz.launchSubScreen(params);
+    // apz.toggleModal({
+    //     targetId: "declar__Launcher__launcherModel"
+    // })
+}
+apz.declar.Terms.fnBack = function() {
+    var params = {};
+    params.appId = "declar";
+    params.scr = "Ekyc";
+    params.div = "declar__Launcher__modelLauncher";
+    params.userObj=apz.declar.Terms.sCache;
+    apz.launchSubScreen(params);
+    // apz.toggleModal({
+    //     targetId: "declar__Launcher__launcherModel"
+    // })
+}

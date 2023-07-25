@@ -1,0 +1,165 @@
+apz.cdtcrd.ministatement = {};
+apz.cdtcrd.ministatement.sParams = {};
+var x = {};
+apz.app.onLoad_MiniStatement = function(params) {
+    debugger;
+    apz.cdtcrd.ministatement.sParams = params;
+    apz.cdtcrd.ministatement.fnInitialise(params);
+          apz.setElmValue("landin__Landing__heading", "CREDIT CARD STATEMENT");
+
+};
+apz.cdtcrd.ministatement.fnInitialise = function(params) {
+    if (params.Navigation) {
+        apz.cdtcrd.ministatement.fnSetNavigation(params);
+    }
+    apz.cdtcrd.ministatement.fnSetDataStage1();
+    apz.cdtcrd.ministatement.fnAccountStmt();
+};
+apz.app.onShown_MiniStatement = function() {
+    debugger;
+    $(".crt-form.ver .ecn > .syl > span").text("Rs.");
+};
+apz.cdtcrd.ministatement.fnSetDataStage1 = function() {
+    debugger;
+    if (apz.cdtcrd.ministatement.sParams.action == "Mini") {
+        apz.show("cdtcrd__MiniStatement__BackNav");
+        apz.show("cdtcrd__MiniStatement__AccNoForm");
+        var lObj = {
+            "value": apz.cdtcrd.ministatement.sParams.data.accountBal,
+            "decimalSep": ".",
+            "mask": "LAKH",
+            "displayAsLiteral": "N",
+            "decimalPoints": "2"
+        }
+        var lAccNo = apz.formatNumber(lObj);
+        apz.setElmValue("cdtcrd__MiniStatement__AvailableBalance", " " + lAccNo)
+        apz.setElmValue("cdtcrd__MiniStatement__AccNo", apz.cdtcrd.ministatement.sParams.data.cardNumber)
+    } else {
+        apz.hide("cdtcrd__MiniStatement__BackNav");
+        apz.hide("cdtcrd__MiniStatement__AccNoForm");
+    }
+}
+apz.cdtcrd.ministatement.fnSetNavigation = function(params) {
+    debugger;
+    apz.cdtcrd.ministatement.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "STATEMENT";
+    }
+    lParams.backPressed = apz.cdtcrd.ministatement.fnBack;
+    apz.cdtcrd.ministatement.Navigation(lParams);
+};
+// apz.cdtcrd.ministatement.fnBack = function() {
+//     debugger;
+//     apz.cdtcrd.ministatement.sParams.callBack();
+// };
+apz.cdtcrd.ministatement.fnBack = function() {
+    debugger;
+    
+    
+    apz.launchSubScreen({
+        appId: "cdtcrd",
+        scr: "CreditCardDetails",
+        div: "landin__Landing__launcher",
+        userObj: {...apz.cdtcrd.ministatement.sParams
+        }
+    })
+    }
+
+apz.cdtcrd.ministatement.fnAccountStmt = function() {
+    var lServerParams = {
+        "ifaceName": "MiniStatement",
+        "buildReq": "N",
+        "req": {
+            "customerId": apz.cdtcrd.ministatement.sParams.customerID,
+            "stmtType": "MINI",
+            "accountNo": apz.cdtcrd.ministatement.sParams.accountNo
+        }
+    };
+    apz.cdtcrd.ministatement.fnBeforeCallServer(lServerParams);
+    var details = apz.data.scrdata.cdtcrd__MiniStatement_Res.miniStmtMaster.miniStmtDtls;
+    for (i = 0; i < details.length; i++) {
+        debugger;
+        if (details[i].trnAmount > 2500 && details[i].drcrInd == "D") {
+            $("#cdtcrd__MiniStatement__emi_" + i).removeClass("sno");
+        }
+    }
+};
+apz.cdtcrd.ministatement.fnBeforeCallServer = function(params) {
+    debugger;
+    // var lServerParams = {
+    //     "ifaceName": params.ifaceName,
+    //     "buildReq": params.buildReq,
+    //     "req": params.req,
+    //     "paintResp": "Y",
+    //     "callBack": apz.cdtcrd.ministatement.fnCallServerCallBack,
+    //     "appId": "cdtcrd",
+    //     "internal": false
+    // };
+    // apz.server.callServer(lServerParams);
+    apz.data.loadJsonData(params.ifaceName);
+    apz.cdtcrd.ministatement.fnCallServerCallBack();
+};
+apz.cdtcrd.ministatement.fnCallServerCallBack = function() {
+    debugger;
+    var lminiStmt = apz.data.scrdata.cdtcrd__MiniStatement_Res.miniStmtMaster.miniStmtDtls;
+    for (var i = 0; i < lminiStmt.length; i++) {
+        if (lminiStmt[i].drcrInd == "C") {
+            $("#cdtcrd__MiniStatement__o__miniStmtDtls__trnAmount_" + i).addClass("suc");
+        } else if (lminiStmt[i].drcrInd == "D") {
+            $("#cdtcrd__MiniStatement__o__miniStmtDtls__trnAmount_" + i).addClass("err");
+        }
+    }
+};
+apz.cdtcrd.ministatement.fnSortByDate = function(pArray) {
+    MONTHS = {
+        jan: 1,
+        feb: 2,
+        mar: 3,
+        apr: 4,
+        may: 5,
+        jun: 6,
+        jul: 7,
+        aug: 8,
+        sep: 9,
+        oct: 10,
+        nov: 11,
+        dec: 12
+    };
+    pArray.sort(function(a, b) {
+        var aa = a.trnDate.split('-'),
+            bb = b.trnDate.split('-');
+        return bb[2] - aa[2] || MONTHS[bb[1]] - MONTHS[aa[1]] || bb[0] - aa[0];
+    });
+    return pArray;
+};
+apz.cdtcrd.ministatement.emical = function(param) {
+    debugger;
+
+    rowno = $(param).attr("rowno");
+    objj = apz.data.scrdata.cdtcrd__MiniStatement_Res.miniStmtMaster.miniStmtDtls[rowno];
+    var x = objj.trnAmount;
+    if (apz.deviceGroup == "Mobile") {
+        
+        apz.launchSubScreen({
+            appId: "cdtcrd",
+            scr: "emiCalculation",
+            div: "cdtcrd__MiniStatement__emiCalculatorLauncher",
+            userObj: {...apz.cdtcrd.ministatement.sParams, "amount": x
+            }
+        })
+        apz.toggleModal({
+            targetId: "cdtcrd__MiniStatement__emiCalculator"
+        });
+    } else {
+        apz.launchSubScreen({
+            appId: "cdtcrd",
+            scr: "emiCalculation",
+            div: "cdtcrd__CreditCardDetails__Stage2",
+            userObj: {...apz.cdtcrd.ministatement.sParams, "amount": x
+            }
+        })
+    }
+}

@@ -1,0 +1,85 @@
+{
+    "favour__FavouriteTransfer_Res": {
+        "summary": [{
+            "amount": "200",
+            "moduleCode": "24356",
+            "toBenefNo": "acc No-539383933",
+            "customerId": "000004712",
+            "nickname": "Girish",
+            "id": 1,
+            "fromAccountNo": "100009312263",
+            "beneficiaryId": "1232",
+            "creationTs": "2018-03-10",
+            "toAccountNo": "129562399110",
+            "beneficiaryImage":"g.png",
+            "ifsc" : "679475",
+            "bankName" : "HDFC Bank",
+            "currency" : "INR"
+        }, {
+            "amount": "200",
+            "moduleCode": "24356",
+            "toBenefNo": "MMID-1234",
+            "customerId": "000004712",
+            "nickname": "Aarav",
+            "id": 2,
+            "fromAccountNo": "100009312263",
+            "beneficiaryId": "54344",
+            "creationTs": "2018-03-10",
+            "toAccountNo": "129848934455",
+            "beneficiaryImage":"a.png",
+             "ifsc" : "786950",
+            "bankName" : "City Bank",
+                        "currency" : "INR"
+
+        }, {
+            "amount": "200",
+            "moduleCode": "24356",
+            "toBenefNo": "MMID-1234",
+            "customerId": "000004712",
+            "nickname": "Arjun",
+            "id": 3,
+            "fromAccountNo": "100009312263",
+            "beneficiaryId": "4332",
+            "creationTs": "2018-03-10",
+            "toAccountNo": "128723019265",
+            "beneficiaryImage":"a.png",
+             "ifsc" : "389404",
+            "bankName" : "ICICI",
+                        "currency" : "INR"
+
+        }, {
+            "amount": "200",
+            "moduleCode": "24356",
+            "toBenefNo": "MMID-1234",
+            "customerId": "000004712",
+            "nickname": "Jaideep",
+            "id": 4,
+            "fromAccountNo": "100009312263",
+            "beneficiaryId": "3553",
+            "creationTs": "2018-03-10",
+            "toAccountNo": "128928923898",
+            "beneficiaryImage":"j.png",
+             "ifsc" : "893047",
+            "bankName" : "Axis Bank",
+                        "currency" : "INR"
+
+        },
+         {
+            "amount": "200",
+            "moduleCode": "24356",
+            "toBenefNo": "MMID-1234",
+            "customerId": "000004712",
+            "nickname": "Stalin",
+            "id": 4,
+            "fromAccountNo": "100009312263",
+            "beneficiaryId": "3553",
+            "creationTs": "2018-03-10",
+            "toAccountNo": "128928923898",
+            "beneficiaryImage":"s.png",
+             "ifsc" : "893047",
+            "bankName" : "HSBC Bank USA",
+                        "currency" : "INR"
+
+        }]
+    }
+}

@@ -1,0 +1,13 @@
+apz.trckgl.checkParams = function(Params) {
+    debugger;
+    Params.userObj = {
+        "goalId": "",
+        "customerID": "",
+        "goalDescription": "Goal",
+        "amtReqforGoal": "100000",
+        "expTimeforGoalUnit": "",
+        "expTimeforGoalFreq": "",
+        "goalFundBy": "",
+        "goalStatus": "Partially Achieved"
+    };
+};

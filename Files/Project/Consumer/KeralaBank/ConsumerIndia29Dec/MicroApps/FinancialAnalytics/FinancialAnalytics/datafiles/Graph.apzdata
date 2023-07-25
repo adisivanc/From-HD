@@ -1,0 +1,183 @@
+{"FinancialAnalytics": {"Transaction": [
+        {
+            "Spent_Type": "Cash Withdrawal",
+            "Trn_Code": "ACW",
+            "Amount": 264732.2,
+            "DRCR_IND": "D",
+            "transDate" : "28/01/2018"
+        },
+        {
+            "Spent_Type": "Others",
+            "Trn_Code": "SEW",
+            "Amount": 28841.11,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "Others",
+            "Trn_Code": "GP1",
+            "Amount": 100,
+            "DRCR_IND": "D",
+            "transDate" : "20/01/2018"
+        },
+        {
+            "Spent_Type": "",
+            "Trn_Code": "XAC",
+            "Amount": 132821,
+            "DRCR_IND": "C",
+            "transDate" : "01/02/2018"
+        },
+        {
+            "Spent_Type": "Others",
+            "Trn_Code": "DPP",
+            "Amount": 11293.33,
+            "DRCR_IND": "D",
+            "transDate" : "28/01/2018"
+        },
+        {
+            "Spent_Type": "Others",
+            "Trn_Code": "EPM",
+            "Amount": 45785.29,
+            "DRCR_IND": "D",
+            "transDate" : "28/01/2018"
+        },
+        {
+            "Spent_Type": "Cash Withdrawal",
+            "Trn_Code": "UTF",
+            "Amount": 40,
+            "DRCR_IND": "D",
+            "transDate" : "28/01/2018"
+        },
+        {
+            "Spent_Type": "",
+            "Trn_Code": "CDA",
+            "Amount": 14000,
+            "DRCR_IND": "C",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "",
+            "Trn_Code": "WIL",
+            "Amount": 1022812.5,
+            "DRCR_IND": "C",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "",
+            "Trn_Code": "WPS",
+            "Amount": 1574575,
+            "DRCR_IND": "C",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "",
+            "Trn_Code": "QOC",
+            "Amount": 411830,
+            "DRCR_IND": "C",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "Others",
+            "Trn_Code": "EFL",
+            "Amount": 22323.69,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "POS",
+            "Trn_Code": "MTF",
+            "Amount": 120,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "Others",
+            "Trn_Code": "LIQ",
+            "Amount": 50,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "Others",
+            "Trn_Code": "DON",
+            "Amount": 30,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "Others",
+            "Trn_Code": "SLK",
+            "Amount": 11650,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "POS",
+            "Trn_Code": "H01",
+            "Amount": 106246.25,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "Finance Repayments",
+            "Trn_Code": "AID",
+            "Amount": 184178.8,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "POS",
+            "Trn_Code": "H04",
+            "Amount": 17038.36,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "Others",
+            "Trn_Code": "WIB",
+            "Amount": 2022812.5,
+            "DRCR_IND": "D"
+        },
+        {
+            "Spent_Type": "Clearing",
+            "Trn_Code": "QIC",
+            "Amount": 421600,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "Others",
+            "Trn_Code": "CWC",
+            "Amount": 595720,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "",
+            "Trn_Code": "QDI",
+            "Amount": 72445,
+            "DRCR_IND": "C",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "Others",
+            "Trn_Code": "CIC",
+            "Amount": 50,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "Others",
+            "Trn_Code": "WRC",
+            "Amount": 2000,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        },
+        {
+            "Spent_Type": "Cash Withdrawal",
+            "Trn_Code": "DON",
+            "Amount": 20,
+            "DRCR_IND": "D",
+            "transDate" : "03/01/2018"
+        }
+    ]}}

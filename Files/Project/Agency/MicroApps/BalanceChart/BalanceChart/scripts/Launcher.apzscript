@@ -1,0 +1,39 @@
+apz.balanc.launcher = {};
+apz.balanc.launcher.sParams = {};
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+apz.balanc.launcher.sParams = params;
+};
+apz.app.onShown_Launcher = function(params) {
+    debugger;
+    apz.balanc.launcher.launchCharts();
+};
+apz.balanc.launcher.fnCancel = function(){
+    
+    debugger;
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": "menuap__Menu__MainLaunchArea",
+            "parentAppId": "menuap",
+            "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+            "custImg": "menuap__Menu__custImg",
+            "custId": "menuap__Menu__custId_txtcnt"
+        }
+    }
+    apz.launchApp(lParams);
+}
+
+apz.balanc.launcher.launchCharts = function(){
+    
+    var lParams = {
+        "appId": "balanc",
+        "scr": "Products",
+        "div": "balanc__Launcher__launcher"
+    };
+    apz.launchSubScreen(lParams);
+}

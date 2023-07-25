@@ -1,0 +1,214 @@
+apz.paymts.CreditCardPaymentVerify = {};
+apz.paymts.CreditCardPaymentVerify.sCache = {};
+apz.paymts.CreditCardPaymentVerify.sAction = "";
+apz.paymts.CreditCardPaymentVerify.fromAccountBalance = "";
+apz.paymts.CreditCardPaymentVerify.fromAccountType = "";
+apz.paymts.CreditCardPaymentVerify.CreditCard = "";
+apz.paymts.CreditCardPaymentVerify.CreditBalance = "";
+apz.paymts.CreditCardPaymentVerify.ServiceResponse = [];
+apz.app.onLoad_CreditCardPaymentVerify = function(params) {
+    debugger;
+    apz.paymts.CreditCardPaymentVerify.sCache = params;
+    if (apz.paymts.CreditCardPaymentVerify.sCache.data.Amount == "") {
+        apz.paymts.CreditCardPaymentVerify.sCache.data.Amount = "2500";
+    }
+    apz.setElmValue("paymts__CreditCardPaymentVerify__verifyCardNum", apz.paymts.CreditCardPaymentVerify.sCache.data.creditCardNum);
+    apz.setElmValue("paymts__CreditCardPaymentVerify__verifyAmt", apz.paymts.CreditCardPaymentVerify.sCache.data.Amount);
+    apz.hide("paymts__CreditCardPaymentVerify__successModal_close");
+    apz.paymts.CreditCardPaymentVerify.fnLaunchAuthentication();
+};
+apz.app.onShown_CreditCardPaymentVerify = function(params) {
+    //  $("#paymts__CreditCardPaymentVerify__aadhaar")[0].click();
+    //  apz.paymts.CreditCardPaymentVerify.fnLaunchOtp();
+};
+// apz.paymts.CreditCardPaymentVerify.fnLaunchAadhaar = function() {
+//     apz.currAppId = "paymts";
+//     var lParams = {
+//         "appId": "MKVR01",
+//         "scr": "AadhaarVerification",
+//         "div": "paymts__CreditCardPaymentVerify__debitCardAuthenticationRow",
+//         "type": "CF",
+//         "userObj": {
+//             "action": "",
+//             "data": {},
+//             "destroyDiv": apz.paymts.CreditCardPaymentVerify.sCache.destroyDiv ,
+//             "parentAppId": apz.paymts.CreditCardPaymentVerify.sCache.parentAppId
+//         }
+//     };
+//     apz.launchApp(lParams);
+// };
+apz.paymts.CreditCardPaymentVerify.fnLaunchAuthentication = function() {
+    apz.currAppId = "paymts";
+    $(".active").removeClass("active");
+    var lParams = {
+        "appId": "pfauth",
+        "scr": "Authentication",
+        "div": "paymts__CreditCardPaymentVerify__authlaunchArea",
+        "type": "CF",
+        "userObj": {
+            "action": "",
+            "data": {},
+            "destroyDiv": apz.paymts.CreditCardPaymentVerify.sCache.destroyDiv,
+            "parentAppId": apz.paymts.CreditCardPaymentVerify.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.paymts.CreditCardPaymentVerify.fnLaunchDebit = function() {
+    apz.currAppId = "paymts";
+    var lParams = {
+        "appId": "DBAT01",
+        "scr": "DebitCardAuthentication",
+        "div": "paymts__CreditCardPaymentVerify__debitCardAuthenticationRow",
+        "type": "CF",
+        "userObj": {
+            "action": "",
+            "data": {},
+            "destroyDiv": apz.paymts.CreditCardPaymentVerify.sCache.destroyDiv,
+            "parentAppId": apz.paymts.CreditCardPaymentVerify.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.paymts.CreditCardPaymentVerify.fnFinal = function() {
+    apz.currAppId = "paymts";
+    apz.paymts.CreditCardPaymentVerify.ModifyDB();
+    // var lObj = {
+    //     "scr": "CreditCardPaymentFinal",
+    //     "div": apz.paymts.CreditCardPaymentVerify.sCache.destroyDiv,
+    //     "animation": 9,
+    //     "userObj": {
+    //         "action": apz.paymts.CreditCardPaymentVerify.sCache.action,
+    //         "data": {
+    //             "creditCardNum": apz.paymts.CreditCardPaymentVerify.sCache.data.creditCardNum,
+    //             "Amount": apz.paymts.CreditCardPaymentVerify.sCache.data.Amount
+    //         },
+    //         "destroyDiv": apz.paymts.CreditCardPaymentVerify.sCache.destroyDiv,
+    //         "parentAppId": apz.paymts.CreditCardPaymentVerify.sCache.parentAppId,
+    //         "callBack": apz.paymts.CreditCardPaymentVerify.sCache.callBack
+    //     }
+    // };
+    // apz.launchSubScreen(lObj);
+    apz.setElmValue("paymts__CreditCardPaymentVerify__transferType", "Transfer Type - Credit card payment");
+    apz.setElmValue("paymts__CreditCardPaymentVerify__transferDesc", "Successfully paid ₹" + apz.paymts.CreditCardPaymentVerify.sCache.data.Amount +
+        " for " + "Card number " + apz.paymts.CreditCardPaymentVerify.sCache.data.creditCardNum);
+    var param = {};
+    param.targetId = 'paymts__CreditCardPaymentVerify__successModal';
+    param.callBack = null;
+    param.callBackObj = this;
+    apz.toggleModal(param);
+};
+apz.paymts.CreditCardPaymentVerify.ModifyDB = function() {
+    debugger;
+    for (j = 0; j < apz.paymts.CreditCardPaymentDetails.AccountData.length; j++) {
+        if (apz.paymts.CreditCardPaymentDetails.AccountData[j].accountNumber == apz.paymts.CreditCardPaymentVerify.sCache.data.fromAcc) {
+            apz.paymts.CreditCardPaymentVerify.fromAccountBalance = apz.paymts.CreditCardPaymentDetails.AccountData[j].balance;
+            apz.paymts.CreditCardPaymentVerify.fromAccountType = apz.paymts.CreditCardPaymentDetails.AccountData[j].accountType;
+        }
+        if (apz.paymts.CreditCardPaymentDetails.AccountData[j].accountNumber == apz.paymts.CreditCardPaymentVerify.sCache.data.creditCardNum) {
+            apz.paymts.CreditCardPaymentVerify.CreditBalance = apz.paymts.CreditCardPaymentDetails.AccountData[j].balance;
+            apz.paymts.CreditCardPaymentVerify.CreditCard = apz.paymts.CreditCardPaymentDetails.AccountData[j].accountType;
+        }
+    }
+    apz.paymts.CreditCardPaymentVerify.beforeCallServer();
+}
+apz.paymts.CreditCardPaymentVerify.beforeCallServer = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "TransactionPayment",
+        "buildReq": "N",
+        "req": {
+            "transactionDetails": {
+                "customerId": "Customer01",
+                "creditCardNumber": apz.paymts.CreditCardPaymentVerify.sCache.data.creditCardNum,
+                "transactionAmount": apz.paymts.CreditCardPaymentVerify.sCache.data.Amount,
+                "dueDate": "2017-09-01",
+                "paymentDate": new Date().toString("dd-MMM-yyyy hh:mm tt")
+            }
+        },
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.paymts.CreditCardPaymentVerify.callServerCallBack,
+        "callBackObj": "",
+    }
+    debugger;
+    apz.server.callServer(lServerParams);
+}
+apz.paymts.CreditCardPaymentVerify.callServerCallBack = function(params) {
+    debugger;
+    apz.paymts.CreditCardPaymentVerify.ServiceResponse = params.res.paymts__TransactionPayment_Res.transactionDetails;
+    apz.paymts.CreditCardPaymentVerify.fnfirstModify();
+}
+apz.paymts.CreditCardPaymentVerify.callServerCallBackLast = function(params) {
+    debugger;
+}
+apz.paymts.CreditCardPaymentVerify.fnfirstModify = function() {
+    var lServerParams = {
+        "ifaceName": "TransctionDetails_Modify",
+        "buildReq": "N",
+        "req": {
+            "agencybankingtransactions": {
+                "accountNumber": apz.paymts.CreditCardPaymentVerify.sCache.data.fromAcc,
+                "balance": apz.paymts.CreditCardPaymentVerify.fromAccountBalance - parseInt(apz.paymts.CreditCardPaymentVerify.ServiceResponse.amount),
+                "accountType": apz.paymts.CreditCardPaymentVerify.fromAccountType,
+                "transactionType": "CREDIT CARD PAYMENT",
+                "transactionId": apz.paymts.CreditCardPaymentVerify.ServiceResponse.transactionId,
+                "dateTime": apz.paymts.CreditCardPaymentVerify.ServiceResponse.paymentDate
+            }
+        },
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.paymts.CreditCardPaymentVerify.firstcallServerCallBack,
+        "callBackObj": "",
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.paymts.CreditCardPaymentVerify.firstcallServerCallBack = function(params) {
+    debugger;
+    apz.paymts.CreditCardPaymentVerify.fnsecondModify();
+}
+apz.paymts.CreditCardPaymentVerify.fnsecondModify = function() {
+    var lServerParams = {
+        "ifaceName": "TransactionModify_Modify",
+        "buildReq": "N",
+        "req": {
+            "agencybankingtransactions": {
+                "accountNumber": apz.paymts.CreditCardPaymentVerify.sCache.data.creditCardNum,
+                "balance": apz.paymts.CreditCardPaymentVerify.CreditBalance - parseInt(apz.paymts.CreditCardPaymentVerify.ServiceResponse.amount),
+                "accountType": apz.paymts.CreditCardPaymentVerify.CreditCard,
+                "transactionType": "CREDIT CARD PAYMENT",
+                "transactionId": apz.paymts.CreditCardPaymentVerify.ServiceResponse.transactionId,
+                "dateTime": apz.paymts.CreditCardPaymentVerify.ServiceResponse.paymentDate
+            }
+        },
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.paymts.CreditCardPaymentVerify.callServerCallBackLast,
+        "callBackObj": "",
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.paymts.CreditCardPaymentVerify.onCancel = function() {
+    apz.paymts.CreditCardPaymentVerify.sCache.callBack();
+}
+apz.paymts.CreditCardPaymentVerify.fnYes = function() {
+    var lParams = {
+        "appId": "paymts",
+        "scr": "CreditCardPaymentDetails",
+        "div": apz.paymts.CreditCardPaymentVerify.sCache.destroyDiv,
+        "animation": 10,
+        "userObj": {
+            "action": apz.paymts.CreditCardPaymentVerify.sCache.action,
+            "data": {
+                "creditCardNum": apz.paymts.CreditCardPaymentVerify.sCache.data.creditCardNum,
+                "Amount": apz.paymts.CreditCardPaymentVerify.sCache.data.Amount
+            },
+            "destroyDiv": apz.paymts.CreditCardPaymentVerify.sCache.destroyDiv,
+            "parentId": apz.paymts.CreditCardPaymentVerify.sCache.parentAppId
+        }
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.paymts.CreditCardPaymentVerify.fnNo = function() {
+    apz.paymts.CreditCardPaymentVerify.sCache.callBack();
+}

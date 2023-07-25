@@ -1,0 +1,24 @@
+{
+    "details":{
+       "firstName": "Darren ",
+        "lastName": "Lansterman",
+        "dob": "03/10/1978",
+        "nationality": "Ireland",
+        "countryOfRes": "England",
+        "placeOfBirth": "Northern Ireland",
+        "dateOfIncorp":"",
+        "countryOfIncorp":"",
+        "flatNo": "Flat 31",
+        "flatName": " Lakozy House",
+        "street": "Southampton Row",
+        "city": "London",
+        "postalCode": "WC1B 5HJ",
+        "lengthOfTime":"20",
+        "position":"Managing Director",
+        "identificationNo":"46656",
+        "validTill":"02/03/2018",
+        "taxReference":"564543",
+        "socialSecurity":"6765455"
+        
+    }
+}

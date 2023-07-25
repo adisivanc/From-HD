@@ -1,0 +1,23 @@
+apz.travel.Summary = {};
+
+apz.travel.Summary.sparams={};
+apz.app.onLoad_Summary = function(params) {
+    //apz.data.loadJsonData("TravelDetails","travel")
+    debugger;
+  //  apz.travel.summary.sparams = params;
+  var data = params.data
+    apz.setElmValue("travel__Summary__place",data.Travellingto);
+        apz.setElmValue("travel__Summary__depDate",data.Departuredate);
+    apz.setElmValue("travel__Summary__retDate",data.Returndate);
+
+}
+apz.travel.Summary.goBack = function()
+{
+            var lObj = {
+            "scr": "ViewScreen",
+            "appId": "travel",
+            "div": "travel__Launcher__launcher"
+           
+        }
+        apz.launchSubScreen(lObj);
+    }

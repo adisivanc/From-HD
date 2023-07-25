@@ -1,0 +1,38 @@
+apz.tdsfrm.launcher= {};
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+    apz.tdsfrm.launcher.fnInitialize(params);
+};
+apz.app.onShown_Launcher = function(){
+    debugger;
+}
+apz.tdsfrm.launcher.fnInitialize = function(params) {
+    debugger;
+    var scr = "";
+    var accountNumber;
+    if(params.type == "TDS"){
+        scr = "TDSCertificateRequest"
+    }else if(params.type == "DI"){
+        scr = "DICertificateRequest",
+        accountNumber = params.accountNumber
+    }else if(params.type == "TIFD"){
+        scr = "TIFDBooklet"
+    } else if(params.type == "Form15")
+    {
+        scr = "TDSForm"
+    }
+        else{
+        scr = "BalanceCertificateRequest",
+        accountNumber = params.accountNumber
+        
+    }
+    var lParams = {
+            "appId": "tdsfrm",
+            "scr": scr,
+            "div": "tdsfrm__Launcher__launcher",
+            "userObj" : {
+                "accountNumber" : accountNumber,
+            }
+        }
+        apz.launchSubScreen(lParams);
+}

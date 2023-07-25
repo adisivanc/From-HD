@@ -1,0 +1,51 @@
+{
+    "CRAC01__AccountOpenMenu_Req":{
+        "custinfo":[
+            {
+                "menuname":"Personal Details",
+                "menuimg":"icon-personalDetails"
+            },
+            {
+                "menuname":"Minor Details",
+                "menuimg":"icon-minorDetails"
+            },
+            {
+                "menuname":"Address",
+                "menuimg":"icon-address"
+            },
+            {
+                "menuname":"Document",
+                "menuimg":"icon-document01"
+            }
+            ],
+             "personal":[
+            {
+                "menuname":"Primary Details",
+                "menuimg":"icon-primaryDetails"
+            },
+            {
+                "menuname":"Contact Details",
+                "menuimg":"icon-contactDetails"
+            },
+            {
+                "menuname":"Professional",
+                "menuimg":"icon-professional"
+            },
+            {
+                "menuname":"Other",
+                "menuimg":"icon-other"
+            }
+            ],
+             "Accounts":[
+            {
+                "menuname":"Account Details",
+                "menuimg":"icon-accountDetails"
+            },
+            {
+                "menuname":"Nominee Details",
+                "menuimg":"icon-nomineeDetails"
+            }
+            ]
+        
+    }
+}

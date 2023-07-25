@@ -1,0 +1,30 @@
+{
+    "accsum__AccountDetails_Res": {
+        "accSummary": [{
+            "accountNo": "XXXXXXXX2274",
+            "accountBrnName": "Matt Hammerstein",
+            "accountBrnCd": "619",
+            "accountBrnIFSC": "7508",
+            "accountOpnDt": "22/Jan/2000",
+            "accountType": "Current Account",
+            "accountStat": "Open",
+            "actCustRel": "Single",
+            "accountPrdct": "9001",
+            "accountBal": "50000",
+            "minBal": "0",
+            "accountCcy": "GBP",
+            "address": "Clarendon Centre, London",
+            "linkedMobno": "9686736353",
+            "linkedCardno": "XXXX XXXX XXXX 3292",
+            "LienAmount": "0",
+            "status": "Active",
+            "ledgerBalance":"8000",
+            "pendingWithdrawal":"2000",
+            "pendingDeposit":"1000",
+            "intrestPaid":"8000",
+            "intrestDate":"12/Aug/2001",
+            "currentBal": "60000",
+            "routingNo":"889977664"
+        }]
+    }
+}

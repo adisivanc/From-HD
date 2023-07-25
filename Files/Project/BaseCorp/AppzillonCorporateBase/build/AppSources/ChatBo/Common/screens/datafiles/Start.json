@@ -1,0 +1,61 @@
+{
+  "botId": "viola",
+  "conversationId": "20",
+  "state": "INTENT_ACTION, DIALOG_ACTION",
+  "dialog": {
+    "prompt": {
+      "swift": "Hi, How can i help you?",
+      "message": "TEXT",
+      "objectType": "TEXT",
+      "objectFormat" : "base64, URL ...", 
+      "object": ""
+    },
+    "options": [
+        {
+          "objectFormat": "STRING",
+          "payloadType": "TEXT",
+          "payload": "confirmmmm",
+          "title": "Bank visit",
+          "payloadFormat": "STRING",
+          "objectType": "TEXT"
+        },
+        {
+          "objectFormat": "STRING",
+          "payloadType": "TEXT",
+          "payload": "cancellll",
+          "title": "Account Opening",
+          "payloadFormat": "STRING",
+          "objectType": "TEXT"
+        },{
+          "objectFormat": "STRING",
+          "payloadType": "TEXT",
+          "payload": "cancellll",
+          "title": "Issue DD",
+          "payloadFormat": "STRING",
+          "objectType": "TEXT"
+        },{
+          "objectFormat": "STRING",
+          "payloadType": "TEXT",
+          "payload": "cancellll",
+          "title": "Mg Road",
+          "payloadFormat": "STRING",
+          "objectType": "TEXT"
+        },{
+          "objectFormat": "STRING",
+          "payloadType": "TEXT",
+          "payload": "cancellll",
+          "title": "Balance Enquiry",
+          "payloadFormat": "STRING",
+          "objectType": "TEXT"
+        }
+      ],
+       "entity": []
+  },
+  "status": true,
+  "errors": [
+    {
+      "errorMessage": "",
+      "errorCode": ""
+    }
+  ]
+}

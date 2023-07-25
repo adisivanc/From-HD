@@ -1,0 +1,22 @@
+[{
+    "STATUS": "PENDING APPROVAL",
+    "workflow_ref_no": "CONSONB3021573586085",
+    "START_TS": "15/07/2020",
+    "COMPANY_NAME":"I-exceed technology",
+    "SUB_PRODUCT":"TLN12345",
+    "stage_id":"RMAPPROVE",
+    "SIGNATORY_ID":93493049,
+    "FLOW_NO":5,
+    "COUNTRY_NAME":"India"
+    
+},{
+    "STATUS": "PENDING APPROVAL",
+    "workflow_ref_no": "CONSONB3021573586086",
+    "START_TS": "16/07/2020",
+    "COMPANY_NAME":"Appzillon Bank",
+    "SUB_PRODUCT":"TLN54321",
+    "stage_id":"RMAPPROVE",
+    "SIGNATORY_ID":93493049,
+    "FLOW_NO":8,
+    "COUNTRY_NAME":"America"
+}]

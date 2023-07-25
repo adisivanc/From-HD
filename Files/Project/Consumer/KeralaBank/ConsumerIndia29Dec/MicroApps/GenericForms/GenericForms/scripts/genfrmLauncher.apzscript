@@ -1,0 +1,8 @@
+apz.genfrm.checkParams = function(params) {
+    debugger;
+    params.userObj = {
+        "data": {
+            "customerID": "000004712"
+        }
+    };
+};

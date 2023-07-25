@@ -1,0 +1,12 @@
+apz.agloan.SuccessScreen = {};
+apz.app.onLoad_SuccessScreen = function(params) {
+    debugger;
+    apz.agloan.SuccessScreen.fnSendSuccessMsg(params);
+};
+apz.agloan.SuccessScreen.fnSendSuccessMsg = function(params) {
+  debugger;
+
+    $("#agloan__SuccessScreen__el_txt_6_txtcnt").text(params.message);
+    
+    $("#agloan__SuccessScreen__el_txt_8_txtcnt").text(params.refNo);
+}

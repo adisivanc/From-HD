@@ -1,0 +1,142 @@
+ apz.cdtcrd.emiCalculation = {};
+ apz.cdtcrd.emiCalculation.sParams = {};
+ var z = {};
+ apz.app.onLoad_emiCalculation = function(params) {
+     debugger;
+     apz.cdtcrd.emiCalculation.sParams = params
+     z = params.amount;
+     apz.setElmValue("cdtcrd__emiCalculation__el_inp_1", z)
+     apz.cdtcrd.emiCalculation.check();
+ }
+ apz.cdtcrd.emiCalculation.check = function() {
+     var x = apz.getElmValue("cdtcrd__emiCalculation__el_dpd_1");
+     var y = parseInt(x);
+     if (y == 6) {
+         apz.setElmValue("cdtcrd__emiCalculation__el_inp_3", 24.0);
+         apz.setElmValue("cdtcrd__emiCalculation__el_inp_4", 40);
+     } else if (y == 12) {
+         apz.setElmValue("cdtcrd__emiCalculation__el_inp_3", 12.0);
+         apz.setElmValue("cdtcrd__emiCalculation__el_inp_4", 38);
+     } else if (y == 24) {
+         apz.setElmValue("cdtcrd__emiCalculation__el_inp_3", 18.0);
+         apz.setElmValue("cdtcrd__emiCalculation__el_inp_4", 38);
+     }
+     var amount = parseInt(apz.getElmValue("cdtcrd__emiCalculation__el_inp_1"));
+     var tenure = apz.getElmValue("cdtcrd__emiCalculation__el_dpd_1")
+     var interest = apz.getElmValue("cdtcrd__emiCalculation__el_inp_3");
+     var monthlyRate = interest / (12 * 100);
+     var monthlyEMI = [
+         [amount * monthlyRate * Math.pow((1 + monthlyRate), tenure)] / [Math.pow((1 + monthlyRate), tenure) - 1]
+     ];
+     var totalEMI = (Math.round((monthlyEMI * 100) / 100));
+     apz.setElmValue("cdtcrd__emiCalculation__el_inp_2", totalEMI);
+ }
+ apz.cdtcrd.emiCalculation.cancel = function() {
+     /*apz.launchSubScreen({
+         appId : "cdtcrd",
+         scr: "Tabs",
+         div : "cdtcrd__CreditCardDetails__Stage2",
+         userObj:{...apz.cdtcrd.emiCalculation.sParams}
+     })*/
+     apz.launchSubScreen({
+         appId: "cdtcrd",
+         scr: "CreditCardDetails",
+         div: "landin__Landing__launcher",
+         userObj: {...apz.cdtcrd.emiCalculation.sParams
+         }
+     })
+ }
+ apz.cdtcrd.emiCalculation.fnCallback = function() {
+     debugger;
+          if(apz.cdtcrd.emiCalculation.sParams.from == "Dashboard")
+{
+    apz.launchApp({
+         appId: "sucscr",
+         scr: "SuccessScreen",
+         div: "landin__Landing__launcher",
+         userObj: {
+             "text": "EMI conversion is successful"
+         }
+     })
+}
+else
+{
+     apz.launchApp({
+         appId: "sucscr",
+         scr: "SuccessScreen",
+         div: "cdtcrd__CreditCardDetails__Stage2",
+         userObj: {
+             "text": "EMI conversion is successful"
+         }
+     })
+ }
+ }
+ apz.cdtcrd.emiCalculation.submit = function() {
+     debugger;
+          var x = apz.getElmValue("cdtcrd__emiCalculation__el_cbx_2")
+
+     if(apz.cdtcrd.emiCalculation.sParams.from == "Dashboard")
+     {
+          if (x == "y") {
+         var lLaunchParams = {
+             "appId": "otpeng",
+             "scr": "ProcessOTP",
+             "div": "landin__Landing__launcher",
+             "userObj": {
+                 "action": "SetRefNo",
+                 "data": {
+                     //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+                 },
+                 "control": {
+                     "appId": "otpeng",
+                     "callBack": apz.cdtcrd.emiCalculation.fnCallback,
+                     "destroyDiv": "landin__Landing__launcher"
+                 }
+             }
+         };
+         
+        apz.toggleModal({
+            targetId: "cdtcrd__MiniStatement__emiCalculator"
+        });
+        
+        // $("#cdtcrd__MiniStatement__emiCalculator_close").click();
+         apz.launchApp(lLaunchParams);
+     } else if (x == "n") {
+         apz.dispMsg({
+             "message": "Please agree to the terms and conditions"
+         })
+     }
+     }
+     else
+     {
+     if (x == "y") {
+         var lLaunchParams = {
+             "appId": "otpeng",
+             "scr": "ProcessOTP",
+             "div": "cdtcrd__CreditCardDetails__Stage2",
+             "userObj": {
+                 "action": "SetRefNo",
+                 "data": {
+                     //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+                 },
+                 "control": {
+                     "appId": "otpeng",
+                     "callBack": apz.cdtcrd.emiCalculation.fnCallback,
+                     "destroyDiv": "cdtcrd__CreditCardDetails__Stage2"
+                 }
+             }
+         };
+         
+        apz.toggleModal({
+            targetId: "cdtcrd__MiniStatement__emiCalculator"
+        });
+        
+        // $("#cdtcrd__MiniStatement__emiCalculator_close").click();
+         apz.launchApp(lLaunchParams);
+     } else if (x == "n") {
+         apz.dispMsg({
+             "message": "Please agree to the terms and conditions"
+         })
+     }
+     }
+ }

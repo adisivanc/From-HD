@@ -1,0 +1,44 @@
+{
+    "tbDbmiCorpRoleAccount": [
+        
+        {
+            "roleId": "Admin",
+            "accountType": "Savings",
+            "accountNo": "00028829921",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 100000,
+            "accountCurrency": "INR"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Savings",
+            "accountNo": "08778222332",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 220000,
+            "accountCurrency": "INR"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Current",
+            "accountNo": "08778222334",
+            "entityId": "Entity1",
+            "accessRights": "Both",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 4000000,
+            "accountCurrency": "INR"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Current",
+            "accountNo": "28800323232",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 500000,
+            "accountCurrency": "INR"
+        }
+        
+    ],
+    "accountStatus": true
+}

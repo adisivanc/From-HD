@@ -1,0 +1,15 @@
+{
+    "change__IFSCDetails_Res": [{
+        "ifscCode": "APZ000234",
+        "bankName": "APZ Bank",
+        "address": "One Wall Street,New York"
+    },{
+        "ifscCode": "APZ000014",
+        "bankName": "APZ Bank",
+        "address": "One Wall Street,New York"
+    },{
+        "ifscCode": "APZ000052",
+        "bankName": "APZ Bank",
+        "address": "One Wall Street,New York"
+    }]
+}

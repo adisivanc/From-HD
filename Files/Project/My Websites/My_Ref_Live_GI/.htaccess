@@ -1,0 +1,21 @@
+# For security reasons, Option followsymlinks cannot be overridden.
+#Options +FollowSymLinks
+Options +SymLinksIfOwnerMatch
+RewriteEngine On
+RewriteBase /
+
+RewriteRule ^index.html$ /index.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^contact-us$ /contact.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^profile$ /aboutus.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^products-wallputty$ /wallputty.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^dealer$ /dealer.php?%{QUERY_STRING} [QSA,L]
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/(.+)/css/(.*)$ /css/$2 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/(.+)/secure/images/(.*)$ /secure/images/$2 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/(.+)/images/(.*)$ /images/$2 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/(.+)/js/(.*)$ /js/$2 [QSA,L]

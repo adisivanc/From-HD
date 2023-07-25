@@ -1,0 +1,23 @@
+{
+    "prdsel__AccountsComparision_Res": [{
+        "feature": "Comparison Criteria",
+        "A1": "Saving account",
+        "A2": "Salary Account",
+        "A3": "Demat Account"
+    },{
+        "feature": "Branch Transacton",
+        "A1": "No Transaction fee per month",
+        "A2": "First three trasaction",
+        "A3": "20 transaction"
+    },{
+        "feature": "NEFT online",
+        "A1": "Nill",
+        "A2": "rs 25 per transaction",
+        "A3": "rs 50 per transaction"
+    },{
+        "feature": "IMPS ",
+        "A1": "Saving account",
+        "A2": "Salary Account",
+        "A3": "Demat Account"
+    }]
+}

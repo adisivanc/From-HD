@@ -1,0 +1,281 @@
+apz.declar.FourthFatca = {};
+var isfileUploaded = false;
+var isAddressfileUploaded = false;
+var isTelefileUploaded = false;
+apz.declar.FourthFatca.sCache = {};
+apz.app.onLoad_FourthFatca = function(params) {
+    debugger;
+    apz.declar.FourthFatca.lRefNo = params.refNo;
+    apz.declar.FourthFatca.sCache = params;
+    apz.declar.FourthFatca.fetchApplicationDetails();
+};
+apz.app.onShown_FourthFatca = function(params) {
+    debugger;
+    $("#declar__Launcher__launcherModel_content").scrollTop(0);
+}
+apz.declar.FourthFatca.fnAgree = function() {
+    debugger;
+    if (apz.declar.FourthFatca.sCache.from === "TermsScreen") {
+        $("#declar__Launcher__launcherModel_close").click();
+        apz.declar.FourthFatca.sCache.callback();
+    } else {
+        var params = {};
+        params.appId = "appsum";
+        params.scr = "SummaryLauncher";
+        // params.div = "prddtl__ProductAccountLauncher__launcher";
+        params.div = "appdtl__AppLauncher__screenLauncher";
+        params.userObj = {
+            "refNo": apz.declar.FourthFatca.sCache.refNo,
+            "product": apz.appdtl.AppLauncher.sCache.product,
+            "subproduct": apz.appdtl.AppLauncher.sCache.subproduct
+        }
+        apz.launchApp(params);
+    }
+}
+apz.declar.FourthFatca.fnCancel = function() {
+    debugger;
+    if(apz.declar.FourthFatca.sCache.from === "TermsScreen"){
+        $("#declar__Launcher__launcherModel_close").click();
+    }else{
+        apz.appdtl.AppLauncher.fnCancel();
+    }
+}
+apz.declar.FourthFatca.fnBack = function() {
+    debugger;
+    if (apz.declar.FourthFatca.sCache.from === "TermsScreen") {
+        var params = {};
+        params.appId = "declar";
+        params.scr = "Terms";
+        params.div = "declar__Launcher__modelLauncher";
+        params.userObj = apz.declar.FourthFatca.sCache;
+        apz.launchSubScreen(params);
+    } else {
+        var params = {};
+        params.appId = "declar";
+        params.scr = "Dbt";
+        params.div = "appdtl__AppLauncher__screenLauncher";
+        params.userObj = apz.declar.FourthFatca.sCache;
+        apz.launchSubScreen(params);
+    }
+}
+apz.declar.FourthFatca.fetchApplicationDetails = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "FatcaCompliance_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiFatcaCompliance": {
+                "refNo": apz.declar.FourthFatca.lRefNo,
+            }
+        },
+        "appId": "declar",
+        "paintResp": "Y",
+        "callBack": apz.declar.FourthFatca.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.declar.FourthFatca.fetchApplicationDetailsCB = function(params) {
+    debugger;
+    if (params && params.status && !params.errors) {
+        if (params.res.declar__FatcaCompliance_Req.tbDbmiFatcaCompliance) {
+            var fatcaDetails = params.res.declar__FatcaCompliance_Req.tbDbmiFatcaCompliance;
+            if (fatcaDetails.areYouUsCitizen == "yes") {
+                $("#declar__FourthFatca__el_btn_1").addClass("current");
+            }
+            if (fatcaDetails.areYouUsCitizen == "no") {
+                $("#declar__FourthFatca__el_btn_2").addClass("current");
+            }
+            if (fatcaDetails.areYouGreencardHolder == "yes") {
+                $("#declar__FourthFatca__el_btn_4").addClass("current");
+            }
+            if (fatcaDetails.areYouGreencardHolder == "no") {
+                $("#declar__FourthFatca__el_btn_5").addClass("current");
+            }
+            if (fatcaDetails.areYouUsTaxresident == "yes") {
+                $("#declar__FourthFatca__el_btn_6").addClass("current");
+                $("#declar__FourthFatca__rowinptax").removeClass("sno");
+            }
+            if (fatcaDetails.areYouUsTaxresident == "no") {
+                $("#declar__FourthFatca__el_btn_7").addClass("current");
+                $("#declar__FourthFatca__rowinptax").addClass("sno");
+            }
+            if (fatcaDetails.areYouUsBorn == "yes") {
+                $("#declar__FourthFatca__el_btn_8").addClass("current");
+            }
+            if (fatcaDetails.areYouUsBorn == "no") {
+                $("#declar__FourthFatca__el_btn_9").addClass("current");
+            }
+            if (fatcaDetails.doYouHaveUsAddress == "yes") {
+                $("#declar__FourthFatca__btnyes").addClass("current");
+            }
+            if (fatcaDetails.doYouHaveUsAddress == "no") {
+                $("#declar__FourthFatca__el_btn_11").addClass("current");
+            }
+            if (fatcaDetails.doYouHaveUsTelephoneNumber == "yes") {
+                $("#declar__FourthFatca__el_btn_12").addClass("current");
+            }
+            if (fatcaDetails.doYouHaveUsTelephoneNumber == "no") {
+                $("#declar__FourthFatca__el_btn_13").addClass("current");
+            }
+            if (fatcaDetails.haveYouIssuedStandingInstruction == "yes") {
+                $("#declar__FourthFatca__el_btn_14").addClass("current");
+            }
+            if (fatcaDetails.haveYouIssuedStandingInstruction == "no") {
+                $("#declar__FourthFatca__el_btn_15").addClass("current");
+            }
+            if (fatcaDetails.areYouUsCitizen == "no" && fatcaDetails.areYouGreencardHolder == "no" && fatcaDetails.areYouUsTaxresident == "no") {
+                $("#declar__FourthFatca__row2ques").removeClass("sno");
+            }
+            if ((fatcaDetails.areYouUsCitizen == "yes" || fatcaDetails.areYouGreencardHolder == "yes" || fatcaDetails.areYouUsTaxresident == "yes") &&
+                fatcaDetails.wnineFormName != "") {
+                $("#declar__FourthFatca__row3ques").removeClass("sno");
+            }
+        }
+    }
+}
+apz.declar.FourthFatca.fnSelectOption = function(pthis, pval, prow, pques) {
+    debugger;
+    $("#declar__FourthFatca__" + prow + " :button").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__" + pques, pval);
+    var isUSResident = apz.getElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__areYouUsCitizen");
+    var isGreenCardHolder = apz.getElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__areYouGreencardHolder");
+    var istaxResident = apz.getElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__areYouUsTaxresident");
+    if (istaxResident == "yes") {
+        $("#declar__FourthFatca__rowinptax").removeClass("sno");
+    }
+    if (istaxResident == "no") {
+        apz.setElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__tin", "");
+        $("#declar__FourthFatca__rowinptax").addClass("sno");
+    }
+    //if ((isUSResident == "yes" || isGreenCardHolder == "yes" || istaxResident == "yes") && isfileUploaded == false) {
+    if (pval == "yes" && isfileUploaded == false) {
+        apz.declar.FourthFatca.uploadingFile = "w9form";
+        $("#declar__FourthFatca__rowfileupload").removeClass("sno");
+        $("#declar__FourthFatca__row2ques").addClass("sno");
+    } else if (isUSResident == "no" && isGreenCardHolder == "no" && istaxResident == "no") {
+        isfileUploaded = false;
+        $("#declar__FourthFatca__row2ques").removeClass("sno");
+        $("#declar__FourthFatca__row3ques").addClass("sno");
+        $("#declar__FourthFatca__rowfileupload").addClass("sno");
+        apz.declar.FourthFatca.wnineform = "";
+        apz.setElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__wnineFormName", "");
+    }
+}
+apz.declar.FourthFatca.fnSelectAddress = function(pthis, pval, prow, pques) {
+    debugger;
+    $("#declar__FourthFatca__" + prow + " :button").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__" + pques, pval);
+    var isUSBorn = apz.getElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__areYouUsBorn");
+    var corrAddress = apz.getElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__doYouHaveUsAddress");
+    if ((isUSBorn == "yes" || corrAddress == "yes") && isAddressfileUploaded == false) {
+        $("#declar__FourthFatca__rowfileupload").removeClass("sno");
+        apz.declar.FourthFatca.uploadingFile = "addrw8form";
+    } else if (isUSBorn == "no" && corrAddress == "no") {
+        $("#declar__FourthFatca__rowfileupload").addClass("sno");
+    }
+}
+apz.declar.FourthFatca.fnSelectTeleNum = function(pthis, pval, prow, pques) {
+    $("#declar__FourthFatca__" + prow + " :button").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__" + pques, pval);
+    var isTelephonenum = apz.getElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__doYouHaveUsTelephoneNumber");
+    var isStandingInst = apz.getElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__haveYouIssuedStandingInstruction");
+    if ((isTelephonenum == "yes" || isStandingInst == "yes") && isTelefileUploaded == false) {
+        $("#declar__FourthFatca__rowfileupload").removeClass("sno");
+        apz.declar.FourthFatca.uploadingFile = "telew8form";
+    } else if (isTelephonenum == "no" && isStandingInst == "no") {
+        $("#declar__FourthFatca__rowfileupload").addClass("sno");
+    }
+}
+apz.declar.FourthFatca.fnCloseFileUploadModal = function() {
+    $("#declar__FourthFatca__rowfileupload").addClass("sno");
+}
+apz.declar.FourthFatca.fnUploadFile = function() {
+    debugger;
+    $("#declar__FourthFatca__filebrowser").trigger("click");
+}
+apz.declar.FourthFatca.fnBrowseFile = function(pthis) {
+    debugger;
+    let fileObj = pthis.files[0];
+    apz.declar.FourthFatca.ldocName = fileObj.name;
+    let apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        let binaryStr = apzFileReader.result;
+        var encodedImage = binaryStr.split(",").pop();
+        if (apz.declar.FourthFatca.uploadingFile == "w9form") {
+            apz.declar.FourthFatca.wnineform = encodedImage;
+            apz.setElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__wnineFormName", apz.declar.FourthFatca.ldocName);
+            $("#declar__FourthFatca__rowfileupload").addClass("sno");
+            isfileUploaded = true;
+            $("#declar__FourthFatca__row3ques").removeClass("sno");
+        }
+        if (apz.declar.FourthFatca.uploadingFile == "telew8form") {
+            apz.declar.FourthFatca.weightform = encodedImage;
+            apz.setElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__weightFormName", apz.declar.FourthFatca.ldocName);
+            $("#declar__FourthFatca__rowfileupload").addClass("sno");
+            isTelefileUploaded = true;
+        }
+        if (apz.declar.FourthFatca.uploadingFile == "addrw8form") {
+            apz.declar.FourthFatca.weightform = encodedImage;
+            apz.setElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__weightFormName", apz.declar.FourthFatca.ldocName);
+            $("#declar__FourthFatca__rowfileupload").addClass("sno");
+            isAddressfileUploaded = true;
+        }
+        $("#" + pthis.id).val("");
+    }
+    apzFileReader.readAsDataURL(fileObj);
+}
+apz.declar.FourthFatca.saveApplicationDetails = function() {
+    debugger;
+    apz.setElmValue("declar__FatcaCompliance__i__tbDbmiFatcaCompliance__refNo", apz.declar.FourthFatca.lRefNo);
+    apz.declar.FourthFatca.scrData = apz.data.buildData("FatcaCompliance", "declar").declar__FatcaCompliance_Req.tbDbmiFatcaCompliance;
+    setTimeout(function() {
+        apz.declar.FourthFatca.fnDeleteData();
+    }, 100)
+}
+apz.declar.FourthFatca.fnDeleteData = function() {
+    debugger;
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "FatcaCompliance_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiFatcaCompliance": {
+                "refNo": apz.declar.FourthFatca.lRefNo,
+            }
+        },
+        "appId": "declar",
+        "paintResp": "N",
+        "callBack": apz.declar.FourthFatca.fnDeleteDataCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.declar.FourthFatca.fnDeleteDataCB = function(params) {
+    debugger;
+    apz.declar.FourthFatca.fnInsertData();
+}
+apz.declar.FourthFatca.fnInsertData = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "FatcaCompliance_New",
+        "buildReq": "N",
+        "req": {},
+        "appId": "declar",
+        "paintResp": "N",
+        "callBack": apz.declar.FourthFatca.fnSaveApplicationDetailsCB,
+    }
+    var req = {};
+    req.tbDbmiFatcaCompliance = apz.declar.FourthFatca.scrData;
+    req.tbDbmiFatcaCompliance.wnineForm = apz.declar.FourthFatca.wnineform;
+    req.tbDbmiFatcaCompliance.weightForm = apz.declar.FourthFatca.weightform;
+    lServerParams.req = req;
+    apz.server.callServer(lServerParams);
+}
+apz.declar.FourthFatca.fnSaveApplicationDetailsCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    apz.declar.Launcher.fnLaunchApp();
+}

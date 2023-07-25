@@ -1,0 +1,62 @@
+apz.chgbil.ChangeInBillingCycle = {};
+apz.app.onLoad_ChangeInBillingCycle = function() {
+    debugger;
+      //  apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "REQUEST FOR BILLING CYCLE CHANGE");
+        
+}
+apz.chgbil.ChangeInBillingCycle.selCard = function()
+{
+    var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1; //January is 0!
+
+var yyyy = today.getFullYear();
+if (dd < 10) {
+  dd = '0' + dd;
+} 
+if (mm < 10) {
+  mm = '0' + mm;
+} 
+var today = dd + '/' + mm + '/' + yyyy;
+apz.setElmValue("chgbil__ChangeInBillingCycle__el_inp_1", today)
+}
+apz.chgbil.ChangeInBillingCycle.dispMsg = function(pResp, type) {
+    var params = {};
+    params.message = pResp;
+    params.type = type;
+    params.callBack = apz.app.displayMessageCallBack;
+    apz.dispMsg(params);
+}
+apz.chgbil.ChangeInBillingCycle.confirm = function() {
+    
+  
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "chgbil__Launcher__launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.chgbil.ChangeInBillingCycle.confirmCB,
+                "destroyDiv": "chgbil__Launcher__launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+
+apz.chgbil.ChangeInBillingCycle.confirmCB = function() {
+    var lLaunchParams = {
+        "appId": "sucscr",
+        "scr": "SuccessScreen",
+        "div": "chgbil__Launcher__launcher",
+        "userObj": {
+            "text": "Your request for the change in billing cycle has been submitted. We will get in touch with you shortly."
+        }
+    }
+    apz.launchApp(lLaunchParams);
+}

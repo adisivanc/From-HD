@@ -1,0 +1,79 @@
+{
+    "relovr__RelationshipOverviewCurr_Res": {
+            "savingAccDtls": [{
+                "accountNo": "100009312263",
+                "currency": "INR",
+                "name": "Jay",
+                "location": "Koramangala, Bengaluru",
+                "availableBal": "50000"
+            }, {
+                "accountNo": "100009312401",
+                "currency": "INR",
+                "name": "Jay",
+                "location": "Koramangala, Bengaluru",
+                "availableBal": "65000"
+            }],
+            "currentAccDtls": [{
+                "accountNo": "100009312274",
+                "currency": "USD",
+                "name": "Jay",
+                "location": "Koramangala, Bengaluru",
+                "availableBal": "60000"
+            }],
+            "loanAccDtls": [{
+                "accountNo": "100009312343",
+                "currency": "INR",
+                "name": "Jay",
+                "location": "Koramangala, Bengaluru",
+                "outstandingBal": "123756"
+            }, {
+                "accountNo": "100009312252",
+                "currency": "INR",
+                "name": "Jay",
+                "location": "Koramangala, Bengaluru",
+                "outstandingBal": "457594"
+            }],
+            "fixedDepAccDtls": [{
+                "accountNo": "100009312285",
+                "currency": "INR",
+                "name": "Jay",
+                "location": "Koramangala, Bengaluru",
+                "depositBal": "45000"
+            }, {
+                "accountNo": "100009312456",
+                "currency": "INR",
+                "name": "Jay",
+                "location": "Koramangala, Bengaluru",
+                "depositBal": "90000"
+            }, {
+                "accountNo": "100009312985",
+                "currency": "INR",
+                "name": "Jay",
+                "location": "Koramangala, Bengaluru",
+                "depositBal": "100000"
+            },{
+                "accountNo": "543985494322",
+                "currency": "INR",
+                "name": "Jay",
+                "location": "Koramangala, Bengaluru",
+                "depositBal": "65947"
+            }],
+            "cards" :
+            [{"cardNo": "7349 XX7X X8XX 2345",
+                "currency": "INR",
+                "name": "Jay",
+                "location": "Koramangala, Bengaluru",
+                "balance": "20000"
+                
+            },
+            {"cardNo": "6493 XX3X X2XX 1143",
+                "currency": "INR",
+                "name": "Jay",
+                "location": "Koramangala, Bengaluru",
+                "balance": "27831"
+                
+            }]
+            
+        }
+    }
+

@@ -1,0 +1,272 @@
+apz.fdsumm.fdtopup = {};
+apz.app.onLoad_FDTopup = function(params) {
+    debugger;
+    apz.fdsumm.fdtopup.sParams = params;
+   //  LandingCommon.setHeading("TOP UP")
+    apz.fdsumm.fdtopup.fnInitialise(params);
+};
+apz.app.onShown_FDTopup = function() {
+    debugger;
+    $(".crt-form.ver .ecn > .syl > span").text("");
+};
+apz.fdsumm.fdtopup.fnSetNavigation = function(params) {
+    debugger;
+    apz.fdsumm.fdtopup.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "FIXED DEPOSIT TOPUP";
+    }
+    lParams.backPressed = apz.fdsumm.fdtopup.fnBack;
+    apz.fdsumm.fdtopup.Navigation(lParams);
+};
+apz.fdsumm.fdtopup.fnInitialise = function(params) {
+    debugger;
+    apz.fdsumm.fdtopup.sParams = params;
+    apz.data.loadJsonData("FDTopUpFromAcc","fdsumm");
+    apz.fdsumm.fdtopup.sParams.data.accounts = apz.data.scrdata.fdsumm__FDTopUpFromAcc_Res.accounts;
+    apz.fdsumm.fdtopup.fnGoToStage1();
+};
+apz.fdsumm.fdtopup.fnGoToStage1 = function() {
+    apz.fdsumm.fdtopup.fnSetDataInStage1();
+    apz.fdsumm.fdtopup.fnRenderStage1();
+};
+apz.fdsumm.fdtopup.fnSetDataInStage1 = function() {
+    debugger;
+    apz.setElmValue("fdsumm__FDTopup__i__fdTopupDtls__accountNo", apz.fdsumm.fdtopup.sParams.data.accountNo);
+    var param = {
+        "decimalSep": ".",
+        "decimalPoints" :"2",
+        "value": apz.fdsumm.fdtopup.sParams.data.maturityAmount,
+        "mask": "MILLION",
+        "displayAsLiteral": "N"
+    };
+    apz.setElmValue("fdsumm__FDTopup__maturityAmt", apz.formatNumber(param));
+   
+    
+    var lAccs = apz.fdsumm.fdtopup.sParams.data.accounts;
+    var lArr = [{
+        "val": "",
+        "desc": "Select Account"
+    }];
+    for (var i = 0; i < lAccs.length; i++) {
+        var lObj = {
+            "val": lAccs[i].accountNo,
+            "desc": lAccs[i].accountNo
+        };
+        lArr.push(lObj);
+    }
+    apz.populateDropdown(document.getElementById("fdsumm__FDTopup__i__fdTopupDtls__fromAccountNo"), lArr);
+    apz.setElmValue("fdsumm__FDTopup__i__fdTopupDtls__authenticationType", "OTP");
+    apz.setElmValue("fdsumm__FDTopup__i__fdTopupDtls__topUpPaidDate", new Date().format("d/M/Y"));
+    apz.setElmValue("fdsumm__FDTopup__i__fdTopupDtls__customerId", apz.fdsumm.fdtopup.sParams.data.customerID);
+    
+};
+
+apz.fdsumm.fdtopup.fnDropdownChange = function() {
+    var lSelAcc = apz.getElmValue("fdsumm__FDTopup__i__fdTopupDtls__fromAccountNo");
+    var lAccs = apz.fdsumm.fdtopup.sParams.data.accounts;
+    for (var i = 0; i < lAccs.length; i++) {
+        var param = {
+            "decimalSep": ".",
+            "value": lAccs[i].accountBalance,
+            "mask": "MILLION",
+            "displayAsLiteral": "N"
+        };
+        if (lAccs[i].accountNo == lSelAcc) {
+            apz.setElmValue("fdsumm__FDTopup__fromAccBal", apz.formatNumber(param));
+        }
+    }
+    if (apz.isNull(lSelAcc)) {
+        apz.setElmValue("fdsumm__FDTopup__fromAccBal", "");
+    }
+};
+apz.fdsumm.fdtopup.fnValidateAmt = function(pThis) {
+    debugger;
+    var lObj = {
+        "decimalSep": ".",
+        "value": apz.getElmValue('fdsumm__FDTopup__fromAccBal'),
+        "mask": "MILLION",
+        "displayAsLiteral": "N"
+    };
+    var lBal = apz.unFormatNumber(lObj);
+    var lAmt = apz.getElmValue('fdsumm__FDTopup__i__fdTopupDtls__topUpAmt');
+    if (!apz.val.isNumber(lAmt)) {
+        params = {
+            "code": "ERR_VALID_AMT"
+        };
+        apz.dispMsg(params);
+        apz.setElmValue('fdsumm__FDTopup__i__fdTopupDtls__topUpAmt', "");
+    } else if (apz.isNull(lBal)) {
+        params = {
+            "code": "ERR_VALID_AMT1"
+        };
+        apz.dispMsg(params);
+    } else if (JSON.parse(lAmt) > JSON.parse(lBal)) {
+        params = {
+            "code": "ERR_VALID_AMT2"
+        };
+        apz.dispMsg(params);
+        apz.setElmValue('fdsumm__FDTopup__i__fdTopupDtls__topUpAmt', "");
+    } else {
+        lObj.value = lAmt;
+        apz.setElmValue('fdsumm__FDTopup__i__fdTopupDtls__topUpAmt', apz.formatNumber(lObj));
+    }
+};
+apz.fdsumm.fdtopup.fnRenderStage1 = function() {
+    apz.show("fdsumm__FDTopup__stage1");
+    apz.hide("fdsumm__FDTopup__stage2");
+    apz.hide("fdsumm__FDTopup__stage3");
+    apz.hide("fdsumm__FDTopup__stage4");
+};
+apz.fdsumm.fdtopup.fnBackTopup = function() {
+    debugger;
+    apz.fdsumm.fdtopup.sParams.callBack();
+};
+apz.fdsumm.fdtopup.fnContinue = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("fdsumm__FDTopup__topupEnterForm");
+    if (lValid) {
+        apz.fdsumm.fdtopup.fnSetDataInStage2();
+        apz.fdsumm.fdtopup.fnRenderStage2();
+    } else {
+        params = {
+            "code": "ERR_ENTR_DET"
+        };
+        apz.dispMsg(params);
+    }
+};
+apz.fdsumm.fdtopup.fnSetDataInStage2 = function() {
+    apz.setElmValue("fdsumm__FDTopup__confAccNo", apz.getElmValue("fdsumm__FDTopup__i__fdTopupDtls__accountNo"));
+    apz.setElmValue("fdsumm__FDTopup__confMatAmt", apz.getElmValue("fdsumm__FDTopup__maturityAmt"));
+    apz.setElmValue("fdsumm__FDTopup__confFromAcc", apz.getElmValue("fdsumm__FDTopup__i__fdTopupDtls__fromAccountNo"));
+    apz.setElmValue("fdsumm__FDTopup__confAccBal", apz.getElmValue("fdsumm__FDTopup__fromAccBal"));
+    apz.setElmValue("fdsumm__FDTopup__confTopupAmt", apz.getElmValue("fdsumm__FDTopup__i__fdTopupDtls__topUpAmt"));
+    apz.setElmValue("fdsumm__FDTopup__confTopupDate", new Date().toLocaleDateString());
+    apz.setElmValue("fdsumm__FDTopup__confRemarks", apz.getElmValue("fdsumm__FDTopup__i__fdTopupDtls__remarks"));
+};
+apz.fdsumm.fdtopup.fnRenderStage2 = function() {
+    apz.hide("fdsumm__FDTopup__stage1");
+    apz.show("fdsumm__FDTopup__stage2");
+    apz.hide("fdsumm__FDTopup__stage3");
+    apz.hide("fdsumm__FDTopup__stage4");
+};
+apz.fdsumm.fdtopup.fnConfirm = function() {
+    debugger;
+    apz.data.buildData("FDTopup", "fdsumm");
+    var lObj = {
+        "decimalSep": ".",
+        "value": apz.getElmValue('fdsumm__FDTopup__i__fdTopupDtls__topUpAmt'),
+        "mask": "MILLION",
+        "displayAsLiteral": "N"
+    };
+    apz.data.scrdata.fdsumm__FDTopup_Req.fdTopupDtls.topUpAmt = apz.unFormatNumber(lObj);
+    var lServerParams = {
+        "ifaceName": "FDTopup",
+        "buildReq": "N",
+        "req": {
+            "action": "Confirm",
+            "fdTopupDtls": apz.data.scrdata.fdsumm__FDTopup_Req.fdTopupDtls
+        },
+        "paintResp": "N",
+        "callBack": apz.fdsumm.fdtopup.fnCallServerCallBack,
+        "appId": "fdsumm",
+        "internal": false
+    };
+    //apz.server.callServer(lServerParams);
+    apz.data.loadJsonData("FDTopup","fdsumm");
+    apz.fdsumm.fdtopup.fnGotoStage3();
+        var lLaunchParams = {
+            "appId": "otpeng",
+            "scr": "ProcessOTP",
+            "div": "fdsumm__FDTopup__otpCol",
+            "userObj": {
+                "action": "SetRefNo",
+                "data": {
+                    "OTPRefNo": apz.data.scrdata.fdsumm__FDTopup_Res.fdTopupDtls.data.OTPRefNo
+                },
+                "control": {
+                    "appId": "otpeng",
+                    "callBack": apz.fdsumm.fdtopup.fnGotoStage4,
+                    "destroyDiv": "fdsumm__FDTopup__otpCol"
+                }
+            }
+        };
+        apz.launchApp(lLaunchParams);
+};
+apz.fdsumm.fdtopup.fnCallServerCallBack = function(params) {
+    debugger;
+    if (params.errors) {
+        var param = {
+            'code': params.errors[0].errorCode
+        };
+        apz.dispMsg(param);
+    } else {
+        apz.fdsumm.fdtopup.fnGotoStage3();
+        var lLaunchParams = {
+            "appId": "otpeng",
+            "scr": "ProcessOTP",
+            "div": "fdsumm__FDTopup__otpCol",
+            "userObj": {
+                "action": "SetRefNo",
+                "data": {
+                    "OTPRefNo": params.res.fdsumm__FDTopup_Res.fdTopupDtls.data.OTPRefNo
+                },
+                "control": {
+                    "appId": "otpeng",
+                    "callBack": apz.fdsumm.fdtopup.fnGotoStage4,
+                    "destroyDiv": "fdsumm__FDTopup__otpCol"
+                }
+            }
+        };
+        apz.launchApp(lLaunchParams);
+    }
+};
+apz.fdsumm.fdtopup.fnGotoStage3 = function() {
+    apz.fdsumm.fdtopup.fnRenderStage3();
+};
+apz.fdsumm.fdtopup.fnRenderStage3 = function() {
+    apz.hide("fdsumm__FDTopup__stage1");
+    apz.hide("fdsumm__FDTopup__stage2");
+    apz.show("fdsumm__FDTopup__stage3");
+    apz.hide("fdsumm__FDTopup__stage4");
+};
+apz.fdsumm.fdtopup.fnGotoStage4 = function(params) {
+    apz.resetCurrAppId("fdsumm");
+    apz.fdsumm.fdtopup.fnSetDataInStage4(params);
+    apz.fdsumm.fdtopup.fnRenderStage4();
+};
+apz.fdsumm.fdtopup.fnRenderStage4 = function() {
+    apz.hide("fdsumm__FDTopup__stage1");
+    apz.hide("fdsumm__FDTopup__stage2");
+    apz.hide("fdsumm__FDTopup__stage3");
+    apz.show("fdsumm__FDTopup__stage4");
+};
+apz.fdsumm.fdtopup.fnSetDataInStage4 = function(params) {
+    debugger;
+    if (params.fdTopupDtls.status !== "success") {
+        apz.show("fdsumm__FDTopup__failImg");
+        apz.show("fdsumm__FDTopup__failTxt");
+        apz.hide("fdsumm__FDTopup__succImg");
+        apz.hide("fdsumm__FDTopup__succTxt");
+    }
+    apz.setElmValue("fdsumm__FDTopup__ackAccNo", apz.getElmValue("fdsumm__FDTopup__confAccNo"));
+    apz.setElmValue("fdsumm__FDTopup__ackMatAmt", apz.getElmValue("fdsumm__FDTopup__confMatAmt"));
+    apz.setElmValue("fdsumm__FDTopup__ackFromAcc", apz.getElmValue("fdsumm__FDTopup__confFromAcc"));
+    apz.setElmValue("fdsumm__FDTopup__ackTopupAmt", apz.getElmValue("fdsumm__FDTopup__confTopupAmt"));
+    apz.setElmValue("fdsumm__FDTopup__ackTopupDate", apz.getElmValue("fdsumm__FDTopup__confTopupDate"));
+    apz.setElmValue("fdsumm__FDTopup__ackRemarks", apz.getElmValue("fdsumm__FDTopup__confRemarks"));
+    var lResponse = "Your reference number is " + params.fdTopupDtls.txnRefNo;
+    apz.setElmValue('fdsumm__FDTopup__txnRefNo', lResponse);
+};
+apz.fdsumm.fdtopup.fnBackConf = function() {
+    apz.fdsumm.fdtopup.fnRenderStage1();
+};
+apz.fdsumm.fdtopup.fnPrintReceipt = function() {
+    debugger;
+};
+apz.fdsumm.fdtopup.fnDone = function() {
+    debugger;
+   apz.landin.Landing.fnHome();
+};

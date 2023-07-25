@@ -1,0 +1,52 @@
+{
+    "menuitems": {
+        "parentMenu": [{
+            "parentMenuItem": "Home",
+            "childMenu": [{
+                "childMenuItem": "Home1"
+            }, {
+                "childMenuItem": "Home2"
+            }, {
+                "childMenuItem": "Home3"
+            }, {
+                "childMenuItem": "Home4"
+            }]
+        }, {
+            "parentMenuItem": "Profile",
+            "childMenu": [{
+                "childMenuItem": "Profile1",
+                "kidMenu": [{
+                    "kidMenuItem": "Profile11"
+                }, {
+                    "kidMenuItem": "Profile12"
+                }, {
+                    "kidMenuItem": "Profile13"
+                }, {
+                    "kidMenuItem": "Profile14"
+                }]
+            }, {
+                "childMenuItem": "Profile2",
+                "kidMenu": [{
+                    "kidMenuItem": "Profile21"
+                }, {
+                    "kidMenuItem": "Profile22"
+                }, {
+                    "kidMenuItem": "Profile23"
+                }, {
+                    "kidMenuItem": "Profile24"
+                }]
+            }, {
+                "childMenuItem": "Profile3"
+            }, {
+                "childMenuItem": "Profile4"
+            }]
+        }, {
+            "parentMenuItem": "Payment",
+            "childMenu": [{
+                "childMenuItem": "Payment1"
+            }, {
+                "childMenuItem": "Payment2"
+            }]
+        }]
+    }
+}

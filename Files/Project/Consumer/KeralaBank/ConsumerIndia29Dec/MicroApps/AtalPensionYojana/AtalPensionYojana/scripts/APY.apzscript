@@ -1,0 +1,298 @@
+apz.atpsyj.apy = {};
+apz.app.onLoad_APY = function(params) {
+    debugger;
+    apz.atpsyj.apy.fnInitialise(params);
+};
+apz.app.onShown_APY = function(params)
+{
+    debugger;
+        $("#atpsyj__AtalPensionYojana__i__APYDtls__mobileNo").attr("type", "tel");
+
+}
+apz.atpsyj.apy.fnInitialise = function(params) {
+    debugger;
+    apz.atpsyj.apy.sParams = params;
+    if (params.Navigation) {
+        apz.atpsyj.apy.fnSetNavigation(params)
+    }
+    apz.atpsyj.apy.fnGoToStage1();
+};
+
+apz.atpsyj.apy.fnSetNavigation = function(params) {
+    debugger;
+    apz.atpsyj.apy.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "ATAL PENSION YOJANA";
+    }
+    lParams.backPressed = apz.atpsyj.apy.fnBack;
+    apz.atpsyj.apy.Navigation(lParams);
+};
+apz.atpsyj.apy.fnGoToStage1 = function() {
+    debugger;
+    apz.atpsyj.apy.fnSetValueStage1();
+     apz.atpsyj.apy.fnPopulateDropdown();
+    apz.atpsyj.apy.fnRenderStage1();
+};
+apz.atpsyj.apy.fnSetValueStage1 = function() {
+    debugger;
+    apz.setElmValue("atpsyj__AtalPensionYojana__i__APYDtls__customerId", apz.atpsyj.apy.sParams.customerID);
+};
+
+ apz.atpsyj.apy.fnPopulateDropdown = function() {
+    debugger;
+    var lAccounts =  apz.atpsyj.apy.sParams.data.accounts;
+    var lObj = [];
+    var lOption;
+    for (i = 0; i < lAccounts.length; i++) {
+        if (i === 0) {
+            lOption = {
+                "val": "",
+                "desc": "Please Select"
+            };
+        } else {
+            lOption = {
+                "val": lAccounts[i].accountNo,
+                "desc": lAccounts[i].accountType + " - " + lAccounts[i].accountNo
+            };
+        }
+        lObj.push(lOption);
+    }
+    apz.populateDropdown(document.getElementById("atpsyj__AtalPensionYojana__i__APYDtls__fromAccountNo"), lObj);
+};
+apz.atpsyj.apy.fnRenderStage1 = function() {
+    apz.show("atpsyj__APY__Stage1");
+    apz.hide("atpsyj__APY__Stage2");
+    apz.hide("atpsyj__APY__Stage3");
+};
+apz.atpsyj.apy.fnSSSChange = function() {
+    debugger;
+    var lValue = apz.getElmValue("atpsyj__APY__Stage1SSS");
+    apz.setElmValue("atpsyj__AtalPensionYojana__i__APYDtls__benOfSSS", lValue);
+};
+apz.atpsyj.apy.fnTaxPayerChange = function() {
+    debugger;
+    var lValue = apz.getElmValue("atpsyj__APY__Stage1TaxPayer");
+    apz.setElmValue("atpsyj__AtalPensionYojana__i__APYDtls__taxPayer", lValue);
+};
+apz.atpsyj.apy.fnContinueStage1 = function() {
+    debugger
+    var lValid = apz.atpsyj.apy.fnValidateStage1();
+    if (lValid) {
+        apz.data.buildData("AtalPensionYojana", "atpsyj");
+        apz.atpsyj.apy.fnGoToStage2();
+    }
+};
+apz.atpsyj.apy.fnGoToStage2 = function() {
+    debugger;
+    apz.atpsyj.apy.fnSetValueStage2();
+    apz.atpsyj.apy.fnRenderStage2();
+};
+apz.atpsyj.apy.fnSetValueStage2 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.atpsyj__AtalPensionYojana_Req.APYDtls;
+    apz.setElmValue("atpsyj__APY__Stage2SavingsAcc", lDetails.fromAccountNo);
+    apz.setElmValue("atpsyj__APY__Stage2Pension", lDetails.pensionContributionAmount);
+    apz.setElmValue("atpsyj__APY__Stage2ContributionFreq", lDetails.contributionFreq);
+    apz.setElmValue("atpsyj__APY__Stage2RelationshipStatus", lDetails.relationshipStat);
+    apz.setElmValue("atpsyj__APY__Stage2SpouseName", lDetails.spouseName);
+    apz.setElmValue("atpsyj__APY__Stage2NomineeName", lDetails.nomineeName);
+    apz.setElmValue("atpsyj__APY__Stage2NomineeRelationship", lDetails.nomineeRelation);
+    apz.setElmValue("atpsyj__APY__Stage2NomineeDOB", lDetails.dobOfNominee);
+    apz.setElmValue("atpsyj__APY__Stage2GuardianName", lDetails.guardianName);
+    apz.setElmValue("atpsyj__APY__Stage2SSS", lDetails.benOfSSS);
+    apz.setElmValue("atpsyj__APY__Stage2TaxPayer", lDetails.taxPayer);
+    apz.setElmValue("atpsyj__APY__Stage2MobileNo", lDetails.mobileNo);
+    apz.setElmValue("atpsyj__APY__Stage2Email", lDetails.emailId);
+    if (lDetails.guardianName != '') {
+        apz.show("atpsyj__APY__Stage2GuardianName_ctrl_grp_div");
+    } else {
+        apz.hide("atpsyj__APY__Stage2GuardianName_ctrl_grp_div");
+    }
+    if (lDetails.dobOfNominee != '') {
+        apz.show("atpsyj__APY__Stage2NomineeDOB_ctrl_grp_div");
+    } else {
+        apz.hide("atpsyj__APY__Stage2NomineeDOB_ctrl_grp_div");
+    }
+    if (lDetails.spouseName != '') {
+        apz.show("atpsyj__APY__Stage2SpouseName_ctrl_grp_div");
+    } else {
+        apz.hide("atpsyj__APY__Stage2SpouseName_ctrl_grp_div");
+    }
+};
+apz.atpsyj.apy.fnRenderStage2 = function() {
+    apz.hide("atpsyj__APY__Stage1");
+    apz.show("atpsyj__APY__Stage2");
+    apz.hide("atpsyj__APY__Stage3");
+};
+apz.atpsyj.apy.fnEditStage2 = function() {
+    apz.atpsyj.apy.fnRenderStage1();
+};
+apz.atpsyj.apy.fnConfirmStage2 = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "AtalPensionYojana",
+        "req": {
+            "APYDtls": apz.data.scrdata.atpsyj__AtalPensionYojana_Req.APYDtls,
+            "action": "Confirm"
+        },
+        "callBack": apz.atpsyj.apy.fnCallServerCallBack
+    };
+    apz.atpsyj.apy.fnBeforeCallServer(lParams);
+};
+apz.atpsyj.apy.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": "N",
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": params.callBack
+    };
+      jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("atpsyj")+"/AtalPensionYojana.json"));
+       apz.data.scrdata.atpsyj__AtalPensionYojana_Res = {};
+                     apz.data.scrdata.atpsyj__AtalPensionYojana_Res = jsondata;
+                     apz.atpsyj.apy.fnCallServerCallBack(jsondata);
+                     // apz.data.loadData("Transaction", "cbdtax");
+   // apz.server.callServer(lServerParams);
+};
+apz.atpsyj.apy.fnCallServerCallBack = function(params) {
+    debugger;
+   // if (!params.errors) {
+        if ( apz.data.scrdata.atpsyj__AtalPensionYojana_Res.APYDtls.respCd == "app") {
+            apz.atpsyj.apy.sParams.RefNum =   apz.data.scrdata.atpsyj__AtalPensionYojana_Res.APYDtls.txnRefNo;
+            apz.atpsyj.apy.fnRenderOtpScreen();
+            var lLaunchParams = {
+                "appId": "otpeng",
+                "scr": "ProcessOTP",
+                "div": "atpsyj__APY__launcher",
+                "userObj": {
+                    "action": "SetRefNo",
+                    "data": {
+                        "OTPRefNo":   apz.data.scrdata.atpsyj__AtalPensionYojana_Res.APYDtls.data.OTPRefNo
+                    },
+                    "control": {
+                        "appId": "otpeng",
+                        "callBack": apz.atpsyj.apy.fnOtpCB,
+                        "destroyDiv": "atpsyj__APY__launcher"
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        }
+    
+};
+apz.atpsyj.apy.fnRenderOtpScreen = function() {
+    debugger;
+    apz.hide("atpsyj__APY__Stage1");
+    apz.hide("atpsyj__APY__Stage2");
+    apz.hide("atpsyj__APY__Stage3");
+    apz.show("atpsyj__APY__launcher");
+};
+apz.atpsyj.apy.fnOtpCB = function() {
+    debugger;
+    apz.atpsyj.apy.fnGoToStage3();
+};
+apz.atpsyj.apy.fnGoToStage3 = function() {
+    debugger;
+    apz.atpsyj.apy.fnSetValueStage3();
+    apz.atpsyj.apy.fnRenderStage3();
+};
+apz.atpsyj.apy.fnSetValueStage3 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.atpsyj__AtalPensionYojana_Req.APYDtls;
+    apz.setElmValue("atpsyj__APY__Stage3SavingsAcc", lDetails.fromAccountNo);
+    apz.setElmValue("atpsyj__APY__Stage3Pension", lDetails.pensionContributionAmount);
+    apz.setElmValue("atpsyj__APY__Stage3ContributionFreq", lDetails.contributionFreq);
+    apz.setElmValue("atpsyj__APY__Stage3RelationshipStatus", lDetails.relationshipStat);
+    apz.setElmValue("atpsyj__APY__Stage3SpouseName", lDetails.spouseName);
+    apz.setElmValue("atpsyj__APY__Stage3NomineeName", lDetails.nomineeName);
+    apz.setElmValue("atpsyj__APY__Stage3NomineeRelationship", lDetails.nomineeRelation);
+    apz.setElmValue("atpsyj__APY__Stage3NomineeDOB", lDetails.dobOfNominee);
+    apz.setElmValue("atpsyj__APY__Stage3GuardianName", lDetails.guardianName);
+    apz.setElmValue("atpsyj__APY__Stage3SSS", lDetails.benOfSSS);
+    apz.setElmValue("atpsyj__APY__Stage3TaxPayer", lDetails.taxPayer);
+    apz.setElmValue("atpsyj__APY__Stage3MobileNo", lDetails.mobileNo);
+    apz.setElmValue("atpsyj__APY__Stage3Email", lDetails.emailId);
+    var lRefNo = "Your Reference no is " + apz.atpsyj.apy.sParams.RefNum;
+    apz.setElmValue("atpsyj__APY__RefNo", lRefNo);
+    if (lDetails.guardianName != '') {
+        apz.show("atpsyj__APY__Stage3GuardianName_ctrl_grp_div");
+    } else {
+        apz.hide("atpsyj__APY__Stage3GuardianName_ctrl_grp_div");
+    }
+    if (lDetails.dobOfNominee != '') {
+        apz.show("atpsyj__APY__Stage3NomineeDOB_ctrl_grp_div");
+    } else {
+        apz.hide("atpsyj__APY__Stage3NomineeDOB_ctrl_grp_div");
+    }
+    if (lDetails.spouseName != '') {
+        apz.show("atpsyj__APY__Stage3SpouseName_ctrl_grp_div");
+    } else {
+        apz.hide("atpsyj__APY__Stage3SpouseName_ctrl_grp_div");
+    }
+};
+apz.atpsyj.apy.fnRenderStage3 = function() {
+    apz.hide("atpsyj__APY__Stage1");
+    apz.hide("atpsyj__APY__Stage2");
+    apz.show("atpsyj__APY__Stage3");
+};
+apz.atpsyj.apy.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("atpsyj__APY__Stage1Form");
+    if (lValid) {
+        var lSSSValue = apz.getElmValue("atpsyj__APY__Stage1SSS");
+        var lTaxPayer = apz.getElmValue("atpsyj__APY__Stage1TaxPayer");
+        if (lSSSValue != '' && lTaxPayer != '') {
+            return true;
+        } else {
+            var lMsg = {
+                "code": "ERR_MAND"
+            };
+            apz.dispMsg(lMsg);
+            return false;
+        }
+    } else {
+        var lMsg = {
+            "code": "ERR_MAND"
+        };
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.atpsyj.apy.fnValidatePhone = function(pobj) {
+    debugger;
+    var lError = apz.val.validateInputAct(document.getElementById("atpsyj__AtalPensionYojana__i__APYDtls__mobileNo"), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            "code": 'VAL-PHONE',
+            "callBack": apz.atpsyj.apy.fnValidatePhoneCB
+        };
+        apz.dispMsg(lErrorParams);
+    }
+};
+apz.atpsyj.apy.fnValidatePhoneCB = function() {
+    debugger;
+    apz.setElmValue("atpsyj__AtalPensionYojana__i__APYDtls__mobileNo", null);
+}
+apz.atpsyj.apy.fnValidateEmail = function(pobj) {
+    debugger;
+    var lError = apz.val.validateInputAct(document.getElementById("atpsyj__AtalPensionYojana__i__APYDtls__emailId"), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            "code": 'VAL-EMAIL',
+            "callBack": apz.atpsyj.apy.fnValidateEmailCB
+        };
+        apz.dispMsg(lErrorParams);
+    }
+};
+apz.atpsyj.apy.fnValidateEmailCB = function() {
+    debugger;
+    apz.setElmValue("atpsyj__AtalPensionYojana__i__APYDtls__emailId", null);
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+}

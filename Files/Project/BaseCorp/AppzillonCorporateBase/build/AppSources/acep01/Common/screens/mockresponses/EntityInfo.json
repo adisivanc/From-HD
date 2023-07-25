@@ -1,0 +1,69 @@
+{
+    "tbDbmiCorpEntityMaster": {
+        "corporateId": "citicorp001",
+        "entityId": "ENTID01",
+        "entityName": "Citi 01",
+        "customerId": "cust001",
+        "description": "Citi union",
+        "entityType": "subsidiary",
+        "parentEntity": "CITI group",
+        "legalName": "",
+        "registrationNumber": "00239823",
+        "taxId": "APG2398327",
+        "countryOfRegistration": "UK"
+    },
+    "tbDbmiCorporateAddress": [
+        {
+            "corporateId": "citicorp001",
+            "addressSequence": "",
+            "addressType": "HO",
+            "address1": "Churchil Road",
+            "address2": "King Street",
+            "address3": "London ",
+            "city": "London",
+            "zipCode": "BH1AA",
+            "country": "UK"
+        },
+        {
+            "corporateId": "citicorp001",
+            "addressSequence": "",
+            "addressType": "Business",
+            "address1": "Avenue Block",
+            "address2": "King Street",
+            "address3": "BourneMouth ",
+            "city": "London",
+            "zipCode": "BH1AA",
+            "country": "UK"
+        },
+         {
+            "corporateId": "citicorp001",
+            "addressSequence": "",
+            "addressType": "HO",
+            "address1": "Avenue Block",
+            "address2": "King Street",
+            "address3": "BourneMouth ",
+            "city": "London",
+            "zipCode": "BH1AA",
+            "country": "UK"
+        }
+    ],
+    "tbDbmiCorporateContact": [
+        {
+            "corporateId": "citicorp001",
+            "contactSequence": "",
+            "contactDesignation": "Director",
+            "contactName": "Robert",
+            "contactMobile": "+44 7700 900738",
+            "contactEmail": "Robert@gmail.com"
+        },
+        {
+            "corporateId": "citicorp001",
+            "contactSequence": "",
+            "contactDesignation": "CEO",
+            "contactName": "Johnny",
+            "contactMobile": "+44 7777 900738",
+            "contactEmail": "Johnny@gmail.com"
+        }
+        
+    ]
+}

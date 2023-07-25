@@ -1,0 +1,268 @@
+apz.playgr.outofbox = {};
+apz.app.onLoad_outofbox = function(params) {
+    debugger;
+}
+apz.app.onShow_outofbox = function(params) {
+    debugger;
+    $("#ablogn__Login__userId").focus();
+}
+//date minus and plus
+var d = new Date();
+ d.setDate(d.getDate()+2);
+console.log(d.toLocaleDateString('en-US', options));
+// value from argument from an input on click
+var accountNo = $(ths).val();
+// find layout mobile web all
+if (apz.getLayout({
+    "appId": "lcteus",
+    "scr": "BranchLocator"
+}) == "Mobile") {
+    startGesture();
+}
+
+/*var pressTimer;
+    $("#ablogn__Login__login_btn").mouseup(function() {
+        
+        console.log("2")
+        clearTimeout(pressTimer);
+        apz.ablogn.Login.fnStaticLogin("RM001")
+        // Clear timeout
+        return false;
+    }).mousedown(function() {
+        // Set timeout
+        console.log("1")
+        pressTimer = window.setTimeout(function() {
+            console.log("victory");
+        }, 1000);
+        return false;
+    });*/
+    
+//forEach
+var arr = ["asdf","qwer","zxcv"];
+arr.forEach(index => {
+console.log(index);
+})
+//date previous date from current date
+var date = new Date();
+new Date(date.getFullYear(), date.getMonth() + 1 - 3, date.getDate()).format("Y-M-d");
+//Validate form //interface should be mapped and mandatory
+apz.val.validateContainer("update__UpdateContact__addressForm");
+//enable all input form
+$("#update__UpdateContact__addressForm input").each(function() {
+    $(this).removeAttr("disabled");
+});
+//disable all input form
+$("#update__UpdateContact__addressForm input").each(function() {
+    $(this).attr("disabled", "disabled");
+});
+//adding current class active
+$("#crddtl__NewCardRequest__ct_lst_3_row_0").addClass("current");
+$("#crddtl__NewCardRequest__ct_lst_3 > ul > li:first-child").addClass("current");
+// load json data
+apz.data.loadJsonData(params.ifaceName, "accstm");
+// open camera
+apz.ekycdt.KYC.fnOpenCamera = function(params) {
+    if (params.errors == undefined && params.status) {
+        var jsonobj = {
+            "zoomLevel": "20",
+            "targetWidth": "200",
+            "targetHeight": "200",
+            "crop": "Y", //Y or N
+            "flash": "N",
+            "action": "base64", // save,base64
+            "fileName": "Identity_Image",
+            "quality": "50",
+            "encodingType": "JPG",
+            "sourceType": "camera" // photo
+        };
+        jsonobj.id = "CAMERA_ID";
+        jsonobj.callBack = apz.ekycdt.KYC.fnGetBase64;
+        apz.ns.openCamera(jsonobj);
+    }
+}
+apz.ekycdt.KYC.fnGetBase64 = function(params) {
+    if (params.status) {
+        $("#ekycdt__KYC__aadhaar_image").attr("src", "data:image/jpg;base64," + params.encodedImage);
+    }
+    // get session
+    apz.ekycdt.KYC.fnGetSession = function() {
+        apz.server.login({
+            "userId": "admin",
+            "pwd": "admin",
+            "callBack": apz.ekycdt.KYC.fnOpenCamera
+        })
+    }
+    //mobile no
+    apz.onbaut.AuthDetails.fnFloatMobileNo = function(el) {
+        var digits = el.value.match(/\d{1,10}/) || [""];
+        el.value = digits[0];
+    }
+    // populate dropdown
+    apz.populateDropdown(document.getElementById("fndftr__Transfer__el_dpd_1"), [{
+        "val": "Transfer Now",
+        "desc": "Transfer Now"
+    }]);
+    // find in css each
+    $(".col3").find("svg").each(function() {
+        debugger;
+        var txt = $(this)[0].style.fill;
+        if (txt == "green") {
+            que3 = true;
+            return false;
+        }
+    });
+    // human or system
+    debugger;
+    if (element.originalEvent === undefined) {
+        alert('not human');
+    } else {
+        alert(' human');
+    }
+    //css click function child previous
+    $(".survey svg").css("fill", "lightgrey");
+    $(".survey svg").click(function() {
+        debugger;
+        $(this).parent("li").siblings().children().css("fill", "lightgrey");
+        $(this).css("fill", "green");
+        $(this).parent().prevAll().children().css("fill", "green");
+    })
+    //dynamic id
+    var currency = apz.getElmValue("" + $(ths).attr("id"));
+    // setTimeout time out
+    $("#csmrbk__Login__el_btn_10").on("click", function() {
+        $(this).blur();
+        //    console.log(new Date());
+        setTimeout(function() {
+            apz.csmrbk.login.fnDoLogin();
+            // console.log(new Date());
+        }, 1000);
+    });
+    // isnull
+    apz.isNull(apz.getElmValue("csmrbk__Login__username"))
+    // row no
+    var lRowNo = $(pthis).parents('li').attr('rowno');
+    //mobiscroll
+    var now = new Date();
+    mobiscroll.settings = {
+        theme: 'mobiscroll', // Specify theme like: theme: 'ios' or omit setting to use default
+        lang: 'en' // Specify language like: lang: 'pl' or omit setting to use default
+    };
+    mobiscroll.date('#logreg__CardRegistration__i__details__year', {
+        dateFormat: 'mm/yy', // More info about dateFormat: https://docs.mobiscroll.com/4-7-3/javascript/datetime#localization-dateFormat
+        onInit: function(event, inst) {
+            debugger; // More info about onInit: https://docs.mobiscroll.com/4-7-3/javascript/datetime#event-onInit
+            inst.setVal(now, true);
+        }
+    });
+    //Append a div into appzillon element
+    $('#dashbo__dashboard__chart_launcher').append('<canvas id="myChart" height="75px"></canvas');
+    //read a json file
+    var filePath = apz.getDataFilesPath("playgr") + "/DepositsAndLoans.json";
+    var content = apz.getFile(filePath);
+    var data = JSON.parse(content);
+    //on cancel
+    apz.playgr.outofbox.fnCancel = function() {
+        debugger;
+        var lParams = {
+            "appId": "landpg",
+            "scr": "LandingPage",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "animation": 21,
+            "userObj": {
+                "asd": "asdf"
+            }
+        }
+        apz.launchApp(lParams);
+    }
+    apz.playgr.outofbox.ManageCancel = function(pResp) {
+        debugger;
+        if (pResp.choice) {
+            apz.playgr.outofbox.fnCancel();
+        }
+    }
+    apz.playgr.outofbox.onCancel = function() {
+        apz.dispMsg({
+            message: "Are you sure want to cancel? To continue your application at a later time, kindly use the Reference number " + apz.appdtl.AppLauncher
+                .sCache.refNo,
+            type: "A",
+            callBack: apz.playgr.outofbox.ManageCancel
+        });
+    }
+    // trigger click
+    $("#appdtl__AppLauncher__personal_div").click(function() {});
+    //getting dropdown value while change
+    apz.appdtl.AppLauncher.fnGetCity = function(element) {
+        var city = $(element).val();
+    }
+    // for each element from div list
+    $("#appdtl__PersonalDetails__personal_details_form input").each(function() {
+        $(this).change(function() {
+            var id = apz.getElmValue(this.id);
+        })
+    });
+    //call server
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "Y",
+        // "req": {
+        //     "tbDbmiCustomerDocuments": {
+        //         "refNo": apz.appdtl.DocumentDetails.refNo
+        //     }
+        // },
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.PersonalDetails.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+    // setting attribute
+    $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid").attr("type", "text");
+    //append html element list li
+    $("#apzonb__Navigator__el_progressstep_1_ext").append(
+        '<li class="pgst-step pgs-100 active" scrname="DocumentDetails" title="Document Details" appid="appdtl"  divname="' + params.parentdiv +
+        '" title="" refNo="' + params.refNo + '"><span></span><span></span></li>');
+    //nth child
+    $("#apzonb__Navigator__el_progressstep_1_ext li:nth-child(5)").addClass("active");
+    //on drop on drag over
+    $(".BrowseToUpload").attr({
+        "ondrop": "apz.appdtl.DocumentDetails.fnGetDroppedFile(event)",
+        "ondragover": "apz.appdtl.DocumentDetails.allowDrop(event)"
+    });
+    apz.appdtl.DocumentDetails.allowDrop = function(e) {
+        e.preventDefault();
+    }
+    apz.appdtl.DocumentDetails.fnGetDroppedFile = function(e) {
+        e.preventDefault();
+        apz.appdtl.DocumentDetails.fileList = e.target.files || e.dataTransfer.files;
+        $("#appdtl__DocumentDetails__documnetUpload").trigger("change");
+    }
+    //Toggle toggle model
+    apz.toggleModal({
+        "targetId": "dshapp__Dashboard__transactionModal"
+    });
+    //grep
+    var lphotoandsign = jQuery.grep(params.res.appdtl__DocumentDetail_Req.tbDbmiCustomerDocuments, function(obj) {
+        return (obj.docType == "Signature" || obj.docType == "Photo");
+    });
+    //attribute image src
+    var lSignature = $("#appdtl__DocumentDetails__signature").attr("src");
+    //device type
+    apz.deviceType === "WEB" || apz.deviceType === "SIMULATOR" || apz.deviceType === "ANDROID"
+    //splice remove list element
+    var rowNo = $(element).attr("rowno");
+    apz.data.scrdata.appdtl__DocumentsTypes_Res[documentsArray].splice(rowNo, 1);
+    // blur element
+    apz.appdtl.DocumentDetails.fnDocumentFiledEnterEvenet = function(e, element) {
+        if (e.keyCode == 13) {
+            $(element).trigger('blur');
+        }
+    }
+    // screen / form validation
+};
+var lIsValid = apz.csmrbk.login.fnValidate(lActionParams);
+if (lIsValid) {}
+//attribute attr id attr type
+var type = $(this).attr("type");
+var id = $(element).attr("id");
+// email validation
+if (!/.*@\w+\.\w+$/.test(lEmail)) {}

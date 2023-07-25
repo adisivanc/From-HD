@@ -1,0 +1,39 @@
+apz.disclo.Agreement = {};
+apz.disclo.Agreement.sCache = {};
+apz.app.onLoad_Agreement = function(params){
+    debugger;
+apz.disclo.Agreement.sCache = params;
+}
+apz.app.onShown_Agreement = function(params){
+    debugger;
+    
+}
+
+apz.disclo.Agreement.fnCreateAccount = function(params){
+    debugger;
+    apz.dispMsg({
+        message:"Page under construction!",
+        type: "A"
+    })
+}
+apz.disclo.Agreement.fnAgree=function(){
+    debugger;
+    var params = {};
+    params.appId = "appsum";
+    params.scr = "SummaryLauncher";
+    params.div = apz.disclo.Agreement.sCache.parentDiv;
+    params.userObj = {
+        "refNo": apz.disclo.Agreement.sCache.refNo,
+        "product": apz.disclo.Agreement.sCache.product,
+        "subproduct": apz.disclo.Agreement.sCache.subproduct
+    }
+    apz.launchApp(params);
+}
+apz.disclo.Agreement.fnBacToDisclosure=function(){
+    var params = {};
+    params.appId = "disclo";
+    params.scr = "Disclosure";
+    params.div = "disclo__Launcher__launcher";
+    params.userObj=apz.disclo.Launcher.sCache;
+    apz.launchSubScreen(params);
+}

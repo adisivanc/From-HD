@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"BulkTransfersApprove1","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"BulkTransfersApprove1","interfaces":[{"name":"BulkTransfers","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

@@ -1,0 +1,44 @@
+{
+    "tbDbtmUtilityDet": [{
+        "utilityImg": "mobile2.svg",
+        "utilityName":"Postpaid",
+        "utilityId":"1"
+    }, {
+        "utilityImg": "mobile2.svg",
+        "utilityName":"Prepaid",
+        "utilityId":"2"
+    },
+    {
+        "utilityImg": "credit_cardPayment1.svg",
+        "utilityName":"Credit Card",
+        "utilityId":"3"   
+    },
+    {
+        "utilityImg": "dth.svg",
+        "utilityName":"DTH",
+        "utilityId":"4"
+    },
+    
+    {
+        "utilityImg": "donation.svg",
+        "utilityName":"Donation",
+        "utilityId":"5"
+    },
+    {
+        "utilityImg": "electricity.svg",
+        "utilityName":"Electricity",
+        "utilityId":"6"
+    },
+    {
+        "utilityImg": "gas.svg",
+        "utilityName":"Gas",
+        "utilityId":"7"
+    },
+    {
+        "utilityImg": "insurance.svg",
+        "utilityName":"Insurance",
+        "utilityId":"8"
+    }
+   
+    ]
+}

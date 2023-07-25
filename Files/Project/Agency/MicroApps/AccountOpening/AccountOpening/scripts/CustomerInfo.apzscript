@@ -1,0 +1,1580 @@
+apz.ACOP01.CustomerInfo = {};
+var sIdentityArrTotal = [];
+var sAddressArrTotal = [];
+var lDocuments = "";
+apz.ACOP01.CustomerInfo.sStage = 0;
+apz.ACOP01.CustomerInfo.sCache = {
+    update: false,
+    updateDocument: false,
+    submitted: false
+};
+apz.ACOP01.CustomerInfo.sParams = {};
+apz.app.onLoad_CustomerInfo = function(params) {
+    debugger;
+    setTimeout(function() {
+        $("#ACOP01__CustomerInfo__i__tbAcopCustomerInfo__firstName").focus();
+    }, 300);
+    apz.data.scrdata.ACOP01__CustomerInfo_Req = {
+        tbAcopCustomerInfo: apz.data.scrdata.ACOP01__customer_Req.tbAcopCustomerInfo
+    }
+    if (apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.photoUploaded) {
+        $("#ACOP01__CustomerInfo__el_img_12")[0].src = apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.photoUploaded;
+    }
+    $("#ACOP01__CustomerInfo__uploadprofileImg").attr("style", "visibility:hidden");
+    apz.data.loadData("CustomerInfo", "ACOP01");
+    c = params;
+    apz.hide("csmrbk__Login__gr_row_1");
+    apz.ACOP01.CustomerInfo.sCache = params;
+    apz.ACOP01.CustomerInfo.sCache.files = []
+    $(".loginby").css("background-image", "none")
+    $("#ACOP01__CustomerInfo__sc_row_163").addClass("accheader");
+    $("#ACOP01__CustomerInfo__el_progressstep_1_ext li").on("click", function() {
+        apz.ACOP01.CustomerInfo.fnProgressClick(this)
+    })
+};
+/// cancel button////
+apz.ACOP01.CustomerInfo.fnuploadProfileImage = function() {
+    debugger;
+    $("#ACOP01__CustomerInfo__uploadimg").trigger("click");
+};
+$("#ACOP01__CustomerInfo__uploadimg").change(function(e) {
+    var file = e.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function(eve) {
+        apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.photoUploaded = reader.result;
+        $("#ACOP01__CustomerInfo__el_img_12")[0].src = reader.result;
+    }
+    reader.readAsDataURL(file);
+})
+apz.ACOP01.CustomerInfo.fnuploadProfile = function(ths) {
+    debugger;
+    console.log(ths)
+};
+apz.ACOP01.CustomerInfo.goToNext = function(stage) {
+    /* if(stage=="stage3"){
+        debugger
+        apz.ACOP01.CustomerInfo.fnGoToStage4();
+	apz.ACOP01.CustomerInfo.fnProgressBarStage4();
+    }
+    else{*/
+    apz.ACOP01.CustomerInfo.fnclickNextCB(stage);
+    //}
+}
+apz.ACOP01.CustomerInfo.fnCancel = function() {
+    debugger;
+    // apz.show("ACOP01__Login__sc_col_36");
+    //apz.show("ACOP01__Login__tick");
+    //apz.ACOP01.aadharno.sParams.callBack();
+    //$('body').attr("style","backgroundImage:''");
+       var lParams = {
+            "appId": "landpg",
+            "scr": "LandingPage",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "animation": 21,
+            "userObj": {
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                "custId": "menuap__Menu__custId_txtcnt"
+            }
+       
+   }
+    
+    apz.launchApp(lParams);
+    apz.mockServer = true;
+};
+apz.ACOP01.CustomerInfo.fnGoToCustomerEntry = function() {
+    debugger;
+    apz.data.buildData("CustomerInfo", "ACOP01");
+    var lParams = {
+        "appId": "ACOP01",
+        "scr": "AccountOpening",
+        "userObj": {
+            "customer": apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo,
+            "update": apz.ACOP01.CustomerInfo.sCache.update
+        }
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.app.onShown_CustomerInfo = function(params) {
+    debugger;
+    $("#page-body").css("padding-bottom", "90px");
+    $("#ACOP01__CustomerInfo__BrowseCamera").change(function() {
+        debugger;
+        apz.ACOP01.CustomerInfo.imageFileSected(this)
+    });
+    $("#ACOP01__CustomerInfo__BrowseSignature").change(function() {
+        debugger;
+        apz.ACOP01.CustomerInfo.imageFileSectedSignature(this)
+    });
+    $("#ACOP01__CustomerInfo__BrowseToUpload").change(function() {
+        debugger;
+        var lValid = apz.ACOP01.CustomerInfo.fnFileSizeCheck('ACOP01__CustomerInfo__BrowseToUpload');
+        if (lValid) {
+            apz.ACOP01.CustomerInfo.BrowseToUploadCB(this)
+        }
+    });
+    setTimeout(function() {
+        apz.ACOP01.CustomerInfo.fnProgressBarStage1();
+        apz.ACOP01.CustomerInfo.fnProgressBarStage2();
+        apz.ACOP01.CustomerInfo.fnProgressBarStage3();
+        apz.ACOP01.CustomerInfo.fnProgressBarStage4();
+    }, 500);
+};
+apz.ACOP01.CustomerInfo.imageFileSected = function(pthis, event) {
+    debugger;
+    var fileObj = pthis.files[0];
+    var apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        var binaryStr = apzFileReader.result;
+        var base64Str = btoa(binaryStr);
+        apz.setElmValue("ACOP01__CustomerInfo__loadUserImage", base64Str);
+        apz.show("ACOP01__CustomerInfo__loadUserImage");
+        binaryStr = "";
+        base64Str = "";
+    }
+    apzFileReader.readAsBinaryString(fileObj);
+}
+apz.ACOP01.CustomerInfo.imageFileSectedSignature = function(pthis, event) {
+    debugger;
+    var fileObj = pthis.files[0];
+    var apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        var binaryStr = apzFileReader.result;
+        var base64Str = btoa(binaryStr);
+        // apz.admin.appglobals.base64Str = base64Str;
+        apz.setElmValue("ACOP01__CustomerInfo__loadSignature", base64Str);
+        apz.show("ACOP01__CustomerInfo__loadSignature");
+        binaryStr = "";
+        base64Str = "";
+    }
+    apzFileReader.readAsBinaryString(fileObj);
+}
+apz.ACOP01.CustomerInfo.BrowseToUploadCB = function(pthis, event) {
+    debugger;
+    var fileObj = pthis.files[0];
+    var rowNo = apz.ACOP01.CustomerInfo.RowNo;
+    var apzFileReader = new FileReader();
+    apz.ACOP01.CustomerInfo.sCache.files[rowNo] = fileObj;
+    apzFileReader.onload = function() {
+        debugger;
+        var binaryStr = apzFileReader.result;
+        var base64Str = btoa(binaryStr);
+        apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[rowNo].emailId = apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo
+            .emailId;
+        apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[rowNo].mobileNo = apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo
+            .mobileNo;
+        apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[rowNo].documentId = +new Date();
+        apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[rowNo].applicationId = +new Date();
+        apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[rowNo].image = base64Str;
+    }
+    apzFileReader.readAsBinaryString(fileObj);
+};
+apz.ACOP01.CustomerInfo.fnFileSizeCheck = function(puploadid) {
+    debugger;
+    var lreturn = true;
+    var lidenObj = $('#' + puploadid).prop("files");
+    var lsize = lidenObj[0].size;
+    var ltype = lidenObj[0].type;
+    if (lsize > 200000 && puploadid == "ACOP01__CustomerInfo__BrowseToUpload") {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_200'
+        };
+        apz.dispMsg(msg);
+    } else if (lsize > 200000) {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_200'
+        };
+        apz.dispMsg(msg);
+    } else if (ltype == "application/pdf" || ltype == "image/jpeg" || ltype == "image/png") {} else {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_FORMAT'
+        };
+        apz.dispMsg(msg);
+    }
+    return lreturn;
+};
+apz.ACOP01.CustomerInfo.fnShowStage1Details = function() {
+    debugger;
+    apz.hide("ACOP01__CustomerInfo__ConfirmRow");
+    apz.ACOP01.CustomerInfo.sCache.category = "primaryDetails";
+    $(".Test1").show();
+    $(".Stage1DetailScreen").show();
+    $(".Test2").hide();
+    $(".Test3").hide();
+    $(".Test4").hide();
+    $(".Stage2DetailScreen").hide();
+    $(".Stage3DetailScreen").hide();
+    //$(".Stage4DetailScreen").hide();
+};
+apz.ACOP01.CustomerInfo.fnProgressBarStage1 = function() {
+    debugger;
+   var elements = $("#ACOP01__CustomerInfo__personaldetailcol :input:not(:button):not(:hidden)");
+    elements.change((function() {
+        var filledElm = elements.get().reduce((p, n) => {
+            if (apz.getElmValue(n.id)) {
+                p += 1
+            }
+            return p;
+        }, 0);
+        var per = Math.floor(100 * (filledElm / elements.length));
+        let lprnt = per + (10 - per % 10)
+        $("#ACOP01__CustomerInfo__el_progressstep_1_ext > li:nth-child(1)")[0].className = "pgst-step pgs-" + (lprnt < 100 ? lprnt : 100);
+    })())
+};
+apz.ACOP01.CustomerInfo.fnShowStage2Details = function() {
+    debugger;
+    apz.hide("ACOP01__CustomerInfo__ConfirmRow");
+    apz.ACOP01.CustomerInfo.sCache.category = "addressDetails";
+    $(".Test1").show();
+    $(".Stage1DetailScreen").hide();
+    apz.show("ACOP01__CustomerInfo__stage2");
+    $(".Test2").show();
+    $(".Stage2DetailScreen").show();
+    $(".Test3").hide();
+    $(".Stage3DetailScreen").hide();
+    $(".Test4").hide();
+    $(".Stage4DetailScreen").hide();
+};
+apz.ACOP01.CustomerInfo.fnProgressBarStage2 = function() {
+    debugger;
+     var elements = $("#ACOP01__CustomerInfo__addressdetailcol :input[type=text]");
+    elements.change((function() {
+        var filledElm = elements.get().reduce((p, n) => {
+            if (apz.getElmValue(n.id)) {
+                p += 1
+            }
+            return p;
+        }, 0);
+        //console.log(filledElm)
+        var per = Math.floor(100 * (filledElm / elements.length));
+        let lprnt = per + (10 - per % 10)
+        $("#ACOP01__CustomerInfo__el_progressstep_1_ext > li:nth-child(2)")[0].className = "pgst-step pgs-" + (lprnt < 100 ? lprnt : 100);
+    })())
+    
+};
+apz.ACOP01.CustomerInfo.fnShowStage3Details = function() {
+    debugger;
+    apz.hide("ACOP01__CustomerInfo__ConfirmRow");
+    apz.ACOP01.CustomerInfo.sCache.category = "documentDetails";
+    apz.ACOP01.CustomerInfo.sCache.Filled = 0;
+    $(".Test1").show();
+    $(".Stage1DetailScreen").hide();
+    apz.show("ACOP01__CustomerInfo__stage2");
+    $(".Test2").show();
+    $(".Stage2DetailScreen").hide();
+    apz.show("ACOP01__CustomerInfo__stage3");
+    $(".Test3").show();
+    $(".Stage3DetailScreen").show();
+    $("ACOP01__CustomerInfo__documentsuploadcol").hide();
+    $(".Stage4DetailScreen").hide();
+};
+apz.ACOP01.CustomerInfo.fnProgressBarStage3 = function() {
+    debugger;
+    var elements = $("#ACOP01__CustomerInfo__ct_frm_12 :input[type=text]");
+    elements.change((function() {
+        var filledElm = elements.get().reduce((p, n) => {
+            if (apz.getElmValue(n.id)) {
+                p += 1
+            }
+            return p;
+        }, 0);
+        console.log(filledElm)
+        var per = Math.floor(100 * (filledElm / elements.length));
+        let lprnt = per + (10 - per % 10)
+        $("#ACOP01__CustomerInfo__el_progressstep_1_ext > li:nth-child(3)")[0].className = "pgst-step pgs-" + (lprnt < 100 ? lprnt : 100);
+    })());
+};
+apz.ACOP01.CustomerInfo.fnShowStage4Details = function() {
+    debugger;
+    apz.hide("ACOP01__CustomerInfo__ConfirmRow");
+    apz.ACOP01.CustomerInfo.sCache.category = "bankingServics";
+    $(".Test1").show();
+    $(".Stage1DetailScreen").hide();
+    apz.show("ACOP01__CustomerInfo__stage2");
+    $(".Test2").show();
+    $(".Stage2DetailScreen").hide();
+    apz.show("ACOP01__CustomerInfo__stage3");
+    $(".Test3").show();
+    $(".Stage3DetailScreen").hide();
+    apz.show("ACOP01__CustomerInfo__stage4");
+    $(".Test4").show();
+    $(".Stage4DetailScreen").show();
+};
+apz.ACOP01.CustomerInfo.fnNomineeDetails = function() {
+    debugger;
+    var lNomiee = apz.getElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__nomineeMinor");
+    if (lNominee == "YES") {
+        $(".NomineeMinor").removeClass('sno');
+    } else {
+        $(".NomineeMinor").addClass('sno');
+    }
+}
+apz.ACOP01.CustomerInfo.fnProgressBarStage4 = function() {
+    debugger;
+     var elements = $("#ACOP01__CustomerInfo__uploaddocumentscol :input[type=text]");
+    elements.change((function() {
+        var filledElm = elements.get().reduce((p, n) => {
+            if (apz.getElmValue(n.id)) {
+                p += 1
+            }
+            return p;
+        }, 0);
+        var per = Math.floor(100 * (filledElm / (elements.length - 3)));
+        let lprnt = per + (10 - per % 10)
+        $("#ACOP01__CustomerInfo__el_progressstep_1_ext > li:nth-child(4)")[0].className = "pgst-step pgs-" + (lprnt < 100 ? lprnt : 100);
+    })())
+};
+apz.ACOP01.CustomerInfo.fnProductType = function() {
+    debugger;
+    var lProductType = apz.getElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__productType");
+    if(lProductType=="wallet"){
+        $("#ACOP01__CustomerInfo__i__tbAcopCustomerInfo__productName").removeAttr("disabled")
+        apz.setElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__productName", "Wing");
+    }
+    else if (lProductType != '') {
+        $("#ACOP01__CustomerInfo__i__tbAcopCustomerInfo__productName").removeAttr("disabled")
+        apz.setElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__productName", "Classic Banking");
+    } else {
+        apz.setElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__productName", "");
+    }
+}
+apz.ACOP01.CustomerInfo.fnclickNext = function(ths, params) {
+    debugger;
+    var refno = apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.referenceNo;
+    apz.data.buildData("CustomerInfo", "ACOP01")
+    if (!refno) {
+        apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.referenceNo = Math.floor(100000 + Math.random() * 900000);
+    } else {
+        apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.referenceNo = refno
+    }
+    var lServerParams = {
+        "ifaceName": "CustomerInfo_New",
+        "buildReq": "N",
+        "appId": "ACOP01",
+        "paintResp": "N",
+        "req": apz.data.scrdata.ACOP01__CustomerInfo_Req,
+        "callBack": apz.ACOP01.CustomerInfo.fnStep2CB,
+        "callBackObj": {
+            "ths": ths,
+            "stage": params
+        }
+    };
+    if (apz.ACOP01.CustomerInfo.sCache.update) {
+        lServerParams.ifaceName = "CustomerInfo_Modify"
+    }
+    apz.ACOP01.CustomerInfo.sCache.update = true;
+    apz.server.callServer(lServerParams);
+    apz.ACOP01.CustomerInfo.goToNext(params);
+};
+//edition
+apz.ACOP01.CustomerInfo.fnStep2CB = function(params) {
+    if (!params.errors) {
+        if (params.callBackObj.stage == "stage4" && params.callBackObj.ths.innerText == "Next") {
+            apz.ACOP01.CustomerInfo.fnSaveDocumentDetail(params.callBackObj.stage);
+        } else {
+            apz.ACOP01.CustomerInfo.fnclickNextCB(params.callBackObj.stage);
+        }
+    } else {
+        apz.dispMsg({
+            message: "Error while saving Data"
+        });
+    }
+}
+apz.ACOP01.CustomerInfo.fnclickNextCB = function(params) {
+    debugger;
+    if (params == "stage1") {
+        if (!$("#ACOP01__CustomerInfo__ConfirmRow").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__ConfirmRow").addClass("sno");
+        }
+        $("#ACOP01__CustomerInfo__AoPersonalDetails").removeClass("sno");
+        if (!$("#ACOP01__CustomerInfo__AoAddressDetails").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__AoAddressDetails").addClass("sno");
+        };
+        if (!$("#ACOP01__CustomerInfo__AoIdentityDetails").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__AoIdentityDetails").addClass("sno");
+        };
+        if (!$("#ACOP01__CustomerInfo__AoBankingService").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__AoBankingService").addClass("sno");
+        };
+        $("#ACOP01__CustomerInfo__i__tbAcopCustomerInfo__firstName").focus();
+    } else if (params == "stage2") {
+        if (!$("#ACOP01__CustomerInfo__ConfirmRow").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__ConfirmRow").addClass("sno");
+        }
+        if (!$("#ACOP01__CustomerInfo__AoPersonalDetails").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__AoPersonalDetails").addClass("sno");
+        };
+        if (!$("#ACOP01__CustomerInfo__AoIdentityDetails").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__AoIdentityDetails").addClass("sno");
+        };
+        if (!$("#ACOP01__CustomerInfo__AoBankingService").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__AoBankingService").addClass("sno");
+        };
+        $("#ACOP01__CustomerInfo__AoAddressDetails").removeClass("sno");
+        $("#ACOP01__CustomerInfo__i__tbAcopCustomerInfo__address1").focus();
+    } else if (params == "stage3") {
+        if (!$("#ACOP01__CustomerInfo__ConfirmRow").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__ConfirmRow").addClass("sno");
+        }
+        if (!$("#ACOP01__CustomerInfo__AoPersonalDetails").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__AoPersonalDetails").addClass("sno");
+        };
+        if (!$("#ACOP01__CustomerInfo__AoAddressDetails").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__AoAddressDetails").addClass("sno");
+        };
+        if (!$("#ACOP01__CustomerInfo__AoBankingService").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__AoBankingService").addClass("sno");
+        };
+        if (apz.ACOP01.CustomerInfo.sCache.submitted) {
+            apz.ACOP01.CustomerInfo.fnFetchDocumentDetail();
+        }
+        $("#ACOP01__CustomerInfo__AoIdentityDetails").removeClass("sno");
+        $("#ACOP01__CustomerInfo__i__tbAcopCustomerInfo__aadhaarId").focus();
+    } else if (params == "stage4") {
+        if (!$("#ACOP01__CustomerInfo__ConfirmRow").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__ConfirmRow").addClass("sno");
+        }
+        if (!$("#ACOP01__CustomerInfo__AoPersonalDetails").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__AoPersonalDetails").addClass("sno");
+        };
+        if (!$("#ACOP01__CustomerInfo__AoAddressDetails").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__AoAddressDetails").addClass("sno");
+        };
+        if (!$("#ACOP01__CustomerInfo__AoIdentityDetails").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__AoIdentityDetails").addClass("sno");
+        };
+        if (!$("ACOP01__CustomerInfo__ConfirmRow").hasClass("sno")) {
+            $("ACOP01__CustomerInfo__ConfirmRow").addClass("sno");
+        };
+        $("#ACOP01__CustomerInfo__AoBankingService").removeClass("sno");
+        setTimeout(function() {
+            $("#ACOP01__CustomerInfo__i__tbAcopCustomerInfo__productName").focus();
+        }, 200)
+        setTimeout(function() {
+            $("#ACOP01__CustomerInfo__i__tbAcopCustomerInfo__productName").trigger("change");
+            $("#ACOP01__CustomerInfo__i__tbAcopCustomerInfo__nomineeName").trigger("blur");
+        }, 200)
+        // apz.ACOP01.CustomerInfo.fnLaunchCusSubmit();
+    } else if (params == "stage5") {
+        if (!$("#ACOP01__CustomerInfo__AoBankingService").hasClass("sno")) {
+            $("#ACOP01__CustomerInfo__AoBankingService").addClass("sno");
+        };
+        $("#ACOP01__CustomerInfo__ConfirmRow").removeClass("sno");
+        //apz.ACOP01.CustomerInfo.fnLaunchCusSubmit();
+    }
+}
+apz.ACOP01.CustomerInfo.fnvalidatePinCode = function(ths) {
+    if (!/^\d{6}$/.test($(ths).val())) {
+        apz.dispMsg({
+            message: "Input is required",
+            callBack: apz.ACOP01.CustomerInfo.fnvalidatePinCodeCB,
+            callBackObj: {
+                "ths": ths
+            }
+        })
+    }
+}
+apz.ACOP01.CustomerInfo.fnvalidatePinCodeCB = function(params) {
+    $(params.callBackObj.ths).val("");
+    $(params.callBackObj.ths).focus();
+}
+apz.ACOP01.CustomerInfo.fnFetchDocumentDetail = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "DocumentDetails_Query",
+        "buildReq": "N",
+        "appId": "ACOP01",
+        "paintResp": "Y",
+        "req": {
+            tbAcopDocumentDetails: {
+                emailId: apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.emailId,
+                mobileNo: apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.mobileNo
+            }
+        },
+        "callBack": apz.ACOP01.CustomerInfo.fnFetchDocumentDetailCB
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.ACOP01.CustomerInfo.fnFetchDocumentDetailCB = function(params) {
+    debugger;
+    if (!params.errors) {
+        apz.ACOP01.CustomerInfo.sCache.updateDocument = true;
+    }
+}
+apz.ACOP01.CustomerInfo.fnSaveDocumentDetail = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "DocumentDetails_New",
+        "buildReq": "N",
+        "appId": "ACOP01",
+        "paintResp": "N",
+        "req": apz.data.scrdata.ACOP01__DocumentDetails_Req,
+        "callBack": apz.ACOP01.CustomerInfo.DocumentDetailsLoginServer,
+        "callBackObj": {
+            "stage": params
+        }
+    };
+    if (apz.ACOP01.CustomerInfo.sCache.updateDocument) {
+        lServerParams.ifaceName = "DocumentDetails_Modify"
+    }
+    apz.ACOP01.CustomerInfo.sCache.updateDocument = true;
+    apz.server.callServer(lServerParams);
+};
+apz.ACOP01.CustomerInfo.DocumentDetailsLoginServer = function() {
+   /* var lServerParams = {
+        "ifaceName": "DocumentDetailsLoginServer",
+        "buildReq": "N",
+        "appId": "ACOP01",
+        "paintResp": "N",
+        "req": {
+            "Username": "iexceed",
+            "Password": "p@ssw0rd",
+            "VaultGuid": "0C49466F-3895-4BB5-99A7-06DFE9B705DE"
+        },
+        "callBack": apz.ACOP01.CustomerInfo.DocumentDetailsLoginServerCB
+    };
+    apz.server.callServer(lServerParams);*/
+}
+apz.ACOP01.CustomerInfo.DocumentDetailsLoginServerCB = function(params) {
+    if (!params.errors) {
+         if(params.res){
+            apz.ACOP01.CustomerInfo.sCache.authenticationKey = params.res.ACOP01__DocumentDetailsLoginServer_Res.Value
+        }
+        apz.ACOP01.CustomerInfo.DocumentDetailsSaveFileServer(params);
+    }
+}
+apz.ACOP01.CustomerInfo.DocumentDetailsSaveObjectServer = function(params) {
+    var lFiles = apz.ACOP01.CustomerInfo.sCache.files[0] || [{}];
+    var lReq = {
+        "PropertyValues": [{
+            "PropertyDef": 100,
+            "TypedValue": {
+                "DataType": 9,
+                "HasValue": false,
+                "Value": null,
+                "Lookup": {
+                    "Deleted": false,
+                    "DisplayValue": null,
+                    "Hidden": false,
+                    "Item": 4,
+                    "Version": -1
+                },
+                "Lookups": null,
+                "DisplayValue": null,
+                "SortingKey": null,
+                "SerializedValue": null
+            }
+        }, {
+            "PropertyDef": 1034,
+            "TypedValue": {
+                "DataType": 1,
+                "HasValue": true,
+                "Value": lFiles[0].name,
+                "Lookup": null,
+                "Lookups": null,
+                "DisplayValue": lFiles[0].name,
+                "SortingKey": null,
+                "SerializedValue": null
+            }
+        }, {
+            "PropertyDef": 1035,
+            "TypedValue": {
+                "DataType": 9,
+                "HasValue": false,
+                "Value": null,
+                "Lookup": {
+                    "Deleted": false,
+                    "DisplayValue": 2,
+                    "Hidden": false,
+                    "Item": 2,
+                    "Version": -1
+                },
+                "Lookups": null,
+                "DisplayValue": null,
+                "SortingKey": null,
+                "SerializedValue": null
+            }
+        }],
+        "Files": [params.res.ACOP01__DocumentDetailsSaveFileServer_Res],
+        "header": {
+            "authentication": apz.ACOP01.CustomerInfo.sCache.authenticationKey
+        }
+    }
+    var lServerParams = {
+        "ifaceName": "DocumentDetailsSaveObjectServer",
+        "buildReq": "N",
+        "appId": "ACOP01",
+        "paintResp": "N",
+        "req": lReq,
+        "callBack": apz.ACOP01.CustomerInfo.DocumentDetailsSaveObjectServerCB
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.ACOP01.CustomerInfo.DocumentDetailsSaveObjectServerCB = function(params) {
+    if (!params.errors) {
+        apz.ACOP01.CustomerInfo.fnGoToStage4();
+    }
+}
+apz.ACOP01.CustomerInfo.DocumentDetailsSaveFileServer = function() {
+    var lFiles = apz.ACOP01.CustomerInfo.sCache.files[0] || [{}];
+    var form = new FormData();
+    form.append("File", lFiles[0]);
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "http://121.121.37.25/m-files/REST/files",
+        "method": "POST",
+        "headers": {
+            "x-authentication": apz.ACOP01.CustomerInfo.sCache.authenticationKey
+        },
+        "processData": false,
+        "contentType": false,
+        "mimeType": "multipart/form-data",
+        "data": form
+    }
+    $.ajax(settings).done(function(response) {
+        apz.ACOP01.CustomerInfo.DocumentDetailsSaveFileServerCB(response)
+    });
+}
+apz.ACOP01.CustomerInfo.DocumentDetailsSaveFileServerCB = function(params) {
+    if (!params.errors) {
+        apz.ACOP01.CustomerInfo.DocumentDetailsSaveObjectServer(params);
+    }
+}
+apz.ACOP01.CustomerInfo.fnRender = function(params) {
+    debugger;
+    if (params.action == "GoToStage1") {
+        apz.ACOP01.CustomerInfo.sCache.category = "primaryDetails"
+        $(".Test1").show();
+        $(".Stage1DetailScreen").show();
+        apz.show("ACOP01__CustomerInfo__stage2");
+        $(".Test2").show();
+        $(".Stage2DetailScreen").hide();
+        apz.show("ACOP01__CustomerInfo__stage3");
+        $(".Test3").show();
+        $(".Stage3DetailScreen").hide();
+        apz.show("ACOP01__CustomerInfo__stage4");
+        $(".Test4").show();
+        $(".Stage4DetailScreen").hide();
+    } else if (params.action == "GoToStage2") {
+        apz.ACOP01.CustomerInfo.sCache.category = "addressDetails"
+        $(".Test1").show();
+        $(".Stage1DetailScreen").hide();
+        apz.show("ACOP01__CustomerInfo__stage2");
+        $(".Test2").show();
+        $(".Stage2DetailScreen").show();
+        /* apz.show("ACOP01__CustomerInfo__stage3");
+            $(".Test3").show();
+            $(".Stage3DetailScreen").hide();
+            apz.show("ACOP01__CustomerInfo__stage4");
+            $(".Test4").show();
+            $(".Stage4DetailScreen").hide();*/
+    } else if (params.action == "GoToStage3") {
+        apz.ACOP01.CustomerInfo.sCache.category = "documentDetails";
+        apz.ACOP01.CustomerInfo.sCache.Filled = 0;
+        $(".Test1").show();
+        $(".Stage1DetailScreen").hide();
+        apz.show("ACOP01__CustomerInfo__stage2");
+        $(".Test2").show();
+        $(".Stage2DetailScreen").hide();
+        apz.show("ACOP01__CustomerInfo__stage3");
+        $(".Test3").show();
+        $(".Stage3DetailScreen").show();
+    } else if (params.action == "GoToStage4") {
+        apz.ACOP01.CustomerInfo.sCache.category = "bankingServics"
+        $(".Test1").show();
+        $(".Stage1DetailScreen").hide();
+        apz.show("ACOP01__CustomerInfo__stage2");
+        $(".Test2").show();
+        $(".Stage2DetailScreen").hide();
+        apz.show("ACOP01__CustomerInfo__stage3");
+        $(".Test3").show();
+        $(".Stage3DetailScreen").hide();
+        apz.show("ACOP01__CustomerInfo__stage4");
+        $(".Test4").show();
+        $(".Stage4DetailScreen").show();
+    } else if (params.action == "GoToStage5") {
+        $(".Test1").show();
+        $(".Stage1DetailScreen").hide();
+        apz.show("ACOP01__CustomerInfo__stage2");
+        $(".Test2").show();
+        $(".Stage2DetailScreen").hide();
+        apz.show("ACOP01__CustomerInfo__stage3");
+        $(".Test3").show();
+        $(".Stage3DetailScreen").hide();
+        apz.show("ACOP01__CustomerInfo__stage4");
+        $(".Test4").show();
+        $(".Stage4DetailScreen").hide();
+    }
+};
+apz.ACOP01.CustomerInfo.fnBack = function(pStage) {
+    debugger;
+    var lParams = {};
+    if (pStage == "Stage1") {} else if (pStage == "Stage2") {
+        lParams.action = "GoToStage1";
+        apz.ACOP01.CustomerInfo.fnShowStage1Details();
+    } else if (pStage == "Stage3") {
+        lParams.action = "GoToStage2";
+        apz.ACOP01.CustomerInfo.fnShowStage2Details();
+    } else if (pStage == "Stage4") {
+        lParams.action = "GoToStage3";
+        apz.ACOP01.CustomerInfo.fnShowStage3Details()
+    }
+};
+apz.ACOP01.CustomerInfo.fnSave = function() {
+    debugger;
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    if (isMobile) {
+        if (apz.ACOP01.CustomerInfo.sCache.action == "New") {
+            if (apz.ACOP01.CustomerInfo.sCache.CreatedTable) {
+                if (apz.ACOP01.CustomerInfo.sCache.SaveCount == 0) {
+                    apz.ACOP01.CustomerInfo.fnSQLiteInserTable();
+                } else {
+                    apz.ACOP01.CustomerInfo.fnSQLiteDeleteTable();
+                }
+            } else {}
+        } else {
+            var lSuccessParams = {
+                "code": 'ACOP01-002'
+            };
+            apz.dispMsg(lSuccessParams);
+        }
+    } else if (apz.ACOP01.CustomerInfo.sCache.action == "Query") {
+        apz.ACOP01.CustomerInfo.fnSQLiteDeleteTable();
+        //  apz.ACOP01.CustomerInfo.fnSQLiteInserTable();
+    }
+}
+apz.ACOP01.CustomerInfo.fnHome = function() {
+    debugger;
+    apz.ACOP01.CustomerInfo.sCache.callBack();
+};
+apz.ACOP01.CustomerInfo.fnSQLiteQuery = function(params) {
+    debugger;
+    apz.data.buildData('CustomerInfo', 'ACOP01');
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    if (isMobile) {
+        var jsonStr = {
+            "queryId": "XYZ78V",
+            "databaseName": "CustomerInfo",
+            "executeQuery": "select * from TB_ACOP_CUSTOMER_INFO"
+        };
+        jsonStr.callBack = apz.ACOP01.CustomerInfo.fnSQLiteQueryCB;
+        apz.ns.executeSql(jsonStr);
+    } else {
+        apz.csmrbk.Onboarding.fnLaunchnAOS();
+    }
+};
+apz.ACOP01.CustomerInfo.fnSQLiteQueryCB = function(params) {
+    debugger;
+    if (params.status) {
+        apz.ACOP01.CustomerInfo.sCache.TableStatus = true;
+    } else {
+        apz.ACOP01.CustomerInfo.fnSQLiteCreateTable();
+    }
+};
+apz.ACOP01.CustomerInfo.fnSQLiteCreateTable = function() {
+    apz.data.buildData('CustomerInfo', 'ACOP01');
+    debugger;
+    var jsonStr = {
+        "queryId": "XYZ78V",
+        "databaseName": "CustomerInfo",
+        "executeQuery": "create table if not exists TB_ACOP_CUSTOMER_INFO(referenceNo	INTEGER NOT NULL,title	VARCHAR,firstName	VARCHAR,middleName	VARCHAR,lastName	VARCHAR,dateOfBirth	VARCHAR,sex	VARCHAR,proffession	VARCHAR,maritalStatus VARCHAR,mobileNo VARCHAR,phoneNo VARCHAR,	emailId VARCHAR,address1 VARCHAR,address2 VARCHAR,address3	VARCHAR,city VARCHAR,state VARCHAR,zipCode	VARCHAR,  aadhaarId	VARCHAR,userImage VARCHAR,userSignature	VARCHAR,	photoUploaded	VARCHAR,	signatureUploaded	VARCHAR,	mobileBanking	VARCHAR,	netBanking	VARCHAR,	atmReqd	VARCHAR,chequeBook VARCHAR,	sms	VARCHAR,emailStatement	VARCHAR,	nomineeName	VARCHAR,nomineeRelationship	VARCHAR,	nomineeDob	VARCHAR,	nomineeMinor	VARCHAR,	nomineeGuarName	VARCHAR,	nomineeGuarAge	VARCHAR,	nomineeGuarRelation	VARCHAR,	nomineeGuarAddress	VARCHAR,	applicationStatus	VARCHAR,submitStatus	VARCHAR)"
+    };
+    jsonStr.id = "CREATE_ID";
+    jsonStr.callBack = apz.ACOP01.CustomerInfo.fnSQLiteCreateTableCB;
+    apz.ns.executeSql(jsonStr);
+};
+apz.ACOP01.CustomerInfo.fnSQLiteCreateTableCB = function(params) {
+    debugger;
+    if (params.status) {
+        apz.ACOP01.CustomerInfo.sCache.CreatedTable = true;
+    }
+};
+apz.ACOP01.CustomerInfo.fnSQLiteInserTable = function() {
+    debugger;
+    apz.data.buildData('CustomerInfo', 'ACOP01');
+    var lScrData = apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo;
+    var jsonStr = {
+        "queryId": "XYZ78V",
+        "databaseName": "CustomerInfo",
+        "executeQuery": "INSERT INTO TB_ACOP_CUSTOMER_INFO VALUES (1,'" + lScrData.title + "','" + lScrData.firstName + "','" + lScrData.middleName +
+            "','" + lScrData.lastName + "','" + lScrData.dateOfBirth + "','" + lScrData.sex + "','" + lScrData.proffession + "','" + lScrData.maritalStatus +
+            "','" + lScrData.mobileNo + "','" + lScrData.phoneNo + "','" + lScrData.emailId + "','" + lScrData.address1 + "','" + lScrData.address2 +
+            "','" + lScrData.address3 + "','" + lScrData.city + "','" + lScrData.state + "','" + lScrData.zipCode + "','" + lScrData.aadhaarId +
+            "','" + apz.ACOP01.CustomerInfo.sCache.ImagePhotoPath + "','" + apz.ACOP01.CustomerInfo.sCache.ImageSignaturePath + "','" + lScrData.photoUploaded +
+            "','" + lScrData.signatureUploaded + "','" + lScrData.mobileBanking + "','" + lScrData.netBanking + "','" + lScrData.atmReqd + "','" +
+            lScrData.chequeBook + "','" + lScrData.sms + "','" + apz.getElmValue("ACOP01__CustomerInfo__EmailStatement") + "','" + lScrData.nomineeName +
+            "','" + lScrData.nomineeRelationship + "','" + lScrData.nomineeDob + "','" + lScrData.nomineeMinor + "','" + lScrData.nomineeGuarName +
+            "','" + lScrData.nomineeGuarAge + "','" + lScrData.nomineeGuarRelation + "','" + lScrData.nomineeGuarAddress + "','Submitted' ,'' )"
+    };
+    jsonStr.callBack = apz.ACOP01.CustomerInfo.fnSQLiteInserTableCB;
+    apz.ns.executeSql(jsonStr);
+}
+apz.ACOP01.CustomerInfo.fnSQLiteInserTableCB = function(params) {
+    debugger;
+    if (params.status) {
+        apz.ACOP01.CustomerInfo.sCache.SaveCount++;
+        var lMsg = {
+            "code": "SUCC_SAVED"
+        };
+        apz.dispMsg(lMsg);
+    }
+};
+apz.ACOP01.CustomerInfo.fnSQLiteDeleteTable = function() {
+    debugger;
+    apz.data.buildData('CustomerInfo', 'ACOP01');
+    var lScrData = apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo;
+    var jsonStr = {
+        "queryId": "XYZ78V",
+        "databaseName": "CustomerInfo",
+        "executeQuery": "Delete from TB_ACOP_CUSTOMER_INFO where aadhaarId ='" + lScrData.aadhaarId + "'"
+    };
+    jsonStr.callBack = apz.ACOP01.CustomerInfo.fnSQLiteDeleteTableCB;
+    apz.ns.executeSql(jsonStr);
+}
+apz.ACOP01.CustomerInfo.fnSQLiteDeleteTableCB = function(params) {
+    debugger;
+    if (params.status) {
+        if (apz.ACOP01.CustomerInfo.sAction == "Submit") {
+            apz.ACOP01.CustomerInfo.fnSQLiteInserTableFinal();
+        } else {
+            apz.ACOP01.CustomerInfo.fnSQLiteInserTable();
+        }
+    }
+};
+apz.ACOP01.CustomerInfo.fnSQLiteInserTableFinal = function() {
+    debugger;
+    apz.data.buildData('CustomerInfo', 'ACOP01');
+    var lScrData = apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo;
+    var jsonStr = {
+        "queryId": "XYZ78V",
+        "databaseName": "CustomerInfo",
+        "executeQuery": "INSERT INTO TB_ACOP_CUSTOMER_INFO VALUES (1,'" + lScrData.title + "','" + lScrData.firstName + "','" + lScrData.middleName +
+            "','" + lScrData.lastName + "','" + lScrData.dateOfBirth + "','" + lScrData.sex + "','" + lScrData.proffession + "','" + lScrData.maritalStatus +
+            "','" + lScrData.mobileNo + "','" + lScrData.phoneNo + "','" + lScrData.emailId + "','" + lScrData.address1 + "','" + lScrData.address2 +
+            "','" + lScrData.address3 + "','" + lScrData.city + "','" + lScrData.state + "','" + lScrData.zipCode + "','" + lScrData.aadhaarId +
+            "','" + apz.ACOP01.CustomerInfo.sCache.ImagePhotoPath + "','" + apz.ACOP01.CustomerInfo.sCache.ImageSignaturePath + "','" + lScrData.photoUploaded +
+            "','" + lScrData.signatureUploaded + "','" + lScrData.mobileBanking + "','" + lScrData.netBanking + "','" + lScrData.atmReqd + "','" +
+            lScrData.chequeBook + "','" + lScrData.sms + "','" + apz.getElmValue("ACOP01__CustomerInfo__EmailStatement") + "','" + lScrData.nomineeName +
+            "','" + lScrData.nomineeRelationship + "','" + lScrData.nomineeDob + "','" + lScrData.nomineeMinor + "','" + lScrData.nomineeGuarName +
+            "','" + lScrData.nomineeGuarAge + "','" + lScrData.nomineeGuarRelation + "','" + lScrData.nomineeGuarAddress + "','Submitted' , '" +
+            lScrData.submitStatus + "')"
+    };
+    jsonStr.callBack = apz.ACOP01.CustomerInfo.fnSQLiteInserTableFinalCB;
+    apz.ns.executeSql(jsonStr);
+}
+apz.ACOP01.CustomerInfo.fnSQLiteInserTableFinalCB = function(params) {
+    debugger;
+    if (params.status) {
+        apz.data.buildData('CustomerInfo', 'ACOP01');
+        var lScrData = apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo;
+        /* var lMsg = {
+            "code": "SUCC_SUCC",
+            "callBack": apz.ACOP01.CustomerInfo.sCache.callBack
+        };
+        apz.dispMsg(lMsg);*/
+        $("#ACOP01__CustomerInfo__ConfirmationText1").text("Thank you Mr " + lScrData.firstName + " for banking with us");
+        apz.setElmValue("ACOP01__CustomerInfo__ConfirmationText2", "Kindly note your account details:");
+        apz.setElmValue("ACOP01__CustomerInfo__ConfirmationText3", "Account Number: 090115");
+        apz.setElmValue("ACOP01__CustomerInfo__ConfirmationText4", "CIF: 4391");
+        var lObj = {
+            "targetId": "ACOP01__CustomerInfo__ConfirmationModal"
+        }
+        apz.toggleModal(lObj);
+    }
+};
+apz.ACOP01.CustomerInfo.fnCheckValue = function() {
+    debugger;
+    var lMaritalstatus = apz.getElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__maritalStatus")
+    if (lMaritalstatus == "6") {
+        apz.show("ACOP01__CustomerInfo__maritialStatusOthers_ul");
+    } else {
+        apz.hide("ACOP01__CustomerInfo__maritialStatusOthers_ul");
+    }
+};
+apz.ACOP01.CustomerInfo.fnShiftOTP = function(pthis) {
+    debugger;
+    var lDigit = apz.ACOP01.CustomerInfo.fnOnlyDigit(pthis);
+    if (lDigit) {
+        if ((pthis.value != '') && (apz.getElmValue(pthis.id) != '')) {
+            var lCurrentStage = parseInt(pthis.id.split("_")[4].slice(-1));
+            var lSetstage = lCurrentStage + 1;
+            $("#ACOP01__CustomerInfo__OTP" + lSetstage).val('');
+            $("#ACOP01__CustomerInfo__OTP" + lSetstage).focus();
+        }
+    }
+};
+apz.ACOP01.CustomerInfo.fnOnlyDigit = function(pobj) {
+    debugger;
+    var lDigit = apz.val.isNumber(pobj.id);
+    if (lDigit == false) {
+        var ldig = $("#" + pobj.id).val().replace(/\D/g, '');
+        $("#" + pobj.id).val(ldig);
+        if (ldig == '') {
+            return false;
+        } else {
+            return true;
+        }
+        //apz.setElmValue(pobj.id, lDigit.substr(0,lDigit.length-1));
+    }
+};
+apz.ACOP01.CustomerInfo.fnLaunchCusSubmit = function() {
+    apz.ACOP01.CustomerInfo.fnRender({
+        "action": "GoToStage5"
+    });
+    apz.show("ACOP01__CustomerInfo__ConfirmRow");
+};
+apz.ACOP01.CustomerInfo.fnAuthenticationType = function(params) {
+    if (params == "OTP") {
+        $("#ACOP01__CustomerInfo__OTPBtn").addClass("current");
+        $("#ACOP01__CustomerInfo__FingerPrintBtn").removeClass("current");
+        apz.show("ACOP01__CustomerInfo__OTPRow");
+    } else {
+        $("#ACOP01__CustomerInfo__FingerPrintBtn").addClass("current");
+        $("#ACOP01__CustomerInfo__OTPBtn").removeClass("current");
+        apz.hide("ACOP01__CustomerInfo__OTPRow");
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+        if (isMobile) {
+            apz.ACOP01.CustomerInfo.fnFingerPrintScan();
+        } else {
+            var lMsg = {
+                "code": "INFO_FP"
+            }
+            apz.dispMsg(lMsg);
+        }
+    }
+}
+apz.ACOP01.CustomerInfo.fnLaunchCusConf = function() {
+    debugger;
+    /*    for (i = 0; i < 3; i++) {
+        var catg = apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[i].category;
+        var docReq = {};
+        docReq.Doc = [];
+        docReq.Doc[i].catg = {};
+        docReq.Doc[i].catg.ReferenceType = apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[i].type;
+        docReq.Doc[i].catg.application = apz.ACOP01.CustomerInfo.sDocDetails[i].ImageName;
+    };*/
+    for (i = 0; i < 3; i++) {
+        if (apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[i].category == "Photo Id Proof") {
+            photoRef = apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[i].type;
+            photoappl = apz.ACOP01.CustomerInfo.sDocDetails[i].ImageName;
+        }
+        if (apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[i].category == "Address Proof") {
+            AddrRef = apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[i].type;
+            Addrappl = apz.ACOP01.CustomerInfo.sDocDetails[i].ImageName;
+        }
+        if (apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[i].category == "Additional Proof") {
+            AddtnlRef = apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[i].type;
+            Addtnlappl = apz.ACOP01.CustomerInfo.sDocDetails[i].ImageName;
+        }
+    }
+    var docReq = {
+        "Doc": [{
+            "photoidProof": {
+                "ReferenceType": photoRef,
+                "application": photoappl
+            }
+        }, {
+            "AddressProof": {
+                "ReferenceType": AddrRef,
+                "application": Addrappl
+            }
+        }, {
+            "AdditionalProof": {
+                "ReferenceType": AddtnlRef,
+                "application": Addtnlappl
+            }
+        }]
+    }
+    var lReq = {
+        "vault": "MBSB",
+        "guid": "0C49466F-3895-4BB5-99A7-06DFE9B705DE",
+        "username": "iexceed",
+        "password": "p@ssw0rd",
+        "Document": docReq
+    };
+    var lServerParams = {
+        "ifaceName": "CustomerInformation",
+        "buildReq": "N",
+        "appId": "ACOP01",
+        "req": lReq,
+        "paintResp": "N",
+        "callBack": apz.ACOP01.CustomerInfo.cusInfoCB,
+        "callBackObj": "",
+    };
+    debugger;
+    apz.server.callServer(lServerParams);
+};
+apz.ACOP01.CustomerInfo.cusInfoCB = function(params) {
+    /*  var lButton = $("#ACOP01__CustomerInfo__el_btn_24").text();
+    if (lButton == "Close") {
+        $("ACOP01__CustomerInfo__el_btn_24").attr("onclick", apz.ACOP01.CustomerInfo.sCache.callBack());
+    } else if (lButton == "Submit") {*/
+    /* var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+        if (isMobile) {
+            apz.setElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__submitStatus", "YES");
+            apz.ACOP01.CustomerInfo.sAction = "Submit";
+            apz.ACOP01.CustomerInfo.fnSQLiteDeleteTable();
+        } else {*/
+    var lscrdata = apz.data.buildData('CustomerInfo', 'ACOP01');
+    lscrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.actualMobileno = lscrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.mobileNo;
+    lscrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.actualEmailid = lscrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.emailId.toLowerCase();
+    lscrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.signature = apz.getElmValue("ACOP01__CustomerInfo__loadSignature");
+    lscrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.applicationId = $.now();
+    lDocuments = apz.data.buildData('DocumentDetails', 'ACOP01');
+    var SelectedDocs = apz.ACOP01.CustomerInfo.sDocDetails;
+    var today = new Date();
+    apz.setElmValue("ACOP01__CustomerInfo__refnotxt", lscrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.applicationId);
+    if (lDocuments.ACOP01__DocumentDetails_Req != undefined) {
+        for (var i = 0; i < lDocuments.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails.length; i++) {
+            lDocuments.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[i].applicationId = lscrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.applicationId;
+            lDocuments.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[i].image = apz.ACOP01.CustomerInfo.sDocDetails[i].ImageName;
+            lDocuments.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[i].documentType = apz.ACOP01.CustomerInfo.sDocDetails[i].Type;
+            lDocuments.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[i].documentId = today.getDate() + today.getMonth() + today.getFullYear() +
+                apz.ACOP01.CustomerInfo.sDocDetails[i].Image;
+        }
+    }
+    var lServerParams = {
+        "ifaceName": "CustomerInfo_New",
+        "buildReq": "N",
+        "appId": "ACOP01",
+        "req": lscrdata.ACOP01__CustomerInfo_Req,
+        "paintResp": "N",
+        "callBack": apz.ACOP01.CustomerInfo.saveDetailsCB,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+    /*  var lMsg = {
+                "code": "ACOP_SUCC",
+                "callBack" : apz.ACOP01.CustomerInfo.fnSuccessCallBack
+            }
+            apz.dispMsg(lMsg);*/
+    /*   var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+        if (isMobile) {
+            apz.ACOP01.CustomerInfo.fnFingerPrintScan();
+        } else  {
+            var lMsg = {
+                "code": "ACOP_SUCC",
+                "callBack": apz.ACOP01.CustomerInfo.fnSuccessCallBack
+            }
+            apz.dispMsg(lMsg);
+        }*/
+    var lModal = {
+        "targetId": "ACOP01__CustomerInfo__SuccessModal"
+    }
+    apz.toggleModal(lModal);
+    /*var lScrData = apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo;
+             $("#ACOP01__CustomerInfo__ConfirmationText1").text("Thank you Mr "+lScrData.firstName+" for banking with us");
+        apz.setElmValue("ACOP01__CustomerInfo__ConfirmationText2","Kindly note your account details:");
+        apz.setElmValue("ACOP01__CustomerInfo__ConfirmationText3","Account Number: 090115");
+        apz.setElmValue("ACOP01__CustomerInfo__ConfirmationText4","CIF: 4391");
+        
+        var lObj = {
+            "targetId" : "ACOP01__CustomerInfo__ConfirmationModal"
+        }
+        apz.toggleModal(lObj);*/
+    //apz.ACOP01.CustomerInfo.sCache.callBack();
+    // }
+    //}
+}
+apz.ACOP01.CustomerInfo.saveDetailsCB = function(presp) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "DocumentDetails_New",
+        "buildReq": "N",
+        "appId": "ACOP01",
+        "req": lDocuments.ACOP01__DocumentDetails_Req,
+        "paintResp": "N",
+        "callBack": apz.ACOP01.CustomerInfo.saveDocDetailsCB,
+        "callBackObj": "",
+    };
+    if (apz.ACOP01.CustomerInfo.sCache.update) {
+        lServerParams.ifaceName = "DocumentDetails_Modify"
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.ACOP01.CustomerInfo.saveDocDetailsCB = function(presp) {
+    debugger;
+    if (!presp.error) {
+        apz.ACOP01.CustomerInfo.fnclickNextCB("stage4");
+    }
+}
+apz.ACOP01.CustomerInfo.fnFingerPrintScan = function() {
+    debugger;
+    var params = {};
+    params.id = "BIOMETRIC_ID";
+    params.callBack = apz.ACOP01.CustomerInfo.fnFingerPrintScanCB;
+    apz.ns.biometricAuth(params);
+};
+apz.ACOP01.CustomerInfo.fnFingerPrintScanCB = function(json) {
+    debugger;
+    if (!json.status) {
+        var lMsg = {
+            "message": json.text
+        }
+        apz.dispMsg(lMsg);
+    }
+    if (json.hasOwnProperty("text")) {
+        if (json.text == "Authentication succeeded") {
+            var lModal = {
+                "targetId": "ACOP01__CustomerInfo__SuccessModal"
+            }
+            apz.toggleModal(lModal);
+        } else if (json.text == "Authentication failed") {
+            var lMsg = {
+                "message": json.text
+            }
+            apz.dispMsg(lMsg);
+        }
+    } else if (json.event = "started") {}
+};
+apz.ACOP01.CustomerInfo.fnSuccessCallBack = function() {
+    var lModal = {
+        "targetId": "ACOP01__CustomerInfo__SuccessModal"
+    }
+    apz.toggleModal(lModal);
+   // apz.ACOP01.CustomerInfo.sCache.callBack();
+   var lParams = {
+            "appId": "landpg",
+            "scr": "LandingPage",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "animation": 21,
+            "userObj": {
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                "custId": "menuap__Menu__custId_txtcnt"
+            }
+       
+   }
+    
+    apz.launchApp(lParams);
+}
+apz.ACOP01.CustomerInfo.sDocDetails = [];
+apz.ACOP01.CustomerInfo.fnCameraDoc = function(params) {
+    debugger;
+    apz.ACOP01.CustomerInfo.RowNo = $(params).attr('rowno');
+    if (apz.deviceGroup == "Mobile") {
+        var lRowNo = params.id.split("_")[5];
+        apz.ACOP01.CustomerInfo.sPicRow = lRowNo;
+        var lJsonObj = {};
+        lJsonObj.action = "base64_Save";
+        lJsonObj.fileName = "fileNumber";
+        lJsonObj.id = "CAMERA_ID";
+        lJsonObj.targetWidth = "200";
+        lJsonObj.targetHeight = "200";
+        lJsonObj.encodingType = "JPG";
+        lJsonObj.openNativeCamera = "Y";
+        lJsonObj.sourceType = "Camera";
+        lJsonObj.callBack = apz.ACOP01.CustomerInfo.fnCameraDocCB;
+        apz.ns.openCamera(lJsonObj);
+    } else {
+        $("#ACOP01__CustomerInfo__BrowseToUpload").trigger('click');
+    }
+};
+apz.ACOP01.CustomerInfo.fnCameraDocCB = function(params) {
+    debugger;
+    if (params.status) {
+        var lobj = {};
+        lobj.ImageName = "data:image/jpg;base64," + params.encodedImage;
+        lobj.RowNo = apz.ACOP01.CustomerInfo.sPicRow;
+        apz.ACOP01.CustomerInfo.sDocDetails.push(lobj);
+    } else {
+        var lErrors = params.errorCode;
+        alert(lErrors);
+    }
+};
+apz.ACOP01.CustomerInfo.fnchangeTitle = function() {}
+apz.ACOP01.CustomerInfo.fnViewPic = function(params) {
+    debugger;
+    var rowNo = $(params).attr('rowno');
+    apz.setElmValue("ACOP01__CustomerInfo__docImage", apz.data.scrdata.ACOP01__DocumentDetails_Req.tbAcopDocumentDetails[rowNo].image);
+    var lObj = {};
+    lObj.targetId = "ACOP01__CustomerInfo__PhotoView";
+    apz.toggleModal(lObj);
+};
+apz.ACOP01.CustomerInfo.fnSameIdproof = function(pthis) {
+    debugger;
+    var lValue = pthis.value;
+    if (lValue == "YES") {
+        $(".Check").each(function() {
+            debugger;
+            var CheckID = $(this).find("select")[0].id;
+            $("#" + CheckID).prop('disabled', true);
+        });
+    } else {
+        $(".Check").each(function() {
+            debugger;
+            var CheckID = $(this).find("select")[0].id;
+            $("#" + CheckID).prop('disabled', false);
+        });
+    }
+};
+apz.ACOP01.CustomerInfo.fnShowErrorMsg = function() {
+    debugger;
+    var lErrorParams = {
+        "code": 'ACOP01-001'
+    };
+    apz.dispMsg(lErrorParams);
+}
+apz.ACOP01.CustomerInfo.fnSaveStages = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "CustomerInfo_Modify",
+        "callBack": apz.ACOP01.CustomerInfo.fnStageCallBack,
+        "buildReq": "Y",
+        "req": {},
+        "paintResp ": "N"
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.ACOP01.CustomerInfo.fnStageCallBack = function(params) {
+    debugger;
+    if (params.status) {
+        var lSuccessParams = {
+            "code": 'ACOP01-002'
+        };
+        apz.dispMsg(lSuccessParams);
+    } else {
+        var lErrorParams = {
+            "code": 'ACOP01-003'
+        };
+        apz.dispMsg(lErrorParams);
+    }
+};
+apz.ACOP01.CustomerInfo.fnGoToStage2 = function() {
+    debugger;
+    var lValid = true;
+    //lValid = apz.val.validateContainer("ACOP01__CustomerInfo__personaldetailform");
+    if (lValid) {
+        var lObj = {
+            "action": "GoToStage2"
+        }
+        apz.ACOP01.CustomerInfo.sStage = 2;
+        apz.ACOP01.CustomerInfo.fnRender(lObj);
+    } else {
+        apz.ACOP01.CustomerInfo.fnShowErrorMsg();
+    }
+};
+apz.ACOP01.CustomerInfo.fnGoToStage3 = function() {
+    debugger;
+    var lValid = true;
+    //lValid = apz.val.validateContainer("ACOP01__CustomerInfo__addressdetailform");
+    if (lValid) {
+        var lObj = {
+            "action": "GoToStage3"
+        }
+        apz.ACOP01.CustomerInfo.sStage = 3;
+        apz.ACOP01.CustomerInfo.fnRender(lObj);
+    } else {
+        apz.ACOP01.CustomerInfo.fnShowErrorMsg();
+    }
+};
+apz.ACOP01.CustomerInfo.fnGoToStage4 = function() {
+    debugger;
+    apz.ACOP01.CustomerInfo.goToLoginPagedebugger;
+    var lValid = true;
+    //  lValid = apz.ACOP01.CustomerInfo.fnStage3Common();
+    if (lValid) {
+        var lObj = {
+            "action": "GoToStage4"
+        }
+        apz.ACOP01.CustomerInfo.sStage = 4;
+        apz.ACOP01.CustomerInfo.fnRender(lObj);
+    } else {
+        apz.ACOP01.CustomerInfo.fnStage3ErrorMsg();
+    }
+};
+apz.ACOP01.CustomerInfo.fnChangekyc=function(){
+     var val = apz.getElmValue("ACOP01__CustomerInfo__ekyctoggle");
+    if(val == "on"){
+       $("#ACOP01__CustomerInfo__ekyclauncher").removeClass("sno");
+       apz.ACOP01.CustomerInfo.fnLaunchekycapp();
+    }else{
+        if(!$("#ACOP01__CustomerInfo__ekyclauncher").hasClass("sno")){
+            $("#ACOP01__CustomerInfo__ekyclauncher").addClass("sno");
+        }
+        
+    }
+};
+apz.ACOP01.CustomerInfo.fnLaunchekycapp=function(){
+    
+    sparams = {
+        appId:"ekycdt",
+        scr : "KYC",
+        div : "ACOP01__CustomerInfo__ekyclauncher"
+    }
+    apz.launchApp(sparams);
+};
+apz.ACOP01.CustomerInfo.fnGoToLoginPage = function() {
+    apz.data.buildData("CustomerInfo", "ACOP01");
+    if (!$("#ACOP01__CustomerInfo__el_cbx_2").is(":checked")) {
+        apz.dispMsg({
+            message: "Please Accept Terms and Condition to Continue.",
+            type: "E"
+        });
+    } else {
+        apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.submitStatus = "submitted";
+        apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.applicationStatus = "Pending";
+        var lDate = new Date();
+        var date = lDate.getDate();
+        var month = lDate.getMonth() + 1;
+        month = month>9?month:'0'+month;
+        var year = lDate.getFullYear();
+        var newdate = year+'-'+month+'-'+date;
+        
+        apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.submittedDate = newdate;
+        var lServerParams = {
+            "ifaceName": "CustomerInfo_Modify",
+            "buildReq": "N",
+            "appId": "ACOP01",
+            "paintResp": "N",
+            "req": apz.data.scrdata.ACOP01__CustomerInfo_Req,
+            
+            //"callBack": apz.ACOP01.CustomerInfo.fnWorkFlowCallBack
+            "callBack": apz.ACOP01.CustomerInfo.fnlastStep,
+        };
+        if(apz.mockServer){
+           lServerParams.callBack =  apz.ACOP01.CustomerInfo.fnWorkFlowCallBack
+        }
+        apz.server.callServer(lServerParams);
+    }
+}
+apz.ACOP01.CustomerInfo.fnlastStep = function() {
+    debugger;
+    apz.startLoader();
+    var params = {};
+    params.appId = "wrkflw";
+    params.scr = "WorkFlow";
+    params.div = "ACOP01__CustomerInfo__ConfirmRow";
+    params.layout = "All";
+    params.userObj = {
+        "appId": "ACOP01",
+        "workFlowId": "ONBRD",
+        "userId": apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.referenceNo,
+        "callBack": apz.ACOP01.CustomerInfo.fnWorkFlowCallBack
+    };
+    apz.launchApp(params);
+}
+apz.ACOP01.CustomerInfo.fnWorkFlowCallBack = function(params) {
+    var lModal = {
+        "targetId": "ACOP01__CustomerInfo__SuccessModal"
+    }
+    apz.stopLoader();
+    apz.toggleModal(lModal);
+}
+/*************************Validation********************************/
+apz.ACOP01.CustomerInfo.fnIsNumber = function(event) {
+    debugger;
+    var lcharcode = event.which //(event.which) ? event.which : event.keyCode;
+    if ((lcharcode > 47 && lcharcode < 58) || (lcharcode == 8 || lcharcode == 46) || lcharcode == 9 || lcharcode == 0) {
+        return true;
+    }
+    return false;
+};
+apz.ACOP01.CustomerInfo.fnValidatePINCode = function(pthis) {
+    debugger;
+    var lpin = apz.getElmValue(pthis.id);
+    apz.val.removeClass(pthis);
+    if (!apz.isNull(lpin)) {
+        var lregex = /^[1-9][0-9]{5}$/;
+        if (!lregex.test(lpin)) {
+            apz.val.addClass(pthis);
+            var msg = {
+                "code": 'ACOP01-VALPIN'
+            };
+            apz.dispMsg(msg);
+        }
+    }
+};
+apz.ACOP01.CustomerInfo.fnNomineeMinor = function() {
+    debugger;
+    var lNominee = apz.getElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__nomineeMinor");
+    if (lNominee == "YES") {
+        apz.show("ACOP01__CustomerInfo__minorguardrow");
+    } else {
+        apz.hide("ACOP01__CustomerInfo__minorguardrow");
+    }
+};
+apz.app.preUpdateResponse = function(params) {
+    if (params.apzIfaceName == 'ACOP01__CustomerInfo_Modify') {
+        return false;
+    }
+};
+apz.ACOP01.CustomerInfo.fnAadhaarValidation
+apz.ACOP01.CustomerInfo.fnCamera = function() {
+    debugger;
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    if (isMobile) {
+        var jsonobj = {
+            "zoomLevel": "20",
+            "targetWidth": "200",
+            "targetHeight": "200",
+            "crop": "Y", //Y or N 
+            "flash": "Y",
+            "action": "base64_Save", // save,base64
+            "fileName": "Sample",
+            "quality": "50",
+            "encodingType": "JPG",
+            "sourceType": "camera" // photo
+        };
+        jsonobj.id = "CAMERA_ID";
+        jsonobj.callBack = apz.app.fnCameraCallback;
+        apz.ns.openCamera(jsonobj);
+    } else {
+        /* var lMsg = {
+            "code": "INFO_CAM"
+        }
+        apz.dispMsg(lMsg);*/
+        $("#ACOP01__CustomerInfo__BrowseCamera").trigger('click');
+    }
+};
+apz.ACOP01.CustomerInfo.fnCameraBrowseCB = function(pthis) {
+    debugger;
+    $("#ACOP01__CustomerInfo__BrowseCamera_ul").find("p").text();
+}
+apz.app.fnCameraCallback = function(pjson) {
+    debugger;
+    if (pjson.status) {
+        //alert("success");
+        apz.show("ACOP01__CustomerInfo__loadUserImage_ul");
+        apz.show("ACOP01__CustomerInfo__loadUserImage_svg")
+        document.getElementById("ACOP01__CustomerInfo__loadUserImage").src = "data:image/jpg;base64," + pjson.encodedImage;
+        apz.show("ACOP01__CustomerInfo__loadUserImage");
+        apz.setElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__photoUploaded", "YES");
+        apz.setElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__signatureUploaded", "YES");
+        apz.ACOP01.CustomerInfo.sCache.ImagePhotoPath = "data:image/png;base64," + pjson.encodedImage + "";
+        apz.ACOP01.CustomerInfo.fnProgressBarStage3();
+    }
+};
+apz.ACOP01.CustomerInfo.fnSignaturePad = function() {
+    debugger;
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    if (isMobile) {
+        var params = {};
+        params.id = "SIGNATUREPAD_ID";
+        params.callBack = apz.ACOP01.CustomerInfo.fnSignaturepadCallback;
+        apz.ns.signaturePad(params);
+    } else {
+        /*var lMsg = {
+            "code": "INFO_SIG"
+        }
+        apz.dispMsg(lMsg);*/
+        $("#ACOP01__CustomerInfo__BrowseSignature").trigger('click');
+    }
+};
+apz.ACOP01.CustomerInfo.fnSignaturepadCallback = function(json) {
+    debugger;
+    if (json.status) {
+        apz.show("ACOP01__CustomerInfo__loadSignature_ul")
+        apz.show("ACOP01__CustomerInfo__loadSignature_svg")
+        document.getElementById("ACOP01__CustomerInfo__loadSignature").src = "data:image/jpg;base64," + json.encodedImage;
+        //apz.setElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__signatureUploaded", pjson.path);
+        apz.show("ACOP01__CustomerInfo__loadSignature");
+        apz.setElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__signatureUploaded", "YES");
+        apz.ACOP01.CustomerInfo.sCache.ImageSignaturePath = "data:image/png;base64," + json.encodedImage + "";
+        apz.ACOP01.CustomerInfo.sCache.Filled++;
+        apz.ACOP01.CustomerInfo.fnProgressBarStage3();
+    }
+};
+apz.ACOP01.CustomerInfo.fnSignatureBrowseCB = function(pthis) {
+    debugger;
+    $("#ACOP01__CustomerInfo__BrowseCamera_ul").find("p").text();
+}
+apz.ACOP01.CustomerInfo.fnProgressClick = function(pThis) {
+      apz.ACOP01.CustomerInfo.fnProgressBarStage1();
+        apz.ACOP01.CustomerInfo.fnProgressBarStage2();
+        apz.ACOP01.CustomerInfo.fnProgressBarStage3();
+        apz.ACOP01.CustomerInfo.fnProgressBarStage4();
+    if (pThis.textContent == "Personal Details") {
+        $("#ACOP01__CustomerInfo__AddrBack").trigger("click");
+    }
+    if (pThis.textContent == "Address Details") {
+        $("#ACOP01__CustomerInfo__personalNext").trigger("click");
+    }
+    if (pThis.textContent == "Identity Details") {
+        $("#ACOP01__CustomerInfo__AddrNext").trigger("click");
+    }
+    if (pThis.textContent == "Banking Services") {
+        $("#ACOP01__CustomerInfo__identNext").trigger("click");
+    }
+}
+/*
+apz.ACOP01.CustomerInfo.fnProgressBarStage = function(formid) {
+    debugger;
+    var per = "";
+    //var elements=$("#ACOP01__CustomerInfo__personaldetailform :input[type=text]");
+    var elements=$(formid+" :input[type=text]");
+    // elements.change(function(){
+    //     debugger;
+    //     var filledElm=elements.get().reduce((p,n)=>{
+    //         if(apz.getElmValue(n.id)){
+    //             p+=1
+    //         }
+    //         return p;
+    //     },0);
+    //     debugger;
+    //      per= 100*(filledElm/elements.length);
+    // })
+    
+    
+    
+     var filledElm=elements.get().reduce((p,n)=>{
+             if(apz.getElmValue(n.id)){
+                 p+=1
+             }
+             return p;
+         },0);
+     per= 100*(filledElm/elements.length);
+    return per;
+}*/
+/*
+apz.ACOP01.CustomerInfo.file_base64Photo = function() {
+    debugger;
+  var json = {};
+    json.id = "FILETOBASE64";
+    json.callBack = apz.ACOP01.CustomerInfo.fnFiletobase64PhotocallBack;
+    json.filePath = apz.getElmValue("ACOP01__CustomerInfo__loadUserImage");
+    //json.fileName = $("#file_name")[0].value;
+    apz.ns.fileToBase64(json);
+};
+apz.ACOP01.CustomerInfo.fnFiletobase64PhotocallBack = function(json) {
+    debugger;
+    var base64 = json.text;
+     apz.setElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__photoUploaded",base64);
+};
+
+apz.ACOP01.CustomerInfo.file_base64Signature = function() {
+    debugger;
+  var json = {};
+    json.id = "FILETOBASE64";
+    json.callBack = apz.ACOP01.CustomerInfo.fnFiletobase64SignatureCB;
+    json.filePath = apz.getElmValue("ACOP01__CustomerInfo__loadSignature");
+    //json.fileName = $("#file_name")[0].value;
+    apz.ns.fileToBase64(json);
+};
+apz.ACOP01.CustomerInfo.fnFiletobase64SignatureCB = function(json) {
+    debugger;
+    var base64 = json.text;
+     apz.setElmValue("ACOP01__CustomerInfo__i__tbAcopCustomerInfo__signatureUploaded",base64);
+};
+*/
+apz.ACOP01.CustomerInfo.fnCall = function() {
+    debugger;
+    var json = {};
+    json.phoneNo = "9632919627";
+    json.id = "CALL_ID";
+    json.callBack = apz.ACOP01.CustomerInfo.fnPhoneCallback;
+    apz.ns.callNumber(json);
+}
+apz.ACOP01.CustomerInfo.fnPhoneCallback = function(params) {};

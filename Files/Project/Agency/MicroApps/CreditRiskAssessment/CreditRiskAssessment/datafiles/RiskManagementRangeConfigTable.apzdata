@@ -1,0 +1,11 @@
+{
+    "crsapp__RiskManagementRangeConfigTable_Res": {
+        "riskManagementRangeConfigTable": {
+            "high": "30",
+            "low": "8",
+            "restricted": "100",
+            "appid": "RCorp",
+            "med": "14"
+        }
+    }
+}

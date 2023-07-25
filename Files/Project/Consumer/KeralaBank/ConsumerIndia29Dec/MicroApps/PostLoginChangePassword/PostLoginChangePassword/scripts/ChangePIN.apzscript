@@ -1,0 +1,97 @@
+apz.chgpwd.ChangePIN = {};
+var chPwdMnd = ["oldPassword", "newPassword", "confirmPassword"];
+apz.app.onLoad_ChangePIN = function(params) {
+    apz.chgpwd.ChangePIN.fnInitialise(params);
+};
+apz.chgpwd.ChangePIN.fnInitialise = function(params) {
+    apz.chgpwd.ChangePIN.sParams = params;
+    if (params.Navigation) {
+        apz.chgpwd.ChangePIN.fnSetNavigation(params)
+    }
+};
+
+apz.chgpwd.ChangePIN.fnSetNavigation = function(params) {
+    debugger;
+    apz.chgpwd.ChangePIN.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "CHANGE PIN";
+    }
+    lParams.backPressed = apz.chgpwd.ChangePIN.fnBack;
+    apz.chgpwd.ChangePIN.Navigation(lParams);
+};
+apz.chgpwd.ChangePIN.callsearch = function(event) {
+    if (event.keyCode == 13) {
+        apz.chgpwd.ChangePIN.confirmChangePwd();
+    }
+};
+apz.chgpwd.ChangePIN.confirmChangePwd = function() {
+    debugger;
+    var luserId = apz.chgpwd.ChangePIN.userId;
+    var params = new Object();
+    params.newPassword = apz.getElmValue("chgpwd__ChangePIN__newPassword").trim();
+    params.confirmPassword = apz.getElmValue("chgpwd__ChangePIN__confirmPassword").trim();
+    params.oldPassword = apz.getElmValue("chgpwd__ChangePIN__oldPassword").trim();
+    if( params.newPassword != "" && params.confirmPassword != "" &&  params.oldPassword !=""){
+         apz.dispMsg({message:"MPIN changed successfully",type:"S",callBack:apz.landin.Landing.fnHome});
+    }else{
+        apz.dispMsg({message:"All input fields are mandatory"});
+    }
+    
+    // var req = {};
+    // req.userId = luserId;
+    // req.oldPassword = params.oldPassword;
+    // req.newPassword = params.newPassword;
+    // req.confirmPassword = params.confirmPassword;
+    // req.callBackObj = this;
+    // req.async = true;
+    // req.callBack = apz.chgpwd.ChangePIN.ChangePINCallBack;
+    // //apz.app.resetMockServer();
+    // apz.server.ChangePIN(req);
+    //apz.app.setMockServer();
+};
+apz.chgpwd.ChangePIN.ChangePINCallBack = function(params) {
+    if (params.status) {
+        if (params.resFull.appzillonHeader.status) {
+            var msg = {};
+            msg.code = 'APZ-PWD-CHN-SUC';
+            msg.callBack = apz.chgpwd.ChangePIN.CheckingUserExpiry;
+            apz.dispMsg(msg);
+        } else {
+            if (params.errors[0].errorCode[0] !== "$") {
+                var perrorCode = params.errors;
+                var msg = {};
+                msg.callBack = null;
+                for (var i = 0; i < perrorCode.length; i++) {
+                    if (perrorCode[i].errorCode === "APZ-DM-033") {
+                        msg.message = params.errors[0].errorMessage;
+                        msg.type = 'E';
+                    } else if (perrorCode[i].errorCode === "APZ-DM-032") {
+                        msg.code = 'APZ-DM-032';
+                    } else if (perrorCode[i].errorCode === "APZ-DM-034") {
+                        msg.code = 'APZ-DM-034';
+                    } else if (perrorCode[i].errorCode === "APZ-FM-EX-050") {
+                        msg.code = 'APZ-FM-EX-050';
+                        msg.callBack = apz.chgpwd.ChangePIN.CheckingUserExpiry;
+                    } else {
+                        msg.code = 'APZ-PWD-CHN-FLD';
+                    }
+                }
+                apz.dispMsg(msg);
+            }
+        }
+    } else {
+        var perrorCode = params.errors;
+        var msg = {};
+        msg.callBack = null;
+        for (var i = 0; i < perrorCode.length; i++) {
+            msg.code = perrorCode[i].errorCode;
+            apz.dispMsg(msg);
+        }
+    }
+};
+apz.chgpwd.ChangePIN.CheckingUserExpiry = function() {
+    apz.ns.refreshPageCallback();
+};

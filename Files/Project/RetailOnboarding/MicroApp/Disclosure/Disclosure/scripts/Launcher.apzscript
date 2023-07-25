@@ -1,0 +1,16 @@
+apz.disclo.Launcher = {};
+apz.app.onLoad_Launcher = function(params){
+    debugger;
+    apz.disclo.Launcher.sCache=params;
+    apz.disclo.Launcher.fnLoadDisclosure();
+}
+apz.disclo.Launcher.fnLoadDisclosure = function(params){
+    debugger;
+    
+    apz.launchSubScreen({
+        appId:"disclo",
+        scr:"Disclosure",
+        div:"disclo__Launcher__launcher",
+    })
+    
+}

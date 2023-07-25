@@ -1,0 +1,29 @@
+{
+    "loginResponse": {
+        "userDet": {
+            "OTPRequired": "N",
+            "lastLogin": "2017-02-28 15:11:22.0",
+            "profilePic": "",
+            "name": "Admin",
+            "extId": "801004",
+            "id": "000FTAC4321__admin",
+            "privs": {
+                "roles": [
+                    "000FTAC4321__Admin"
+                ]
+            },
+            "userPrefs": {
+                "decimalSep": ".",
+                "otaReqd": "N",
+                "dateTimeFormat": "dd-MMM-yyyy  hh:mm:ss",
+                "dateFormat": "dd-MMM-yyyy",
+                "lattitude": "12.9255616",
+                "numberMask": "MILLION",
+                "language": "en",
+                "theme": "",
+                "longitude": "77.6196951"
+            }
+        },
+        "status": true
+    }
+}

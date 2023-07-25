@@ -1,0 +1,247 @@
+apz.crsapp.RiskManagement = {};
+apz.crsapp.RiskManagement.getConfig = function(cb) {
+    var request = {};
+    var params = {};
+    request.riskManagementConfigTable = {};
+    request.riskManagementConfigTable.appid = apz.appId;
+    params.buildReq = "N";
+    params.paintResp = "N";
+    params.req = request;
+    params.ifaceName = "RiskManagementConfigTable_Query";
+    params.async = false;
+    params.callBack = apz.crsapp.RiskManagement.getConfigCB;
+    params.userCb = cb;
+    params.status = true;
+    apz.data.loadJsonData("RiskManagementConfigTable", "crsapp");
+    apz.crsapp.RiskManagement.getConfigCB(params);
+    /*apz.server.callServer(params);*/
+};
+apz.crsapp.RiskManagement.getConfigCB = function(params) {
+    debugger;
+    if (params.status) {
+        apz.crsapp.RiskManagement.currentRiskValues = apz.data.scrdata.crsapp__RiskManagementConfigTable_Res.riskManagementConfigTable;
+        var entityData = {};
+        for (var i = 0, len = apz.crsapp.RiskManagement.entityData.length; i < len; i++) {
+            entityData[apz.crsapp.RiskManagement.entityData[i].entityName] = {};
+            for (var key in apz.crsapp.RiskManagement.entityData[i]) {
+                if (apz.crsapp.RiskManagement.entityData[i].hasOwnProperty(key)) {
+                    if (key != "entityName" && key != "appid") {
+                        if (!apz.isNull(apz.crsapp.RiskManagement.entityData[i][key])) {
+                            var splitString = apz.crsapp.RiskManagement.entityData[i][key].split(",");
+                            var value = 0;
+                            for (var k = 0, length = splitString.length; k < length; k++) {
+                                if (!apz.isNull(splitString[k])) {
+                                    value += parseInt(apz.crsapp.RiskManagement.currentRiskValues[splitString[k].toLocaleLowerCase()]);
+                                }
+                            }
+                            entityData[apz.crsapp.RiskManagement.entityData[i].entityName][key] = value;
+                        }
+                    }
+                }
+            }
+        }
+        for (var ele in entityData) {
+            if (entityData.hasOwnProperty(ele)) {
+                var sum = 0;
+                for (var elm in entityData[ele]) {
+                    if (entityData[ele].hasOwnProperty(elm)) {
+                        if (!apz.isNull(entityData[ele][elm])) {
+                            sum += entityData[ele][elm];
+                        }
+                    }
+                }
+                entityData[ele].sum = sum;
+                if (sum < apz.crsapp.RiskManagement.currentRangeValues.low) {
+                    entityData[ele].range = "Low";
+                } else if (sum > apz.crsapp.RiskManagement.currentRangeValues.low && sum < apz.crsapp.RiskManagement.currentRangeValues.med) {
+                    entityData[ele].range = "Med";
+                } else if (sum > apz.crsapp.RiskManagement.currentRangeValues.med && sum < apz.crsapp.RiskManagement.currentRangeValues.high) {
+                    entityData[ele].range = "High";
+                } else if (sum > apz.crsapp.RiskManagement.currentRangeValues.high) {
+                    entityData[ele].range = "Restricted";
+                }
+            }
+        }
+        apz.crsapp.RiskManagement.RangeVlues = entityData;
+        if (apz.isFunction(params.userCb)) {
+            params.userCb(entityData);
+        }
+    } else {
+        var msg = {
+            "message": "Risk Management Config Table Failed"
+        }
+        apz.dispMsg(msg);
+    }
+};
+apz.crsapp.RiskManagement.getMaster = function(cb, entityName) {
+    debugger;
+    var request = {};
+    var params = {};
+    request.riskManagementMaster = {};
+    request.riskManagementMaster.appid = apz.appId;
+    request.riskManagementMaster.entityName = entityName;
+    params.buildReq = "N";
+    params.paintResp = "N";
+    params.req = request;
+    params.ifaceName = "RiskManagementMaster_Query";
+    params.async = false;
+    params.callBack = apz.crsapp.RiskManagement.getMasterCB;
+    params.userCb = cb;
+    /*apz.server.callServer(params);*/
+    params.status = true;
+    apz.data.loadJsonData("RiskManagementMaster", "crsapp");
+    apz.crsapp.RiskManagement.getMasterCB(params);
+};
+apz.crsapp.RiskManagement.getMasterCB = function(params) {
+    debugger;
+    if (params.status) {
+        apz.crsapp.RiskManagement.entityData = apz.data.scrdata.crsapp__RiskManagementMaster_Res.riskManagementMaster;
+        apz.crsapp.RiskManagement.getRangeConfig(params.userCb);
+    } else {
+        var msg = {
+            "message": "Risk Management Master Table Failed"
+        }
+        apz.dispMsg(msg);
+    }
+};
+apz.crsapp.RiskManagement.getRangeConfig = function(cb) {
+    debugger;
+    var request = {};
+    var params = {};
+    request.riskManagementRangeConfigTable = {};
+    request.riskManagementRangeConfigTable.appid = apz.appId;
+    params.buildReq = "N";
+    params.paintResp = "N";
+    params.req = request;
+    params.ifaceName = "RiskManagementRangeConfigTable_Query";
+    params.async = false;
+    params.callBack = apz.crsapp.RiskManagement.getRangeConfigCB;
+    params.userCb = cb;
+    params.status = true;
+    /*apz.server.callServer(params);*/
+    apz.data.loadJsonData("RiskManagementRangeConfigTable", "crsapp");
+    apz.crsapp.RiskManagement.getRangeConfigCB(params);
+};
+apz.crsapp.RiskManagement.getRangeConfigCB = function(params) {
+    debugger;
+    if (params.status) {
+        apz.crsapp.RiskManagement.currentRangeValues = apz.data.scrdata.crsapp__RiskManagementRangeConfigTable_Res.riskManagementRangeConfigTable;
+        apz.crsapp.RiskManagement.getConfig(params.userCb);
+    } else {
+        var msg = {
+            "message": "Risk Management Range Config Table Failed"
+        }
+        apz.dispMsg(msg);
+    }
+};
+apz.crsapp.RiskManagement.upsertEntity = function(json) {
+    debugger;
+    var request = {};
+    var params = {};
+    request.riskManagementMaster = {};
+    request.riskManagementMaster.appid = apz.appId;
+    request.riskManagementMaster.entityName = json.entityName;
+    params.buildReq = "N";
+    params.paintResp = "N";
+    params.req = request;
+    params.ifaceName = "RiskManagementMaster_Query";
+    params.async = false;
+    params.callBack = apz.crsapp.RiskManagement.upsertEntityCB;
+    params.userCb = json.cb || "";
+    params.savedReq = json;
+    params.status = true;
+    params.errors = true;
+    apz.data.loadJsonData("RiskManagementMaster", "crsapp");
+    apz.crsapp.RiskManagement.upsertEntityCB(params);
+    /*apz.server.callServer(params);*/
+};
+apz.crsapp.RiskManagement.upsertEntityCB = function(params) {
+    debugger;
+    if (params.status) {
+        if (!params.errors) {
+            apz.crsapp.RiskManagement.ModifyEntity(params.savedReq);
+        } else {
+            apz.crsapp.RiskManagement.insertNewEntity(params.savedReq);
+        }
+        //params.res.crsapp__RiskManagementMaster_Res.riskManagementMaster.
+    } else {
+        var msg = {
+            "message": "Risk Management Master Table Failed while insertion"
+        }
+        apz.dispMsg(msg);
+    }
+};
+apz.crsapp.RiskManagement.insertNewEntity = function(json) {
+    debugger;
+    var request = {};
+    var params = {};
+    request.riskManagementMaster = {};
+    request.riskManagementMaster.appid = apz.appId;
+    request.riskManagementMaster.entityName = json.entityName;
+    request.riskManagementMaster.customerRisk = json.customerRisk || "";
+    request.riskManagementMaster.adverseNews = json.adverseNews || "";
+    request.riskManagementMaster.countryRisk = json.countryRisk || "";
+    request.riskManagementMaster.positiveMatchPep = json.positiveMatchPep || "";
+    request.riskManagementMaster.productRisk = json.productRisk || "";
+    request.riskManagementMaster.distributionChannel = json.distributionChannel || "";
+    request.riskManagementMaster.clientRisk = json.clientRisk || "";
+    params.buildReq = "N";
+    params.paintResp = "N";
+    params.req = request;
+    params.ifaceName = "RiskManagementMaster_New";
+    params.async = false;
+    params.callBack = apz.crsapp.RiskManagement.insertNewEntityCB;
+    params.userCb = json.cb || "";
+    params.status=true;
+    /*apz.server.callServer(params);*/
+    apz.data.loadJsonData("RiskManagementMaster", "crsapp");
+    apz.crsapp.RiskManagement.insertNewEntityCB(params);
+};
+apz.crsapp.RiskManagement.insertNewEntityCB = function(params) {
+    debugger;
+    if (params.status) {
+        console.log("Data inserted successfully");
+    } else {
+        var msg = {
+            "message": "Risk Management Master Table Failed while insertion"
+        }
+        apz.dispMsg(msg);
+    }
+};
+apz.crsapp.RiskManagement.ModifyEntity = function(json) {
+    debugger;
+    var request = {};
+    var params = {};
+    request.riskManagementMaster = {};
+    request.riskManagementMaster.appid = apz.appId;
+    request.riskManagementMaster.entityName = json.entityName;
+    request.riskManagementMaster.customerRisk = json.customerRisk || "";
+    request.riskManagementMaster.adverseNews = json.adverseNews || "";
+    request.riskManagementMaster.countryRisk = json.countryRisk || "";
+    request.riskManagementMaster.positiveMatchPep = json.positiveMatchPep || "";
+    request.riskManagementMaster.productRisk = json.productRisk || "";
+    request.riskManagementMaster.distributionChannel = json.distributionChannel || "";
+    request.riskManagementMaster.clientRisk = json.clientRisk || "";
+    params.buildReq = "N";
+    params.paintResp = "N";
+    params.req = request;
+    params.ifaceName = "RiskManagementMaster_Modify";
+    params.async = false;
+    params.callBack = apz.crsapp.RiskManagement.ModifyEntityCB;
+    params.userCb = json.cb || "";
+    params.status= true;
+    apz.data.loadJsonData("RiskManagementMaster","crsapp");
+    apz.crsapp.RiskManagement.ModifyEntityCB(params);
+    //apz.server.callServer(params);
+};
+apz.crsapp.RiskManagement.ModifyEntityCB = function(params) {
+    debugger;
+    if (params.status) {
+        console.log("Data inserted successfully");
+    } else {
+        var msg = {
+            "message": "Risk Management Master Table Failed while insertion"
+        }
+        apz.dispMsg(msg);
+    }
+};

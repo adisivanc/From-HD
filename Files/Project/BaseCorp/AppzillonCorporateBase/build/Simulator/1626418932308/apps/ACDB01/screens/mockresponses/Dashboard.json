@@ -1,0 +1,401 @@
+{
+    "transactionsSummary": [
+        {
+            "date": "21-Apr",
+            "account": "8274239482711",
+            "referenceNo": "324232",
+            "amount": "$87432",
+            "cureency": "USD",
+            "hashtag": "Deposits"
+        },
+        {
+            "date": "20-Apr",
+            "account": "7356329872139",
+            "referenceNo": "323512",
+            "amount": "$67331",
+            "cureency": "USD",
+            "hashtag": "Marketing"
+        },
+        {
+            "date": "20-Apr",
+            "account": "4785936513712",
+            "referenceNo": "983742",
+            "amount": "$93472",
+            "cureency": "USD",
+            "hashtag": "Deposits"
+        },
+        {
+            "date": "19-Apr",
+            "account": "4785936513712",
+            "referenceNo": "983742",
+            "amount": "$93472",
+            "cureency": "USD",
+            "hashtag": "Deposits"
+        },
+        {
+            "date": "19-Apr",
+            "account": "4785936513712",
+            "referenceNo": "983742",
+            "amount": "$93472",
+            "cureency": "USD",
+            "hashtag": "Miscellaneous"
+        },
+        {
+            "date": "19-Apr",
+            "account": "4785936513712",
+            "referenceNo": "983742",
+            "amount": "$93472",
+            "cureency": "USD",
+            "hashtag": "Marketing"
+        },
+        {
+            "date": "21-Apr",
+            "account": "8274239482711",
+            "referenceNo": "324232",
+            "amount": "$87432",
+            "cureency": "USD",
+            "hashtag": "Marketing"
+        },
+        {
+            "date": "21-Apr",
+            "account": "8274239482711",
+            "referenceNo": "324232",
+            "amount": "$87432",
+            "cureency": "USD",
+            "hashtag": "Marketing"
+        },
+        {
+            "date": "21-Apr",
+            "account": "8274239482711",
+            "referenceNo": "324232",
+            "amount": "$87432",
+            "cureency": "USD",
+            "hashtag": "Miscellaneous"
+        }
+    ],
+    "balanceSummary": [
+        {
+            "type": "Business Account",
+            "amount": "$7894567",
+            "currency": "USD"
+        },
+        {
+            "type": "Loans",
+            "amount": "$4567654",
+            "currency": "USD"
+        },
+        {
+            "type": "Savings",
+            "amount": "$3242354",
+            "currency": "USD"
+        },
+        {
+            "type": "Business Account",
+            "amount": "$4545435",
+            "currency": "USD"
+        },
+        {
+            "type": "Loans",
+            "amount": "$354351",
+            "currency": "USD"
+        },
+        {
+            "type": "Savings",
+            "amount": "$322354",
+            "currency": "USD"
+        },
+        {
+            "type": "Business Account",
+            "amount": "$5764522",
+            "currency": "USD"
+        },
+        {
+            "type": "Loans",
+            "amount": "$325435",
+            "currency": "USD"
+        },
+        {
+            "type": "Savings",
+            "amount": "$3242354",
+            "currency": "USD"
+        }
+    ],
+    "taskSummary": [
+        {
+            "taskName": "Loan Approval",
+            "referenceNo": "38472",
+            "amount": "$234223",
+            "status": "Intiated",
+            "currency": "USD"
+        },
+        {
+            "taskName": "Guarantee",
+            "referenceNo": "98079",
+            "amount": "$765721",
+            "status": "Rejected",
+            "currency": "USD"
+        },
+        {
+            "taskName": "Loan Approval",
+            "referenceNo": "38472",
+            "amount": "$234223",
+            "status": "Intiated",
+            "currency": "USD"
+        },
+        {
+            "taskName": "Guarantee",
+            "referenceNo": "98079",
+            "amount": "$765721",
+            "status": "Rejected",
+            "currency": "USD"
+        },
+        {
+            "taskName": "Loan Approval",
+            "referenceNo": "38472",
+            "amount": "$234223",
+            "status": "Intiated",
+            "currency": "USD"
+        },
+        {
+            "taskName": "Guarantee",
+            "referenceNo": "98079",
+            "amount": "$765721",
+            "status": "Rejected",
+            "currency": "USD"
+        },
+        {
+            "taskName": "Loan Approval",
+            "referenceNo": "38472",
+            "amount": "$234223",
+            "status": "Intiated",
+            "currency": "USD"
+        },
+        {
+            "taskName": "Guarantee",
+            "referenceNo": "98079",
+            "amount": "$765721",
+            "status": "Rejected",
+            "currency": "USD"
+        },
+        {
+            "taskName": "Loan Approval",
+            "referenceNo": "38472",
+            "amount": "$234223",
+            "status": "Intiated",
+            "currency": "USD"
+        },
+        {
+            "taskName": "Guarantee",
+            "referenceNo": "98079",
+            "amount": "$765721",
+            "status": "Rejected",
+            "currency": "USD"
+        },
+        {
+            "taskName": "Loan Approval",
+            "referenceNo": "38472",
+            "amount": "$234223",
+            "status": "Intiated",
+            "currency": "USD"
+        },
+        {
+            "taskName": "Guarantee",
+            "referenceNo": "98079",
+            "amount": "$765721",
+            "status": "Rejected",
+            "currency": "USD"
+        }
+    ],
+    "information": [
+        {
+            "requestType": "Payment",
+            "description": "Bill Payment",
+            "amount": "$4534",
+            "dueDate": "23-May",
+            "currency": "USD"
+        },
+        {
+            "requestType": "Payment",
+            "description": "Loan Payment",
+            "amount": "$12543",
+            "dueDate": "20-Jun",
+            "currency": "USD"
+        },
+        {
+            "requestType": "Payment",
+            "description": "Bill Payment",
+            "amount": "$2342",
+            "dueDate": "03-May",
+            "currency": "USD"
+        },
+        {
+            "requestType": "Payment",
+            "description": "Loan Payment",
+            "amount": "$32423",
+            "dueDate": "13-Jun",
+            "currency": "USD"
+        },
+        {
+            "requestType": "Payment",
+            "description": "Bill Payment",
+            "amount": "$22342",
+            "dueDate": "17-May",
+            "currency": "USD"
+        },
+        {
+            "requestType": "Payment",
+            "description": "Loan Payment",
+            "amount": "$32423",
+            "dueDate": "12-Jun",
+            "currency": "USD"
+        }
+    ],
+    "balanceMovement": [
+        {
+            "date": "24-01-2017",
+            "account": "8274239482711",
+            "balance": "$324233"
+        },
+        {
+            "date": "04-02-2017",
+            "account": "8274239482711",
+            "balance": "$214213"
+        },
+        {
+            "date": "02-03-2017",
+            "account": "8274239482711",
+            "balance": "$362645"
+        },
+        {
+            "date": "04-04-2017",
+            "account": "8274239482711",
+            "balance": "$544333"
+        },
+        {
+            "date": "12-04-2017",
+            "account": "8274239482711",
+            "balance": "$597345"
+        },
+        {
+            "date": "18-05-2017",
+            "account": "8274239482711",
+            "balance": "$742532"
+        },
+        {
+            "date": "24-01-2017",
+            "account": "7356329872139",
+            "balance": "$554232"
+        },
+        {
+            "date": "04-02-2017",
+            "account": "7356329872139",
+            "balance": "$384213"
+        },
+        {
+            "date": "02-03-2017",
+            "account": "7356329872139",
+            "balance": "$626451"
+        },
+        {
+            "date": "04-04-2017",
+            "account": "7356329872139",
+            "balance": "$718433"
+        },
+        {
+            "date": "12-04-2017",
+            "account": "7356329872139",
+            "balance": "$798734"
+        },
+        {
+            "date": "18-05-2017",
+            "account": "7356329872139",
+            "balance": "$892532"
+        },
+        {
+            "date": "24-01-2017",
+            "account": "4785936513712",
+            "balance": "$12335"
+        },
+        {
+            "date": "04-02-2017",
+            "account": "4785936513712",
+            "balance": "$22131"
+        },
+        {
+            "date": "02-03-2017",
+            "account": "4785936513712",
+            "balance": "$46451"
+        },
+        {
+            "date": "04-04-2017",
+            "account": "4785936513712",
+            "balance": "$103433"
+        },
+        {
+            "date": "12-04-2017",
+            "account": "4785936513712",
+            "balance": "$258734"
+        },
+        {
+            "date": "18-05-2017",
+            "account": "4785936513712",
+            "balance": "$62532"
+        },
+        {
+            "date": "24-01-2017",
+            "account": "5785936513734",
+            "balance": "$94233"
+        },
+        {
+            "date": "04-02-2017",
+            "account": "5785936513734",
+            "balance": "$494213"
+        },
+        {
+            "date": "02-03-2017",
+            "account": "5785936513734",
+            "balance": "$226455"
+        },
+        {
+            "date": "04-04-2017",
+            "account": "5785936513734",
+            "balance": "$424332"
+        },
+        {
+            "date": "12-04-2017",
+            "account": "5785936513734",
+            "balance": "$487343"
+        },
+        {
+            "date": "18-05-2017",
+            "account": "5785936513734",
+            "balance": "$242532"
+        }
+    ],
+    "relationshipSummary": [
+        {
+            "accountType": "Deposits",
+            "balance": "$4353343"
+        },
+        {
+            "accountType": "Investments",
+            "balance": "$9874353"
+        },
+        {
+            "accountType": "Over Drafts",
+            "balance": "$2073421"
+        },
+        {
+            "accountType": "Accounts",
+            "balance": "$9156534"
+        },
+        {
+            "accountType": "Loans",
+            "balance": "$4307831"
+        },
+        {
+            "accountType": "Other Liabilities",
+            "balance": "$2363542"
+        }
+    ]
+}

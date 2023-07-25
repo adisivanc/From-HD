@@ -1,0 +1,47 @@
+apz.assets.AssetDetails = {};
+apz.assets.AssetDetails.sparams = {};
+apz.app.onLoad_AssetDetails = function(params) {
+    debugger;
+apz.assets.AssetDetails.sparams = params;
+apz.data.scrdata.assets__AssetSummary_Res.AssetDetails = params.data;
+    apz.data.loadData("AssetSummary", "assets");
+    //apz.assets.AssetDetails.getAssetDetails(params);
+    
+};
+apz.assets.AssetDetails.getAssetDetails = function(pRef) {
+    debugger;
+     var req = {
+        "AssetDetails": {
+            "ColCode": pRef.data.colCode
+        }
+    };
+    var lServerParams = {
+        "ifaceName": "AssetSummary",
+        "buildReq": "N",
+        "req": req,
+        "paintResp": "Y",
+        "async": "true",
+        "callBack": apz.assets.AssetDetails.getAssetDetailsCB,
+    };
+    //apz.server.callServer(lServerParams);
+                  jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("assets")+"/AssetSummary.json"));
+      apz.data.scrdata.assets__AssetSummary_Res = {};
+            apz.data.scrdata.assets__AssetSummary_Res = jsondata;
+            apz.data.loadData("AssetSummary", "assets");
+             apz.assets.AssetDetails.getAssetDetailsCB(jsondata);
+};
+apz.assets.AssetDetails.getAssetDetailsCB = function(pResp) {};
+
+apz.assets.AssetDetails.fnCancel = function() {
+    debugger;
+    if(apz.assets.AssetDetails.sparams.from == "Loan" )
+    {
+       apz.landin.Landing.fnMenuClickInside("Summary"); 
+    }
+    else
+    {
+    apz.show("assets__AssetSummary__rowheader");
+    apz.hide("assets__AssetSummary__subScreenLauncher");
+    apz.show("assets__AssetSummary__rowlist");
+}
+}

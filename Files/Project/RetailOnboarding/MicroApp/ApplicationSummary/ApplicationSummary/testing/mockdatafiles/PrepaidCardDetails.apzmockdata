@@ -1,0 +1,18 @@
+{
+    "tbDbmiPrepaidcardDetails": {
+        "styleofcard": "Card Style",
+        "amount": "10000",
+        "recipientofcard": "Self",
+        "beneficiaryname": "John",
+        "emailid": "john@gmail.com",
+        "mobilenumber": "8907890756",
+        "purpose": "purpose",
+        "relationshipwithpurchaser": "",
+        "addressline1": "Oman Commercial Centre",
+        "addressline2": "",
+        "city": "MUSCAT",
+        "country": "OMAN",
+        "code": "112"
+        
+    }
+}

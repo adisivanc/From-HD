@@ -1,0 +1,611 @@
+{
+    "ACDB01__Dashboard_Req": {
+        "transactionsSummary": [{
+            "date": "04/08/2020",
+            "account": "8274239482711",
+            "referenceNo": "324232",
+            "amount": "USD 87432",
+            "cureency": "USD",
+            "hashtag": "Deposits"
+        }, {
+            "date": "01/08/2020",
+            "account": "7356329872139",
+            "referenceNo": "323512",
+            "amount": "USD 67331",
+            "cureency": "USD",
+            "hashtag": "Marketing"
+        }, {
+            "date": "24/08/2020",
+            "account": "4785936513712",
+            "referenceNo": "983742",
+            "amount": "USD 93472",
+            "cureency": "USD",
+            "hashtag": "Deposits"
+        }, {
+            "date": "18/07/2020",
+            "account": "4785936513712",
+            "referenceNo": "983742",
+            "amount": "USD 93472",
+            "cureency": "USD",
+            "hashtag": "Deposits"
+        }, {
+            "date": "11/07/2020",
+            "account": "4785936513712",
+            "referenceNo": "983742",
+            "amount": "USD 93472",
+            "cureency": "USD",
+            "hashtag": "Miscellaneous"
+        }, {
+            "date": "08/07/2020",
+            "account": "4785936513712",
+            "referenceNo": "983742",
+            "amount": "USD 93472",
+            "cureency": "USD",
+            "hashtag": "Marketing"
+        }, {
+            "date": "03/07/2020",
+            "account": "8274239482711",
+            "referenceNo": "324232",
+            "amount": "USD 87432",
+            "cureency": "USD",
+            "hashtag": "Marketing"
+        }, {
+            "date": "24/08/2020",
+            "account": "8274239482711",
+            "referenceNo": "324232",
+            "amount": "USD 87432",
+            "cureency": "USD",
+            "hashtag": "Marketing"
+        }, {
+            "date": "18/08/2020",
+            "account": "8274239482711",
+            "referenceNo": "324232",
+            "amount": "USD 87432",
+            "cureency": "USD",
+            "hashtag": "Miscellaneous"
+        }],
+        "balanceSummary": [{
+            "type": "Loans",
+            "amount": "USD 100000",
+            "currency": "USD"
+        }, {
+            "type": "Checking Account",
+            "amount": "USD 2000",
+            "currency": "USD"
+        }, {
+            "type": "Checking Account",
+            "amount": "USD 10000",
+            "currency": "USD"
+        }, {
+            "type": "Checking Account",
+            "amount": "USD 20000",
+            "currency": "USD"
+        }, {
+            "type": "Loans",
+            "amount": "USD 250000",
+            "currency": "USD"
+        }, {
+            "type": "Savings",
+            "amount": "USD 8000",
+            "currency": "USD"
+        }, {
+            "type": "Deposits",
+            "amount": "USD 250000",
+            "currency": "USD"
+        }, {
+            "type": "Deposits",
+            "amount": "USD 100000",
+            "currency": "USD"
+        }, {
+            "type": "Investments",
+            "amount": "USD 200000",
+            "currency": "USD"
+        }, {
+            "type": "Investments",
+            "amount": "USD 200000",
+            "currency": "USD"
+        }, {
+            "type": "Investments",
+            "amount": "USD 200000",
+            "currency": "USD"
+        }],
+        "taskSummaryold": [{
+            "taskName": "Loan Approval",
+            "referenceNo": "38472",
+            "amount": "USD 234223",
+            "status": "Initiated",
+            "currency": "USD"
+        }, {
+            "taskName": "Guarantee",
+            "referenceNo": "98079",
+            "amount": "USD 765721",
+            "status": "Rejected",
+            "currency": "USD"
+        }, {
+            "taskName": "Loan Approval",
+            "referenceNo": "38472",
+            "amount": "USD 234223",
+            "status": "Initiated",
+            "currency": "USD"
+        }, {
+            "taskName": "Guarantee",
+            "referenceNo": "98079",
+            "amount": "USD 765721",
+            "status": "Rejected",
+            "currency": "USD"
+        }, {
+            "taskName": "Loan Approval",
+            "referenceNo": "38472",
+            "amount": "USD 234223",
+            "status": "Initiated",
+            "currency": "USD"
+        }, {
+            "taskName": "Guarantee",
+            "referenceNo": "98079",
+            "amount": "USD 765721",
+            "status": "Rejected",
+            "currency": "USD"
+        }, {
+            "taskName": "Loan Approval",
+            "referenceNo": "38472",
+            "amount": "USD 234223",
+            "status": "Initiated",
+            "currency": "USD"
+        }, {
+            "taskName": "Guarantee",
+            "referenceNo": "98079",
+            "amount": "USD 765721",
+            "status": "Rejected",
+            "currency": "USD"
+        }, {
+            "taskName": "Loan Approval",
+            "referenceNo": "38472",
+            "amount": "USD 234223",
+            "status": "Initiated",
+            "currency": "USD"
+        }, {
+            "taskName": "Guarantee",
+            "referenceNo": "98079",
+            "amount": "USD 765721",
+            "status": "Rejected",
+            "currency": "USD"
+        }, {
+            "taskName": "Loan Approval",
+            "referenceNo": "38472",
+            "amount": "USD 234223",
+            "status": "Initiated",
+            "currency": "USD"
+        }, {
+            "taskName": "Guarantee",
+            "referenceNo": "98079",
+            "amount": "USD 765721",
+            "status": "Rejected",
+            "currency": "USD"
+        }],
+        "taskSummary": [{
+            "Date": "2020-08-05 15:28:56",
+            "WorkflowName": "000FTAC4321__FTOA",
+            "InitiatedBy": "Mohammad Nawaz"
+        }, {
+            "Date": "2020-08-05 15:28:56",
+            "WorkflowName": "000FTAC4321__FTOA",
+            "InitiatedBy": "Mohammad Nawaz"
+        }, {
+            "Date": "2020-08-05 15:28:56",
+            "WorkflowName": "000FTAC4321__FTOA",
+            "InitiatedBy": "Mohammad Nawaz"
+        }, {
+            "Date": "2020-08-05 15:28:56",
+            "WorkflowName": "000FTAC4321__FTOA",
+            "InitiatedBy": "Mohammad Nawaz"
+        }, {
+            "Date": "2020-08-05 15:28:56",
+            "WorkflowName": "000FTAC4321__FTOA",
+            "InitiatedBy": "Mohammad Nawaz"
+        }],
+        "information": [{
+            "requestType": "Payment",
+            "description": "Bill Payment",
+            "amount": "USD 4534",
+            "dueDate": "2020-03-03",
+            "currency": "USD"
+        }, {
+            "requestType": "Payment",
+            "description": "Loan Payment",
+            "amount": "USD 12543",
+            "dueDate": "2020-03-03",
+            "currency": "USD"
+        }, {
+            "requestType": "Payment",
+            "description": "Bill Payment",
+            "amount": "USD 2342",
+            "dueDate": "2020-03-05",
+            "currency": "USD"
+        }, {
+            "requestType": "Payment",
+            "description": "Loan Payment",
+            "amount": "USD 32423",
+            "dueDate": "2020-03-08",
+            "currency": "USD"
+        }, {
+            "requestType": "Payment",
+            "description": "Bill Payment",
+            "amount": "USD 22342",
+            "dueDate": "2020-03-10",
+            "currency": "USD"
+        }, {
+            "requestType": "Payment",
+            "description": "Loan Payment",
+            "amount": "USD 32423",
+            "dueDate": "2020-03-15",
+            "currency": "USD"
+        }],
+        "balanceMovement": [{
+            "date": "01/6/2020",
+            "account": "8274239482711",
+            "balance": "324233"
+        }, {
+            "date": "04/7/2020",
+            "account": "8274239482711",
+            "balance": "214213"
+        }, {
+            "date": "04/08/2020",
+            "account": "8274239482711",
+            "balance": "362645"
+        }, {
+            "date": "01/9/2020",
+            "account": "8274239482711",
+            "balance": "544333"
+        }, {
+            "date": "04/09/2020",
+            "account": "8274239482711",
+            "balance": "597345"
+        }, {
+            "date": "01/09/2020",
+            "account": "8274239482711",
+            "balance": "742532"
+        }, {
+            "date": "01/6/2020",
+            "account": "7356329872139",
+            "balance": "554232"
+        }, {
+            "date": "04/7/2020",
+            "account": "7356329872139",
+            "balance": "384213"
+        }, {
+            "date": "04/08/2020",
+            "account": "7356329872139",
+            "balance": "626451"
+        }, {
+            "date": "01/9/2020",
+            "account": "7356329872139",
+            "balance": "718433"
+        }, {
+            "date": "04/09/2020",
+            "account": "7356329872139",
+            "balance": "798734"
+        }, {
+            "date": "01/09/2020",
+            "account": "7356329872139",
+            "balance": "892532"
+        }, {
+            "date": "01/6/2020",
+            "account": "4785936513712",
+            "balance": "12335"
+        }, {
+            "date": "04/7/2020",
+            "account": "4785936513712",
+            "balance": "22131"
+        }, {
+            "date": "04/08/2020",
+            "account": "4785936513712",
+            "balance": "46451"
+        }, {
+            "date": "01/9/2020",
+            "account": "4785936513712",
+            "balance": "103433"
+        }, {
+            "date": "04/10/2020",
+            "account": "4785936513712",
+            "balance": "258734"
+        }, {
+            "date": "01/09/2020",
+            "account": "4785936513712",
+            "balance": "62532"
+        }, {
+            "date": "01/6/2020",
+            "account": "5785936513734",
+            "balance": "94233"
+        }, {
+            "date": "04/7/2020",
+            "account": "5785936513734",
+            "balance": "494213"
+        }, {
+            "date": "04/08/2020",
+            "account": "5785936513734",
+            "balance": "226455"
+        }, {
+            "date": "01/9/2020",
+            "account": "5785936513734",
+            "balance": "424332"
+        }, {
+            "date": "04/09/2020",
+            "account": "5785936513734",
+            "balance": "487343"
+        }, {
+            "date": "01/09/2020",
+            "account": "5785936513734",
+            "balance": "242532"
+        }],
+        "relationshipSummary": [{
+            "accountType": "Deposits",
+            "balance": "350000"
+        }, {
+            "accountType": "Investments",
+            "balance": "600000"
+        }, {
+            "accountType": "Accounts",
+            "balance": "40000"
+        }, {
+            "accountType": "Loans",
+            "balance": "506300"
+        }, {
+            "accountType": "Other Liabilities",
+            "balance": "20000"
+        }],
+        "highPriority": [{
+            "name": "Pending",
+            "value": "40"
+        }, {
+            "name": "Total",
+            "value": "130"
+        }],
+        "mediumPriority": [{
+            "name": "Pending",
+            "value": "50"
+        }, {
+            "name": "Total",
+            "value": "120"
+        }],
+        "lowPriority": [{
+            "name": "Pending",
+            "value": "30"
+        }, {
+            "name": "Total",
+            "value": "140"
+        }],
+        "exposureoverviewcash": [{
+            "Type": "Cash Limit",
+            "Amount": "3000",
+            "Currency": "USD"
+        }, {
+            "Type": "Cash Limit",
+            "Amount": "2000",
+            "Currency": "INR"
+        }, {
+            "Type": "Cash Limit",
+            "Amount": "5000",
+            "Currency": "EUR"
+        }],
+        "exposureoverviewnocash": [{
+            "Type": "No Cash Limit",
+            "Amount": "3000",
+            "Currency": "USD"
+        }, {
+            "Type": "No Cash Limit",
+            "Amount": "2000",
+            "Currency": "INR"
+        }, {
+            "Type": "No Cash Limit",
+            "Amount": "5000",
+            "Currency": "EUR"
+        }],
+        "exposureoverviewoverall": [{
+            "Type": "Cash Limit",
+            "Amount": "3000",
+            "Currency": "Utilization"
+        }, {
+            "Type": "Cash Limit",
+            "Amount": "2000",
+            "Currency": "Available Limit"
+        }],
+        "exposureoverviewtbl": [{
+            "icon": "icon-calendar",
+            "creditLine": "OD100101",
+            "decription": "Overdrafts",
+            "currency": "USD",
+            "overallLimit": "10000",
+            "utilization": "2000",
+            "availableLimit": "8000",
+            "expireson": "10/01/2020",
+            "revolving": "Yes"
+        }, {
+            "icon": "icon-calendar",
+            "creditLine": "LD100101",
+            "decription": "Loans Packing Credit",
+            "currency": "USD",
+            "overallLimit": "10000",
+            "utilization": "2000",
+            "availableLimit": "8000",
+            "expireson": "10/01/2020",
+            "revolving": "Yes"
+        }, {
+            "icon": "icon-calendar",
+            "creditLine": "LC100101",
+            "decription": "Import Letters of Credit",
+            "currency": "USD",
+            "overallLimit": "10000",
+            "utilization": "2000",
+            "availableLimit": "8000",
+            "expireson": "10/01/2020",
+            "revolving": "Yes"
+        }],
+        "cashlimitTbl": [{
+            "icon": "icon-calendar",
+            "creditLine": "OD100101",
+            "decription": "Overdrafts",
+            "currency": "USD",
+            "overallLimit": "10000",
+            "utilization": "2000",
+            "availableLimit": "8000",
+            "expireson": "10/01/2020",
+            "revolving": "Yes"
+        }, {
+            "icon": "icon-calendar",
+            "creditLine": "LD100101",
+            "decription": "Loans Packing Credit",
+            "currency": "USD",
+            "overallLimit": "10000",
+            "utilization": "2000",
+            "availableLimit": "8000",
+            "expireson": "10/01/2020",
+            "revolving": "Yes"
+        }, {
+            "icon": "icon-calendar",
+            "creditLine": "LC100101",
+            "decription": "Import Letters of Credit",
+            "currency": "USD",
+            "overallLimit": "10000",
+            "utilization": "2000",
+            "availableLimit": "8000",
+            "expireson": "10/01/2020",
+            "revolving": "Yes"
+        }],
+        "nocashlimitTbl": [{
+            "icon": "icon-calendar",
+            "creditLine": "OD100101",
+            "decription": "Import Bills - Advance",
+            "currency": "USD",
+            "overallLimit": "10000",
+            "utilization": "2000",
+            "availableLimit": "8000",
+            "expireson": "10/01/2020",
+            "revolving": "Yes"
+        }, {
+            "icon": "icon-calendar",
+            "creditLine": "LD100101",
+            "decription": "Import Bills - Advance",
+            "currency": "USD",
+            "overallLimit": "10000",
+            "utilization": "2000",
+            "availableLimit": "8000",
+            "expireson": "10/01/2020",
+            "revolving": "Yes"
+        }, {
+            "icon": "icon-calendar",
+            "creditLine": "LC100101",
+            "decription": "Import Bills - Advance",
+            "currency": "USD",
+            "overallLimit": "10000",
+            "utilization": "2000",
+            "availableLimit": "8000",
+            "expireson": "10/01/2020",
+            "revolving": "Yes"
+        }],
+        "overalllimitTbl": [{
+            "icon": "icon-calendar",
+            "creditLine": "OD100101",
+            "decription": "Overdrafts",
+            "currency": "USD",
+            "overallLimit": "10000",
+            "utilization": "2000",
+            "availableLimit": "8000",
+            "expireson": "10/01/2020",
+            "revolving": "Yes"
+        }, {
+            "icon": "icon-calendar",
+            "creditLine": "LD100101",
+            "decription": "Overdrafts",
+            "currency": "USD",
+            "overallLimit": "10000",
+            "utilization": "2000",
+            "availableLimit": "8000",
+            "expireson": "10/01/2020",
+            "revolving": "Yes"
+        }, {
+            "icon": "icon-calendar",
+            "creditLine": "LC100101",
+            "decription": "Overdrafts",
+            "currency": "USD",
+            "overallLimit": "10000",
+            "utilization": "2000",
+            "availableLimit": "8000",
+            "expireson": "10/01/2020",
+            "revolving": "Yes"
+        }],
+        "payableandreceivable": [{
+            "currency": "USD",
+            "pay": "172,000.00",
+            "receive": "145,000.00",
+            "netposition": "-27,000.00"
+        }, {
+            "currency": "EUR",
+            "pay": "51,000.00",
+            "receive": "32,000.00",
+            "netposition": "-18,000.00"
+        }],
+        "onemonthdata": [{
+            "currency": "USD",
+            "pay": "172,000.00",
+            "receive": "145,000.00",
+            "netposition": "-27,000.00"
+        }, {
+            "currency": "EUR",
+            "pay": "51,000.00",
+            "receive": "32,000.00",
+            "netposition": "-18,000.00"
+        }],
+        "threemonthdata": [{
+            "currency": "USD",
+            "pay": "378,000.00",
+            "receive": "249,000.00",
+            "netposition": "-129,000.00"
+        }, {
+            "currency": "EUR",
+            "pay": "89,000.00",
+            "receive": "45,000.00",
+            "netposition": "-44,000.00"
+        }],
+        "sixmonthdata": [{
+            "currency": "USD",
+            "pay": "545,000.00",
+            "receive": "300,000.00",
+            "netposition": "-245,000.00"
+        }, {
+            "currency": "EUR",
+            "pay": "102,000.00",
+            "receive": "65,000.00",
+            "netposition": "-37,000.00"
+        }],
+        "totalAssets": [{
+            "name": "Cash",
+            "value": "50,000"
+        }, {
+            "name": "Investments",
+            "value": "20,000"
+        }, {
+            "name": "Retirement",
+            "value": "50,000"
+        }, {
+            "name": "Personal",
+            "value": "250,000"
+        }],
+        "totalLiabilities": [{
+            "name": "Unsecured",
+            "value": "70,000"
+        }, {
+            "name": "Secured",
+            "value": "150,000"
+        }],
+        "assetLiabilitiestbl": [{
+            "netWorth": "69000",
+            "deposits": "200000",
+            "operativeAccounts": "40000",
+            "investments": "90000",
+            "others": "2000",
+            "loans": "150000",
+            "cards": "80000",
+            "othersli": "33000"
+        }]
+    }
+}

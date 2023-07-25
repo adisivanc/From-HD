@@ -1,0 +1,18 @@
+apz.disclo.Disclosure = {};
+apz.app.onLoad_Disclosure = function(params){
+    debugger;
+}
+apz.disclo.Disclosure.fnNext = function(params){
+    debugger;
+    apz.launchSubScreen({
+        appId:"disclo",
+        scr:"Agreement",
+        div:"disclo__Launcher__launcher"
+    })
+}
+apz.disclo.Disclosure.fnBackToProducts=function(){
+    apz.flowNo--;
+    $("#navgtn__Navigator__ct_nav_2").removeClass("sno");
+    apz.disclo.Launcher.sCache.callback();
+}
+

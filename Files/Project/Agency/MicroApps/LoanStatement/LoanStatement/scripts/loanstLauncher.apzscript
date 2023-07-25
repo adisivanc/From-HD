@@ -1,0 +1,20 @@
+apz.loanst.checkParams = function(params){
+    params.userObj={"data":{
+        "customerID":"134",
+       "LoanAccount": [{
+                    "accountNo": "001234545545",
+                    "loanType": "Vehicle",
+                    "branch": "Koramangala",
+                    "loanAmount": "100000",
+                    "outstandingAmount": "30000"
+                }, {
+                    "accountNo": "001234590880",
+                    "loanType": "Home",
+                    "branch": "Madivala",
+                    "loanAmount": "200000",
+                    "outstandingAmount": "87575"
+                }]//,
+           // "selectedAccount":"753410000076"
+    }
+    };
+};

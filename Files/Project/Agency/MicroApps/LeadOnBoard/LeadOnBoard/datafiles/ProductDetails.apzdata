@@ -1,0 +1,71 @@
+{
+	"ProductDetails":[{"Category":"Savings Account","Type":[{"val":"Please Select","desc":"Please Select"
+}
+,{
+	"val":"Savings Account - Regular","desc":"Savings Account - Regular"
+}
+,{
+	"val":"Savings Account - Minor","desc":"Savings Account - Minor"
+}
+,{
+	"val":"Savings Account - Basic","desc":"Savings Account - Basic"
+}
+,{
+	"val":"Savings Account - Basic small savings","desc":"Savings Account - Basic small savings"
+}
+,{
+	"val":"Savings Account - Staff","desc":"Savings Account - Staff"
+}
+,{
+	"val":"Savings Account - Senior Citizen","desc":"Savings Account - Senior Citizen"}]
+}
+,{
+	"Category":"Fixed Deposit","Type":[{"val":"Please Select","desc":"Please Select"
+}
+,{
+	"val":"Fixed deposits - Traditional - MONTHLY","desc":"Fixed deposits - Traditional - MONTHLY"
+}
+,{
+	"val":"Fixed deposits - Traditional - QUATERLY","desc":"Fixed deposits - Traditional - QUATERLY"
+}
+,{
+	"val":"Fixed deposits - Traditional - HALF YEARLY","desc":"Fixed deposits - Traditional - HALF YEARLY"
+}
+,{
+	"val":"Fixed deposits - Traditional - YEARLY","desc":"Fixed deposits - Traditional - YEARLY"
+}
+,{
+	"val":"Fixed deposits - Cumulative - QUATERLY","desc":"Fixed deposits - Cumulative - QUATERLY"
+}
+,{
+	"val":"TASC Fixed deposits - Cumulative - QUATERLY","desc":"TASC Fixed deposits - Cumulative - QUATERLY"}]
+}
+,{
+	"Category":"Recurring Deposit","Type":[{"val":"Please Select","desc":"Please Select"
+}
+,{
+	"val":"Recurring deposit - QUATERLY - COUMPOUNDING","desc":"Recurring deposit - QUATERLY - COUMPOUNDING"}]
+}
+,{
+	"Category":"Home Loan","Type":[{"val":"Please Select","desc":"Please Select"
+}
+,{
+	"val":"Secured ready purchase","desc":"Secured ready purchase"}]
+}
+,{
+	"Category":"Vehicle Loan","Type":[{"val":"Please Select","desc":"Please Select"
+}
+,{
+	"val":"Used Private","desc":"Used Private"
+}
+,{
+	"val":"Used Commercial","desc":"Used Commercial"
+}
+,{
+	"val":"New Private","desc":"New Private"
+}
+,{
+	"val":"New Commercial","desc":"New Commercial"}]
+}
+]
+}

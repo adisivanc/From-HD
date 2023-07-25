@@ -1,0 +1,31 @@
+apz.regapp.ThirdFatca = {};
+apz.regapp.ThirdFatca.sParams = {};
+apz.app.onLoad_ThirdFatca = function(params) {
+    debugger;
+apz.regapp.ThirdFatca.sParams = params;
+};
+apz.app.onShown_ThirdFatca = function(params) {
+    debugger;
+};
+apz.regapp.ThirdFatca.fnCancel = function(){
+    debugger;
+}
+
+apz.regapp.ThirdFatca.launchFourthFatca = function(){
+    debugger;
+    var lParams = {
+        "appId": "regapp",
+        "scr": "FourthFatca",
+        "div": "regapp__Launcher__launcher"
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.regapp.ThirdFatca.launchSecondFatca = function(){
+    
+    var lParams = {
+        "appId": "regapp",
+        "scr": "SecondFatca",
+        "div": "regapp__Launcher__launcher"
+    };
+    apz.launchSubScreen(lParams);
+}

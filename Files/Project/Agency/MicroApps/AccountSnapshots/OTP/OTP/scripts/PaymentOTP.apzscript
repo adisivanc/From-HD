@@ -1,0 +1,330 @@
+/******         
+ * Purpose -- This Microapp implements the logic of OTP generation and on OTP validation initiating
+ *              the actual system call.
+ *            It has to be customized at the Java layer to send out the OTP Pin in sms or email formats.
+ ******/
+/* Expected Input Parameters
+    "ifaceName" : "", --Name of the interface for which OTP is invoked
+    "appId" : "", App ID of the Micro app which invoked the OTP
+    "control" : {
+        "callBack" : , -- On successful confirmation of the OTP, the microapp which to which the control should be handed over.
+        "destroyDiv" : "" -- ID of the div container within which it is launched, from where it has to be removed 
+                             on successful OTP completion
+    }
+    
+ ******/
+apz.otpeng = {};
+apz.otpeng.processotp = {};
+apz.otpeng.processotp.sAction = '';
+apz.otpeng.processotp.sReferenceId = '';
+apz.otpeng.processotp.sParams = {};
+var d = "";
+apz.app.onLoad_PaymentOTP = function(params) {
+    debugger;
+    apz.otpeng.processotp.sParams = params;
+    
+        if (params.action == 'SetRefNo') {
+        apz.otpeng.processotp.fnLaunch(params);
+    } else if (params.action == 'Generate') {
+        apz.otpeng.processotp.sParentAction = "Generate";
+        var lParams = {};
+        lParams.ifaceName = "ProcessOTP";
+        lParams.appId = "otpeng";
+        lParams.data = {};
+        apz.otpeng.processotp.fnGenerate(lParams);
+    }
+};
+apz.otpeng.processotp.fnLaunch = function(params) {
+    debugger;
+     d = new Date().toString().split("GMT")[0].trim();
+    apz.setElmValue("otpeng__PaymentOTP__sucdate", d); 
+     apz.setElmValue("otpeng__PaymentOTP__refno","Reference Number - APZ"+Math.floor(Math.random()*9999999999));
+     if(params.data.billpayments != undefined){
+         apz.data.scrdata.otpeng__BillPaymentSummary_Res = [];
+    apz.data.scrdata.otpeng__BillPaymentSummary_Res = params.data.billpayments
+    apz.data.loadData("BillPaymentSummary", "otpeng");
+     }else if(params.transferDetails!=undefined){
+         apz.data.scrdata.otpeng__TransferDetails_Res = {};
+    apz.data.scrdata.otpeng__TransferDetails_Res.transferDtls = params.transferDetails
+    apz.data.loadData("TransferDetails", "otpeng");
+     }
+     
+    // apz.otpeng.processotp.sReferenceId = params.data.OTPRefNo;
+    // apz.setElmValue("otpeng__PaymentOTP__amount", apz.amount);
+    // apz.setElmValue("otpeng__PaymentOTP__date", apz.date);
+    // apz.setElmValue("otpeng__PaymentOTP__remarks", apz.remarks);
+    //   apz.setElmValue('otpeng__PaymentOTP__ref_no', apz.otpeng.processotp.sReferenceId);
+};
+apz.otpeng.processotp.fnShare = function() {
+    debugger;
+    var rowNo = 0;
+         if(apz.otpeng.processotp.sParams.data.billpayments != undefined){
+
+    var text = "Your reference number : " +  apz.otpeng.processotp.sParams.data.OTPRefNo + ". Amount : " + apz.otpeng.processotp.sParams.data.billpayments[rowNo].amount + ". Date : " + d + ". Remarks : " + apz.otpeng.processotp.sParams.data.billpayments[rowNo].remarks  + ".";
+         }
+         else
+         {
+              var text = "Your reference number : " +  apz.otpeng.processotp.sParams.data.OTPRefNo + ". Amount : " + apz.otpeng.processotp.sParams.transferDetails.amount  + ". Date : " + d + ". Remarks : " + apz.otpeng.processotp.sParams.transferDetails.remarks  + ".";
+         }
+    var json = {};
+    json.id = "NATIVE";
+    json.textToShare = text;
+    json.callBack = apz.otpeng.processotp.fnShareCallBack;
+    json.action = "text";
+    apz.ns.nativeShare(json);
+}
+apz.otpeng.processotp.fnShareCallBack = function() {
+    debugger;
+    
+}
+apz.otpeng.processotp.fnGenerate = function(params) {
+    debugger;
+    apz.otpeng.processotp.sAction = 'Generate';
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "req": {
+            "payload": params.data,
+            "action": "Generate"
+        },
+        "callBack": apz.otpeng.processotp.fnGenerateCallBack
+    };
+    apz.otpeng.processotp.fnBeforeCallServer(lServerParams);
+};
+apz.otpeng.processotp.fnConfirm = function() {
+    debugger;
+    
+    apz.otpeng.processotp.sAction = 'Validate';
+    var lReq = {
+        "validateNProcessRequest": {
+            "RefNo": apz.otpeng.processotp.sReferenceId,
+            "otp": apz.getElmValue('otpeng__PaymentOTP__otp'),
+            "action": "Validate"
+        },
+        "action": "Validate"
+    };
+    //apz.otpeng.ProcessOTP.sParams.callBack.call(lReq, lReq);
+    var lServerParams = {
+        "ifaceName": "otpeng__ProcessOTP",
+        "buildReq": "N",
+        "req": lReq,
+        "callBack": apz.app.fnValidateCB,
+        "internal": true
+    };
+    apz.otpeng.processotp.fnBeforeCallServer(lServerParams);
+};
+apz.otpeng.processotp.fnRegenerate = function() {
+    apz.otpeng.processotp.sAction = 'Resend';
+    var lServerParams = {
+        "ifaceName": "ProcessOTP",
+        "req": {
+            "action": "Resend",
+            "payload": params.data
+        }
+    };
+    apz.otpeng.processotp.fnBeforeCallServer(lServerParams);
+};
+apz.otpeng.processotp.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.req,
+        "paintResp": "N",
+        "callBack": apz.otpeng.processotp.fnCallServerCallBack,
+        "appId": "otpeng",
+        "internal": false
+    };
+    if (apz.otpeng.processotp.sAction == 'Validate') {
+        lServerParams.internal = true;
+    }
+    apz.server.callServer(lServerParams);
+    if (apz.otpeng.processotp.sAction == "Generate" || apz.otpeng.processotp.sAction == "Resend") {
+        $('#otpeng__PaymentOTP__otp').focus();
+    }
+};
+apz.otpeng.processotp.fnCallServerCallBack = function(params) {
+    debugger;
+    if (apz.otpeng.processotp.sAction == 'Generate') {
+        if (params.status) {
+            apz.otpeng.processotp.sReferenceId = params.res.otpeng__ProcessOTP_Res.generateOTPResponse.RefNo;
+            apz.setElmValue('otpeng__PaymentOTP__reference_Id', apz.otpeng.processotp.sReferenceId);
+            if (apz.otpeng.processotp.sParentAction == "Generate") {
+                apz.otpeng.processotp.fnSendOTP(params);
+            }
+        }
+    } else if (apz.otpeng.processotp.sAction == 'Validate')
+        if (apz.mockServer && apz.otpeng.processotp.sParentAction == "Generate") {
+            var lParams = {};
+            lParams.otpdetails = {};
+            lParams.otpdetails.Status = "P";
+            var lDestroy = apz.otpeng.processotp.sParams.control.destroyDiv;
+            $('#' + lDestroy).children().remove();
+            apz.otpeng.processotp.sParams.control.callBack(lParams);
+            apz.otpeng.processotp.sParentAction = "";
+        } else {
+            if (params.status) {
+                if (!params.res['OTPValServiceResponse']) {
+                    $("#otpeng__PaymentOTP__otp_details,#otpeng__PaymentOTP__el_btn_1").removeClass("sno")
+                    
+                  //  $("#otpeng__PaymentOTP__shareBtn").removeClass("sno")
+                    
+                    $("#otpeng__PaymentOTP__otp_form,#otpeng__PaymentOTP__regenerate,#otpeng__PaymentOTP__confirm,#otpeng__PaymentOTP__el_btn_2").addClass(
+                        "sno")
+                    $("#otpeng__PaymentOTP__el_txt_14_ul").removeClass("sno")
+                    
+                    if(apz.otpeng.processotp.sParams.data.billpayments != undefined){
+                         $("#otpeng__PaymentOTP__billpaymentlist").removeClass("sno")
+                    }else if(apz.otpeng.processotp.sParams.transferDetails!=undefined){
+                        $("#otpeng__PaymentOTP__ct_frm_2").removeClass("sno")
+                    }
+                    if(apz.otpeng.processotp.sParams.from!= undefined && apz.otpeng.processotp.sParams.from == "QRscan"){
+                        $("#otpeng__PaymentOTP__sc_row_28").addClass("sno");
+                    }
+                     if(apz.data.scrdata.otpeng__TransferDetails_Res.transferDtls.beneficiaryType == "internationalRemittance"){
+                         $("#otpeng__TransferDetails__o__transferDtls__ifsc_lbl").text("Swift Code")
+                     }
+                } else if (params.res['OTPValServiceResponse']) {
+                    if (params.res.OTPValServiceResponse['status']) {
+                        if (params.res.OTPValServiceResponse.status == 'N') {
+                            var lerrorParams = {
+                                'code': 'OTP_CMN_001'
+                            };
+                            apz.dispMsg(lerrorParams);
+                        }
+                    }
+                }
+            } else {
+                var lerrorParams = {
+                    'code': 'OTP_CMN_002'
+                };
+                apz.dispMsg(lerrorParams);
+            }
+        }
+};
+//go to one time payment page
+apz.otpeng.processotp.fnGotoOTPlayment = function() {}
+//back to previous screen
+apz.otpeng.processotp.fnBacktoPayment = function() {
+    apz.otpeng.processotp.sParams.back();
+}
+apz.otpeng.processotp.fnDestroy = function() {
+    var lDestroy = apz.otpeng.processotp.sParams.control.destroyDiv;
+    $('#' + lDestroy).children().remove();
+    apz.otpeng.processotp.sParams.control.callBack();
+};
+apz.otpeng.processotp.fnSendOTP = function(lParams) {
+    debugger;
+    var lmobileNo = "8904131879";
+    var lsenderID = "APZBNK";
+    var lOtp = parseInt(lParams.res.otpeng__ProcessOTP_Res.generateOTPResponse.otp);
+    var lmessage = "Your OTP is " + lOtp + ". Use this OTP for Registration";
+    var llurl = "http://smshorizon.co.in/api/sendsms.php?user=Iexceed&apikey=XOTNwz3OffqcodOubdhl&mobile=" + lmobileNo + "&message=" + lmessage +
+        "&senderid=" + lsenderID + "&type=txt";
+    $.ajax({
+        url: llurl,
+        dataType: "JSONP",
+        success: function(result, error) {
+            console.log(result, error);
+            var json = {};
+            json.id = "SMSLIST_ID";
+            json.callBack = startSMSCallback;
+            apz.ns.startSMSListener(json);
+        }
+    });
+};
+startSMSCallback = function(params) {
+    debugger;
+    //params.message.match(/[0-9]{6}/)[0]
+}
+/*apz.app.postGetHeader = function(header){
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};*/
+
+
+
+
+
+
+
+
+
+
+
+
+apz.otpeng.processotp.fnDownload = function(params) {
+    debugger;
+    
+        var jsonFilePath = apz.getDataFilesPath("otpeng") + "/Transfer.json";
+    
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    for (var i = 0; i < ljsondata.data.length; i++) {
+        var mimetype = ljsondata.data[i].mimeType;
+        var lMimeType = mimetype.slice(-3);
+      //  if (fileType == lMimeType.toLowerCase()) {
+            apz.otpeng.processotp.ReportdwnldMethod(ljsondata.data[i]);
+      //  }
+    }
+}
+apz.otpeng.processotp.ReportdwnldMethod = function(lbodyobj) {
+    debugger;
+   
+    var blob;
+    var fileType = "";
+    if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+        blob = apz.otpeng.processotp.b64toBlob(lbodyobj.content, "application/pdf");
+        fileType = ".pdf";
+    }
+    var blobUrl = URL.createObjectURL(blob);
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.otpeng.processotp.base64tofilecallBack;
+        json.base64 = lbodyobj.content;
+        
+            json.fileName = "Transfer" + fileType;
+        
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    } else {
+        window.open(blobUrl);
+    }
+};
+apz.otpeng.processotp.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};
+apz.otpeng.processotp.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.otpeng.processotp.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.otpeng.processotp.openFileCallback = function(params) {
+    debugger;
+};
+

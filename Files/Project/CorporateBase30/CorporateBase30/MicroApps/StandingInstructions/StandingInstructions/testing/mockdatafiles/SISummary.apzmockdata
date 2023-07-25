@@ -1,0 +1,53 @@
+{
+    "SISummary": [
+        {
+            "txnId": "SIOA1121212",
+            "fromAccount": "1231231232",
+            "toAccount": "150100159221",
+            "transferType": "SIOA",
+            "txnFrequency": "Monthly",
+            "noOfTimes": "2",
+            "endDate": "2017-02-21",
+            "amount": "221211",
+            "currency": "USD",
+            "txnDesc": "Test",
+            "corporateId": "000FTAC4321",
+            "startDate": "2017-01-12",
+            "nextExecutionDate": "2018-07-12",
+            "status": "Active"
+        },
+        {
+            "txnId": "SIOA1121212",
+            "fromAccount": "1231231232",
+            "toAccount": "150100159221",
+            "transferType": "SIOA",
+            "txnFrequency": "Monthly",
+            "noOfTimes": "2",
+            "endDate": "2017-02-21",
+            "amount": "221211",
+            "currency": "USD",
+            "txnDesc": "Test",
+            "corporateId": "000FTAC4321",
+            "startDate": "2017-01-12",
+            "nextExecutionDate": "2018-07-12",
+            "status": "Active"
+        },
+        {
+            "txnId": "SIOA1121212",
+            "fromAccount": "1231231232",
+            "toAccount": "150100159221",
+            "transferType": "SIOA",
+            "txnFrequency": "Monthly",
+            "noOfTimes": "2",
+            "endDate": "2017-02-21",
+            "amount": "221211",
+            "currency": "USD",
+            "txnDesc": "Test",
+            "corporateId": "000FTAC4321",
+            "startDate": "2017-01-12",
+            "nextExecutionDate": "2018-07-12",
+            "status": "Active"
+        }
+    ],
+    "SIStatus": true
+}

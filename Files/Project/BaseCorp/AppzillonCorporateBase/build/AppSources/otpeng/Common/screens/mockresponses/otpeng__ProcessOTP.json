@@ -1,0 +1,77 @@
+{
+    "transferDtls": {
+        "data": "+0000000000000000+0000000000000000+0000000000000000+0000000000000000+0000000000000000                 ",
+        "txnRefNo": "1513928421467692152",
+        "extMsg": "",
+        "respCd": "destroy",
+        "intMsgCd": "SUC-001",
+        "status": "success"
+    },
+    "chequeBookReq": {
+        "data": "",
+        "txnRefNo": "1513928421467692152",
+        "extMsg": "",
+        "respCd": "destroy",
+        "intMsgCd": "SUC-001",
+        "status": "success"
+    },
+    "chequeDtls": {
+        "data": "",
+        "txnRefNo": "1513920553046937755",
+        "extMsg": "",
+        "respCd": "ack",
+        "intMsgCd": "",
+        "status": "success"
+    },
+    "depositDtls": {
+        "data": "",
+        "txnRefNo": "1513928421467692152",
+        "extMsg": "",
+        "respCd": "destroy",
+        "intMsgCd": "SUC-001",
+        "status": "success"
+    },
+    "siTxnDtls": {
+        "data": {},
+        "trnRefNo": "1512478307798232923",
+        "extMsg": "",
+        "respCd": "destroy",
+        "intMsgCd": "SUC-001",
+        "status": true
+    },
+    "otpdetails": {
+        "Status": "P"
+    },
+    "ODonFDDtls": {
+        "data": "",
+        "txnRefNo": "admin1523269588357384236",
+        "extMsg": "",
+        "respCd": "destroy",
+        "intMsgCd": "SUC-001",
+        "status": "success"
+    },
+    "fdTopupDtls": {
+        "data": "",
+        "txnRefNo": "admin1523269588357384236",
+        "extMsg": "",
+        "respCd": "destroy",
+        "intMsgCd": "SUC-001",
+        "status": "success"
+    },
+    "nomineeDtls": {
+        "data": "",
+        "txnRefNo": "admin1523269588357384236",
+        "extMsg": "",
+        "respCd": "destroy",
+        "intMsgCd": "SUC-001",
+        "status": "success"
+    },
+     "ecsData": {
+        "data": "",
+        "txnRefNo": "admin1523269588357384236",
+        "extMsg": "",
+        "respCd": "destroy",
+        "intMsgCd": "SUC-001",
+        "status": "success"
+    }
+}

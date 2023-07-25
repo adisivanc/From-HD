@@ -1,0 +1,26 @@
+{
+    "interestType" : [{
+        "code" : "Monthly",
+        "description" : "Monthly Interest Payout"
+    },
+    {
+        "code" : "Quarterly",
+        "description" : "Quarterly Interest Payout"
+    },
+    {
+        "code" : "Annual",
+        "description" : "Reinvestment of Interest"
+    }],
+    "maturityType" : [{
+        "code" : "Both",
+        "description" : "Renew Principal & Interest"
+    },
+    {
+        "code" : "Principal",
+        "description" : "Renew Principal Only"
+    },
+    {
+        "code" : "Liquidate",
+        "description" : "Do not Renew"
+    }]
+}

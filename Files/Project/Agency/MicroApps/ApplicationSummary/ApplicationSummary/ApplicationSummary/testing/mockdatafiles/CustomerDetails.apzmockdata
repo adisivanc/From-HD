@@ -1,0 +1,31 @@
+{
+    "tbDbmiCustomerMaster": {
+        "srcFund": "",
+        "refNo": "CONSONB15620078031852",
+        "education": "",
+        "gender": "M",
+        "city": "",
+        "nid": "",
+        "mname": "Shekhar",
+        "title": "MR",
+        "lname": "Nath",
+        "pin": "560035",
+        "addressLine1": "40003, Bhuvana Greens Apartment",
+        "addressLine2": "",
+        "addressLine3": "Kasavanahalli",
+        "state": "",
+        "alternateNo": "",
+        "email": "manohar@gmail.com",
+        "issuePlace": "",
+        "profession": "",
+        "passportNo": "",
+        "fname": "Manohar",
+        "product": "Loans",
+        "motherMaidenName": "",
+        "subproduct": "Home Loan",
+        "mobileNo": "8951519545",
+        "nationality": "",
+        "dob": "1987-10-28",
+        "maritalStatus": "M"
+    }
+}

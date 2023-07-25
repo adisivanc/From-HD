@@ -1,0 +1,44 @@
+{
+    "tbDbmiCorpInterestRates": [
+        {
+            "period": "< 29 Days",
+            "gbp": "0.01",
+            "usd": "0.01",
+            "eur": "0.01",
+            "jpy": "0.01",
+            "aud": "0.01",
+            "cad": "0.01",
+            "effectiveFrom": "February 1, 2018"
+        },
+        {
+            "period": "30 days - 3 Months",
+            "gbp": "0.01",
+            "usd": "0.01",
+            "eur": "0.01",
+            "jpy": "0.01",
+            "aud": "0.01",
+            "cad": "0.01",
+            "effectiveFrom": "February 1, 2018"
+        },
+        {
+            "period": "3 Months 1 day - 6 Months",
+            "gbp": "0.01",
+            "usd": "0.01",
+            "eur": "0.01",
+            "jpy": "0.01",
+            "aud": "0.01",
+            "cad": "0.01",
+            "effectiveFrom": "February 1, 2018"
+        },
+        {
+            "period": "6 Months 1 day - < 1 Year",
+            "gbp": "0.01",
+            "usd": "0.01",
+            "eur": "0.01",
+            "jpy": "0.01",
+            "aud": "0.01",
+            "cad": "0.01",
+            "effectiveFrom": "February 1, 2018"
+        }
+    ]
+}

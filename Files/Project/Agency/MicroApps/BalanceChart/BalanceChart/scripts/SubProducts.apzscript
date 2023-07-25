@@ -1,0 +1,72 @@
+apz.balanc.SubProducts = {};
+apz.balanc.SubProducts.sParams = {};
+apz.app.onLoad_SubProducts = function(params) {
+    debugger;
+    apz.balanc.SubProducts.sParams = params;
+    
+    if(params.kind == "product"){
+        apz.show("balanc__SubProducts__subProductRow");
+    }else{
+        apz.show("balanc__SubProducts__subTatRow");
+    }
+    
+    apz.balanc.SubProducts.loadFile(params.type, params.kind);
+};
+apz.balanc.SubProducts.loadFile = function(type, kind) {
+    debugger;
+    if(kind == "product"){
+    if (type == "Loans") {
+        apz.data.loadJsonData("Loans", "balanc");
+    } else if (type == "Accounts") {
+        apz.data.loadJsonData("Accounts", "balanc");
+    } else if (type == "Cards") {
+        apz.data.loadJsonData("Cards", "balanc");
+    } else if (type == "Deposits") {
+        apz.data.loadJsonData("Deposits", "balanc");
+    }
+    }else{
+        
+    if (type == "Loans") {
+        apz.data.loadJsonData("LoansTat", "balanc");
+    } else if (type == "Accounts") {
+        apz.data.loadJsonData("AccountsTat", "balanc");
+    } else if (type == "Cards") {
+        apz.data.loadJsonData("CardsTat", "balanc");
+    } else if (type == "Deposits") {
+        apz.data.loadJsonData("DepositsTat", "balanc");
+    }
+    }
+}
+apz.balanc.SubProducts.fnCancel = function() {
+    
+    debugger;
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": "menuap__Menu__MainLaunchArea",
+            "parentAppId": "menuap",
+            "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+            "custImg": "menuap__Menu__custImg",
+            "custId": "menuap__Menu__custId_txtcnt"
+        }
+    }
+    apz.launchApp(lParams);
+}
+apz.balanc.SubProducts.fnBack = function() {
+    debugger;
+        var lParams = {
+            "appId": "balanc",
+            "scr": "Products",
+            "div": "balanc__Launcher__launcher"
+        };
+        apz.launchApp(lParams);
+}
+apz.balanc.SubProducts.showStageOneAndTwo = function(ev, props) {
+    apz.show("balanc__Products__stage1");
+    apz.show("balanc__Products__stage2");
+    apz.hide("balanc__Products__stage3");
+}

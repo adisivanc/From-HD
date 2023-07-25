@@ -1,0 +1,183 @@
+var identityIntegration = {};
+var data_text = "";
+var url = "https://aitest.appzillon.com/ocrdemo";
+var fileType = "";
+identityIntegration.caputure_image = function(idType_Caps, IdType_Small, captionRation, text, detectType) {
+    var docuType = "";
+    var detectionType = "";
+    if (IdType_Small === "passport") {
+        docuType = "passport";
+        detectionType = "new"
+    } else if (apz.docdtl.type === "Uganda ID Back") {
+        docuType = "td1";
+    }
+    else if (apz.docdtl.type === "Uganda ID Front") {
+        docuType = "others";
+    }else {
+        detectionType = "appleVision"
+    }
+    fileType = idType_Caps;
+    var texttodetect = {};
+    texttodetect.type = detectType;
+    messageTitle = idType_Caps;
+    title = idType_Caps;
+    message = "Place the " + IdType_Small + " inside the frame perfectly";
+    documentWHRatio = captionRation;
+    texttodetect.text = text
+    var json = {
+        "source": "camera", // default camera
+        "type": "base64", // default file
+        "fileName": "", /// mandatory in case type is file
+        "encodingType": "PNG", //  default JPEG
+        "quality": "100", //  default 100
+        "documentWHRatio": documentWHRatio,
+        "documentType": docuType,
+        "typeOfDetection": detectionType,
+        "holdTimeForCapture": "5", //in seconds,default is 5 seconds
+        "UIParams": {
+            "portraitMarginPercent": "10", //maximum upto 50 -adjusts the frame's margin for portrait
+            "landscapeMarginPercent": "15", //maximum upto 50 -adjusts the frame's margin for landscape
+            "pageTitle": title, //top title message   -default is "" and no title will be displayed
+            "messageTitle": messageTitle, //message title at the bottom -default is "" and no title will be displayed
+            "message": "Place your " + IdType_Small + " inside the frame", //message  -default is "" and no msg will be displayed
+            "fontColor": "#002F76", //color hex value of the texts (titles and messages) -default is white(#FFFFFF)
+            "overlayColor": "#FFFFFF", //color hex value of the overlay outside the frame -default is grey (#66000000)
+            "scanStatus1": "Looking for your " + IdType_Small, //Status message at the bottom instead of "Scanning..." displayed previously
+            "scanStatus2": "Ready to capture", //Status message at the bottom instead of "Verifying..." displayed previously
+            "scanStatus3": "Hold steady..." //Status message at the bottom "Hold steady..."(default) displayed during capture delay.
+        },
+        "textToDetect": texttodetect
+    };
+    json.id = "AUTO_CAPTURE";
+    json.callBack = identityIntegration.callbackDetectdocument;
+    apz.ns.detectDocument(json);
+}
+identityIntegration.callbackDetectdocument = function(params) {
+    if (params.status) {
+        if (params.outputFile.ocrWholeText == null) {
+            data_text = '';
+        } else {
+            data_text = params.outputFile.ocrWholeText;
+        }
+        var detected_data = params.outputFile.data;
+        if (apz.docdtl.type === "Uganda ID Back") {
+            try{
+                MRZ.store(params.outputFile.ocrText[params.outputFile.ocrText.length - 1].text);
+                apz.docdtl.ugandaDetails = MRZ.getjson();
+                identityIntegration.fnLaunchPreview(detected_data); 
+            }
+            catch(er){
+                apz.dispMsg({
+                    "type": "E",
+                    "message": "Image was not captured properly. Please try again.",
+                });
+            }
+            
+        } else {
+            identityIntegration.preprocess_image(detected_data, identityIntegration.preprocessimagecallback);
+        }
+    } else {
+        $("body").removeClass("modal-open");
+        apz.dispMsg({
+            "type": "E",
+            "message": "Error in Text Detection API",
+        });
+    }
+}
+identityIntegration.preprocess_image = function(data, callback) {
+    var json = {
+        "inputFile": {
+            "type": "base64",
+            "data": data
+        },
+        "outputFile": {
+            "type": "base64", //default file/base64
+            "fileName": "", //mandatory if type is "file"
+            "encodingType": "PNG", // default is JPEG encoding
+            "quality": "100" //default is 100
+        },
+        "imageAction": "grayscale", //default is grayscale /bw
+        "id": "NATIVE",
+        "action": "processImage" //mandatory
+    }
+    json.callBack = callback;
+    apz.ns.processImage(json);
+}
+identityIntegration.preprocessimagecallback = function(params) {
+    if (params.status) {
+        var preprocessbase64 = params.outputFile.data;
+        identityIntegration.fnLaunchPreview(preprocessbase64);
+    } else {
+        apz.dispMsg({
+            "type": "E",
+            "message": "Error in Image Preprocess API",
+        });
+    }
+}
+identityIntegration.fnLaunchPreview = function(preprocessbase64) {
+    debugger;
+    var lparams = {};
+    lparams.appId = "docdtl";
+    lparams.scr = "IdentityPreview";
+    lparams.div = "docdtl__Launcher__launcher";
+    lparams.userObj = {
+        "file": preprocessbase64,
+        "fileType": fileType
+    }
+    apz.launchApp(lparams);
+}
+identityIntegration.call_server = function(base64data, docType, docId, docFormat, processType) {
+    var Random_digit = Math.floor(Math.random() * 1000000000);
+    var today = new Date();
+    var date = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate();
+    var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds() + today.getMilliseconds();
+    var dateTime = date + "" + time;
+    var user_id = "ADMIN";
+    var txn_id_no = apz.appId + "_" + user_id + "_" + apz.deviceType + "_" + docType + "_" + Random_digit + "_" + dateTime;
+    var ocrrequestjson = {
+        "user_id": "ADMIN",
+        "txn_id": txn_id_no,
+        "document_type": docType,
+        "document_id": docId,
+        "data_format": docFormat,
+        "preprocessed_type": processType,
+        "device_type": apz.deviceType,
+        "data_text": data_text,
+        "data_cord": "",
+        "addtional_param": [],
+        "data_base64": base64data
+    };
+    var interfaceName;
+    if (apz.docdtl.type === "Passport") {
+        interfaceName = "PassportOCR"
+    } else {
+        interfaceName = "IdentityOCR"
+    }
+    var lParams = {
+        "ifaceName": interfaceName,
+        "buildReq": "N",
+        "appId": "docdtl",
+        "paintResp": "Y",
+        "req": ocrrequestjson,
+        "async": false,
+        "callBack": identityIntegration.fnOcrCallback
+    };
+    apz.server.callServer(lParams);
+}
+identityIntegration.serverCallback = function(params) {
+    debugger;
+    apz.stopLoader();
+    apz.docdtl.IdentityPreview.fnProceedIdCB(params.response.extracted_entities);
+}
+identityIntegration.fnOcrCallback = function(params) {
+    debugger;
+    apz.stopLoader();
+    if (params.status && params.errors === undefined) {
+        apz.docdtl.IdentityPreview.fnProceedIdCB(params.res["docdtl__" + params.ifaceName + "_Res"].extracted_entities);
+    } else {
+        apz.dispMsg({
+            "type": "E",
+            "message": "Error in Ocr API",
+        });
+    }
+}

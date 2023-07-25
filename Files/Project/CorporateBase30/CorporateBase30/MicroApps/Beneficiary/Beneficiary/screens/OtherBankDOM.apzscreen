@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"OtherBankDOM","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"OtherBankDOM","interfaces":[{"name":"OtherBankDOM","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

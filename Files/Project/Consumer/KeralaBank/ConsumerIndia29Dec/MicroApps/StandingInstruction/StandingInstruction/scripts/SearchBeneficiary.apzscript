@@ -1,0 +1,363 @@
+apz.stnint.SearchBeneficiary = {};
+apz.stnint.SearchBeneficiary.sParams = {};
+apz.stnint.SearchBeneficiary.lParams = {};
+apz.stnint.SearchBeneficiary.fnSetHeader = "";
+apz.stnint.SearchBeneficiary.sHome = function() {};
+apz.stnint.SearchBeneficiary.sAuthentication;
+apz.stnint.SearchBeneficiary.printReq = "";
+apz.app.onShown_SearchBeneficiary = function(params) {
+    apz.hide("stnint__SearchBeneficiary__benef_lst");
+    apz.stnint.SearchBeneficiary.fnaddRowClicked();
+    if (params.headerCallback) {
+        apz.stnint.SearchBeneficiary.fnSetHeader = params.headerCallback;
+    }
+    if (params.printReq) {
+        apz.stnint.SearchBeneficiary.printReq = params.printReq;
+    }
+    apz.stnint.SearchBeneficiary.lParams = params.custom360;
+    apz.stnint.SearchBeneficiary.sHome = params.home;
+    apz.stnint.SearchBeneficiary.sAuthentication = params.authentication;
+    apz.stnint.SearchBeneficiary.fnLoadOwnAccs();
+    //  apz.stnint.SearchBeneficiary.fnhandleBackFunction("N", "Y", "N", "LIT_SEARCHBENEFICIARYBYNAME", apz.stnint.SearchBeneficiary.fnLoadPageBack);
+};
+apz.stnint.SearchBeneficiary.fnLoadOwnAccs = function() {
+    debugger;
+    var lAccs = apz.stnint.SearchBeneficiary.lParams.accountDetail;
+    apz.data.scrdata.stnint__AccountDetail_Req = {};
+    apz.data.scrdata.stnint__AccountDetail_Req.Details = [];
+    for (i = 0; i < lAccs.length; i++) {
+        if (apz.stnint.SearchBeneficiary.lParams.selectedAccount !== i) {
+            if (lAccs[i].accountBal.indexOf(",") == -1) {
+                lAccs[i].accountBal = apz.stnint.SearchBeneficiary.fnFormatNumber(lAccs[i].accountBal);
+                apz.data.scrdata.stnint__AccountDetail_Req.Details.push(lAccs[i]);
+            } else {
+                apz.data.scrdata.stnint__AccountDetail_Req.Details.push(lAccs[i]);
+            }
+        }
+    }
+    apz.data.loadData("AccountDetail", "stnint");
+    if (apz.data.scrdata.stnint__AccountDetail_Req.Details.length == 0) {
+        apz.hide("stnint__SearchBeneficiary__own_panel");
+    }
+};
+apz.stnint.SearchBeneficiary.fnSearchBeneficiary = function() {
+    if (apz.isNull(apz.getElmValue("stnint__SearchBeneficiary__Beneficiary_Name"))) {
+        var lMsg = {};
+        lMsg.code = "ERR_SEARCHDATA";
+        apz.dispMsg(lMsg);
+    } else if (apz.getElmValue("stnint__SearchBeneficiary__Beneficiary_Name").length < 3) {
+        var lMesg = {};
+        lMesg.code = "ERR_SEARCHDATALENGTH";
+        apz.dispMsg(lMesg);
+    }
+};
+apz.stnint.SearchBeneficiary.lTimer;
+apz.stnint.SearchBeneficiary.lSearchLength = 2;
+apz.stnint.SearchBeneficiary.fnSearch = function() {
+    var sysUser = apz.getElmValue("stnint__SearchBeneficiary__Beneficiary_Name");
+    if (sysUser.length > apz.stnint.SearchBeneficiary.lSearchLength) {
+        var res = /^[a-zA-Z0-9&@.|,.: -]*$/g.test(sysUser);
+        if (res) {
+            apz.stnint.SearchBeneficiary.lSearch = sysUser;
+            clearInterval(apz.stnint.SearchBeneficiary.lTimer);
+            apz.stnint.SearchBeneficiary.lTimer = window.setInterval(function() {
+                clearInterval(apz.stnint.SearchBeneficiary.lTimer);
+                apz.stnint.SearchBeneficiary.fngetBeneficiary(apz.stnint.SearchBeneficiary.lSearch);
+            }, 2000);
+        } else {
+            var lMesg = {};
+            lMesg.code = "ERR_SEARCHSPECIAL";
+            apz.dispMsg(lMesg);
+        }
+    } else {
+        clearInterval(apz.stnint.SearchBeneficiary.lTimer);
+    }
+};
+apz.stnint.SearchBeneficiary.fngetBeneficiary = function(searchData) {
+    debugger;
+    apz.startLoader();
+    var lReqs = {};
+    lReqs.tbDbtpBeneficiaryDetails = {};
+    // lReqs.tbDbtpBeneficiaryDetails.customerId = apz.stnint.SearchBeneficiary.lParams.customerDetail.customerID;
+    lReqs.tbDbtpBeneficiaryDetails.beneficiaryStatus = "A";
+    lReqs.tbDbtpBeneficiaryDetails.beneficiaryType = "I";
+    lReqs.tbDbtpBeneficiaryDetails.beneficiaryName = searchData;
+    // if (apz.isNull(lReqs.tbDbtpBeneficiaryDetails.beneficiaryName)) {
+    //     lReqs.tbDbtpBeneficiaryDetails.beneficiaryName = "%";
+    // } else {
+    //     lReqs.tbDbtpBeneficiaryDetails.beneficiaryName = "%" + lReqs.tbDbtpBeneficiaryDetails.beneficiaryName + "%";
+    // }
+    var lServerParams = {
+        "ifaceName": "SearchBeneficiary_Query",
+        "paintResp": "N",
+        "req": lReqs,
+        "appId": "stnint",
+        "callBack": apz.stnint.SearchBeneficiary.fnSearchBeneficiaryCallBack
+    };
+    //apz.server.callServer(lServerParams);
+    jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("stnint") + "/SearchBeneficiary.json"));
+    apz.stnint.SearchBeneficiary.fnSearchBeneficiaryCallBack(jsondata, lReqs.tbDbtpBeneficiaryDetails.beneficiaryName);
+};
+apz.stnint.SearchBeneficiary.fnSearchBeneficiaryCallBack = function(params, searchData) {
+    apz.stopLoader();
+    debugger;
+    if (apz.isNull(params.errors)) {
+        apz.data.scrdata.stnint__SearchBeneficiary_Req = {};
+        apz.data.scrdata.stnint__SearchBeneficiary_Req = params;
+        apz.stnint.SearchBeneficiary.sBeneData = params.tbDbtpBeneficiaryDetails;
+        var data = apz.stnint.SearchBeneficiary.sBeneData;
+        
+        
+        const keyword =searchData.toLowerCase();
+    var filteredList = data.filter(function(item) {
+        if (item.beneficiaryName.toLowerCase().search(keyword) !== -1) {
+            return item;
+        }
+    })
+   
+ 
+        
+        
+        
+        apz.data.scrdata.stnint__SearchBeneficiary_Req.tbDbtpBeneficiaryDetails = filteredList;
+        apz.data.loadData("SearchBeneficiary", "stnint");
+        if(searchData != "")
+        {
+        if (filteredList.length > 0) {
+            apz.hide("stnint__SearchBeneficiary__noRecord");
+            apz.show("stnint__SearchBeneficiary__benef_lst");
+            $("#stnint__SearchBeneficiary__ownLst").addClass("sno");
+            $("#stnint__SearchBeneficiary__own_panel_div").addClass("sno");
+            //  apz.data.loadData("SearchBeneficiary", "stnint");
+            debugger;
+            for (var x = 0; x < filteredList.length; x++) {
+                if (apz.isNull(filteredList[x].beneficiaryAadharNo)) {
+                    // $("#stnint__SearchBeneficiary__benef_lst_row_" + x).children().children(3)[1].className = "sno";
+                    $("#stnint__SearchBeneficiary__benef_lst_row_" + x + " .aadharRow").addClass("sno");
+                }
+                if (apz.isNull(filteredList[x].beneficiaryBankName)) {
+                    $("#stnint__SearchBeneficiary__benef_lst_row_" + x + " .bankDtlsRow").addClass("sno");
+                }
+                if (apz.isNull(filteredList[x].beneficiaryMobilenumber)) {
+                    $("#stnint__SearchBeneficiary__benef_lst_row_" + x + " .MobileRow").addClass("sno");
+                }
+                if (apz.isNull(filteredList[x].beneficiaryMmid)) {
+                    $("#stnint__SearchBeneficiary__benef_lst_row_" + x + " .mmidRow").addClass("sno");
+                }
+                if (apz.isNull(filteredList[x].beneficiaryAccountNo)) {
+                    $("#stnint__SearchBeneficiary__benef_lst_row_" + x + " .accNoRow").addClass("sno");
+                }
+                if (apz.isNull(filteredList[x].beneficiaryIfsc)) {
+                    $("#stnint__SearchBeneficiary__benef_lst_row_" + x + " .IFSCRow").addClass("sno");
+                }
+                if (apz.isNull(filteredList[x].beneficiaryVpa)) {
+                    $("#stnint__SearchBeneficiary__benef_lst_row_" + x + " .vpaRow").addClass("sno");
+                }
+            }
+        } else {
+            apz.show("stnint__SearchBeneficiary__noRecord");
+            apz.hide("stnint__SearchBeneficiary__benef_lst");
+        }
+    } else {
+        apz.show("stnint__SearchBeneficiary__noRecord");
+        apz.hide("stnint__SearchBeneficiary__benef_lst");
+        var lMsg = {
+            "message": params.errors[0].errorMessage
+        };
+        apz.dispMsg(lMsg);
+    }
+    }
+    else
+    {
+            apz.hide("stnint__SearchBeneficiary__benef_lst");
+            $("#stnint__SearchBeneficiary__ownLst").removeClass("sno");
+            $("#stnint__SearchBeneficiary__own_panel_div").removeClass("sno");
+    }
+};
+apz.stnint.SearchBeneficiary.fnNewBeneficiary = function() {
+    apz.hide("stnint__SearchBeneficiary__Search_Beneficiary");
+    // apz.launchApp({
+    //     "appId": "bnfmnt",
+    //     "scr": "AddBeneficiary",
+    //     "div": "stnint__STAccountDetails__lauchingPad",
+    //     "userObj": {
+    //         //  "data": {
+    //         //     "customerId": apz.stnint.SearchBeneficiary.lParams.customerDetail.customerID
+    //         // },
+    //         "control": {
+    //             "callBack": apz.stnint.SearchBeneficiary.fnAddStandingIntructionCallBack,
+    //             "destroyDiv": "stnint__STAccountDetails__lauchingPad"
+    //         }
+    //     }
+    // });
+    apz.landin.Landing.fnMenuClickInside("Add Beneficiary");
+};
+apz.stnint.SearchBeneficiary.fnAddStandingIntructionCallBack = function(pParam) {
+    debugger;
+    apz.resetCurrAppId("stnint");
+    var selectedAccount = apz.stnint.SearchBeneficiary.lParams.selectedAccount;
+    var accountNo = apz.stnint.SearchBeneficiary.lParams.accountDetail[selectedAccount].accountNo;
+    var accountBal = apz.stnint.SearchBeneficiary.lParams.accountDetail[selectedAccount].accountBal;
+    var customerId = apz.stnint.SearchBeneficiary.lParams.customerDetail.customerID;
+    var selectedAccountType = apz.stnint.SearchBeneficiary.lParams.accountType;
+    var usrObj = {
+        "BENEFICIARY_ID": pParam.beneficiaryId,
+        "BENEFICIARY_NAME": pParam.beneficiaryName,
+        "BENEFICIARY_SHORT_NAME": pParam.beneficiaryShortName,
+        "BENEFICIARY_BANK_ADDRESS": pParam.beneficiaryBankAddress,
+        "BENEFICIARY_TYPE": pParam.beneficiaryType,
+        "BENEFICIARY_ACCOUNT_TYPE": pParam.beneficiaryAccType,
+        "BENEFICIARY_ACCOUNT_NO": pParam.beneficiaryAccountNo,
+        "BENEFICIARY_IFSC": pParam.beneficiaryIFSC,
+        "BENEFICIARY_MOBILENUMBER": pParam.beneficiaryMobileNo,
+        "BENEFICIARY_MMID": pParam.beneficiaryMmID,
+        "BENEFICIARY_VPA": pParam.beneficiaryVPA,
+        "BENEFICIARY_AADHAR_NO": pParam.beneficiaryAadharNo,
+        "BENEFICIARY_EMAIL": pParam.beneficiaryEmail,
+        "FROM_ACCOUNT_NO": accountNo,
+        "accountBal": accountBal,
+        "CUSTOMER_ID": customerId,
+        "BENEFICIARY_BANK_NAME": pParam.beneficiaryBank,
+        "selectedAccountType": selectedAccountType,
+        "home": apz.stnint.SearchBeneficiary.sHome,
+        "authentication": apz.stnint.SearchBeneficiary.sAuthentication,
+        "printReq": apz.stnint.SearchBeneficiary.printReq
+    };
+    apz.launchSubScreen({
+        "appId": "stnint",
+        "scr": "STAmount",
+        "div": "stnint__STAccountDetails__lauchingPad",
+        "userObj": {
+            "userObj": usrObj,
+            "custom360": apz.stnint.SearchBeneficiary.lParams,
+            "headerCallback": apz.stnint.SearchBeneficiary.fnSetHeader,
+            "home": apz.stnint.SearchBeneficiary.sHome
+        }
+    });
+};
+apz.stnint.SearchBeneficiary.fnLoadData = function() {};
+apz.stnint.SearchBeneficiary.fnaddRowClicked = function() {
+    apz.app.preRowClicked = function(containerId, rowNo) {
+        debugger;
+        if (containerId === "stnint__SearchBeneficiary__benef_lst") {
+            var beneficiaryId = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryId_" + rowNo);
+            var beneficiaryName = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryName_" + rowNo);
+            var beneficiaryType = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryType_" + rowNo);
+            var beneficiaryShortName = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryShortName_" + rowNo);
+            var beneficiaryBankAddress = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryBankAddress_" + rowNo);
+            var beneficiaryEmail = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryEmail_" + rowNo);
+            var beneficiaryAccountNo = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryAccountNo_" + rowNo);
+            var beneficiaryIFSC = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryIfsc_" + rowNo);
+            var beneficiaryAccType = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryAccountType_" + rowNo);
+            var beneficiaryMobileNo = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryMobilenumber_" + rowNo);
+            var beneficiaryMmID = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryMmid_" + rowNo);
+            var beneficiaryVPA = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryVpa_" + rowNo);
+            var beneficiaryAadharNo = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryAadharNo_" + rowNo);
+            var beneficiaryBank = apz.getElmValue("stnint__SearchBeneficiary__i__tbDbtpBeneficiaryDetails__beneficiaryBankName_" + rowNo);
+            var selectedAccount = apz.stnint.SearchBeneficiary.lParams.selectedAccount;
+            var accountNo = apz.stnint.SearchBeneficiary.lParams.accountDetail[selectedAccount].accountNo;
+            var accountBal = apz.stnint.SearchBeneficiary.lParams.accountDetail[selectedAccount].accountBal;
+            var customerId = apz.stnint.SearchBeneficiary.lParams.data.userId;
+            var selectedAccountType = apz.stnint.SearchBeneficiary.lParams.accountType;
+            var usrObj = {
+                "BENEFICIARY_ID": beneficiaryId,
+                "BENEFICIARY_NAME": beneficiaryName,
+                "BENEFICIARY_SHORT_NAME": beneficiaryShortName,
+                "BENEFICIARY_BANK_ADDRESS": beneficiaryBankAddress,
+                "BENEFICIARY_TYPE": beneficiaryType,
+                "BENEFICIARY_ACCOUNT_TYPE": beneficiaryAccType,
+                "BENEFICIARY_ACCOUNT_NO": beneficiaryAccountNo,
+                "BENEFICIARY_IFSC": beneficiaryIFSC,
+                "BENEFICIARY_MOBILENUMBER": beneficiaryMobileNo,
+                "BENEFICIARY_MMID": beneficiaryMmID,
+                "BENEFICIARY_VPA": beneficiaryVPA,
+                "BENEFICIARY_AADHAR_NO": beneficiaryAadharNo,
+                "BENEFICIARY_EMAIL": beneficiaryEmail,
+                "FROM_ACCOUNT_NO": accountNo,
+                "accountBal": accountBal,
+                "CUSTOMER_ID": customerId,
+                "BENEFICIARY_BANK_NAME": beneficiaryBank,
+                "selectedAccountType": selectedAccountType,
+                "home": apz.stnint.SearchBeneficiary.sHome,
+                "authentication": apz.stnint.SearchBeneficiary.sAuthentication,
+                "printReq": apz.stnint.SearchBeneficiary.printReq
+            };
+            apz.launchSubScreen({
+                "scr": "STAmount",
+                "div": "stnint__STAccountDetails__lauchingPad",
+                "userObj": {
+                    "userObj": usrObj,
+                    "custom360": apz.stnint.SearchBeneficiary.lParams,
+                    "headerCallback": apz.stnint.SearchBeneficiary.fnSetHeader,
+                    "home": apz.stnint.SearchBeneficiary.sHome
+                }
+            });
+            return false;
+        } else if (containerId === "stnint__SearchBeneficiary__ownLst") {
+            var selectedAccount = apz.stnint.SearchBeneficiary.lParams.selectedAccount;
+            var accountNo = apz.stnint.SearchBeneficiary.lParams.accountDetail[selectedAccount].accountNo;
+            var accountBal = apz.stnint.SearchBeneficiary.lParams.accountDetail[selectedAccount].accountBal;
+            var customerId = apz.stnint.SearchBeneficiary.lParams.data.userId;
+            var selectedAccountType = apz.stnint.SearchBeneficiary.lParams.accountType;
+            var name = LandingCommon.getLoggedInUser();
+            var usrObj = {
+                "BENEFICIARY_ID": apz.stnint.SearchBeneficiary.lParams.data.userId,
+                "BENEFICIARY_NAME": name,
+                "BENEFICIARY_SHORT_NAME": name,
+                "BENEFICIARY_BANK_ADDRESS": "",
+                "BENEFICIARY_TYPE": "OWN",
+                "BENEFICIARY_ACCOUNT_TYPE": apz.getElmValue("stnint__AccountDetail__i__Details__accountType_" + rowNo),
+                "BENEFICIARY_ACCOUNT_NO": apz.getElmValue("stnint__AccountDetail__i__Details__accountNo_" + rowNo),
+                "BENEFICIARY_IFSC": apz.getElmValue("stnint__AccountDetail__i__Details__accountBrnIFSC_" + rowNo),
+                "BENEFICIARY_MOBILENUMBER": "",
+                "BENEFICIARY_MMID": "",
+                "BENEFICIARY_VPA": "",
+                "BENEFICIARY_AADHAR_NO": "",
+                "BENEFICIARY_EMAIL": "",
+                "FROM_ACCOUNT_NO": accountNo,
+                "accountBal": accountBal,
+                "CUSTOMER_ID": customerId,
+                "BENEFICIARY_BANK_NAME": "APZ Bank",
+                "selectedAccountType": selectedAccountType,
+                "home": apz.stnint.SearchBeneficiary.sHome,
+                "authentication": apz.stnint.SearchBeneficiary.sAuthentication,
+                "printReq": apz.stnint.SearchBeneficiary.printReq
+            };
+            apz.launchSubScreen({
+                "scr": "STAmount",
+                "div": "stnint__STAccountDetails__lauchingPad",
+                "userObj": {
+                    "userObj": usrObj,
+                    "custom360": apz.stnint.SearchBeneficiary.lParams,
+                    "headerCallback": apz.stnint.SearchBeneficiary.fnSetHeader,
+                    "home": apz.stnint.SearchBeneficiary.sHome
+                }
+            });
+        }
+    };
+};
+apz.stnint.SearchBeneficiary.fnUpperCaseBanName = function(pthis) {
+    pthis.value = pthis.value.toUpperCase();
+};
+apz.stnint.SearchBeneficiary.fnLoadPageBack = function() {
+    apz.launchSubScreen({
+        "appId": "stnint",
+        "scr": "STAccountDetails",
+        "div": $("#scr__stnint__STAccountDetails__main").parent()[0].id,
+        "userObj": {
+            "headerCallback": apz.stnint.SearchBeneficiary.fnSetHeader,
+            "custom360": apz.stnint.SearchBeneficiary.lParams,
+            "home": apz.stnint.SearchBeneficiary.sHome,
+            "authentication": apz.stnint.SearchBeneficiary.sAuthentication
+        }
+    });
+};
+apz.stnint.SearchBeneficiary.fnFormatNumber = function(balance) {
+    var lParams = {};
+    lParams.value = balance;
+    lParams.decimalSep = ".";
+    lParams.decimalPoints = "2";
+    lParams.displayAsLiteral = "N";
+    lParams.mask = "LAKH";
+    return apz.formatNumber(lParams);
+};

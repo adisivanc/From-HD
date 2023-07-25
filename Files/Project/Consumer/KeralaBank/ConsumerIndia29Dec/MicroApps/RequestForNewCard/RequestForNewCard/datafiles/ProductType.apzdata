@@ -1,0 +1,21 @@
+{
+    "crddtl__ProductType_Res": {
+        "Product": [{
+            "title": "Visa Credit Card",
+            "image": "debit-card.png",
+            "description": "A debit card (also known as a bank card or check card) is a plastic card that is used as a payment method to cash when buying things. It is similar to a credit card, but unlike a credit card, the money comes directly from the user's bank account when using a debit card."
+        }, {
+            "title": "Maestro Credit Card",
+            "image": "credit-card.png",
+            "description": "A credit card is a plastic card that people use to purchase goods and services on credit. The card issuer pays for the purchase, and the cardholder pays the issuer at a later date. In other words, the issuer lends the cardholder the money to buy things."
+        }, {
+            "title": "Gift Card",
+            "image": "gift-card.png",
+            "description": "A gift card ( or gift voucher or gift token in the UK) is a prepaid stored-value money card usually issued by a retailer or bank to be used as an alternative to cash for purchases within a particular store or related businesses."
+        }, {
+            "title": "Forex Card",
+            "image": "elite-card.png",
+            "description": "A prepaid card is very different from a bank account debit card. A bank account debit card is linked to your checking account. Instead, you are spending money you loaded onto the prepaid card in advance. In most cases, you can't spend more money than you have already loaded onto your prepaid card."
+        }]
+    }
+}

@@ -1,0 +1,485 @@
+apz.appdtl.DocumentDetails = {};
+apz.appdtl.DocumentDetails.DocType = ""
+apz.appdtl.DocumentDetails.sDocData = {};
+apz.appdtl.DocumentDetails.progress = 0;
+apz.appdtl.DocumentDetails.progressInterval = "";
+apz.data.scrdata.appdtl__DocumentDetail_Req = {
+    tbDbmiCustomerDocuments: []
+}
+apz.app.onLoad_DocumentDetails = function(params) {
+    debugger;
+    apz.appdtl.DocumentDetails.refNo = params.refNo;
+    apz.appdtl.DocumentDetails.manageHeaders();
+    apz.setElmValue("appdtl__DocumentDetail__i__tbDbmiCustomerDocuments__refNo_0", apz.appdtl.DocumentDetails.refNo);
+    apz.appdtl.DocumentDetails.fetchDocument(params);
+    $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+        $(this).removeClass("active");
+    })
+    if ($("#apzonb__Navigator__el_progressstep_1_ext li").length == 4) {
+        $("#apzonb__Navigator__el_progressstep_1_ext").append(
+            '<li class="pgst-step pgs-100 active" scrname="DocumentDetails" title="Document Details" appid="appdtl"  divname="' + params.parentdiv +
+            '" title="" refNo="' + params.refNo + '"><span></span><span></span></li>');
+    } else {
+        $("#apzonb__Navigator__el_progressstep_1_ext li:nth-child(5)").addClass("active");
+    }
+}
+apz.appdtl.DocumentDetails.manageHeaders = function() {
+    $("#appdtl__AppLauncher__document_div").addClass('active');
+    $("#appdtl__AppLauncher__product_div").removeClass('active');
+    $("#appdtl__AppLauncher__employment_div").removeClass('active');
+}
+apz.app.onShown_DocumentDetails = function(params) {
+    apz.appdtl.currenctScreen = "document_details";
+    $(".BrowseToUpload").attr({
+        "ondrop": "apz.appdtl.DocumentDetails.fnGetDroppedFile(event)",
+        "ondragover": "apz.appdtl.DocumentDetails.allowDrop(event)"
+    });
+}
+apz.appdtl.DocumentDetails.allowDrop = function(e) {
+    e.preventDefault();
+}
+apz.appdtl.DocumentDetails.fnGetDroppedFile = function(e) {
+    e.preventDefault();
+    apz.appdtl.DocumentDetails.fileList = e.target.files || e.dataTransfer.files;
+    $("#appdtl__DocumentDetails__documnetUpload").trigger("change");
+}
+apz.appdtl.DocumentDetails.fnloadfirstRow = function() {
+    debugger;
+    apz.data.scrdata.appdtl__DocumentDetail_Req = {
+        "tbDbmiCustomerDocuments": [{
+            "refNo": "CONSONB34417872082120",
+            "docType": "",
+            "docSeq": 5,
+            "docData": ""
+        }]
+    }
+    apz.data.loadData("DocumentDetail", "appdtl");
+}
+apz.appdtl.DocumentDetails.uploadDocument = function(pthis) {
+    debugger;
+    if (apz.appdtl.DocumentDetails.DocType !== "") {
+        if (apz.deviceType === "ANDROID") {
+            apz.appdtl.DocumentDetails.fnCallFileBrowser("appdtl__DocumentDetails__documnetUpload");
+            apz.appdtl.DocumentDetails.fileUploadId = "appdtl__DocumentDetails__documnetUpload";
+        } else {
+            $("#appdtl__DocumentDetails__documnetUpload").trigger("click");
+        }
+    } else {
+        apz.dispMsg({
+            "message": "Please select the document type for the document you are trying to upload."
+        })
+    }
+}
+apz.appdtl.DocumentDetails.fetchDocument = function(params) {
+    debugger;
+    apz.data.buildData("ApplicationInfoDB", "appdtl");
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.refNo = params.refNo;
+    apz.data.scrdata.appdtl__DocumentsTypes_Res = {
+        photoIdDocuments: [],
+        addressDocuments: [],
+        additionalDocuments: []
+    };
+    var lParams = {
+        "ifaceName": "DocumentDetail_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": {
+                "refNo": apz.appdtl.DocumentDetails.refNo
+            }
+        },
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.DocumentDetails.fetchDocumentCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.appdtl.DocumentDetails.fetchDocumentCB = function(params) {
+    debugger;
+    if (params.errors == undefined && params.status) {
+        var lphotoandsign = jQuery.grep(params.res.appdtl__DocumentDetail_Req.tbDbmiCustomerDocuments, function(obj) {
+            return (obj.docType == "Signature" || obj.docType == "Photo");
+        });
+        var lidProof = jQuery.grep(params.res.appdtl__DocumentDetail_Req.tbDbmiCustomerDocuments, function(obj) {
+            return (obj.docType != "Signature" && obj.docType != "Photo");
+        });
+        apz.data.scrdata.appdtl__DocumentDetail_Req.tbDbmiCustomerDocuments = lphotoandsign;
+        apz.data.loadData("DocumentDetail", "appdtl");
+        lphotoandsign.forEach(function(lobj) {
+            if (lobj.docType === "Signature") {
+                $("#appdtl__DocumentDetails__signature").attr("src", lobj.docData);
+            } else {
+                $("#appdtl__DocumentDetails__profillePic").attr("src", lobj.docData);
+            }
+        });
+        lidProof.forEach(function(lobj) {
+            if (lobj.docType === "photoProof") {
+                apz.data.scrdata.appdtl__DocumentsTypes_Res.photoIdDocuments.push(lobj);
+            } else if (lobj.docType === "addressProof") {
+                apz.data.scrdata.appdtl__DocumentsTypes_Res.addressDocuments.push(lobj);
+            } else if (lobj.docType === "additionalProof") {
+                apz.data.scrdata.appdtl__DocumentsTypes_Res.additionalDocuments.push(lobj);
+            }
+        });
+        if (lidProof.length > 0) {
+            $(
+                "#appdtl__DocumentDetails__bottom_fileUpload,#appdtl__DocumentDetails__uploadNav,#appdtl__DocumentDetails__DocumentDetail__i__tbDbmiCustomerDocuments__docType_span,#appdtl__DocumentDetails__mandatory_err"
+            ).addClass("sno");
+            $("#appdtl__DocumentDetails__el_btn_6").removeClass("sno");
+        }
+        if (apz.data.scrdata.appdtl__DocumentsTypes_Res.photoIdDocuments.length > 0) {
+            $("#appdtl__DocumentDetails__photoProof_lst").removeClass("sno");
+        }
+        if (apz.data.scrdata.appdtl__DocumentsTypes_Res.addressDocuments.length > 0) {
+            $("#appdtl__DocumentDetails__addressProof_lst").removeClass("sno");
+        }
+        if (apz.data.scrdata.appdtl__DocumentsTypes_Res.additionalDocuments.length > 0) {
+            $("#appdtl__DocumentDetails__additionalProof_lst").removeClass("sno");
+        }
+        apz.data.loadData("DocumentsTypes", "appdtl");
+        var uploadDocuments = apz.data.scrdata.appdtl__DocumentsTypes_Res;
+        for (var key in uploadDocuments) {
+            if (uploadDocuments[key].length > 0) {
+                for (var i = 0, len = uploadDocuments[key].length; i < len; i++) {
+                    $("#appdtl__DocumentDetails__" + uploadDocuments[key][i].docType + "_ProgressBar_" + i + "_div").removeClass("sno")
+                    $("#appdtl__DocumentDetails__" + uploadDocuments[key][i].docType + "_ProgressBar_" + i).css("width", "100%").addClass("suc");
+                    $("#appdtl__DocumentDetails__" + uploadDocuments[key][i].docType + "_StatusMsg_" + i).removeClass("sno");
+                }
+            }
+        }
+    }
+}
+apz.appdtl.DocumentDetails.saveApplicationDetails = function() {
+    debugger;
+    apz.startLoader();
+    apz.appdtl.DocumentDetails.sDocData = apz.copyJSONObject(apz.data.scrdata.appdtl__DocumentDetail_Req);
+    var lParams = {
+        "ifaceName": "DocumentDetail_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": {
+                "refNo": apz.appdtl.DocumentDetails.refNo
+            }
+        },
+        "appId": "appdtl",
+        "paintResp": "N",
+        "callBack": apz.appdtl.DocumentDetails.saveApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.DocumentDetails.fnCancel = function(params) {
+    debugger;
+    
+    apz.appdtl.DocumentDetails.saveApplicationDetails();
+        apz.appdtl.AppLauncher.onCancel();
+        
+        
+}
+apz.appdtl.DocumentDetails.saveApplicationDetailsCB = function(params) {
+    debugger;
+    apz.appdtl.DocumentDetails.sDocData.tbDbmiCustomerDocuments = [];
+    var lDocumentArray = apz.appdtl.DocumentDetails.sDocData.tbDbmiCustomerDocuments;
+    var lSignature = $("#appdtl__DocumentDetails__signature").attr("src");
+    var lPhoto = $("#appdtl__DocumentDetails__profillePic").attr("src");
+    if ($("#appdtl__DocumentDetails__profillePic").attr("src") != "apps/styles/themes/SopraBaseApp/img/photo-camera.png") {
+        var lPhotoObj = {
+            "refNo": apz.appdtl.DocumentDetails.refNo,
+            "docType": "Photo",
+            "docData": lPhoto,
+            "docName": "Photo"
+        };
+        lDocumentArray.push(lPhotoObj);
+    }
+    if ($("#appdtl__DocumentDetails__signature").attr("src") != "apps/styles/themes/SopraBaseApp/img/img1.png") {
+        var lSignatureObj = {
+            "refNo": apz.appdtl.DocumentDetails.refNo,
+            "docType": "Signature",
+            "docData": lSignature,
+            "docName": "Signature"
+        };
+        lDocumentArray.push(lSignatureObj);
+    }
+    apz.appdtl.DocumentDetails.insertDocument();
+};
+apz.appdtl.DocumentDetails.insertDocument = function() {
+    debugger;
+    var idDocument = apz.data.scrdata.appdtl__DocumentsTypes_Res;
+    var lDocArray = apz.appdtl.DocumentDetails.sDocData.tbDbmiCustomerDocuments.concat(idDocument.photoIdDocuments).concat(idDocument.addressDocuments)
+        .concat(idDocument.additionalDocuments);
+    lDocArray.forEach(function(doc, i) {
+        doc.refNo = apz.appdtl.DocumentDetails.refNo;
+        if (doc.seqNo) {
+            delete doc.seqNo;
+        }
+        if (!doc.docId) {
+            doc.docId = +new Date() + i
+        }
+    });
+    var lParams = {
+        "ifaceName": "DocumentDetail_New",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": lDocArray
+        },
+        "appId": "appdtl",
+        "paintResp": "N",
+        "callBack": apz.appdtl.DocumentDetails.insertDocumentCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.appdtl.DocumentDetails.insertDocumentCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    
+    /*if (!apz.isNull(pResp.res.appdtl__DocumentsTypes_Res)) {
+        apz.applicationDetails = jQuery.extend(true, {}, pResp.res.appdtl__DocumentsTypes_Req.tbDbmiCustomerMaster);
+    } else {
+        apz.applicationDetails = jQuery.extend(true, {}, pResp.res.appdtl__DocumentsTypes_Res.tbDbmiCustomerMaster);
+    }*/
+}
+apz.appdtl.DocumentDetails.BrowseToUploadCB = function(pthis, event) {
+    debugger;
+    apz.appdtl.DocumentDetails.progress = 0;
+    var fieArray = (pthis.files.length > 0) ? pthis.files : apz.appdtl.DocumentDetails.fileList;
+    for (var i = 0, len = fieArray.length; i < len; i++) {
+        let fileObj = fieArray[i];
+        if (fileObj.size <= 2097152) {
+            let apzFileReader = new FileReader();
+            apzFileReader.onload = function() {
+                debugger;
+                let binaryStr = apzFileReader.result;
+                apz.appdtl.DocumentDetails.fnShowFileProgress(fileObj.name, binaryStr);
+                $("#" + pthis.id).val("");
+            }
+            apzFileReader.readAsDataURL(fileObj);
+        } else {
+            apz.dispMsg({
+                appId: "appdtl",
+                message: "Please select the size below 2MB,If you were uploaded that file would skipped."
+            })
+        }
+    }
+};
+apz.appdtl.DocumentDetails.fnShowProgressbarStatus = function() {
+    apz.appdtl.DocumentDetails.progress++;
+    var documentType = apz.appdtl.DocumentDetails.DocType;
+    if (apz.appdtl.DocumentDetails.progress <= 100) {
+        $("#appdtl__DocumentDetails__" + documentType + "_ProgressBar_" + (apz.appdtl.nodeName.length - 1)).css("width", apz.appdtl.DocumentDetails.progress +
+            "%");
+    } else if (apz.appdtl.DocumentDetails.progress > 100) {
+        $("#appdtl__DocumentDetails__" + documentType + "_ProgressBar_" + (apz.appdtl.nodeName.length - 1)).addClass("suc");
+        $("#appdtl__DocumentDetails__" + documentType + "_StatusMsg_" + (apz.appdtl.nodeName.length - 1)).removeClass("sno");
+        clearInterval(apz.appdtl.DocumentDetails.progressInterval);
+    }
+}
+apz.appdtl.DocumentDetails.BrowsePhotoAndSign = function(pthis, event) {
+    debugger;
+    apz.data.buildData("DocumentDetail", "appdtl");
+    let fileObj = pthis.files[0];
+    let apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        let binaryStr = apzFileReader.result;
+        if (pthis.id == "appdtl__DocumentDetails__browsePhoto") {
+            $("#appdtl__DocumentDetails__profillePic").attr("src", binaryStr);
+        } else {
+            $("#appdtl__DocumentDetails__signature").attr("src", binaryStr);
+        }
+        $("#" + pthis.id).val("");
+    }
+    apzFileReader.readAsDataURL(fileObj);
+};
+apz.appdtl.DocumentDetails.uploadPhoto = function(pthis) {
+    if (apz.deviceType === "ANDROID") {
+        apz.appdtl.DocumentDetails.fnCallFileBrowser("appdtl__DocumentDetails__browsePhoto");
+        apz.appdtl.DocumentDetails.fileUploadId = "appdtl__DocumentDetails__browsePhoto";
+    } else {
+        $("#appdtl__DocumentDetails__browsePhoto").trigger("click");
+    }
+}
+apz.appdtl.DocumentDetails.fnCallFileBrowser = function(id) {
+    var json = {
+        "filter": "",
+        "fileCategory": "EXTERNAL",
+        "location": "EXTERNAL",
+        "openFile": "N"
+    };
+    json.id = id;
+    json.callBack = apz.appdtl.DocumentDetails.fnGetSession;
+    apz.ns.fileBrowser(json);
+}
+apz.appdtl.DocumentDetails.fnGetSession = function(jsonObj) {
+    apz.appdtl.DocumentDetails.androidFilePath = jsonObj.filePath;
+    apz.server.login({
+        "userId": "admin",
+        "pwd": "admin",
+        "callBack": apz.appdtl.DocumentDetails.fnGetSessionCB
+    })
+}
+apz.appdtl.DocumentDetails.fnGetSessionCB = function(params) {
+    if (params.errors == undefined && params.status) {
+        var path = apz.appdtl.DocumentDetails.androidFilePath;
+        var lfilePath = path.split("/")
+        apz.appdtl.DocumentDetails.androidfileName = lfilePath.pop();
+        var json = {
+            "filePath": lfilePath.join("/"),
+            "sessionReq": "Y"
+        };
+        json.fileName = apz.appdtl.DocumentDetails.androidfileName;
+        json.base64 = "Y";
+        json.id = "DOWNLOADFILE_ID";
+        json.callBack = apz.appdtl.DocumentDetails.fnGetBase64
+        apz.ns.downloadFile(json);
+    }
+}
+apz.appdtl.DocumentDetails.fnGetBase64 = function(params) {
+    if (params.base64) {
+        if (apz.appdtl.DocumentDetails.fileUploadId == "appdtl__DocumentDetails__browsePhoto") {
+            $("#appdtl__DocumentDetails__profillePic").attr("src", "data:image;base64," + params.base64);
+        } else if (apz.appdtl.DocumentDetails.fileUploadId == "appdtl__DocumentDetails__browseSignature") {
+            $("#appdtl__DocumentDetails__signature").attr("src", "data:image;base64," + params.base64);
+        } else {
+            var lfileName = apz.appdtl.DocumentDetails.androidfileName;
+            apz.appdtl.DocumentDetails.fnShowFileProgress(lfileName, "data:image;base64," + params.base64);
+        }
+    }
+}
+apz.appdtl.DocumentDetails.fnShowFileProgress = function(filename, base64) {
+    if (apz.appdtl.DocumentDetails.DocType !== "") {
+        var uploadObj = {};
+        var documentType = apz.appdtl.DocumentDetails.DocType;
+        uploadObj.fileName = filename;
+        uploadObj.docData = base64;
+        uploadObj.docType = documentType;
+        if (documentType === "photoProof") {
+            uploadObj.docName = "Photo Id Proof";
+            apz.data.scrdata.appdtl__DocumentsTypes_Res.photoIdDocuments.push(uploadObj);
+            apz.appdtl.nodeName = apz.data.scrdata.appdtl__DocumentsTypes_Res.photoIdDocuments;
+        } else if (documentType === "addressProof") {
+            uploadObj.docName = "Address Proof";
+            apz.data.scrdata.appdtl__DocumentsTypes_Res.addressDocuments.push(uploadObj);
+            apz.appdtl.nodeName = apz.data.scrdata.appdtl__DocumentsTypes_Res.addressDocuments;
+        } else {
+            uploadObj.docName = "Additional Proof";
+            apz.data.scrdata.appdtl__DocumentsTypes_Res.additionalDocuments.push(uploadObj);
+            apz.appdtl.nodeName = apz.data.scrdata.appdtl__DocumentsTypes_Res.additionalDocuments;
+        }
+        if (apz.appdtl.nodeName.length > 0) {
+            $("#appdtl__DocumentDetails__" + documentType + "_lst").removeClass("sno")
+        }
+        apz.data.loadData("DocumentsTypes", "appdtl");
+        $("#appdtl__DocumentDetails__" + documentType + "_ProgressBar_" + (apz.appdtl.nodeName.length - 1)).removeClass("suc");
+        $("#appdtl__DocumentDetails__" + documentType + "_ProgressBar_" + (apz.appdtl.nodeName.length - 1 + "_div")).removeClass("sno");
+        $("#appdtl__DocumentDetails__" + documentType + "_docName_input_" + (apz.appdtl.nodeName.length - 1)).parent().removeClass("sno");
+        apz.appdtl.DocumentDetails.progressInterval = setInterval(apz.appdtl.DocumentDetails.fnShowProgressbarStatus, 20);
+    } else {
+        apz.dispMsg({
+            "message": "Please select the document type for the document you are trying to upload."
+        })
+    }
+    if ((apz.deviceType === "WEB" || apz.deviceType === "SIMULATOR") && apz.appdtl.DocumentDetails.DocType !== "") {
+        $(
+            "#appdtl__DocumentDetails__bottom_fileUpload,#appdtl__DocumentDetails__uploadNav,#appdtl__DocumentDetails__DocumentDetail__i__tbDbmiCustomerDocuments__docType_span,#appdtl__DocumentDetails__mandatory_err"
+        ).addClass("sno");
+        $("#appdtl__DocumentDetails__el_btn_6").removeClass("sno");
+    }
+}
+apz.appdtl.DocumentDetails.uploadSignature = function(pthis) {
+    if (apz.deviceType === "ANDROID") {
+        apz.appdtl.DocumentDetails.fnCallFileBrowser("appdtl__DocumentDetails__browseSignature");
+        apz.appdtl.DocumentDetails.fileUploadId = "appdtl__DocumentDetails__browseSignature";
+    } else {
+        $("#appdtl__DocumentDetails__browseSignature").trigger("click");
+    }
+}
+apz.appdtl.DocumentDetails.nextScreen = function() {
+    if ($("#appdtl__DocumentDetails__el_txt_7").hasClass("active")) {
+        $("#appdtl__DocumentDetails__el_txt_8").trigger("click");
+    } else {
+    
+        apz.startLoader();
+        apz.appdtl.DocumentDetails.saveApplicationDetails();
+        apz.appdtl.AppLauncher.sCache.screen = "product";
+        var params = {};
+        params.appId = "appdtl";
+        params.scr = "ProductLauncher";
+        params.div = "appdtl__AppLauncher__screenLauncher";
+        params.userObj = {
+            "refNo": apz.appdtl.DocumentDetails.refNo,
+            "subproduct": apz.appdtl.AppLauncher.sCache.subproduct,
+            "product": apz.appdtl.AppLauncher.sCache.product,
+            "appId": apz.appdtl.AppLauncher.sCache.appId,
+            "screen": "product"
+        };
+        apz.launchSubScreen(params);
+        //apz.appdtl.DocumentDetails.launchScreen(scr);
+    }
+}
+apz.appdtl.DocumentDetails.preScreen = function() {
+    apz.appdtl.DocumentDetails.saveApplicationDetails();
+    debugger;
+    var scr = "IdentityDetail";
+    apz.appdtl.DocumentDetails.launchScreen(scr);
+}
+apz.appdtl.DocumentDetails.launchScreen = function(scr) {
+    debugger;
+    apz.appdtl.DocumentDetails.saveApplicationDetails();
+    var lParams = {
+        "appId": "appdtl",
+        "scr": scr,
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.appdtl.DocumentDetails.refNo,
+            "div": "appdtl__AppLauncher__screenLauncher"
+        }
+    };
+    apz.launchSubScreen(lParams);
+}
+//remove the file upload status
+apz.appdtl.DocumentDetails.fnRemoveImageStatus = function(element, documentsArray, documentType) {
+    var rowNo = $(element).attr("rowno");
+    apz.data.scrdata.appdtl__DocumentsTypes_Res[documentsArray].splice(rowNo, 1);
+    apz.data.loadData("DocumentsTypes", "appdtl");
+    if (apz.data.scrdata.appdtl__DocumentsTypes_Res[documentsArray].length === 0) {
+        $("#appdtl__DocumentDetails__" + documentType + "_lst").addClass("sno")
+    }
+}
+//get address type of document upload
+apz.appdtl.DocumentDetails.fnSelectDocType = function(element) {
+    apz.appdtl.DocumentDetails.DocType = apz.getElmValue("appdtl__DocumentDetails__DocumentDetail__i__tbDbmiCustomerDocuments__docType");
+    apz.setElmValue("appdtl__DocumentDetails__el_rdo_1", apz.appdtl.DocumentDetails.DocType);
+}
+apz.appdtl.DocumentDetails.fnShowDocumentContainer = function(showId, hideId, preActiveId, element) {
+    $(element).addClass("active");
+    $("#appdtl__DocumentDetails__" + showId).removeClass("sno");
+    $("#appdtl__DocumentDetails__" + hideId).addClass("sno");
+    $("#appdtl__DocumentDetails__" + preActiveId).removeClass("active");
+}
+apz.appdtl.DocumentDetails.fnGetDocumentName = function(element, docDivId, documentsArray) {
+    debugger;
+    var documentName = $(element).val();
+    var rowNo = $(element).attr("rowno");
+    $("#appdtl__" + docDivId + "_" + rowNo).removeClass("sno");
+    apz.setElmValue("appdtl__" + docDivId + "_" + rowNo, documentName)
+    $(element).parent().addClass("sno");
+    apz.data.scrdata.appdtl__DocumentsTypes_Res[documentsArray][rowNo].docName = documentName;
+}
+apz.appdtl.DocumentDetails.fnDocumentFiledEnterEvenet = function(e, element) {
+    if (e.keyCode == 13) {
+        $(element).trigger('blur');
+    }
+}
+apz.appdtl.DocumentDetails.fnShowDocumentField = function(element, showId) {
+    $(element).addClass("sno");
+    var rowNo = $(element).attr("rowno");
+    $("#appdtl__DocumentDetails__" + showId + "_" + rowNo).parent().removeClass("sno");
+}
+apz.appdtl.DocumentDetails.fnShowBotttomFileUpload = function() {
+    $("#appdtl__DocumentDetails__bottom_fileUpload").removeClass("sno")
+}
+apz.appdtl.DocumentDetails.fnCloseBottomUpload = function() {
+    $("#appdtl__DocumentDetails__bottom_fileUpload").addClass("sno")
+}
+apz.appdtl.DocumentDetails.fnSetDocType = function(element) {
+    var id = $(element).attr("id");
+    apz.appdtl.DocumentDetails.DocType = apz.getElmValue(id)
+}

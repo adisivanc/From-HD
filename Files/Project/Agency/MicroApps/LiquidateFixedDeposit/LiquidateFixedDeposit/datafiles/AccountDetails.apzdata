@@ -1,0 +1,48 @@
+{
+    "liqdfd__AccountDetails_Res": {
+        "fixedDeposit": {
+            "txnRefNo": "123",
+            "status": true,
+            "respCd": "",
+            "extMsg": "",
+            "intMsgCd": "",
+            "depositDtls": [
+                {
+                    "accountNo": "001234545545",
+                    "branchName": "Koramangala, Bengaluru",
+                    "interestType": "Compounded Interest",
+                    "bookDate": "05/10/2018",
+                    "tenor": "1 Year",
+                    "interestRate": "5.00%",
+                    "maturityType": "RenewPrinciple",
+                    "creditAccountNo": "001234545545",
+                    "maturityAmount": "15000",
+                    "maturityDate": "15/10/2021",
+                    "seniorCitizen": "No",
+                    "attachNominee": "No",
+                    "natureOfDeposit": "Reinvestment of Interest",
+                    "accountCreationDate": "2018-03-13",
+                    "depositAmount": "10000",
+                    "preclosure": "0"
+                },
+                {
+                    "accountNo": "001234590880",
+                    "branchName": "Koramangala, Bengaluru",
+                    "interestType": "Compounded Interest",
+                    "bookDate": "05/10/2018",
+                    "tenor": "1 Year",
+                    "interestRate": "6.00%",
+                    "maturityType": "RenewPrincipleInt",
+                    "creditAccountNo": "001234590880",
+                    "maturityAmount": "10000",
+                    "maturityDate": "15/10/2021",
+                    "seniorCitizen": "No",
+                    "attachNominee": "No",
+                    "natureOfDeposit": "Reinvestment of Interest",
+                    "accountCreationDate": "2018-03-13",
+                    "depositAmount": "20000"
+                }
+            ]
+        }
+    }
+}

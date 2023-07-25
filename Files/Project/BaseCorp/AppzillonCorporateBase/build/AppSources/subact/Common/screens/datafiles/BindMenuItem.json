@@ -1,0 +1,104 @@
+{
+    "subact__BindMenuItem_Res": {
+        "ListItem": [
+            {
+                "screenDesc": "Accounts",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "External Accounts",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Term Deposits",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Remote Check Deposit",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Corporate Cards",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Liquidity Management",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Loans",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Credit Line",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Forex Buy/Sell",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Letter of Credits",
+                "Status":"InActive"
+            }, {
+                "screenDesc": "Bill of collections",
+                "Status":"InActive"
+            }, {
+                "screenDesc": "Guarantees",
+                "Status":"InActive"
+            }, {
+                "screenDesc": "Payments and Transfers",
+                "Status":"InActive"
+            }, {
+                "screenDesc": "Bill Payments",
+                "Status":"InActive"
+            }, {
+                "screenDesc": "ACH Payments",
+                "Status":"InActive"
+            }, {
+                "screenDesc": "Multiple Transfers",
+                "Status":"InActive"
+            }, {
+                "screenDesc": "Standing Instruction",
+                "Status":"InActive"
+            }, {
+                "screenDesc": "Sweep Transfer",
+                "Status":"InActive"
+            }, {
+                "screenDesc": "Direct Debit Mandates",
+                "Status":"InActive"
+            }, {
+                "screenDesc": "Cheque Status Enquiry",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Cheque book request",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Multiple Positive Pay",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Positive pay",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Stop Pay",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Demand Draft",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Statement Change request",
+                "Status":"InActive"
+            },
+            {
+                "screenDesc": "Request for printed statements",
+                "Status":"InActive"
+            }
+        ]
+    }
+}

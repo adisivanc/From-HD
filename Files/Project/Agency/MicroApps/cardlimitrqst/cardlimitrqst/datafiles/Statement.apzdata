@@ -1,0 +1,216 @@
+{
+    "budget__StatementBudget_Res": {
+        "Statement": [{
+            "date": "18/06/2020",
+            "desc": "LuLu International Shopping Mall Ft2200001",
+            "amount": 12000,
+            "budgetfor": "Home"
+        }, {
+            "date": "19/06/2020",
+            "desc": "DLF Mall of India u8888R1",
+            "amount": 20000,
+            "budgetfor": "Home"
+        }, {
+            "date": "20/06/2020",
+            "desc": "Phoenix Marketcity FT444113T",
+            "amount": 6000,
+            "budgetfor": "Home"
+        }, {
+            "date": "21/06/2020",
+            "desc": "Orion Mall SF777Red1",
+            "amount": 12000,
+            "budgetfor": "Home"
+        }, {
+            "date": "22/06/2020",
+            "desc": "Mantri Square GT55423R",
+            "amount": 20000,
+            "budgetfor": "Home"
+        }, {
+            "date": "24/06/2020",
+            "desc": "The Peshwa Pavilion CF7564t",
+            "amount": 1000,
+            "budgetfor": "Home"
+        }, {
+            "date": "26/06/2020",
+            "desc": "Coffee Day Gt9806654",
+            "amount": 8000,
+            "budgetfor": "Home"
+        },{
+            "date": "18/06/2020",
+            "desc": "Deposit 0000111223n",
+            "amount": 12000,
+            "budgetfor": "Investments"
+        }, {
+            "date": "21/06/2020",
+            "desc": "Derivatives sell 777yrtf",
+            "amount": 12000,
+            "budgetfor": "Investments"
+        }, {
+            "date": "22/06/2020",
+            "desc": "Derivatives buy 777yrtf",
+            "amount": 12000,
+            "budgetfor": "Investments"
+        }, {
+            "date": "24/06/2020",
+            "desc": "Dividends & Cap Gains",
+            "amount": 12000,
+            "budgetfor": "Investments"
+        }, {
+            "date": "18/06/2020",
+            "desc": "IndiGo Id 32o9",
+            "amount": 4000,
+            "budgetfor": "Auto and Transport"
+        }, {
+            "date": "20/06/2020",
+            "desc": "AirAsia ID R87TTu",
+            "amount": 6000,
+            "budgetfor": "Auto and Transport"
+        }, {
+            "date": "22/06/2020",
+            "desc": "MakeMyTrip ID 00988",
+            "amount": 8000,
+            "budgetfor": "Auto and Transport"
+        }, {
+            "date": "23/06/2020",
+            "desc": "ClearTrip TN21m",
+            "amount": 6000,
+            "budgetfor": "Auto and Transport"
+        },  {
+            "date": "24/06/2020",
+            "desc": "Expedia Mn321q",
+            "amount": 3000,
+            "budgetfor": "Auto and Transport"
+        },
+         {
+            "date": "20/06/2020",
+            "desc": "Cult.fit DC0006667",
+            "amount": 4000,
+            "budgetfor": "HealthCare"
+        }, {
+            "date": "22/06/2020",
+            "desc": "Fitness First Tf5554111",
+            "amount": 2000,
+            "budgetfor": "HealthCare"
+        }, {
+            "date": "24/06/2020",
+            "desc": "Anytime Fitness Ey766543",
+            "amount": 10000,
+            "budgetfor": "HealthCare"
+        }, {
+            "date": "26/06/2020",
+            "desc": "Gold’s Gym Phb66543",
+            "amount": 200,
+            "budgetfor": "HealthCare"
+        }, {
+            "date": "27/06/2020",
+            "desc": "Fortis Healthcare Pl324NH",
+            "amount": 5000,
+            "budgetfor": "HealthCare"
+        }, {
+            "date": "28/06/2020",
+            "desc": "Apollo Hospital PL000111H",
+            "amount": 4000,
+            "budgetfor": "HealthCare"
+        }, {
+            "date": "18/06/2020",
+            "desc": "Tata Sky Recharge ID 76y554",
+            "amount": 5000,
+            "budgetfor": "Bills and Utilities"
+        }, {
+            "date": "19/06/2020",
+            "desc": "BSNL broadband bill pay ID AR53427y",
+            "amount": 4000,
+            "budgetfor": "Bills and Utilities"
+        }, {
+            "date": "21/06/2020",
+            "desc": "Airtel Postpaid bill 998XXXX213 txn C09867T",
+            "amount": 2000,
+            "budgetfor": "Bills and Utilities"
+        }, {
+            "date": "22/06/2020",
+            "desc": "Recharge on Jio number 89786XXX43 Txn E32Yt1",
+            "amount": 1000,
+            "budgetfor": "Bills and Utilities"
+        }, {
+            "date": "19/06/2020",
+            "desc": "The Table G387643e",
+            "amount": 6000,
+            "budgetfor": "Food and Dining"
+        }, {
+            "date": "20/06/2020",
+            "desc": "JW Marriott N234876q",
+            "amount": 1000,
+            "budgetfor": "Food and Dining"
+        }, {
+            "date": "22/06/2020",
+            "desc": "The Peshwa Pavilion CF7564t",
+            "amount": 8000,
+            "budgetfor": "Food and Dining"
+        }, {
+            "date": "23/06/2020",
+            "desc": "Hard Rock Cafe MN8676743z",
+            "amount": 6000,
+            "budgetfor": "Food and Dining"
+        }, {
+            "date": "25/06/2020",
+            "desc": "Starbucks Pm009",
+            "amount": 2000,
+            "budgetfor": "Food and Dining"
+        }, {
+            "date": "26/06/2020",
+            "desc": "Coffee Day Gt9806654",
+            "amount": 3000,
+            "budgetfor": "Food and Dining"
+        },{
+            "date": "24/06/2020",
+            "desc": "Sunburn  Oi00011T",
+            "amount": 5000,
+            "budgetfor": "Entertainment"
+        }, {
+            "date": "26/06/2020",
+            "desc": "Wonderla RE2134T",
+            "amount": 2000,
+            "budgetfor": "Entertainment"
+        }, {
+            "date": "27/06/2020",
+            "desc": "PVR Cinemas Yg111Tg",
+            "amount": 20000,
+            "budgetfor": "Entertainment"
+        }, {
+            "date": "28/06/2020",
+            "desc": "INOX Leisure Ni11002",
+            "amount": 2000,
+            "budgetfor": "Entertainment"
+        }, {
+            "date": "29/06/2020",
+            "desc": "EsselWorld Com001V",
+            "amount": 3000,
+            "budgetfor": "Entertainment"
+        }, {
+            "date": "20/06/2020",
+            "desc": "Study Loan Emi0001T",
+            "amount": 3000,
+            "budgetfor": "Others"
+        }, {
+            "date": "25/06/2020",
+            "desc": "DLF Mall of India u8888R1",
+            "amount": 4000,
+            "budgetfor": "Others"
+        }, {
+            "date": "26/06/2020",
+            "desc": "Tuition fee TT1132T",
+            "amount": 30000,
+            "budgetfor": "Others"
+        }, {
+            "date": "25/06/2020",
+            "desc": "Cheque Deposit new112",
+            "amount": 3000,
+            "budgetfor": "Others"
+        }, {
+            "date": "29/06/2020",
+            "desc": "ATM Withdrawal TRx52rrd",
+            "amount": 3000,
+            "budgetfor": "Others"
+        }]
+    }
+}

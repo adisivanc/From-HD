@@ -1,0 +1,19 @@
+{
+    "tbDbmiCorpBillCollection": [{
+        "draweeName": "Eric Derzie & Assoc",
+        "billAmount": 108049.7,
+        "contractStatus": "Active",
+        "referenceNumber": "1519885785047",
+        "drawerName": "Oxy Trading Inc",
+        "currency": "USD",
+        "corporateId": "000FTAC4321"
+    }, {
+        "draweeName": "Eric Derzie & Assoc",
+        "billAmount": 258023.7,
+        "contractStatus": "Active",
+        "referenceNumber": "1519885785937",
+        "drawerName": "Oxy Trading Inc",
+        "currency": "USD",
+        "corporateId": "000FTAC4321"
+    }]
+}

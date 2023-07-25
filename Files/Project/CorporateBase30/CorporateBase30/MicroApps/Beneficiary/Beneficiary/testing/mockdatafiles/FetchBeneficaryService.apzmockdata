@@ -1,0 +1,14 @@
+{
+    "Status": true,
+    "beneficiaryDetails": {
+        "nickName": "hari",
+        "beneficaryName": "Hari Prasad",
+        "branchName": "Madiwala",
+        "bankName": "HDFC",
+        "beneficaryType": "other",
+        "accountNumber": "2938752937983",
+        "ifscCode": "93487530923",
+        "corporateId": "000FTAC4321",
+        "swiftCode": "092350233"
+    }
+}

@@ -1,0 +1,124 @@
+apz.ddinst.ecssummary = {};
+apz.ddinst.ecssummary.sParams = {};
+apz.app.onLoad_EcsSummary = function(params) {
+    debugger;
+    apz.ddinst.ecssummary.sParams = params;
+    if (params.Navigation) {
+        apz.ddinst.ecssummary.fnSetNavigation(params);
+    }
+    apz.ddinst.ecssummary.fnInitialise(params);
+}
+apz.ddinst.ecssummary.fnSetNavigation = function(params) {
+    debugger;
+    apz.ddinst.ecssummary.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "DIRECT DEBIT SUMMARY";
+    }
+    lParams.backPressed = apz.ddinst.ecssummary.fnBack;
+    apz.ddinst.ecssummary.Navigation(lParams);
+};
+apz.ddinst.ecssummary.fnInitialise = function(params) {
+    var lReq = {};
+    lReq.EcsMandateReq = {};
+    lReq.EcsMandateReq.customerId = apz.ddinst.ecssummary.sParams.data.customerID;
+    lReq.EcsMandateReq.ACTION = "V";
+    lReq.ACTION = "V";
+    var lServerParams = {
+        "ifaceName": "ecsMandate",
+        "buildReq": "N",
+        "appId": "ddinst",
+        "req": lReq,
+        "paintResp": "Y",
+        "async": "true",
+        "callBack": apz.ddinst.ecssummary.fetchEcsListCB,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.ddinst.ecssummary.fetchEcsListCB = function(params) {
+    debugger;
+}
+apz.ddinst.ecssummary.fnClickView = function(pthis) {
+    debugger;
+    var lrow = parseInt($(pthis).attr("rowno"));
+    apz.hide("ddinst__EcsSummary__summ1");
+    apz.hide("ddinst__EcsSummary__summ2");
+    apz.show("ddinst__EcsSummary__summ3");
+    var lLaunchParams = {
+        "appId": "ddinst",
+        "scr": "EcsMandateDetails",
+        "div": "ddinst__EcsLauncher__row1",
+        "userObj": {
+            "action": "view",
+            "data": apz.data.scrdata.ddinst__ecsMandate_Res.EcsMandateRes.data[lrow],
+        }
+    }
+    if (apz.ddinst.ecssummary.sParams.Navigation) {
+        lLaunchParams.userObj.Navigation = apz.ddinst.ecssummary.sParams.Navigation
+    }
+    apz.launchSubScreen(lLaunchParams);
+}
+apz.ddinst.ecssummary.fnClickEdit = function(pthis) {
+    debugger;
+    var lrow = parseInt($(pthis).attr("rowno"));
+    apz.hide("ddinst__EcsSummary__summ1");
+    apz.hide("ddinst__EcsSummary__summ2");
+    apz.show("ddinst__EcsSummary__summ3");
+    var lLaunchParams = {
+        "appId": "ddinst",
+        "scr": "EcsMandateDetails",
+        "div": "ddinst__EcsLauncher__row1",
+        "userObj": {
+            "action": "edit",
+            "data": apz.data.scrdata.ddinst__ecsMandate_Res.EcsMandateRes.data[lrow],
+             
+        }
+        }
+         lLaunchParams.userObj.data.customerID ="00001" 
+    
+    if (apz.ddinst.ecssummary.sParams.Navigation) {
+        lLaunchParams.userObj.Navigation = apz.ddinst.ecssummary.sParams.Navigation
+    }
+    apz.launchSubScreen(lLaunchParams);
+}
+apz.ddinst.ecssummary.fnAdd = function() {
+    debugger;
+    var Params = {
+        "appId": "ddinst",
+        "scr": "EcsMandateDetails",
+        "div": "ddinst__EcsLauncher__row1",
+        "userObj": {
+             "data": {
+                "customerID": "00001",
+            }
+        
+        }
+    }
+    if (apz.ddinst.ecssummary.sParams.Navigation) {
+        Params.userObj.Navigation = apz.ddinst.ecssummary.sParams.Navigation
+    }
+    apz.launchSubScreen(Params);
+}
+apz.ddinst.ecssummary.fnClickDelete = function(pthis) {
+    debugger;
+    var lrow = parseInt($(pthis).attr("rowno"));
+    apz.hide("ddinst__EcsSummary__summ1");
+    apz.hide("ddinst__EcsSummary__summ2");
+    apz.show("ddinst__EcsSummary__summ3");
+    var lLaunchParams = {
+        "appId": "ddinst",
+        "scr": "EcsMandateDetails",
+        "div": "ddinst__EcsLauncher__row1",
+        "userObj": {
+            "action": "delete",
+            "data": apz.data.scrdata.ddinst__ecsMandate_Res.EcsMandateRes.data[lrow]
+        }
+    }
+    if (apz.ddinst.ecssummary.sParams.Navigation) {
+        lLaunchParams.userObj.Navigation = apz.ddinst.ecssummary.sParams.Navigation
+    }
+    apz.launchSubScreen(lLaunchParams);
+}

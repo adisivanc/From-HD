@@ -1,0 +1,324 @@
+apz.mytask.MyTasks = {};
+apz.mytask.MyTasks.sparams = {}
+apz.app.onLoad_MyTasks = function(params) {
+    apz.mytask.MyTasks.sparams = params;
+    $("#mytask__MyTasks__myTasksTableul_ttl").addClass("sno");
+    $("#mytask__MyTasks__myTasksTable_tbody>tr").click(function(arg1) {
+        apz.mytask.MyTasks.fnLaunchAppDetails(arg1);
+    })
+};
+apz.app.onShown_MyTasks = function(params) {
+    if (apz.menuap.Menu.userRole == "SRM" || apz.menuap.Menu.userRole == "SCR" || apz.menuap.Menu.userRole == "SLA") {
+        // apz.mytask.MyTasks.fngetSMEApplicationHistory();
+        $("#mytask__MyTasks__myTasksTable_col_1_th")[0].innerText = "Company Name";
+        $("#mytask__MyTasks__myTasksTable_col_2_th")[0].innerText = "Trade License No";
+    }
+    apz.mytask.MyTasks.fngetApplicationHistory();
+}
+apz.mytask.MyTasks.fngetApplicationCount = function() {
+    debugger;
+    apz.startLoader();
+    var lStageId = "RMAPPROVE";
+    var lPrevStageId = "";
+    var userRole = apz.menuap.Menu.userRole;
+    if (userRole == "FLD") {
+        lStageId = "FIELDAGENTAPPROVE";
+    } else if (userRole == "CR" || userRole == "SCR") {
+        lStageId = "CREDITCHECK";
+    } else if (userRole == "LA" || userRole == "SLA") {
+        lStageId = "MANAGERAPPROVE";
+    } else if (userRole == "RM") {
+        lPrevStageId = "INPUT";
+    }
+    var lReq = {
+        stageId: lStageId,
+        prevStageId: lPrevStageId
+    };
+    var lServerParams = {
+        "ifaceName": "ApplicationHistoryCount",
+        "buildReq": "N",
+        "req": lReq,
+        "appId": "mytask",
+        "paintResp": "N",
+        "callBack": apz.mytask.MyTasks.fngetApplicationCountCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.mytask.MyTasks.fngetApplicationCountCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    if (pResp.status) {
+        if (!pResp.errors) {
+            var records = pResp.res.mytask__ApplicationHistoryCount_Res;
+            apz.mytask.MyTasks.fnPopulateChart(records);
+        }
+    }
+}
+apz.mytask.MyTasks.fngetApplicationHistory = function() {
+    debugger;
+    apz.startLoader();
+    var lStageId = "RMAPPROVE";
+    var userRole = apz.menuap.Menu.userRole;
+    if (userRole == "FLD") {
+        lStageId = "FIELDAGENTAPPROVE";
+    } else if (userRole == "CR" || userRole == "SCR") {
+        lStageId = "CREDITCHECK";
+    } else if (userRole == "LA" || userRole == "SLA") {
+        lStageId = "MANAGERAPPROVE";
+    }
+    var interfaceName = "AgencyHistorySQL"
+    var lReq = {
+        stageId: lStageId
+    };
+    if (apz.menuap.Menu.userRole == "SRM" || apz.menuap.Menu.userRole == "SCR" || apz.menuap.Menu.userRole == "SLA") {
+        interfaceName = "ApplicationHistorySQL";
+        if (apz.menuap.Menu.userId == "MRM001" || apz.menuap.Menu.userId == "MCR003" || apz.menuap.Menu.userId == "MLA004") {
+            lReq.applicationType = "Merchant";
+        } else if (apz.menuap.Menu.userId == "SRM001" || apz.menuap.Menu.userId == "SCR003" || apz.menuap.Menu.userId == "SLA004") {
+            lReq.applicationType = "Corporate";
+        }
+    }
+    var lServerParams = {
+        "ifaceName": interfaceName,
+        "buildReq": "N",
+        "req": lReq,
+        "appId": "mytask",
+        "paintResp": "N",
+        "callBack": apz.mytask.MyTasks.fngetApplicationHistoryAgencyCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.mytask.MyTasks.fngetApplicationHistoryAgencyCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    if (pResp.status) {
+        if (!pResp.errors) {
+            var records = [];
+            apz.data.scrdata.mytask__AgencyHistorySQL_Res = {};
+            apz.data.scrdata.mytask__AgencyHistorySQL_Res.Records = [];
+            if (apz.menuap.Menu.userRole == "SRM" || apz.menuap.Menu.userRole == "SCR" || apz.menuap.Menu.userRole == "SLA") {
+                //records = pResp.res.mytask__ApplicationHistorySQL_Res;
+                // Added by Chaitra
+                records = apz.mytask.MyTasks.fnRemoveDuplicateRecords(pResp.res.mytask__ApplicationHistorySQL_Res, 'workflow_ref_no');
+                //
+                var recordArray = []
+                records.forEach(function(item, index) {
+                    var recordObject = {}
+                    recordObject.START_TS = item.START_TS
+                    recordObject.STATUS = item.STATUS
+                    recordObject.product = item.COMPANY_NAME
+                    recordObject.srcdata = ""
+                    recordObject.STAGE_ID = item.stage_id
+                    recordObject.subproduct = item.TRADE_LICENSE_NO
+                    recordObject.workflow_ref_no = item.workflow_ref_no
+                    recordObject.source = "sme"
+                    recordObject.COUNTRY_NAME = item.COUNTRY_NAME
+                    apz.data.scrdata.mytask__AgencyHistorySQL_Res.Records.push(recordObject)
+                });
+                apz.data.loadData("AgencyHistorySQL", "mytask")
+                apz.mytask.MyTasks.fnPopulateChart(records);
+            } else {
+                var userRole = apz.menuap.Menu.userRole;
+                var totalRecords = pResp.res.mytask__AgencyHistorySQL_Res;
+                var refinedRecords = [];
+                if (userRole != "RM") {
+                    for (var i = 0; i < totalRecords.length; i++) {
+                        if (totalRecords[i].STATUS != "INITIATED") {
+                            refinedRecords.push(totalRecords[i]);
+                        }
+                    }
+                    apz.data.scrdata.mytask__AgencyHistorySQL_Res.Records = refinedRecords;
+                } else {
+                    apz.data.scrdata.mytask__AgencyHistorySQL_Res.Records = totalRecords;
+                }
+                apz.data.loadData("AgencyHistorySQL", "mytask")
+                apz.mytask.MyTasks.fngetApplicationCount();
+            }
+        }
+    }
+}
+apz.mytask.MyTasks.fnPopulateChart = function(recsArray) {
+    debugger;
+    var totalRecs = recsArray.length;
+    var approvedRecs = 0;
+    var rejectedRecs = 0;
+    var pendingRecs = 0;
+    var savedRecs = 0;
+    for (var i = 0; i < totalRecs; i++) {
+        if (recsArray[i].STATUS == "APPROVED") {
+            recsArray[i].status_img = "icon-approved-alt";
+            approvedRecs++;
+        } else if (recsArray[i].STATUS == "REJECTED") {
+            recsArray[i].status_img = "icon-rejected-alt";
+            rejectedRecs++;
+        } else if (recsArray[i].STATUS == "PENDING APPROVAL" || recsArray[i].STATUS == "IN-PROGRESS") {
+            recsArray[i].status_img = "icon-pending-alt";
+            pendingRecs++;
+        } else if (recsArray[i].STATUS == "INITIATED") {
+            recsArray[i].status_img = "icon-approved-alt";
+            savedRecs++;
+        } else {
+            debugger;
+        }
+    }
+    debugger;
+    apz.landpg.landingpage.approvedRecs = approvedRecs;
+    apz.landpg.landingpage.rejectedRecs = rejectedRecs;
+    apz.landpg.landingpage.pendingRecs = pendingRecs;
+    apz.landpg.landingpage.savedRecs = savedRecs;
+    apz.landpg.landingpage.allCount = approvedRecs + rejectedRecs + pendingRecs + savedRecs;
+    apz.setElmValue("landpg__LandingPage__pending", pendingRecs)
+    apz.setElmValue("landpg__LandingPage__rejected", rejectedRecs)
+    apz.setElmValue("landpg__LandingPage__approved", approvedRecs)
+    apz.setElmValue("landpg__LandingPage__saved", savedRecs)
+    // apz.landpg.landingpage.getApplicationChart(approvedRecs, rejectedRecs, pendingRecs, savedRecs);
+}
+apz.mytask.MyTasks.fnLaunchAppDetails = function(arg1) {
+    var refNo = apz.getElmValue("mytask__AgencyHistorySQL__o__Records__workflow_ref_no_" + (arg1.currentTarget.rowIndex - 1) + "_txtcnt");
+    var records = apz.data.scrdata.mytask__AgencyHistorySQL_Res.Records;
+    var selectedRow = [];
+    for (var i = 0; i < records.length; i++) {
+        var record = records[i];
+        if (refNo == record.workflow_ref_no) {
+            selectedRow = record;
+            if (record.source) {
+                apz.menuap.Menu.sCache.source = "sme";
+            } else {
+                apz.menuap.Menu.sCache.source = "retail";
+            }
+            break;
+        }
+    }
+    // var rowno = apz.scrMetaData.containersMap["mytask__MyTasks__myTasksTable"].currRec;
+    // let selectedRow = apz.data.scrdata.mytask__AgencyHistorySQL_Res[rowno];
+    var userRole = apz.menuap.Menu.userRole;
+    // apz.country = selectedRow.COUNTRY_NAME;
+    if (selectedRow.subproduct == "Update Contact" || selectedRow.subproduct == "Update Address") {
+        if (userRole != 'FLD') {
+            apz.dispMsg({
+                "message": "This request is pending to be approved by Field Agent!",
+                "type": "A"
+            });
+        } else {
+            var lParams = {
+                "appId": "update",
+                "scr": "UpdateContact",
+                "div": "menuap__Menu__MainLaunchArea",
+                "type": "CF",
+                "userObj": {
+                    "action": "fromLanding",
+                    "data": selectedRow, //{refNo:selectedRow.refno,scrdata:selectedRow.srcdata},
+                    "destroyDiv": "menuap__Menu__MainLaunchArea",
+                    "parentAppId": "menuap",
+                    "custImg": "menuap__Menu__custImg",
+                    "custId": "menuap__Menu__custId_txtcnt",
+                    "callBack": apz.mytask.MyTasks.fnBack
+                }
+            };
+            apz.launchApp(lParams);
+        }
+    } else if (selectedRow.subproduct == "Debit Card Request") {
+        if (userRole != "RM") {
+            apz.dispMsg({
+                "message": "This request could be approved only by the Regional Manager!",
+                "type": "A"
+            });
+        } else {
+            var lParams = {
+                "appId": "issdeb",
+                "scr": "ApproveDebit",
+                "div": "menuap__Menu__MainLaunchArea",
+                "type": "CF",
+                "userObj": {
+                    "action": "fromLanding",
+                    "data": selectedRow,
+                    "destroyDiv": "menuap__Menu__MainLaunchArea",
+                    "parentAppId": "menuap",
+                    "custImg": "menuap__Menu__custImg",
+                    "custId": "menuap__Menu__custId_txtcnt",
+                    "callBack": apz.mytask.MyTasks.fnBack
+                }
+            };
+            apz.launchApp(lParams);
+        }
+    } else if (selectedRow.subproduct == "Cheque Book Request") {
+        if (userRole != "RM") {
+            apz.dispMsg({
+                "message": "This request could be approved only by the Regional Manager!",
+                "type": "A"
+            });
+        } else {
+            var lParams = {
+                "appId": "nchqbk",
+                "scr": "ApproveCheckBook",
+                "div": "menuap__Menu__MainLaunchArea",
+                "type": "CF",
+                "userObj": {
+                    "action": "fromLanding",
+                    "data": selectedRow,
+                    "destroyDiv": "menuap__Menu__MainLaunchArea",
+                    "parentAppId": "menuap",
+                    "custImg": "menuap__Menu__custImg",
+                    "custId": "menuap__Menu__custId_txtcnt",
+                    "callBack": apz.mytask.MyTasks.fnBack
+                }
+            };
+            apz.launchApp(lParams);
+        }
+    } else {
+        apz.appNo = refNo;
+        if (userRole == "SRM") {
+            console.log("SRM into Application summary")
+            var params = {};
+            params.appId = "corsum";
+            params.scr = "Launcher";
+            params.div = "menuap__Menu__MainLaunchArea";
+            params.userObj = {
+                "refNo": refNo
+            };
+            apz.launchApp(params);
+        } else {
+            var appId = "Agency"
+            if (selectedRow.STATUS == "REJECTED") {
+                apz.dispMsg({
+                    "message": "The application has been rejected already and you can not edit it!"
+                });
+            } else if (selectedRow.STATUS == "APPROVED") {
+                apz.dispMsg({
+                    "message": "The application has been approved already and you can not edit it!"
+                });
+            } else {
+                if (selectedRow.STATUS == "INITIATED") {
+                    appId = "ONB";
+                    apz.saved = true;
+                }
+                var params = {};
+                params.appId = "appdtl";
+                params.scr = "AppLauncher";
+                params.div = "menuap__Menu__MainLaunchArea";
+                params.userObj = {
+                    "refNo": refNo,
+                    "appId": appId,
+                    "product": selectedRow.product,
+                    "subproduct": selectedRow.subproduct
+                };
+                apz.launchApp(params);
+            }
+        }
+    }
+};
+apz.mytask.MyTasks.fnBack = function() {
+    apz.menuap.Menu.fnMenuClick({
+        "textContent": "Service Request"
+    });
+}
+apz.mytask.MyTasks.fnRemoveDuplicateRecords = function(arr, comp) {
+    debugger;
+    // store the comparison  values in array
+    const unique = arr.map(e => e[comp])
+    // store the indexes of the unique objects
+    .map((e, i, final) => final.indexOf(e) === i && i)
+    // eliminate the false indexes & return unique objects
+    .filter((e) => arr[e]).map(e => arr[e]);
+    return unique;
+}

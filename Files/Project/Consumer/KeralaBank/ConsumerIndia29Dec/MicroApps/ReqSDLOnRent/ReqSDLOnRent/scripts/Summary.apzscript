@@ -1,0 +1,71 @@
+apz.reqsdl.summary = {};
+apz.app.onLoad_Summary = function(params) {
+    debugger;
+    apz.reqsdl.summary.fnInitialise(params);
+};
+apz.reqsdl.summary.fnInitialise = function(params) {
+    debugger;
+    apz.reqsdl.summary.sParams = params;
+    if (params.Navigation) {
+        apz.reqsdl.summary.fnSetNavigation(params);
+    }
+    apz.reqsdl.summary.fnGoToStage1();
+};
+apz.reqsdl.summary.fnSetNavigation = function(params) {
+    apz.reqsdl.summary.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "LOCKER SUMMARY";
+    }
+    apz.reqsdl.summary.Navigation(lParams);
+};
+apz.reqsdl.summary.fnGoToStage1 = function() {
+    apz.reqsdl.summary.fnGetLockerSummary();
+};
+apz.reqsdl.summary.fnGetLockerSummary = function() {
+    var lServerParams = {
+        "ifaceName": "LockerSummary_Query",
+        "paintResp": "Y",
+        "req": {},
+        "appId": "reqsdl",
+        "callBack": apz.reqsdl.summary.fnCallServerCallBack
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.reqsdl.summary.fnCallServerCallBack = function(params) {
+    debugger;
+};
+apz.reqsdl.summary.addLocker = function() {
+    debugger;
+    $("#reqsdl__Summary__Stage1").addClass('sno');
+    $("#reqsdl__Summary__Stage2").removeClass('sno');
+    var params = {};
+    params.appId = "reqsdl";
+    params.scr = "LockerForm";
+    params.userObj = {
+        "action": "Add",
+        "navigation": apz.reqsdl.summary.Navigation
+    };
+    params.div = "reqsdl__Summary__Stage2";
+    apz.launchSubScreen(params);
+};
+apz.reqsdl.summary.viewLocker = function(pObj){
+    debugger;
+    $("#reqsdl__Summary__Stage1").addClass('sno');
+    $("#reqsdl__Summary__Stage2").removeClass('sno');
+    var lRow = $(pObj).attr('rowno');
+    var lRecord = apz.data.scrdata.reqsdl__LockerSummary_Req.tbDbtpLockerSummary[lRow];
+    var params = {};
+    params.appId = "reqsdl";
+    params.scr = "LockerForm";
+    params.userObj = {
+        "data":lRecord,
+        "action":"View",
+        "navigation":apz.reqsdl.summary.Navigation
+    }
+    params.div = "reqsdl__Summary__Stage2";
+    apz.launchSubScreen(params);
+    
+};

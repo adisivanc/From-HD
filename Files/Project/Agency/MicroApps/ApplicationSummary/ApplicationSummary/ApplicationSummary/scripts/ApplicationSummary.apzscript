@@ -1,0 +1,508 @@
+apz.appsum.ApplicationSummary = {};
+apz.appsum.ApplicationSummary.sParam = {}
+apz.app.onLoad_ApplicationSummary = function(params) {
+    debugger;
+    apz.appsum.ApplicationSummary.sParam = params;
+    if(apz.appdtl.AppLauncher.sCache.appId !== "ONB"){
+        apz.setElmValue("appsum__ApplicationSummary__el_btn_1","Approve");
+    }
+    else{
+        $("#appsum__ApplicationSummary__el_btn_4").addClass("sno");
+    }
+    apz.setElmValue("appsum__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo", params.refNo);
+    if (params.product == "Accounts") {
+        $(".loans").addClass("sno");
+    } else {
+        $(".accounts").addClass("sno");
+    }
+    if(params.product == "Cards"){
+        $("#appsum__ApplicationSummary__loan_details_li").find("a").html("Card Details");
+        $("#appsum__ProductLoanDetails__i__tbDbmiProductLoan__loantype_lbl").html("Card Type");
+        $("#appsum__ApplicationSummary__sc_col_73,#appsum__ApplicationSummary__sc_col_72,#appsum__ApplicationSummary__sc_col_74").addClass("sno");
+           apz.setElmValue("appsum__ProductLoanDetails__i__tbDbmiProductLoan__loantype",params.subproduct);
+       }
+    apz.appsum.ApplicationSummary.fnFetchDetails();
+    apz.appsum.ApplicationSummary.fnInitialiseObj();
+}
+
+apz.app.onShown_ApplicationSummary = function(params) {
+    apz.appdtl.currenctScreen = "application_summary";
+    $("#appsum__ApplicationSummary__ct_tbl_1_add_btn, #appsum__ApplicationSummary__ct_tbl_1_rem_btn").addClass("sno");
+    // $("#appsum__ApplicationSummary__ct_tbl_1_rem_btn").addClass("sno");
+    debugger;
+    $("#appdtl__AppLauncher__nominee_div, #appdtl__AppLauncher__product_div").removeClass('active');
+    // $("#appdtl__AppLauncher__product_div").removeClass('active');
+    if (apz.appsum.ApplicationSummary.sParam.product == "Accounts") {
+        $("#appsum__ApplicationSummary__account_details_li, #appsum__ApplicationSummary__nominee_details_li").removeClass("sno");
+        // $("#appsum__ApplicationSummary__nominee_details_li").removeClass("sno");
+        
+            $("#appsum__ApplicationSummary__loan_details_li, #appsum__ApplicationSummary__employment_details_li, #appsum__ApplicationSummary__financial_details_li, #appsum__ApplicationSummary__personal_details_li").addClass("sno");
+            // $("#appsum__ApplicationSummary__employment_details_li").addClass("sno");
+            // $("#appsum__ApplicationSummary__financial_details_li").addClass("sno");
+            // $("#appsum__ApplicationSummary__personal_details_li").addClass("sno");
+            
+        } else if (apz.appsum.ApplicationSummary.sParam.product == "Loans"){
+            $("#appsum__ApplicationSummary__account_details_li, #appsum__ApplicationSummary__nominee_details_li").addClass("sno");
+            // $("#appsum__ApplicationSummary__nominee_details_li").addClass("sno");
+            if (apz.appsum.ApplicationSummary.sParam.subproduct == "Home Loan") {
+                
+                $("#appsum__ApplicationSummary__loan_details_li, #appsum__ApplicationSummary__employment_details_li, #appsum__ApplicationSummary__financial_details_li, #appsum__ApplicationSummary__personal_details_li").removeClass("sno");
+                // $("#appsum__ApplicationSummary__employment_details_li").removeClass("sno");
+                // $("#appsum__ApplicationSummary__financial_details_li").removeClass("sno");
+                // $("#appsum__ApplicationSummary__personal_details_li").removeClass("sno");
+            } else if (apz.appsum.ApplicationSummary.sParam.subproduct == "Auto Loan") {
+                
+                $("#appsum__ApplicationSummary__loan_details_li, #appsum__ApplicationSummary__employment_details_li, #appsum__ApplicationSummary__financial_details_li").removeClass("sno");
+                // $("#appsum__ApplicationSummary__employment_details_li").removeClass("sno");
+                // $("#appsum__ApplicationSummary__financial_details_li").removeClass("sno");
+                $("#appsum__ApplicationSummary__personal_details_li").addClass("sno");
+            } else {
+                
+                $("#appsum__ApplicationSummary__loan_details_li, #appsum__ApplicationSummary__employment_details_li, #appsum__ApplicationSummary__financial_details_li").removeClass("sno");
+                // $("#appsum__ApplicationSummary__employment_details_li").removeClass("sno");
+                // $("#appsum__ApplicationSummary__financial_details_li").removeClass("sno");
+                $("#appsum__ApplicationSummary__personal_details_li").addClass("sno");
+            }
+    }else if (apz.appsum.ApplicationSummary.sParam.product == "Deposits"){
+                $("#appsum__ApplicationSummary__personal_details_li").addClass("sno");
+            $("#appsum__ApplicationSummary__account_details_li, #appsum__ApplicationSummary__nominee_details_li").addClass("sno");
+                $("#appsum__ApplicationSummary__loan_details_li, #appsum__ApplicationSummary__employment_details_li, #appsum__ApplicationSummary__financial_details_li").addClass("sno");
+    }else if (apz.appsum.ApplicationSummary.sParam.product == "Cards"){
+            $("#appsum__ApplicationSummary__account_details_li, #appsum__ApplicationSummary__nominee_details_li").addClass("sno");
+                $("#appsum__ApplicationSummary__loan_details_li, #appsum__ApplicationSummary__employment_details_li, #appsum__ApplicationSummary__financial_details_li").removeClass("sno");
+                // $("#appsum__ApplicationSummary__employment_details_li").removeClass("sno");
+                // $("#appsum__ApplicationSummary__financial_details_li").removeClass("sno");
+                $("#appsum__ApplicationSummary__personal_details_li").addClass("sno");
+    }
+    
+    if(apz.country == "IND"){
+    $("#appsum__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo_lbl").removeClass("sno");
+    $("#appsum__ApplicationInfoDB__i__tbDbmiCustomerMaster__pep_lbl").removeClass("sno");
+    }else{
+    $("#appsum__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo_lbl").addClass("sno");
+    $("#appsum__ApplicationInfoDB__i__tbDbmiCustomerMaster__pep_lbl").addClass("sno");
+    }
+}
+ apz.appsum.ApplicationSummary.fnInitialiseObj=function(){
+     debugger;
+     
+     $("#appsum__ApplicationSummary__objectlauncher").append(`<object
+  data=""
+  type="application/pdf"
+  width="100%"
+  height="100%">
+  <p>Your browser does not support PDFs.
+    <a href="https://example.com/test.pdf">Download the PDF</a>.</p>
+</object>`);
+ };
+ apz.appsum.ApplicationSummary.fnViewPdf = function(){
+    debugger;
+    apz.toggleModal({"targetId":"appsum__ApplicationSummary__pdfmodal"});
+    $("object").attr("data","apps/lifein/staticfiles/normal.pdf");
+};
+apz.appsum.ApplicationSummary.fnFetchDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                "refNo": apz.appsum.ApplicationSummary.sParam.refNo
+            }
+        },
+        "appId": "appsum",
+        "paintResp": "Y",
+        "callBack": apz.appsum.ApplicationSummary.fnFetchDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appsum.ApplicationSummary.fnFetchDetailsCB = function(pResp) {
+    debugger;
+    apz.appsum.ApplicationSummary.fnFetchDocumentDetails();
+}
+apz.appsum.ApplicationSummary.fnFetchDocumentDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "DocumentDetail_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": {
+                "refNo": apz.appsum.ApplicationSummary.sParam.refNo
+            }
+        },
+        "appId": "appsum",
+        "paintResp": "Y",
+        "callBack": apz.appsum.ApplicationSummary.fnFetchDocumentDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appsum.ApplicationSummary.fnFetchDocumentDetailsCB = function(pResp) {
+    debugger;
+    apz.appsum.ApplicationSummary.fnFetchAccountDetails();
+};
+apz.appsum.ApplicationSummary.fnFetchAccountDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ProductAccountDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiAccountProduct": {
+                "refno": apz.appsum.ApplicationSummary.sParam.refNo
+            }
+        },
+        "appId": "appsum",
+        "paintResp": "Y",
+        "callBack": apz.appsum.ApplicationSummary.fnFetchAccountDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appsum.ApplicationSummary.fnFetchAccountDetailsCB = function(pResp) {
+    debugger;
+    if(apz.appdtl.AppLauncher.sCache.product == "Loans" || apz.appdtl.AppLauncher.sCache.product == "Cards"){
+    apz.appsum.ApplicationSummary.fnFetchLoanDetials();
+    }
+    
+    if(apz.data.scrdata.appsum__ProductAccountDetails_Req && apz.data.scrdata.appsum__ProductAccountDetails_Req.tbDbmiAccountProduct){
+    var productObj=apz.data.scrdata.appsum__ProductAccountDetails_Req.tbDbmiAccountProduct;
+        for(var i in productObj){
+            if(productObj[i]==="N"){
+                var id = "#appsum__ApplicationSummary__"+i+"_ctrl_grp_div";
+               $("#appsum__ApplicationSummary__"+i+"_ctrl_grp_div").addClass("sno");
+            }
+        }
+        var guardianName=apz.data.scrdata.appsum__ProductAccountDetails_Req.tbDbmiAccountProduct.guardianname;
+        var guardianRelationship=apz.data.scrdata.appsum__ProductAccountDetails_Req.tbDbmiAccountProduct.guardianrelationship;
+        var guardianAddress=apz.data.scrdata.appsum__ProductAccountDetails_Req.tbDbmiAccountProduct.guardianaddress;
+        if(guardianName!==""||guardianRelationship!==""||guardianAddress!==""){
+            $("#appsum__ApplicationSummary__sc_row_36").removeClass("sno");
+        }
+    }
+    
+}
+apz.appsum.ApplicationSummary.fnFetchLoanDetials = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ProductLoanDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiProductLoan": {
+                "refno": apz.appsum.ApplicationSummary.sParam.refNo
+            }
+        },
+        "appId": "appsum",
+        "paintResp": "Y",
+        "callBack": apz.appsum.ApplicationSummary.fnFetchLoanDetialsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.appsum.ApplicationSummary.fnFetchLoanDetialsCB = function(pResp) {
+    debugger;
+        switch(apz.appsum.ApplicationSummary.sParam.product){
+        case "Personal Line of Credit":
+            $("#appsum__ProductLoanDetails__i__tbDbmiProductLoan__rate").val("10.24");
+            
+            break;
+        case "Home Loan":
+              $("#appsum__ProductLoanDetails__i__tbDbmiProductLoan__rate").val("4.125");
+               $('.mortagageLoanRow').removeClass('sno');
+        
+              break;
+        case "Auto Loan":
+              $("#appsum__ProductLoanDetails__i__tbDbmiProductLoan__rate").val("4.74");
+               $("#appsum__ApplicationSummary__rowvehicle").removeClass("sno");
+        $("#appsum__ApplicationSummary__rowmodel").removeClass("sno");
+       // $("#appsum__Applyloan__rowmodelimg").removeClass("sno");
+            break;
+    }
+    if(apz.country==="IND"){
+        $("#appsum__ApplicationSummary__sc_row_45,#appsum__ApplicationSummary__sc_row_48,#appsum__ApplicationSummary__sc_row_52,#appsum__ApplicationSummary__sc_row_50,#appsum__ApplicationSummary__sc_row_49,#appsum__ApplicationSummary__sc_row_53").addClass("sno");
+        $("#appsum__ProductLoanDetails__i__tbDbmiProductLoan__term_lbl").html(apz.lits.agloan[apz.language].LIT_TENOR_YEARS);
+        $("#appsum__ApplicationSummary__sc_row_103").removeClass("sno");
+    }
+    apz.setElmValue("appsum__ProductLoanDetails__i__tbDbmiProductLoan__amount",apz.getElmValue("appsum__ProductLoanDetails__i__tbDbmiProductLoan__amount"));
+    var additionalIncome=apz.data.scrdata.appsum__ProductLoanDetails_Req.tbDbmiProductLoan.additionalincomesource;
+        if(apz.country ==="IND" && additionalIncome==="Yes"){
+            $("#appsum__ApplicationSummary__income_row").removeClass("sno");
+            apz.appsum.ApplicationSummary.fnFetchIncomeDetails();
+        }
+        else{
+            $("#appsum__ApplicationSummary__addtional_income_amount").removeClass("sno");
+        }
+        var coapplicant=apz.data.scrdata.appsum__ProductLoanDetails_Req.tbDbmiProductLoan.havecoapplicant;
+        if(coapplicant==="Yes"){
+            $("#appsum__ApplicationSummary__sc_row_71").removeClass("sno");
+        }
+    var monthlyOblication=apz.data.scrdata.appsum__ProductLoanDetails_Req.tbDbmiProductLoan.monthlydeptobligation;
+    if(apz.country ==="IND" && monthlyOblication==="Yes"){
+        $("#appsum__ApplicationSummary__dbt_row").removeClass("sno");
+        apz.appsum.ApplicationSummary.fnFetchExitCardDetails();
+    }
+    else{
+        $("#appsum__ApplicationSummary__sc_row_104").removeClass("sno");
+    }
+    var loanPupose= apz.data.scrdata.appsum__ProductLoanDetails_Req.tbDbmiProductLoan.loanPurpose;
+    if(apz.country ==="IND" && loanPupose==="Others"){
+        $("#appsum__ApplicationSummary__sc_col_168").removeClass("sno");
+    }
+    apz.appsum.ApplicationSummary.fnFetchCustomerDetials();
+}
+apz.appsum.ApplicationSummary.fnFetchCustomerDetials = function() {
+    var lParams = {
+        "ifaceName": "CustomerDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                "refNo": apz.appsum.ApplicationSummary.sParam.refNo
+            }
+        },
+        "appId": "appsum",
+        "paintResp": "Y",
+        "callBack": apz.appsum.ApplicationSummary.fnFetchCustomerDetialsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appsum.ApplicationSummary.fnFetchCustomerDetialsCB = function(pResp) {
+    debugger;
+}
+apz.appsum.ApplicationSummary.fnRejectApplicationConfirmation = function(){
+    debugger;
+    if(apz.isNull(apz.getElmValue("appsum__ApplicationSummary__el_txa_1"))){
+        apz.dispMsg({"message":"Please add comments in remarks section about rejection."});
+    }
+    else{
+    apz.dispMsg({"message":"Please confirm if you want to reject this application?","type":"C","callBack":apz.appsum.ApplicationSummary.fnRejectCB});
+}
+        
+    }
+apz.appsum.ApplicationSummary.fnRejectCB = function(params){
+    debugger;
+    if(params.choice){
+        
+       apz.appsum.ApplicationSummary.fnRejectApplication()
+    }
+}
+apz.appsum.ApplicationSummary.fnRejectApplication=function(){
+    debugger;
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "appsum",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appsum.ApplicationSummary.sParam.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "REJECT",
+            "remarks":apz.getElmValue("appsum__ApplicationSummary__el_txa_1")
+        },
+        "paintResp": "N",
+        "callBack": apz.appsum.ApplicationSummary.fnRejectWFStageCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.appsum.ApplicationSummary.fnRejectWFStageCB = function(pResp){
+    debugger;
+      if (pResp.status) {
+       
+            var params = {};
+    params.appId = "appsum";
+    params.scr = "SuccessScreen";
+    params.div = "appdtl__ProductLauncher__productlauncher";
+    params.userObj = {
+      "message": "The application has been rejected.",
+    "refNo":apz.appsum.ApplicationSummary.sParam.refNo
+    }
+    apz.launchSubScreen(params);
+    }
+}
+apz.appsum.ApplicationSummary.fnCallNextStateWorkFlow = function(){
+    debugger;
+    apz.startLoader();
+     var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "appsum",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appsum.ApplicationSummary.sParam.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "SUBMIT"
+        },
+        "paintResp": "N",
+        "callBack": apz.appsum.ApplicationSummary.fnNexttWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.appsum.ApplicationSummary.fnNexttWorkflowCB = function(pResp) {
+    debugger;
+    var appId = apz.appdtl.AppLauncher.sCache.appId;
+    var product = apz.appdtl.AppLauncher.sCache.product;
+    var message = "The application has been approved successfully!";
+    if (pResp.status) {
+        if((product == "Loans" && appId == "Agency") || (appId == "ONB")){
+            if(appId == "ONB"){
+                message = "The application has been submitted successfully!"
+            }
+            var params = {};
+            params.appId = "appsum";
+            params.scr = "SuccessScreen";
+            params.div = "appdtl__ProductLauncher__productlauncher";
+            params.userObj = {
+              "message": message,
+            "refNo":apz.appsum.ApplicationSummary.sParam.refNo
+            }
+            apz.launchSubScreen(params);
+        }else{
+            apz.appsum.ApplicationSummary.fnCallNextStateWorkFlowTwice();
+        }
+    }
+}
+
+
+apz.appsum.ApplicationSummary.fnCallNextStateWorkFlowTwice = function(){
+    debugger;
+    apz.startLoader();
+     var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "appsum",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appsum.ApplicationSummary.sParam.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "SUBMIT"
+        },
+        "paintResp": "N",
+        "callBack": apz.appsum.ApplicationSummary.fnNexttWorkflowCBTwice
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.appsum.ApplicationSummary.fnNexttWorkflowCBTwice = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        // if(apz.appdtl.AppLauncher.sCache.appId == "Agency"){
+    var params = {};
+    params.appId = "appsum";
+    params.scr = "SuccessScreen";
+    params.div = "appdtl__ProductLauncher__productlauncher";
+    params.userObj = {
+      "message": "The application has been approved successfully!",
+    "refNo":apz.appsum.ApplicationSummary.sParam.refNo
+    }
+    apz.launchSubScreen(params);
+    // }else if(apz.appdtl.AppLauncher.sCache.appId == "ONB"){
+    //     apz.appsum.ApplicationSummary.fnCallNextStateWorkFlowThrice()
+    // }
+    }
+}
+
+apz.appsum.ApplicationSummary.fnCallNextStateWorkFlowThrice = function(){
+    debugger;
+    apz.startLoader();
+     var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "appsum",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appsum.ApplicationSummary.sParam.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "SUBMIT"
+        },
+        "paintResp": "N",
+        "callBack": apz.appsum.ApplicationSummary.fnNexttWorkflowCBThrice
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.appsum.ApplicationSummary.fnNexttWorkflowCBThrice = function(pResp) {
+    debugger;
+    if (pResp.status) {
+    var params = {};
+    params.appId = "appsum";
+    params.scr = "SuccessScreen";
+    params.div = "appdtl__ProductLauncher__productlauncher";
+    params.userObj = {
+      "message": "The application has been approved successfully!",
+    "refNo":apz.appsum.ApplicationSummary.sParam.refNo
+    }
+    apz.launchSubScreen(params);
+}
+}
+apz.appsum.ApplicationSummary.fnBack = function(){
+    debugger;
+    var lParams = {
+        "appId": "appsum",
+        "scr": "Appluloanem",
+        "div": "appdtl__ProductLauncher__productlauncher",
+        "userObj": {
+            "refNo":  $("#appsum__ProductLoanDetails__i__tbDbmiProductLoan__refno").val(),
+            "product":$("#appsum__ProductLoanDetails__i__tbDbmiProductLoan__loantype").val(),
+            "amount": $("#appsum__ProductLoanDetails__i__tbDbmiProductLoan__amount").val(),
+             "tenor": $("#appsum__ProductLoanDetails__i__tbDbmiProductLoan__term").val(),
+            
+        }
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.appsum.ApplicationSummary.fnFetchIncomeDetails = function(){
+    debugger;
+    var lParams = {
+        "ifaceName": "IncomeDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiIncomeDetails": {
+                "refno": apz.appsum.ApplicationSummary.sParam.refNo
+            }
+        },
+        "appId": "appsum",
+        "async":false,
+        "paintResp": "Y",
+        "callBack": apz.appsum.ApplicationSummary.fnFetchIncomeDetailsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.appsum.ApplicationSummary.fnFetchIncomeDetailsCB = function(params){
+    debugger;
+}
+apz.appsum.ApplicationSummary.fnFetchExitCardDetails = function(){
+    var lParams = {
+        "ifaceName": "ExitingCardDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiExitCeditCardDetails": {
+                "refno": apz.appsum.ApplicationSummary.sParam.refNo
+            }
+        },
+        "appId": "appsum",
+        "async":false,
+        "paintResp": "Y",
+        "callBack": apz.appsum.ApplicationSummary.fnFetchExitCardDetailsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.appsum.ApplicationSummary.fnFetchExitCardDetailsCB = function(params){
+    debugger;
+    apz.appsum.ApplicationSummary.fnFetchExitLaonDetails();
+}
+apz.appsum.ApplicationSummary.fnFetchExitLaonDetails = function(){
+    var lParams = {
+        "ifaceName": "ExitingLoanDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiExitLoanDetails": {
+                "refno": apz.appsum.ApplicationSummary.sParam.refNo
+            }
+        },
+        "appId": "appsum",
+        "async":false,
+        "paintResp": "Y",
+        "callBack": apz.appsum.ApplicationSummary.fnFetchExitLaonDetailsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.appsum.ApplicationSummary.fnFetchExitLaonDetailsCB = function(params){
+    debugger;
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <clipPath id="clip-elect">
+      <rect width="64" height="64"/>
+    </clipPath>
+  </defs>
+  <g id="elect" clip-path="url(#clip-elect)">
+    <rect id="Rectangle_6405" data-name="Rectangle 6405" width="58.906" height="58" rx="29" transform="translate(3 3)" fill="#93c840"/>
+    <path id="electricity" d="M22.451,0,10.468,15.375l7.5-1.258L9.1,26.264,25.405,9.74l-7.441,1.149Z" transform="translate(14.9 19)"/>
+  </g>
+</svg>

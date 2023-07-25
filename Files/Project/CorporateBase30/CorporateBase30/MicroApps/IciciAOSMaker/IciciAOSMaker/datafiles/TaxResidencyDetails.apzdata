@@ -1,0 +1,16 @@
+{
+    "icaosm__TaxResidencyDetails_Req": {
+        "TaxResidencyDetails": [
+            {
+                "taxresques":"Are you a resident of tax in uk? If yes; please fill details in below table",
+                "taxresval":"N"
+            },{
+                "taxresques":"Are you a citizen of US? If yes; please fill w9 form and enter details in below table",
+                "taxresval":"Y"
+            },{
+                "taxresques":"Are you a resident for tax in any other country? If yes; please fill details in below table",
+                "taxresval":"N"
+            }
+        ]
+    }
+}

@@ -1,0 +1,110 @@
+{
+    "relovr__AccountsDetails_Res": {
+        "accountDetail": [{
+            "accountNo": "100009312263",
+            "accountBrnName": "Koramangala, Bengaluru",
+            "accountBrnCd": "619",
+            "accountBrnIFSC": "HKL00000619",
+            "accountOpnDt": "12/08/2001",
+            "accountType": "Savings Account",
+            "accountStat": "Open",
+            "actCustRel": "Single",
+            "accountPrdct": "1233",
+            "accountCcy": "INR",
+            "accountBal": "1000996",
+            "linkedMobno": "9686736454",
+            "linkedCardno": "2324 XXXX XXXX XX34",
+            "address": "Koramangala, Bengaluru"
+        }, {
+            "accountNo": "100009312401",
+            "accountBrnName": "Koramangala, Bengaluru",
+            "accountBrnCd": "619",
+            "accountBrnIFSC": "HKL00000721",
+            "accountOpnDt": "12/08/2001",
+            "accountType": "Savings Account",
+            "accountStat": "Open",
+            "actCustRel": "Single",
+            "accountPrdct": "1233",
+            "accountCcy": "INR",
+            "accountBal": "188373",
+            "linkedMobno": "9686736353",
+            "linkedCardno": "2324 XXXX XXXX XX45",
+            "address": "Koramangala, Bengaluru"
+        }, {
+            "accountNo": "100009312285",
+            "accountBrnName": "Koramangala, Bengaluru",
+            "accountBrnCd": "619",
+            "accountBrnIFSC": "HKL00000699",
+            "accountOpnDt": "22/01/2000",
+            "accountType": "Savings",
+            "accountStat": "Open",
+            "actCustRel": "Single",
+            "accountPrdct": "9001",
+            "accountBal": "284748",
+            "address": "Koramangala, Bengaluru",
+            "linkedMobno": "9686736454",
+            "linkedCardno": "2324 XXXX XXXX XX67"
+        }, {
+            "accountNo": "100009312274",
+            "accountBrnName": "Koramangala, Bengaluru",
+            "accountBrnCd": "619",
+            "accountBrnIFSC": "HKL00000699",
+            "accountOpnDt": "22/01/2000",
+            "accountType": "Current Account",
+            "accountStat": "Open",
+            "actCustRel": "Single",
+            "accountPrdct": "9001",
+            "accountBal": "46504",
+            "address": "Koramangala, Bengaluru",
+            "linkedMobno": "9686736353",
+            "linkedCardno": "2324 XXXX XXXX XX92"
+        }, {
+            "accountNo": "753410000895",
+            "accountBrnName": "Koramangala, Bengaluru",
+            "accountBrnCd": "619",
+            "accountBrnIFSC": "HKL00000699",
+            "accountOpnDt": "02/01/2000",
+            "accountType": "Current Account",
+            "accountStat": "Open",
+            "actCustRel": "Single",
+            "accountPrdct": "9001",
+            "accountBal": "657498",
+            "accountCcy": "INR",
+            "address": "Koramangala, Bengaluru",
+            "linkedMobno": "9686736353",
+            "linkedCardno": "2324 XXXX XXXX XX66"
+        }],
+        "accounts": [{
+            "accountNo": "100009312263",
+            "accountType": "Savings",
+            "accountBalance": "1000996"
+        }, {
+            "accountNo": "100009312401",
+            "accountType": "Savings",
+            "accountBalance": "188373"
+        }, {
+            "accountNo": "732510006721",
+            "accountType": "Savings",
+            "accountBalance": "264748"
+        }],
+        "SavingsAccount": [{
+            "accountNo": "100009312263",
+            "accountBal": "1000996",
+            "accountBrnName": "Koramangala, Bengaluru",
+            "accountBrnCd": "619",
+            "accountBrnIFSC": "HKL00000619"
+        }, {
+            "accountNo": "100009312401",
+            "accountBal": "188373",
+            "accountBrnName": "Koramangala, Bengaluru",
+            "accountBrnCd": "619",
+            "accountBrnIFSC": "HKL00000619"
+        }, {
+            "accountNo": "732510006721",
+            "accountBal": "264748",
+            "accountBrnName": "Koramangala, Bengaluru",
+            "accountBrnCd": "619",
+            "accountBrnIFSC": "HKL00000619"
+        }]
+    }
+}

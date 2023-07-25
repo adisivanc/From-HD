@@ -1,0 +1,23 @@
+apz.crdles.SuccessScreen={};
+apz.app.onLoad_SuccessScreen = function(params) {
+    debugger;
+    
+    
+};
+
+apz.crdles.SuccessScreen.fnDone = function() {
+   
+    // var lLaunchParams = {
+    //     "appId": "crdles",
+    //     "scr": "CardlessCash",
+    //     "div": "csmrbk__LandingPage__microappLauncherCol",
+    //     "userObj": {
+           
+    //         "Navigation": {
+    //             "setNavigation": apz.csmrbk.landingpage.fnSetNavigation
+    //         }
+    //     }
+    // };
+    // apz.launchSubScreen(lLaunchParams);
+    apz.landin.Landing.fnMenuClickInside("Cardless Cash")
+}

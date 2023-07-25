@@ -1,0 +1,574 @@
+apz.corsum.SummaryScreen = {};
+apz.corsum.SummaryScreen.stackholderCount = 0;
+apz.corsum.SummaryScreen.corporateDocumentsDownloaded = false;
+apz.corsum.SummaryScreen.stakeholdersDocumentsDownloaded = false;
+apz.corsum.SummaryScreen.documentPreviewDiv = "";
+apz.app.onLoad_SummaryScreen = function(params) {
+    debugger;
+    $('html, body').animate({
+        scrollTop: 0
+    }, 0);
+    $("body").removeClass("openby");
+    if (apz.deviceOs !== "iOS") {
+        // $("#corsum__Launcher__el_btn_3").prop("disabled", true);
+        apz.data.loadJsonData("DocuSignDoc", "corsum");
+        apz.corsum.SummaryScreen.DocumentDetails = apz.data.scrdata.corsum__DocuSignDoc_Res.Documents;
+        var url = window.location.href;
+        if (url.indexOf('?') != -1) {
+            apz.startLoader();
+            apz.corsum.SummaryScreen.fnGetAccessCode();
+        }
+    } else {
+        $("#corsum__SummaryScreen__gr_row_14").addClass("sno");
+    }
+    apz.corsum.SummaryScreen.fnGetCompanyDetails();
+}
+apz.app.onShown_SummaryScreen = function(params) {
+    debugger;
+    if (apz.corsum.Launcher.sParams.from == "CR") {
+        /*$("#corsum__Launcher__el_btn_4").addClass("sno")
+        $("#corsum__Launcher__el_btn_3").addClass("sno")
+        $("#corsum__Launcher__el_btn_1").addClass("sno")*/
+        /*$("#corsum__Launcher__remarksRow").addClass("sno")
+        $("#corsum__Launcher__navigationRow").addClass("sno")*/
+    } else if (apz.corsum.Launcher.sParams.from == "LA") {
+        $("#corsum__SummaryScreen__gr_row_15").addClass("sno")
+        /*$("#corsum__Launcher__remarksRow").addClass("sno")
+        $("#corsum__Launcher__navigationRow").addClass("sno")*/
+    }
+    $("#corsum__SummaryScreen__StakeholdersDocuments").click(function() {
+        apz.corsum.SummaryScreen.fnShowCorporateDocumentList("CorporateList");
+    });
+    $("#corsum__SummaryScreen__CorporateDocuments").click(function() {
+        apz.corsum.SummaryScreen.fnShowStakeholdersDocumentList("StakeholdersList");
+    });
+    if (apz.menuap.Menu.userRole == "SRM") {
+        $("#corsum__Launcher__remarksRow").removeClass("sno")
+        $("#corsum__Launcher__navigationRow").removeClass("sno")
+    }
+}
+apz.corsum.SummaryScreen.fnShowCorporateDocumentList = function(documentDiv) {
+    debugger;
+    var theDiv = "corsum__SummaryScreen__" + documentDiv
+    apz.corsum.SummaryScreen.documentPreviewDiv = theDiv;
+    var isDivHidden = $("#" + theDiv).hasClass("sno")
+    if (isDivHidden) {
+        if (!apz.corsum.SummaryScreen.corporateDocumentsDownloaded) {
+            if (!apz.mockServer) {
+                apz.startLoader()
+                var req = {
+                    tbComiCorporateDocuments: {
+                        appNo: apz.appNo
+                    }
+                }
+                apz.common.callServer("corsum", "CorporateDocuments_Query", "N", "Y", req, apz.corsum.SummaryScreen.fnShowCorporateDocumentListCallback);
+            } else {
+                if ($("#" + apz.corsum.SummaryScreen.documentPreviewDiv).hasClass("sno")) {
+                    $("#" + apz.corsum.SummaryScreen.documentPreviewDiv).removeClass("sno")
+                } else {
+                    $("#" + apz.corsum.SummaryScreen.documentPreviewDiv).addClass("sno")
+                }
+            }
+        } else {
+            if ($("#" + apz.corsum.SummaryScreen.documentPreviewDiv).hasClass("sno")) {
+                $("#" + apz.corsum.SummaryScreen.documentPreviewDiv).removeClass("sno")
+            } else {
+                $("#" + apz.corsum.SummaryScreen.documentPreviewDiv).addClass("sno")
+            }
+        }
+    } else {
+        $("#" + apz.corsum.SummaryScreen.documentPreviewDiv).addClass("sno")
+    }
+}
+apz.corsum.SummaryScreen.fnShowCorporateDocumentListCallback = function(pResp) {
+    debugger;
+    apz.stopLoader()
+    if (pResp.status && !pResp.errors) {
+        apz.corsum.SummaryScreen.corporateDocumentsDownloaded = true;
+        $("#" + apz.corsum.SummaryScreen.documentPreviewDiv).removeClass("sno")
+    } else {
+        apz.corsum.SummaryScreen.documentPreviewDiv = ""
+        apz.dispMsg({
+            "message": "Something went wrong! Please try again.",
+            "type": "E"
+        });
+    }
+}
+apz.corsum.SummaryScreen.fnShowStakeholdersDocumentList = function(documentDiv) {
+    debugger;
+    var theDiv = "corsum__SummaryScreen__" + documentDiv
+    apz.corsum.SummaryScreen.documentPreviewDiv = theDiv;
+    var isDivHidden = $("#" + theDiv).hasClass("sno")
+    if (isDivHidden) {
+        if (!apz.corsum.SummaryScreen.stakeholdersDocumentsDownloaded) {
+            if (!apz.mockServer) {
+                apz.startLoader();
+                var req = {
+                    tbComiSignatoryDocuments: {
+                        appNo: apz.appNo,
+                        signatoryId: apz.corsum.SummaryScreen.stakeholderDetails[apz.corsum.SummaryScreen.stackholderCount].signatoryId
+                    }
+                }
+                apz.common.callServer("corsum", "SignatoryDocuments_Query", "N", "Y", req, apz.corsum.SummaryScreen.fnShowStakeholdersDocumentListCallback);
+            } else {
+                if ($("#" + apz.corsum.SummaryScreen.documentPreviewDiv).hasClass("sno")) {
+                    $("#" + apz.corsum.SummaryScreen.documentPreviewDiv).removeClass("sno")
+                } else {
+                    $("#" + apz.corsum.SummaryScreen.documentPreviewDiv).addClass("sno")
+                }
+            }
+        } else {
+            if ($("#" + apz.corsum.SummaryScreen.documentPreviewDiv).hasClass("sno")) {
+                $("#" + apz.corsum.SummaryScreen.documentPreviewDiv).removeClass("sno")
+            } else {
+                $("#" + apz.corsum.SummaryScreen.documentPreviewDiv).addClass("sno")
+            }
+        }
+    } else {
+        $("#" + apz.corsum.SummaryScreen.documentPreviewDiv).addClass("sno")
+    }
+}
+apz.corsum.SummaryScreen.fnShowStakeholdersDocumentListCallback = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    if (pResp.status && !pResp.errors) {
+        //commented by chaitra
+        //apz.corsum.SummaryScreen.stakeholdersDocumentsDownloaded = true;
+        //
+        $("#" + apz.corsum.SummaryScreen.documentPreviewDiv).removeClass("sno")
+    } else {
+        apz.corsum.SummaryScreen.documentPreviewDiv = ""
+        apz.dispMsg({
+            "message": "Something went wrong! Please try again.",
+            "type": "E"
+        });
+    }
+}
+apz.corsum.SummaryScreen.fnShowDocument = function(param, type) {
+    debugger;
+    console.log(param)
+    var id = $(param).attr("id");
+    var value = apz.getElmValue("" + $(param).attr("id"));
+    $("#corsum__SummaryScreen__DocumentPreview").removeClass("sno")
+    var img = ""
+    var documentName = ""
+    var records = [];
+    if (type == "corporate") {
+        records = apz.data.scrdata.corsum__CorporateDocuments_Req.tbComiCorporateDocuments;
+    } else {
+        records = apz.data.scrdata.corsum__SignatoryDocuments_Req.tbComiSignatoryDocuments;
+    }
+    for (var i = 0; i < records.length; i++) {
+        if (records[i].documentName == value) {
+            img = records[i].document;
+            documentName = records[i].documentName;
+        }
+    }
+    if (img == "upiimg25.png") {
+        $("#corsum__SummaryScreen__PreviewImage").attr("src", img);
+    } else {
+        $("#corsum__SummaryScreen__PreviewImage").attr("src", "data:image;base64," + img);
+    }
+    apz.setElmValue("corsum__SummaryScreen__PreviewDocumentName", documentName);
+}
+apz.corsum.SummaryScreen.fnHideDocument = function() {
+    debugger;
+    $("#corsum__SummaryScreen__DocumentPreview").addClass("sno")
+}
+apz.corsum.SummaryScreen.fnGetAccessCode = function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var keys = urlParams.keys();
+    var qKey = "";
+    for (key of keys) {
+        qKey = key;
+    }
+    if (qKey == "code") {
+        apz.accessCode = urlParams.get("code");
+        apz.corsum.SummaryScreen.signDetails = JSON.parse(window.localStorage.getItem('signDetails'));
+        if (apz.corsum.SummaryScreen.signDetails.esignType == "remote") {
+            apz.corsum.SummaryScreen.fnRemoteSigning();
+        } else if (apz.corsum.SummaryScreen.signDetails.esignType == "embed") {
+            apz.corsum.SummaryScreen.fnEmbedSigning();
+        } else if (apz.corsum.SummaryScreen.signDetails.esignType == "envstatus") {
+            apz.corsum.SummaryScreen.fnGetEnvStatus();
+        }
+    } else {
+        apz.corsum.SummaryScreen.fnshowCheckboxRow();
+    }
+}
+apz.corsum.SummaryScreen.fnRemoteSigning = function() {
+    var lServerParams = {
+        "ifaceName": "DocuSign",
+        "buildReq": "N",
+        "appId": "corsum",
+        "req": {
+            "Document": apz.corsum.SummaryScreen.DocumentDetails.DocumentFile,
+            "DocumentType": apz.corsum.SummaryScreen.DocumentDetails.DocumentType,
+            "AccessToken": apz.accessCode,
+            "SignList": apz.corsum.SummaryScreen.signDetails.signList
+        },
+        "paintResp": "N",
+        "callBack": apz.corsum.SummaryScreen.fnRemoteSigningCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.corsum.SummaryScreen.fnRemoteSigningCB = function(lparams) {
+    debugger;
+    apz.stopLoader();
+    //apz.comdtl.Launcher.fnLaunchUserDetails();
+    console.log(lparams.res.corsum__DocuSign_Res.envelopeId);
+    var params = {};
+    params.message = "Document has been sent for review and sign";
+    params.callBack = apz.corsum.SummaryScreen.fnshowCheckboxRow;
+    params.type = "S";
+    apz.dispMsg(params);
+}
+apz.corsum.SummaryScreen.fnshowCheckboxRow = function(params) {
+    $("#corsum__SummaryScreen__checkrow").removeClass("sno");
+}
+apz.corsum.SummaryScreen.fnDocuSign = function(signType) {
+    debugger;
+    apz.startLoader();
+    if (signType == "embed") {
+        var signObj = {};
+        signObj.signName = apz.getElmValue("corsum__SummaryScreen__inpSignName");
+        signObj.signEmail = apz.getElmValue("corsum__SummaryScreen__inpSignEmail");
+        var lObj = {};
+        lObj.appNo = apz.appNo;
+        lObj.esignType = signType;
+        lObj.signList = signObj;
+        lObj.navigationList = apz.naviationList;
+        lObj.mobileNo = apz.data.scrdata.corsum__Stakeholders_Res.tbComiSignatoryInfo.mobileNo;
+        window.localStorage.setItem('signDetails', JSON.stringify(lObj));
+        window.location.replace(
+            "https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature&client_id=4568212d-bd5c-4a09-b02e-a00c5b11b77d&redirect_uri=http://52.230.13.182:8080/SMEOnboardingBeta/"
+        );
+    }
+    if (signType == "remote") {
+        apz.corsum.SummaryScreen.fnShowSignatoryModal();
+    }
+    if (signType == "envstatus") {
+        var lObj = {};
+        lObj.appNo = apz.appNo;
+        lObj.esignType = signType;
+        lObj.envId = apz.getElmValue("corsum__SummaryScreen__inpEnvId");
+        lObj.navigationList = apz.naviationList;
+        window.localStorage.setItem('signDetails', JSON.stringify(lObj));
+        window.location.replace(
+            "https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature&client_id=4568212d-bd5c-4a09-b02e-a00c5b11b77d&redirect_uri=http://52.230.13.182:8080/SMEOnboardingBeta/"
+        );
+    }
+}
+apz.corsum.SummaryScreen.fnShowSignatoryModal = function() {
+    apz.stopLoader();
+    debugger;
+    var params = {
+        "targetId": "corsum__SummaryScreen__SignatoryModal",
+    }
+    apz.toggleModal(params);
+    apz.data.scrdata.corsum__GetSignatoryList_Res = {};
+    if (apz.data.scrdata.corsum__SignatoryInfo_Req) {
+        apz.data.scrdata.corsum__GetSignatoryList_Res.tbComiSignatoryInfo = apz.data.scrdata.corsum__SignatoryInfo_Req.tbComiSignatoryInfo
+    } else {
+        apz.data.scrdata.corsum__GetSignatoryList_Res.tbComiSignatoryInfo = apz.data.scrdata.corsum__SignatoryInfo_Res.tbComiSignatoryInfo
+    }
+    apz.data.loadData("GetSignatoryList", "corsum");
+}
+apz.corsum.SummaryScreen.fnShowSignatoryModalCB = function() {
+    var signArray = [];
+    var signatorylist = apz.corsum.SummaryScreen.stakeholderDetails;
+    for (var i = 0; i < signatorylist.length; i++) {
+        var signObj = {};
+        signObj.signName = signatorylist[i].firstName;
+        signObj.signEmail = signatorylist[i].email;
+        signArray.push(signObj);
+    }
+    //var scrdata = apz.data.buildData("SignerMail", "corsum");
+    // var signArray = scrdata.corsum__SignerMail_Res.MailList;
+    var lObj = {};
+    lObj.appNo = apz.appNo;
+    lObj.esignType = "remote";
+    lObj.signList = signArray;
+    lObj.navigationList = apz.naviationList;
+    window.localStorage.setItem('signDetails', JSON.stringify(lObj));
+    window.location.replace(
+        "https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature&client_id=4568212d-bd5c-4a09-b02e-a00c5b11b77d&redirect_uri=http://52.230.13.182:8080/SMEOnboardingBeta/"
+    );
+}
+apz.corsum.SummaryScreen.fnCancelModal = function() {
+    var params = {
+        "targetId": "corsum__SummaryScreen__SignatoryModal",
+    }
+    apz.toggleModal(params);
+}
+apz.corsum.SummaryScreen.fnShowEmbedRow = function() {
+    $("#corsum__SummaryScreen__rowembed").removeClass("sno");
+}
+apz.corsum.SummaryScreen.fnEmbedSigning = function() {
+    debugger;
+    //var scrdata = apz.data.buildData("SignerMail", "corsum");
+    //var signArray = scrdata.corsum__SignerMail_Res.MailList;
+    var lServerParams = {
+        "ifaceName": "DocuSignEmb",
+        "buildReq": "N",
+        "appId": "corsum",
+        "req": {
+            "Document": apz.corsum.SummaryScreen.DocumentDetails.DocumentFile,
+            "DocumentType": apz.corsum.SummaryScreen.DocumentDetails.DocumentType,
+            "AccessToken": apz.accessCode,
+            "SignName": apz.corsum.SummaryScreen.signDetails.signList.signName,
+            "SignEmail": apz.corsum.SummaryScreen.signDetails.signList.signEmail,
+            "MobileNo": apz.corsum.SummaryScreen.signDetails.mobileNo
+        },
+        "paintResp": "N",
+        "callBack": apz.corsum.SummaryScreen.fnEmbedSigningCB
+    }
+    apz.server.callServer(lServerParams);
+    //apz.comdtl.DocumentDetails.docData.tradeLicense
+}
+apz.corsum.SummaryScreen.fnEmbedSigningCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    var redirectURL = params.res.corsum__DocuSignEmb_Res.redirectUrl;
+    window.location.replace(redirectURL);
+}
+apz.corsum.SummaryScreen.fnGetEnvStatus = function() {
+    var lServerParams = {
+        "ifaceName": "GetEnvelopeStatus",
+        "buildReq": "N",
+        "appId": "corsum",
+        "req": {
+            "AccessToken": apz.accessCode,
+            "EnvelopId": apz.corsum.SummaryScreen.signDetails.envId
+        },
+        "paintResp": "N",
+        "callBack": apz.corsum.SummaryScreen.fnGetEnvStatusCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.corsum.SummaryScreen.fnGetEnvStatusCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    console.log(lparams.res.corsum__GetEnvelopeStatus_Res);
+}
+apz.corsum.SummaryScreen.fnGetCompanyDetails = function() {
+    debugger;
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "CompanyInfo_Query",
+        "buildReq": "N",
+        "req": {
+            "tbComiCorpInfo": {
+                "appNo": apz.appNo,
+            }
+        },
+        "paintResp": "Y",
+        "callBack": apz.corsum.SummaryScreen.fnGetCompanyDetailsCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.corsum.SummaryScreen.fnGetCompanyDetailsCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    if (params.res.corsum__CompanyInfo_Req.tbComiCorpInfo.applicationType == "Merchant") {
+        apz.corsum.SummaryScreen.applicationType = "Merchant";
+        $("#corsum__SummaryScreen__stakeholderLabel").html("Owner Details");
+        $("#corsum__CompanyInfo__i__tbComiCorpInfo__companyName_lbl").html("Merchant Name");
+        $("#corsum__CompanyInfo__i__tbComiCorpInfo__companyType_lbl").html("Merchant Type");
+        $("#corsum__SummaryScreen__sc_col_71 fieldset legend").html("Owner Details");
+        $("#corsum__SummaryScreen__stakeholderName").text("Owner 1");
+        $("#corsum__SummaryScreen__sc_col_12 fieldset legend").html("Product and Fees");
+        $("#corsum__SummaryScreen__productLabel").html("Product and Fees");
+        $("#corsum__SummaryScreen__ct_tbl_2").addClass("sno");
+        $("#corsum__SummaryScreen__ct_tbl_3,#corsum__SummaryScreen__ct_tbl_3_table").removeClass("sno");
+        $("#corsum__SummaryScreen__CorporateDocuments").addClass("sno");
+    }
+    apz.corsum.SummaryScreen.fnGetUserDetails();
+}
+apz.corsum.SummaryScreen.fnGetUserDetails = function() {
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "SignatoryInfo_Query",
+        "buildReq": "N",
+        "req": {
+            "tbComiSignatoryInfo": {
+                "appNo": apz.appNo,
+            }
+        },
+        "paintResp": "Y",
+        "callBack": apz.corsum.SummaryScreen.fnGetUserDetailsCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.corsum.SummaryScreen.fnGetUserDetailsCB = function(params) {
+    apz.stopLoader();
+    debugger;
+    if (params.status && params.errors === undefined) {
+        if (params.res.corsum__SignatoryInfo_Req) {
+            apz.corsum.SummaryScreen.stakeholderDetails = params.res.corsum__SignatoryInfo_Req.tbComiSignatoryInfo;
+        } else {
+            apz.corsum.SummaryScreen.stakeholderDetails = params.res.corsum__SignatoryInfo_Res.tbComiSignatoryInfo;
+        }
+        apz.data.scrdata.corsum__Stakeholders_Res = {
+            tbComiSignatoryInfo: apz.corsum.SummaryScreen.stakeholderDetails[0]
+        }
+        apz.data.loadData("Stakeholders", "corsum");
+    }
+    if (apz.corsum.SummaryScreen.applicationType === "Merchant") {
+        apz.corsum.SummaryScreen.fnGetMerchantFees();
+    } else {
+        apz.corsum.SummaryScreen.fnGetProductDetails();
+    }
+}
+apz.corsum.SummaryScreen.fnGetMerchantFees = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "MerchantFees_Query",
+        "buildReq": "N",
+        "req": {
+            "tbComiMerchantFees": {
+                "appNo": apz.appNo
+            }
+        },
+        "appId": "corsum",
+        "paintResp": "Y",
+        "async": false,
+        "callBack": apz.corsum.SummaryScreen.fnGetMerchantFeesCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.corsum.SummaryScreen.fnGetMerchantFeesCB = function() {
+    debugger;
+}
+apz.corsum.SummaryScreen.fnGetProductDetails = function() {
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "ProductsInfo_Query",
+        "buildReq": "N",
+        "req": {
+            "tbComiAccountProducts": {
+                "appNo": apz.appNo,
+            }
+        },
+        "paintResp": "Y",
+        "callBack": apz.corsum.SummaryScreen.fnGetProductDetailsCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.corsum.SummaryScreen.fnGetProductDetailsCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    var lServerParams = {
+        "ifaceName": "NavigationFlow_Query",
+        "buildReq": "N",
+        "req": {
+            "tbComiNavigationFlow": {
+                "appNo": apz.appNo
+            }
+        },
+        "appId": "corsum",
+        "paintResp": "N",
+        "callBack": apz.corsum.SummaryScreen.fnGetCountryCodeCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.corsum.SummaryScreen.fnGetCountryCodeCB = function(pResp) {
+    debugger;
+    if (pResp.status && pResp.errors === undefined) {
+        apz.country = pResp.res.corsum__NavigationFlow_Res.tbComiNavigationFlow.country;
+        if (apz.country === "IND") {
+            $(
+                "#corsum__SummaryScreen__nationalAadhaarPanRow,#corsum__SummaryScreen__sinGstPan,#corsum__CompanyInfo__i__tbComiCorpInfo__dateOfIncorporation_ctrl_grp_div"
+            ).removeClass("sno");
+            $("#corsum__CompanyInfo__i__tbComiCorpInfo__website_ctrl_grp_div").addClass("sno")
+            apz.corsum.SummaryScreen.fnGetKycDetails();
+        }
+    }
+}
+apz.corsum.SummaryScreen.fnGetKycDetails = function() {
+    debugger;
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "kycDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbComiKycDetails": {
+                "appNo": apz.appNo,
+            }
+        },
+        "paintResp": "Y",
+        "callBack": apz.corsum.SummaryScreen.fnGetKycDetailsCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.corsum.SummaryScreen.fnGetKycDetailsCB = function(params) {
+    debugger;
+}
+apz.corsum.SummaryScreen.fnscrollTop = function() {
+    $(
+        "#corsum__SummaryScreen__basicLabel, #corsum__SummaryScreen__stakeholderLabel, #corsum__SummaryScreen__productLabel,#corsum__SummaryScreen__el_bdg_2,#corsum__SummaryScreen__el_bdg_3,#corsum__SummaryScreen__el_bdg_4"
+    ).removeClass("current");
+    $("#corsum__SummaryScreen__basicLabel,#corsum__SummaryScreen__el_bdg_2").addClass("current");
+    $('html, body').animate({
+        scrollTop: 0
+    }, 500);
+}
+apz.corsum.SummaryScreen.moveDiv = function(ths, tabName) {
+    debugger;
+    $("#corsum__SummaryScreen__basicLabel, #corsum__SummaryScreen__stakeholderLabel, #corsum__SummaryScreen__productLabel").removeClass("current");
+    $("#corsum__SummaryScreen__el_bdg_2,#corsum__SummaryScreen__el_bdg_3,#corsum__SummaryScreen__el_bdg_4").removeClass("current");
+    if (tabName == "stakeholder") {
+        $("#corsum__SummaryScreen__stakeholderLabel,#corsum__SummaryScreen__el_bdg_3").addClass("current");
+        $('html, body').animate({
+            scrollTop: $("#corsum__SummaryScreen__stakeholder").offset().top - 180
+        }, 500);
+    } else if (tabName == "products") {
+        $("#corsum__SummaryScreen__productLabel,#corsum__SummaryScreen__el_bdg_4").addClass("current");
+        $('html, body').animate({
+            scrollTop: $("#corsum__SummaryScreen__products").offset().top - 80
+        }, 500);
+    }
+}
+apz.corsum.SummaryScreen.stackholderChange = function(option) {
+    debugger;
+    $("#corsum__SummaryScreen__CorporateList").addClass("sno")
+    $("#corsum__SummaryScreen__StakeholdersList").addClass("sno")
+    if (option == "prev") {
+        prevVal = --apz.corsum.SummaryScreen.stackholderCount;
+        if (prevVal >= 0 && prevVal < apz.corsum.SummaryScreen.stakeholderDetails.length) {
+            apz.data.scrdata.corsum__Stakeholders_Res.tbComiSignatoryInfo = apz.corsum.SummaryScreen.stakeholderDetails[prevVal];
+            $("#corsum__SummaryScreen__stakeholderName").text("Stakeholder " + (prevVal + 1));
+        } else {
+            apz.corsum.SummaryScreen.stackholderCount = 0
+        }
+    } else if (option == "next") {
+        nextVal = ++apz.corsum.SummaryScreen.stackholderCount;
+        if (nextVal >= 0 && nextVal < apz.corsum.SummaryScreen.stakeholderDetails.length) {
+            apz.data.scrdata.corsum__Stakeholders_Res.tbComiSignatoryInfo = apz.corsum.SummaryScreen.stakeholderDetails[nextVal];
+            $("#corsum__SummaryScreen__stakeholderName").text("Stakeholder " + (nextVal + 1));
+        } else {
+            apz.corsum.SummaryScreen.stackholderCount = apz.corsum.SummaryScreen.stakeholderDetails.length - 1
+        }
+    }
+    apz.data.loadData("Stakeholders", "corsum");
+}
+$(window).scroll(function() {
+    $("#corsum__SummaryScreen__basicLabel, #corsum__SummaryScreen__stakeholderLabel, #corsum__SummaryScreen__productLabel").removeClass("current");
+    $("#corsum__SummaryScreen__el_bdg_2,#corsum__SummaryScreen__el_bdg_3,#corsum__SummaryScreen__el_bdg_4").removeClass("current");
+    if ($(window).scrollTop() >= 0 && $(window).scrollTop() < 400) {
+        $("#corsum__SummaryScreen__basicLabel,#corsum__SummaryScreen__el_bdg_2").addClass("current");
+    } else if ($(window).scrollTop() >= 401 && $(window).scrollTop() < 679) {
+        $("#corsum__SummaryScreen__stakeholderLabel,#corsum__SummaryScreen__el_bdg_3").addClass("current");
+    } else if ($(window).scrollTop() > 680) {
+        $("#corsum__SummaryScreen__productLabel,#corsum__SummaryScreen__el_bdg_4").addClass("current");
+    }
+});
+apz.corsum.SummaryScreen.fnCheckDocusign = function() {
+    debugger;
+    var checkVal = apz.getElmValue("corsum__SummaryScreen__docusign_Confirm");
+    if (checkVal == "y") {
+        $("#corsum__Launcher__el_btn_3").prop("disabled", false);
+    } else if (checkVal == "n") {
+        $("#corsum__Launcher__el_btn_3").prop("disabled", true);
+    }
+}

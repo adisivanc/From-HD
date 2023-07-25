@@ -1,0 +1,16 @@
+apz.newBusinessAccounts = {};
+apz.app.onLoad_NewBusinessAccounts = function() {};
+apz.app.onShown_NewBusinessAccounts = function() {
+    var params = {};
+    params.scr = "Features";
+    params.div = "ACPL01__NewBusinessAccounts__FeaturesCol";
+    apz.launchSubScreen(params);
+};
+apz.newBusinessAccounts.close = function() {
+    var params = {};
+    params.scr = "PreLogin";
+    apz.launchScreen(params);
+    setTimeout(function() {
+        $("#ACPL01__PreLogin__ArrowDown").trigger("click");
+    }, 50);
+};

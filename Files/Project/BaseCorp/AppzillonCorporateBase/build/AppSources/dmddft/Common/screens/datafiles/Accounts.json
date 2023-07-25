@@ -1,0 +1,27 @@
+{
+    "dmddft__Accounts_Res": {
+        "accounts": [{
+            "accountNo": "47585936513712",
+            "accountType": "Savings",
+            "accountBalance": "90,000"
+        }, {
+            "accountNo": "47585936514239",
+            "accountType": "Savings",
+            "accountBalance": "60,000"
+        }, {
+            "accountNo": "5785936513734",
+            "accountType": "Checking",
+            "accountBalance": "200,000"
+        },
+        {
+            "accountNo": "5785936519021",
+            "accountType": "Checking",
+            "accountBalance": "60,000"
+        },
+        {
+            "accountNo": "7356329872139",
+            "accountType": "Checking",
+            "accountBalance": "100,000"
+        }]
+    }
+}

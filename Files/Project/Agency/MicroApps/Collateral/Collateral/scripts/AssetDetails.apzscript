@@ -1,0 +1,32 @@
+apz.assets.AssetDetails = {};
+apz.app.onLoad_AssetDetails = function(params) {
+    debugger;
+    apz.data.scrdata.assets__AssetSummary_Res.AssetDetails = params.data;
+    apz.data.loadData("AssetSummary", "assets");
+    //apz.assets.AssetDetails.getAssetDetails(params);
+    
+};
+apz.assets.AssetDetails.getAssetDetails = function(pRef) {
+    debugger;
+     var req = {
+        "AssetDetails": {
+            "ColCode": pRef.data.colCode
+        }
+    };
+    var lServerParams = {
+        "ifaceName": "AssetSummary",
+        "buildReq": "N",
+        "req": req,
+        "paintResp": "Y",
+        "async": "true",
+        "callBack": apz.assets.AssetDetails.getAssetDetailsCB,
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.assets.AssetDetails.getAssetDetailsCB = function(pResp) {};
+
+apz.assets.AssetDetails.fnCancel = function() {
+    apz.show("assets__AssetSummary__rowheader");
+    apz.hide("assets__AssetSummary__subScreenLauncher");
+    apz.show("assets__AssetSummary__rowlist");
+}

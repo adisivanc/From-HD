@@ -1,0 +1,14 @@
+{
+	"tbDbtpDbtDet": {
+		"customerId": "1000001",
+		"fromAccountNo": "100009312263",
+		"oilCompanyName": "BPCL",
+		"oilCompanyCode": "BPCL01",
+		"ifscCode": "HDFC0001755",
+		"lpgid": "12345678901234567",
+		"mobileNo": "9878678989",
+		"emailId": "demo@gmail.com",
+		"aadhaarNo": "123456789012",
+		"txnRefNo":"1234123123121312"
+	}
+}

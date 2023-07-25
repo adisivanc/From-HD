@@ -1,0 +1,23 @@
+apz.fndftr.FavouriteDetails = {};
+apz.fndftr.FavouriteDetails.sCache = null;
+apz.app.onShown_FavouriteDetails = function(params) {
+    var filePath = apz.getDataFilesPath("fndftr") + "/FavouritesBeneficiary.json";
+    var content = apz.getFile(filePath);
+    var providers = JSON.parse(content);
+    apz.data.scrdata.fndftr__FavouritesBebeficiary_Res = {};
+    apz.data.scrdata.fndftr__FavouritesBebeficiary_Res.beneficiaryDetails = providers;
+    apz.data.loadData("FavouritesBebeficiary", "fndftr");
+}
+//open amount transfer screen 
+apz.fndftr.FavouriteDetails.fnOpenTransferScreen=function(element){
+    var rowNo=$(element).attr("rowno");
+    var transferDetails=apz.data.scrdata.fndftr__FavouritesBebeficiary_Res.beneficiaryDetails[rowNo];
+    apz.launchSubScreen({
+        appId: "fndftr",
+        scr: "Transfer",
+        div: "fndftr__FundsTransfer__ps_pls_5",
+        userObj: {
+            transferDetails:transferDetails
+        }
+    })
+}

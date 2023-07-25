@@ -1,0 +1,147 @@
+apz.loansm.loandetails = {};
+apz.app.onLoad_LoanDetails = function(params) {
+    debugger;
+    if (params.Navigation) {
+        // apz.loansm.loandetails.fnSetNavigation(params);
+    }
+    apz.loansm.loandetails.fnInitialise(params);
+};
+apz.loansm.loandetails.fnSetNavigation = function(params) {
+    debugger;
+    apz.loansm.loandetails.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.showBack = "N";
+    lParams.headerText = "LOAN DETAILS";
+    apz.loansm.loandetails.Navigation(lParams);
+};
+apz.loansm.loandetails.fnInitialise = function(params) {
+    debugger;
+    apz.loansm.loandetails.sParams = params;
+    apz.data.scrdata.loansm__loanDetails_Req = {};
+    apz.data.scrdata.loansm__loanDetails_Req.loanDtls = params.data;
+    apz.data.loadData("loanDetails", "loansm");
+    if (apz.data.scrdata.loansm__loanDetails_Req.loanDtls.loanType == "Home") {
+        $("#loansm__LoanDetails__el_btn_2").removeClass("sno");
+    }
+};
+apz.app.onShown_LoanDetails = function(params) {
+    debugger;
+    $(".payScheDtl").addClass("sno");
+};
+apz.loansm.loandetails.fnBack = function() {
+    debugger;
+    apz.loansm.loandetails.sParams.callBack();
+    $("#loansm__LoanSummary__Loans_Offers").removeClass('sno');
+};
+apz.app.postRowClicked = function(pContainerId, pRowno) {
+    debugger;
+    if (pContainerId == "loansm__LoanDetails__loan_paySchedule") {
+        if ($("#" + pContainerId + " li[rowno=" + pRowno + "]").find(".payScheDtl").hasClass("sno")) {
+            $(".payScheDtl").addClass("sno");
+            $("#" + pContainerId + " li[rowno=" + pRowno + "]").find(".payScheDtl").removeClass("sno");
+        } else {
+            $("#" + pContainerId + " li[rowno=" + pRowno + "]").find(".payScheDtl").addClass("sno");
+        }
+    }
+};
+apz.loansm.loandetails.fnDownload = function(params, fileType) {
+    debugger;
+    var jsonFilePath = apz.getDataFilesPath("loansm") + "/ProvisionalCertificate.json";
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    for (var i = 0; i < ljsondata.data.length; i++) {
+        var mimetype = ljsondata.data[i].mimeType;
+        var lMimeType = mimetype.slice(-3);
+        if (fileType == lMimeType.toLowerCase()) {
+            apz.loansm.loandetails.ReportdwnldMethod(ljsondata.data[i]);
+        }
+    }
+}
+apz.loansm.loandetails.ReportdwnldMethod = function(lbodyobj) {
+    debugger;
+    var blob;
+    if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+        blob = apz.loansm.loandetails.b64toBlob(lbodyobj.content, "application/pdf");
+    }
+    var blobUrl = URL.createObjectURL(blob);
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.loansm.loandetails.base64tofilecallBack;
+        json.base64 = lbodyobj.content;
+        json.fileName = "ProvisionalCertificate";
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    } else {
+        window.open(blobUrl);
+    }
+};
+apz.loansm.loandetails.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};
+apz.loansm.loandetails.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.loansm.loandetails.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.loansm.loandetails.openFileCallback = function(params) {
+    debugger;
+};
+//edited by manohar
+apz.loansm.loandetails.fnOnCollateralClick = function(ths) {
+    debugger;
+    var rowno = $(ths).attr("rowno");
+    var col_Details = apz.data.scrdata.loansm__loanDetails_Req.loanDtls.collateralDetails[rowno];
+    apz.loansm.loandetails.colDetails = Object.assign({},col_Details);
+   
+    apz.toggleModal({
+        targetId: "loansm__LoanDetails__pu_mdl_1"
+    });
+     apz.setElmValue("loansm__LoanDetails__colName", col_Details.collatName);
+    apz.setElmValue("loansm__LoanDetails__coltype", col_Details.collatType);
+    apz.setElmValue("loansm__LoanDetails__colvalue", apz.formatNumber({value:col_Details.collatValue,decimalSep:".",decimalPoints:"2",mask:"MILLION"})
+);
+    apz.setElmValue("loansm__LoanDetails__colallocatevalue", apz.formatNumber({value:col_Details.allocatedValue,decimalSep:".",decimalPoints:"2",mask:"MILLION"}));
+}
+apz.loansm.loandetails.fnCollateralMore = function(ths) {
+    debugger;
+ apz.toggleModal({
+        targetId: "loansm__LoanDetails__pu_mdl_1"
+    });
+var params = {};
+    params.appId = "assets";
+    params.scr = "AssetSummary";
+//    params.layout = "All";
+    params.div = "cmrnav__Launcher__Launcher";
+    params.userObj = {
+        from:"Loan",
+        collatCode :  apz.loansm.loandetails.colDetails.collatCode
+        
+    };
+    apz.launchApp(params);
+}

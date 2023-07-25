@@ -1,0 +1,70 @@
+{
+    "balanc__MonthlyBalance_Res": {
+        "datasets": [
+          {
+            "Months": "January",
+            "Amount": "11",
+            "Account": "3 Months Deposit"
+        }, {
+            "Months": "January",
+            "Amount": "8",
+            "Account": "6 Months Deposit"
+        }, {
+            "Months": "January",
+            "Amount": "30",
+            "Account": "12 Months Deposit"
+        }, {
+            "Months": "January",
+            "Amount": "20",
+            "Account": "24 Months Deposit"
+        },{
+            "Months": "February",
+            "Amount": "19",
+            "Account": "3 Months Deposit"
+        }, {
+            "Months": "February",
+            "Amount": "7",
+            "Account": "6 Months Deposit"
+        }, {
+            "Months": "February",
+            "Amount": "20",
+            "Account": "12 Months Deposit"
+        }, {
+            "Months": "February",
+            "Amount": "10",
+            "Account": "24 Months Deposit"
+        },{
+            "Months": "March",
+            "Amount": "11",
+            "Account": "3 Months Deposit"
+        }, {
+            "Months": "March",
+            "Amount": "23",
+            "Account": "6 Months Deposit"
+        }, {
+            "Months": "March",
+            "Amount": "30",
+            "Account": "12 Months Deposit"
+        }, {
+            "Months": "March",
+            "Amount": "12",
+            "Account": "24 Months Deposit"
+        },{
+            "Months": "April",
+            "Amount": "11",
+            "Account": "3 Months Deposit"
+        }, {
+            "Months": "April",
+            "Amount": "28",
+            "Account": "6 Months Deposit"
+        }, {
+            "Months": "April",
+            "Amount": "30",
+            "Account": "12 Months Deposit"
+        }, {
+            "Months": "April",
+            "Amount": "13",
+            "Account": "24 Months Deposit"
+        }]
+    }
+}

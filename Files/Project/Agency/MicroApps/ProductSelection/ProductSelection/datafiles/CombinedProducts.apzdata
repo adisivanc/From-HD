@@ -1,0 +1,103 @@
+ [{
+     "productName": "Accounts",
+     "subProducts": [{
+         "subProductName": "Savings Account",
+         "productAlias": "Savings Account",
+         "description": "A savings account is a basic type of bank account that allows you to deposit money, keep it safe, and withdraw funds, all while earning interest",
+         "productName": "Accounts",
+         "icon": "savings-account.svg"
+     }, {
+         "subProductName": "Premier Savings",
+         "productAlias": "Premier Savings",
+         "description": "An exclusive account that offers higher rates as you save more.",
+         "productName": "Accounts",
+         "icon": "premier-savings.svg"
+     }, {
+         "subProductName": "Total Checking",
+         "productAlias": "Total Checking",
+         "description": "Ideal when you are looking for value and convenience.",
+         "productName": "Accounts",
+         "icon": "total-checking.svg"
+     }, {
+         "subProductName": "Premier Plus Checking",
+         "productAlias": "Premier Plus Checking",
+         "description": "Ideal when you need exclusive products and services you can access globally.",
+         "productName": "Accounts",
+         "icon": "premier-plus-checking.svg"
+     }]
+ },{
+     "productName": "Deposits",
+     "subProducts": [{
+         "subProductName": "3 Months Deposit",
+         "productAlias": "3 Months Deposit",
+         "description": "0.40% APY for 3 Months.",
+         "productName": "Deposits",
+         "icon": "deposit.svg"
+     }, {
+         "subProductName": "6 Months Deposit",
+         "productAlias": "6 Months Deposit",
+         "description": "0.75% APY for 6 Months.",
+         "productName": "Deposits",
+         "icon": "wallet1.svg"
+     }, {
+         "subProductName": "12 Months Deposit",
+         "productAlias": "12 Months Deposit",
+         "description": "0.75% APY for 12 Months.",
+         "productName": "Deposits",
+         "icon": "wallet2.svg"
+     }, {
+         "subProductName": "24 Months Deposit",
+         "productAlias": "24 Months Deposit",
+         "description": "1.30% APY for 24 Months.",
+         "productName": "Deposits",
+         "icon": "wallet3.svg"
+     }]
+ }, {
+     "productName": "Loans",
+     "subProducts": [{
+         "subProductName": "Personal Line of Credit",
+         "productAlias": "Personal Line of Credit",
+         "description": "Be ready for life’s changes and the changes you want to make in life, with a personal line of credit.",
+         "productName": "Loans",
+         "icon": "loan.svg"
+     }, {
+         "subProductName": "Home Loan",
+         "productAlias": "Home Loan",
+         "description": "First home, new home, investment property, condo – we're here to help with your mortgage needs.",
+         "productName": "Loans",
+         "icon": "mortgage.svg"
+     }, {
+         "subProductName": "Auto Loan",
+         "productAlias": "Auto Loan",
+         "description": "Get a low rate on purchase, refinance and lease buyout loans.",
+         "productName": "Loans",
+         "icon": "auto-loan.svg"
+     }]
+ }, {
+     "productName": "Cards",
+     "subProducts": [{
+         "subProductName": "Sapphire Preferred",
+         "productAlias": "Sapphire Preferred",
+         "description": "Premium travel & dining rewards. Earn 2X points on travel and dining at restaurants.",
+         "productName": "Cards",
+         "icon": "sapphire.svg"
+     }, {
+         "subProductName": "Premier World Elite",
+         "productAlias": "Premier World Elite",
+         "description": "Offering our richest rewards and access to elite travel benefits. Enjoy a credit card that compliments the way you live and travel.",
+         "productName": "Cards",
+         "icon": "world.svg"
+     }, {
+         "subProductName": "Prepaid Card",
+         "productAlias": "Travel Rewards",
+         "description": "Benefits include 2X miles at restaurants and on hotel accommodations and a free checked bag.",
+         "productName": "Cards",
+         "icon": "airplane.svg"
+     }, {
+         "subProductName": "Business Unlimited",
+         "productAlias": "Business Unlimited",
+         "description": "Unlimited 1.5% cash back. Earn unlimited 1.5% Cash Back rewards on every purchase made for your business.",
+         "productName": "Cards",
+         "icon": "planning.svg"
+     }]
+ }]

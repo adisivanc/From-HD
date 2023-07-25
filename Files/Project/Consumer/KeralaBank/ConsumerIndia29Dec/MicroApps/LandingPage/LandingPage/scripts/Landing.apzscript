@@ -1,0 +1,324 @@
+apz.landin.Landing = {};
+apz.landin.Landing.formatedValue = [];
+apz.app.onLoad_Landing = function(params) {
+    debugger;
+    LandingCommon.store(params);
+    $("#landin__Landing__ct_lst_2_row_0").removeClass("ssp");
+    apz.landin.Landing.init();
+    apz.data.loadJsonData("widgetIcon", "landin");
+}
+apz.landin.Landing.init = function() {
+    debugger;
+    //   if (apz.common.isMobile()) {
+    //         LandingCommon.launchApp("omnise", "SearchChatImpl", {
+    //             callBack: apz.landin.Landing.OmniSearchCB
+    //         }, "landin__Landing__launchOmniSearch");
+    //     }
+    $(".landing-logo").on("click", apz.landin.Landing.fnHome);
+    apz.landin.Landing.fnLoadMenuNavigator();
+    apz.landin.Landing.fnLoadNotification();
+    apz.startLoader();
+    apz.landin.Landing.fnCallServices();
+    apz.landin.Landing.fnHome();
+    setTimeout(function() {
+        //apz.stopLoader();
+        apz.landin.Landing.fnLaunchGreeting();
+    }, 50);
+};
+apz.landin.Landing.fnLoadMenuNavigator = function() {
+    apz.landin.Landing.menuNavigator = JSON.parse(apz.getFile(apz.getDataFilesPath("landin") + "/MenuNavigator.json"));
+};
+apz.landin.Landing.fnOnNotificationClick = function(ths) {
+    debugger;
+    NotificationHandler.launchApp($(ths).attr("rowno"));
+    $("#landin__Landing__notifyicon").trigger("click");
+    if (apz.common.isMobile()) {
+        $("#landin__Landing__gr_row_17").addClass("xband");
+    }
+}
+apz.landin.Landing.fnLaunchGreeting = function() {
+    debugger;
+    var grtUserObj = {
+        "userId": LandingCommon.getLoggedInUser(),
+        'modaldiv': "landin__Landing__greeting"
+    };
+    apz.common.launchApp("grtprm", "Greeting", grtUserObj, "landin__Landing__launchGreeting");
+};
+apz.landin.Landing.fnLoadNotification = function() {
+    apz.data.loadJsonData("Notifications", "landin");
+};
+apz.landin.Landing.OmniSearchCB = function(intent, intentData) {
+    debugger;
+    $('#landin__Landing__gr_row_17').addClass("menuopened");
+    apz.consumerGlobals.omnisearch.search = true;
+    apz.toggleModal({
+        targetId: "landin__Landing__search"
+    });
+    var appId, scr;
+    var userObj = {...(LandingCommon.getPassingObj()), "transferDetails": "",
+        "entities": intentData,
+        "from": "Search"
+    };
+    switch (intent) {
+        case "billpayment":
+            appId = "bllpay";
+            scr = "BillPaymentSummary";
+            break;
+        case "transfer":
+            appId = "fndftr";
+            scr = "FundsTransfer";
+            userObj.message = searchObj.message;
+            userObj.userId = LandingCommon.getLoggedInUser();
+            break;
+    }
+    LandingCommon.launchMicroApp(appId, scr, userObj);
+};
+apz.landin.Landing.fnHome = function() {
+    debugger;
+    $("#landin__Landing__sc_col_36").addClass("sno");
+    $("body").removeClass("dollarCurrency");
+    if (apz.consumerGlobals.omnisearch.search == true) {
+        $('#landin__Landing__gr_row_17').toggleClass("menuopened");
+    }
+    apz.consumerGlobals.omnisearch.search = false;
+    if (apz.consumerGlobals.camera.scan == true) {
+        apz.ns.stopBarcodeScan({
+            id: "BARCODE_ID"
+        });
+    }
+    $(".srbtn").addClass("sno")
+    LandingCommon.setHeading("Relationship Overview");
+    if (apz.common.isMobile()) {
+        if (apz.consumerGlobals.Notification.notify) {
+            apz.consumerGlobals.Notification.notify = false;
+            apz.landin.Landing.fnlaunchBillpayment();
+        } else {
+            LandingCommon.launchApp("moblan", "Home", LandingCommon.getPassingObj());
+            $("#landin__Landing__gr_row_17").removeClass("xband");
+            $("#landin__Landing__gr_row_16").removeClass("sno");
+            $("#landin__Landing__gr_row_16").addClass("expandmenu");
+        }
+    } else {
+        LandingCommon.launchApp("dashbo", "Dashboard", LandingCommon.getPassingObj());
+    }
+    $("#landin__Landing__TitleRow").addClass("sno");
+};
+apz.landin.Landing.fnLogout = function() {
+    $("head > link[href*='ConsumerV01\.css']")[0].disabled = false;
+    $("body").removeClass("landingtheme2");
+    var links = LandingCommon.getStyleLinks();
+    setTimeout(function() {
+        LandingCommon.disableStyleLinks();
+        links[0].disabled = false;
+        apz.common.launchScreen("baseap", "Launcher", {});
+    }, 100)
+};
+apz.landin.Landing.fnCallServices = async function() {
+    debugger;
+    fetchMenu = LandingCommon.FetchDetails("landin", "UserRoleMenu_Query", "N", "N", {
+        "vwUserRoleMenu": {
+            appId: "baseap",
+            userId: LandingCommon.getLoggedInUser()
+        }
+    });
+    fetchTheme = LandingCommon.FetchDetails("landin", "fetchTheme_Query", "N", "N", {
+        "vwUserTheme": {
+            appId: "baseap",
+            userName: LandingCommon.getLoggedInUser()
+        }
+    });
+    try {
+        let[menuResp, themeResp] = await Promise.all([fetchMenu, fetchTheme]);
+        apz.landin.Landing.configureThemeResp(themeResp);
+        apz.landin.Landing.configureMenuResp(menuResp);
+    } catch (e) {
+        console.log(e);
+    }
+};
+apz.landin.Landing.configureThemeResp = function(pResp) {
+    debugger;
+    if (!pResp.errors) {
+        if (pResp.res.landin__fetchTheme_Res && pResp.res.landin__fetchTheme_Res.vwUserTheme) {
+            themeName = pResp.res.landin__fetchTheme_Res.vwUserTheme.themeName;
+        } else if (apz.data.scrdata.landin__fetchTheme_Res.appzillonBody.vwUserTheme) {
+            themeName = pResp.res.landin__fetchTheme_Res.appzillonBody.vwUserTheme.themeName;
+        } else {
+            themeName = "LightTheme";
+        }
+        var links = LandingCommon.getStyleLinks();
+        LandingCommon.disableStyleLinks();
+        switch (themeName) {
+            case "ChildTheme":
+                links[2].disabled = false;
+                break;
+            case "DarkTheme":
+                links[1].disabled = false;
+                break;
+            case "LightTheme":
+                links[0].disabled = false;
+                break;
+            default:
+                links[0].disabled = false;
+                break;
+        }
+        setTimeout(function() {
+            LandingCommon.disableDefaultStyle();
+        }, 2000)
+    } else {
+        LandingCommon.disableStyleLinks();
+        LandingCommon.getStyleLinks()[0].disabled = false;
+        LandingCommon.disableDefaultStyle();
+    }
+};
+apz.landin.Landing.configureMenuResp = function(pResp) {
+    debugger
+    if (pResp.status) {
+        if (pResp.res.landin__UserRoleMenu_Res) {
+            if (pResp.res.landin__UserRoleMenu_Res.vwUserRoleMenu) {
+                MenuHandler.store(pResp.res.landin__UserRoleMenu_Res.vwUserRoleMenu);
+                apz.landin.Landing.formatedValue = MenuHandler.formatMenu();
+            } else if (pResp.res.landin__UserRoleMenu_Res.appzillonBody.vwUserRoleMenu) {
+                MenuHandler.store(pResp.res.landin__UserRoleMenu_Res.vwUserRoleMenu);
+                apz.landin.Landing.formatedValue = MenuHandler.formatMenu();
+            }
+        } else if (pResp.res.landin__UserRoleMenu_Req) {
+            if (pResp.res.landin__UserRoleMenu_Req.vwUserRoleMenu) {
+                MenuHandler.store(pResp.res.landin__UserRoleMenu_Res.vwUserRoleMenu);
+                apz.landin.Landing.formatedValue = MenuHandler.formatMenu();
+            }
+        } else {
+            defaultmenus = JSON.parse(apz.getFile(apz.getDataFilesPath("landin") + "/DefaultMenus.json"))
+            MenuHandler.store(defaultmenus.vwUserRoleMenu);
+            apz.landin.Landing.formatedValue = MenuHandler.formatMenu();
+        }
+        apz.landin.Landing.fnLoadMenu(apz.landin.Landing.formatedValue["All"]);
+        apz.data.loadData("Menu", "landin");
+    } else {
+        apz.displayMsg({
+            message: "No roles assigned to userID " + apz.csmrbk.landingpage.currentUser
+        });
+    }
+}
+apz.landin.Landing.fntoggleSideBar = function() {
+    debugger;
+    $("#landin__Landing__menurow").toggleClass("sno");
+    $("#landin__Landing__menuOpenbtn").toggleClass("sno")
+    $("#landin__Landing__menuClosebtn").toggleClass("sno");
+    $('#landin__Landing__gr_row_17').toggleClass("menuopened");
+}
+apz.landin.Landing.fnMenuClick = function(ths) {
+    debugger;
+    $("#landin__Landing__sc_col_36").addClass("sno");
+    $("body").removeClass("dollarCurrency");
+    let menuName = ths.textContent;
+    let menuContent = apz.landin.Landing.formatedValue[menuName];
+    if (menuContent.length) {
+        LandingCommon.showBreadScrumb(menuName);
+        apz.landin.Landing.fnLoadMenu(menuContent);
+    } else {
+        LandingCommon.setHeading(menuName);
+        let[appId, scr, userObj] = apz.landin.Landing.menuNavigator[menuName];
+        if (!userObj.data) {
+            userObj["data"] = {};
+        }
+        userObj["data"].userId = LandingCommon.getLoggedInUser();
+        userObj["data"].accountNo = LandingCommon.getAccountNumbers();
+        userObj["control"] = {};
+        userObj["control"].callBack = apz.landin.Landing.fnHome;
+        userObj["control"].exitApp = {
+            div: "landin__Landing__launcher",
+            callBack: apz.landin.Landing.fnHome
+        };
+        LandingCommon.launchMicroApp(appId, scr, userObj);
+        $("#landin__Landing__menuClosebtn").trigger("click");
+        apz.landin.Landing.fnLoadMainMenu();
+        $("#landin__Landing__TitleRow").removeClass("sno");
+        if (apz.common.isMobile() && !$("#landin__Landing__gr_row_17").hasClass("xband")) {
+            $("#landin__Landing__gr_row_17").toggleClass("xband");
+        }
+    }
+},
+apz.landin.Landing.fnMenuClickInside = function(menuName, obj = {}) {
+    debugger;
+    $("#landin__Landing__sc_col_36").addClass("sno");
+    $("body").removeClass("dollarCurrency");
+    let menuContent = apz.landin.Landing.formatedValue[menuName];
+    LandingCommon.setHeading(menuName);
+    let[appId, scr, userObj] = apz.landin.Landing.menuNavigator[menuName];
+    if (!userObj.data) {
+        userObj["data"] = {};
+    }
+    userObj["data"].userId = LandingCommon.getLoggedInUser();
+    userObj["data"].accountNo = LandingCommon.getAccountNumbers();
+    userObj["control"] = {};
+    userObj["control"].callBack = apz.landin.Landing.fnHome;
+    userObj["control"].exitApp = {
+        div: "landin__Landing__launcher",
+        callBack: apz.landin.Landing.fnHome
+    }
+    userObj = {...userObj, obj
+    };
+    LandingCommon.launchMicroApp(appId, scr, userObj);
+    $("#landin__Landing__TitleRow").removeClass("sno");
+    $("#landin__Landing__gr_row_17").addClass("xband");
+    $("#landin__Landing__gr_row_16").addClass("sno");
+    $("#landin__Landing__gr_row_16").removeClass("expandmenu");
+}
+apz.landin.Landing.fnLoadMenu = function(content) {
+    apz.data.scrdata.landin__Menu_Res = MenuHandler.restructureToArayyObj(content);
+    apz.data.loadData("Menu", "landin");
+}
+apz.landin.Landing.fnLoadMainMenu = function() {
+    LandingCommon.clearBreadScrumb();
+    apz.landin.Landing.fnLoadMenu(apz.landin.Landing.formatedValue["All"]);
+}
+apz.landin.Landing.fnBreadScrumbNavigation = function(ths, level) {
+    debugger;
+    let menuName = ths.textContent;
+    let menuContent = apz.landin.Landing.formatedValue[menuName];
+    apz.landin.Landing.fnLoadMenu(menuContent);
+    LandingCommon.hideBcLevels(level);
+}
+apz.landin.Landing.toggleQuicklinkStrip = function() {
+    debugger;
+    $("#landin__Landing__gr_row_16").toggleClass("expandmenu");
+    $("#landin__Landing__gr_row_17").toggleClass("xband");
+    $("#moblan__Home__gr_row_1").toggleClass("expandmenu")
+    $("#landin__Landing__gr_row_16").toggleClass("sno");
+    $("#landin__Landing__launcher").toggleClass("expandmenu")
+    $("#landin__Landing__sidebar").toggleClass("sno");
+}
+apz.landin.Landing.fnlaunchBillpayment = function() {
+    debugger;
+    var lLaunchParams = {
+        "appId": "bilpay",
+        "scr": "OneTimeBillPay",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "data": {
+                "customerID": "1",
+                "message": apz.consumerGlobals.Notification.notifyMessage
+            },
+            "control": {
+                "exitApp": {
+                    "appId": "baseap",
+                    "div": "landin__Landing__launcher",
+                    "callBack": apz.landin.Landing.fnHome
+                }
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.landin.Landing.fnlaunchServiceReqStatus = function() {
+    debugger;
+    var lLaunchParams = {
+        "appId": "servic",
+        "scr": "StatusScreen",
+        "div": "landin__Landing__launcher",
+    }
+    apz.launchApp(lLaunchParams);
+    $(".srbtn").removeClass("sno")
+    $(".srbtn1").addClass("sno");
+    $("#landin__Landing__sc_col_36").addClass("sno");
+}

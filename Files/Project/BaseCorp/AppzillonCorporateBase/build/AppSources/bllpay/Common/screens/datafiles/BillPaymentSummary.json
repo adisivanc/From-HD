@@ -1,0 +1,65 @@
+{
+    "bllpay__BillPaymentSummary_Res": {
+        "summary": [
+            {
+            "providerImg": "4change.png",
+            "providerName": "4Change Energy",
+            "status": "Autopay Scheduled",
+            "dueDate": "05/07/2020",
+            "subsriberId": "3231212",
+            "billType": "Electricity",
+            "providerCategory": "4Change Energy",
+            "amount":"600.00"
+        },{
+            "providerImg": "uscelluar.png",
+            "providerName": "U.S. Cellular",
+            "status": "Autopay Scheduled",
+            "dueDate": "08/07/2020",
+            "subsriberId": "9600565673",
+            "billType": "Mobile",
+            "providerCategory": "U.S. Cellular",
+            "amount":"1,200.00"
+        },
+        {
+            "providerImg": "Airtel.png",
+            "providerName": "Airtel",
+            "status": "Autopay Scheduled",
+            "dueDate": "03/07/2020",
+            "subsriberId": "9600565673",
+            "billType": "Mobile",
+            "providerCategory": "Airtel",
+            "amount":"800.00"
+        },
+        {
+            "providerImg": "glory.png",
+            "providerName": "Glorystar",
+            "status": "pending",
+            "dueDate": "09/07/2020",
+            "subsriberId": "232323423",
+            "billType": "DishTV",
+            "providerCategory": "Glorystar",
+            "amount":"500.00"
+        },
+        {
+            "providerImg": "t-mobile.png",
+            "providerName": "T-Mobile",
+            "status": "Autopay Scheduled",
+            "dueDate": "02/07/2020",
+            "subsriberId": "8698345627",
+            "billType": "Mobile",
+            "providerCategory": "T-Mobile",
+            "amount":"878.00"
+        },
+        {
+            "providerImg": "berkshy.png",
+            "providerName": "Berkshire Hathaway",
+            "status": "pending",
+            "dueDate": "10/07/2020",
+            "subsriberId": "100100023234",
+            "billType": "Insurance",
+            "providerCategory": "Berkshire Hathaway",
+            "amount":"3,000.00"
+        }
+        ]
+    }
+}

@@ -1,0 +1,124 @@
+{
+    "budget__SetupBudget_Res": {
+        "Budget": [{
+                "budgetleft": "200 left",
+                "budgeticon": "home.svg",
+                "budgetCategory": "Home",
+                "budgetfrom": "8,000",
+                "budgetTo": "10,000",
+                "budgetProgress": "0.80",
+                "budgetEx": {
+                    "example": "Furniture, Educational Fees",
+                    "budgetfor1": "3,000",
+                    "budgetfor2": "4,000",
+                    "number" : "2"
+                }
+            }, {
+                "budgetleft": "30,000 left",
+                "budgeticon": "food.svg",
+                "budgetCategory": "Investments",
+                "budgetfrom": "20,000",
+                "budgetTo": "50,000",
+                "budgetProgress": "0.40",
+                "budgetEx": {
+                    "example": "SIP,NPS",
+                    "budgetfor1": "10,000",
+                    "budgetfor2": "5,000",
+                                        "number" : "2"
+
+                }
+            },
+                {
+                    "budgetleft": "30,000 left",
+                    "budgeticon": "food.svg",
+                    "budgetCategory": "Food and Dining",
+                    "budgetfrom": "20,000",
+                    "budgetTo": "50,000",
+                    "budgetProgress": "0.40",
+                    "budgetEx": {
+                    "example": "Grocery, Dinner Date",
+                    "budgetfor1": "5,000",
+                    "budgetfor2": "3,000",
+                                        "number" : "2"
+
+                }
+                },
+                {
+                    "budgetleft": "5,000 left",
+                    "budgeticon": "healthcare.svg",
+                    "budgetCategory": "HealthCare",
+                    "budgetfrom": "10,000",
+                    "budgetTo": "15,000",
+                    "budgetProgress": "0.80",
+                    "budgetEx": {
+                    "example": "Regular Health Checkup",
+                    "budgetfor1": "9,000",
+                                        "number" : "1"
+
+                }
+                },
+                {
+                    "budgetleft": "5,000 left",
+                    "budgeticon": "bills.svg",
+                    "budgetCategory": "Bills and Utilities",
+                    "budgetfrom": "10,000",
+                    "budgetTo": "15,000",
+                    "budgetProgress": "0.80",
+                     "budgetEx": {
+                    "example": "Electricity, Water , Internet",
+                    "budgetfor1": "5,000",
+                    "budgetfor2": "3,000",
+                    "budgetfor3" : "2,000",
+                                        "number" : "3"
+
+                }
+                    
+                },
+                {
+                    "budgetleft": "30,000 left",
+                    "budgeticon": "family.svg",
+                    "budgetCategory": "Auto and Transport",
+                    "budgetfrom": "50,000",
+                    "budgetTo": "80,000",
+                    "budgetProgress": "0.40",
+                     "budgetEx": {
+                    "example": "Travel",
+                    "budgetfor1": "15,000",
+                    "number" : "1"
+                }
+                },
+                {
+                    "budgetleft": "500 left",
+                    "budgeticon": "entertainment.svg",
+                    "budgetCategory": "Entertainment",
+                    "budgetfrom": "14,500",
+                    "budgetTo": "15,000",
+                    "budgetProgress": "0.90",
+                      "budgetEx": {
+                    "example": "Movie,Sports,Shopping",
+                    "budgetfor1": "1,000",
+                    "budgetfor2": "3,000",
+                                        "budgetfor3" : "5,000",
+                                                            "number" : "3"
+
+
+                }
+                },
+                {
+                    "budgetleft": "8000 left",
+                    "budgeticon": "others.svg",
+                    "budgetCategory": "Others",
+                    "budgetfrom": "2,000",
+                    "budgetTo": "10,000",
+                    "budgetProgress": "0.30",
+                    "budgetEx": {
+                    "example": "Transactions , ATM Withdrawal",
+                    "budgetfor1": "10,000",
+                    "budgetfor2": "3,000",
+                                        "number" : "2"
+
+
+                }
+                }]
+        }
+    }

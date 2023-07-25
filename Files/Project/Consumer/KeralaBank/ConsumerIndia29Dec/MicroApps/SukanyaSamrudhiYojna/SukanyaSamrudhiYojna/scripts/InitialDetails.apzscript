@@ -1,0 +1,94 @@
+apz.yojna.InitialDetails = {};
+apz.app.onLoad_InitialDetails = function() {
+}
+apz.yojna.InitialDetails.dispMsg = function(pResp, type) {
+    var params = {};
+    params.message = pResp;
+    params.type = type;
+    params.callBack = apz.app.displayMessageCallBack;
+    apz.dispMsg(params);
+}
+apz.yojna.InitialDetails.confirm = function() {
+    debugger;
+    var initialAmount = apz.getElmValue("yojna__InitialDetails__el_inp_1");
+    var accountNumber = apz.getElmValue("yojna__InitialDetails__el_dpd_1");
+    var startDate = apz.getElmValue("yojna__InitialDetails__el_inp_2");
+    var endDate = apz.getElmValue("yojna__InitialDetails__el_inp_3");
+    var amount = apz.getElmValue("yojna__InitialDetails__el_inp_4")
+    apz.yojna.Depositdetails = {
+        "accountNumber": accountNumber,
+        "startDate": startDate,
+        "endDate" : endDate,
+        "amount" : amount
+       
+    }
+    if(initialAmount < 1000)
+    {
+                apz.yojna.InitialDetails.dispMsg("the initail amount should be more than Rs 1,000", "E");
+
+    }
+    else{
+    // var lObj = {
+    //     "scr": "SuccessScreen",
+    //     "appId": "sucscr",
+    //     "div": "yojna__Launcher__launcher",
+    //     "userObj" :
+    //     {
+    //         "text" : "SSY created successfully"
+    //     }
+    // }
+    // apz.launchApp(lObj);
+      var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "yojna__Launcher__launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.yojna.InitialDetails.confirmCB,
+                "destroyDiv": "yojna__Launcher__launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+}
+apz.yojna.InitialDetails.confirmCB = function() {
+    var lLaunchParams = {
+        "appId": "sucscr",
+        "scr": "SuccessScreen",
+        "div": "yojna__Launcher__launcher",
+        "userObj": {
+            "text": "SSY created successfully"
+        }
+    }
+    apz.launchApp(lLaunchParams);
+
+
+}
+apz.yojna.InitialDetails.cancel = function() {
+    var lObj = {
+        "scr": "PersonalDetails",
+        "appId": "yojna",
+        "div": "yojna__Launcher__launcher"
+    }
+    apz.launchSubScreen(lObj);
+}
+
+apz.yojna.InitialDetails.calculateEndDate = function() {
+    debugger;
+    var lStartDate = apz.getElmValue("yojna__InitialDetails__el_inp_2");
+    var lFrequency = apz.getElmValue("yojna__InitialDetails__el_dpd_2");
+    var lTimes = apz.getElmValue("yojna__InitialDetails__el_dpd_3");
+    if (!apz.isNull(lStartDate) && !apz.isNull(lFrequency) && !apz.isNull(lTimes)) {
+        var date = Date.parseExact(encodeURIComponent(lStartDate), "dd-MMM-yyyy");
+        var lNum = lFrequency * (lTimes);
+        var lMon = date.getMonth()  + lNum;
+        var lEnddate = date.setMonth(lMon);
+        apz.setElmValue("yojna__InitialDetails__el_inp_3", date.toString("dd-MMM-yyyy"));
+    }
+}

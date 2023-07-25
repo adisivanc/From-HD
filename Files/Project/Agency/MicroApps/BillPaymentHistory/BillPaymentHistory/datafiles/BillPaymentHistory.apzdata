@@ -1,0 +1,45 @@
+{
+    "bphist__BillPaymentHistory_Res": [{
+        "refNumber":"53423",
+        "paymentDate":"25/06/2020",
+        "provider":"Airtel",
+        "amount":120,
+        "custmerId":"987111823"
+    },{
+        "refNumber":"53566",
+        "paymentDate":"28/06/2020",
+        "provider":"Dish TV",
+        "amount":150,
+        "custmerId":"1726731"
+    },{
+        "refNumber":"53666",
+        "paymentDate":"29/06/2020",
+        "provider":"BESCOM",
+        "amount":200,
+        "custmerId":"110253237210"
+    },{
+        "refNumber":"53723",
+        "paymentDate":"21/06/2020",
+        "provider":"Vodafone",
+        "amount":80,
+        "custmerId":"987111823"
+    },{
+        "refNumber":"53823",
+        "paymentDate":"09/06/2020",
+        "provider":"Jio",
+        "amount":150,
+        "custmerId":"1726731"
+    },{
+        "refNumber":"53924",
+        "paymentDate":"20/06/2020",
+        "provider":"Adani Gas",
+        "amount":2000,
+        "custmerId":"110253237210"
+    },{
+        "refNumber":"53021",
+        "paymentDate":"15/06/2020",
+        "provider":"LIC",
+        "amount":4000,
+        "custmerId":"92138"
+    }]
+}

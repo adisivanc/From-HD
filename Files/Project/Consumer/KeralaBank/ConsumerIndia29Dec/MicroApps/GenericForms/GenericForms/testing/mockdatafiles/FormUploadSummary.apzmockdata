@@ -1,0 +1,25 @@
+{
+    "tbDbtpFrmUpload": [
+        {
+            "customerId": "100032892",
+            "dateOfUpload": "12 Apr 2018",
+            "docUploaded": "Form 15AA",
+            "docName": "Form 15AA_Aditya",
+            "docPath": "docs"
+        },
+        {
+            "customerId": "100032892",
+            "dateOfUpload": "07 Apr 2018",
+            "docUploaded": "Form 60",
+            "docName": "Form 60_Vishal_16545345",
+            "docPath": "docs"
+        },
+        {
+            "customerId": "100032892",
+            "dateOfUpload": "23 Mar 2018",
+            "docUploaded": "Form 15H/G",
+            "docName": "Suresh_Form 15H/G",
+            "docPath": "docs"
+        }
+    ]
+}

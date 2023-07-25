@@ -1,0 +1,13 @@
+{
+    "Credit Card Payments": ["cdtcrd", "CreditCardDashboard", {"data":{}}],
+    "Spend Analysis": ["spndas", "SpendDashboard", {"data":{}}],
+    "Earn and Spends": ["ernspn", "EarnAndSpend", {"data":{}}],
+    "Calendar": ["Calend", "demonew", {"data":{}}],
+    "Upcoming Payments": ["bllpay", "UpcomingDashboard", {"data":{}}],
+    "Foreign Exchange Rates": ["Rates", "feDashboard", {"data":{}}],
+    "Messages": ["messag", "MessageDashboard", {"data":{}}],
+    "Announcements": ["pmtapp", "PromotionDashboard", {"data":{}}],
+    "Expenses": ["accstm", "expenses", {"data":{}}],
+    "Recent Transactions": ["accstm", "recentTransaction", {"data":{}}]
+    
+}

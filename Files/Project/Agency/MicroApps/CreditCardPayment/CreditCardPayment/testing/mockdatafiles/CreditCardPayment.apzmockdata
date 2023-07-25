@@ -1,0 +1,18 @@
+{
+	"creditCardTransaction":{
+		"creditCardNumberList":[{"val":"378282000000000","desc":"378282000000000"
+	}
+	,{
+		"val":"478282000000000","desc":"478282000000000"
+	}
+	],"payment":{
+		"value":"Accounts"
+	}
+	,"fromAccountList":[{"val":"209871678897","desc":"209871678897","balance":"50000"
+}
+,{
+	"val":"265765768768","desc":"265765768768","balance":"40000"
+}
+]
+}
+}

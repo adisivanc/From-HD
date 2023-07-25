@@ -1,0 +1,108 @@
+apz.cdtcrd.CreditCardMobile = {};
+var index = "";
+apz.app.onLoad_CreditCardMobile = function(params) {
+    apz.data.loadJsonData("CreditCardDash", "cdtcrd");
+               $('#cdtcrd__CreditCardMobile__el_btn_1').removeAttr("disabled");
+               $('#cdtcrd__CreditCardMobile__el_btn_5').removeAttr("disabled");
+
+    
+}
+
+
+apz.cdtcrd.CreditCardMobile.fnPay = function(ths){
+    debugger;
+       $("body").removeClass("loginby");
+    $("body").removeClass("landingtheme2");
+      $("#landin__Landing__gr_row_16").removeClass("expandmenu");
+     $("#landin__Landing__gr_row_17").addClass("xband"); 
+    //$("#moblan__Home__gr_row_1").toggleClass("expandmenu")
+    $("#landin__Landing__gr_row_16").addClass("sno");
+    $("#landin__Landing__launcher").addClass("expandmenu")
+    $("#landin__Landing__sidebar").removeClass("sno");
+    $("#landin__Landing__TitleRow").removeClass("sno");
+
+    index = ths;
+    data     = apz.data.scrdata.cdtcrd__CCDetailsDash_Res.creditCardDtls[index];
+     var lLaunchParams = {
+        "appId": "bllpay",
+        "scr": "Launcher",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "from":"creditcard",
+            "data": {
+                "customerID": "9600565673",
+                "actionscr" : "CreditCard",
+                "details" : data
+            },
+            
+            "control": {
+                "exitApp": {
+                    "appId": "landin",
+                    "div": "landin__Landing__launcher",
+                    "callBack": apz.landin.Landing.fnHome
+                }
+            },
+            
+            }
+    };
+    
+    apz.launchApp(lLaunchParams)
+}
+
+
+ apz.cdtcrd.CreditCardMobile.launchStatement = function(ths) {
+    debugger;
+                    $("body").removeClass("landingtheme2");
+    $("body").removeClass("loginby");
+        $("#landin__Landing__gr_row_16").removeClass("expandmenu");
+     $("#landin__Landing__gr_row_17").addClass("xband"); 
+    //$("#moblan__Home__gr_row_1").toggleClass("expandmenu")
+    $("#landin__Landing__gr_row_16").addClass("sno");
+    $("#landin__Landing__launcher").addClass("expandmenu")
+    $("#landin__Landing__sidebar").removeClass("sno");
+    $("#landin__Landing__TitleRow").removeClass("sno");
+     apz.data.loadJsonData("CCDetailsReq","cdtcrd");
+    apz.data.scrdata.cdtcrd__CCDetails_Req = {};
+    apz.data.scrdata.cdtcrd__CCDetails_Req.ccSummary = [];
+    apz.data.scrdata.cdtcrd__CCDetails_Req.ccSummary = apz.data.scrdata.cdtcrd__CCDetailsReq_Res.creditCardDtls;//apz.cdtcrd.creditcarddetails.sParams.data.creditCardDtls;
+    
+     apz.data.loadData("CCDetails", "cdtcrd");
+   
+       rowNo = ths;
+  
+    var lRec =    apz.data.scrdata.cdtcrd__CCDetails_Req.ccSummary[rowNo];
+    var lObj = {
+        "scr": "Tabs",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "action": "Summary",
+            "data": lRec,
+            "from" : "Dashboard"
+            
+        }
+    };
+   
+       apz.launchSubScreen(lObj);
+
+ }
+ 
+ apz.cdtcrd.CreditCardMobile.launchDetails = function() {
+    debugger;
+        $("body").removeClass("loginby");
+        $("body").removeClass("landingtheme2");
+        
+         $("#landin__Landing__gr_row_16").removeClass("expandmenu");
+     $("#landin__Landing__gr_row_17").addClass("xband"); 
+    //$("#moblan__Home__gr_row_1").toggleClass("expandmenu")
+    $("#landin__Landing__gr_row_16").addClass("sno");
+    $("#landin__Landing__launcher").addClass("expandmenu")
+    $("#landin__Landing__sidebar").removeClass("sno");
+    $("#landin__Landing__TitleRow").removeClass("sno");
+    var lparams = {
+        "scr": "CreditCardDetails",
+        "div": "landin__Landing__launcher",
+        "appId": "cdtcrd"
+    };
+    apz.launchSubScreen(lparams);
+}
+ 

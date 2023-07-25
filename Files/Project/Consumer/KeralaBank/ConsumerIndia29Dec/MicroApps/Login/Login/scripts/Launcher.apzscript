@@ -1,0 +1,178 @@
+apz.login.Launcher = {};
+launcher = apz.login.Launcher;
+launcher.id = "login__Launcher";
+sCache = {};
+apz.languagedChanged = false
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+    sCache = params;
+    $("body").removeClass("landingby");
+
+};
+apz.app.onShown_Launcher = function(params) {
+    debugger;
+
+    apz.login.Launcher.init(params);
+}
+apz.login.Launcher.init = function(params) {
+    debugger;
+    apz.screenLaunched = true
+
+ if (params.language) {
+apz.languagedChanged = true;
+        apz.setElmValue(launcher.id + "__language", params.language);
+    }
+
+      apz.login.Launcher.fnthemechange();
+    apz.common.launchSubScreen("login", "Login", {...sCache,}, "login__Launcher__loginLauncher");
+};
+apz.login.Launcher.fnChangeLanguage = function() {
+    debugger;
+    if(!apz.languagedChanged){
+
+    const language = apz.getElmValue(launcher.id + "__language");
+
+
+
+
+    apz.changeLanguage(language, "baseap");
+let json = {};
+    json.id = "setUserPrefs";
+    json.callBack = apz.login.Launcher.changeLanguageCB;
+    json.userprefs = {
+        "LANGUAGE": apz.language
+    };
+    apz.ns.setUserPrefs(json);
+
+    //apz.common.launchApp("baseap", "Launcher", {...sCache, language : language}, sCache.control.parentDiv);
+var params = {};
+params.appId = "baseap";
+params.scr = "Launcher";
+params.userObj = {
+...sCache,
+language : language
+}
+apz.launchScreen(params);
+    apz.languagedChanged = true
+    }
+};
+apz.login.Launcher.changeLanguageCB = function(params)
+{
+debugger;
+}
+apz.login.Launcher.fncallBack = function() {
+    debugger
+    if (apz.common.isMobile) {
+        apz.toggleFooter();
+    }
+    apz.common.launchApp("login", "Launcher", {...sCache}, sCache.control.parentDiv);
+}
+
+apz.login.Launcher.onPreLoginLinkClicked = function(ths) {
+    debugger;
+    var userObj = {
+        "action": "Registration",
+        "callBack": apz.login.Launcher.fncallBack,
+        "distroyDiv": sCache.control.parentDiv
+    }
+    switch (ths.textContent) {
+        case "Rates":
+            apz.common.launchApp("Rates", "MainScreen", {
+                callBack: apz.login.Launcher.fncallBack,
+                "from": "prelogin"
+            }, sCache.control.parentDiv);
+            break;
+        case "ChatBot":
+            apz.login.Launcher.fnOpenBrowserTab("https://aitest.appzillon.com/ChatBotMultiLanguage/");
+            break;
+        case "SMS Banking":
+            apz.common.launchApp("smsban", "SMSBanking", {
+                callBack: apz.login.Launcher.fncallBack
+            }, sCache.control.parentDiv);
+            break;
+        case "Skype":
+            apz.common.skypeCall(function(resp){
+                debugger;
+            });
+            break;
+        case "About Us":
+            apz.login.Launcher.fnOpenBrowserTab("https://www.i-exceed.com/overview/");
+            break;
+        case "Products and Services":
+            apz.login.Launcher.fnOpenBrowserTab("https://www.i-exceed.com/appzillon-digital-banking-solution/");
+            break;
+        case "Customer Care":
+            apz.login.Launcher.fnOpenBrowserTab("https://www.i-exceed.com/contact-us/");
+            break;
+        case "Registration":
+            apz.common.launchApp("logreg", "Launcher", userObj, sCache.control.parentDiv);
+            break;
+        case "Location":
+            apz.common.launchApp("lcteus", "Locator", {
+                callBack: apz.login.Launcher.fncallBack
+            }, sCache.control.parentDiv);
+    }
+    if (apz.common.isMobile()) {
+        apz.toggleModal({
+            targetId: "csmrbk__Login__more"
+        });
+        if((ths.textContent != "About Us") &&(ths.textContent != "Products and Services") &&(ths.textContent != "Customer Care") &&(ths.textContent != "Skype")&&(ths.textContent != "ChatBot"))
+        {
+        apz.toggleFooter();
+        }
+    }
+      $("body").removeClass("loginby");
+      $("body").removeClass("modal-open");
+};
+
+apz.login.Launcher.fnOpenBrowserTab = function(params,) {
+    debugger;
+   apz.common.fnOpenBrowserTab(params,function(resp){debugger;});
+};
+
+apz.login.Launcher.fnBiometricApiCall = function() {
+    debugger;
+    LoginCommon.enableFingerPrint();
+   apz.common.Biometric(apz.login.Launcher.fnBiometricApiCallCB);
+};
+apz.login.Launcher.fnBiometricApiCallCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        LoginCommon.signIn(function(pResp) {
+          apz.toggleFooter();
+          var userObj= {
+            data :{
+              userId:  LoginCommon.getUserId()
+            },
+             control:{
+                  "distroyDiv": Login.sCache.control.parentDiv
+             }
+        };
+     apz.common.launchApp("landin","Landing",userObj,sCache.control.parentDiv);
+   if(apz.common.isMobile()){
+     $("body").addClass("loginby");  
+   }else{
+       $("body").removeClass("loginby");
+   }
+     
+        });
+    } else {
+        apz.dispMsg({
+            message: pResp.text
+        });
+    }
+}
+
+
+apz.login.Launcher.fnthemechange = function()
+{
+    debugger;
+    links = $("head > link[href*='Theme\.css']");
+    Array.from(links).forEach(function(link){
+               link.disabled = true;
+            });
+    links[0].disabled = false;
+   // $("head > link[href*='UAB\.css']")[0].disabled = true;
+    
+}
+    

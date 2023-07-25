@@ -1,0 +1,53 @@
+{
+    "balanc__MonthlyBalance_Res": {
+        "datasets": [{
+            "Months": "Jul",
+            "Amount": "19995",
+            "Account": "100009312263"
+        }, {
+            "Months": "Jul",
+            "Amount": "15992",
+            "Account": "100009312401"
+        },  {
+            "Months": "Jul",
+            "Amount": "46504",
+            "Account": "100009312274"
+        }, {
+            "Months": "Aug",
+            "Amount": "10188.33",
+            "Account": "100009312263"
+        }, {
+            "Months": "Aug",
+            "Amount": "17624.33",
+            "Account": "100009312401"
+        }, {
+            "Months": "Aug",
+            "Amount": "52504",
+            "Account": "100009312274"
+        },{
+            "Months": "Sep",
+            "Amount": "19928.33",
+            "Account": "100009312263"
+        }, {
+            "Months": "Sep",
+            "Amount": "10059.33",
+            "Account": "100009312401"
+        }, {
+            "Months": "Sep",
+            "Amount": "51004",
+            "Account": "100009312274"
+        },{
+            "Months": "Oct",
+            "Amount": "50000",
+            "Account": "100009312263"
+        }, {
+            "Months": "Oct",
+            "Amount": "65000",
+            "Account": "100009312401"
+        },  {
+            "Months": "Oct",
+            "Amount": "60000",
+            "Account": "100009312274"
+        }]
+    }
+}

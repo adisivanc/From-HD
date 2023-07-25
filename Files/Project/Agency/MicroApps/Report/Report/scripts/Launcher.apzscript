@@ -1,0 +1,19 @@
+apz.report.launcher = {};
+apz.report.launcher.sParams = {};
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+apz.report.launcher.sParams = params;
+    apz.report.launcher.launchCharts();
+};
+apz.app.onShown_Launcher = function(params) {
+    debugger;
+};
+apz.report.launcher.launchCharts = function(){
+    
+    var lParams = {
+        "appId": "balanc",
+        "scr": "Products",
+        "div": "report__Launcher__launcher"
+    };
+    apz.launchScreen(lParams);
+}

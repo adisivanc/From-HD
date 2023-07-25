@@ -1,0 +1,44 @@
+baseap = {};
+baseap = apz.baseap;
+baseapId = "baseap__Launcher__";
+apz.app.onLoad_Launcher = function(params){
+    debugger;
+    baseap.init();
+};
+apz.app.onShown_Launcher = function(params){
+    baseap.sCache = params;
+    baseap.fnlaunchLogin(params);
+};
+baseap.init=function(){
+    debugger;
+     baseap.appendHTML();
+     baseap.addRemoveHtmlClassName();
+     if(apz.common.isMobile()){
+          apz.common.PushNotificationRegistration(baseap.notificationstartListenerCallback);
+     }
+};
+baseap.addRemoveHtmlClassName =  function(){};
+
+baseap.fnlaunchLogin = function(params){
+    debugger;
+  lang = params.language?params.language:null;
+  apz.common.launchApp("login","Launcher",{language:lang,control:{parentDiv:baseapId+"Launcher"}},baseapId+"Launcher");      
+};
+baseap.fnCallBack = function(){
+    debugger;
+    baseap.fnlaunchLogin();
+};
+
+baseap.appendHTML= function(){
+    $("head").append('<meta name="format-detection" content="telephone=no">');
+    $("head").append('<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">');
+};
+baseap.notificationstartListenerCallback = function(resp){
+    debugger;
+     if (resp.action_code == "Pay") {
+        apz.consumerGlobals.Notification.notify = true;
+        apz.consumerGlobals.Notification.notifyMessage = resp.message;
+    } else if (resp.action_code == "Apply") {
+       apz.consumerGlobals.Notification.saver = true;
+    }
+};

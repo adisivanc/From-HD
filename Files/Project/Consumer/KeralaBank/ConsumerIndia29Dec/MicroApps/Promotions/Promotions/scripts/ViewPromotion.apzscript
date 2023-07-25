@@ -1,0 +1,86 @@
+//declaration
+apz.pmtapp.ViewPromotion = {};
+apz.pmtapp.ViewPromotion.sCache = {};
+//on load functon
+apz.app.onLoad_ViewPromotion = function(params) {
+    debugger;
+ //apz.mockServer = true;
+    $("#"+params.div).removeClass("sno");
+    apz.pmtapp.ViewPromotion.sCache = params;
+    if (params.Navigation) {
+        apz.pmtapp.ViewPromotion.fnSetNavigation(params);
+    }
+    apz.pmtapp.ViewPromotion.fnGetViewPromotion(params.id);
+}
+//get view details from db
+apz.pmtapp.ViewPromotion.fnOnPromoClick = function(ths){
+    debugger;
+  $(ths).parent("ul").find("li").removeClass("promoteanimate");
+    $(ths).toggleClass("promoteanimate");
+  //  $(ths).children().children().eq(0).addClass("sno")
+ 
+
+}
+apz.pmtapp.ViewPromotion.fnGetViewPromotion=function(){
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "PromotionList_Query",
+        "buildReq": "N",
+        "paintResp": "Y",
+        "appId":"pmtapp",
+        "req":{
+            vwUserPromotion:{
+                appId:"baseap",
+                userId:apz.pmtapp.ViewPromotion.sCache.data.userId
+            }
+        },
+        "async": false,
+        "callBack": apz.pmtapp.ViewPromotion.fnGetViewPromotionCB
+    };
+    apz.server.callServer(lServerParams);
+}
+//callback function for get view details
+apz.pmtapp.ViewPromotion.fnGetViewPromotionCB=function(params){
+    debugger
+    if(!params.errors && params.res){
+        params.res.pmtapp__PromotionList_Req.vwUserPromotion.forEach(function(obj,index){
+            $("#pmtapp__PromotionList__i__vwUserPromotion__msg_"+index+"_txtcnt").html(obj.msg.replace(/-/g,"</br>$&"))
+        })
+    //   var result =  params.res.pmtapp__PromotionList_Req.vwUserPromotion.filter(function(item){
+    //         if(item.name == apz.pmtapp.ViewPromotion.sCache.userId){
+    //             return item
+    //         }
+    //     });
+        // params.res.pmtapp__PromotionList_Req.vwUserPromotion =  params.res.pmtapp__PromotionList_Req.vwUserPromotion;
+        // apz.data.loadData("PromotionList", "pmtapp")
+        $("#pmtapp__ViewPromotion__gr_row_3").show();
+    }else{
+        $("#pmtapp__ViewPromotion__gr_row_3").hide();
+        apz.dispMsg({
+            message:"No promotions found"
+        });
+    }
+    apz.stopLoader();
+}
+apz.pmtapp.ViewPromotion.fnSetNavigation = function(params) {
+    debugger;
+    apz.pmtapp.ViewPromotion.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "PROMOTIONS";
+    }
+    // lParams.backPressed = apz.cuacpf.CustAccPort.fnBack;
+    apz.pmtapp.ViewPromotion.Navigation(lParams);
+};
+apz.pmtapp.ViewPromotion.fnApply = function(ths){
+    debugger;
+    var rowno = $(ths).attr("rowno");
+    var promoObj = apz.data.scrdata.pmtapp__PromotionList_Req.vwUserPromotion[rowno];
+    if(promoObj.category == "Account"){
+         apz.common.fnOpenBrowserTab("http://52.230.122.45:8080/Onboarding/",function(resp){debugger;});
+    }else{
+    apz.dispMsg({"message":"Your request has been submitted","type":"S","callBack":apz.landin.Landing.fnHome});
+    }
+}

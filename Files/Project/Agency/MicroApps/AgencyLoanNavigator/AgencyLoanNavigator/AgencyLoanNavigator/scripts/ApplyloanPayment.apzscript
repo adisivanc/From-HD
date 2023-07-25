@@ -1,0 +1,97 @@
+ apz.agloan.ApplyloanPayment = {};
+ apz.app.onLoad_ApplyloanPayment = function(params) {
+     debugger;
+     var loantype = apz.agloan.Applyloan.loantype;
+     apz.setElmValue("agloan__ApplyloanPayment__ddlloantype", apz.agloan.Applyloan.loantype);
+     apz.setElmValue("agloan__ApplyloanPayment__ddlvehicletype", apz.agloan.Applyloan.vehicletype);
+     apz.setElmValue("agloan__ApplyloanPayment__ddlvehiclemake", apz.agloan.Applyloan.vehiclemake);
+     apz.setElmValue("agloan__ApplyloanPayment__inpmodel", apz.agloan.Applyloan.model);
+     apz.setElmValue("agloan__ApplyloanPayment__inpamount", apz.agloan.Applyloan.amount);
+     apz.setElmValue("agloan__ApplyloanPayment__inptermofloan", apz.agloan.Applyloan.termofloan);
+     apz.setElmValue("agloan__ApplyloanPayment__inpapr", apz.agloan.Applyloan.apr);
+     apz.setElmValue("agloan__ApplyloanPayment__inpdebitaccount", apz.getElmValue("agloan__ApplyloanPayment__ddldebitaccount"));
+     if (loantype == "2") {
+         $("#agloan__ApplyloanPayment__rowvehicle").removeClass("sno");
+         $("#agloan__ApplyloanPayment__colmodel").removeClass("sno");
+     } else {
+         $("#agloan__ApplyloanPayment__rowvehicle").addClass("sno");
+         $("#agloan__ApplyloanPayment__colmodel").addClass("sno");
+     }
+     $("#agloan__ApplyloanPayment__progresStep_ext li").on("click", function() {
+         apz.agloan.ApplyloanPayment.fnProgressClick(this)
+     })
+     $("#agloan__ApplyloanPayment__progresStep_ext > li:nth-child(3)")[0].className="pgst-step pgs-100";
+ };
+ apz.agloan.ApplyloanPayment.fnonPayment = function(){
+     var val = apz.getElmValue("agloan__ApplyloanPayment__radPayment");
+    if (val == "yes") {
+        $("#agloan__ApplyloanPayment__rowtoaccount").removeClass("sno");
+    } else {
+        $("#agloan__ApplyloanPayment__rowtoaccount").addClass("sno");
+    }
+ }
+ apz.agloan.ApplyloanPayment.fnondebitacc = function(){
+     apz.setElmValue("agloan__ApplyloanPayment__inpdebitaccount", apz.getElmValue("agloan__ApplyloanPayment__ddldebitaccount"));
+ }
+ apz.agloan.ApplyloanPayment.gotoOTP = function() {
+     var div = apz.agloan.Applyloan.sparams.control.exitApp.div;
+     var lLaunchParams = {
+         "appId": "otpeng",
+         "scr": "ProcessOTP",
+         "div": div,
+         "userObj": {
+             "action": "SetRefNo",
+             "data": {
+                 "OTPRefNo": "214"
+             },
+             "control": {
+                 "appId": "otpeng",
+                 "callBack": apz.agloan.ApplyloanPayment.gotoOTPCB,
+                 "destroyDiv": div
+             }
+         }
+     };
+     apz.launchApp(lLaunchParams);
+ }
+ apz.agloan.ApplyloanPayment.gotoOTPCB = function() {
+     var div = apz.agloan.Applyloan.sparams.control.exitApp.div;
+     var lLaunchParams = {
+         "appId": "agloan",
+         "scr": "SuccessScreen",
+         "div": div
+     };
+     apz.launchSubScreen(lLaunchParams);
+ }
+ apz.agloan.ApplyloanPayment.fnProgressClick = function(pThis) {
+     if (pThis.textContent == "Loan Details") {
+         var div = apz.agloan.Applyloan.sparams.control.exitApp.div;
+         var lLaunchParams = {
+             "appId": "agloan",
+             "scr": "Applyloan",
+             "div": div,
+              "userObj": {
+                "control": {
+                    "exitApp": {
+                        "appId": "",
+                        "backFunction": "",
+                        "div": "csmrbk__LandingPage__microappLauncherCol",
+                        "callBack": ""
+                    }
+                }
+            }
+         };
+         apz.launchSubScreen(lLaunchParams);
+     }
+     if (pThis.textContent == "Personal Info") {
+         var div = apz.agloan.Applyloan.sparams.control.exitApp.div;
+         var lLaunchParams = {
+             "appId": "agloan",
+             "scr": "Appluloanem",
+             "div": div
+         };
+         apz.launchSubScreen(lLaunchParams);
+     }
+     if (pThis.textContent == "Payment Details") {
+         //apz.agloan.Appluloanem.gotoNext();
+     }
+ }

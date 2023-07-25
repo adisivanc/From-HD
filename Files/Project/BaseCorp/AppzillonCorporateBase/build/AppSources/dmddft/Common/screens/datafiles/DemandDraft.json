@@ -1,0 +1,14 @@
+{
+    "dmddft__DemandDraft_Res": {
+        "demandDraftDtls": {
+            "data": {
+                "OTPRefNo": 2
+            },
+            "txnRefNo": "1513620908049896169",
+            "extMsg": "",
+            "respCd": "app",
+            "intMsgCd": "",
+            "status": "success"
+        }
+    }
+}

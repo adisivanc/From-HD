@@ -1,0 +1,28 @@
+apz.prddtl.SuccessScr = {};
+
+apz.app.onLoad_SuccessScr = function(params){
+    debugger;
+    apz.setElmValue("prddtl__SuccessScr__refnumber","Your reference number is "+params.refNo+".");
+    apz.setElmValue("prddtl__SuccessScr__message",params.message +".");
+}
+apz.prddtl.SuccessScr.fnHome = function(){
+    debugger;
+    debugger;
+   var lParams = {
+            "appId": "landpg",
+            "scr": "LandingPage",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "animation": 21,
+            "userObj": {
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                "custId": "menuap__Menu__custId_txtcnt"
+            }
+       
+   }
+    
+    apz.launchApp(lParams);
+}

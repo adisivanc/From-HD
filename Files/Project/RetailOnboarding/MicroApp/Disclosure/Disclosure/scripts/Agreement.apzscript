@@ -1,0 +1,29 @@
+apz.disclo.Agreement = {};
+apz.app.onLoad_Agreement = function(params){
+    debugger;
+}
+apz.app.onShown_Agreement = function(params){
+    debugger;
+    
+}
+
+apz.disclo.Agreement.fnCreateAccount = function(params){
+    debugger;
+    apz.dispMsg({
+        message:"Page under construction!",
+        type: "A"
+    })
+}
+apz.disclo.Agreement.fnAgree=function(){
+    $("#navgtn__Navigator__ct_nav_2").removeClass("sno");
+    apz.declaration = "Done";
+    apz.disclo.Launcher.sCache.callback();
+}
+apz.disclo.Agreement.fnBacToDisclosure=function(){
+    var params = {};
+    params.appId = "disclo";
+    params.scr = "Disclosure";
+    params.div = "disclo__Launcher__launcher";
+    params.userObj=apz.disclo.Launcher.sCache;
+    apz.launchSubScreen(params);
+}

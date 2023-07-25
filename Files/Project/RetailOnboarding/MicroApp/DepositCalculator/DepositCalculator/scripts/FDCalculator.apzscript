@@ -1,0 +1,196 @@
+var sliderTI = document.getElementById("dpcalc__FDCalculator__sliderTI");
+var inputTI = document.getElementById("dpcalc__FDCalculator__inputTI");
+var sliderROI = document.getElementById("dpcalc__FDCalculator__sliderROI");
+var inputROI = document.getElementById("dpcalc__FDCalculator__inputROI");
+var sliderTenure = document.getElementById("dpcalc__FDCalculator__sliderTenure");
+var inputTenure = document.getElementById("dpcalc__FDCalculator__inputTenure");
+var tpMode = document.getElementById("dpcalc__FDCalculator__tp_mode");
+apz.dpcalc.FDCalculator = {};
+apz.app.onShown_FDCalculator = function(params) {
+    debugger;
+    apz.dpcalc.FDCalculator.sparams = params;
+    apz.setElmValue("dpcalc__FDCalculator__inputTI","100000");
+    $("#dpcalc__FDCalculator__inputTI").blur();
+    apz.setElmValue("dpcalc__FDCalculator__inputROI","6.5");
+    apz.setElmValue("dpcalc__FDCalculator__inputTenure","5");
+    sliderTI.addEventListener("input", apz.dpcalc.FDCalculator.updateValueTotalInvestment);
+    sliderROI.addEventListener("input", apz.dpcalc.FDCalculator.updateValueExpectedReturns);
+    sliderTenure.addEventListener("input", apz.dpcalc.FDCalculator.updateValueTimePeriod);
+    apz.dpcalc.FDCalculator.AttachInputListeners();
+    apz.dpcalc.FDCalculator.calculateIt();
+}
+apz.dpcalc.FDCalculator.showTotalInvestmentVal = function(newVal) {
+    sliderTI.value = newVal;
+    apz.dpcalc.FDCalculator.calculateIt();
+}
+apz.dpcalc.FDCalculator.showExpectedReturnsVal = function(newVal) {
+    sliderROI.value = newVal;
+    apz.dpcalc.FDCalculator.calculateIt();
+}
+apz.dpcalc.FDCalculator.showTimePeriodVal = function(newVal) {
+    sliderTenure.value = newVal;
+    apz.dpcalc.FDCalculator.calculateIt();
+}
+apz.dpcalc.FDCalculator.updateValueTotalInvestment = function(e) {
+    inputTI.value = e.srcElement.value;
+    $("#dpcalc__FDCalculator__inputTI").blur();
+    apz.dpcalc.FDCalculator.calculateIt();
+}
+apz.dpcalc.FDCalculator.updateValueExpectedReturns = function(e) {
+    inputROI.value = e.srcElement.value;
+    apz.dpcalc.FDCalculator.calculateIt();
+}
+apz.dpcalc.FDCalculator.updateValueTimePeriod = function(e) {
+    inputTenure.value = e.srcElement.value;
+    apz.dpcalc.FDCalculator.calculateIt();
+}
+apz.dpcalc.FDCalculator.calculateIt = function() {
+    let TI, ER, MV;
+    var unformateTI = apz.unFormatNumber({value:inputTI.value,decimalSep:".",displayAsLiteral:"N"}).split(".");
+    TI = Number(unformateTI[0]);
+    let ROI = Number(inputROI.value);
+    let T = Number(inputTenure.value);
+    let tp_mode = apz.getElmValue("dpcalc__FDCalculator__tp_mode");
+    if (TI >= 1000 && ROI >= 1) {
+        if (tp_mode === "YY") {
+            MV = Math.round(TI * Math.pow(1 + ROI / 400, 4 * T));
+        } else if (tp_mode === "MM") {
+            if (T <= 6) {
+                T = (T / 12).toFixed(2);
+                MV = Math.round(TI + (TI * ROI * T) / 100);
+            } else {
+                T = (T / 12).toFixed(2);
+                MV = Math.round(TI * Math.pow(1 + ROI / 400, 4 * T));
+            }
+        } else if (tp_mode === "DD") {
+            T = (T / 365).toFixed(3);
+            MV = Math.round(TI + (TI * ROI * T) / 100);
+        }
+        ER = Math.round(MV - TI);
+        
+        apz.setElmValue("dpcalc__FDCalculator__investment",apz.formatNumber({value:TI,decimalSep:".",mask:"MILLION",decimalPoints:"2"}));
+        apz.setElmValue("dpcalc__FDCalculator__interest", apz.formatNumber({value:ER,decimalSep:".",mask:"MILLION",decimalPoints:"2"}));
+        apz.setElmValue("dpcalc__FDCalculator__maturity", apz.formatNumber({value:MV,decimalSep:".",mask:"MILLION",decimalPoints:"2"}));
+        apz.dpcalc.FDCalculator.DrawChart(TI, ER);
+    }
+}
+apz.dpcalc.FDCalculator.DrawChart = function(TI, ER) {
+    debugger;
+    apz.data.scrdata.dpcalc__DepositChart_Res = {
+        Deposit: [{
+            "value": TI,
+            "title": "Total Investment"
+        }, {
+            "value": ER,
+            "title": "Total Interest"
+        }]
+    };
+    apz.data.loadData("DepositChart", "dpcalc");
+}
+apz.dpcalc.FDCalculator.fnGetTenor = function(pThis){
+    let val = apz.getElmValue(pThis.id);
+        if (val === "YY") {
+            inputTenure.min = "1";
+            inputTenure.max = "10";
+            inputTenure.value = "5";
+            sliderTenure.min = "1";
+            sliderTenure.max = "10";
+            sliderTenure.value = "5";
+            apz.dpcalc.FDCalculator.calculateIt();
+        } else if (val === "MM") {
+            inputTenure.min = "1";
+            inputTenure.max = "11";
+            inputTenure.value = "3";
+            sliderTenure.min = "1";
+            sliderTenure.max = "11";
+            sliderTenure.value = "3";
+            apz.dpcalc.FDCalculator.calculateIt();
+        } else if ((val = "DD")) {
+            inputTenure.min = "1";
+            inputTenure.max = "31";
+            inputTenure.value = "7";
+            sliderTenure.min = "1";
+            sliderTenure.max = "31";
+            sliderTenure.value = "7";
+            apz.dpcalc.FDCalculator.calculateIt();
+        }
+}
+apz.dpcalc.FDCalculator.AttachInputListeners = function() {
+    inputTI.addEventListener("input", (e) => {
+        let val = e.target.value;
+        if (val < 0) {
+            inputTI.value = 1000;
+            apz.dpcalc.FDCalculator.calculateIt();
+        }
+        if (val > 100000000) {
+            inputTI.value = 100000000;
+            apz.dpcalc.FDCalculator.calculateIt();
+        }
+    });
+    inputROI.addEventListener("input", (e) => {
+        let val = e.target.value;
+        if (val < 0) {
+            inputROI.value = 1;
+            apz.dpcalc.FDCalculator.calculateIt();
+        }
+        if (val > 15) {
+            inputROI.value = 15;
+            apz.dpcalc.FDCalculator.calculateIt();
+        }
+    });
+    inputTenure.addEventListener("input", (e) => {
+        let val = e.target.value;
+        let tpModeVal = apz.getElmValue("dpcalc__FDCalculator__tp_mode");
+        if (!Number.isInteger(val)) {
+            val = Math.ceil(val);
+            inputTenure.value = val;
+            apz.dpcalc.FDCalculator.calculateIt();
+        }
+        if (val < 1) {
+            inputTenure.value = 1;
+            apz.dpcalc.FDCalculator.calculateIt();
+        }
+        if (tpModeVal === "YY") {
+            if (val > 10) {
+                inputTenure.value = 10;
+                apz.dpcalc.FDCalculator.calculateIt();
+            }
+        } else if (tpModeVal === "MM") {
+            if (val > 11) {
+                inputTenure.value = 11;
+                apz.dpcalc.FDCalculator.calculateIt();
+            }
+        } else if (tpModeVal === "DD") {
+            if (val > 31) {
+                inputTenure.value = 31;
+                apz.dpcalc.FDCalculator.calculateIt();
+            }
+        }
+    });
+}
+apz.dpcalc.FDCalculator.fnApply = function() {
+    debugger;
+    var params = {};
+    params.appId = "prdsel";
+    params.scr = "Deposit";
+    params.div = "prdsel__ProductLauncher__productlauncher";
+    params.userObj = {
+        "parentdiv": "prdsel__ProductLauncher__productlauncher",
+        "subproduct": apz.dpcalc.FDCalculator.sparams.subtype,
+        "product": apz.dpcalc.FDCalculator.sparams.product,
+        "action": "new"
+    };
+    apz.launchApp(params);
+}
+apz.dpcalc.FDCalculator.fnBack = function() {
+    debugger;
+    let lparams = {
+        "appId": "prdsel",
+        "scr": "SubProducts",
+        "div": "prdsel__ProductLauncher__productlauncher",
+        "userObj": {
+            "product": apz.dpcalc.FDCalculator.sparams.product
+        }
+    };
+    apz.launchApp(lparams);
+}

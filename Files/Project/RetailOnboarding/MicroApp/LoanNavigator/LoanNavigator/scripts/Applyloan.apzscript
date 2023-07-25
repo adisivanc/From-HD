@@ -1,0 +1,410 @@
+apz.loanvg.Applyloan = {};
+apz.loanvg.Applyloan.isCreditCheckDisabled = true;
+apz.app.onLoad_Applyloan = function(params) {
+    debugger;
+    apz.loanvg.Applyloan.sparams = params;
+    $("#loanvg__Applyloan__btnFixed").addClass("current");
+    $("#loanvg__Applyloan__btnPriResi").addClass("current");
+    $("#loanvg__Applyloan__btnBuyHome1").addClass("current");
+    $("#loanvg__Applyloan__btnPurchaseYes").addClass("current");
+    $("#loanvg__Applyloan__btnLoanNo").addClass("current");
+    $("#loanvg__Applyloan__btnSingle").addClass("current");
+    apz.data.loadJsonData("GaugeData", "loanvg");
+    var PersonalLineofCreditPurpose = JSON.parse(apz.getFile(apz.getDataFilesPath("loanvg") + "/PersonalLineofCreditPurpose.json"));
+    apz.data.scrdata.loanvg__PersonalLineofCreditPurpose_Res = {
+        ListItem: PersonalLineofCreditPurpose
+    }
+    apz.data.loadData("PersonalLineofCreditPurpose", "loanvg");
+    $("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__refno").val(apz.loanvg.Applyloan.sparams.refNo);
+    if (params.product === "Cards") {
+        $("#loanvg__Applyloan__sc_row_4,#loanvg__Applyloan__el_icn_1,#loanvg__Applyloan__infotxt").addClass("sno");
+        apz.setElmValue("loanvg__Applyloan__el_txt_5", apz.lits.loanvg[apz.language].LIT_CARD_DETAILS);
+        $("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__loantype_grp_lbl").html(apz.lits.loanvg[apz.language].LIT_CARD_TYPE);
+        if (apz.country === "IND") {
+            apz.loanvg.Applyloan.isCreditCheckDisabled = false;
+        }
+    } else {
+        if (apz.deviceGroup == "Mobile") {
+            $("#loanvg__Applyloan__el_icn_1").removeClass("sno");
+            $("#loanvg__Applyloan__infotxt").addClass("sno");
+        } else {
+            $("#loanvg__Applyloan__el_icn_1").addClass("sno");
+            $("#loanvg__Applyloan__infotxt").removeClass("sno");
+        }
+        if (apz.country === "IND") {
+            var arrayName = params.subproduct.replace(/ /g, '');
+            var loanPurpose = JSON.parse(apz.getFile(apz.getDataFilesPath("loanvg") + "/" + arrayName + "Purpose.json"));
+            apz.populateDropdown($("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__loanPurpose")[0], loanPurpose);
+            apz.loanvg.Applyloan.isCreditCheckDisabled = false;
+            if (params.subproduct === "Home Loan") {
+                var propertyType = [{
+                    "val": "",
+                    "desc": "Please Select"
+                }, {
+                    "val": "Free Hold",
+                    "desc": "Free Hold"
+                }, {
+                    "val": "Lease Hold",
+                    "desc": "Lease Hold"
+                }]
+                apz.populateDropdown($("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__homepropertytype")[0], propertyType);
+                $("#loanvg__Applyloan__btnSingle_ul").addClass("sno");
+                $("#loanvg__Applyloan__btnTownhouse_ul").addClass("sno");
+                $("#loanvg__Applyloan__btnVilla_ul").addClass("sno");
+                $("#loanvg__Applyloan__btnFree_ul").removeClass("sno");
+                $("#loanvg__Applyloan__btnLease_ul").removeClass("sno");
+                var interestType = [{
+                    "val": "",
+                    "desc": "Please Select"
+                }, {
+                    "val": "Fixed Rate",
+                    "desc": "Fixed Rate"
+                }, {
+                    "val": " Floating Rate",
+                    "desc": "Floating Rate"
+                }]
+                apz.populateDropdown($("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__interestType")[0], interestType);
+            }
+        } else {
+            var propertyType = [{
+                "val": "",
+                "desc": "Please Select"
+            }, {
+                "val": "Single Family",
+                "desc": "Single Family"
+            }, {
+                "val": "Townhouse",
+                "desc": "Townhouse"
+            }, {
+                "val": "Villa",
+                "desc": "Villa"
+            }]
+            apz.populateDropdown($("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__homepropertytype")[0], propertyType);
+            $("#loanvg__Applyloan__btnSingle_ul").removeClass("sno");
+            $("#loanvg__Applyloan__btnTownhouse_ul").removeClass("sno");
+            $("#loanvg__Applyloan__btnVilla_ul").removeClass("sno");
+            $("#loanvg__Applyloan__btnFree_ul").addClass("sno");
+            $("#loanvg__Applyloan__btnLease_ul").addClass("sno");
+        }
+    }
+    apz.loanvg.Applyloan.fnPopulateLoanTypeFields();
+    $("#navigation_" + apz.flowNo).removeClass("sno");
+    $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+        $(this).removeClass("active");
+    })
+    $("#navigation_"+apz.flowNo+",#navgtn__MobileNavigation__ct_lst_2_row_"+apz.flowNo).addClass("active");
+    if (apz.country === "IND") {
+        $("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__term_grp_lbl").html(apz.lits.loanvg[apz.language].LIT_TENOR_YEARS);
+        $("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__term").attr("placeholder", apz.lits.loanvg[apz.language].LIT_TENOR_YEARS);
+        //$("#loanvg__Applyloan__sc_row_71,#loanvg__Applyloan__sc_row_70,#loanvg__Applyloan__sc_row_58").removeClass("sno");
+        $("#loanvg__Applyloan__sc_row_70,#loanvg__Applyloan__sc_row_58").removeClass("sno");
+        $("#loanvg__Applyloan__sc_col_98,#loanvg__Applyloan__sc_row_75").addClass("sno");
+        if (params.subproduct === "Home Loan" || params.subproduct === "Property Purchase Loan" || params.subproduct === "Home Loan Top Up" || params
+            .subproduct === "Loan Against Property") {
+            apz.setElmValue("loanvg__Applyloan__el_dpd_5", apz.loanvg.Applyloan.sparams.subproduct)
+            $("#loanvg__Applyloan__sc_col_129,#loanvg__Applyloan__sc_row_74,#loanvg__Applyloan__el_dpd_5_ul").removeClass("sno");
+            $(
+                "#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__ispropertyattached_ul,#loanvg__Applyloan__sc_row_16,#loanvg__Applyloan__sc_row_11, #loanvg__Applyloan__sc_row_96,   #loanvg__ProductLoanDetails__i__tbDbmiProductLoan__loantype_ul"
+            ).addClass("sno");
+            //$("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__interestType_ul").removeClass("sno")
+        } else if (params.subproduct === "Auto Loan") {
+            $("#loanvg__Applyloan__rowmodelimg").addClass("sno");
+        }
+    }
+    if (params.product === "Cards") {
+        $("#loanvg__Applyloan__sc_col_127").addClass("sno");
+    }
+    if (params.subproduct === "Personal Line of Credit") {
+        $("#loanvg__Applyloan__sc_row_71").removeClass("sno");
+    }
+};
+apz.loanvg.Applyloan.fnPopulateLoanTypeFields = function() {
+    debugger;
+    $('.mortagageLoanRow').addClass('sno');
+    switch (apz.loanvg.Applyloan.sparams.subproduct) {
+        case "Personal Line of Credit":
+            $("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__rate").val("10.24");
+            break;
+        case "Home Loan":
+            $("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__rate").val("4.125");
+            $('.mortagageLoanRow').removeClass('sno');
+            break;
+        case "Auto Loan":
+            $("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__rate").val("4.74");
+            $("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__amount").val("2,00,000.00");
+            $("#loanvg__Applyloan__rowvehicle").removeClass("sno");
+            $("#loanvg__Applyloan__rowmodel").removeClass("sno");
+            $("#loanvg__Applyloan__rowmodelimg").removeClass("sno");
+            break;
+    }
+    apz.loanvg.Applyloan.fetchApplicationDetails();
+}
+apz.loanvg.Applyloan.fetchApplicationDetails = function() {
+    debugger;
+    apz.startLoader();
+    var lParams = {
+        "ifaceName": "ProductLoanDetails_Query",
+        "buildReq": "Y",
+        "appId": "loanvg",
+        "paintResp": "Y",
+        "async": false,
+        "callBack": apz.loanvg.Applyloan.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.loanvg.Applyloan.fetchApplicationDetailsCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    $("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__refno").val(apz.loanvg.Applyloan.sparams.refNo);
+    if (apz.loanvg.Applyloan.sparams.amount) {
+        $("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__amount").val(apz.loanvg.Applyloan.sparams.amount);
+    }
+    if (apz.loanvg.Applyloan.sparams.tenor) {
+        $("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__term").val(apz.loanvg.Applyloan.sparams.tenor);
+    }
+    if (params.status && params.errors === undefined) {
+        if (params.res.loanvg__ProductLoanDetails_Req.tbDbmiProductLoan.loantype !== "") {
+            apz.loanvg.Applyloan.sparams.subproduct = params.res.loanvg__ProductLoanDetails_Req.tbDbmiProductLoan.loantype;
+        }
+        if (params.res.loanvg__ProductLoanDetails_Req.tbDbmiProductLoan.loanConsent === "Yes") {
+            apz.loanvg.Applyloan.isCreditCheckDisabled = true;
+        }
+        var ispropertyattached = params.res.loanvg__ProductLoanDetails_Req.tbDbmiProductLoan.ispropertyattached;
+        if (ispropertyattached == "Yes") {
+            $("#loanvg__Applyloan__btnPropYes").addClass("current");
+            $("#loanvg__Applyloan__btnPropNo").removeClass("current");
+        } else if (ispropertyattached == "No") {
+            $("#loanvg__Applyloan__btnPropNo").addClass("current");
+            $("#loanvg__Applyloan__btnPropYes").removeClass("current");
+        }
+        var homepurchaseaggrement = params.res.loanvg__ProductLoanDetails_Req.tbDbmiProductLoan.homepurchaseaggrement;
+        if (homepurchaseaggrement == "Yes") {
+            $("#loanvg__Applyloan__btnPurchaseYes").addClass("current");
+            $("#loanvg__Applyloan__btnPurchaseNo").removeClass("current");
+        } else if (homepurchaseaggrement == "No") {
+            $("#loanvg__Applyloan__btnPurchaseNo").addClass("current");
+            $("#loanvg__Applyloan__btnPurchaseYes").removeClass("current");
+        }
+        var homeequityloan = params.res.loanvg__ProductLoanDetails_Req.tbDbmiProductLoan.homeequityloan;
+        if (homeequityloan == "Yes") {
+            $("#loanvg__Applyloan__btnLoanYes").addClass("current");
+            $("#loanvg__Applyloan__btnLoanNo").removeClass("current");
+        } else if (homeequityloan == "No") {
+            $("#loanvg__Applyloan__btnLoanNo").addClass("current");
+            $("#loanvg__Applyloan__btnLoanYes").removeClass("current");
+        }
+        var useofproperty = params.res.loanvg__ProductLoanDetails_Req.tbDbmiProductLoan.useofproperty;
+        if (useofproperty == "Primary Residence") {
+            $("#loanvg__Applyloan__btnPriResi").addClass("current");
+            $("#loanvg__Applyloan__btnSecResi").removeClass("current");
+        } else if (useofproperty == "Secondary Residence") {
+            $("#loanvg__Applyloan__btnSecResi").addClass("current");
+            $("#loanvg__Applyloan__btnPriResi").removeClass("current");
+        }
+        var homeplan = params.res.loanvg__ProductLoanDetails_Req.tbDbmiProductLoan.homeplan;
+        if (homeplan == "less than 90 days ") {
+            $("#loanvg__Applyloan__btnBuyHome1").addClass("current");
+            $("#loanvg__Applyloan__btnBuyHome2").removeClass("current");
+            $("#loanvg__Applyloan__btnBuyHome3").removeClass("current");
+        } else if (homeplan == "90-180 days") {
+            $("#loanvg__Applyloan__btnBuyHome2").addClass("current");
+            $("#loanvg__Applyloan__btnBuyHome1").removeClass("current");
+            $("#loanvg__Applyloan__btnBuyHome3").removeClass("current");
+        } else if (homeplan == "more than 180 days") {
+            $("#loanvg__Applyloan__btnBuyHome3").addClass("current");
+            $("#loanvg__Applyloan__btnBuyHome2").removeClass("current");
+            $("#loanvg__Applyloan__btnBuyHome1").removeClass("current");
+        }
+        var homepropertytype = params.res.loanvg__ProductLoanDetails_Req.tbDbmiProductLoan.homepropertytype;
+        if (homepropertytype == "Single Family") {
+            $("#loanvg__Applyloan__btnSingle").addClass("current");
+            $("#loanvg__Applyloan__btnTownhouse").removeClass("current");
+            $("#loanvg__Applyloan__btnVilla").removeClass("current");
+        } else if (homepropertytype == "Townhouse") {
+            $("#loanvg__Applyloan__btnSingle").removeClass("current");
+            $("#loanvg__Applyloan__btnTownhouse").addClass("current");
+            $("#loanvg__Applyloan__btnVilla").removeClass("current");
+        } else if (homepropertytype == "Villa ") {
+            $("#loanvg__Applyloan__btnSingle").removeClass("current");
+            $("#loanvg__Applyloan__btnTownhouse").removeClass("current");
+            $("#loanvg__Applyloan__btnVilla").addClass("current");
+        }
+        // $("#loanvg__Applyloan__btnSingle").addClass("sno");
+        //         $("#loanvg__Applyloan__btnTownhouse").addClass("sno");
+        //         $("#loanvg__Applyloan__btnVilla").addClass("sno");
+    }
+    $("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__loantype").val(apz.loanvg.Applyloan.sparams.subproduct);
+}
+apz.loanvg.Applyloan.saveApplicationDetails = function() {
+    debugger;
+    apz.loanvg.Applyloan.fnDeleteLoanDetails();
+};
+apz.loanvg.Applyloan.fnDeleteLoanDetails = function() {
+    var lParams = {
+        "ifaceName": "ProductLoanDetails_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiProductLoan": {
+                "refno": apz.loanvg.Applyloan.sparams.refNo
+            }
+        },
+        "appId": "loanvg",
+        "paintResp": "N",
+        "callBack": apz.loanvg.Applyloan.fnInsertLoanDetails
+    }
+    apz.server.callServer(lParams);
+}
+apz.loanvg.Applyloan.fnInsertLoanDetails = function(pResp) {
+    debugger;
+    var lParams = {
+        "ifaceName": "ProductLoanDetails_New",
+        "buildReq": "Y",
+        "appId": "loanvg",
+        "paintResp": "Y",
+        "callBack": apz.loanvg.Applyloan.fnInsertLoanDetailsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.loanvg.Applyloan.fnInsertLoanDetailsCB = function() {
+    apz.navgtn.Navigator.fnLaunchApp();
+}
+apz.loanvg.Applyloan.fngetCreditScore = function() {
+    debugger;
+    if (apz.loanvg.Applyloan.isCreditCheckDisabled) {
+        apz.toggleModal({
+            targetId: "loanvg__Applyloan__creditscoremodal"
+        });
+        //gaugePaint("680", 'loanvg__Applyloan__creditscroreguage_gauge', 'loanvg__Applyloan__g_123');
+    } else {
+        apz.dispMsg({
+            "message": "Please make sure that authorise consent is checked"
+        })
+    }
+}
+apz.app.updateGaugeBeforeRender = function(gChartType, gChartData, gId, gChart) {
+    debugger;
+    //gChartData.chart.theme="gammel";
+    //gChartData.chart.gaugeFillMix= "{light+0}";  
+    gChartData.chart.showBorder = 0;
+    //gChartData.chart.canvasbgAlpha = 0;
+    //gChartData.chart.bgAlpha = 0;
+    gChartData.chart.showlabels = 1;
+    gChartData.chart.lowerLimitDisplay = "Very poor";
+    gChartData.chart.upperLimitDisplay = "Exceptional";
+    gChartData.chart.showValue = 1;
+    //gChartData.colorRange.color[0].label = "test";
+}
+apz.loanvg.Applyloan.fnCreditScoreSubmit = function(id) {
+    debugger;
+    apz.toggleModal({
+        targetId: id
+    });
+    apz.setElmValue("loanvg__ProductLoanDetails__i__tbDbmiProductLoan__loanConsent", "Yes")
+    $("#loanvg__ProductLoanDetails__i__tbDbmiProductLoan__creditscore").val("680");
+}
+apz.loanvg.Applyloan.fnGetLoanConsent = function(el) {
+    if (apz.getElmValue(el.id) === "Yes") {
+        apz.loanvg.Applyloan.isCreditCheckDisabled = true;
+    } else {
+        apz.loanvg.Applyloan.isCreditCheckDisabled = false;
+    }
+}
+apz.loanvg.Applyloan.fnGetLoanPurpose = function(element) {
+    if (apz.getElmValue(element.id) === "Others") {
+        $("#loanvg__Applyloan__sc_col_128").removeClass("sno");
+    } else {
+        $("#loanvg__Applyloan__sc_col_128").addClass("sno");
+    }
+}
+apz.loanvg.Applyloan.fnGetLoanType = function(element) {
+    var loanType = apz.getElmValue(element.id);
+    if (loanType !== "") {
+        apz.setElmValue("loanvg__ProductLoanDetails__i__tbDbmiProductLoan__loantype", loanType)
+    }
+}
+apz.loanvg.Applyloan.fnRestrictCharacter = function(el, digit) {
+    var regex = new RegExp("\\d{1," + digit + "}");
+    var digits = el.value.match(regex) || [""];
+    el.value = digits[0];
+}
+apz.loanvg.Applyloan.fnSelectInterestType = function(pthis, pval) {
+    debugger;
+    $("#loanvg__Applyloan__btnFixed").removeClass("current");
+    $("#loanvg__Applyloan__btnFloating").removeClass("current");
+    //$("#appdtl__ContactDetails__sc_row_28 :button").removeClass("current")
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("loanvg__ProductLoanDetails__i__tbDbmiProductLoan__interestType", pval);
+}
+apz.loanvg.Applyloan.fnSelectPropertyType = function(pthis, pval) {
+    debugger;
+    $("#loanvg__Applyloan__btnSingle").removeClass("current");
+    $("#loanvg__Applyloan__btnTownhouse").removeClass("current");
+    $("#loanvg__Applyloan__btnVilla").removeClass("current");
+    $("#loanvg__Applyloan__btnFree").removeClass("current");
+    $("#loanvg__Applyloan__btnLease").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("loanvg__ProductLoanDetails__i__tbDbmiProductLoan__homepropertytype", pval);
+}
+apz.loanvg.Applyloan.fnIsPropAttached = function(pthis, pval) {
+    debugger;
+    $("#loanvg__Applyloan__btnPropYes").removeClass("current");
+    $("#loanvg__Applyloan__btnPropNo").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("loanvg__ProductLoanDetails__i__tbDbmiProductLoan__ispropertyattached", pval);
+}
+apz.loanvg.Applyloan.fnPurchaseAgreement = function(pthis, pval) {
+    debugger;
+    $("#loanvg__Applyloan__btnPurchaseYes").removeClass("current");
+    $("#loanvg__Applyloan__btnPurchaseNo").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("loanvg__ProductLoanDetails__i__tbDbmiProductLoan__homepurchaseaggrement", pval);
+}
+apz.loanvg.Applyloan.fnHomeLoan = function(pthis, pval) {
+    debugger;
+    $("#loanvg__Applyloan__btnLoanYes").removeClass("current");
+    $("#loanvg__Applyloan__btnLoanNo").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("loanvg__ProductLoanDetails__i__tbDbmiProductLoan__homeequityloan", pval);
+}
+apz.loanvg.Applyloan.fnUseProp = function(pthis, pval) {
+    debugger;
+    $("#loanvg__Applyloan__btnPriResi").removeClass("current");
+    $("#loanvg__Applyloan__btnSecResi").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("loanvg__ProductLoanDetails__i__tbDbmiProductLoan__useofproperty", pval);
+}
+apz.loanvg.Applyloan.fnBuyHome = function(pthis, pval) {
+    debugger;
+    $("#loanvg__Applyloan__btnBuyHome1").removeClass("current");
+    $("#loanvg__Applyloan__btnBuyHome2").removeClass("current");
+    $("#loanvg__Applyloan__btnBuyHome3").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("loanvg__ProductLoanDetails__i__tbDbmiProductLoan__homeplan", pval);
+}
+apz.loanvg.Applyloan.fnOpenLoanPurposeModal = function(ptype) {
+    debugger;
+    if (ptype == "open") {
+        $("#loanvg__Applyloan__loanPurposeModal").removeClass("sno");
+        $("#loanvg__Applyloan__ct_lst_1 li").removeClass("current");
+        //var occupationName = apz.getElmValue("loanvg__ProductLoanDetails__i__tbDbmiProductLoan__currentoccupation");
+        //var occupationName = $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__occupation").val();
+        // var lLength = apz.data.scrdata.loanvg__OccupationList_Res.ListItem.length;
+        // for (var i = 0; i < lLength; i++) {
+        //     var occupationListName = apz.getElmValue("loanvg__OccupationList__o__ListItem__OccupationType_" + i);
+        //     if (occupationName == occupationListName) {
+        //         $("#loanvg__Appluloanem__ct_lst_1_row_" + i).addClass("current");
+        //         break;
+        //     }
+        // }
+    }
+    if (ptype == "close") {
+        $("#loanvg__Applyloan__loanPurposeModal").addClass("sno");
+    }
+}
+apz.loanvg.Applyloan.fnSelectPurpose = function(pthis) {
+    var lrowno = $(pthis).attr("rowno");
+    var loanPurpose = apz.getElmValue("loanvg__PersonalLineofCreditPurpose__o__ListItem__desc_" + lrowno);
+    //apz.setElmValue("loanvg__ProductLoanDetails__i__tbDbmiProductLoan__currentoccupation",occupation);
+    $("#loanvg__Applyloan__loanPurposeTxt").val(loanPurpose);
+    $("#loanvg__Applyloan__loanPurposeModal").addClass("sno");
+}

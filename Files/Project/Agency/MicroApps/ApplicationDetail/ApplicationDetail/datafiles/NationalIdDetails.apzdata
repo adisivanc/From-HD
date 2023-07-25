@@ -1,0 +1,10 @@
+{
+    "appdtl__NationalIdDetails_Res": {
+        "name":"Zamrad KP",
+        "dob":"28/02/1984",
+        "countryCode":"IND",
+        "cardNumber":"784-1988-8394758-6",
+        "expiryDate":"14/05/2020",
+        "gender":"Male"
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "bnfmnt__StaticTypes_Res": {
+        "BeneficiaryType": [
+            {
+                "Image": "Mohit",
+                "Title": "Within Bank"
+            },
+            {
+                "Image": "Mohit",
+                "Title": "Other Banks"
+            }
+        ],
+        "TransactionType": [
+          
+            {
+              
+                "Type": "Mobile Money Identifier (MMID)"
+            },
+            {
+               
+                "Type": "Account Number + IFSC"
+            },
+            {
+               
+                "Type": "Virtual Payment Address (VPA)"
+            }, {
+               
+                "Type": "International Remittance"
+            }
+        ]
+    }
+}

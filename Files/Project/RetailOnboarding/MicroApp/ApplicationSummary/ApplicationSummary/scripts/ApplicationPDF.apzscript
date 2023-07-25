@@ -1,0 +1,91 @@
+apz.appsum.ApplicationPDF = {};
+apz.app.onLoad_ApplicationPDF = function(params) {
+    apz.appsum.ApplicationPDF.params = params;
+    if (apz.deviceOs === "iOS" || apz.deviceOs === "ANDROID") {
+        apz.appsum.ApplicationPDF.fnDocValidation();
+    }
+}
+apz.appsum.ApplicationPDF.fnDocValidation = function() {
+    apz.server.callServer({
+        "ifaceName": "DocumentAuthentication",
+        "buildReq": "N",
+        "req": {
+            "tokenObj": {
+                "token": apz.docRefNo
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.appsum.ApplicationPDF.fnDocValidationCB,
+        "appId": "appsum"
+    });
+}
+apz.appsum.ApplicationPDF.fnDocValidationCB = function(params) {
+    debugger;
+    if (params.status && params.errors === undefined) {
+        if (params.res.appsum__DocumentAuthentication_Res.document.status === "APPROVED_VERIFIED" && params.res.appsum__DocumentAuthentication_Res.verification
+            .identityVerification.similarity === "MATCH") {
+            apz.applicationDetails.idStatus = "Success";
+            apz.applicationDetails.idStatusReason = params.res.appsum__DocumentAuthentication_Res.document.status;
+            apz.setElmValue("appsum__ApplicationPDF__el_txt_1",
+                "Your identification documents has been verified.Please proceed to submit your application.");
+            $("#appsum__ApplicationPDF__el_btn_1,#appsum__ApplicationPDF__el_btn_4").removeClass("sno");
+        } else {
+            apz.applicationDetails.idStatus = "Failure";
+            var reasonObj = params.res.appsum__DocumentAuthentication_Res.verification.identityVerification;
+            apz.applicationDetails.idStatusReason = (reasonObj) ? reasonObj.similarity + " " + reasonObj.reason : "Failed Identification";
+            apz.setElmValue("appsum__ApplicationPDF__el_txt_1",
+                "There seems to be mismatch in the document you submitted . Would you like to proceed to submit the application or get back later");
+            $("#appsum__ApplicationPDF__el_btn_1,#appsum__ApplicationPDF__el_btn_3").removeClass("sno");
+        }
+    }
+    apz.stopLoader();
+}
+apz.appsum.ApplicationPDF.fnStartNewApp = function() {
+    apz.appsum.Launcher.fnNextStateWorkFlow();
+}
+apz.appsum.ApplicationPDF.fnBackToProducts = function() {
+    $("[currentflow='6']").click();
+}
+apz.appsum.ApplicationPDF.fnCancelWorkflow = function() {
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "appsum",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appsum.Launcher.sCache.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "REJECT"
+        },
+        "paintResp": "N",
+        "callBack": apz.appsum.ApplicationPDF.fnCancelWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.appsum.ApplicationPDF.fnCancelWorkflowCB = function(params) {
+    if (params.errors == undefined && params.status) {
+        apz.apzonb.Navigator.fnLunachHome();
+    }
+}
+apz.appsum.Launcher.fnSaveIDstatus = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Modify",
+        "buildReq": "N",
+        "appId": "appsum",
+        "paintResp": "N",
+        "req": {
+            "tbDbmiCustomerMaster": apz.applicationDetails
+        },
+        "async": false,
+        "callBack": apz.appsum.Launcher.fnSaveIDstatusCB
+    };
+    apz.server.callServer(lParams);
+}
+apz.appsum.Launcher.fnSaveIDstatusCB = function() {
+    debugger;
+    $("#navgtn__Navigator__ct_nav_2").removeClass("sno");
+    apz.docRefNo = "";
+    apz.navgtn.Navigator.fnLaunchApp();
+}

@@ -1,0 +1,42 @@
+{
+    "tbDbmiCorpRoleBeneficary": [
+        {
+            "nickName": "John",
+            "beneficaryName": "John Baelish",
+            "swiftCode": "",
+            "branchName": "Madiwala",
+            "bankName": "HDFC",
+            "beneficaryType": "same",
+            "accountNumber": "150100159160987",
+            "ifscCode": "COR0000001231",
+            "corporateId": "000FTAC4321",
+            "benType": "Dealer",
+            "status": "Enabled",
+            "emailId": "John.sass@gmail.com"
+        },
+        {
+            "nickName": "test",
+            "beneficaryName": "test",
+            "branchName": "Koramangala",
+            "beneficaryType": "same",
+            "accountNumber": "29148023",
+            "ifscCode": "9284023942",
+            "corporateId": "000FTAC4321",
+            "benType": "Dealer",
+            "status": "Enabled",
+            "emailId": "JOhn.sass@gmail.com"
+        },
+        {
+            "nickName": "test123",
+            "beneficaryName": "test test",
+            "branchName": "Gandhi Naga",
+            "beneficaryType": "same",
+            "accountNumber": "93857394898732",
+            "ifscCode": "KIJJUu757686498",
+            "corporateId": "000FTAC4321",
+            "benType": "Dealer",
+            "status": "Enabled",
+            "emailId": "JOhn.sass@gmail.com"
+        }
+    ]
+}

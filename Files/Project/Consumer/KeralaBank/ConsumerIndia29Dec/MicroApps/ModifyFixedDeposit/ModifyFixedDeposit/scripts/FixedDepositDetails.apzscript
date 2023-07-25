@@ -1,0 +1,119 @@
+apz.FixedDepositDetails = {};
+apz.modifd.FixedDepositDetails = {};
+apz.FixedDepositDetails.sparams = {};
+apz.app.onLoad_FixedDepositDetails = function(params) {
+    debugger;
+    apz.FixedDepositDetails.sparams = params;
+    apz.data.scrdata.modifd__FDDetails_Req = {};
+    apz.data.scrdata.modifd__FDDetails_Req.depositDtls = apz.FixedDepositDetails.sparams.data;
+    apz.data.loadData("FDDetails", "modifd");
+}
+apz.modifd.FixedDepositDetails.fnPrint = function() {
+    debugger;
+    var jsonFilePath = apz.getDataFilesPath("modifd") + "/FDCertificate.json";
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    var blob = apz.modifd.FixedDepositDetails.b64toBlob(ljsondata.data.content, "application/pdf");
+    var blobUrl = URL.createObjectURL(blob);
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.modifd.FixedDepositDetails.base64tofilecallBack;
+        json.base64 = ljsondata.data.content;
+        json.fileName = "FDSummary.pdf";
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    } else {
+        window.open(blobUrl);
+    }
+};
+apz.modifd.FixedDepositDetails.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.modifd.FixedDepositDetails.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.modifd.FixedDepositDetails.openFileCallback = function(params) {
+    debugger;
+};
+apz.modifd.FixedDepositDetails.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};
+apz.modifd.FixedDepositDetails.fnEdit = function() {
+    debugger;
+    $("#modifd__FixedDepositDetails__sc_row_9").addClass("sno");
+    $("#modifd__FixedDepositDetails__ct_frm_4").removeClass("sno");
+    $("#modifd__FixedDepositDetails__editButton").addClass("sno");
+    $("#modifd__FixedDepositDetails__saveButton").removeClass("sno");
+}
+apz.modifd.FixedDepositDetails.fnChangeMaturityType = function() {
+    debugger;
+    var type = apz.getElmValue("modifd__FixedDepositDetails__maturityDropDown");
+    if ((type == "RenewPrincipal") || (type == "TransferAcc")) {
+        $("#modifd__FixedDepositDetails__creditAccount_ul").removeClass("sno");
+    } else {
+        $("#modifd__FixedDepositDetails__creditAccount_ul").addClass("sno");
+    }
+}
+apz.modifd.FixedDepositDetails.fnCancel = function() {
+    debugger;
+    apz.FixedDepositDetails.sparams.callBack();
+}
+apz.modifd.FixedDepositDetails.fnSave = function() {
+        $("#modifd__FixedDepositDetails__Stage1").addClass("sno");
+
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "modifd__FixedDepositDetails__otp",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                // "OTPRefNo": apz.data.scrdata.fdsumm__FDTopup_Res.fdTopupDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.modifd.FixedDepositDetails.fnSuccessScreen,
+                "destroyDiv": "modifd__FixedDepositDetails__otp"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+};
+apz.modifd.FixedDepositDetails.fnSuccessScreen = function() {
+    debugger;
+        $("#modifd__FixedDepositDetails__Stage1").addClass("sno");
+        apz.hide("modifd__FixedDepositDetails__otp");
+
+    $("#modifd__FixedDepositDetails__success").removeClass("sno");
+    apz.setElmValue("modifd__FixedDepositDetails__accNum", apz.FixedDepositDetails.sparams.data.accountNo);
+    apz.setElmValue("modifd__FixedDepositDetails__accountCreation", apz.FixedDepositDetails.sparams.data.accountCreationDate);
+    apz.setElmValue("modifd__FixedDepositDetails__maturityAmount", apz.FixedDepositDetails.sparams.data.maturityAmount);
+    apz.setElmValue("modifd__FixedDepositDetails__maturityDate", apz.FixedDepositDetails.sparams.data.maturityDate);
+    apz.setElmValue("modifd__FixedDepositDetails__maturityType", apz.getElmValue("modifd__FixedDepositDetails__maturityDropDown"));
+    apz.setElmValue("modifd__FixedDepositDetails__creditaccountNumber", apz.getElmValue("modifd__FixedDepositDetails__creditAccount"));
+}

@@ -1,0 +1,15 @@
+apz.consumerGlobals = {
+    Notification: {
+        notify: false,
+        saver: false,
+        notifyMessage : ""
+    },
+    camera :
+    {
+        scan : false
+    },
+    omnisearch : 
+    {
+        search : false
+    }
+};

@@ -1,0 +1,27 @@
+{
+    "tbDbtpBeneficiaryDetails": [
+        {
+            "beneficiaryAccountNo": "",
+            "beneficiaryStatus": "I",
+            "beneficiaryMmid": "",
+            "txnStage": "OTPSENT",
+            "beneficiaryVpa": "",
+            "beneficiaryShortName": "Girish",
+            "beneficiaryMobilenumber": "",
+            "txnType": "Aadhar",
+            "authenticationTs": "2017-12-26",
+            "beneficiaryIfsc": "",
+            "beneficiaryEmail": "girishkumar@gmail.com",
+            "modifiedTs": "2017-12-22 19:12:53",
+            "createdBy": "John",
+            "beneficiaryType": "E",
+            "beneficiaryName": "Girish Kumar",
+            "customerId": "8",
+            "modifiedBy": "a",
+            "authenticationType": "OTP",
+            "beneficiaryAadharNo": "123412341234",
+            "beneficiaryId": "81514284698514531817",
+            "creationTs": "2017-12-26"
+        }
+    ]
+}

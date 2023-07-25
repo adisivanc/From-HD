@@ -1,0 +1,35 @@
+{
+	"crsapp__CountryRisk_Req": {
+		"countryRiskAssesment": [{
+			"country": "China",
+			"riskCategory": "Medium"
+		}, {
+			"country": "India",
+			"riskCategory": "Medium"
+		}, {
+			"country": "Indonesia",
+			"riskCategory": "High"
+		}, {
+			"country": "USA",
+			"riskCategory": "Low"
+		}, {
+			"country": "North Korea",
+			"riskCategory": "Restricted"
+		}, {
+			"country": "Papua New Guinea",
+			"riskCategory": "High"
+		}, {
+			"country": "Russia",
+			"riskCategory": "High"
+		}, {
+			"country": "Singapore",
+			"riskCategory": "Low"
+		}, {
+			"country": "Thailand",
+			"riskCategory": "Low"
+		}, {
+			"country": "Vietnam",
+			"riskCategory": "Medium"
+		}]
+	}
+}

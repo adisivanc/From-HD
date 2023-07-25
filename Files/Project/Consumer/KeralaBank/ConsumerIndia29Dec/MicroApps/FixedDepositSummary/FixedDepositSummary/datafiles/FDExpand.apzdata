@@ -1,0 +1,72 @@
+{
+    "fdsumm__FDExpand_Res": {
+       
+                "numberofDeposists": [
+                    {
+                        "depositNumber": "Deposit-1",
+                        "percentage": "2.5%",
+                        "maturityDate": "04/02/2022",
+                        "maturityBalance": "15000"
+                    },
+                    {
+                        "depositNumber": "Deposit-2",
+                        "percentage": "4%",
+                        "maturityDate": "06/03/2022",
+                        "maturityBalance": "20000"
+                    },
+                    {
+                        "depositNumber": "Deposit-3",
+                        "percentage": "8%",
+                        "maturityDate": "08/04/2022",
+                        "maturityBalance": "30000"
+                    },
+                      {
+                        "depositNumber": "Deposit-4",
+                        "percentage": "6%",
+                        "maturityDate": "09/04/2022",
+                        "maturityBalance": "30000"
+                    },
+                      {
+                        "depositNumber": "Deposit-5",
+                        "percentage": "9%",
+                        "maturityDate": "08/05/2022",
+                        "maturityBalance": "10000"
+                    },
+                      {
+                        "depositNumber": "Deposit-6",
+                        "percentage": "10%",
+                        "maturityDate": "08/06/2022",
+                        "maturityBalance": "20000"
+                    },
+                      {
+                        "depositNumber": "Deposit-7",
+                        "percentage": "8%",
+                        "maturityDate": "08/04/2022",
+                        "maturityBalance": "30000"
+                    },
+                      {
+                        "depositNumber": "Deposit-8",
+                        "percentage": "8%",
+                        "maturityDate": "08/04/2022",
+                        "maturityBalance": "30000"
+                    },
+                      {
+                        "depositNumber": "Deposit-9",
+                        "percentage": "8%",
+                        "maturityDate": "08/04/2022",
+                        "maturityBalance": "30000"
+                    }
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+               
+        
+        ]
+        
+        
+    }
+}

@@ -1,0 +1,406 @@
+apz.fndftr.fundstranfer = {};
+apz.fndftr.fundstranfer.sParams = null;
+apz.fndftr.fundstranfer.sCache = null;
+apz.fndftr.ownAccounts = null;
+apz.fndftr.nodename = null;
+apz.fndftr.rowNo = {};
+apz.fndftr.beneficaryList = [];
+apz.fndftr.tranfers = {};
+apz.fndftr.isInternational = false;
+apz.app.onLoad_FundsTransfer = function() {
+    debugger;
+   apz.setElmValue("landin__Landing__heading", "TRANSFER");
+}
+apz.app.onShown_FundsTransfer = function(params) {
+    debugger;
+    var name = LandingCommon.getLoggedInUser();
+    apz.fndftr.fundstranfer.sParams = params;
+    if (apz.deviceGroup == "Mobile") {
+        apz.setElmValue("fndftr__FundsTransfer__customerName", name)
+    }
+    $("#csmrbk__LandingPage__sc_col_55").addClass("sno");
+    apz.fndftr.fundstranfer.sCache = params;
+    apz.data.loadJsonData("FundsTransferDetails", "fndftr");
+    var name = LandingCommon.getLoggedInUser();
+    apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.userId = name;
+    for (i = 0; i < apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts.length; i++) {
+        apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts[i].HolderName = name;
+    }
+    apz.data.loadData("FundsTransferDetails", "fndftr");
+    apz.data.loadJsonData("FavouritesBeneficiary", "fndftr");
+    apz.data.scrdata.fndftr__Beneficiary_Res = {};
+    apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails = apz.data.scrdata.fndftr__FavouritesBebeficiary_Res.beneficiaryDetails;
+    apz.data.loadData("Beneficiary", "fndftr");
+    apz.fndftr.fundstranfer.fnShowAllBeneficiary();
+    if (params.from === "favourites" || params.from == "favAndDash") {
+        //apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "SEND MONEY");
+        var transferDetails = {};
+        transferDetails.accountNo = params.transfer.toAccountNo;
+        transferDetails.branchName = params.transfer.branchName;
+        transferDetails.ifsc = params.transfer.ifsc;
+        transferDetails.HolderName = params.transfer.nickname.replace("(Beneficiary)", "");
+        transferDetails.benificiaryPic = params.transfer.beneficiaryImage;
+        transferDetails.bankName = params.transfer.bankName;
+        transferDetails.amount = params.transfer.amount;
+        transferDetails.from = params.from;
+        transferDetails.currency = params.transfer.currency
+        apz.fndftr.tranfers["toAccountDetails"] = transferDetails;
+        apz.fndftr.tranfers["fromAccountDetails"] = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts[0];
+        apz.fndftr["fromAccountCurrency"] = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts[0].currency;
+        apz.fndftr.fundstranfer.fnlaunchTransferDetails(transferDetails);
+        if (apz.deviceGroup === "Mobile") {
+            $("#fndftr__FundsTransfer__beneficiaryAcc_row,#fndftr__FundsTransfer__userAcc_row").addClass("sno");
+            $("#fndftr__FundsTransfer__payment_row").removeClass("sno");
+        } else {
+            $("#fndftr__FundsTransfer__ct_lst_1_row_0").trigger("click");
+            setTimeout(function() {
+                $("#fndftr__FundsTransfer__step3").removeClass("FTDisable");
+            }, 300);
+            $("#fndftr__FundsTransfer__step1").addClass("FTDisable");
+            $("#fndftr__FundsTransfer__step2").addClass("FTDisable");
+        }
+    } else if (params.from === "Search") {
+        debugger;
+        amount = params.entities.entities[4].extractedValue[0];
+        beneName = params.entities.entities[0].extractedValue[0];
+        messageArray = params.message.split(" ");
+        if (messageArray.length > 2) {
+            beneName = messageArray[messageArray.length - 1].toLowerCase();
+            beneficiaries   = apz.data.scrdata.fndftr__FavouritesBebeficiary_Res.beneficiaryDetails;
+            beneDetails  = beneficiaries.filter(function(bene){
+                if(bene.HolderName.toLowerCase() ==beneName ){
+                    return bene;
+                }
+            });
+            apz.fndftr.tranfers.toAccountDetails = apz.data.scrdata.fndftr__FavouritesBebeficiary_Res.beneficiaryDetails[0];
+            transferDetailsBene = apz.fndftr.tranfers.toAccountDetails;
+            if (beneName) {
+                transferDetailsBene.HolderName = beneName;
+            }
+            if (amount) {
+                transferDetailsBene.amount = amount;
+            }
+            apz.fndftr.tranfers["fromAccountCurrency"] = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts[0]["currency"];
+            apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts[0]["HolderName"] = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary
+                .userId
+            apz.fndftr.tranfers.fromAccountDetails = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts[0];
+apz.fndftr.fromAccountCurrency =   apz.fndftr.tranfers["fromAccountCurrency"] ;
+apz.fndftr.fundstranfer.fnlaunchTransferDetails(transferDetailsBene);
+            if (apz.deviceGroup === "Mobile") {
+                $("#fndftr__FundsTransfer__beneficiaryAcc_row,#fndftr__FundsTransfer__userAcc_row").addClass("sno");
+                $("#fndftr__FundsTransfer__payment_row").removeClass("sno")
+            } else {
+                $("#fndftr__FundsTransfer__ct_lst_1_row_0").trigger("click");
+            }
+        }
+    } else if (apz.fndftr.fundstranfer.sCache.from == "DashboardSavings") {
+        $("#fndftr__FundsTransfer__el_icn_2_ul").addClass("sno");
+
+        $("#fndftr__FundsTransfer__ct_lst_1_row_0").click();
+    } else if (apz.fndftr.fundstranfer.sCache.from == "DashboardCurrent") {
+        $("#fndftr__FundsTransfer__el_icn_2_ul").addClass("sno");
+
+        $("#fndftr__FundsTransfer__ct_lst_1_row_2").click();
+    }
+    $("#fndftr__FundsTransfer__step2").addClass("FTDisable")
+    $("#fndftr__FundsTransfer__step3").addClass("FTDisable")
+}
+//launching favourities
+apz.fndftr.fundstranfer.fnLaunchingFavourites = function() {
+    debugger;
+    apz.launchSubScreen({
+        appId: "fndftr",
+        scr: "FavouriteDetails",
+        div: "fndftr__FundsTransfer__ps_pls_5",
+        userObj: {}
+    })
+};
+apz.fndftr.fundstranfer.fnShowAllBeneficiary = function() {
+    debugger;
+    var fav = [...apz.data.scrdata.fndftr__FavouritesBebeficiary_Res.beneficiaryDetails];
+    var others = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary;
+    apz.fndftr.beneficaryList = [...fav, ...others["accounts"], ...others["apzBankBenificiary"], ...others["otherBankBenificiary"], ...others[
+        "internationalRemittance"]];
+}
+apz.fndftr.fundstranfer.fnBeneficiarySearch = function() {
+    debugger;
+    const keyword = $("#fndftr__FundsTransfer__search").val().toLowerCase();
+    var filteredList = apz.fndftr.beneficaryList.filter(function(item) {
+        if (item.HolderName.toLowerCase().search(keyword) !== -1) {
+            return item;
+        }
+    })
+    if (filteredList.length >= 1) {
+        apz.setElmValue("fndftr__FundsTransfer__el_dpd_1", filteredList[0].beneficiaryType)
+    }
+    apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails = filteredList;
+    apz.data.loadData("Beneficiary", "fndftr");
+}
+//open amount transfer screen 
+apz.fndftr.fundstranfer.fnOpenTransferScreen = function(element) {
+    debugger;
+    rowNo = $(element).attr("rowno");
+    var transferDetails = apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails[rowNo];
+    apz.fndftr.tranfers["toAccountDetails"] = apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails[rowNo];
+    apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails = [transferDetails];
+    apz.data.loadData("Beneficiary", "fndftr");
+    apz.fndftr.fundstranfer.fnlaunchTransferDetails(transferDetails);
+    var trnsAccLength = apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails.length;
+    for (var i = 0; i < trnsAccLength; i++) {
+        $("#fndftr__FundsTransfer__ct_lst_2_row_" + i).removeClass("current");
+    }
+    $(element).addClass("current");
+    if (apz.deviceGroup === "Mobile") {
+        $("#fndftr__FundsTransfer__beneficiaryAcc_row").addClass("sno");
+        $("#fndftr__FundsTransfer__payment_row").removeClass("sno")
+    }
+    $("#fndftr__FundsTransfer__step3").removeClass("FTDisable")
+    $(".ftbthny").addClass("sno")
+    $(".step2group").removeClass("sno")
+    $("#fndftr__FundsTransfer__ct_lst_2_pagination_ul").addClass("sno");
+}
+//launch transfer details page
+apz.fndftr.fundstranfer.fnlaunchTransferDetails = function(transferDetails) {
+    debugger;
+    apz.launchSubScreen({
+        appId: "fndftr",
+        scr: "TransferLauncher",
+        div: "fndftr__FundsTransfer__ps_pls_5",
+        userObj: {
+            summaryData: apz.fndftr.fundstranfer.sParams,
+            transferDetails: transferDetails,
+            fromAccontCurrency: apz.fndftr.fromAccountCurrency,
+            ...apz.fndftr.fundstranfer.sCache
+        }
+    })
+}
+//Get beneficiary List
+apz.fndftr.fundstranfer.fnGetbeneficiaryList = function(nodeName, element) {
+    debugger;
+    $(
+        "#fndftr__FundsTransfer__el_btn_1,#fndftr__FundsTransfer__el_btn_2,#fndftr__FundsTransfer__el_btn_3,#fndftr__FundsTransfer__el_btn_8,#fndftr__FundsTransfer__el_btn_12,#fndftr__FundsTransfer__el_btn_13"
+    ).removeClass("active");
+    $("#fndftr__FundsTransfer__level2").addClass("sno");
+    if (nodeName === "favourites") {
+        apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails = apz.data.scrdata.fndftr__FavouritesBebeficiary_Res.beneficiaryDetails;
+    } else if (nodeName === "domestic") {
+        $("#fndftr__FundsTransfer__level2").removeClass("sno");
+    } else {
+        if (nodeName == "accounts") {
+            $("#fndftr__FundsTransfer__level2").removeClass("sno");
+            $("#fndftr__FundsTransfer__el_btn_12").addClass("active");
+            apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails = apz.fndftr.ownAccounts;
+        } else if (nodeName === "apzBankBenificiary" || nodeName === "otherBankBenificiary") {
+            $("#fndftr__FundsTransfer__el_btn_12").addClass("active");
+            $("#fndftr__FundsTransfer__level2").removeClass("sno");
+            apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary[nodeName];
+        } else {
+            apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary[nodeName];
+        }
+    }
+    apz.data.loadData("Beneficiary", "fndftr");
+    $(element).addClass("active");
+}
+apz.fndftr.fundstranfer.fnGetbeneficiaryListDropDown = function() {
+    debugger;
+    nodeName = apz.getElmValue("fndftr__FundsTransfer__el_dpd_1");
+    if (nodeName === "Favourites") {
+        apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails = apz.data.scrdata.fndftr__FavouritesBebeficiary_Res.beneficiaryDetails;
+    } else {
+        if (nodeName == "accounts") {
+            apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails = apz.fndftr.ownAccounts;
+        } else if (nodeName == "internationalRemittance") {
+            apz.fndftr.isInternational = true;
+            apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary[nodeName];
+        } else {
+            apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary[nodeName];
+        }
+    }
+    apz.data.loadData("Beneficiary", "fndftr");
+}
+apz.fndftr.fundstranfer.fnDomestic = function(element) {
+    debugger;
+    var accounts = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary;
+    var domesticAccounts = [...apz.fndftr.ownAccounts, ...accounts["otherBankBenificiary"], ...accounts["apzBankBenificiary"]];
+    apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails = domesticAccounts;
+    apz.data.loadData("Beneficiary", "fndftr");
+    $(
+        "#fndftr__FundsTransfer__el_btn_1,#fndftr__FundsTransfer__el_btn_2,#fndftr__FundsTransfer__el_btn_3,#fndftr__FundsTransfer__el_btn_4,#fndftr__FundsTransfer__el_btn_6,#fndftr__FundsTransfer__el_btn_7"
+    ).removeClass("active");
+    $(element).addClass("active");
+}
+//open releated screen
+apz.fndftr.fundstranfer.fnOpenRelatedScreen = function(appId, scrName) {
+    debugger;
+    if (scrName === "FTSummary") {
+       apz.landin.Landing.fnMenuClickInside("Fund Transfer Summary");
+        
+    } else if (scrName === "AddBeneficiary") {
+         apz.landin.Landing.fnMenuClickInside("Add Beneficiary");
+    } else {
+        apz.landin.Landing.fnMenuClickInside("Add Beneficiary");
+    }
+    // var lLaunchParams = {};
+    // lLaunchParams.appId = appId;
+    // lLaunchParams.scr = scrName;
+    // lLaunchParams.div = "csmrbk__LandingPage__microappLauncherCol";
+    // lLaunchParams.userObj = {};
+    // lLaunchParams.userObj.data = {
+    //     "customerID": "000004712",
+    //     "customerName": "JackSparrow"
+    // };
+    // apz.launchApp(lLaunchParams);
+}
+//select account to transfer money
+apz.fndftr.fundstranfer.fnSelectAccount = function(element) {
+    debugger;
+    var accountsLength = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts.length;
+    for (var i = 0; i < accountsLength; i++) {
+        $("#fndftr__FundsTransfer__ct_lst_1_row_" + i).removeClass("current")
+    }
+    $(".disable_list").removeClass("disable_list");
+    $(element).addClass("current");
+    if (apz.fndftr.fundstranfer.sParams.from == "DashboardSavings") {
+        var index = 0;
+    } else {
+        var index = $(element).attr("rowno");
+    }
+    apz.fndftr["fromAccountCurrency"] = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts[index]["currency"];
+    var name = LandingCommon.getLoggedInUser();
+    apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.userId = name;
+    for (i = 0; i < apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts.length; i++) {
+        apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts[i].HolderName = name;
+    }
+    apz.data.loadData("FundsTransferDetails", "fndftr");
+    apz.fndftr.tranfers["fromAccountDetails"] = apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts[index];
+    apz.fndftr.ownAccounts = [...apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts];
+    apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts = [apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts[index]]
+    apz.data.loadData("FundsTransferDetails", "fndftr");
+    if (apz.deviceGroup == "Mobile") {
+        apz.setElmValue("fndftr__FundsTransfer__el_txt_3", apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts[0].accountNo);
+        apz.setElmValue("fndftr__FundsTransfer__el_txt_4", apz.data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts[0].currency + " " + apz
+            .data.scrdata.fndftr__FundsTransferDetails_Res.summary.accounts[0].availBalance);
+        $("#fndftr__FundsTransfer__beneficiaryAcc_row").removeClass("sno");
+        $("#fndftr__FundsTransfer__userAcc_row").addClass("sno")
+    }
+    //enabling destination account selection coloumn
+    $("#fndftr__FundsTransfer__step2").removeClass("FTDisable");
+    //enabling the step1 switch account link 
+    $(".step1group").removeClass("sno")
+}
+apz.fndftr.fundstranfer.fnOnSwitchOriginAccount = function() {
+    debugger;
+    apz.data.loadJsonData("FundsTransferDetails", "fndftr");
+    $("#fndftr__FundsTransfer__step2").addClass("FTDisable")
+    $("#fndftr__FundsTransfer__step3").addClass("FTDisable")
+    $(".step1group").addClass("sno");
+    //apz.fndftr.fundstranfer.fnOnSwitchDestinationAccount();
+}
+apz.fndftr.fundstranfer.fnOnSwitchDestinationAccount = function() {
+    debugger;
+    apz.data.scrdata.fndftr__Beneficiary_Res.beneficiaryDetails = apz.data.scrdata.fndftr__FavouritesBebeficiary_Res.beneficiaryDetails;
+    apz.data.loadData("Beneficiary", "fndftr");
+    $("#fndftr__FundsTransfer__step3").addClass("FTDisable");
+    $(".step2group").addClass("sno")
+    $(".ftbthny").removeClass("sno");
+    $("#fndftr__FundsTransfer__ct_lst_2_pagination_ul").removeClass("sno");
+}
+//back to user account list
+apz.fndftr.fundstranfer.fnBackToUserAccount = function() {
+    debugger;
+    apz.data.loadJsonData("FundsTransferDetails", "fndftr");
+    $("#fndftr__FundsTransfer__beneficiaryAcc_row").addClass("sno");
+    $("#fndftr__FundsTransfer__userAcc_row").removeClass("sno")
+}
+//scan and upload payment
+apz.fndftr.fundstranfer.fnScan = function() {
+    debugger;
+    var lLaunchParams = {
+        "appId": "qrscan",
+        "scr": "Launcher",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "from": "fundtransfer",
+            "fromAccount": apz.fndftr.tranfers["fromAccountDetails"].accountNo,
+            "data": {
+                "customerID": "000004712"
+            },
+            "control": {
+                "exitApp": {
+                    "appId": "landin",
+                    "div": "landin__Landing__Launcher",
+                    "callBack": apz.fndftr.fundstranfer.fnScanCB
+                }
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+    // var ljson = {};
+    // ljson.id = "BARCODE_ID";
+    // ljson.callBack = apz.fndftr.fundstranfer.fnscanBarcodeCallback;
+    // ljson.callBackObj = this;
+    // apz.ns.scanBarcode(ljson);
+};
+apz.fndftr.fundstranfer.fnScanCB = function(){
+    debugger;
+        var lLaunchParams = {
+        "appId": "fndftr",
+        "scr": "FundsTransfer",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "from":"fundtransfer",
+            //"userId" :apz.csmrbk.landingpage.sCache.userId,
+            "fromAccount": apz.fndftr.tranfers["fromAccountDetails"].accountNo,
+            "data": {
+                "customerID": "000004712"
+            },
+            "control": {
+                "exitApp": {
+                    "appId": "landin",
+                    "div": "landin__Landing__Launcher",
+                    "callBack": apz.landin.Landing.fnHome
+                }
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.fndftr.fundstranfer.fnscanBarcodeCallback = function(pResp) {
+    debugger;
+    // if (pResp.status) {
+    //     var lJson = pResp.text.split(",");
+    //     var transferDetails = {};
+    //     transferDetails.accountNo = lJson[1].split("=")[1];
+    //     transferDetails.branchName = lJson[3].split("=")[1];
+    //     transferDetails.ifsc = lJson[5].split("=")[1];
+    //     transferDetails.HolderName = lJson[0].split("=")[1];
+    //     transferDetails.benificiaryPic = apz.fndftr.fundstranfer.sCache.transfer.beneficiaryImage;
+    //     transferDetails.bankName = lJson[2].split("=")[1];
+    //     transferDetails.amount = "";
+    //     transferDetails.from=apz.fndftr.fundstranfer.sCache.from;
+    //     apz.fndftr.fundstranfer.fnlaunchTransferDetails(transferDetails);
+    // }
+};
+// apz.fndftr.fundstranfer.fnscanpay = function()
+// {
+//      var lLaunchParams = {
+//         "appId": "qrscan",
+//         "scr": "Launcher",
+//         "div": "csmrbk__LandingPage__microappLauncherCol",
+//         "userObj": {
+//             "from":"fundtransfer",
+//             "fromAccount": apz.fndftr.tranfers["fromAccountDetails"].accountNo,
+//             "data": {
+//                 "customerID": "000004712"
+//             },
+//             "control": {
+//                 "exitApp": {
+//                     "appId": "csmrbk",
+//                     "div": "csmrbk__LandingPage__microappLauncherCol",
+//                     "callBack": apz.csmrbk.landingpage.fnHome
+//                 }
+//             }
+//         }
+//     };
+//     apz.launchApp(lLaunchParams);
+// }

@@ -1,0 +1,353 @@
+apz.reqsdl.lockerform = {};
+apz.reqsdl.lockerform.sParams = {};
+apz.reqsdl.lockerform.sAction = {};
+apz.reqsdl.lockerform.sParams.data = {};
+apz.app.onLoad_LockerForm = function(params) {
+    debugger;
+    apz.reqsdl.lockerform.sParams = params;
+    if (params.Navigation) {
+        apz.reqsdl.lockerform.fnSetNavigation(params);
+    }
+    apz.reqsdl.lockerform.sAction = params.action;
+    if (apz.reqsdl.lockerform.sAction == "Add") {
+        apz.reqsdl.lockerform.fnGoToStage1();
+    } else if (apz.reqsdl.lockerform.sAction == "View") {
+        apz.reqsdl.lockerform.sParams.data = params.data;
+        apz.reqsdl.lockerform.fnGoToStage2();
+    }
+};
+apz.reqsdl.lockerform.fnSetNavigation = function(params) {
+    debugger;
+    apz.reqsdl.lockerform.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "LOCKER FORM";
+    }
+    lParams.backPressed = apz.reqsdl.lockerform.fnBack;
+    apz.reqsdl.lockerform.Navigation(lParams);
+};
+apz.reqsdl.lockerform.fnGoToStage1 = function() {
+    apz.reqsdl.lockerform.fnSetValueStage1();
+    apz.reqsdl.lockerform.fnRenderStage1();
+};
+apz.reqsdl.lockerform.fnSetValueStage1 = function() {};
+apz.reqsdl.lockerform.fnRenderStage1 = function() {
+    $("#reqsdl__LockerForm__nominationRow").addClass("sno");
+    apz.show("reqsdl__LockerForm__Stage1");
+    apz.hide("reqsdl__LockerForm__Stage2");
+    apz.hide("reqsdl__LockerForm__Stage3");
+};
+apz.reqsdl.lockerform.fnNominationChanged = function() {
+    var lValue = apz.getElmValue("reqsdl__LockerForm__nomination");
+    if (lValue === 'Yes') {
+        //Uncomment while integrated with core bank 
+        apz.reqsdl.lockerform.mockServerBckup = apz.mockServer;
+        apz.mockServer = true;
+        var lServerParams = {
+            "ifaceName": "NomineeDetails",
+            "paintResp": "N",
+            "buildReq": "N",
+            "req": {
+                "SDLDtls": {
+                    "customerid": ""
+                },
+                "action": "Query"
+            },
+            "callBack": apz.reqsdl.lockerform.fnNominationChangedCB
+        };
+        apz.server.callServer(lServerParams);
+    } else {
+        $("#reqsdl__LockerForm__nominationRow").addClass("sno");
+    }
+};
+apz.reqsdl.lockerform.fnNominationChangedCB = function(params) {
+    debugger;
+    if (params.errors) {
+        var param = {
+            'code': params.errors[0].errorCode
+        };
+        apz.dispMsg(param);
+    } else {
+        $("#reqsdl__LockerForm__nominationRow").removeClass("sno");
+        apz.mockServer = apz.reqsdl.lockerform.mockServerBckup;
+        apz.reqsdl.lockerform.nomineeDtls = params.res.reqsdl__NomineeDetails_Res.nomineeDtls.data.nomineeData;
+        var lArr = [{
+            "val": "",
+            "desc": "Select"
+        }];
+        for (var i = 0; i < apz.reqsdl.lockerform.nomineeDtls.length; i++) {
+            var lObj = {
+                "val": apz.reqsdl.lockerform.nomineeDtls[i].nomineeName,
+                "desc": apz.reqsdl.lockerform.nomineeDtls[i].nomineeName
+            };
+            lArr.push(lObj);
+        }
+        apz.populateDropdown(document.getElementById("reqsdl__LockerFormIFace__i__SDLDtls__nomineeName"), lArr);
+    }
+};
+apz.reqsdl.lockerform.fnChangeNomineeDD = function() {
+    debugger;
+    var lSelNominee = apz.getElmValue("reqsdl__LockerFormIFace__i__SDLDtls__nomineeName");
+    var lNominees = apz.reqsdl.lockerform.nomineeDtls;
+    for (var i = 0; i < lNominees.length; i++) {
+        if (lNominees[i].nomineeName == lSelNominee) {
+            apz.setElmValue("reqsdl__LockerFormIFace__i__SDLDtls__nomineeAddress", lNominees[i].nomineeAddress);
+            apz.setElmValue("reqsdl__LockerFormIFace__i__SDLDtls__nomineeContactNo", lNominees[i].nomineePhno);
+            apz.setElmValue("reqsdl__LockerFormIFace__i__SDLDtls__nomineeRelation", lNominees[i].nomineeRelation);
+            apz.setElmValue("reqsdl__LockerFormIFace__i__SDLDtls__nomineeDob", lNominees[i].nomineeDob);
+        }
+        if (apz.isNull(lSelNominee)) {
+            $("#reqsdl__LockerForm__sc_row_nominees input").not("#reqsdl__LockerFormIFace__i__SDLDtls__nomineeName").val("");
+        }
+    }
+};
+apz.reqsdl.lockerform.fnContinueBtn = function() {
+    debugger;
+    var lValid = apz.reqsdl.lockerform.fnValidateStage1();
+    if (lValid) {
+        apz.data.buildData("LockerFormIFace", "reqsdl");
+        apz.reqsdl.lockerform.fnGoToStage2();
+    }
+};
+apz.reqsdl.lockerform.fnGoToStage2 = function() {
+    apz.reqsdl.lockerform.fnSetValueStage2();
+    apz.reqsdl.lockerform.fnRenderStage2();
+};
+apz.reqsdl.lockerform.fnSetValueStage2 = function() {
+    debugger;
+    var lDetails;
+    $("#reqsdl__LockerForm__nominationRow").addClass("sno");
+    if (apz.reqsdl.lockerform.sAction == "Add") {
+        lDetails = apz.data.scrdata.reqsdl__LockerFormIFace_Req.SDLDtls;
+    } else if (apz.reqsdl.lockerform.sAction == "View") {
+        lDetails = apz.reqsdl.lockerform.sParams.data;
+    }
+    if (lDetails.branchName != '') {
+        apz.show("reqsdl__LockerForm__stage2BranchName_ctrl_grp_div");
+        apz.setElmValue("reqsdl__LockerForm__stage2BranchName", lDetails.branchName);
+    } else {
+        apz.hide("reqsdl__LockerForm__stage2BranchName_ctrl_grp_div");
+    }
+    if (lDetails.brnCode != '') {
+        apz.show("reqsdl__LockerForm__stage2BranchCode_ctrl_grp_div");
+        apz.setElmValue("reqsdl__LockerForm__stage2BranchCode", lDetails.brnCode);
+    } else {
+        apz.hide("reqsdl__LockerForm__stage2BranchCode_ctrl_grp_div");
+    }
+    if (lDetails.lockerSize != '') {
+        apz.show("reqsdl__LockerForm__stage2LockerSize_ctrl_grp_div");
+        apz.setElmValue("reqsdl__LockerForm__stage2LockerSize", lDetails.lockerSize);
+    } else {
+        apz.hide("reqsdl__LockerForm__stage2LockerSize_ctrl_grp_div");
+    }
+    apz.setElmValue("reqsdl__LockerForm__stage2AcRecov", lDetails.accountNoForRent);
+    apz.setElmValue("reqsdl__LockerForm__stage2CustomerId", lDetails.customerId);
+    apz.setElmValue("reqsdl__LockerForm__stage2MOD", lDetails.modeOfOperation);
+    apz.setElmValue("reqsdl__LockerForm__stage2NameOfHirer", lDetails.nameOfHirer);
+    apz.setElmValue("reqsdl__LockerForm__stage2AddrOfHirer", lDetails.addressOfHirer);
+    if (lDetails.nomineeName != '') {
+        apz.setElmValue("reqsdl__LockerForm__stage2Nomination", "Yes");
+        $("#reqsdl__LockerForm__stage2NominationRow").removeClass("sno");
+        apz.setElmValue("reqsdl__LockerForm__stage2NomineeName", lDetails.nomineeName);
+        apz.setElmValue("reqsdl__LockerForm__stage2NomineeDOB", lDetails.nomineeDob);
+        apz.setElmValue("reqsdl__LockerForm__stage2RwHirer", lDetails.nomineeRelation);
+        apz.setElmValue("reqsdl__LockerForm__stage2NomineeAddr", lDetails.nomineeAddress);
+        apz.setElmValue("reqsdl__LockerForm__stage2NomineeContactNo", lDetails.nomineeContactNo);
+    } else {
+        apz.setElmValue("reqsdl__LockerForm__stage2Nomination", "No");
+        $("#reqsdl__LockerForm__stage2NominationRow").addClass("sno");
+    }
+};
+apz.reqsdl.lockerform.fnRenderStage2 = function() {
+    apz.hide("reqsdl__LockerForm__Stage1");
+    apz.show("reqsdl__LockerForm__Stage2");
+    apz.hide("reqsdl__LockerForm__Stage3");
+    if (apz.reqsdl.lockerform.sAction == "Add") {
+        apz.hide("reqsdl__LockerForm__viewNavBar");
+        apz.show("reqsdl__LockerForm__addNavBar");
+    } else if (apz.reqsdl.lockerform.sAction == "View") {
+        apz.show("reqsdl__LockerForm__viewNavBar");
+        apz.hide("reqsdl__LockerForm__addNavBar");
+    }
+};
+apz.reqsdl.lockerform.fnEditBtn = function() {
+    apz.reqsdl.lockerform.fnRenderStage1();
+};
+apz.reqsdl.lockerform.fnBackBtn = function() {
+    debugger;
+     apz.reqsdl.lockerform.sParams.back();
+    // var lLaunchParams = {
+    //     "appId": "reqsdl",
+    //     "scr": "Summary",
+    //     // "div": "reqsdl__LockerForm__launchMicroApp",
+    // }
+    // apz.launchApp(lLaunchParams);
+};
+apz.reqsdl.lockerform.fnPayRentBtn = function() {
+    alert("PayRent");
+    var lLaunchParams = {
+        "appId": "sdlrnt",
+        "scr": "PayRent",
+        "div": "reqsdl__LockerForm__launchMicroApp",
+        "userObj": {
+            "action": "",
+            "data": apz.reqsdl.lockerform.sParams.data,
+            "control": {
+                "appId": "sdlrnt",
+                "callBack": apz.reqsdl.lockerform.fnPayRentCB,
+                "destroyDiv": "reqsdl__LockerForm__launchMicroApp"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+};
+apz.reqsdl.lockerform.fnPayRentCB = function() {
+    debugger;
+};
+apz.reqsdl.lockerform.fnConfirmBtn = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "LockerFormIFace",
+        "req": {
+            "SDLDtls": apz.data.scrdata.reqsdl__LockerFormIFace_Req.SDLDtls,
+            "action": "Confirm"
+        },
+        "callBack": apz.reqsdl.lockerform.fnCallServerCallBack
+    };
+    apz.reqsdl.lockerform.fnBeforeCallServer(lParams);
+};
+apz.reqsdl.lockerform.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": "N",
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": params.callBack
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.reqsdl.lockerform.fnCallServerCallBack = function(params) {
+    debugger;
+    if (!params.errors) {
+        if (params.res.reqsdl__LockerFormIFace_Res.SDLDtls.respCd == "app") {
+            apz.reqsdl.lockerform.sParams.RefNum = params.res.reqsdl__LockerFormIFace_Res.SDLDtls.txnRefNo;
+            apz.reqsdl.lockerform.fnRenderOtpScreen();
+            var lLaunchParams = {
+                "appId": "otpeng",
+                "scr": "ProcessOTP",
+                "div": "reqsdl__LockerForm__launchMicroApp",
+                "userObj": {
+                    "action": "SetRefNo",
+                    "data": {
+                        "OTPRefNo": params.res.reqsdl__LockerFormIFace_Res.SDLDtls.data.OTPRefNo
+                    },
+                    "control": {
+                        "appId": "otpeng",
+                        "callBack": apz.reqsdl.lockerform.fnOtpCB,
+                        "destroyDiv": "reqsdl__LockerForm__launchMicroApp"
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        }
+    } else {}
+};
+apz.reqsdl.lockerform.fnRenderOtpScreen = function() {
+    apz.hide("reqsdl__LockerForm__Stage1");
+    apz.hide("reqsdl__LockerForm__Stage2");
+    apz.hide("reqsdl__LockerForm__Stage3");
+    apz.show("reqsdl__LockerForm__launchMicroApp");
+};
+apz.reqsdl.lockerform.fnOtpCB = function() {
+    debugger;
+    apz.reqsdl.lockerform.fnSetValueStage3();
+    apz.reqsdl.lockerform.fnRenderStage3();
+};
+apz.reqsdl.lockerform.fnSetValueStage3 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.reqsdl__LockerFormIFace_Req.SDLDtls;
+    if (lDetails.branchName != '') {
+        apz.show("reqsdl__LockerForm__stage3BranchName_ctrl_grp_div");
+        apz.setElmValue("reqsdl__LockerForm__stage3BranchName", lDetails.branchName);
+    } else {
+        apz.hide("reqsdl__LockerForm__stage3BranchName_ctrl_grp_div");
+    }
+    if (lDetails.brnCode != '') {
+        apz.show("reqsdl__LockerForm__stage3BranchCode_ctrl_grp_div");
+        apz.setElmValue("reqsdl__LockerForm__stage3BranchCode", lDetails.brnCode);
+    } else {
+        apz.hide("reqsdl__LockerForm__stage3BranchCode_ctrl_grp_div");
+    }
+    if (lDetails.lockerSize != '') {
+        apz.show("reqsdl__LockerForm__stage3LockerSize_ctrl_grp_div");
+        apz.setElmValue("reqsdl__LockerForm__stage3LockerSize", lDetails.lockerSize);
+    } else {
+        apz.hide("reqsdl__LockerForm__stage3LockerSize_ctrl_grp_div");
+    }
+    apz.setElmValue("reqsdl__LockerForm__stage3AcRecov", lDetails.accountNoForRent);
+    apz.setElmValue("reqsdl__LockerForm__stage3CustomerId", lDetails.customerId);
+    apz.setElmValue("reqsdl__LockerForm__stage3MOD", lDetails.modeOfOperation);
+    apz.setElmValue("reqsdl__LockerForm__stage3NameOfHirer", lDetails.nameOfHirer);
+    apz.setElmValue("reqsdl__LockerForm__stage3AddrOfHirer", lDetails.addressOfHirer);
+    if (lDetails.nomineeName != '') {
+        apz.setElmValue("reqsdl__LockerForm__stage3Nomination", "Yes");
+        $("#reqsdl__LockerForm__stage3NominationRow").removeClass("sno");
+        apz.setElmValue("reqsdl__LockerForm__stage3NomineeName", lDetails.nomineeName);
+        apz.setElmValue("reqsdl__LockerForm__stage3NomineeDOB", lDetails.nomineeDob);
+        apz.setElmValue("reqsdl__LockerForm__stage3RwHirer", lDetails.nomineeRelation);
+        apz.setElmValue("reqsdl__LockerForm__stage3NomineeAddr", lDetails.nomineeAddress);
+        apz.setElmValue("reqsdl__LockerForm__stage3NomineeContactNo", lDetails.nomineeContactNo);
+    } else {
+        apz.setElmValue("reqsdl__LockerForm__stage3Nomination", "No");
+        $("#reqsdl__LockerForm__stage3NominationRow").addClass("sno");
+    }
+};
+apz.reqsdl.lockerform.fnRenderStage3 = function() {
+    apz.hide("reqsdl__LockerForm__Stage1");
+    apz.hide("reqsdl__LockerForm__Stage2");
+    apz.show("reqsdl__LockerForm__Stage3");
+};
+apz.reqsdl.lockerform.fnPrintBtn = function() {
+  
+};
+apz.reqsdl.lockerform.fnDoneBtn = function() {
+    apz.csmrbk.landingpage.fnCancel();
+};
+apz.reqsdl.lockerform.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("reqsdl__LockerForm__Stage1Form");
+    if (lValid) {
+        if ($('#reqsdl__LockerForm__terms').is(":checked")) {
+            var captcha = "a"; //apz.getElmValue("reqsdl__LockerForm__captcha");
+            var captchaV = "a"; // apz.getElmValue("reqsdl__LockerForm__captchaInput");
+            if (captcha == captchaV) {
+                return true;
+            } else {
+                var lMsg = {
+                    "code": "ERR_MAND"
+                };
+                apz.dispMsg(lMsg);
+                return false;
+            }
+        } else {
+            var lMsg = {
+                "code": "ERR_MAND"
+            };
+            apz.dispMsg(lMsg);
+            return false;
+        }
+    } else {
+        var lMsg = {
+            "code": "ERR_MAND"
+        };
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};

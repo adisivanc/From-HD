@@ -1,0 +1,685 @@
+{
+    "ACNR01__MenuList_Req": {
+        "vwMenu": [
+            {
+                "appId": "ACDB01",
+                "corporateId": "000FTAC4321",
+                "description": "Home",
+                "displayOrder": "1",
+                "groupIcon": "",
+                "groupName": "",
+                "icon": "icon-home64",
+                "roleId": "SeniorManagement",
+                "screenId": "Dashboard"
+            },
+            {
+                "appId": "",
+                "corporateId": "000FTAC4321",
+                "description": "My Dashboard",
+                "displayOrder": "2",
+                "groupIcon": "",
+                "groupName": "",
+                "icon": "icon-dashboard64",
+                "roleId": "SeniorManagement",
+                "screenId": ""
+            },
+            {
+                "appId": "accp01",
+                "corporateId": "000FTAC4321",
+                "description": "Change Password",
+                "displayOrder": "2",
+                "groupName": "My Dashboard",
+                "icon": "icon-users",
+                "roleId": "SeniorManagement",
+                "screenId": "ChangePassword"
+            },
+            {
+                "appId": "actf01",
+                "corporateId": "000FTAC4321",
+                "description": "My Tasks",
+                "displayOrder": "2",
+                "groupName": "My Dashboard",
+                "icon": "icon-cm-mytask",
+                "roleId": "SeniorManagement",
+                "screenId": "TaskFlow"
+            },
+            {
+                "appId": "prfinf",
+                "corporateId": "000FTAC4321",
+                "description": "My Profile",
+                "displayOrder": "2",
+                "groupName": "My Dashboard",
+                "icon": "icon-users",
+                "roleId": "SeniorManagement",
+                "screenId": "profileinfo"
+            },
+            {
+                "appId": "notifi",
+                "corporateId": "000FTAC4321",
+                "description": "Alerts",
+                "displayOrder": "2",
+                "groupName": "My Dashboard",
+                "icon": "icon-users",
+                "roleId": "SeniorManagement",
+                "screenId": "notification"
+            },
+            {
+                "appId": "accdtl",
+                "corporateId": "000FTAC4321",
+                "description": "Accounts",
+                "displayOrder": "2",
+                "groupName": "Accounts",
+                "icon": "icon-cm-account_details",
+                "roleId": "SeniorManagement",
+                "screenId": "AccountSummary"
+            },
+            {
+                "appId": "promtn",
+                "corporateId": "000FTAC4321",
+                "description": "Promotions",
+                "displayOrder": "2",
+                "groupName": "My Dashboard",
+                "icon": "icon-users",
+                "roleId": "SeniorManagement",
+                "screenId": "ViewPromotion"
+            },
+            {
+                "appId": "acdp01",
+                "corporateId": "000FTAC4321",
+                "description": "Term Deposits",
+                "displayOrder": "3",
+                "groupName": "Accounts",
+                "icon": "icon-cm-deposits",
+                "roleId": "SeniorManagement",
+                "screenId": "DepositLauncher"
+            },
+            {
+                "appId": "card01",
+                "corporateId": "000FTAC4321",
+                "description": "Corporate Cards",
+                "displayOrder": "3",
+                "groupName": "Accounts",
+                "icon": "icon-cm-cards",
+                "roleId": "SeniorManagement",
+                "screenId": "Cards"
+            },
+            {
+                "appId": "acdp01",
+                "corporateId": "000FTAC4321",
+                "description": "Liquidate Deposit",
+                "displayOrder": "3",
+                "groupName": "Accounts",
+                "icon": "icon-cm-liquidateFD",
+                "roleId": "SeniorManagement",
+                "screenId": "LiquidateFD"
+            },
+            {
+                "appId": "chkdpt",
+                "corporateId": "000FTAC4321",
+                "description": "Remote Check Deposit",
+                "displayOrder": "3",
+                "groupName": "Accounts",
+                "icon": "icon-cm-cards",
+                "roleId": "SeniorManagement",
+                "screenId": "ChkDepositLauncher"
+            },
+            {
+                "appId": "acnp01",
+                "corporateId": "000FTAC4321",
+                "description": "Liquidity Management",
+                "displayOrder": "3",
+                "groupName": "Accounts",
+                "icon": "icon-cm-cards",
+                "roleId": "SeniorManagement",
+                "screenId": "NotionalPooling"
+            },
+            
+            {
+                "appId": "extacc",
+                "corporateId": "000FTAC4321",
+                "description": "External Accounts",
+                "displayOrder": "3",
+                "groupName": "Accounts",
+                "icon": "icon-cm-deposits",
+                "roleId": "SeniorManagement",
+                "screenId": "ExternalAccountList"
+            },
+            
+            
+            {
+                "appId": "",
+                "corporateId": "000FTAC4321",
+                "description": "Accounts",
+                "displayOrder": "3",
+                "groupIcon": "",
+                "groupName": "",
+                "icon": "icon-accounts64",
+                "roleId": "SeniorManagement",
+                "screenId": ""
+            },
+            {
+                "appId": "",
+                "corporateId": "000FTAC4321",
+                "description": "Lending",
+                "displayOrder": "5",
+                "groupIcon": "",
+                "groupName": "",
+                "icon": "icon-lending64",
+                "roleId": "SeniorManagement",
+                "screenId": ""
+            },
+            {
+                "appId": "aclo01",
+                "corporateId": "000FTAC4321",
+                "description": "Loan",
+                "displayOrder": "5",
+                "groupName": "Lending",
+                "icon": "icon-cm-cashmanagement",
+                "roleId": "SeniorManagement",
+                "screenId": "LoansSummary"
+            },
+            {
+                "appId": "ficl01",
+                "corporateId": "000FTAC4321",
+                "description": "Commitment",
+                "displayOrder": "5",
+                "groupName": "Lending",
+                "icon": "icon-file-alt",
+                "roleId": "SeniorManagement",
+                "screenId": "CommitmentList"
+            },
+            {
+                "appId": "",
+                "corporateId": "000FTAC4321",
+                "description": "Credit Facilities",
+                "displayOrder": "7",
+                "groupIcon": "",
+                "groupName": "",
+                "icon": "icon-CreditFacility64",
+                "roleId": "SeniorManagement",
+                "screenId": ""
+            },
+            {
+                "appId": "ficl01",
+                "corporateId": "000FTAC4321",
+                "description": "Credit Line",
+                "displayOrder": "7",
+                "groupName": "Credit Facilities",
+                "icon": "icon-file-alt",
+                "roleId": "SeniorManagement",
+                "screenId": "CreditLimitsList"
+            },
+            {
+                "appId": "ficl01",
+                "corporateId": "000FTAC4321",
+                "description": "Collaterals",
+                "displayOrder": "8",
+                "groupName": "Credit Facilities",
+                "icon": "icon-file-alt",
+                "roleId": "SeniorManagement",
+                "screenId": "CollateralList"
+            },
+            {
+                "appId": "",
+                "corporateId": "000FTAC4321",
+                "description": "Foreign Exchange",
+                "displayOrder": "11",
+                "groupIcon": "",
+                "groupName": "",
+                "icon": "icon-ForeignExchange64",
+                "roleId": "SeniorManagement",
+                "screenId": ""
+            },
+            {
+                "appId": "exrate",
+                "corporateId": "000FTAC4321",
+                "description": "Buy / Sell",
+                "displayOrder": "11",
+                "groupName": "Foreign Exchange",
+                "icon": "icon-ForeignExchange64",
+                "roleId": "SeniorManagement",
+                "screenId": "ExchangeRate"
+            },
+            {
+                "appId": "",
+                "corporateId": "000FTAC4321",
+                "description": "Trade Finance",
+                "displayOrder": "12",
+                "groupIcon": "",
+                "groupName": "",
+                "icon": "icon-tradeFinance64",
+                "roleId": "SeniorManagement",
+                "screenId": ""
+            },
+            {
+                "appId": "lecr01",
+                "corporateId": "000FTAC4321",
+                "description": "Import LC ",
+                "displayOrder": "12",
+                "groupName": "Trade Finance",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "ImportLC"
+            },
+            
+              {
+                "appId": "lecr01",
+                "corporateId": "000FTAC4321",
+                "description": "Bill Collections",
+                "displayOrder": "12",
+                "groupName": "Trade Finance",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "BillCollections"
+            },
+            
+              {
+                "appId": "lecr01",
+                "corporateId": "000FTAC4321",
+                "description": "Guarantees",
+                "displayOrder": "12",
+                "groupName": "Trade Finance",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "Guarantees"
+            },
+            
+            
+            
+            
+            {
+                "appId": "acsf01",
+                "corporateId": "000FTAC4321",
+                "description": "Vendors",
+                "displayOrder": "13",
+                "groupName": "Payables",
+                "icon": "icon-zt-buyer",
+                "roleId": "SeniorManagement",
+                "screenId": "BuyerSummary"
+            },
+            {
+                "appId": "acsf01",
+                "corporateId": "000FTAC4321",
+                "description": "File Formats",
+                "displayOrder": "16",
+                "groupName": "Receivables",
+                "icon": "icon-rt-invoice",
+                "roleId": "SeniorManagement",
+                "screenId": "SCFTemplateSummary"
+            },
+            {
+                "appId": "acsf01",
+                "corporateId": "000FTAC4321",
+                "description": "Upload Invoices",
+                "displayOrder": "16",
+                "groupName": "Receivables",
+                "icon": "icon-rt-invoice",
+                "roleId": "SeniorManagement",
+                "screenId": "FileUpload"
+            },
+            {
+                "appId": "Invoic",
+                "corporateId": "000FTAC4321",
+                "description": "Sync Invoices",
+                "displayOrder": "16",
+                "groupName": "Receivables",
+                "icon": "icon-rt-invoice",
+                "roleId": "SeniorManagement",
+                "screenId": "InvoiceLauncher"
+            },
+            {
+                "appId": "",
+                "corporateId": "000FTAC4321",
+                "description": "Receivables",
+                "displayOrder": "16",
+                "groupIcon": "",
+                "groupName": "",
+                "icon": "icon-Receivables64",
+                "roleId": "SeniorManagement",
+                "screenId": ""
+            },
+            {
+                "appId": "bllpay",
+                "corporateId": "000FTAC4321",
+                "description": "Bill Payments",
+                "displayOrder": "16",
+                "groupName": "Payments & Transfers",
+                "icon": "icon-rt-invoice",
+                "roleId": "SeniorManagement",
+                "screenId": "BillPaymentSummary"
+            },
+            {
+                "appId": "",
+                "corporateId": "000FTAC4321",
+                "description": "Payables",
+                "displayOrder": "16",
+                "groupIcon": "",
+                "groupName": "",
+                "icon": "icon-payables64",
+                "roleId": "SeniorManagement",
+                "screenId": ""
+            },
+            {
+                "appId": "acsf01",
+                "corporateId": "000FTAC4321",
+                "description": "Customers",
+                "displayOrder": "17",
+                "groupName": "Receivables",
+                "icon": "icon-zt-seller",
+                "roleId": "SeniorManagement",
+                "screenId": "SellerSummary"
+            },
+            {
+                "appId": "bilpay",
+                "corporateId": "000FTAC4321",
+                "description": "Manage Payee",
+                "displayOrder": "17",
+                "groupName": "Payments & Transfers",
+                "icon": "icon-zt-seller",
+                "roleId": "SeniorManagement",
+                "screenId": "AddBiller"
+            },
+            {
+                "appId": "bill01",
+                "corporateId": "000FTAC4321",
+                "description": "Bills",
+                "displayOrder": "17",
+                "groupName": "Payables",
+                "icon": "icon-zt-seller",
+                "roleId": "SeniorManagement",
+                "screenId": "Header"
+            },
+            {
+                "appId": "acft01",
+                "corporateId": "000FTAC4321",
+                "description": "Payments & Transfers",
+                "displayOrder": "21",
+                "groupIcon": "icon-cm-transfers",
+                "groupName": "Payments & Transfers",
+                "icon": "icon-cm-transfers",
+                "roleId": "SeniorManagement",
+                "screenId": "Transfers"
+            },
+            {
+                "appId": "",
+                "corporateId": "000FTAC4321",
+                "description": "Payments & Transfers",
+                "displayOrder": "21",
+                "groupIcon": "",
+                "groupName": "",
+                "icon": "icon-paymentNtransfers64",
+                "roleId": "SeniorManagement",
+                "screenId": ""
+            },
+            {
+                "appId": "benf01",
+                "corporateId": "000FTAC4321",
+                "description": "Manage Beneficiary",
+                "displayOrder": "22",
+                "groupIcon": "icon-cm-transfers",
+                "groupName": "Payments & Transfers",
+                "icon": "icon-cm-beneficiary",
+                "roleId": "SeniorManagement",
+                "screenId": "Beneficiary"
+            },
+            {
+                "appId": "acsi01",
+                "corporateId": "000FTAC4321",
+                "description": "Standing Instructions",
+                "displayOrder": "23",
+                "groupIcon": "icon-cm-transfers",
+                "groupName": "Payments & Transfers",
+                "icon": "icon-cm-standinginst",
+                "roleId": "SeniorManagement",
+                "screenId": "StandingInstructions"
+            },
+            {
+                "appId": "bulktr",
+                "corporateId": "000FTAC4321",
+                "description": "Multiple Transfers",
+                "displayOrder": "24",
+                "groupName": "Payments & Transfers",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "BulkTransfers"
+            },
+            {
+                "appId": "fthist",
+                "corporateId": "000FTAC4321",
+                "description": "Transfer History",
+                "displayOrder": "25",
+                "groupName": "Payments & Transfers",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "FundTransferHistory"
+            },
+            
+            {
+                "appId": "fthist",
+                "corporateId": "000FTAC4321",
+                "description": "Scheduled Payments",
+                "displayOrder": "25",
+                "groupName": "Payments & Transfers",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "ScheduledPayments"
+            },
+            
+            {
+                "appId": "sweptr",
+                "corporateId": "000FTAC4321",
+                "description": "Sweep Transfer",
+                "displayOrder": "26",
+                "groupName": "Payments & Transfers",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "liquidityMgmt"
+            },
+            
+            {
+                "appId": "ddinst",
+                "corporateId": "000FTAC4321",
+                "description": "Direct Debit Mandates",
+                "displayOrder": "27",
+                "groupName": "Payments & Transfers",
+                "icon": "icon-rt-invoice",
+                "roleId": "SeniorManagement",
+                "screenId": "EcsLauncher"
+            },
+            {
+                "appId": "",
+                "corporateId": "000FTAC4321",
+                "description": "Service Requests",
+                "displayOrder": "26",
+                "groupIcon": "",
+                "groupName": "",
+                "icon": "icon-serviceRequest64",
+                "roleId": "SeniorManagement",
+                "screenId": ""
+            },
+            {
+                "appId": "nchqbk",
+                "corporateId": "000FTAC4321",
+                "description": "Check Book Request",
+                "displayOrder": "26",
+                "groupName": "Service Requests",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "ChequeBookRequest"
+            },
+            {
+                "appId": "nchqbk",
+                "corporateId": "000FTAC4321",
+                "description": "Positive Pay",
+                "displayOrder": "26",
+                "groupName": "Service Requests",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "PositivePay"
+            },
+            {
+                "appId": "nchqbk",
+                "corporateId": "000FTAC4321",
+                "description": "Stop Pay",
+                "displayOrder": "26",
+                "groupName": "Service Requests",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "StopPay"
+            },
+            {
+                "appId": "smtreq",
+                "corporateId": "000FTAC4321",
+                "description": "Statement Change Request",
+                "displayOrder": "26",
+                "groupName": "Service Requests",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "statementrequest"
+            },
+            
+            
+            
+              {
+                "appId": "chqsts",
+                "corporateId": "000FTAC4321",
+                "description": "Inward Clearing",
+                "displayOrder": "26",
+                "groupName": "Service Requests",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "ClearingChequeSummary"
+            },
+            
+              {
+                "appId": "chqsts",
+                "corporateId": "000FTAC4321",
+                "description": "Outward Clearing",
+                "displayOrder": "26",
+                "groupName": "Service Requests",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "OutwardSummary"
+            },
+            
+            {
+                "appId": "chqsts",
+                "corporateId": "000FTAC4321",
+                "description": "Cheque Status Enquiry",
+                "displayOrder": "26",
+                "groupName": "Service Requests",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "ChequeStatusEnquiry"
+            },
+            
+            
+            {
+                "appId": "crdles",
+                "corporateId": "000FTAC4321",
+                "description": "Cardless Cash",
+                "displayOrder": "26",
+                "groupName": "Service Requests",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "CardlessCash"
+            },
+            
+             {
+                "appId": "dmddft",
+                "corporateId": "000FTAC4321",
+                "description": "Demand Draft",
+                "displayOrder": "26",
+                "groupName": "Service Requests",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "DemandDraft"
+            },
+            
+             {
+                "appId": "prtstm",
+                "corporateId": "000FTAC4321",
+                "description": "Request for Printed Statement",
+                "displayOrder": "26",
+                "groupName": "Service Requests",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "Launcher"
+            },
+            
+            {
+                "appId": "omnise",
+                "corporateId": "000FTAC4321",
+                "description": "OmniSearch",
+                "displayOrder": "26",
+                "groupName": "Service Requests",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "SearchChatImpl"
+            },
+            
+             {
+                "appId": "docupl",
+                "corporateId": "000FTAC4321",
+                "description": "Upload Documents",
+                "displayOrder": "26",
+                "groupName": "Service Requests",
+                "icon": "icon-cm-tradefinance",
+                "roleId": "SeniorManagement",
+                "screenId": "DocumentUpload"
+            },
+            
+            {
+                "appId": "",
+                "corporateId": "000FTAC4321",
+                "description": "Help & Support",
+                "displayOrder": "27",
+                "groupIcon": "",
+                "groupName": "",
+                "icon": "icon-help64",
+                "roleId": "SeniorManagement",
+                "screenId": ""
+            },
+            {
+                "appId": "messag",
+                "corporateId": "000FTAC4321",
+                "description": "Mail Box",
+                "displayOrder": "27",
+                "groupName": "Help & Support",
+                "icon": "icon-email",
+                "roleId": "SeniorManagement",
+                "screenId": "Messages"
+            },
+            {
+                "appId": "contac",
+                "corporateId": "000FTAC4321",
+                "description": "Contact Us",
+                "displayOrder": "27",
+                "groupName": "Help & Support",
+                "icon": "icon-email",
+                "roleId": "SeniorManagement",
+                "screenId": "ContactUs"
+            },
+            {
+                "appId": "chatwi",
+                "corporateId": "000FTAC4321",
+                "description": "Chat With Us",
+                "displayOrder": "27",
+                "groupName": "Help & Support",
+                "icon": "icon-cm-account_details",
+                "roleId": "Admin",
+                "screenId": "chat"
+            },
+            {
+                "appId": "faq001",
+                "corporateId": "000FTAC4321",
+                "description": "FAQ",
+                "displayOrder": "3",
+                "groupName": "Help & Support",
+                "icon": "icon-email",
+                "roleId": "Admin",
+                "screenId": "FAQ"
+            }
+        ]
+    }
+}

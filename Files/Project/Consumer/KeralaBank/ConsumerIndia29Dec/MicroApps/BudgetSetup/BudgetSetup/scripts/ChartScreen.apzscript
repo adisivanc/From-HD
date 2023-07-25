@@ -1,0 +1,23 @@
+apz.budget.ChartScreen = {};
+apz.app.onLoad_ChartScreen = function(params) {
+ debugger;
+};
+
+
+
+apz.budget.ChartScreen.addBudget = function () {
+    debugger;
+    $("#budget__Launcher__gr_row_3").addClass("sno");
+    
+     var params = {
+                "appId": "budget",
+                "scr": "AddBudget",
+                "div": "budget__Launcher__Summary",
+                "userObj": {
+                    "from" : "Add"
+                }
+     };
+    apz.launchSubScreen(params)
+    
+}
+

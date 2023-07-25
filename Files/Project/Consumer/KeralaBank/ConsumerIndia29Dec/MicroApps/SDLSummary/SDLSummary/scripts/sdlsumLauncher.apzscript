@@ -1,0 +1,60 @@
+apz.sdlsum.checkParams = function(params) {
+    debugger;
+    params.userObj = {
+        "data": {
+            "customerID": "000004712",
+            "lockerId": "LOC1234XDA3",
+            "rentDueDate" : "23 Apr 2018",
+            "rentAmount" : "2000",
+            "penlRate" : "0.00",
+            "penlAmount" : "0.00",
+            "branchName" : "Koramangala",
+            "branchCode" : "619",
+            "SavingsAccount": [{
+                "accountNo": "753410000076",
+                "accountBal": "987435",
+                "accountBrnName": "Koramangala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "IOB00000619"
+            }, {
+                "accountNo": "732510006721",
+                "accountBal": "332222",
+                "accountBrnName": "Madivala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "IOB00000619"
+            }],
+            "CurrentAccount": [{
+                "accountNo": "753410000086",
+                "accountBal": "987435",
+                "accountBrnName": "Koramangala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "IOB00000619"
+            }, {
+                "accountNo": "732510006789",
+                "accountBal": "332222",
+                "accountBrnName": "Madivala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "IOB00000619"
+            }],
+            "branchDetails": [{
+                "branchName": "Kormangala",
+                "branchCode": "KOR12345"
+            }, {
+                "branchName": "Madiwala",
+                "branchCode": "MAD09878"
+            }, {
+                "branchName": "Jay Nagar",
+                "branchCode": "JNG25834"
+            }, {
+                "branchName": "Majestic",
+                "branchCode": "MJC48207"
+            }, {
+                "branchName": "Ulsoor",
+                "branchCode": "USR98237"
+            }, {
+                "branchName": "J P Nagar",
+                "branchCode": "JPN28472"
+            }]
+        }
+    };
+};

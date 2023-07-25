@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"BillCollections","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"BillCollections","interfaces":[{"name":"BillCollection","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

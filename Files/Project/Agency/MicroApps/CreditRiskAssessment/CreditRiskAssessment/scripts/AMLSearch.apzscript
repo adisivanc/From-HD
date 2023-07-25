@@ -1,0 +1,351 @@
+apz.crsapp.AMLSearch = {};
+apz.crsapp.AMLSearch.sAction = "";
+var beforeedit = {};
+apz.app.onLoad_AMLSearch = function(params) {
+    if (apz.menuap.Menu.userId == "LA004" || apz.menuap.Menu.userId == "SLA004") {
+        $("#crsapp__AMLSearch__gr_col_18,#crsapp__AMLSearch__gr_col_14").addClass("sno");
+        $("#crsapp__AMLSearch__gr_col_17,#crsapp__AMLSearch__gr_col_13").addClass("gcb-col12");
+        $("#crsapp__AMLSearch__el_btn_11").trigger("click");
+    }
+    apz.hide("crsapp__CorporateAml__i__corporateAml__commentsHit_ul");
+    apz.hide("crsapp__CorporateAml__i__corporateAml__commentsAdverse_ul");
+    $("#crsapp__CorporateAml__i__corporateAml__answer3a").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer3b").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer4b").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer4a").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer1a_00").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer1b_00").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer1c_00").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer1a_11").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer1b_11").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer1c_11").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer2a_00").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer2a_11").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer2b_00").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer2b_11").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer2c_00").attr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer2c_11").attr("disabled", "disabled");
+    document.getElementById("crsapp__CorporateAml__i__corporateAml__answer1bval").readOnly = true;
+    document.getElementById("crsapp__CorporateAml__i__corporateAml__answer1cval").readOnly = true;
+    //document.getElementById("crsapp__CorporateAml__i__corporateAml__answer2bval").readOnly = true;
+    //document.getElementById("crsapp__CorporateAml__i__corporateAml__answer2cval").readOnly = true;
+    document.getElementById("crsapp__CorporateAml__i__corporateAml__answer3aval1").readOnly = true;
+    document.getElementById("crsapp__CorporateAml__i__corporateAml__answer3aval2").readOnly = true;
+    document.getElementById("crsapp__CorporateAml__i__corporateAml__answer3aval3").readOnly = true;
+    document.getElementById("crsapp__CorporateAml__i__corporateAml__answer4aval").readOnly = true;
+    apz.crsapp.AMLSearch.fnFetchAMLDetails();
+}
+apz.app.onShown_AMLSearch = function() {
+    if (apz.menuap.Menu.userId == "LA004" || apz.menuap.Menu.userId == "SLA004") {
+        $("#crsapp__AMLSearch__gr_col_18,#crsapp__AMLSearch__gr_col_14").addClass("sno");
+        $("#crsapp__AMLSearch__gr_col_17,#crsapp__AMLSearch__gr_col_13,#crsapp__AMLSearch__gr_col_2").addClass("gcb-col12");
+        $("#crsapp__AMLSearch__el_btn_11").trigger("click");
+        $("#crsapp__AMLSearch__el_btn_17").trigger("click");
+       
+    }
+}
+apz.crsapp.AMLSearch.fnFetchAMLDetails = function(param) {
+    var lParams = {
+        "ifaceName": "CorporateAml_Query",
+        "paintResp": "Y",
+        "appId": "crsapp",
+        "buildReq": "N",
+        "req": {
+            "corporateAml": {
+                "applicationId": "ONBAgency"
+            }
+        },
+        "callBack": apz.crsapp.AMLSearch.FetchServerCB
+    };
+    //apz.server.callServer(lParams);
+}
+apz.crsapp.AMLSearch.FetchServerCB = function(params) {
+    debugger;
+};
+apz.crsapp.AMLSearch.fnQueryAMLDetails = function(param) {
+    var liface = "";
+    var lreq = "";
+    if (param == "ADVERSE") {
+        liface = "Adverse_HitList_Query";
+        lreq = {
+            "amlHitlistDowjones": {
+                "entityIndividualName": "CIMB Group",
+                "type": "E",
+                "systemName": "ADVERSE_NEWS"
+            }
+        };
+        apz.data.loadJsonData("Adverse_HitList","crsapp");
+    } else {
+        liface = "HitList_Query";
+        lreq = {
+            "amlHitlistDowjones": {
+                "entityIndividualName": "CIMB Group",
+                "type": "E",
+                "systemName": "AML"
+            }
+        };
+        apz.data.loadJsonData("HitList","crsapp");
+    }
+    apz.crsapp.AMLSearch.sAction = param;
+    //apz.data.loadJsonData(liface,"crsapp");
+    apz.crsapp.AMLSearch.callServerCB();
+   /* var lParams = {
+        "ifaceName": liface,
+        "paintResp": "N",
+        "appId": "crsapp",
+        "buildReq": "N",
+        "req": lreq,
+        "callBack": apz.crsapp.AMLSearch.callServerCB
+    };
+    apz.server.callServer(lParams);*/
+}
+apz.crsapp.AMLSearch.callServerCB = function(params) {
+    apz.crsapp.AMLSearch.fnQueryHitDetailsCB(params);
+};
+apz.crsapp.AMLSearch.fnQueryHitDetailsCB = function(params) {
+    debugger;
+    var result = {};
+    if (apz.crsapp.AMLSearch.sAction == "ADVERSE") {
+        result = apz.data.scrdata.crsapp__Adverse_HitList_Req.amlHitlistDowjones;
+        apz.data.loadData('Adverse_HitList', 'crsapp');
+        apz.show("crsapp__AMLSearch__adverse_list");
+        if (apz.data.scrdata.crsapp__Adverse_HitList_Req.amlHitlistDowjones.length > 0) {
+            apz.show("crsapp__AMLSearch__AdverseHit");
+        } else {
+            apz.show("crsapp__AMLSearch__AdverseNoHit");
+        }
+        // apz.hide('crsapp__AMLSearch__adverseimage');
+        $("#crsapp__AMLSearch__el_btn_17").addClass("sno");
+    } else {
+        result = apz.data.scrdata.crsapp__HitList_Req.amlHitlistDowjones;
+        apz.data.loadData('HitList', 'crsapp');
+        apz.show("crsapp__AMLSearch__hitlist")
+        if (apz.data.scrdata.crsapp__HitList_Req.amlHitlistDowjones.length > 0) {
+            apz.show("crsapp__AMLSearch__InstitutionHit");
+        } else {
+            apz.show("crsapp__AMLSearch__Institution_NoHit");
+        }
+        // apz.hide('crsapp__AMLSearch__hitlistimage');
+        $("#crsapp__AMLSearch__el_btn_11").addClass("sno");
+    }
+    for (i = 0; i < result.length; i++) {
+        apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer1c', 'y');
+        apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer1cval', result[0].systemId);
+        if (result[i].systemName == "AML") {
+            //apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer3aval1',result[i].answer3aval1);  
+            apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer3aval2', result[i].entityIndividualName);
+            apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer3aval3', result[i].description);
+            apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer3a', 'y');
+            apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer3b', 'n');
+        } else if (result[i].systemName == "ADVERSE_NEWS") {
+            apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer4aval', result[i].entityIndividualName + ',' + result[i].description);
+            apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer4a', 'y');
+            apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer4b', 'n');
+        }
+    }
+    debugger;
+    beforeedit.answer3a = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer3a');
+    beforeedit.answer3b = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer3b');
+    beforeedit.answer3aval1 = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer3aval1');
+    beforeedit.answer3aval2 = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer3aval2');
+    beforeedit.answer3aval3 = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer3aval3');
+    beforeedit.answer4a = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer4a');
+    beforeedit.answer4b = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer4b');
+    beforeedit.answer4aval = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer4aval');
+};
+apz.crsapp.AMLSearch.fnInsertAMLDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "CorporateAml_New",
+        "paintResp": "N",
+        "appId": "crsapp",
+        "buildReq": "N",
+        "req": {},
+        "callBack": apz.crsapp.AMLSearch.callInsertCB
+    };
+    var answer3a = beforeedit.answer3a;
+    var answer3b = beforeedit.answer3b;
+    var answer3aval1 = beforeedit.answer3aval1;
+    var answer3aval2 = beforeedit.answer3aval2;
+    var answer3aval3 = beforeedit.answer3aval3;
+    var answer4a = beforeedit.answer4a;
+    var answer4b = beforeedit.answer4b;
+    var answer4aval = beforeedit.answer4aval;
+    var resCp = apz.data.buildData("CorporateAml", "crsapp");
+    var req = {};
+    req.corporateAml = resCp.crsapp__CorporateAml_Req.corporateAml;
+    if (apz.crsapp.AMLSearch.sAction == "HitOverride") {
+        req.corporateAml.answer3aUser = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer3a');
+        req.corporateAml.answer3bUser = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer3b');
+        req.corporateAml.answer3aval1User = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer3aval1');
+        req.corporateAml.answer3aval2User = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer3aval2');
+        req.corporateAml.answer3aval3User = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer3aval3');
+        req.corporateAml.answer3a = answer3a;
+        req.corporateAml.answer3b = answer3b
+        req.corporateAml.answer3aval1 = answer3aval1;
+        req.corporateAml.answer3aval2 = answer3aval2;
+        req.corporateAml.answer3aval3 = answer3aval3;
+    }
+    if (apz.crsapp.AMLSearch.sAction == "AdverseOverride") {
+        req.corporateAml.answer4aUser = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer4a');
+        req.corporateAml.answer4bUser = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer4b');
+        req.corporateAml.answer4avalUser = apz.getElmValue('crsapp__CorporateAml__i__corporateAml__answer4aval');
+        req.corporateAml.answer4a = answer4a;
+        req.corporateAml.answer4b = answer4b;
+        req.corporateAml.answer4aval = answer4aval;
+    }
+    req.corporateAml.applicationId = "ONBAgency";
+    lParams.req = req;
+    apz.crsapp.AMLSearch.callInsertCB();
+    //apz.server.callServer(lParams);
+}
+apz.crsapp.AMLSearch.callInsertCB = function(params) {
+    debugger;
+    apz.crsapp.AMLSearch.fnNxt();
+};
+apz.crsapp.AMLSearch.fnQueryAMLDetailsCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        var result = params.res.crsapp__CorporateAml_Req.corporateAml;
+        apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer3aval1', result.answer3aval1);
+        apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer3aval2', result.answer3aval2);
+        apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer3aval3', result.answer3aval3);
+        apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer3a', result.answer3a.toLowerCase());
+        apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer3b', result.answer3b.toLowerCase());
+        apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer4b', result.answer4b.toLowerCase());
+        apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer4a', result.answer4a.toLowerCase());
+        apz.setElmValue('crsapp__CorporateAml__i__corporateAml__answer4avalUser', result.answer4aval);
+        $("#crsapp__CorporateAml__i__corporateAml__answer3a").attr("disabled", "disabled");
+        $("#crsapp__CorporateAml__i__corporateAml__answer3b").attr("disabled", "disabled");
+        $("#crsapp__CorporateAml__i__corporateAml__answer4b").attr("disabled", "disabled");
+        $("#crsapp__CorporateAml__i__corporateAml__answer4a").attr("disabled", "disabled");
+    }
+};
+apz.crsapp.AMLSearch.fnHitOverride = function() {
+    apz.show("crsapp__CorporateAml__i__corporateAml__commentsHit_ul");
+    document.getElementById("crsapp__CorporateAml__i__corporateAml__answer3aval1").readOnly = false;
+    document.getElementById("crsapp__CorporateAml__i__corporateAml__answer3aval2").readOnly = false;
+    document.getElementById("crsapp__CorporateAml__i__corporateAml__answer3aval3").readOnly = false;
+    $("#crsapp__CorporateAml__i__corporateAml__answer3a").removeAttr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer3b").removeAttr("disabled", "disabled");
+    apz.crsapp.AMLSearch.sAction = "HitOverride";
+}
+apz.crsapp.AMLSearch.fnAdverseOverride = function() {
+    apz.show("crsapp__CorporateAml__i__corporateAml__commentsAdverse_ul");
+    $("#crsapp__CorporateAml__i__corporateAml__answer4b").removeAttr("disabled", "disabled");
+    $("#crsapp__CorporateAml__i__corporateAml__answer4a").removeAttr("disabled", "disabled");
+    document.getElementById("crsapp__CorporateAml__i__corporateAml__answer4aval").readOnly = false;
+    apz.crsapp.AMLSearch.sAction = "AdverseOverride";
+}
+apz.crsapp.AMLSearch.fnSave = function() {
+    debugger;
+    apz.crsapp.AMLSearch.fnInsertAMLDetails();
+    /* // if (apz.crsapp.AMLSearch.sAction == ""){
+    //apz.crsapp.AMLSearch.fnUpdateAMLDetails();}
+    if (apz.crsapp.AMLSearch.sAction == "HitOverride") {
+        var taskObj = {};
+        taskObj.applicationId = "1000";
+        taskObj.answer1a = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer1a");
+        taskObj.answer1b = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer1b");
+        taskObj.answer1bval = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer1bval");
+        taskObj.answer1c = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer1c");
+        taskObj.answer2a = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer2a");
+        taskObj.answer2b = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer2b");
+        taskObj.answer2bval = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer2bval");
+        taskObj.answer2c = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer2c");
+        taskObj.answer2cval = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer2cval");
+        taskObj.answer3a = apz.data.scrdata.crsapp__CorporateAml_Req.corporateAml.answer3a;
+        taskObj.answer3b = apz.data.scrdata.crsapp__CorporateAml_Req.corporateAml.answer3b;
+        taskObj.answer3aval3 = apz.data.scrdata.crsapp__CorporateAml_Req.corporateAml.answer3aval3;
+        taskObj.answer3aval2 = apz.data.scrdata.crsapp__CorporateAml_Req.corporateAml.answer3aval2;
+        taskObj.answer3aUser = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer3a");
+        taskObj.answer3bUser = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer3b");
+        taskObj.answer3aval1User = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer3aval1");
+        taskObj.answer3aval2User = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer3aval2");
+        taskObj.answer3aval3User = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer3aval3");
+        taskObj.commentsHit = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__commentsHit");
+        taskObj.answer4a = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer4a");
+        taskObj.answer4b = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer4b");
+        taskObj.answer4aval = apz.getElmValue("crsapp__CorporateAml__i__corporateAml__answer4avalUser");
+        var lUserObj = {};
+        lUserObj.corporateAml = taskObj;
+        var lParams = {
+            "ifaceName": "CorporateAml_Modify",
+            "paintResp": "N",
+            "appId": "crsapp",
+            "buildReq": "N",
+            "req": lUserObj,
+            "callBack": apz.crsapp.AMLSearch.updateHitCB
+        };
+        apz.server.callServer(lParams);
+    }*/
+};
+apz.crsapp.AMLSearch.fnUpdateAMLDetails = function() {
+    var req = {};
+    //req.corporateAml =    apz.data.buildData("CorporateAml", "crsapp");
+    var lParams = {
+        "ifaceName": "CorporateAml_Modify",
+        "paintResp": "N",
+        "appId": "crsapp",
+        "buildReq": "Y",
+        "lReq": req,
+        "callBack": apz.crsapp.AMLSearch.updateCB
+    };
+    //apz.server.callServer(lParams);
+};
+apz.crsapp.AMLSearch.updateCB = function(params) {
+    debugger;
+};
+apz.crsapp.AMLSearch.updateHitCB = function(params) {
+    debugger;
+};
+apz.crsapp.AMLSearch.downloadPDF = function(obj) {
+    debugger;
+    var lDocName = "";
+    var json = {
+        "id": "FormDownload",
+        "destinationPath": "docs",
+        "filePath": "DownloadDocs",
+        "screenId": "AMLSearch",
+        "fileName": apz.getElmValue(obj.id),
+        "base64": "N",
+        "sessionReq": "N",
+        "callBack": apz.crsapp.AMLSearch.downloadPDFCallBack
+    };
+    apz.ns.downloadFile(json);
+};
+apz.crsapp.AMLSearch.downloadPDFCallBack = function(params) {
+    debugger;
+}
+apz.crsapp.AMLSearch.LaunchURL = function(params) {
+    debugger;
+    //var url = apz.getElmValue(params.id);
+    var row = $("#" + params.id).attr("rowno");
+    var url = apz.getElmValue("crsapp__Adverse_HitList__i__amlHitlistDowjones__documentName_" + row);
+    if (apz.deviceOs == "WEB") {
+        window.open(url);
+    } else {
+        var json = {
+            "URL": params
+        }
+        json.id = "LAUNCH_ID";
+        json.callBack = apz.crsapp.AMLSearch.LaunchURLCallBack;
+        apz.ns.launchWebview(json);
+    }
+};
+apz.crsapp.AMLSearch.LaunchURLCallBack = function(params) {
+    debugger;
+}
+apz.crsapp.AMLSearch.AMLCheck = function(params) {
+    debugger;
+    apz.crsapp.AMLSearch.fnQueryAMLDetails("AML");
+};
+apz.crsapp.AMLSearch.AdverseCheck = function(params) {
+    debugger;
+    apz.crsapp.AMLSearch.fnQueryAMLDetails("ADVERSE");
+};
+apz.crsapp.AMLSearch.fnNxt = function(params) {
+    debugger;
+    $("#crsapp__ProgressStep__el_progressstep_1_ext li:nth-child(2)").trigger("click");
+    //$("#crsapp__ProgressStep__pepBadge").trigger("click")
+};

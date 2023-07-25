@@ -1,0 +1,1 @@
+{"typeclass":"LOV","name":"Personas","type":"LOV","schemaname":"CorpDB","lovquery":"select name from tb_asmi_persona_master","jndiname":"AppzillonServerDS","lovreturnfields":[{"queryfield":"name","visibility":"Y","datatype":"STRING","filterreqd":"N","resultreqd":"N"}],"lovsession":"N","querybydefault":"Y"}

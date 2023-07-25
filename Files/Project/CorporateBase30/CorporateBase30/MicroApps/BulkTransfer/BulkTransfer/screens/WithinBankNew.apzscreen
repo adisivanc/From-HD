@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"WithinBankNew","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","screencategory":"NONE","displayname":"WithinBankNew","interfaces":[{"name":"WithinBankDetails","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

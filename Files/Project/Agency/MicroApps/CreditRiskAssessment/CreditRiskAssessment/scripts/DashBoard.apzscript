@@ -1,0 +1,326 @@
+apz.crsapp.DashBoard = {};
+apz.app.onLoad_DashBoard = function(params) {
+    $("body").scrollTop();
+    if (apz.crsapp.userId == "user1") {
+        $("#crsapp__DashBoard__loanLink").removeClass("sno");
+    } else {
+        $("#crsapp__DashBoard__loanLink").addClass("sno");
+    }
+    //$("#crsapp__DashBoard__el_btn_2").trigger("click");
+    apz.crsapp.DashBoard.Role = "Compliance";
+    apz.crsapp.DashBoard.fetchDashboardList(params);
+};
+apz.crsapp.DashBoard.fetchDashboardList = function(params) {
+    // applictaionStatus IN ($.this.applictaionStatus)
+    if (apz.crsapp.userId == "user1") {
+        apz.crsapp.DashBoard.Role = "RM";
+    } else if (apz.crsapp.userId == "user3") {
+        apz.crsapp.DashBoard.Role = "Compliance";
+    } else if (apz.crsapp.userId == "user4") {
+        apz.crsapp.DashBoard.Role = "GroupHead";
+    } else if (apz.crsapp.userId == "user2") {
+        apz.crsapp.DashBoard.Role = "CreditCheck";
+    }
+    var role = "RM";
+    /*var lServerParams = {
+        "ifaceName": "Dashboard_Query",
+        "buildReq": "N",
+        "req": {},
+        "paintResp": "Y",
+        "callBack": apz.crsapp.DashBoard.fetchDashboardListCB
+    };*/
+    apz.data.loadJsonData("Dashboard","crsapp");
+    apz.crsapp.DashBoard.fetchDashboardListCB();
+    debugger;
+    /*lServerParams.req.applicationMaster = {};
+    if (role == "RM") {
+        lServerParams.req.applicationMaster.applictaionStatus = "'Draft','Pending Documentation','Pending Review','Rejected'";
+    }
+    if (role == "GroupHead") {
+        lServerParams.req.applicationMaster.applictaionStatus = "'Pending Approval','Approved','Rejected'";
+    }
+    if (role == "Compliance") {
+        lServerParams.req.applicationMaster.applictaionStatus = "'Pending Compliance','Pending Assessment'";
+    }
+    if (role == "CreditCheck") {
+        lServerParams.req.applicationMaster.applictaionStatus = "'Pending Credit Check'";
+    }
+    apz.server.callServer(lServerParams);*/
+};
+apz.crsapp.DashBoard.fetchDashboardListCB = function(pResp) {
+    debugger;
+    var UserList = apz.data.scrdata.applicationMaster;
+    var dashboardList = [];
+    if (apz.crsapp.DashBoard.Role == "RM") {
+        for (var i = 0; i < UserList.length; i++) {
+            if (UserList[i].applictaionStatus == "Draft" || UserList[i].applictaionStatus == "Pending Review" || UserList[i].applictaionStatus ==
+                "Pending Documentation" || UserList[i].applictaionStatus == "Rejected") {
+                dashboardList.push(UserList[i])
+            }
+        }
+    }
+    if (apz.crsapp.DashBoard.Role == "GroupHead") {
+        for (var i = 0; i < UserList.length; i++) {
+            if (UserList[i].applictaionStatus == "Pending Approval" || UserList[i].applictaionStatus == "Approved" || UserList[i].applictaionStatus ==
+                "Rejected" || UserList[i].applictaionStatus == "Pending Loan Approval") {
+                dashboardList.push(UserList[i])
+            }
+        }
+    }
+    if (apz.crsapp.DashBoard.Role == "Compliance") {
+        for (var i = 0; i < UserList.length; i++) {
+            if (UserList[i].applictaionStatus == "Pending Compliance" || UserList[i].applictaionStatus == "Pending Assessment" || UserList[i].applictaionStatus ==
+                "Pending Underwriting") {
+                dashboardList.push(UserList[i])
+            }
+        }
+    }
+    if (apz.crsapp.DashBoard.Role == "CreditCheck") {
+        for (var i = 0; i < UserList.length; i++) {
+            if (UserList[i].applictaionStatus == "Pending Credit Check") {
+                dashboardList.push(UserList[i])
+            }
+        }
+    }
+    //apz.data.scrdata.crsapp__DashBoard_Req.applicationMaster = dashboardList;
+    //apz.data.loadData("DashBoard", "crsapp");
+    // for (var i = 0; i < dashboardList.length; i++) {
+    //     if (dashboardList[i].highRisk == "Yes") {
+    //         $("#crsapp__DashBoard__icn_risk_" + i + " use").attr("xlink:href", "#icon-ichighrisk");
+    //         $("#crsapp__Dashboard__i__applicationMaster__bankName_" + i + "_txtcnt").text("High Risk")
+    //     } else if (dashboardList[i].lowRisk == "Yes") {
+    //         $("#crsapp__DashBoard__icn_risk_" + i + " use").attr("xlink:href", "#icon-iclowrisk");
+    //         $("#crsapp__Dashboard__i__applicationMaster__bankName_" + i + "_txtcnt").text("Low Risk")
+    //     } else if (dashboardList[i].mediumRisk == "Yes") {
+    //         $("#crsapp__DashBoard__icn_risk_" + i + " use").attr("xlink:href", "#icon-icmediumrisk");
+    //         $("#crsapp__Dashboard__i__applicationMaster__bankName_" + i + "_txtcnt").text("Medium Risk")
+    //     }
+    // }
+    if (apz.crsapp.DashBoard.Role == "RM") {
+        DCount = 0;
+        PDCount = 0;
+        PRCount = 0;
+        RCount = 0;
+        apz.setElmValue("crsapp__DashBoard__inp1", "Draft");
+        apz.setElmValue("crsapp__DashBoard__inp2", "Pending Documentation");
+        apz.setElmValue("crsapp__DashBoard__inp3", "Pending Review");
+        apz.setElmValue("crsapp__DashBoard__inp4", "Rejected");
+        for (var i = 0; i < dashboardList.length; i++) {
+            if (dashboardList[i].applictaionStatus == "Draft") {
+                DCount++;
+            } else if (dashboardList[i].applictaionStatus == "Pending Documentation") {
+                PDCount++;
+            } else if (dashboardList[i].applictaionStatus == "Pending Review") {
+                PRCount++;
+            } else if (dashboardList[i].applictaionStatus == "Rejected") {
+                RCount++;
+            }
+        }
+        $("#crsapp__DashBoard__icon1 use").attr("xlink:href", "#icon-icdraft");
+        $("#crsapp__DashBoard__icon2 use").attr("xlink:href", "#icon-icpending-docs");
+        $("#crsapp__DashBoard__icon3 use").attr("xlink:href", "#icon-icpendingrew");
+        $("#crsapp__DashBoard__icon4 use").attr("xlink:href", "#icon-icreject1");
+        $("#crsapp__DashBoard__el_inp_2_txtcnt").text(DCount);
+        $("#crsapp__DashBoard__el_inp_3_txtcnt").text(PDCount);
+        $("#crsapp__DashBoard__el_inp_4_txtcnt").text(PRCount);
+        $("#crsapp__DashBoard__el_txt_2_txtcnt").text(RCount);
+    }
+    if (apz.crsapp.DashBoard.Role == "GroupHead") {
+        PACount = 0;
+        AppCount = 0;
+        RejCount = 0;
+        apz.hide("crsapp__DashBoard__pnl4_div");
+        apz.setElmValue("crsapp__DashBoard__inp1", "Pending Approval");
+        apz.setElmValue("crsapp__DashBoard__inp2", "Approved");
+        apz.setElmValue("crsapp__DashBoard__inp3", "Rejected");
+        for (var i = 0; i < dashboardList.length; i++) {
+            if (dashboardList[i].applictaionStatus == "Pending Approval") {
+                PACount++;
+            } else if (dashboardList[i].applictaionStatus == "Approved") {
+                AppCount++;
+            } else if (dashboardList[i].applictaionStatus == "Rejected") {
+                RejCount++;
+            }
+        }
+        $("#crsapp__DashBoard__icon1 use").attr("xlink:href", "#icon-icdraft");
+        $("#crsapp__DashBoard__icon2 use").attr("xlink:href", "#icon-icpending-docs");
+        $("#crsapp__DashBoard__icon3 use").attr("xlink:href", "#icon-icpendingrew");
+        $("#crsapp__DashBoard__el_inp_2_txtcnt").text(PACount);
+        $("#crsapp__DashBoard__el_inp_3_txtcnt").text(AppCount);
+        $("#crsapp__DashBoard__el_inp_4_txtcnt").text(RejCount);
+    }
+    if (apz.crsapp.DashBoard.Role == "Compliance") {
+        PCCount = 0;
+        PAsCount = 0;
+        apz.hide("crsapp__DashBoard__pnl4_div");
+        apz.hide("crsapp__DashBoard__pnl3_div");
+        apz.setElmValue("crsapp__DashBoard__inp1", "Pending Compliance");
+        apz.setElmValue("crsapp__DashBoard__inp2", "Pending Assesment");
+        for (var i = 0; i < dashboardList.length; i++) {
+            if (dashboardList[i].applictaionStatus == "Pending Compliance") {
+                PCCount++;
+            } else if (dashboardList[i].applictaionStatus == "Pending Assesment") {
+                PAsCount++;
+            }
+        }
+        $("#crsapp__DashBoard__icon1 use").attr("xlink:href", "#icon-icdraft");
+        $("#crsapp__DashBoard__icon2 use").attr("xlink:href", "#icon-icpending-docs");
+        $("#crsapp__DashBoard__el_inp_2_txtcnt").text(PCCount);
+        $("#crsapp__DashBoard__el_inp_3_txtcnt").text(PAsCount);
+    }
+    if (apz.crsapp.DashBoard.Role == "CreditCheck") {
+        PCCount = 0;
+        PAsCount = 0;
+        apz.hide("crsapp__DashBoard__pnl4_div");
+        apz.hide("crsapp__DashBoard__pnl3_div");
+        apz.hide("crsapp__DashBoard__pnl2_div");
+        apz.setElmValue("crsapp__DashBoard__inp1", "Pending Credit Check");
+        //apz.setElmValue("crsapp__DashBoard__inp2", "Pending Assesment");
+        for (var i = 0; i < dashboardList.length; i++) {
+            if (dashboardList[i].applictaionStatus == "Pending Credit Check") {
+                PCCount++;
+            }
+        }
+        $("#crsapp__DashBoard__icon1 use").attr("xlink:href", "#icon-icdraft");
+        //$("#crsapp__DashBoard__icon2 use").attr("xlink:href", "#icon-icpending-docs");
+        $("#crsapp__DashBoard__el_inp_2_txtcnt").text(PCCount);
+        //$("#crsapp__DashBoard__el_inp_3_txtcnt").text(PAsCount);
+    }
+    debugger;
+    apz.data.scrdata.crsapp__Dashboard_Req = {};
+    apz.data.scrdata.crsapp__Dashboard_Req.applicationMaster = {};
+    //apz.data.scrdata.crsapp__Dashboard_Req.applicationMaster = {};
+    //apz.data.scrdata.crsapp__Dashboard_Req.applicationMaster = dashboardList;
+    apz.data.scrdata.crsapp__Dashboard_Req.applicationMaster = dashboardList;
+    apz.data.loadData("Dashboard", "crsapp");
+    var lImagePath = apz.getStylesPath() + "/" + "BranchBase" + "/img/";
+    debugger
+    for (var i = 0; i < dashboardList.length; i++) {
+        $("#crsapp__DashBoard__icn_risk_" + i).attr("src", "");
+        $("#crsapp__Dashboard__i__applicationMaster__bankName_" + i + "_txtcnt").text("")
+        if (dashboardList[i].highRisk) {
+            if (dashboardList[i].highRisk == "Yes") {
+                $("#crsapp__DashBoard__icn_risk_" + i).attr("src", lImagePath + "high_risk.png");
+                $("#crsapp__Dashboard__i__applicationMaster__bankName_" + i + "_txtcnt").text("High Risk")
+            }
+        }
+        if (dashboardList[i].lowRisk) {
+            if (dashboardList[i].lowRisk == "Yes") {
+                $("#crsapp__DashBoard__icn_risk_" + i).attr("src", lImagePath + "low_risk.png");
+                $("#crsapp__Dashboard__i__applicationMaster__bankName_" + i + "_txtcnt").text("Low Risk")
+            }
+        }
+        if (dashboardList[i].mediumRisk) {
+            if (dashboardList[i].mediumRisk == "Yes") {
+                $("#crsapp__DashBoard__icn_risk_" + i).attr("src", lImagePath + "medium_risk.png");
+                $("#crsapp__Dashboard__i__applicationMaster__bankName_" + i + "_txtcnt").text("Medium Risk")
+            }
+        }
+        if (dashboardList[i].applictaionStatus.split(" ")[0] == "Pending") {
+            $("#crsapp__DashBoard__dashboard_list_row_" + i).addClass("pending");
+        } else if (dashboardList[i].applictaionStatus.split(" ")[0] == "Approved") {
+            $("#crsapp__DashBoard__dashboard_list_row_" + i).addClass("success");
+        } else if (dashboardList[i].applictaionStatus.split(" ")[0] == "Rejected") {
+            $("#crsapp__DashBoard__dashboard_list_row_" + i).addClass("rejected");
+        }
+        if (apz.crsapp.userId != "user4") {
+            // $("#crsapp__DashBoard__dashboard_list_row_" + i).children().children().children()[1].classList = "sno";
+        }
+    }
+};
+apz.crsapp.DashBoard.SearchRecords = function() {
+    debugger;
+    var searchtxt = apz.getElmValue("crsapp__DashBoard__Searchtxt");
+    apz.searchRecords("crsapp__DashBoard__dashboard_list", searchtxt);
+};
+apz.crsapp.DashBoard.fetchDetails = function(pObj) {
+    debugger;
+    var rowno = $(pObj).attr("rowno");
+    gApplicationId = $("#crsapp__Dashboard__i__applicationMaster__applicationId_" + rowno + "_txtcnt").text()
+    var params = {};
+    params.scr = "NewApplication";
+    params.div = "crsapp__ScreenHeader__subScreenLauncher";
+    apz.launchSubScreen(params);
+}
+apz.crsapp.DashBoard.fnCreate = function(pAppID) {
+    debugger;
+    if (apz.isNull(pAppID)) {
+        apz.crsapp.DashBoard.createApplicationID();
+        gData = "";
+    }
+    var params = {};
+    params.appId = "crsapp";
+    params.scr = "NewApplication";
+    params.div = "crsapp__ScreenHeader__subScreenLauncher";
+    apz.launchSubScreen(params);
+}
+apz.crsapp.DashBoard.createApplicationID = function() {
+    var randNo = Math.floor((Math.random() * 1000000) + 1)
+    var d = new Date();
+    var time = d.getTime();
+    var date = d.getDate();
+    var month = d.getMonth() + 1;
+    var year = d.getFullYear();
+    if (month < 10) {
+        var dateTime = date + "0" + month + "" + year;
+    } else {
+        var dateTime = date + "" + month + "" + year
+    }
+    gApplicationId = dateTime + "" + randNo;
+}
+apz.app.postRowClicked = function(containerId, rowNo, event) {
+    debugger;
+    if (containerId == "crsapp__DashBoard__dashboard_list") {
+        gData = apz.data.scrdata.crsapp__Dashboard_Req.applicationMaster[rowNo];
+        gApplicationId = apz.data.scrdata.crsapp__Dashboard_Req.applicationMaster[rowNo].applicationId;
+        if (gData.applictaionStatus == "Draft" || gData.applictaionStatus == "Pending Review" || (gData.applictaionStatus == "Rejected" && apz.crsapp
+            .DashBoard.Role == "RM")) {
+            // apz.crsapp.DashBoard.fnCreate(gApplicationId);
+        } else if (gData.applictaionStatus == "Pending Compliance" || gData.applictaionStatus == "Pending Assesment" || (gData.applictaionStatus ==
+            "Approved" && apz.crsapp.DashBoard.Role == "Compliance")) {
+            gEntityName = apz.data.scrdata.crsapp__Dashboard_Req.applicationMaster[rowNo].entityName;
+            var params = {};
+            params.appId = "crsapp";
+            params.scr = "ProgressStep";
+            params.div = "crsapp__ScreenHeader__subScreenLauncher";
+            params.userObj = gData;
+            apz.launchSubScreen(params);
+        } else if (gData.applictaionStatus == "Pending Approval" || (gData.applictaionStatus == "Approved" && apz.crsapp.DashBoard.Role ==
+            "GroupHead") || (gData.applictaionStatus == "Rejected" && apz.crsapp.DashBoard.Role == "GroupHead")) {
+            var params = {};
+            params.appId = "crsapp";
+            params.scr = "GroupHead";
+            params.div = "crsapp__ScreenHeader__subScreenLauncher";
+            params.userObj = gData;
+            apz.launchSubScreen(params);
+        } else if ((gData.applictaionStatus == "Pending Credit Check" && apz.crsapp.DashBoard.Role == "CreditCheck")) {
+            var params = {};
+            params.appId = "crsapp";
+            params.scr = "CreditCheck";
+            params.div = "crsapp__ScreenHeader__subScreenLauncher";
+            params.userObj = gData;
+            apz.launchSubScreen(params);
+        } else if ((gData.applictaionStatus == "Pending Underwriting" && apz.crsapp.DashBoard.Role == "Compliance")) {
+            var params = {};
+            params.appId = "crsapp";
+            params.scr = "Underwriting";
+            params.div = "crsapp__ScreenHeader__subScreenLauncher";
+            params.userObj = gData;
+            apz.launchSubScreen(params);
+        } else if ((gData.applictaionStatus == "Pending Loan Approval" && apz.crsapp.DashBoard.Role == "GroupHead")) {
+            var params = {};
+            params.appId = "crsapp";
+            params.scr = "ViewLoanApplication";
+            params.div = "crsapp__ScreenHeader__subScreenLauncher";
+            params.userObj = gData;
+            apz.launchSubScreen(params);
+        }
+    }
+};
+apz.crsapp.DashBoard.fnApplyLoan = function() {
+    var params = {};
+    params.appId = "crsapp";
+    params.scr = "NewLoan";
+    params.div = "crsapp__ScreenHeader__subScreenLauncher";
+    apz.launchSubScreen(params);
+}

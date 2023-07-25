@@ -1,0 +1,507 @@
+apz.menuap = {};
+apz.menuap.Menu = {};
+apz.menuap.Menu.RowNo = '';
+apz.menuap.customerContext = false;
+apz.menuap.Menu.gLeadDetails = {};
+apz.menuap.Menu.sCache = {};
+apz.menuap.Menu.menuLen = 0;
+apz.menuap.Menu.parentMenuId = 0;
+apz.menuap.Menu.parentChildMenuId = 0;
+debugger;
+// Life cycle
+apz.app.onLoad_Menu = function(params) {
+    debugger;
+    if (apz.isOnline) {
+        apz.mockServer = false;
+    } else {
+        apz.mockServer = true;
+    }
+    apz.appContext = "agency";
+    apz.menuap.Menu.sCache = params;
+    apz.menuap.Menu.userId = params.userId;
+    apz.menuap.Menu.userRole = params.userRole;
+    // apz.menuap.configureSearchBar();
+    $("#sidebar").next(".backdrop").click(function() {
+        apz.closeSidebar();
+    })
+    
+    //Set last logged in
+    var d = new Date().toString();
+    lastLoggedIn = d.split(' ').slice(1, 5).join(' ');
+    apz.setElmValue("menuap__Menu__lastLoggedIn", "Last logged in : " + lastLoggedIn)
+    apz.country = "IND";
+    apz.setElmValue("menuap__Menu__countryFlag", "apps/styles/themes/BranchBase/img/" + apz.country + ".png");
+    $("body").addClass("indianCurrency").removeClass("dollarCurrency bangladeshCurrency uaeCurrency poundCurrency ugCurrency");
+    // $("#menuap__Menu__StaticMenu").addClass("sno");
+    // StaticMenu
+    debugger;
+    if (apz.mockServer) {
+        $("#menuap__Menu__ct_mnu_1").removeClass("sno")
+        $("#menuap__Menu__ParentList").addClass("sno")
+        $("#menuap__Menu__ChildList").addClass("sno")
+        $("#menuap__Menu__KidList").addClass("sno")
+    } else {
+        $("#menuap__Menu__ct_mnu_1").addClass("sno")
+        $("#menuap__Menu__ParentList").removeClass("sno")
+        $("#menuap__Menu__ChildList").removeClass("sno")
+        $("#menuap__Menu__KidList").removeClass("sno")
+    }
+    apz.menuap.Menu.fnLaunchLandingPage(params);
+}
+apz.menuap.Menu.fnThemeChange =function(){
+debugger;
+console.log("Theme switched");
+}
+apz.app.onShown_Menu = function(params) {
+    if (!apz.mockServer) {
+        apz.menuap.Menu.fnGetRoleMenu()
+    }
+    apz.hide("menuap__Menu__sidebarController");
+    $("#menuap__Menu__menuColumn").click(function() {
+        apz.toggleSidebar()
+    })
+};
+apz.menuap.Menu.fnParentMenuClick = function(pResp) {
+    debugger;
+    // var y = parseInt(pResp.id.substring(pResp.id.length - 1))
+    var y = parseInt(pResp.id.split("__")[4].split("_")[1])
+    apz.menuap.Menu.parentMenuId = y;
+    var cM = apz.data.scrdata.menuap__AppMenu_Res.parentMenu[y].childMenu;
+    if (!cM) {
+        $("#menuap__Menu__ChildList").addClass("sno")
+        $("#menuap__Menu__KidList").addClass("sno")
+        apz.menuap.Menu.fnMenuClick(pResp);
+    } else {
+        $("#menuap__Menu__ChildList").removeClass("sno")
+        var kM = apz.data.scrdata.menuap__AppMenu_Res.parentMenu[y].childMenu[0].kidMenu;
+        if (!kM) {
+            $("#menuap__Menu__KidList").addClass("sno")
+        } else {
+            $("#menuap__Menu__KidList").removeClass("sno")
+        }
+    }
+    setTimeout(function() {
+        for (var i = 0; i < apz.menuap.Menu.menuLen; i++) {
+            var val = apz.getElmValue("menuap__AppMenu__o__childMenu__childMenuItem_" + i + "_txtcnt")
+            if (val == "") {
+                $("#menuap__Menu__ChildList_row_" + i).addClass("sno");
+            }
+        }
+    }, 1000)
+}
+apz.menuap.Menu.fnChildMenuClick = function(pResp) {
+    debugger;
+    var parent = pResp.parentElement.parentElement.parentElement.parentElement.parentElement;
+    // var x = parseInt(parent.id.substring(parent.id.length - 1))
+    var x = apz.menuap.Menu.parentMenuId;
+    // var y = parseInt(pResp.id.substring(pResp.id.length - 1))
+    var y = parseInt(pResp.id.split("__")[4].split("_")[1])
+    var kM = apz.data.scrdata.menuap__AppMenu_Res.parentMenu[x].childMenu[y].kidMenu;
+    if (!kM) {
+        $("#menuap__Menu__KidList").addClass("sno")
+        apz.menuap.Menu.fnMenuClick(pResp);
+    } else {
+        $("#menuap__Menu__KidList").removeClass("sno")
+    }
+}
+apz.menuap.Menu.fnKidMenuClick = function(pResp) {
+    debugger;
+    apz.menuap.Menu.fnMenuClick(pResp);
+}
+apz.menuap.Menu.fnGetRoleMenu = function() {
+    debugger;
+    apz.startLoader();
+    var lParams = {};
+    lParams.appId = "menuap";
+    lParams.ifaceName = "RoleMenu_Query";
+    lParams.callBack = apz.menuap.Menu.fnGetRoleMenuCallback;
+    lParams.callBackObj = this;
+    lParams.buildReq = "N";
+    lParams.req = {};
+    lParams.req.vwAsmiRoleMenu = { //feed real data
+        "appId": "brbase",
+        "roleId": apz.menuap.Menu.userRole
+    },
+    lParams.paintResp = "N",
+    apz.server.callServer(lParams);
+}
+apz.menuap.Menu.fnGetRoleMenuCallback = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    if (pResp.status) {
+        if (!pResp.errors) {
+            var parentMenus = []
+            var menuItems = {
+                "parentMenu": []
+            }
+            var data = pResp.res.menuap__RoleMenu_Res.vwAsmiRoleMenu;
+            for (var i = 0; i < data.length; i++) {
+                //remove duplicates from parentMenus
+                if (parentMenus.indexOf(data[i].parentMenu) == -1) {
+                    parentMenus.push(data[i].parentMenu)
+                }
+            }
+            for (var i = 0; i < parentMenus.length; i++) {
+                var theMenu = {
+                    "parentMenuItem": parentMenus[i]
+                };
+                var childMenu = []
+                for (var j = 0; j < data.length; j++) {
+                    var childMenuObj = {
+                        "childMenuItem": ""
+                    }
+                    if (parentMenus[i] == data[j].parentMenu) {
+                        if (data[j].firstLevelChild != "") {
+                            if (childMenu.indexOf(data[j].firstLevelChild) == -1) {
+                                childMenuObj.childMenuItem = data[j].firstLevelChild
+                                childMenu.push(childMenuObj)
+                                var kidMenu = []
+                                for (var k = 0; k < data.length; k++) {
+                                    var kidMenuObj = {
+                                        "kidMenuItem": ""
+                                    };
+                                    if (parentMenus[i] == data[k].parentMenu && data[k].firstLevelChild == data[j].firstLevelChild) {
+                                        if (data[k].secondLevelChild != "") {
+                                            if (kidMenu.indexOf(data[k].secondLevelChild) == -1) {
+                                                kidMenuObj.kidMenuItem = data[k].secondLevelChild
+                                                kidMenu.push(kidMenuObj)
+                                            }
+                                        }
+                                    }
+                                }
+                                var uniq = {}
+                                // var finalKidMenu = kidMenu.filter(obj => !uniq[obj.kidMenu] && (uniq[obj.kidMenu] = true));
+                                // childMenuObj.kidMenu = finalKidMenu;
+                                childMenuObj.kidMenu = kidMenu;
+                            }
+                        }
+                    }
+                }
+                debugger;
+                var uniq = {}
+                if (childMenu.length > 0) {
+                    var finalChildMenu = childMenu.filter(obj => !uniq[obj.kidMenu] && (uniq[obj.kidMenu] = true));
+                    theMenu.childMenu = finalChildMenu;
+                    // theMenu.childMenu = childMenu;
+                    if (apz.menuap.Menu.menuLen < theMenu.childMenu.length) {
+                        apz.menuap.Menu.menuLen = theMenu.childMenu.length;
+                    }
+                }
+                menuItems.parentMenu.push(theMenu)
+            }
+            debugger;
+            apz.data.scrdata.menuap__AppMenu_Res = {};
+            apz.data.scrdata.menuap__AppMenu_Res = menuItems;
+            apz.data.loadData("AppMenu", "menuap");
+            var cM = apz.data.scrdata.menuap__AppMenu_Res.parentMenu[0].childMenu;
+            if (!cM) {
+                $("#menuap__Menu__ChildList").addClass("sno")
+                $("#menuap__Menu__KidList").addClass("sno")
+            }
+        } else {
+            $("#menuap__Menu__ct_mnu_1").removeClass("sno")
+            $("#menuap__Menu__ParentList").addClass("sno")
+            $("#menuap__Menu__ChildList").addClass("sno")
+            $("#menuap__Menu__KidList").addClass("sno")
+        }
+    } else {
+        $("#menuap__Menu__ct_mnu_1").removeClass("sno")
+        $("#menuap__Menu__ParentList").addClass("sno")
+        $("#menuap__Menu__ChildList").addClass("sno")
+        $("#menuap__Menu__KidList").addClass("sno")
+    }
+}
+//Button click actions
+apz.menuap.Menu.fnLaunchLandingPage = function(params) {
+    var lUserId = params.userId;
+    $("#header").removeClass("sno");
+    apz.common.launchApp("landpg", "LandingPage", params, "menuap__Menu__MainLaunchArea");
+    $("body").removeAttr('style');
+    $("body").removeClass("bgclr");
+};
+apz.menuap.Menu.LaunchApplicationHistory = function() {
+    debugger;
+    var userObj = {
+        "corporateId": "000FTAC4321",
+        "userId": apz.menuap.Menu.userId,
+        "userRole": apz.menuap.menu.userRole,
+        "action": "retrieve",
+        "appId": "Agency"
+    }
+    apz.common.launchApp("aphist", "ApplicationHistory", userObj, "menuap__Menu__MainLaunchArea");
+};
+apz.menuap.Menu.fnGoHome = function() {
+    $("#menuap__Menu__country").addClass("sno");
+    var params = {
+        textContent: "Home"
+    }
+    apz.menuap.Menu.fnMenuClick(params);
+}
+apz.menuap.Menu.fnChangeCountry = function(element) {
+    apz.country = apz.getElmValue(element.id);
+    apz.setElmValue("menuap__Menu__countryFlag", "apps/styles/themes/BranchBase/img/" + apz.country + ".png");
+    if (apz.country === "US") {
+        $("body").addClass("dollarCurrency").removeClass("indianCurrency poundCurrency bangladeshCurrency uaeCurrency ugCurrency");
+    } else if (apz.country === "UK") {
+        $("body").addClass("poundCurrency").removeClass("indianCurrency dollarCurrency bangladeshCurrency uaeCurrency ugCurrency");
+    } else if (apz.country === "IND") {
+        $("body").addClass("indianCurrency").removeClass("dollarCurrency poundCurrency bangladeshCurrency uaeCurrency ugCurrency");
+    } else if (apz.country === "BD") {
+        $("body").addClass("bangladeshCurrency").removeClass("dollarCurrency poundCurrency indianCurrency uaeCurrency ugCurrency");
+    } else if (apz.country == "UAE") {
+        $("body").addClass("uaeCurrency").removeClass("dollarCurrency poundCurrency indianCurrency bangladeshCurrency ugCurrency");
+    } else if (apz.country == "UGA") {
+        $("body").addClass("ugCurrency").removeClass("dollarCurrency poundCurrency indianCurrency bangladeshCurrency uaeCurrency");
+    }
+}
+apz.menuap.Menu.hideModel = function() {
+    var display = document.getElementById("menuap__Menu__model").style.display;
+    if (display == "block") {
+        apz.toggleModal({
+            "targetId": "menuap__Menu__model"
+        });
+    }
+}
+apz.menuap.Menu.LaunchLogin = function() {
+    debugger;
+    apz.common.launchApp("ablogn", "Login", userObj, "menuap__Menu__MainLaunchArea");
+};
+// Button click actions
+apz.menuap.Menu.fnMenuClick = function(obj) {
+    if (apz.isOnline) {
+        apz.mockServer = false;
+    } else {
+        apz.mockServer = true;
+    }
+    apz.common.fnSwitchTheme("agency");
+    // http://52.230.122.45:8080/AppzillonBranchAMTest/appzillon/styles/themes/AgencyBase/img/topstrip.png
+    $("#menuap__Menu__country").addClass("sno");
+    $("#menuap__Menu__countryDropdown_ext").removeAttr("enabled").attr("disabled", false);
+    /*if (apz.mockServer) {
+        apz.mockServer = false;
+    }*/
+    $("#menuap__Menu__loggedinCust_txtcnt").text("No customer logged in");
+    $("#menuap__Menu__custId_txtcnt").text("Customer Id : Not available");
+    $("#menuap__Menu__custBranch").text("");
+    apz.hide("menuap__Menu__custBranch");
+    $("#menuap__Menu__custImg").attr("src", "apps/styles/themes/BranchBase/img/Default_User.jpg");
+    var lMenu = obj.textContent;
+    if (lMenu == "Home") {
+        var lParams = {
+            "appId": "landpg",
+            "scr": "LandingPage",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "animation": 21,
+            "userObj": {
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                "custId": "menuap__Menu__custId_txtcnt"
+            }
+        };
+    } else if (lMenu == "My Tasks") {
+        var lParams = {
+            "appId": "adsbrd",
+            "scr": "AgentTasks",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "userObj": {
+                "action": "AgentTasks",
+                "data": {},
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                "custId": "menuap__Menu__custId_txtcnt"
+            }
+        };
+    } else if (lMenu == "Applications") {
+        $("body").css('background-image', 'none');
+        var lParams = {
+            "appId": "aphist",
+            "scr": "ApplicationHistory",
+            "div": "menuap__Menu__MainLaunchArea",
+            "userObj": {
+                "corporateId": "000FTAC4321",
+                "userId": apz.ablogn.Login.userId,
+                "action": "retrieve",
+                "appId": "Agency"
+            }
+        }
+    } else if (lMenu == "Utilities") {
+        var lParams = {
+            "appId": "lnsmlr",
+            "scr": "LoanSimulation",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "userObj": {
+                "action": "LoanSimulation",
+                "data": {},
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                "custId": "menuap__Menu__custId_txtcnt"
+            }
+        };
+    } else if (lMenu == "Service Request") {
+        var lParams = {
+            "appId": "servic",
+            "scr": "StatusScreen",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "userObj": {
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                "custId": "menuap__Menu__custId_txtcnt"
+            }
+        };
+    } else if (lMenu == "Create Lead") {
+        var lParams = {
+            "appId": "ACOP01",
+            "scr": "AccountOpening",
+            "div": "menuap__Menu__MainLaunchArea",
+            "animation": 9,
+            "type": "CF",
+            "userObj": {
+                "action": "",
+                "data": {},
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "callBack": "",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                "custId": "menuap__Menu__custId_txtcnt"
+            }
+        };
+    } else if (lMenu == "My Performance") {
+        var lParams = {
+            "appId": "adsbrd",
+            "scr": "AgentPerformance",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "userObj": {
+                "action": "Performance",
+                "data": {},
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                "custId": "menuap__Menu__custId_txtcnt"
+            }
+        };
+    } else if (lMenu == "Customers") {
+        var lParams = {
+            "appId": "cuslst",
+            "scr": "Customers",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "userObj": {
+                "action": "Performance",
+                "data": {},
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                "custId": "menuap__Menu__custId_txtcnt"
+            }
+        };
+    } else if (lMenu == "Contact Us") {
+        $("body").css('background-image', 'none');
+        var lParams = {
+            "appId": "CNUS01",
+            "scr": "ContactUs",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "userObj": {
+                "action": "ContactUsFooter",
+                "data": {},
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                "custId": "menuap__Menu__custId_txtcnt"
+            }
+        }
+    } else if (lMenu == "My Profile") {
+        $("body").css('background-image', 'none');
+        var lParams = {
+            "appId": "myprof",
+            "scr": "MyProfile",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "userObj": {
+                "action": "MyProfile",
+                "data": {},
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                // "custId": "menuap__Menu__custId_txtcnt"
+                "custId": "786631"
+            }
+        }
+    } else if (lMenu == "Reports") {
+        $("body").css('background-image', 'none');
+        var lParams = {
+            "appId": "balanc",
+            "scr": "Launcher",
+            "div": "menuap__Menu__MainLaunchArea",
+            "type": "CF",
+            "userObj": {
+                "action": "Report",
+                "data": {},
+                "destroyDiv": "menuap__Menu__MainLaunchArea",
+                "parentAppId": "menuap",
+                "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                "custImg": "menuap__Menu__custImg",
+                // "custId": "menuap__Menu__custId_txtcnt"
+                "custId": "786631"
+            }
+        }
+    } else if (lMenu == "Logout") {
+        apz.menuap.Menu.fnLogout()
+    }
+    if (lMenu != "Logout") {
+        apz.toggleSidebar("menuap__Menu__menuBtn");
+        apz.launchApp(lParams);
+    }
+    if ($("#backdrop").hasClass("backdrop in")) {
+        if ($('#menuap__Menu__SearchValue').length) {
+            $("#menuap__Menu__SearchValue").val('');
+            $('#menuap__Menu__SearchValue')[0].click();
+        }
+        apz.toggleSidebar("menuap__Menu__menuBtn");
+    }
+};
+apz.menuap.Menu.fnLogout = function() {
+    /*var lParams = {
+        "appId": "menuap",
+        "scr": "Menu",
+        "animation": 9,
+        "type": "CF",
+    };
+    apz.launchApp(lParams);*/
+    //Switch theme
+    if (apz.isOnline) {
+        apz.mockServer = false;
+    } else {
+        apz.mockServer = true;
+    }
+    /*apz.menuap.Menu.theme = "appzillon/styles/themes/AgencyBase/css/AgencyBase.css"
+    $("link").eq(0).attr("href", apz.menuap.Menu.theme)*/
+    
+    apz.common.fnSwitchTheme("agency");
+    var userObj = {
+        "destroyDiv": "menuap__Menu__MainLaunchArea",
+        "parentAppId": "menuap",
+        "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+        "custImg": "menuap__Menu__custImg",
+        "custId": "menuap__Menu__custId_txtcnt"
+    }
+    apz.common.launchApp("ablogn", "Login", userObj);
+}

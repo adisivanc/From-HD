@@ -1,0 +1,43 @@
+{
+    "CreditLineList": [
+        {
+            "lineId": "LI29835769353443",
+            "customerName": "Jacob",
+            "lineCurrency": "INR",
+            "lineAmount": "900000",
+            "availableAmount": "938534"
+        },
+        {
+            "lineId": "LI21335769353654",
+            "customerName": "Jacob",
+            "lineCurrency": "INR",
+            "lineAmount": "700000",
+            "availableAmount": "938534"
+        },
+        {
+            "lineId": "LI87635769353765",
+            "customerName": "Jacob",
+            "lineCurrency": "INR",
+            "lineAmount": "600000",
+            "availableAmount": "938534"
+        }
+       
+    ],
+    "CreditLineDetails": {
+        "lineId": "LI_IN00567",
+        "limitAmount": "1,00,000.00",
+        "availableAmount": "11,681,00.00",
+        "lineAmount": "11,681,00.00",
+        "image": "prof-acc.png",
+        "cifId": "0106789",
+        "CustomerName": "John Thomas",
+        "lineDescription": "US INC",
+        "mainLine": "WOFF",
+        "mainlineDescription": "WOFF",
+        "lineCurrency": "INR",
+        "revolvingLine": "ELSC",
+        "startDate": "14-Dec-16",
+        "endDate": "12-Jan-17"
+    },
+    "Status":true
+}

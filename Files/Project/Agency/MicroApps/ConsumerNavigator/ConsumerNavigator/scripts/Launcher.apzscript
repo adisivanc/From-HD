@@ -1,0 +1,225 @@
+var subchildId = "cmrnav__Launcher__SubChildList";
+var screenId = "cmrnav__Launcher__";
+var childNodes = [];
+var menuDetails = {};
+apz.cmrnav.sCache = {};
+selectedrow = "0";
+
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+    apz.mockServer = true;
+    apz.cmrnav.sCache = params;
+    
+    
+    apz.country = "US";
+    $("body").addClass("dollarCurrency").removeClass("indianCurrency poundCurrency bangladeshCurrency uaeCurrency ugCurrency");
+    apz.common.fnSwitchTheme("consumer");
+    apz.cmrnav.fnLoadMenus();
+    apz.cmrnav.fnLaunchConsumerHome();
+    $("#" + subchildId).addClass("sno");
+    menuDetails = apz.data.scrdata.cmrnav__ConsumerMenus_Res;
+    childNodes = menuDetails.ParentMenu[0].ChildMenu;
+    apz.cmrnav.fnPopulateCustDetails(params);
+    // apz.cmrnav.fnPopulateHeaderVaues();
+    //Show title - anand
+    $("#" + screenId + "gr_row_5").removeClass("sno");
+    apz.setElmValue(screenId + "el_txt_1", "Dashboard");
+    if (apz.deviceOs !== "WEB" && apz.deviceOs !== "SIMULATOR") {
+    dragElement(document.getElementById("cmrnav__Launcher__dragAndMove"));
+        $("#" + screenId + "iPadMenu").removeClass("sno");
+        $("#" + screenId + "webMenu").addClass("sno");
+    }else{
+        $("#" + screenId + "iPadMenu").addClass("sno");
+        $("#" + screenId + "webMenu").removeClass("sno");
+    }
+};
+apz.cmrnav.fnPopulateHeaderVaues = function() {
+    debugger;
+    apz.setHtml(apz.cmrnav.sCache.loggedCust, "Logged in Customer: " + apz.cmrnav.sCache.data.custName);
+    document.getElementById(apz.cmrnav.sCache.loggedCustImg).src = apz.cmrnav.sCache.data.custImage;
+    apz.setHtml(apz.cmrnav.sCache.loggedCustId, "Customer Id: " + apz.cmrnav.sCache.data.custId);
+    apz.setHtml("menuap__Menu__custBranch", "Customer Branch: " + apz.cmrnav.sCache.data.loggedCustBranch);
+    apz.show("menuap__Menu__custBranch");
+};
+apz.app.onShown_Launcher = function(params) {
+    debugger;
+    //document.getElementById("cmrnav__CustmerDetails__o__cmrnav__CustmerDetails_Res__image").src = params.data.custImage;
+}
+apz.cmrnav.fnLoadMenus = function() {
+    debugger;
+    apz.data.loadJsonData("ConsumerMenu", "cmrnav");
+}
+apz.cmrnav.fnPopulateCustDetails = function(params) {
+    debugger;
+    apz.data.scrdata.cmrnav__CustmerDetails_Res = {};
+    apz.data.scrdata.cmrnav__CustmerDetails_Res = params.customerDetails;
+    apz.data.loadData("CustmerDetails", "cmrnav");
+    // document.getElementById("cmrnav__CustmerDetails__o__cmrnav__CustmerDetails_Res__image").src = params.data.custImage;
+};
+apz.cmrnav.fnOnParentNodeClicked = function(e, ths) {
+    debugger;
+    $(".ssp").removeClass("sno");
+    selectedrow = $(ths).attr("rowno");
+    if (selectedrow === "2") {
+        childNodes = menuDetails.ParentMenu[selectedrow].ChildMenu;
+    } else if (selectedrow === "5") {
+        $("#" + subchildId).removeClass("sno");
+        childNodes = menuDetails.ParentMenu[selectedrow].ChildMenu;
+    } else if (selectedrow === "0") {
+        apz.cmrnav.fnLaunchConsumerHome();
+        $("#" + screenId + "consumerSidebar").toggleClass("sno");
+        $("#" + screenId + "gr_row_5").removeClass("sno");
+        apz.setElmValue(screenId + "el_txt_1", "Dashboard");
+    } else if (selectedrow === "8") {
+        apz.cmrnav.fnLaunchApp({
+            appId: "srmenu",
+            scr: "MenuList",
+            userObj: {
+                data: {}
+            }
+        });
+        $("#" + screenId + "gr_row_5").removeClass("sno");
+        apz.setElmValue(screenId + "el_txt_1", "Service Requests");
+    } else {
+        $("#" + subchildId).addClass("sno");
+        childNodes = menuDetails.ParentMenu[selectedrow].ChildMenu;
+    }
+    // $(".ssp").addClass("sno");
+    setTimeout(function() {
+        $(".ssp").addClass("sno");
+    }, 100);
+}
+apz.cmrnav.fnOnNavigateMicroapp = function(e, ths) {
+    debugger;
+    let menuName = $(ths)[0].textContent;
+    childSelectedrow = $(ths).attr("rowno");
+    if (childNodes[childSelectedrow].name == "Fixed Deposit" || childNodes[childSelectedrow].name == "Recurring Deposit") {
+        $("#" + subchildId).removeClass("sno");
+        childNodes = childNodes[childSelectedrow].SubChildMenu;
+    } else if (childNodes[childSelectedrow].name == "Beneficiary Maintenance") {
+        childNodes = childNodes[childSelectedrow].SubChildMenu;
+    } else {
+        $("#" + screenId + "gr_row_5").removeClass("sno");
+        apz.setElmValue(screenId + "el_txt_1", menuName);
+        apz.cmrnav.fnLaunchApp(apz.cmrnav.fnGetSelectedNode(menuName, childNodes));
+    };
+};
+apz.cmrnav.fnGetSelectedNode = function(menuName, childNodes) {
+    debugger;
+    let selectedMenu = childNodes.filter(function(node) {
+        if (node.name == menuName) {
+            return node
+        }
+    });
+    return selectedMenu[0];
+}
+apz.cmrnav.fnLaunchApp = function(microappObj) {
+    debugger;
+    apz.mockServer = true;
+    lparams = {
+        appId: microappObj.appId,
+        scr: microappObj.scr,
+        div: screenId + "Launcher"
+    }
+    if (microappObj.userObj !== undefined) {
+        lparams.userObj = microappObj.userObj;
+    }
+    lparams.userObj["control"] = {
+        "exitApp": {
+            "appId": "cmrnav",
+            "div": screenId + "Launcher",
+            "callBack": apz.cmrnav.fnLaunchConsumerHome
+        }
+    }
+    // lparams.userObj["data"] = apz.cmrnav.sCache.customerDetails;
+    apz.launchApp(lparams);
+    if (microappObj.appId !== "relovr") {
+        // if (microappObj.appId != "bookfd") {
+            // $("#" + screenId + "consumerSidebar").toggleClass("sno");
+            apz.cmrnav.fnToggleConsumerSideBar()
+        // }
+    }
+}
+apz.cmrnav.fnToggleConsumerSideBar = function() {
+    debugger;
+    $("#" + subchildId).addClass("sno");
+    childNodes = menuDetails.ParentMenu[selectedrow].ChildMenu;
+    $("#" + screenId + "consumerSidebar").toggleClass("sno");
+    setTimeout(function() {
+        $(".ssp").addClass("sno");
+    }, 100);
+};
+apz.cmrnav.fnCustomerHome = function() {
+    debugger;
+    apz.cmrnav.fnLaunchConsumerHome()
+};
+apz.cmrnav.fnCustmDetails = function() {
+    debugger;
+    $(".userDetailsR1").toggleClass("sno");
+};
+/*apz.cmrnav.fnTogggletheme = function() {
+    debugger;
+    apz.menuap.Menu.theme = "appzillon/styles/themes/MTBLCustomer/css/MTBLCustomer.css"
+    $("link").eq(0).attr("href", apz.menuap.Menu.theme)
+}*/
+apz.cmrnav.fnLaunchConsumerHome = function() {
+    debugger;
+    // $("#" + screenId + "gr_row_5").addClass("sno");
+    apz.mockServer = true;
+    apz.cmrnav.fnLaunchApp({
+        appId: "relovr",
+        scr: "RelationshipOverview",
+        userObj: {
+            data: apz.cmrnav.sCache.customerDetails
+        }
+    });
+}
+function dragElement(elmnt) {
+    debugger;
+    console.log('dragElement called')
+    var pos1 = 0,
+        pos2 = 0,
+        pos3 = 0,
+        pos4 = 0;
+    elmnt.onmousedown = dragMouseDown;
+
+    function dragMouseDown(e) {
+        debugger;
+        console.log('dragMouseDown called')
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        // pos3 = e.clientX;
+        // pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+        debugger;
+        console.log('elementDrag called')
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        // elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        // elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        
+        
+        elmnt.style.top = e.clientY + "px";
+        elmnt.style.left = e.clientX + "px";
+    }
+
+    function closeDragElement() {
+        debugger;
+        console.log('closeDragElement called')
+        /* stop moving when mouse button is released:*/
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}

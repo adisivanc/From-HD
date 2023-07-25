@@ -1,0 +1,338 @@
+apz.logreg.registration = {};
+apz.logreg.registration.sAction = "";
+apz.app.onLoad_Registration = function(params) {
+    apz.logreg.registration.sParams = params;
+    apz.logreg.launcher.sAction = "Registration";
+    //    $("body").addClass("loginby");
+}
+apz.app.onShown_Registration = function() {
+    debugger;
+    $("#logreg__UserRegistration__i__details__accNo").attr("type","tel");
+        $("#logreg__UserRegistration__i__details__cifNo").attr("type","tel");
+        
+        $("#logreg__UserRegistration__i__details__mobileNo").attr("type","tel");
+
+    var now = new Date();
+    // mobiscroll.settings = {
+    //     theme: 'mobiscroll',              // Specify theme like: theme: 'ios' or omit setting to use default
+    //     lang: 'en'                        // Specify language like: lang: 'pl' or omit setting to use default
+    // };
+
+    mobiscroll.date('#logreg__CardRegistration__i__details__year', {
+        dateFormat: 'mm/yy', 
+    
+        min:new Date(),// More info about dateFormat: https://docs.mobiscroll.com/4-7-3/javascript/datetime#localization-dateFormat
+        onInit: function (event, inst) { 
+            debugger;// More info about onInit: https://docs.mobiscroll.com/4-7-3/javascript/datetime#event-onInit
+            inst.setVal(now, true);
+         
+            
+        }
+    });
+    $("#logreg__Registration__registration_types").removeClass("sno");
+    $("#logreg__Registration__image").attr("style", 'background-image: url("apps/styles/themes/ConsumerBank/img/bg.png")');
+}
+
+apz.logreg.registration.fnMobileKeyup = function(el) {
+    var digits = el.value.match(/\d{1,10}/) || [""];
+    el.value = digits[0];
+}
+apz.logreg.registration.cancelFn = function(param) {
+  apz.logreg.registration.fnClosePopOver();
+}
+apz.logreg.registration.registerFn = function(param) {
+    debugger;
+    //acc_dtl crd_dtl
+    var id = param.id;
+    $("#logreg__Registration__registration_types").addClass("sno");
+    if (id == "logreg__Registration__acc_dtl") {
+        apz.logreg.registration.type = "account";
+        $("#logreg__Registration__RegistrationBlock").removeClass("sno");
+        $("#logreg__Registration__card_registration_block").addClass("sno");
+    } else {
+        apz.logreg.registration.type = "card";
+        $("#logreg__Registration__RegistrationBlock").addClass("sno");
+        $("#logreg__Registration__card_registration_block").removeClass("sno");
+    }
+}
+apz.logreg.registration.fnRegister = function(param, type) {
+    debugger;
+    if (type == "account") {
+        apz.data.buildData("UserRegistration", "logreg");
+        if (apz.val.validateScreen("RegistrationForm")) {
+            var accNo = apz.data.scrdata.logreg__UserRegistration_Req.details.accNo;
+            var cifNo = apz.data.scrdata.logreg__UserRegistration_Req.details.cifNo;
+            var userId = apz.data.scrdata.logreg__UserRegistration_Req.details.name;
+            var address = apz.data.scrdata.logreg__UserRegistration_Req.details.address;
+            var pattern = new RegExp("^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
+            var phoneno = new RegExp("^[0-9]{10}$");
+            if(accNo == "" || userId == "" || cifNo == "" || address == ""){
+                var msg = {
+                    "code": "REG_MCHK"
+                }
+                apz.dispMsg(msg);
+                return false;
+            }else if (!pattern.test(apz.data.scrdata.logreg__UserRegistration_Req.details.emailID)) {
+                var msg = {
+                    "code": "INVALIDEmail"
+                }
+                apz.dispMsg(msg);
+                return false;
+            } else if (!phoneno.test(apz.data.scrdata.logreg__UserRegistration_Req.details.mobileNo)) {
+                var msg = {
+                    "code": "INVALIDPhoneNo"
+                }
+                apz.dispMsg(msg);
+                return false;
+            }else{
+                apz.logreg.registration.sUserDetails = apz.data.scrdata.logreg__UserRegistration_Req.details;
+                 $("#logreg__Registration__RegistrationBlock").addClass("sno");
+    $("#logreg__Registration__card_registration_block").addClass("sno");
+    apz.hide("logreg__Registration__Header");
+    //             apz.launchSubScreen( {
+    //   appId : "logreg",
+    //     scr:"ChangePIN",
+    //     div:"logreg__Registration__OTP",
+    //       userObj : {
+    //         "control": {
+    //         "callBack":  apz.logreg.registration.sParams.callBack,
+    //         "destroyDiv": "logreg__Registration__OTP"
+    //     }
+    //     }
+      
+    // }       )
+                
+                apz.logreg.registration.launchOTPScreen("account", apz.data.scrdata.logreg__UserRegistration_Req.details.mobileNo);
+                
+            }
+        } else {
+            var lMsg = {};
+            lMsg.code = "REG_MCHK";
+            apz.dispMsg(lMsg);
+        }
+    } else {
+        apz.data.buildData("CardRegistration", "logreg");
+        if (apz.val.validateScreen("Registration")) {
+                apz.logreg.registration.sCardDetails = apz.data.scrdata.logreg__CardRegistration_Req.details;
+                 $("#logreg__Registration__RegistrationBlock").addClass("sno");
+    $("#logreg__Registration__card_registration_block").addClass("sno");
+    apz.hide("logreg__Registration__Header");
+    //              apz.launchSubScreen( {
+    //   appId : "logreg",
+    //     scr:"ChangePIN",
+    //     div:"logreg__Registration__OTP",
+    //     userObj : {
+    //         "control": {
+    //         "callBack":  apz.logreg.registration.sParams.callBack,
+    //         "destroyDiv": "logreg__Registration__OTP"
+    //     }
+    //     }
+      
+    // }       )
+  
+  
+          apz.logreg.registration.launchOTPScreen("card", "9876543210"); //The mobile number linked with account number
+        } else {
+            var lMsg = {};
+            lMsg.code = "REG_MCHK";
+            apz.dispMsg(lMsg);
+        }
+    }
+};
+apz.logreg.registration.launchOTPScreen = function(type, mobileNo) {
+    $("#logreg__Registration__RegistrationBlock").addClass("sno");
+    $("#logreg__Registration__card_registration_block").addClass("sno");
+    apz.hide("logreg__Registration__Header");
+    var params = {};
+    params.appId = "otpeng";
+    params.div = "logreg__Registration__OTP";
+    params.scr = "ProcessOTP";
+    params.layout = "Web";
+    params.userObj = {
+        "action": "Generate",
+        "mobileNo": mobileNo,
+        "control": {
+            "callBack": apz.logreg.registration.fnOTPCB,
+            "destroyDiv": "logreg__Registration__OTP"
+        }
+    }
+    apz.launchApp(params);
+}
+apz.logreg.registration.fnOTPCB = function(lParams) {
+    debugger;
+    apz.launchSubScreen( {
+      appId : "logreg",
+        scr:"ChangePIN",
+        div:"logreg__Registration__OTP",
+        userObj : {
+            "control": {
+            "callBack":  apz.logreg.registration.sParams.callBack,
+            "destroyDiv": "logreg__Registration__OTP"
+        }
+        }
+      
+    } ) 
+    // if (lParams.otpdetails.Status == "P") {
+    //     apz.logreg.registration.fnRegisterUser();
+    // }
+};
+apz.logreg.registration.fnRegisterUser = function() {
+    debugger;
+    apz.currAppId = "logreg"
+    var request = {};
+    var date = new Date();
+    var params = {};
+    request.appzillonCreateUserRequest = {};
+    if (apz.logreg.registration.type == "account") {
+        request.appzillonCreateUserRequest.userId = apz.logreg.registration.sUserDetails.name;
+        request.appzillonCreateUserRequest.userName = apz.logreg.registration.sUserDetails.name;
+        //request.appzillonCreateUserRequest.password = "";
+        request.appzillonCreateUserRequest.appId = "csmrbk";
+        request.appzillonCreateUserRequest.language = "en";
+        request.appzillonCreateUserRequest.email1 = apz.logreg.registration.sUserDetails.emailID;
+        request.appzillonCreateUserRequest.dateOfBirth = "";
+        request.appzillonCreateUserRequest.phone1 = apz.logreg.registration.sUserDetails.mobileNo;
+        request.appzillonCreateUserRequest.phone2 = "";
+        request.appzillonCreateUserRequest.email2 = "";
+        request.appzillonCreateUserRequest.addr1 = apz.logreg.registration.sUserDetails.address;
+        request.appzillonCreateUserRequest.addr2 = "";
+        request.appzillonCreateUserRequest.addr3 = "";
+        request.appzillonCreateUserRequest.addr4 = "";
+        request.appzillonCreateUserRequest.createUserId = apz.logreg.registration.sUserDetails.name;
+        request.appzillonCreateUserRequest.profilePic = "";
+        request.appzillonCreateUserRequest.loginStatus = 'N';
+        request.appzillonCreateUserRequest.userLocked = 'N';
+        request.appzillonCreateUserRequest.extIdentifier = '';
+        request.appzillonCreateUserRequest.makerId = apz.logreg.registration.sUserDetails.name;
+        request.appzillonCreateUserRequest.authStat = 'A';
+        request.appzillonCreateUserRequest.ussdRequired = "Y";
+        request.appzillonCreateUserRequest.smsRequiredPhone1 = "Y";
+        request.appzillonCreateUserRequest.smsRequiredPhone2 = 'N';
+        request.appzillonCreateUserRequest.createTs = date.getFullYear() + "-" + (parseInt(date.getMonth()) + 1) + "-" + date.getDate() + " " + date.getHours() +
+            ":" + date.getMinutes() + ":" + date.getSeconds();
+        request.appzillonCreateUserRequest.versionNo = 1;
+        request.appzillonCreateUserRequest.roles = [{
+            "roleId": "admin",
+            "userId": apz.logreg.registration.sUserDetails.name,
+            "appId": "csmrbk"
+        }];
+        request.appzillonCreateUserRequest.Devices = [];
+        request.appzillonCreateUserRequest.userAccessApps = [];
+        apz.startLoader();
+        params.callBackObj = this;
+        params.buildReq = 'N';
+        params.paintResp = 'N';
+        params.req = request;
+        params.ifaceName = 'appzillonCreateUser';
+        params.async = true;
+        params.callBack = apz.logreg.registration.fnRegisterUserCB;
+        params.internal = true;
+        apz.server.sendReq(params);
+    } else {
+        request.appzillonCreateUserRequest.userId = apz.logreg.registration.sCardDetails.userId;
+        request.appzillonCreateUserRequest.userName = apz.logreg.registration.sCardDetails.userId;
+        //request.appzillonCreateUserRequest.password = "";
+        request.appzillonCreateUserRequest.appId = "csmrbk";
+        request.appzillonCreateUserRequest.language = "en";
+        request.appzillonCreateUserRequest.email1 = "anand@iexceed.com";
+        request.appzillonCreateUserRequest.dateOfBirth = "";
+        request.appzillonCreateUserRequest.phone1 = "9902615729";
+        request.appzillonCreateUserRequest.phone2 = "";
+        request.appzillonCreateUserRequest.email2 = "";
+        request.appzillonCreateUserRequest.addr1 = "";
+        request.appzillonCreateUserRequest.addr2 = "";
+        request.appzillonCreateUserRequest.addr3 = "";
+        request.appzillonCreateUserRequest.addr4 = "";
+        request.appzillonCreateUserRequest.createUserId = apz.logreg.registration.sCardDetails.userId;
+        request.appzillonCreateUserRequest.profilePic = "";
+        request.appzillonCreateUserRequest.loginStatus = 'N';
+        request.appzillonCreateUserRequest.userLocked = 'N';
+        request.appzillonCreateUserRequest.extIdentifier = '';
+        request.appzillonCreateUserRequest.makerId = apz.logreg.registration.sCardDetails.userId;
+        request.appzillonCreateUserRequest.authStat = 'A';
+        request.appzillonCreateUserRequest.ussdRequired = "Y";
+        request.appzillonCreateUserRequest.smsRequiredPhone1 = "Y";
+        request.appzillonCreateUserRequest.smsRequiredPhone2 = 'N';
+        request.appzillonCreateUserRequest.createTs = date.getFullYear() + "-" + (parseInt(date.getMonth()) + 1) + "-" + date.getDate() + " " + date.getHours() +
+            ":" + date.getMinutes() + ":" + date.getSeconds();
+        request.appzillonCreateUserRequest.versionNo = 1;
+        request.appzillonCreateUserRequest.roles = [{
+            "roleId": "admin",
+            "userId": apz.logreg.registration.sCardDetails.userId,
+            "appId": "csmrbk"
+        }];
+        request.appzillonCreateUserRequest.Devices = [];
+        request.appzillonCreateUserRequest.userAccessApps = [];
+        apz.startLoader();
+        params.callBackObj = this;
+        params.buildReq = 'N';
+        params.paintResp = 'N';
+        params.req = request;
+        params.ifaceName = 'appzillonCreateUser';
+        params.async = true;
+        params.callBack = apz.logreg.registration.fnRegisterUserCB;
+        params.internal = true;
+        apz.server.sendReq(params);
+    }
+};
+apz.logreg.registration.fnRegisterUserCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    if (params.status) {
+        if (apz.isNull(params.errors)) {
+            msg = {
+                "code": "REG_SUC",
+                "callBack": apz.logreg.registration.fnSuccessCB
+            };
+            apz.dispMsg(msg);
+        } else {
+            if (params.errors[0].errorCode[0] !== "$") {
+                var perrorCode = params.errors[0].errorCode;
+                if (perrorCode === 'APZ-DM-033') {
+                    var msg = {};
+                    msg.message = params.errors[0].errorMessage;
+                    msg.type = 'E';
+                } else if (perrorCode === 'REX_0') {
+                    var msg = {};
+                    msg.message = params.errors[0].errorMessage;
+                    msg.type = 'E';
+                } else {
+                    var msg = {
+                        'code': params.errors[0].errorCode
+                    };
+                }
+                apz.dispMsg(msg);
+            }
+        }
+    } else {
+        msg = {
+            'code': 'APZ-SVR-ERR'
+        };
+        apz.dispMsg(msg);
+    }
+};
+apz.logreg.registration.fnSuccessCB = function(params) {
+    debugger;
+    if (params.choice) {
+        apz.logreg.registration.fnClosePopOver();
+        /*setTimeout(function() {
+            $("#logreg__Registration__IconPopover").trigger('click');
+        }, 0);
+        setTimeout(function() {
+            apz.logreg.registration.fnClosePopOver();
+        }, 2000);*/
+    }
+}
+apz.logreg.registration.fnClosePopOver = function() {
+    debugger;
+    $("#logreg__Registration__IconPopover").trigger('click');
+    apz.logreg.launcher.sAction = "";
+    $("#" + apz.logreg.launcher.sDistroyDivCB).html("");
+    apz.logreg.launcher.sParentCB();
+}
+apz.logreg.registration.fnBack = function() {
+    debugger;
+    apz.show("csmrbk__Login__sc_col_36");
+    apz.show("csmrbk__Login__tick");
+    apz.logreg.registration.sParams.callBack();
+}

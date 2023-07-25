@@ -1,0 +1,10 @@
+apz.app.onShown_LandingPage = function() {};
+apz.icaosm.LandingPage.fnNewClick = function() {
+    debugger;
+    apz.launchSubScreen({
+        "scr": "Home",
+        "div": "icaosm__LandingHeader__scrlaunchingdiv"
+    });
+};
+apz.icaosm.LandingPage.fnRetrieveClick = function() {};
+apz.icaosm.LandingPage.fnSubmittedClick = function() {};

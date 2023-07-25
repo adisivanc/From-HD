@@ -1,0 +1,275 @@
+apz.aphist.ApplicationHistory = {};
+apz.aphist.ApplicationHistory.sparams = {}
+apz.app.onLoad_ApplicationHistory = function(params) {
+    debugger;
+    apz.aphist.ApplicationHistory.sparams = params;
+    apz.aphist.ApplicationHistory.fngetApplicationHistory();
+    $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+        $(this).removeClass("active");
+    })
+    if ($("#apzonb__Navigator__el_progressstep_1_ext li").length == 3) {
+        $("#apzonb__Navigator__el_progressstep_1_ext").append(
+            '<li class="pgst-step pgs-100 active" scrname="ApplicationHistory" appid="aphist" childappname="' + params.appId + '" divname="' + params
+            .parentdiv + '" title="Retrieve History" mobile="' + params.mobile + '"><span></span><span></span></li>');
+    } else {
+        $("#apzonb__Navigator__el_progressstep_1_ext li:nth-child(4)").attr({
+            "childappname": params.appId,
+            "mobile": params.mobile
+        }).addClass("active");
+    }
+    if (!apz.newApplication) {
+        $("#aphist__ApplicationHistory__gr_row_3").addClass("sno")
+    } else {
+        $("#aphist__ApplicationHistory__gr_row_3").removeClass("sno")
+    }
+    $("#aphist__ApplicationHistory__applHistTable_tbody>tr").click(function(pThis) {
+        var rowNo = pThis.currentTarget.rowIndex - 1;
+        apz.aphist.ApplicationHistory.fnOpenApplication(rowNo);
+    })
+}
+apz.aphist.ApplicationHistory.fngetApplicationHistory = function() {
+    debugger;
+    let appId = apz.aphist.ApplicationHistory.sparams.appId;
+    if (appId == "ONB") {
+        var lServerParams = {
+            "ifaceName": "ApplicationHistorySQL",
+            "buildReq": "N",
+            "appId": "aphist",
+            "req": {
+                "mobileNo": apz.aphist.ApplicationHistory.sparams.mobile,
+                "dob": apz.formatDate({
+                    val: apz.aphist.ApplicationHistory.sparams.dob,
+                    fromFormat: apz.dateFormat,
+                    toFormat: "yyyy-MM-dd"
+                }),
+                "countryCode": apz.country,
+            },
+            "paintResp": "Y",
+            "callBack": apz.aphist.ApplicationHistory.fngetApplicationHistoryCB
+        }
+        apz.server.callServer(lServerParams);
+    } else {
+        var lServerParams = {
+            "ifaceName": "AgencyHistorySQL",
+            "buildReq": "Y",
+            "appId": "aphist",
+            "paintResp": "N",
+            "callBack": apz.aphist.ApplicationHistory.fngetApplicationHistoryAgencyCB
+        }
+        apz.server.callServer(lServerParams);
+    }
+}
+apz.aphist.ApplicationHistory.fngetApplicationHistoryCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        if (pResp.errors) {
+            if (pResp.errors[0].errorCode == "APZ-FM-EX-038") {
+                apz.dispMsg({
+                    "message": "You seem to be applying for the first time. ",
+                    "callBack": apz.aphist.ApplicationHistory.fnCancel
+                })
+            }
+        }
+    }
+}
+apz.aphist.ApplicationHistory.fngetApplicationHistoryAgencyCB = function(pResp) {
+    if (pResp) {
+        apz.data.buildData("ApplicationHistorySQL", "aphist");
+        apz.data.scrdata.aphist__ApplicationHistorySQL_Res = apz.data.scrdata.aphist__AgencyHistorySQL_Res;
+        apz.data.loadData("ApplicationHistorySQL", "aphist");
+    }
+}
+apz.aphist.ApplicationHistory.fnLaunchAppDetails = function(arg1) {
+    debugger;
+    var rowNo = $(arg1).attr("rowno");
+    apz.aphist.ApplicationHistory.fnOpenApplication(rowNo);
+}
+apz.aphist.ApplicationHistory.fnOpenApplication = function(rowNo) {
+    var refNo = apz.data.scrdata.aphist__ApplicationHistorySQL_Res[rowNo].workflow_ref_no;
+    var records = apz.data.scrdata.aphist__ApplicationHistorySQL_Res;
+    var selectedRow = [];
+    for (var i = 0; i < records.length; i++) {
+        debugger;
+        var record = records[i];
+        if (refNo == record.workflow_ref_no) {
+            debugger;
+            selectedRow = record;
+            break;
+        }
+    }
+    apz.aphist.ApplicationHistory.sparams.refNo = selectedRow.workflow_ref_no;
+    apz.refNo = apz.aphist.ApplicationHistory.sparams.refNo;
+    apz.aphist.ApplicationHistory.sparams.product = selectedRow.product;
+    apz.product = selectedRow.product;
+    apz.aphist.ApplicationHistory.sparams.subproduct = selectedRow.subproduct;
+    var stageId = selectedRow.stage_id;
+    if (stageId == "INPUT") {
+        apz.checkExistingCustomer = "n";
+        apz.aphist.ApplicationHistory.fnGetFlowNo();
+    } else if (stageId == "APPROVED") {
+        apz.dispMsg({
+            "message": "The application has been approved and hence cannot be edited!",
+            "type": "S"
+        });
+    } else {
+        apz.dispMsg({
+            "message": "The application is currently under review and hence cannot be edited!"
+        });
+    }
+}
+apz.aphist.ApplicationHistory.fnGetFlowNo = function() {
+    var lServerParams = {
+        "ifaceName": "ApplicationDetailsDB_Query",
+        "buildReq": "N",
+        "appId": "aphist",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                refNo: apz.aphist.ApplicationHistory.sparams.refNo
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.aphist.ApplicationHistory.fnGetFlowNoCB
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.aphist.ApplicationHistory.fnGetFlowNoCB = function(sParams) {
+    if (sParams.errors === undefined && sParams.status) {
+        var workFlowNo = sParams.res.aphist__ApplicationDetailsDB_Res.tbDbmiCustomerMaster.workFlowIndex;
+        apz.country = sParams.res.aphist__ApplicationDetailsDB_Res.tbDbmiCustomerMaster.countryCode;
+        apz.userEmail = sParams.res.aphist__ApplicationDetailsDB_Res.tbDbmiCustomerMaster.email;
+        apz.flowNo = (!apz.isNull(workFlowNo)) ? workFlowNo : 0;
+        apz.applicationDetails = sParams.res.aphist__ApplicationDetailsDB_Res.tbDbmiCustomerMaster;
+        apz.aphist.ApplicationHistory.fnGetDocuments();
+    }
+}
+apz.aphist.ApplicationHistory.fnGetDocuments = function() {
+    var lParams = {
+        "ifaceName": "DocumentDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": {
+                "refNo": apz.aphist.ApplicationHistory.sparams.refNo
+            }
+        },
+        "appId": "aphist",
+        "paintResp": "N",
+        "async": false,
+        "callBack": apz.aphist.ApplicationHistory.fnGetDocumentsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.aphist.ApplicationHistory.fnGetDocumentsCB = function(params) {
+    debugger;
+    if (params.status && params.errors === undefined) {
+        apz.documentArray = params.res.aphist__DocumentDetails_Res.tbDbmiCustomerDocuments;
+    }
+    apz.aphist.ApplicationHistory.fnLaunchDetailsApp();
+}
+apz.aphist.ApplicationHistory.fnCancel = function() {
+    debugger;
+    var params = {};
+    params.appId = "navgtr";
+    params.scr = "Navigator";
+    params.div = "apzonb__Navigator__launchdiv";
+    apz.launchApp(params);
+}
+apz.aphist.ApplicationHistory.fnStartNewApplication = function() {
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "StartWorkFlow",
+        "buildReq": "N",
+        "appId": "aphist",
+        "req": {
+            "appId": "acdp01",
+            "workFlowId": "",
+            "userId": "CorpUser"
+        },
+        "paintResp": "N",
+        "callBack": apz.aphist.ApplicationHistory.fnStartNewApplicationCB
+    }
+    apz.server.callServer(lServerParams);
+}
+//workflow callback
+apz.aphist.ApplicationHistory.fnStartNewApplicationCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        if (pResp.res.aphist__StartWorkFlow_Res) {
+            apz.aphist.ApplicationHistory.sparams.refNo = pResp.res.aphist__StartWorkFlow_Res.instanceId;
+            apz.refNo = apz.aphist.ApplicationHistory.sparams.refNo;
+            if(apz.product === "Deposits"){
+                apz.aphist.ApplicationHistory.fnAddDepositDetails();
+            }
+            else{
+                apz.aphist.ApplicationHistory.fnAddUser();
+            }
+        }
+    }
+}
+apz.aphist.ApplicationHistory.fnAddDepositDetails =  function(){
+    debugger;
+    apz.depositValues.refNo = apz.refNo;
+    var lServerParams = {
+        "ifaceName": "DepositDetails_New",
+        "buildReq": "N",
+        "appId": "aphist",
+        "req": {
+            "tbDbmiDepositDetails": apz.depositValues
+        },
+        "paintResp": "N",
+        "callBack": apz.aphist.ApplicationHistory.fnAddDepositDetailsCB
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.aphist.ApplicationHistory.fnAddDepositDetailsCB = function(params){
+    debugger;
+    apz.aphist.ApplicationHistory.fnAddUser(apz.refNo);
+}
+apz.aphist.ApplicationHistory.fnAddUser = function(params) {
+    var lServerParams = {
+        "ifaceName": "ApplicationDetailsDB_New",
+        "buildReq": "N",
+        "appId": "aphist",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                dob: apz.formatDate({
+                    val: apz.aphist.ApplicationHistory.sparams.dob,
+                    fromFormat: apz.dateFormat,
+                    toFormat: "yyyy-MM-dd"
+                }),
+                mobileNo: apz.aphist.ApplicationHistory.sparams.mobile,
+                product: apz.aphist.ApplicationHistory.sparams.product,
+                subproduct: apz.aphist.ApplicationHistory.sparams.subproduct,
+                refNo: apz.aphist.ApplicationHistory.sparams.refNo,
+                mode: "SELF",
+                countryCode: apz.country
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.aphist.ApplicationHistory.fnLaunchDetailsApp
+    };
+    apz.server.callServer(lServerParams);
+}
+//new user callback
+apz.aphist.ApplicationHistory.fnLaunchDetailsApp = function(params) {
+    $("#apzonb__Navigator__el_img_1,#apzonb__Navigator__el_img_1_svg").attr("onclick", "apz.apzonb.Navigator.fnSaveFlow();");
+    apz.isWorkflowStarted = true;
+    var appId, scrName;
+    if (apz.flowNo === 0 && apz.country === "IND") {
+        appId = "apptyp";
+        scrName = "AppType";
+    } else {
+        appId = "navgtn";
+        scrName = "Navigator";
+    }
+    var params = {};
+    params.appId = appId;
+    params.scr = scrName;
+    params.div = "apzonb__Navigator__launchdiv";
+    params.userObj = {
+        "refNo": apz.refNo,
+        "product": apz.aphist.ApplicationHistory.sparams.product,
+        "subproduct": apz.aphist.ApplicationHistory.sparams.subproduct,
+        "currentFlow": apz.flowNo
+    };
+    apz.launchApp(params);
+}

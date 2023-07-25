@@ -1,0 +1,21 @@
+{
+    "Status": true,
+    "accountDetails": {
+        "accountName": "Savings",
+        "accountType": "Savings",
+        "accountOpeningDate": "2017-12-11",
+        "accountCurrency": "USD",
+        "unclearedFunds": 40,
+        "mainAccountHolder": "John Thomas",
+        "branch": "Central Park",
+        "lienAmount": 5657,
+        "availableBalance": 343343,
+        "lastTransactionDate": "2017-12-11",
+        "accountNo": 288122232,
+        "lastTransaction": 6666,
+        "limitAmount": 3464,
+        "overDrafts": 342,
+        "relationshipManager": "John Jacob",
+        "bookBalance": 23123
+    }
+}

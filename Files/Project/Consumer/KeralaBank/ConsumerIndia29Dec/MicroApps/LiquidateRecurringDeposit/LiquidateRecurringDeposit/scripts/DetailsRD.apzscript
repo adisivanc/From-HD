@@ -1,0 +1,14 @@
+apz.liqdrd.detailsrd = {};
+apz.liqdrd.detailsrd.sParams = {};
+apz.liqdrd.detailsrd.sAction = {};
+apz.app.onLoad_DetailsRD = function(params) {
+    debugger;
+    apz.liqdrd.detailsrd.fnInitialise(params);
+};
+apz.liqdrd.detailsrd.fnInitialise = function(params) {
+    debugger;
+    apz.liqdrd.detailsrd.sParams = params;
+    apz.data.scrdata.liqdrd__LiquidateRD_Req = {};
+    apz.data.scrdata.liqdrd__LiquidateRD_Req.depositDtls = params.data;
+    apz.data.loadData("LiquidateRD", "liqdrd");
+};

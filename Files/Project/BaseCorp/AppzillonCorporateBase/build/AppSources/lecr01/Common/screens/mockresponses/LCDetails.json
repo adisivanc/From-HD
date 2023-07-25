@@ -1,0 +1,52 @@
+{
+    "tbDbmiCorpLetterCredit": {
+        "chargeCollectionAccount": "98232039598239",
+        "beneficarySwiftCode": " BPBLGB21",
+        "requestCreditConfirmation": "y",
+        "beneficaryBankName": "Barclays Private Bank",
+        "corporateId": "000FTAC4321",
+        "expiryDate": "2018-01-28",
+        "referenceNumber": "1517807050348",
+        "beneficaryContactPerson": "james",
+        "beneficaryBankAddress": " 1 CHURCHILL PLACE LONDON E14 5HP",
+        "versionNo": "1",
+        "currency": "GBP",
+        "beneficaryAddress": "#212, Woodlane, London",
+        "beneficaryCompanyName": "West Digit",
+        "shippmentDocument": "Invoice",
+        "tolerance": "3",
+        "goodsDescription": "Computer hardware",
+        "shippmentPartialDelivery": "y",
+        "makerId": "admin",
+        "amount": 2344,
+        "paymentMode": "sight",
+        "accountType": "Credit",
+        "userId": "user0001",
+        "shippmentDelivery": "local",
+        "transferrableCredit": "y",
+        
+        "shippmentDate": "2018-01-03",
+        "beneficaryContactNumber": "9876654678",
+        "redClauseLc": "928432",
+        "status": "Active",
+        "transferrableBy":"Payment ",
+        "templateAccessType":"Private",
+        "creditDaysFrom":"B/L Date"
+    },
+    "tbDbmiCorpLetterCreditDocuments": [
+        {
+            "filename": "Store3.3.pdf",
+            "referenceNumber": "1517807050348",
+            "documentType": "Contract",
+            "userId": "user0001",
+            "corporateId": "000FTAC4321"
+        },
+        {
+            "filename": "Corporates.docx",
+            "referenceNumber": "1517807050348",
+            "documentType": "Insurance",
+            "userId": "user0001",
+            "corporateId": "000FTAC4321"
+        }
+    ]
+}

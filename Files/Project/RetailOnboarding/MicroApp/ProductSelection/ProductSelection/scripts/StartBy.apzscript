@@ -1,0 +1,16 @@
+apz.prdsel.StartBy = {};
+apz.app.onLoad_StartBy = function(params) {
+    apz.prdsel.StartBy.sParams=params;
+}
+apz.prdsel.StartBy.fnLaunchAuthentication=function(startParam){
+    apz.startby=startParam;
+     var params = {};
+    params.appId = "onbaut";
+    params.scr = "AuthLauncher";
+    params.div = "apzonb__Navigator__launchdiv";
+    params.userObj = apz.prdsel.StartBy.sParams;
+    apz.launchApp(params);
+}
+apz.prdsel.StartBy.fnBack=function(){
+    apz.prdsel.ProductLauncher.fnNavigate("SubProducts",{"product": apz.prdsel.StartBy.sParams.product});
+}

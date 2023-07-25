@@ -1,0 +1,295 @@
+apz.ocrapp.ScanAndUpload = {};
+apz.ocrapp.ScanAndUpload.binaryStr1 = "";
+apz.ocrapp.ScanAndUpload.binaryStr2 = "";
+apz.ocrapp.ScanAndUpload.fileName1 = "";
+apz.ocrapp.ScanAndUpload.fileName2 = "";
+apz.app.onLoad_ScanAndUpload = function(params) {
+    apz.ocrapp.ScanAndUpload.sParams = params;
+}
+apz.ocrapp.ScanAndUpload.fnUploadDoc = function() {
+    apz.toggleModal({
+        "targetId": "ocrapp__ScanAndUpload__upload_modal"
+    })
+}
+apz.ocrapp.ScanAndUpload.fnUploadImg = function(status) {
+    if (status == "front") {
+        if (apz.deviceType === "ANDROID") {
+           apz.ocrapp.ScanAndUpload.fileNo=1;
+           apz.ocrapp.ScanAndUpload.fnOpenCamera(); 
+        }
+        else{
+           $("#ocrapp__ScanAndUpload__el_fil_1").click(); 
+        }
+    } else {
+        if(apz.deviceType === "ANDROID") {
+          apz.ocrapp.ScanAndUpload.fileNo=2;
+          apz.ocrapp.ScanAndUpload.fnOpenCamera();
+        }
+        else{
+          $("#ocrapp__ScanAndUpload__el_fil_2").click();
+        }
+    }
+};
+
+apz.ocrapp.ScanAndUpload.fnOpenCamera = function(params) {
+        var jsonobj = {
+            "zoomLevel": "20",
+            "targetWidth": "200",
+            "targetHeight": "200",
+            "crop": "Y", //Y or N
+            "flash": "N",
+            "action": "base64", // save,base64
+            "fileName": "Identity_Image",
+            "quality": "50",
+            "encodingType": "JPG",
+            "sourceType": "camera" // photo
+        };
+        jsonobj.id = "CAMERA_ID";
+        jsonobj.callBack = apz.ocrapp.ScanAndUpload.fnOpenCameraCB;
+        apz.ns.openCamera(jsonobj);
+}
+apz.ocrapp.ScanAndUpload.fnOpenCameraCB=function(params){
+    var base64=params.encodedImage;
+    apz.ocrapp.ScanAndUpload.fnUpdateImage(base64,apz.ocrapp.ScanAndUpload.fileNo)
+}
+apz.ocrapp.ScanAndUpload.fnSubmitDocument = function() {
+    apz.toggleModal({
+        "targetId": "ocrapp__ScanAndUpload__upload_modal"
+    })
+    var lFetchedJSON = JSON.parse(apz.getFile(apz.getDataFilesPath("ocrapp") + "/NationalIdDate.json"));
+    apz.ocrapp.ScanAndUpload.sParams.callBack(lFetchedJSON, {});
+}
+apz.ocrapp.ScanAndUpload.fnGetFile = function(pthis, i) {
+    var fileObj = pthis.files[0];
+    var apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        apz.ocrapp.ScanAndUpload['binaryStr' + i] = apzFileReader.result.split(",").pop();
+        apz.ocrapp.ScanAndUpload["fileName" + i] = fileObj.name.split('.').pop();
+        apz.ocrapp.ScanAndUpload.fnUpdateImage(apz.ocrapp.ScanAndUpload['binaryStr' + i],i)
+    }
+    apzFileReader.readAsDataURL(fileObj);
+}
+apz.ocrapp.ScanAndUpload.fnUpdateImage=function(base64,i){
+    apz.setElmValue("ocrapp__ScanAndUpload__el_img_" + i, base64);
+}
+apz.ocrapp.ScanAndUpload.fnOCRServerCall = function(response, filetype) {
+    var str = '{ "ns1:GetExtratedText": {"ns1:Key":"IEXEEDKEY1109lvc","ns1:file":"' + response + '","ns1:f":"' + filetype + '","ns1:language":"' +
+        "English" + '"}}';
+    var req1 = JSON.parse(str);
+    apz.startLoader();
+    var params = {};
+    params.buildReq = 'N';
+    params.paintResp = 'N';
+    params.req = req1;
+    params.ifaceName = 'soapFileUpload';
+    params.async = true;
+    params.callBack = apz.ocrapp.ScanAndUpload.fnOCRServerCallCB;
+    params.internal = false;
+    apz.server.callServer(params);
+};
+apz.ocrapp.ScanAndUpload.fnOCRServerCallCB = function(params) {
+    debugger;
+    try {
+        var response = params.res.ocrapp__soapFileUpload_Res.GetExtratedTextResponse.GetExtratedTextResult;
+        if (apz.mockServer) {
+            apz.ocrapp.ScanAndUpload.sParams.callBack(JSON.parse(response), {});
+            apz.stopLoader();
+        } else {
+            var extrText = JSON.parse(response).ExtractedText;
+            apz.stopLoader();
+            if (params.status) {
+                var lobj = {
+                    "extrText": extrText
+                }
+                if (/T= Tar a a/gim.test(extrText)) {
+                    apz.ocrapp.ScanAndUpload.parseNIC(lobj);
+                } else if (/DEMOCRATIC SOCIALIST REPUBLIC/img.test(extrText)) {
+                    apz.ocrapp.ScanAndUpload.parseSrilankanDomestricPasspord(lobj);
+                } else if (/SRI LANKAN/img.test(extrText)) {
+                    apz.ocrapp.ScanAndUpload.parseSRILANKANPASSPORD(lobj);
+                } else if (/United Arab Emirates/img.test(extrText)) {
+                    if (params.callBackObj.index == 0) apz.ocrapp.ScanAndUpload.parseUAEIDFront(lobj);
+                    else if (params.callBackObj.index == 1) {
+                        apz.ocrapp.ScanAndUpload.parseUAEIDBack(lobj);
+                    }
+                } else if (/Card Number/img.test(extrText)) {
+                    apz.ocrapp.ScanAndUpload.parseUAEIDBack(lobj);
+                } else {
+                    apz.ocrapp.ScanAndUpload.parseAndPaintData(lobj);
+                }
+            } else if (params.errorMessage) {
+                var msg = {};
+                msg.code = "FL-UPL-FLDLOC";
+                apz.dispMsg(msg);
+            }
+        }
+    } catch (e) {
+        apz.ocrapp.ScanAndUpload.sParams.callBack(apz.ocrapp.ScanAndUpload.sParams.scrdata);
+    }
+};
+apz.ocrapp.ScanAndUpload.parseNIC = function(params) {
+    var lines = params.extrText.split("\n"),
+        aadhaarId = lines[4].replace(/\W+/ig, "");
+    apz.ocrapp.ScanAndUpload.sParams.callBack([{
+        aadhaarId
+    }], params)
+}
+apz.ocrapp.ScanAndUpload.parseUAEIDFront = function(params) {
+    debugger;
+    var lines = params.extrText.trim().split("\n"),
+        nationalId = lines[6].split(" ")[4]
+        name = lines[9].split(':')[1].slice(0, -4)
+        nationality = lines[12].split(" ")[1]
+        apz.app.data = {
+            nationalId, name, nationality, dateOfIssued: "",
+            dateOfExpired: "",
+            passportNo: "",
+            dob: ""
+        };
+    apz.ocrapp.ScanAndUpload.UAEIDParsedResult = {
+        nationalId, name, nationality, dateOfIssued: "",
+        dateOfExpired: "",
+        passportNo: "",
+        dob: ""
+    };
+    if ($("#ocrapp__ScanAndUpload__fileUpload").prop("files").length == 1) {
+        apz.ocrapp.ScanAndUpload.sParams.callBack([apz.ocrapp.ScanAndUpload.UAEIDParsedResult], params);
+    }
+}
+apz.ocrapp.ScanAndUpload.parseUAEIDBack = function(params) {
+    debugger;
+    var lines = params.extrText.trim().split("\n"),
+        gender = lines[0].split(" ")[1],
+        dob = lines[0].split(" ")[8],
+        dateOfExpired = lines[3].split(" ")[1]
+        apz.app.data.dob = dob;
+    apz.app.data.gender = gender;
+    apz.app.data.dateOfExpired = dateOfExpired
+    apz.ocrapp.ScanAndUpload.sParams.callBack([apz.app.data], params);
+}
+apz.ocrapp.ScanAndUpload.parseSRILANKANPASSPORD = function(params) {
+    var lines = params.extrText.split("\n"),
+        sur_name = lines[5].split(" ")[0],
+        first_name = lines[7],
+        dob = lines[11].split(" ")[0],
+        dateOfIssued = lines[17].split(" ")[0],
+        dateOfExpired = lines[19].split(" ")[0],
+        nationalId = lines[11].split(" ")[5],
+        passportNo = lines[3].split(" ")[3],
+        nationality = "SRI LANKAN",
+        gender = "F";
+    apz.ocrapp.ScanAndUpload.sParams.callBack([{
+        dob, sur_name, first_name, nationality, gender, dateOfIssued, dateOfExpired, passportNo, nationalId
+    }], params);
+}
+apz.ocrapp.ScanAndUpload.parseSrilankanDomestricPasspord = function(params) {
+    var lines = params.extrText.split("\n"),
+        name = lines[5].match(/\w+(\s+)?(\w+)?/ig, "")[0].trim(),
+        dob = lines[11].split(" ")[0],
+        nationality = "SRI LANKAN",
+        dateOfIssued = lines[17].split(" ")[0],
+        dateOfExpired = lines[19].split(" ")[0],
+        passportNo = lines[11].split(" ").pop();
+    apz.ocrapp.ScanAndUpload.sParams.callBack([{
+        dob, name, nationality, dateOfIssued, dateOfExpired, passportNo
+    }], params);
+}
+apz.ocrapp.ScanAndUpload.parseAndPaintData = function(params) {
+    debugger;
+    var extractedText = params.extrText; // Input text
+    var lines = [];
+    lines = extractedText.split("\n");
+    var numLines = lines.length;
+    var i;
+    var currentSection;
+    var lDetails = [];
+    var fromAccount = "";
+    var accountName = "";
+    var pattern = new RegExp("RTGS/NEFT");
+    var passportPattern = new RegExp("Passport No.");
+    var checkPassport = lines[0].split("/");
+    if (pattern.test(lines[2])) {
+        //Get transaction ammount
+        var larray1 = lines[6].split(" ");
+        var trAmount = larray1[6];
+        //Get account name and beneficary name
+        var larray2 = lines[10].split(":");
+        var userArray = larray2[1].split(/\d/);
+        accountName = userArray[0].trim();
+        var benfName = larray[larray.length - 1].trim();
+        //Get from account no
+        var larray3 = lines[11].split(" ");
+        fromAccount = larray3[1];
+        //Get beneficary account no
+        var larray4 = lines[i].split(".");
+        var benfAccNo = larray4[larray.length - 1].trim();
+        lDetails.push({
+            "fromAccount": fromAccount,
+            "accountName": accountName,
+            "type": "Intra Bank",
+            "benificiaryName": benfName,
+            "beneficiaryAccount": benfAccNo,
+            "amount": trAmount
+        });
+    } else if (passportPattern.test(checkPassport[checkPassport.length - 1].trim())) {
+        //Passport no
+        var larray1 = lines[1].split(" ");
+        var passportNo = larray1[larray1.length - 1].trim();
+        //Nationality
+        var larray2 = lines[5].split(" ");
+        var nationality = larray2[2].trim();
+        //DoB
+        var larray3 = lines[7].split(" ");
+        var dob = larray3[2].trim() + " " + larray3[3].trim() + " " + larray3[4].trim();
+        var placeOfBirth = larray3[larray3.length - 1].trim();
+        //Gender
+        var larray4 = lines[9].split("-");
+        var genderArray = larray4[2].split(" ");
+        if (genderArray[0] == "M") {
+            var gender = "Male";
+        } else {
+            var gender = "Female";
+        }
+        //Date of issue and Date of expired
+        var larray5 = lines[11].split(" ");
+        var dateOfIssued = larray5[1].trim() + " " + larray5[2].trim() + " " + larray5[3].trim();
+        var dateOfExpired = larray5[4].trim() + " " + larray5[5].trim() + " " + larray5[6].trim();
+        //Place of issued
+        var larray6 = lines[13].split(" ");
+        var placeOfIssued = larray6[0].trim() + " " + larray6[1].trim();
+        lDetails.push({
+            "name": lines[3],
+            "passportNo": passportNo,
+            "nationality": nationality,
+            "dob": dob,
+            "placeOfBirth": placeOfBirth,
+            "gender": gender,
+            "dateOfIssued": dateOfIssued,
+            "dateOfExpired": dateOfExpired,
+            "placeOfIssued": placeOfIssued
+        });
+    } else {
+        for (var i in lines) {
+            if (lines[i] != "") {
+                if (i == 1) {
+                    var larray = lines[i].split(" ");
+                    fromAccount = larray[0];
+                    accountName = apz.ocrapp.ScanAndUpload.getFromAccName(larray);
+                } else if (i > 2) {
+                    var larray = lines[i].split(" ");
+                    lDetails.push({
+                        "fromAccount": fromAccount,
+                        "accountName": accountName,
+                        "type": "Intra Bank",
+                        "benificiaryName": apz.ocrapp.ScanAndUpload.getToAccName(larray),
+                        "beneficiaryAccount": larray[1].trim(),
+                        "amount": larray[larray.length - 1].trim()
+                    });
+                }
+            }
+        }
+    }
+    console.log(lDetails);
+    apz.ocrapp.ScanAndUpload.sParams.callBack(lDetails, lParams)
+};

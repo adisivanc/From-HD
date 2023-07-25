@@ -1,0 +1,37 @@
+{
+    "relovr__OverViewDash_Res": {
+            "currentAccDtls": [{
+                "accountType": "Current",
+                "availableBal": "65000",
+                "currencies": ["INR"]
+            }], 
+            "savingsAccDtls": [{
+                "accountType": "Savings",
+                "availableBal": "110000",
+                "number" : "2",
+                "currencies": ["INR"]
+            }],
+            "DepositsAccDtls": [
+            {
+                "accountType": "Deposits",
+                "availableBal": "235000",
+                "number" : "4",
+                "currencies": ["INR"]
+            }],
+            "LoanAccDtls": [{
+               "accountType": "Loans",
+                "availableBal": "225000",
+                "number" : "2",
+                "currencies": ["INR"]
+            }],
+            "CardAccDtls": [{
+                "accountType": "Cards",
+                "availableBal": "50000",
+                "number" : "2",
+                "currencies": ["INR"]
+            }
+            
+            ]
+        
+    }
+}

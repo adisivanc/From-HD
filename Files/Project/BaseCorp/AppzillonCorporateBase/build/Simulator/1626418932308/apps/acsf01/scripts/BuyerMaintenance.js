@@ -1,0 +1,153 @@
+apz.acsf01.buyerMaintenance = {};
+apz.acsf01.buyerMaintenance.partyLogo = "";
+apz.acsf01.buyerMaintenance.sAction = "";
+apz.app.onLoad_BuyerMaintenance = function(params) {
+    debugger;
+    apz.acsf01.buyerMaintenance.sAction = params.action;
+    if (params.action == "Add") {
+        apz.data.scrdata.acsf01__PartyMaintenance_Res = {};
+        apz.data.loadData("PartyDetailsMaintenance", 'acsf01');
+    } else if (params.action == "Edit") {
+        apz.acsf01.buyerMaintenance.showPartyDetails(params.Partydetails);
+    }
+    
+    var req = {};
+    req.tbDbmiCorpFileTemplate = {
+        "corporateId": "000FTAC4321",
+        "type": "All"
+    };
+    req.importFunction = "TemplateSummary";
+    var lReq = {
+        "ifaceName": "TemplateSummary",
+        "paintResp": "Y",
+        "buildReq": "N",
+        "req": req,
+        "appId": "acsf01",
+        "async": false,
+        "callBack": apz.acsf01.buyerMaintenance.getTemplateSummaryCB,
+        "callBackObj": ""
+    };
+    apz.server.callServer(lReq);
+};
+apz.acsf01.buyerMaintenance.getTemplateSummaryCB = function(pResp) {
+    debugger;
+    if (!pResp.errors) {
+        var Templates = pResp.res.acsf01__TemplateSummary_Res.tbDbmiCorpFileTemplate;
+        var lTemplatesLength = Templates.length;
+        var lArr = [{
+            "val": "MultiParty",
+            "desc": "Multi Party"
+        }];
+        for (var i = 0; i < lTemplatesLength; i++) {
+            var lObj = {
+                "val": pResp.res.acsf01__TemplateSummary_Res.tbDbmiCorpFileTemplate[i].templateId,
+                "desc": pResp.res.acsf01__TemplateSummary_Res.tbDbmiCorpFileTemplate[i].templateName,
+            };
+            lArr.push(lObj);
+        }
+        
+        
+        apz.populateDropdown(document.getElementById("acsf01__PartyMaintenance__o__tbDbmiCorpScfParty__templateName"), lArr);
+    }
+};
+apz.acsf01.buyerMaintenance.showPartyDetails = function(pPartyDetails) {
+    apz.data.scrdata.acsf01__PartyMaintenance_Res = {};
+    apz.data.scrdata.acsf01__PartyMaintenance_Res.tbDbmiCorpScfParty = pPartyDetails;
+    apz.data.loadData("PartyMaintenance", 'acsf01');
+    if (pPartyDetails.logo == undefined || pPartyDetails.logo == "") {
+        $("#acsf01__PartyMaintenance__o__tbDbmiCorpScfParty__logo").attr("src", 'apps/styles/themes/AppzillonCorporateBase/img/user-placeholder.png');
+    } else {
+        var blob = convertBase64toBlob(pPartyDetails.logo);
+        var blobUrl = URL.createObjectURL(blob);
+        $("#acsf01__PartyMaintenance__o__tbDbmiCorpScfParty__logo").attr("src", blobUrl);
+    }
+};
+apz.acsf01.buyerMaintenance.Save = function() {
+    debugger;
+    var lPartyDetails = apz.data.buildData("PartyMaintenance", "acsf01");
+    lPartyDetails = lPartyDetails.acsf01__PartyMaintenance_Res.tbDbmiCorpScfParty;
+    lPartyDetails.corporateId = apz.acsf01.buyerSummary.sCorporateId;
+    lPartyDetails.logo = apz.acsf01.buyerMaintenance.partyLogo;
+    lPartyDetails.partyType = "Buyer";
+    var lReq = {};
+    if (apz.acsf01.buyerMaintenance.sAction == "Add") {
+        lReq.NewParty = lPartyDetails;
+    } else if (apz.acsf01.buyerMaintenance.sAction == "Edit") {
+        lReq.ModifyParty = lPartyDetails;
+    }
+    lReq.importFunction = "SCFParty";
+    var lServerParams = {
+        "ifaceName": "PartyMaintenance",
+        "buildReq": "N",
+        "req": lReq,
+        "paintResp": "N",
+        "async": "true",
+        "callBack": apz.acsf01.buyerMaintenance.saveCB,
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.acsf01.buyerMaintenance.saveCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        var lMsg = {};
+        lMsg.code = "BUYER_SAVED";
+        apz.dispMsg(lMsg);
+        $("#acsf01__BuyerSummary__PartySummary_Header").removeClass('sno');
+        $("#acsf01__BuyerSummary__MobPartySummary_Header").removeClass('sno');
+        $("#acsf01__BuyerSummary__PartySummary_List_Row").removeClass('sno');
+        $("#acsf01__BuyerSummary__PartyLauncherRow").addClass('sno');
+        apz.acsf01.buyerSummary.getPartySummary();
+    }
+};
+apz.acsf01.buyerMaintenance.Back = function() {
+    $("#acsf01__BuyerSummary__PartySummary_Header").removeClass('sno');
+    $("#acsf01__BuyerSummary__MobPartySummary_Header").removeClass('sno');
+    $("#acsf01__BuyerSummary__PartySummary_List_Row").removeClass('sno');
+    $("#acsf01__BuyerSummary__PartyLauncherRow").addClass('sno');
+};
+apz.acsf01.buyerMaintenance.imageFileSected = function(obj, event) {
+    debugger;
+    var fileObj = $(obj)[0].files[0];
+    var apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        var binaryStr = apzFileReader.result;
+        var base64Str = btoa(binaryStr);
+        apz.acsf01.buyerMaintenance.partyLogo = base64Str;
+        var blob = convertBase64toBlob(base64Str, 'image/jpg');
+        var blobUrl = URL.createObjectURL(blob);
+        $("#acsf01__PartyMaintenance__o__tbDbmiCorpScfParty__logo").attr("src", blobUrl);
+    };
+    apzFileReader.readAsBinaryString(fileObj);
+    //$("#" + apz.adminAppId + "__User__selectedfiles").addClass("sno");
+};
+/*Method to convert base64 string to blob object*/
+function convertBase64toBlob(content, contentType) {
+    contentType = contentType || '';
+    var sliceSize = 512;
+    var byteCharacters = window.atob(content); //method which converts base64 to binary
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    }); //statement which creates the blob
+    return blob;
+};
+
+apz.acsf01.buyerMaintenance.fnshowhiderow = function(pthis,rowid){
+    debugger;
+    $("#acsf01__BuyerMaintenance__rowBasicDetails").addClass("sno");
+    $("#acsf01__BuyerMaintenance__rowAddressDetails").addClass("sno");
+    $("#acsf01__BuyerMaintenance__rowBankDetails").addClass("sno");
+    $("#acsf01__BuyerMaintenance__" + rowid).removeClass("sno");
+    $("#acsf01__BuyerMaintenance__sectionList li").removeClass("current");
+    $(pthis).parent().addClass("current");
+    
+}

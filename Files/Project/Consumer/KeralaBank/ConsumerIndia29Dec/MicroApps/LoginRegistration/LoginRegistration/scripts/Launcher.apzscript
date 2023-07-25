@@ -1,0 +1,61 @@
+apz.logreg = {};
+apz.logreg.launcher = {};
+apz.logreg.launcher.sAction = "";
+apz.logreg.launcher.sUserID = "";
+apz.app.onLoad_Launcher = function(userObj) {
+    debugger;
+    apz.mockServer = true;
+    apz.logreg.launcher.sAction = "launcher";
+    apz.logreg.launcher.sParentCB = userObj.callBack;
+    apz.logreg.launcher.sDistroyDivCB = userObj.distroyDiv;
+    var params = {};
+    params.action = userObj.action;
+    if(userObj.userID !== undefined){
+        params.userID = userObj.userID;
+    }
+    apz.logreg.launcher.fnRender(params);
+};
+apz.app.onShown_Launcher = function(){
+    debugger;
+}
+
+apz.logreg.launcher.fnRender = function(lParams) {
+    if (lParams.action == "Registration") {
+        var params = {};
+        params.appId = "logreg";
+        params.scr = "Registration";
+        params.userObj = {};
+         params.userObj.callBack = apz.logreg.launcher.sParentCB;
+        params.layout = "All";
+        params.div = "logreg__Launcher__launch";
+        apz.launchSubScreen(params);
+    } else if (lParams.action == "ChangePassword") {
+        var params = {};
+        params.appId = "logreg";
+        params.scr = "ChangePassword";
+        params.userObj = {
+            "userID": lParams.userID
+        };
+         params.userObj.callBack = apz.logreg.launcher.sParentCB;
+        params.layout = "All";
+        params.div = "logreg__Launcher__launch";
+        apz.launchSubScreen(params);
+    }
+};
+apz.app.postGetHeader = function(header) {
+    debugger;
+    if (apz.logreg.launcher.sAction == "login") {
+        header.sessionId = 'gjdgasghgasfgafgas';
+        header.userId = apz.getElmValue("logreg__Login__UserName");
+        header.pwd = '';
+    } else if (apz.logreg.launcher.sAction == "Registration") {
+        header.sessionId = 'gjdgasghgasfgafgas';
+        header.userId = 'admin';
+        header.pwd = 'admin';
+    } else if (apz.logreg.launcher.sAction == "ChangePassword") {
+        header.sessionId = 'gjdgasghgasfgafgas';
+        header.userId = apz.logreg.changePassword.sUserID;
+        header.pwd = '';
+    }
+    return header;
+};

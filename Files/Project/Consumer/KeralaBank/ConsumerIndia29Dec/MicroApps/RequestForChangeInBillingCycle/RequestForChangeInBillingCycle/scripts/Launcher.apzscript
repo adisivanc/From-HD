@@ -1,0 +1,11 @@
+apz.chgbil.Launcher = {};
+apz.app.onLoad_Launcher = function() {
+    var params = {};
+    params.div = 'chgbil__Launcher__launcher';
+    params.scr = 'ChangeInBillingCycle';
+    params.appId = "chgbil";
+    apz.launchSubScreen(params);
+}
+apz.app.onShown_Launcher = function(){
+    debugger;
+}

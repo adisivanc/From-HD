@@ -1,0 +1,169 @@
+apz.loanst.loanstatement = {};
+apz.app.onShown_LoanStatement = function(params) {
+    debugger;
+    apz.loanst.loanstatement.sParams = params;
+    apz.loanst.loanstatement.schae = params;
+    if(apz.loanst.loanstatement.sParams.from == "Dashboard")
+    {
+           apz.loanst.loanstatement.fnInitialise();
+ 
+    }
+    if (params.Navigation) {
+        apz.loanst.loanstatement.fnSetNavigation(params);
+    }
+    apz.loanst.loanstatement.fnInit();
+    apz.loanst.loanstatement.fnInitialise();
+    
+};
+apz.loanst.loanstatement.fnSetAmountFlow = function() {
+    var transactionDetails = apz.data.scrdata.loanst__LoanTransactions_Res.loanTranc.loanTrancDtls.TrancDtls;
+
+    for (var i = 0, len = transactionDetails.length; i < len; i++) {
+        if (!$("#loanst__LoanStatement__ct_lst_1_row_" + i).hasClass("ssp")) {
+            var creditAmount = apz.getElmValue("loanst__LoanTransactions__o__TrancDtls__creditAmount_" + i);
+            var debitAmount = apz.getElmValue("loanst__LoanTransactions__o__TrancDtls__debitAmount_" + i);
+            if (creditAmount === "") {
+                $("#loanst__LoanTransactions__o__TrancDtls__creditAmount_" + i).addClass('sno');
+            } else {
+                apz.setElmValue("loanst__LoanTransactions__o__TrancDtls__creditAmount_" + i, "+ " + creditAmount);
+                $("#loanst__LoanTransactions__o__TrancDtls__creditAmount_" + i).removeClass('sno');
+            }
+            if (debitAmount === "") {
+                $("#loanst__LoanTransactions__o__TrancDtls__debitAmount_" + i).addClass('sno');
+            } else {
+                apz.setElmValue("loanst__LoanTransactions__o__TrancDtls__debitAmount_" + i, "- " + debitAmount);
+                $("#loanst__LoanTransactions__o__TrancDtls__debitAmount_" + i).removeClass('sno');
+            }
+        }
+        
+    }
+}
+apz.loanst.loanstatement.fnInitialise = function() {
+    debugger;
+    if (apz.loanst.loanstatement.sParams.data.selectedAccount && (!apz.isNull(apz.loanst.loanstatement.sParams.data.selectedAccount))) {
+        $("#loanst__LoanStatement__tranc_backBtn").addClass("sno");
+        apz.loanst.loanstatement.fnGetLoanStatement(apz.loanst.loanstatement.sParams.data.selectedAccount);
+    } else {
+        apz.loanst.loanstatement.fnGotoStage1();
+    }
+};
+apz.loanst.loanstatement.fnInit = function() {
+    debugger;
+    apz.data.loadJsonData("LoanAccountTemp", "loanst");
+}
+apz.loanst.loanstatement.fnSetNavigation = function(params) {
+    debugger;
+    apz.loanst.loanstatement.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.showBack = "N";
+    lParams.headerText = "LOAN ACCOUNTS";
+    apz.loanst.loanstatement.Navigation(lParams);
+};
+apz.loanst.loanstatement.fnGotoStage1 = function() {
+    apz.loanst.loanstatement.fnSetDataInStage1();
+    apz.loanst.loanstatement.fnRenderStage1();
+};
+apz.loanst.loanstatement.fnSetDataInStage1 = function() {
+    apz.data.scrdata.loanst__LoanAccounts_Req = {};
+    apz.data.scrdata.loanst__LoanAccounts_Req = apz.data.scrdata.loanst__LoanAccountTemp_Res;
+    apz.data.loadData("LoanAccounts", "loanst");
+
+};
+apz.loanst.loanstatement.fnRenderStage1 = function() {
+    debugger;
+    if (apz.loanst.loanstatement.sParams.Navigation) {
+        var lParams = {};
+        lParams.showBack = "N";
+        lParams.headerText = "LOAN ACCOUNTS";
+        apz.loanst.loanstatement.Navigation(lParams);
+    }
+    apz.hide("loanst__LoanStatement__Stage2");
+    apz.show("loanst__LoanStatement__Stage1");
+};
+apz.loanst.loanstatement.fnGetLoanStatement = function(pthis) {
+    debugger;
+    // var lAccNo =$(pthis).text();
+    var lRowIndex = $("#" + pthis.id).attr("rowno");
+    var pAccNo = apz.getElmValue("loanst__LoanAccounts__i__LoanAccount__accountNo_" + lRowIndex);
+    var lReq = {
+        "loanTranc": {
+            "customerId": apz.loanst.loanstatement.sParams.data.customerID,
+            "accountNo": pAccNo
+        }
+    };
+    var lParams = {
+        "ifaceName": "LoanTransactions",
+        "req": lReq
+    };
+    apz.loanst.loanstatement.fnGotoStage2();
+    apz.loanst.loanstatement.fnBeforeCallServer(lParams);
+    if(apz.deviceGroup==="Mobile"){
+        apz.loanst.loanstatement.fnSetAmountFlow();
+    }
+};
+apz.loanst.loanstatement.fnBeforeCallServer = function(params) {
+    debugger;
+    // var lServerParams = {
+    //     "ifaceName": params.ifaceName,
+    //     "paintResp": "Y",
+    //     "buildReq": "N",
+    //     "req": params.req,
+    //     "callBack": apz.loanst.loanstatement.fnCallServerCallBack
+    // };
+    // apz.server.callServer(lServerParams);
+    apz.data.loadJsonData(params.ifaceName, "loanst");
+};
+apz.loanst.loanstatement.fnCallServerCallBack = function(params) {
+    debugger;
+};
+/*apz.loanst.loanstatement.fnLaunchDetails = function(pthis) {
+    debugger;
+    var lRowIndex = $("#" + pthis.id).attr("rowno");
+    var lRec = $.extend(apz.data.scrdata.loanst__LoanSumm_Res.loanstatement.loanDtls[apz.getRecordNumber(
+        "loanst__LoanStatement__loan_SummaryList", parseInt(lRowIndex))], {}, true);
+    var lObj = {
+        "scr": "LoanDetails",
+        "div": "loanst__LoanStatement__Stage2",
+        "userObj": {
+            "action": "Summary",
+            "data": lRec,
+            "callBack": apz.loanst.loanstatement.fnRenderStage1
+        }
+    };
+    apz.loanst.loanstatement.fnGotoStage2();
+    apz.launchSubScreen(lObj);
+};*/
+apz.loanst.loanstatement.fnRenderStage2 = function() {
+    debugger;
+    apz.hide("loanst__LoanStatement__Stage1");
+    apz.show("loanst__LoanStatement__Stage2");
+    var name = LandingCommon.getLoggedInUser();
+    if(apz.deviceGroup == "Web")
+    {
+              apz.setElmValue("loanst__LoanStatement__loanCustomer",  name)
+}
+};
+apz.loanst.loanstatement.fnGotoStage2 = function() {
+    if (apz.loanst.loanstatement.sParams.Navigation) {
+        var lParams = {};
+        lParams.showBack = "N";
+        lParams.headerText = "LOAN STATEMENT";
+        apz.loanst.loanstatement.Navigation(lParams);
+    }
+    apz.loanst.loanstatement.fnRenderStage2();
+};
+apz.loanst.loanstatement.fnBack = function() {
+    apz.loanst.loanstatement.fnRenderStage1();
+};
+apz.loanst.loanstatement.fnShowLoanDetails=function(){
+    $("#loanst__LoanStatement__gr_row_3").removeClass("sno");
+}
+apz.loanst.loanstatement.fnHideLoanDetails=function(){
+    $("#loanst__LoanStatement__gr_row_3").addClass("sno");
+}
+apz.app.postsearchRecords=function(){
+   apz.loanst.loanstatement.fnSetAmountFlow(); 
+}
+$("#loanst__LoanStatement__gr_row_3").click(function(){
+    apz.loanst.loanstatement.fnHideLoanDetails();
+})

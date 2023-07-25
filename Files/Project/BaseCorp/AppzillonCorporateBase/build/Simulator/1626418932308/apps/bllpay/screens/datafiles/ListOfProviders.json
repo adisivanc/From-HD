@@ -1,0 +1,137 @@
+[{
+    "providerType": "Mobile",
+    "icon":"icon-icc-mobile",
+    "serviceProviders": [{
+        "val": "AT&T Mobility",
+        "desc": "AT&T Mobility"
+    }, {
+        "val": "Verizon Wireless",
+        "desc": "Verizon Wireless"
+    }, {
+        "val": "T-Mobile",
+        "desc": "T-Mobile"
+    }, {
+        "val": "U. S. Cellular",
+        "desc": "U. S. Cellular"
+    }]
+}, {
+    "providerType": "DTH",
+    "icon":"icon-icc-dth",
+    "serviceProviders": [{
+        "val": "DirecTV",
+        "desc": "DirecTV"
+    }, {
+        "val": "DISH Network",
+        "desc": "DISH Network"
+    }, {
+        "val": "Glorystar",
+        "desc": "Glorystar"
+    }]
+}, {
+    "providerType": "Electricity",
+    "icon":"icon-icc-electricity",
+    "serviceProviders": [{
+        "val":"4Change Energy",
+        "desc": "4Change Energy"
+    }, {
+        "val": "AEP Energy",
+        "desc": "AEP Energy"
+    }]
+}, {
+    "providerType": "Credit Card",
+    "icon":"icon-icc-electricity",
+    "serviceProviders": [{
+        "val": "Chase",
+        "desc": "Chase"
+    }, {
+        "val": "American Express",
+        "desc": "American Express"
+    }, {
+        "val": "Capital One ",
+        "desc": "Capital One "
+    }]
+},{
+    "providerType": "Gas",
+    "icon":"icon-icc-gas",
+    "serviceProviders": [{
+        "val": "AmeriGas",
+        "desc": "AmeriGas"
+    }, {
+        "val": "Ferellgas",
+        "desc": "Ferellgas"
+    }, {
+        "val": "Matheson Gas",
+        "desc": "Matheson Gas"
+    }, {
+        "val": "ThompsonGas",
+        "desc": "ThompsonGas"
+    }]
+}, {
+    "providerType": "Insurance",
+    "icon":"icon-icc-insurance",
+    "serviceProviders": [{
+        "val": "State Farm",
+        "desc": "State Farm"
+    }, {
+        "val": "Berkshire Hathaway",
+        "desc": "Berkshire Hathaway"
+    }, {
+        "val": "Liberty Mutual",
+        "desc": "Liberty Mutual"
+    }]
+}, {
+    "providerType": "Landline",
+    "icon":"icon-icc-landline",
+    "serviceProviders": [{
+        "val": "CenturyLink",
+        "desc": "CenturyLink"
+    }, {
+        "val": "Frontier",
+        "desc": "Frontier"
+    }, {
+        "val": "Spectrum ",
+        "desc": "Spectrum "
+    }]
+},  {
+    "providerType": "Broadband",
+    "icon":"icon-cog",
+    "serviceProviders": [{
+        "val": "Cable One",
+        "desc": "Cable One"
+    }, {
+        "val": "Charter Communications",
+        "desc": "Charter Communications"
+    }, {
+        "val": "Frontier Communications",
+        "desc": "Frontier Communications"
+    }, {
+        "val": "Mediacom",
+        "desc": "Mediacom"
+    }]
+}, {
+    "providerType": "Metro",
+    "icon":"icon-cog",
+    "serviceProviders": [{
+        "val": "New York City Subway",
+        "desc": "New York City Subway"
+    }, {
+        "val": "Washington Metro",
+        "desc": "Washington Metro"
+    }]
+}, {
+    "providerType": "Loan",
+    "icon":"icon-cog",
+    "serviceProviders": [{
+        "val": "Wells Fargo",
+        "desc": "Wells Fargo"
+    }, {
+        "val": "LightStream",
+        "desc": "LightStream"
+    }, {
+        "val": "TD Bank",
+        "desc": "TD Bank"
+    }, {
+        "val": "Marcus by Goldman Sachs",
+        "desc": "Marcus by Goldman Sachs"
+    }]
+}]

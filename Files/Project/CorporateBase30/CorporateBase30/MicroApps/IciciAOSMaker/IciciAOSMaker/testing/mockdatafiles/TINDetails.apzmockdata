@@ -1,0 +1,15 @@
+{
+    "tbCountryTaxResidencyDetails": [{
+        "tin": "23232",
+        "companyid": "08880881",
+        "country": "England",
+        "tinComment": "",
+        "bDetails": ""
+    }, {
+        "tin": "11232",
+        "companyid": "08880881",
+        "country": "USA",
+        "tinComment": "",
+        "bDetails": ""
+    }]
+}

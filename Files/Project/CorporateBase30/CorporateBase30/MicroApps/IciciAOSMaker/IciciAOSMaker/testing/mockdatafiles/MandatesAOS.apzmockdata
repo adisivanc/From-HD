@@ -1,0 +1,20 @@
+{
+    "tbLetterOfUndertaking":{
+        "companyid" : "08811532",
+        "authorizerNameAlias1" : "Darren",
+        "authorizerNameAlias2" : "Darren",
+        "authorizerNameAlias3" : "Darren",
+        "signature" : "",
+        "undertakingDate" : "26-Apr-2018",
+        "entityNameAlias1" : "GLOBAL FUNDS AXIS LTD",
+        "authorizerNameAlias4" : "",
+        "entityNameAlias2" : "GLOBAL FUNDS AXIS LTD",
+        "authorizer1" : "Darren",
+        "authorizer2" : "Darren",
+        "partnerSignature1" : "",
+        "partnerSignature2" : "",
+        "partnerName1" : "Darren",
+        "partnerName2" : "John",
+        "mandateDate" : "26-Apr-2018"
+    }
+}

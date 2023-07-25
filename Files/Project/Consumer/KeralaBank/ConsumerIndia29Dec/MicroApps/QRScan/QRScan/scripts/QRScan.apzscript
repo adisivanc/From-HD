@@ -1,0 +1,96 @@
+apz.qrscan.QRScan = {};
+
+apz.app.onLoad_QRScan = function(params){
+    debugger;
+   apz.qrscan.QRScan.sParams = params;
+    apz.qrscan.QRScan.fnOpenCamera();
+};
+apz.app.onShown_QRScan = function(params){
+    debugger;
+    
+}
+ apz.qrscan.QRScan.fnOpenCamera=function(){
+     debugger;
+     apz.consumerGlobals.camera.scan = true;
+      var ljson = {};
+    ljson.id = "BARCODE_ID";
+    ljson.callBack = apz.qrscan.QRScan.fnscanBarcodeCallback;
+    ljson.callBackObj = this;
+   apz.ns.startBarcodeScan(ljson);
+ };
+ apz.qrscan.QRScan.fnscanBarcodeCallback = function(pResp){
+     debugger;
+    $("#qrscan__QRScan__el_btn_3").removeClass("sno");
+     apz.ns.stopBarcodeScan({id:"BARCODE_ID"});
+     if (pResp.status) {
+        var lJson = pResp.text.split(",");
+        var transferDetails = {};
+        transferDetails.accountNo = lJson[1].split("=")[1];
+        transferDetails.branchName = lJson[3].split("=")[1];
+        transferDetails.ifsc = lJson[5].split("=")[1];
+        transferDetails.HolderName = lJson[0].split("=")[1];
+        transferDetails.bankName = lJson[2].split("=")[1];
+        transferDetails.amount = "";
+        transferDetails.remarks = "";
+       apz.data.scrdata.qrscan__TransferDetails_Res={};
+       apz.data.scrdata.qrscan__TransferDetails_Res.transferDtls = transferDetails
+       apz.data.loadData("TransferDetails","qrscan");
+    
+       if(apz.qrscan.QRScan.sParams.from == "fundtransfer"){
+           apz.setElmValue("qrscan__QRScan__el_dpd_3",apz.qrscan.QRScan.sParams.fromAccount);
+       }
+     }
+ }
+ apz.qrscan.QRScanCancel = function(){
+     debugger;
+     apz.ns.stopBarcodeScan({id:"BARCODE_ID"});
+     // $("#csmrbk__LandingPage__ScreenNmeLandingTxt_txtcnt").text("Send Money");
+     apz.qrscan.QRScan.sParams.control.exitApp.callBack();
+    //  var lLaunchParams = {
+    //     "appId": "fndftr",
+    //     "scr": "FundsTransfer",
+    //     "div": "csmrbk__LandingPage__microappLauncherCol",
+    //     "userObj": {
+    //         "from":"fundtransfer",
+    //         "userId" : apz.qrscan.QRScan.sParams,
+    //         "fromAccount": apz.fndftr.tranfers["fromAccountDetails"].accountNo,
+    //         "data": {
+    //             "customerID": "000004712"
+    //         },
+    //         "control": {
+    //             "exitApp": {
+    //                 "appId": "csmrbk",
+    //                 "div": "csmrbk__LandingPage__microappLauncherCol",
+    //                 "callBack": apz.csmrbk.landingpage.fnHome
+    //             }
+    //         }
+    //     }
+    // };
+    // apz.launchApp(lLaunchParams);
+    
+    
+ }
+apz.qrscan.QRScan.fnConfirm = function(){
+ debugger;
+ apz.data.buildData("TransferDetails","qrscan");
+ apz.data.scrdata.qrscan__TransferDetails_Res.transferDtls.beneficiaryType ="normal" 
+  apz.launchApp({
+        appId: "otpeng",
+        scr: "PaymentOTP",
+        div: "qrscan__Launcher__ps_pls_1",
+        userObj: {
+            "action": "SetRefNo",
+             "from":"QRscan",
+             "transferDetails" :  apz.data.scrdata.qrscan__TransferDetails_Res.transferDtls,
+            "data": {
+                "OTPRefNo": +new Date()
+            },
+            "back": function(){},
+            "control": {
+                "appId": "otpeng",
+                "callBack": function(){},
+                "destroyDiv": "qrscan__Launcher__ps_pls_1"
+            }
+        }
+    })       
+}

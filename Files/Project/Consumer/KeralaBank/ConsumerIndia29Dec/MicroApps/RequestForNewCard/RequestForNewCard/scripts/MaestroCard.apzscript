@@ -1,0 +1,238 @@
+apz.crddtl.MaestroCard = {};
+apz.crddtl.MaestroCard.sParams = {};
+apz.app.onShown_MaestroCard = function(params) {
+    debugger;
+    $("#crddtl__MaestroCard__Stage3AccNo").attr("type","tel");
+    $("#crddtl__MaestroCard__Stage3MobileNo").attr("type","tel");
+
+
+    apz.crddtl.MaestroCard.sParams = params;
+    // apz.crddtl.MaestroCard.fnInitialise(params);
+    apz.show("crddtl__MaestroCard__Stage1");
+};
+apz.crddtl.MaestroCard.fnContinueStage1 = function(params) {
+    debugger;
+    var lValid = apz.crddtl.MaestroCard.fnValidateStage1();
+    if (lValid) {
+        apz.data.buildData("NewCardRequest", "crddtl");
+        var lImage = $("#crddtl__NewCardRequest__i__cardReqDtl__custImageBase64").attr("src");
+        if (lImage == "") {
+            apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl.custImageBase64 = "";
+        }
+        apz.crddtl.MaestroCard.fnGoToStage2();
+    }
+};
+apz.crddtl.MaestroCard.fnNameonCard = function(params) {
+    debugger;
+    apz.setElmValue("crddtl__MaestroCard__CustomerName", apz.getElmValue("crddtl__NewCardRequest__i__cardReqDtl__nameOnCard"));
+};
+apz.crddtl.MaestroCard.fnGoToStage2 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl;
+    apz.setElmValue("crddtl__MaestroCard__Stage3Product", "Maestro Credit Card");
+    apz.setElmValue("crddtl__MaestroCard__Stage3CardType", lDetails.cardType);
+    apz.setElmValue("crddtl__MaestroCard__Stage3AccNo", lDetails.accountNo);
+    apz.setElmValue("crddtl__MaestroCard__Stage3NameOnCard", lDetails.nameOnCard);
+    apz.setElmValue("crddtl__MaestroCard__Stage3CustomerName", lDetails.custName);
+    apz.setElmValue("crddtl__MaestroCard__Stage3MobileNo", lDetails.mobileNo);
+    apz.setElmValue("crddtl__MaestroCard__Stage3Email", lDetails.emailId);
+    apz.setElmValue("crddtl__MaestroCard__Stage3Address", lDetails.address);
+    apz.setElmValue("crddtl__MaestroCard__Stage3AddressProofDoc", lDetails.addressProofDoc);
+    apz.setElmValue("crddtl__MaestroCard__Stage3AddressProofId", lDetails.addressProofDocID);
+    apz.setElmValue("crddtl__MaestroCard__Stage3IdProofDoc", lDetails.idProofDoc);
+    apz.setElmValue("crddtl__MaestroCard__Stage3IdProofId", lDetails.idProofDocID);
+    apz.setElmValue("crddtl__MaestroCard__Stage3Amount", lDetails.amount);
+    apz.setElmValue("crddtl__MaestroCard__Stage3Validity", lDetails.validity);
+    apz.hide("crddtl__MaestroCard__Stage1");
+    apz.show("crddtl__MaestroCard__Stage2");
+};
+apz.crddtl.MaestroCard.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer('crddtl__MaestroCard__Stage2Form');
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "ERR_MANDATORY"
+        }
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.crddtl.MaestroCard.fnBack = function() {
+    var lParams = {
+        "appId": "crddtl",
+        "scr": "NewCardRequest",
+        "div": "crddtl__ManageCards__Stage2",
+        "userObj": {
+            "data": {
+                "customerID": apz.crddtl.managecards.sParams.data.customerID,
+                "accountCcy": "INR"
+            },
+            "callBack": apz.crddtl.managecards.fnBack
+        }
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.crddtl.MaestroCard.fnBackStage1 = function() {
+    apz.crddtl.MaestroCard.sParams.callBack();
+};
+apz.crddtl.MaestroCard.fnRenderStage3 = function() {
+    debugger;
+    apz.hide("crddtl__ManageCards__Stage1");
+    apz.hide("crddtl__ManageCards__CardDtlsList");
+    apz.show("crddtl__ManageCards__Stage2");
+};
+apz.crddtl.MaestroCard.fnCapturePhoto = function(pthis) {
+    debugger;
+    var lValid = apz.crddtl.MaestroCard.fnFileSizeCheck('crddtl__MaestroCard__CustomerPhotoBrowse');
+    if (lValid) {
+        var fileObj = pthis.files[0];
+        var apzFileReader = new FileReader();
+        apzFileReader.onload = function() {
+            debugger;
+            var binaryStr = apzFileReader.result;
+            var base64Str = btoa(binaryStr);
+            apz.setElmValue("crddtl__MaestroCard__TempImg", base64Str);
+            apz.startLoader();
+            setTimeout(function() {
+                apz.crddtl.MaestroCard.fnGetImage(base64Str)
+            }, 1000);
+        }
+        apzFileReader.readAsBinaryString(fileObj);
+    }
+};
+apz.crddtl.MaestroCard.fnGetImage = function(base64Str) {
+    debugger;
+    var lImg = document.querySelector("#crddtl__MaestroCard__TempImg");
+    var lHeight = lImg.naturalHeight;
+    var lWidth = lImg.naturalWidth;
+    apz.stopLoader();
+    if (lHeight <= 230 && lWidth <= 230) {
+        apz.setElmValue("crddtl__MaestroCard__i__cardReqDtl__custImageBase64", base64Str);
+        apz.setElmValue("crddtl__MaestroCard__BackgroundImge", base64Str);
+        document.getElementById("crddtl__MaestroCard__BackgroundImge").style.backgroundImage = "url('data:image/png;base64," + base64Str + "')";
+        apz.show("crddtl__MaestroCard__i__cardReqDtl__custImageBase64_ul");
+        apz.show("crddtl__MaestroCard__i__cardReqDtl__custImageBase64");
+    } else {
+        alert("Height and width");
+        apz.crddtl.MaestroCard.fnRemoveImage();
+    }
+}
+apz.crddtl.MaestroCard.fnRemoveImage = function() {
+    debugger;
+    $("#crddtl__NewCardRequest__i__cardReqDtl__custImageBase64").attr("src", "")
+    apz.hide("crddtl__NewCardRequest__i__cardReqDtl__custImageBase64_ul");
+}
+apz.crddtl.MaestroCard.fnFileSizeCheck = function(puploadid) {
+    debugger;
+    var lreturn = true;
+    var lidenObj = $('#' + puploadid).prop("files");
+    var lsize = lidenObj[0].size;
+    var ltype = lidenObj[0].type;
+    if (lsize > 200000) {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_200'
+        };
+        apz.dispMsg(msg);
+    } else if (lsize > 200000) {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_200'
+        };
+        apz.dispMsg(msg);
+    } else if (ltype == "application/pdf" || ltype == "image/jpeg" || ltype == "image/png") {} else {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_FORMAT'
+        };
+        apz.dispMsg(msg);
+    }
+    return lreturn;
+};
+apz.crddtl.MaestroCard.fnConfirmStage2 = function() {
+    debugger;
+    var lReq = {
+        "action": "Confirm",
+        "cardReqDtl": apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl
+    };
+    var lServerParams = {
+        "ifaceName": "NewCardRequest",
+        "req": lReq,
+        "callBack": apz.crddtl.MaestroCard.fnInsertCallBack
+    };
+    apz.crddtl.MaestroCard.fnBeforeCallServer(lServerParams);
+};
+apz.crddtl.MaestroCard.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.req,
+        "paintResp": "N",
+        "callBack": params.callBack
+    };
+    //apz.server.callServer(lServerParams);
+                       jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("crddtl")+"/NewCardRequest.json"));
+apz.crddtl.MaestroCard.fnInsertCallBack(jsondata);
+};
+apz.crddtl.MaestroCard.fnInsertCallBack = function(params) {
+    debugger;
+    apz.data.loadJsonData("NewCardRequest", "crddtl");
+    apz.crddtl.MaestroCard.sParams.OtpRes = params.crddtl__NewCardRequest_Res.cardReqDtl;
+    apz.crddtl.MaestroCard.fnRenderOTP();
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "crddtl__MaestroCard__Launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.crddtl__MaestroCard_Res.cardReqDtl.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.crddtl.MaestroCard.fnGotoStage4,
+                "destroyDiv": "crddtl__MaestroCard__Launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+};
+apz.crddtl.MaestroCard.fnRenderOTP = function() {
+    debugger;
+    apz.hide("crddtl__MaestroCard__Stage1");
+    apz.hide("crddtl__MaestroCard__Stage2");
+    apz.show("crddtl__MaestroCard__Launcher");
+    apz.hide("crddtl__MaestroCard__Stage3");
+};
+apz.crddtl.MaestroCard.fnGotoStage4 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl;
+    apz.setElmValue("crddtl__MaestroCard__Stage4Product", "Maestro Credit Card");
+    apz.setElmValue("crddtl__MaestroCard__Stage4CardType", lDetails.cardType);
+    apz.setElmValue("crddtl__MaestroCard__Stage4AccNo", lDetails.accountNo);
+    apz.setElmValue("crddtl__MaestroCard__Stage4NameOnCard", lDetails.nameOnCard);
+    apz.setElmValue("crddtl__MaestroCard__Stage4CustomerName", lDetails.custName);
+    apz.setElmValue("crddtl__MaestroCard__Stage4MobileNo", lDetails.mobileNo);
+    apz.setElmValue("crddtl__MaestroCard__Stage4Email", lDetails.emailId);
+    apz.setElmValue("crddtl__MaestroCard__Stage4Address", lDetails.address);
+    apz.setElmValue("crddtl__MaestroCard__Stage4AddressProofDoc", lDetails.addressProofDoc);
+    apz.setElmValue("crddtl__MaestroCard__Stage4AddressProofId", lDetails.addressProofDocID);
+    apz.setElmValue("crddtl__MaestroCard__Stage4IdProofDoc", lDetails.idProofDoc);
+    apz.setElmValue("crddtl__MaestroCard__Stage4IdProofId", lDetails.idProofDocID);
+    apz.setElmValue("crddtl__MaestroCard__Stage4Amount", lDetails.amount);
+    apz.setElmValue("crddtl__MaestroCard__Stage4Validity", lDetails.validity);
+    apz.hide("crddtl__MaestroCard__Stage1");
+    apz.hide("crddtl__MaestroCard__Stage2");
+    apz.hide("crddtl__MaestroCard__Launcher");
+    apz.show("crddtl__MaestroCard__Stage3");
+};
+apz.crddtl.MaestroCard.fnEditStage2 = function() {
+    debugger;
+    apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl = "";
+    debugger;
+    apz.show("crddtl__MaestroCard__Stage1");
+    apz.hide("crddtl__MaestroCard__Stage2");
+};

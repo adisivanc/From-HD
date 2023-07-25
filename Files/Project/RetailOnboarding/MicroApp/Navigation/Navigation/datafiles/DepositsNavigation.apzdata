@@ -1,0 +1,72 @@
+[
+    {
+        "position": "1",
+        "title": "Personal Details",
+        "appId": "appdtl",
+        "screenName": "PersonalDetails",
+        "flowNo": "0"
+    },
+    {
+        "position": "2",
+        "title": "Contact Details",
+        "appId": "appdtl",
+        "screenName": "ContactDetails",
+        "flowNo": "1"
+    },
+    {
+        "position": "3",
+        "title": "Additional Information",
+        "appId": "appdtl",
+        "screenName": "AdditionalPersonalDetails",
+        "flowNo": "2"
+    },
+    {
+        "position": "4",
+        "title": "Identity Details",
+        "appId": "appdtl",
+        "screenName": "IdentityDetail",
+        "flowNo": "3"
+    },
+    {
+        "position": "5",
+        "title": "Document Selection",
+        "appId": "docmnt",
+        "screenName": "DocumentSelection",
+        "flowNo": "4"
+    },
+    {
+        "position": "6",
+        "title": "Document Upload",
+        "appId": "docmnt",
+        "screenName": "DocumentUpload",
+        "flowNo": "5"
+    },
+    {
+        "position": "7",
+        "title": "Email Validation",
+        "appId": "checkm",
+        "screenName": "Mail",
+        "flowNo": "6"
+    },
+    {
+        "position": "8",
+        "title": "Funding Details",
+        "appId": "fundin",
+        "screenName": "FundingOptions",
+        "flowNo": "7"
+    },
+    {
+        "position": "9",
+        "title": "compliance",
+        "appId": "compln",
+        "screenName": "FourthFatca",
+        "flowNo": "8"
+    },
+    {
+        "position": "10",
+        "title": "Summary",
+        "appId": "appsum",
+        "screenName": "ApplicationSummary",
+        "flowNo": "9"
+    }
+]

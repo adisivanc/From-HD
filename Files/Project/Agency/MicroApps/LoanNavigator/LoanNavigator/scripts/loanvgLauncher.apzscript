@@ -1,0 +1,21 @@
+apz.loanvg.checkParams = function(Params) {
+    debugger;
+    Params.userObj = {
+        "data": {
+            "customerID": "23445",
+            "FirstName": "John",
+            "MiddeleName": "",
+            "LastName": "Keller",
+            "EduQualification": "Graduate",
+            "IndustryType": "Manufacturing",
+            "InstitutionType": "PrivateLimited",
+            "InstitutionName": "MAS Holdings PVT Ltd",
+            "InstAddress1": "10th Floor",
+            "InstAddress2": "Aitken Spence Tower 2",
+            "InstAddress3": "315, Vauxhall Street",
+            "InstState": "Colombo",
+            "InstCity": "Colombo",
+            "InstPinCode": "02"
+        }
+    };
+};

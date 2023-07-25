@@ -1,0 +1,26 @@
+{
+    "tbDbmiCorpRoleMaster": {
+        "corporateId": "CITI001",
+        "roleId": "Admin",
+        "roleDescription": "Admin For CITI DB maintenance",
+        "versionNo": "",
+        "makerId": "Admin",
+        "makerTs": "21-Jan-2017"
+    },
+    "tbDbmiCorpRoleEntity": [
+        {
+            "corporateId": "CITI001",
+            "roleId": "Admin",
+            "entityId": "CITI USA",
+            "transactionLimit": 200000,
+            "authorizationLimit": "1000000"
+        },
+        {
+            "corporateId": "CITI001",
+            "roleId": "Admin",
+            "entityId": "CITI IND",
+            "transactionLimit": 200000,
+            "authorizationLimit": "1000000"
+        }
+    ]
+}

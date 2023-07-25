@@ -1,0 +1,14 @@
+{
+    "fdsumm__FDTopup_Res": {
+        "fdTopupDtls": {
+            "txnRefNo": "23456",
+            "status": "",
+            "respCd": "app",
+            "extMsg": "",
+            "intMsgCd": "",
+            "data": {
+                "OTPRefNo": 34567
+            }
+        }
+    }
+}

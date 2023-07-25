@@ -1,0 +1,29 @@
+{
+    "fdsumm__FDDashboard_Res": {
+                "details": [
+                    {
+                        "title": "Fixed Deposit",
+                        "accno": "100009312285",
+                        "totalBalance": "365000",
+                        "interestRate": "5.0%",
+                        "depositAmount" : "10000",
+                        "tenor" : "1 year",
+                        "maturityDate" : "15/12/2021",
+                        "branch" : "One Wall Street,New York",
+                        "depositNumbers" : "1 of 3"
+                        
+                    },
+                    {
+                         "title": "Recurring Deposit",
+                        "accno": "543985494322",
+                        "totalBalance": "215000",
+                        "interestRate": "2.0%",
+                        "depositAmount" : "1000",
+                        "tenor" : "11 months",
+                        "maturityDate" : "15/10/2021",
+                        "branch" : "One Wall Street,New York",
+                        "depositNumbers" : "1 of 2"
+                    }]
+        
+    }
+}

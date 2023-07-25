@@ -1,0 +1,77 @@
+apz.golstp.setupGoal = {};
+apz.golstp.setupGoal.sParams = {};
+apz.golstp.setupGoal.sAction = {};
+apz.app.onLoad_SetupGoal = function(params) {
+    debugger;
+                   $('#golstp__SetupGoal__el_btn_9').removeAttr("disabled");
+
+    if (params.Navigation) {
+        apz.golstp.setupGoal.fnSetNavigation(params);
+    }
+    apz.golstp.setupGoal.sAction = params.action;
+    if (apz.golstp.setupGoal.sAction == "Add") {
+        //code
+        $("#golstp__SetupGoal__goalStatusRow").addClass('sno');
+    } else if (apz.golstp.setupGoal.sAction == "Edit") {
+        var lGoalData = params.data
+        apz.setElmValue('golstp__SetupGoal__goalName', lGoalData.goalDescription);
+        apz.setElmValue('golstp__SetupGoal__goalAmount', lGoalData.amtReqforGoal);
+        apz.setElmValue('golstp__SetupGoal__goalUnit', lGoalData.expTimeforGoalUnit);
+        apz.setElmValue('golstp__SetupGoal__goalFreq', lGoalData.expTimeforGoalFreq);
+        apz.setElmValue('golstp__SetupGoal__goalFundedBy', lGoalData.goalFundBy);
+        apz.setElmValue('golstp__SetupGoal__goalStatus', lGoalData.goalStatus);
+        $("#golstp__SetupGoal__goalStatusRow").removeClass('sno');
+    } else if (apz.golstp.setupGoal.sAction == "View") {
+        var lGoalData = params.data
+        apz.setElmValue('golstp__SetupGoal__goalName', lGoalData.goalDescription);
+        apz.setElmValue('golstp__SetupGoal__goalAmount', lGoalData.amtReqforGoal);
+        apz.setElmValue('golstp__SetupGoal__goalUnit', lGoalData.expTimeforGoalUnit);
+        apz.setElmValue('golstp__SetupGoal__goalFreq', lGoalData.expTimeforGoalFreq);
+        apz.setElmValue('golstp__SetupGoal__goalFundedBy', lGoalData.goalFundBy);
+        apz.setElmValue('golstp__SetupGoal__goalStatus', lGoalData.goalStatus);
+        $("#golstp__SetupGoal__SubmitNav").addClass('sno');
+                $("#golstp__SetupGoal__viewNav").removeClass('sno');
+        $("#golstp__SetupGoal__goalStatusRow").removeClass('sno');
+        $("#golstp__SetupGoal__Goal_Input_Row").find('input').attr('disabled', 'disabled')
+    }
+};
+apz.golstp.setupGoal.fnSetNavigation = function(params) {
+    apz.golstp.setupGoal.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "SETUP GOAL";
+    }
+    apz.golstp.setupGoal.Navigation(lParams);
+};
+apz.golstp.setupGoal.submitGoal = function() {
+    debugger;
+    $("#golstp__SetupGoal__Confirm_Goal_Row").removeClass('sno');
+    $("#golstp__SetupGoal__Goal_Input_Row").addClass('sno');
+    var lGoalName = apz.getElmValue("golstp__SetupGoal__goalName");
+    var lAmount = apz.getElmValue("golstp__SetupGoal__goalAmount");
+    var lGoalUnit = apz.getElmValue("golstp__SetupGoal__goalUnit");
+    var lGoalFreq = apz.getElmValue("golstp__SetupGoal__goalFreq");
+    var lGoalFundedBy = apz.getElmValue("golstp__SetupGoal__goalFundedBy");
+    var lGoalStatus = apz.getElmValue('golstp__SetupGoal__goalStatus');
+    var lConfirmText = 'Goal to be achieved ' + lGoalName + ' of ' + lAmount + ' , is for ' + lGoalFreq + ' ' + lGoalUnit +'. This Goal will be funded by your  '+ lGoalFundedBy + ', and did you achieved this Goal '+ lGoalStatus + '.';
+    apz.setElmValue('golstp__SetupGoal__Confirm_Goal_text', lConfirmText);
+};
+apz.golstp.setupGoal.confirmGoal = function() {
+    debugger;
+    $("#golstp__SetupGoal__Confirm_Goal_Row").addClass('sno');
+    $("#golstp__SetupGoal__Goal_Input_Row").addClass('sno');
+    $("#golstp__SetupGoal__Success_Row").removeClass('sno');
+    apz.setElmValue('golstp__SetupGoal__Goal_Success_Text', apz.getElmValue('golstp__SetupGoal__Confirm_Goal_text'));
+};
+apz.golstp.setupGoal.editGoal = function() {
+    debugger;
+    $("#golstp__SetupGoal__Confirm_Goal_Row").addClass('sno');
+    $("#golstp__SetupGoal__Goal_Input_Row").removeClass('sno');
+};
+apz.golstp.setupGoal.Back = function() {
+    debugger;
+    $("#golstp__GoalSummary__GoalSummaryRow").removeClass('sno');
+    $("#golstp__GoalSummary__LaunchGoalRow").addClass('sno');
+}

@@ -1,0 +1,35 @@
+{
+     "EcsMandateRes" : {
+    "data": [{
+        "customerId": "001",
+        "custNameInOB": "Akshaya",
+        "bankName": "Doha Bank",
+        "bankCode": "612",
+        "accountNoOfOB": "5432xxxxx115",
+        "mandateAmount": "20000",
+        "mandateStartDate": "15-May-2018",
+        "mandateEndDate": "16-Aug-2018",
+        "frequency": "2",
+        "noOfInst": "3",
+        "mandateChgAmt": "",
+        "referenceNumber":"1001",
+        "authenticationType":"OTP",
+        "accountNoOfCR":"234xxxxx879"
+    }, {
+        "customerId": "002",
+        "custNameInOB": "Sheeba",
+        "bankName": "Doha Bank",
+        "bankCode": "512",
+        "accountNoOfOB": "5432xxxxx018",
+        "mandateAmount": "30000",
+        "mandateStartDate": "20-Jan-2018",
+        "mandateEndDate": "18-Aug-2018",
+        "frequency": "2",
+        "noOfInst": "3",
+        "mandateChgAmt": "",
+        "referenceNumber":"1002",
+        "authenticationType":"OTP",
+        "accountNoOfCR":"234xxxxx879"
+    }]
+}
+}

@@ -1,0 +1,14 @@
+apz.bookfd.checkParams = function(params) {
+    debugger;
+    params.userObj = {"data":{
+        "customerId": "12345",
+        "accounts": [{
+            "accountNo": "5432xxxxx575",
+            "accountType": "Savings"
+        },{
+            "accountNo": "5432xxxxx858",
+            "accountType": "Savings"
+        }]
+    }
+    };
+};

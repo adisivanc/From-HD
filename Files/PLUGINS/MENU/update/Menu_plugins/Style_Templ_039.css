@@ -1,0 +1,111 @@
+@charset "utf-8";
+/* CSS Document */
+
+* html img,
+* html .png{
+position:relative;
+behavior: expression((this.runtimeStyle.behavior="none")&&(this.pngSet?this.pngSet=true:(this.nodeName == "IMG" && this.src.toLowerCase().indexOf('.png')>-1?(this.runtimeStyle.backgroundImage = "none",
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.src + "', sizingMethod='image')",
+this.src = "images/transparent.gif"):(this.origBg = this.origBg? this.origBg :this.currentStyle.backgroundImage.toString().replace('url("','').replace('")',''),
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.origBg + "', sizingMethod='crop')",
+this.runtimeStyle.backgroundImage = "none")),this.pngSet=true)
+);
+}
+
+html {
+    font-size: 100%; /* 1 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+    -ms-text-size-adjust: 100%; /* 2 */
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video { margin:0; padding:0; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; }
+a { text-decoration:none; border: 0; outline:none; }
+.boxerror { border:1px solid #F00; }
+h1, h2, h3, h4, h5, h6 { font-weight: normal; font-style:normal; }
+table { border-collapse:collapse; }
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
+.boldtxt { font-family: 'myriad_probold'; }
+.errortxt { color:#F00; }
+
+
+body { margin:0 0 0 0; padding:0 0 0 0; font-family: 'MYRIADPRO-REGULAR'; background-color:#efefef; font-size:14px; color:#000; }
+
+/* Default */
+
+.header
+{
+	
+	background:url(../../Task14/Mine/images/maintopBG.gif) repeat-x ;
+	width:100%;
+	height:60px;
+	float:left;
+	/*-moz-background-size:cover; -webkit-background-size:cover; -ms-background-size:cover; background-size:cover; */
+}
+.header_size
+{
+	width:100%;
+	height:60px;
+}
+
+#templatemo_container {
+	margin:0 auto;
+	width: 960px;
+}
+
+/*------------- Menu ------------------*/
+#templatemo_menu {
+	float: left;
+	width: 930px;
+	height: 30px; /* Menu Height*/
+	margin: 18px 0 0 0; /* From Top The Menu is in 18px gap*/
+	padding: 0 0 0 30px;  /* From Left The Menu is in 30px gap*/
+}
+
+#templatemo_menu ul {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+#templatemo_menu ul li{
+	display: inline; /*Text padding*/
+}
+
+#templatemo_menu ul li a{
+	float: left;
+	width: 140px; /*Text width- Compare with hover image*/
+	height: 30px; /*Text height- Compare with hover image*/
+	padding: 10px 0 0 0;/*Text padding*/
+	font-size: 1.1em;
+	font-weight: bold; 
+	text-align: center; /*Text align in center*/
+	text-decoration: none; /* Remove underline while using anchor link*/
+	color: #aabdd0; /*Text color*/
+	border-left: 1px solid #34373b; /*Left Border*/
+}
+
+#templatemo_menu ul li .lastmenu{
+	border-right: 1px solid #34373b;	
+}
+
+#templatemo_menu li a:hover, #templatemo_menu li .current{
+	color: #aabdd0;
+	background: url(images/menuhoverBG.gif) no-repeat;
+}
+
+/* ----------------- end of menu----------------*/
+

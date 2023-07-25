@@ -1,0 +1,66 @@
+{
+    "achpay__TransactionCode_Res": {
+        "TransactionCodeDetails": [
+            {
+                "numericCode": "22",
+                "description": "Checking Deposit (Credit)"
+            },
+            {
+                "numericCode": "27",
+                "description": "Checking Withdrawal (Debit)"
+            },
+            {
+                "numericCode": "32",
+                "description": "Share Deposit (Credit)"
+            },
+            {
+                "numericCode": "37",
+                "description": "Share Withdrawal (Debit)"
+            },
+            {
+                "numericCode": "42",
+                "description": "GL Deposit (Credit)"
+            },
+            {
+                "numericCode": "47",
+                "description": "GL Withdrawal (Debit)"
+            },
+            {
+                "numericCode": "52",
+                "description": "Loan Deposit (Credit)"
+            },
+            {
+                "numericCode": "55",
+                "description": "Loan Reversal (Debit) { rarely used, used for reversal of code 52}"
+            },
+            {
+                "numericCode": "23",
+                "description": "Pre-Note : Checking Deposit (Credit)"
+            },
+            {
+                "numericCode": "28",
+                "description": "Pre-Note : Checking Withdrawal (Debit)"
+            },
+            {
+                "numericCode": "33",
+                "description": "Pre-Note : Share Deposit (Credit)"
+            },
+            {
+                "numericCode": "38",
+                "description": "Pre-Note : Share Withdrawal (Debit)"
+            },
+            {
+                "numericCode": "43",
+                "description": "Pre-Note : GL Deposit (Credit)"
+            },
+            {
+                "numericCode": "48",
+                "description": "Pre-Note : GL Withdrawal (Debit)"
+            },
+            {
+                "numericCode": "53",
+                "description": "Pre-Note : GL Deposit (Credit)"
+            }
+        ]
+    }
+}

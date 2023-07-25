@@ -1,0 +1,12 @@
+apz.convac.Launcher={};
+apz.app.onLoad_Launcher = function() {
+    debugger;
+    var params = {};
+    params.div = 'convac__Launcher__launcher';
+    params.scr = 'DetailsScreen';
+    params.appId = "convac";
+    apz.launchSubScreen(params);
+}
+apz.app.onShown_Launcher = function(){
+    debugger;
+}

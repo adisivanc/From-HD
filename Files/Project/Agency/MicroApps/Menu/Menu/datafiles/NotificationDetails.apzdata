@@ -1,0 +1,13 @@
+{
+    "BSAP01__NotificationDetails_Res":{
+        "NotificationsList":[{
+            "icon":"warning",
+            "notificationText":"Krishnaih - Issue debit card issued",
+            "notificationTime":"7 Nov 02:30 PM"
+        },{
+            "icon":"warning",
+            "notificationText":"Aryappa - Open RD account completed",
+            "notificationTime":"7 Nov 03:27 PM"
+        }]
+    }
+}

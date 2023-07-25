@@ -1,0 +1,23 @@
+{
+    "tbDbmiCorpGuaranteeIssuance": {
+        "amount": 87348,
+        "chargeCollectionAccount": "39485739498",
+        "makerTs": "2018-02-06",
+        "purpose": "d",
+        "accountType": "debit",
+        "userId": "user0001",
+        "corporateId": "000FTAC4321",
+        "expiryDate": "2019-02-06",
+        "guaranteeFormat": "upload",
+        "referenceNumber": "1517920268979",
+        "beneficaryContactPerson": "Jane",
+        "claimPeriod": "12",
+        "versionNo": "1",
+        "currency": "USD",
+        "beneficaryAddress": "#12, 5th Ave, NJ",
+        "beneficaryContactNumber": "9988776655",
+        "beneficaryCompanyName": "ABC Corp",
+        "checkerTs": "2018-02-06",
+        "status": "Active"
+    }
+}

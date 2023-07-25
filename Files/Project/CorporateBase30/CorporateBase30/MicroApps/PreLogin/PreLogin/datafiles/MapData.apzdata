@@ -1,0 +1,94 @@
+{
+    "tbMbAtmLocator": [
+        {
+            "atmId": "KBL01002",
+            "location": "Managaluru-Balmatta Road",
+            "city": "MANGALORE",
+			"state":"KARNATAKA",
+			"vsatMake":"NELCO",
+			"latitude":"12.8730555555556",
+			"longitude":"74.8511111111111"
+        },
+		{
+            "atmId": "KBL01005",
+            "location": "Mangaluru-Bejai",
+            "city": "MANGALORE",
+			"state":"KARNATAKA",
+			"vsatMake":"NELCO",
+			"latitude":"12.8879",
+			"longitude":"74.8469"
+        },
+		{
+            "atmId": "KBL11006",
+            "location": "Mangaluru-Bolar",
+            "city": "MANGALORE",
+			"state":"KARNATAKA",
+			"vsatMake":"NELCO",
+			"latitude":"12.8428",
+			"longitude":"74.8422"
+        },
+		{
+            "atmId": "KBL17005",
+            "location": "Mangaluru-Bunder",
+            "city": "MANGALORE",
+			"state":"KARNATAKA",
+			"vsatMake":"NELCO",
+			"latitude":"12.8669",
+			"longitude":"74.8331"
+        },
+        {
+            "atmId": "KBL17005",
+            "location": "Mangaluru-Derebail",
+            "city": "MANGALORE",
+			"state":"KARNATAKA",
+			"vsatMake":"NELCO",
+			"latitude":"12.8062",
+			"longitude":"74.8477"
+        },
+        {
+            "atmId": "KBL17005",
+            "location": "Bengaluru-Jayanagar IV Block",
+            "city": "BANGALORE",
+			"state":"KARNATAKA",
+			"vsatMake":"NELCO",
+			"latitude":"12.9305555555556",
+			"longitude":"77.5869444444444"
+        },
+        {
+            "atmId": "KBL17005",
+            "location": "Bengaluru-Kasturba Road",
+            "city": "BANGALORE",
+			"state":"KARNATAKA",
+			"vsatMake":"NELCO",
+			"latitude":"12.9719444444444",
+			"longitude":"77.5880555555556"
+        },
+        {
+            "atmId": "KBL17005",
+            "location": "Bengaluru-Subashnagar",
+            "city": "BANGALORE",
+			"state":"KARNATAKA",
+			"vsatMake":"NELCO",
+			"latitude":"12.9722222222222",
+			"longitude":"77.5683333333333"
+        },
+        {
+            "atmId": "KBL17005",
+            "location": "Bengaluru-Basavanagudi",
+            "city": "BANGALORE",
+			"state":"KARNATAKA",
+			"vsatMake":"NELCO",
+			"latitude":"12.94",
+			"longitude":"77.5727777777778"
+        },
+        {
+            "atmId": "KBL17005",
+            "location": "Bengaluru-Vijayanagar",
+            "city": "BANGALORE",
+			"state":"KARNATAKA",
+			"vsatMake":"NELCO",
+			"latitude":"12.9716666666667",
+			"longitude":"77.5297222222222"
+        }
+    ]
+}

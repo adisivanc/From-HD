@@ -1,0 +1,33 @@
+{
+    "bilpay__MultipleBillers_Res": {
+        "billerDtls": {
+            "Billers": [
+                {
+                    "ConsumerPIN": "6543",
+                    "Description": "Mobile Pre-Paid",
+                    "ConsumerNumber": "9686968696",
+                    "ServiceName": "Airtel",
+                    "Amount":"120",
+                    "SiReq":"NO",
+                    "TrancLimit":"5000",
+                    "Account":"100009312263",
+                    "RetryCount":"3",
+                    "PreferredPayDay":"10"
+                    
+                },
+                {
+                    "ConsumerPIN": "45678",
+                    "Description": "DTH",
+                    "ConsumerNumber": "9585758595",
+                    "ServiceName": "Dish TV",
+                    "Amount":"150",
+                    "SiReq":"YES",
+                    "TrancLimit":"10000",
+                    "Account":"100009312401",
+                    "RetryCount":"10",
+                    "PreferredPayDay":"12"
+                }
+            ]
+        }
+    }
+}

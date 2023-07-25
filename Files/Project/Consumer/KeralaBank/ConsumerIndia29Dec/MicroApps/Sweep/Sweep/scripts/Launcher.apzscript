@@ -1,0 +1,12 @@
+apz.sweep.Launcher={};
+apz.app.onLoad_Launcher = function(params) {
+    var params = {};
+    params.div = 'sweep__Launcher__launcher';
+    params.scr = 'DetailsScreen';
+    params.appId = "sweep";
+    params.userObj = params;
+    apz.launchSubScreen(params);
+}
+apz.app.onShown_Launcher = function(){
+    debugger;
+}

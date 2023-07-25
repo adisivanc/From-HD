@@ -1,0 +1,24 @@
+{
+    "accsnp__AccountDetails_Res" : {
+            "SavingsAccount": [{
+                "accountNo": "100009312263",
+                "accountBal": "50000",
+                "accountBrnName": "Koramangala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }, {
+                "accountNo": "100009312401",
+                "accountBal": "65000",
+                "accountBrnName": "koramangala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }],
+            "CurrentAccount": [{
+                "accountNo": "100009312274",
+                "accountBal": "60000",
+                "accountBrnName": "koramangala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }]
+    }
+}

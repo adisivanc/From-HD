@@ -1,0 +1,12 @@
+{
+	"tbDbtmCusacPrtfolioMaint":[{
+		"customerId":"001","accountNo":"10001","accountBrn":"","accountCcy":"","primaryAcc":"Y","accNickName":"Saving10001","includeInPortfolio":"Y"
+	}
+	,{
+		"customerId":"002","accountNo":"10002","accountBrn":"","accountCcy":"","primaryAcc":"N","accNickName":"Deposit10002","includeInPortfolio":"Y"
+	}
+	,{
+		"customerId":"003","accountNo":"10003","accountBrn":"","accountCcy":"","primaryAcc":"Y","accNickName":"Card10003","includeInPortfolio":"N"
+	}
+	]
+}

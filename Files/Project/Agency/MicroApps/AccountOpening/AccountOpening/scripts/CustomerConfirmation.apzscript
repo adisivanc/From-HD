@@ -1,0 +1,122 @@
+apz.ACOP01.CustomerConfirmation = {};
+apz.ACOP01.CustomerConfirmation.sAction = '';
+apz.ACOP01.CustomerConfirmation.sCache = '';
+apz.app.onShown_CustomerConfirmation = function(params) {
+    debugger;
+    apz.ACOP01.CustomerConfirmation.sCache = params;
+    // apz.data.buildData('CustomerInfo','ACOP01');
+    apz.data.loadData('CustomerInfo', 'ACOP01');
+    $("#ACOP01__CustomerConfirmation__submit").prop("disabled", true);
+    //apz.CustomerConfirmation.fnInitialize(); 
+    //$("#CUS001__CustomerConfirmation__Title").text(params.data.action);
+};
+apz.ACOP01.CustomerConfirmation.fnCheckBox = function() {
+    debugger;
+    var isChecked = $('#ACOP01__CustomerConfirmation__checkbox').prop('checked');
+    if (isChecked) {
+        $("#ACOP01__CustomerConfirmation__submit").prop("disabled", false);
+        
+    } else {
+       $("#ACOP01__CustomerConfirmation__submit").prop("disabled", true);
+       
+    }
+};
+/*apz.CustomerConfirmation.fnInitialize = function(){
+    debugger;
+    apz.CustomerConfirmation.sAction = "fetchAllDetails"; 
+ 	var lreq = {};
+    lreq.tbAcopCustomerInfo = [{
+       
+    }];
+    var lActionParams = { 
+        "action":  apz.CustomerConfirmation.sAction, 
+        "ifaceName": "CustomerInfo_Query", 
+        "req": lreq, 
+        "paintResp": "Y", 
+        "async": false 
+    }; 
+    apz.CustomerConfirmation.fnBeforeCallServer(lActionParams);
+};*/
+apz.ACOP01.CustomerConfirmation.fnCallServerCallBack = function(params) {
+    debugger;
+};
+apz.ACOP01.CustomerConfirmation.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.req,
+        "paintResp": params.paintResp,
+        "async": false,
+        "callBack": apz.ACOP01.CustomerConfirmation.fnCallServerCallBack,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.ACOP01.CustomerConfirmation.fnEdit = function() {
+    debugger;
+    var lObj = {
+        "scr": "CustomerInfo",
+        "div": "CSOB01__Home__launchMapp",
+        "userObj": {
+            "action": "Edit",
+            "data": apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo,
+            "callBack" : apz.ACOP01.CustomerConfirmation.sCache.callBack
+        }
+    }
+    apz.launchSubScreen(lObj);
+};
+apz.ACOP01.CustomerConfirmation.fnSubmit = function() {
+    debugger;
+    lReq = {}
+    lReq.tbAcopCustomerInfo = {};
+    lReq.tbAcopCustomerInfo = apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo;
+    lReq.tbAcopCustomerInfo.submitStatus = "Y";
+    lReq.tbAcopCustomerInfo.submittedDate = new Date();
+    var lServerParams = {
+        "ifaceName": "CustomerInfo_Modify",
+        "callBackObj": this,
+        "buildReq": "N",
+        "req": lReq,
+        "paintResp": "N",
+        "callBack": apz.ACOP01.CustomerConfirmation.fnCallBack
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.ACOP01.CustomerConfirmation.fnCallBack = function(params) {
+    debugger;
+    let params = {};
+    params.appId = "wrkflw";
+    params.scr = "WorkFlow";
+    params.div = "entpro__EntityDetails__LaunchScreen";
+    params.layout = "All";
+    params.userObj = {
+        "appId": "ACOP01",
+        "workFlowId": "ONBRD",
+        "userId": apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo.referenceNo,
+        "callBack":apz.ACOP01.CustomerConfirmation.fnWorkFlowCallBack
+    };
+    apz.launchApp(params);
+}
+
+apz.ACOP01.CustomerConfirmation.fnWorkFlowCallBack=function(params){
+ var lSuccessParams = {
+        "code": 'ACOP05_SUB',
+        "callBack": apz.ACOP01.CustomerConfirmation.sCache.callBack
+    };
+    apz.dispMsg(lSuccessParams);
+}    
+    
+apz.ACOP01.CustomerConfirmation.fnCancel = function(){
+    debugger;
+     var lObj = {
+        "scr": "CustomerInfo",
+        "div": "CSOB01__Home__launchMapp",
+        "userObj": {
+            "action": "Edit",
+            "data": apz.data.scrdata.ACOP01__CustomerInfo_Req.tbAcopCustomerInfo,
+            "callBack" : apz.ACOP01.CustomerConfirmation.sCache.callBack
+        }
+    }
+    apz.launchSubScreen(lObj);
+}

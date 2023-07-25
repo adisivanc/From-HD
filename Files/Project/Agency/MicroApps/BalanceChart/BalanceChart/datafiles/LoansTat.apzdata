@@ -1,0 +1,53 @@
+{
+    "balanc__MonthlyBalance_Res": {
+        "datasets": [{
+            "Months": "January",
+            "Amount": "11",
+            "Account": "Home Loan"
+        }, {
+            "Months": "January",
+            "Amount": "8",
+            "Account": "Auto Loan"
+        }, {
+            "Months": "January",
+            "Amount": "30",
+            "Account": "Personal Line of Credit"
+        },{
+            "Months": "February",
+            "Amount": "19",
+            "Account": "Home Loan"
+        }, {
+            "Months": "February",
+            "Amount": "7",
+            "Account": "Auto Loan"
+        }, {
+            "Months": "February",
+            "Amount": "20",
+            "Account": "Personal Line of Credit"
+        },{
+            "Months": "March",
+            "Amount": "11",
+            "Account": "Home Loan"
+        }, {
+            "Months": "March",
+            "Amount": "23",
+            "Account": "Auto Loan"
+        }, {
+            "Months": "March",
+            "Amount": "30",
+            "Account": "Personal Line of Credit"
+        },{
+            "Months": "April",
+            "Amount": "11",
+            "Account": "Home Loan"
+        }, {
+            "Months": "April",
+            "Amount": "28",
+            "Account": "Auto Loan"
+        }, {
+            "Months": "April",
+            "Amount": "30",
+            "Account": "Personal Line of Credit"
+        }]
+    }
+}

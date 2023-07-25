@@ -1,0 +1,34 @@
+{
+    "Details": [
+        {
+            "fromAccount": "10050100123",
+            "toAccount":"150834793484",
+            "amount": "",
+            "remarks": ""
+        },
+        {
+            "fromAccount": "10050200321",
+             "toAccount":"150834793484",
+            "amount": "",
+            "remarks": ""
+        },
+        {
+            "fromAccount": "10050010345",
+             "toAccount":"150834793484",
+            "amount": "",
+            "remarks": ""
+        },
+        {
+            "fromAccount": "10050132200",
+             "toAccount":"150834793484",
+            "amount": "",
+            "remarks": ""
+        },
+        {
+            "fromAccount": "10020032145",
+             "toAccount":"150834793484",
+            "amount": "",
+            "remarks": ""
+        }
+    ]
+}

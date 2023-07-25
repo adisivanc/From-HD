@@ -1,0 +1,60 @@
+apz.trckgl.trackgoal = {};
+apz.app.onLoad_TrackGoal = function() {};
+apz.app.onShown_TrackGoal = function(params) {
+    debugger;
+    apz.trckgl.trackgoal.sParams = params;
+    $("#trckgl__TrackGoal__trackGoalSlider").roundSlider({
+        sliderType: "min-range",
+        radius: 55,
+        width: 8,
+        min: 0,
+        max: 100,
+        handleShape: "dot",
+        startAngle: 90,
+        endAngle: "+330",
+        value: "50",
+        step: 1,
+        handleSize: "+13",
+        change: function(args) {}
+    });
+    $(".rs-tooltip-text").removeClass("edit");
+    $(".rs-tooltip-text").css("margin-top", "-20.2833px");
+    $(".rs-tooltip-text").css("margin-left", "-36.4px");
+    if($(window).width() > 420) {
+        $(".rs-tooltip-text").css("font-size", "12px");
+    } else { 
+        $(".rs-tooltip-text").css("font-size", "13px");
+    }
+    $(".rs-tooltip-text").text("50% Completed");
+    $(".rs-handle").removeClass("rs-handle rs-handle-dot");
+    $("#trckgl__TrackGoal__TrackGoal").attr("style", "background: -webkit-radial-gradient(center, ellipse cover, #f3f3f3 0%,#f7f7f7 29%,#f1f1f1 99%); border-radius: 800px 800px 800px 800px;height:350px;width:350px;margin:0 auto;border: 7px solid #ffdd00; margin-top: 10%;");
+    $("#trckgl__TrackGoal__TrackGoal").children().attr("style", "margin-top:35px;margin-left:-5px");
+    if (params.Navigation) {
+        apz.trckgl.trackgoal.fnSetNavigation(params);
+    }
+    apz.trckgl.trackgoal.fnSetData();
+};
+apz.trckgl.trackgoal.fnSetNavigation = function(params) {
+    debugger;
+    apz.trckgl.trackgoal.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.headerText = "TRACK GOAL";
+    apz.trckgl.trackgoal.Navigation(lParams);
+};
+apz.trckgl.trackgoal.fnSetData = function() {
+    debugger;
+    var lParams = {
+        "value": apz.trckgl.trackgoal.sParams.amtReqforGoal / 2,
+        "decimalSep": ".",
+        "decimalPoints": "2",
+        "displayAsLiteral": "N",
+        "mask": "MILLION"
+    };
+    apz.setElmValue("trckgl__TrackGoal__goalDesc", apz.trckgl.trackgoal.sParams.goalDescription);
+    apz.setElmValue("trckgl__TrackGoal__funded", apz.formatNumber(lParams));
+    apz.setElmValue("trckgl__TrackGoal__togo", apz.formatNumber(lParams));
+};
+apz.trckgl.trackgoal.fnDone = function(){
+    apz.landin.Landing.fnHome();
+    
+}

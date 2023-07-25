@@ -1,0 +1,69 @@
+{
+    "aclo01__LoanDetails_Res": {
+        "LoansListDetails": {
+            "image": "prof-acc.png",
+            "accountNumber": "01245473298472322",
+            "accountName": "PROJECT FINANCE",
+            "accountType": "CAPITAL LOAN",
+            "currency": "INR",
+            "loanamt": 167799000,
+            "accountOpeningDate": "04-Jun-17",
+            "maturityDate": "05-Jun-17",
+            "repaymentFrequency": "Monthly",
+            "intrestRate": "15%",
+            "currentBalance": 250000,
+            "accruedintrest": 345900,
+            "lastpaymentamt": 73000,
+            "lastpaymentdate": "06-April-17",
+            "nextpaymentamt": 190000,
+            "nextpaymentdate": "30-May-17",
+            "overdueamt": 54000,
+            "installmentamount": 55000,
+            "loanStatus": "Overdue"
+        },
+        "DemandDetails": [
+            {
+                "demandDate": "09-Feb-17",
+                "amtPaid": 197008000,
+                "requestedamt": 897908000
+            },
+            {
+                "demandDate": "19-Feb-17",
+                "amtPaid": 197008000,
+                "requestedamt": 756902000
+            },
+            {
+                "demandDate": "09-Mar-17",
+                "amtPaid": 207345000,
+                "requestedamt": 456238000
+            },
+            {
+                "demandDate": "20-Apr-17",
+                "amtPaid": 457008000,
+                "requestedamt": 567023000
+            }
+        ],
+        "DisbursementDetails": [
+            {
+                "disburseDate": "19-Mar-17",
+                "disbursedamt": 345999000,
+                "balsanctioned": 500005000
+            },
+            {
+                "disburseDate": "29-Mar-17",
+                "disbursedamt": 897908000,
+                "balsanctioned": 156995000
+            },
+            {
+                "disburseDate": "10-Mar-17",
+                "disbursedamt": 977908000,
+                "balsanctioned": 25603500000
+            },
+            {
+                "disburseDate": "29-Mar-17",
+                "disbursedamt": 624178000,
+                "balsanctioned": 725926000
+            }
+        ]
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "transferDtls": {
+        "data": {
+            "OTPRefNo": 1280
+        },
+        "txnRefNo": "admin1513676882977359117",
+        "extMsg": "",
+        "respCd": "app",
+        "intMsgCd": "",
+        "status": "success"
+    }
+}

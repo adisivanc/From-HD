@@ -1,0 +1,42 @@
+MenuHandler = (function() {
+    menulist = null;
+    currentMenuList = [];
+    formatedMenu = {
+        "All": []
+    };
+    return {
+        store: function(data) {
+            menulist = data.slice();
+        },
+        formatMenu: function() {
+            newformatedMenu = {
+                "All": []
+            };
+            for (let menu in menulist) {
+                if (menulist[menu].type == "Main") {
+                    newformatedMenu["All"].push(menulist[menu].parentMenu);
+                    newformatedMenu[menulist[menu].parentMenu] = [];
+                } else if (menulist[menu].type == "Sub") {
+                    if (newformatedMenu[menulist[menu].parentMenu] == undefined) {
+                        newformatedMenu[menulist[menu].parentMenu] = [];
+                    }
+                    newformatedMenu[menulist[menu].parentMenu] = [...newformatedMenu[menulist[menu].parentMenu], menulist[menu].childMenu];
+                    newformatedMenu[menulist[menu].childMenu] = [];
+                } else if (menulist[menu].type == "Kid") {
+                    if (newformatedMenu[menulist[menu].childMenu] == undefined) {
+                        newformatedMenu[menulist[menu].childMenu] = [];
+                    }
+                    newformatedMenu[menulist[menu].childMenu] = [...newformatedMenu[menulist[menu].childMenu], menulist[menu].kidMenu];
+                    newformatedMenu[menulist[menu].kidMenu] = [];
+                }
+            };
+            return newformatedMenu;
+        },
+        restructureToArayyObj : function(menuarr){
+            return menuarr.map(function(name){
+                                 return {name}
+                                });
+                                
+        }
+    };
+})();

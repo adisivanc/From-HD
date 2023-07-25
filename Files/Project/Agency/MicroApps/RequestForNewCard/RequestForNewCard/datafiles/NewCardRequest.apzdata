@@ -1,0 +1,14 @@
+{
+    "crddtl__NewCardRequest_Res": {
+        "cardReqDtl": {
+            "data": {
+                "OTPRefNo": 1857
+            },
+            "txnRefNo": "15124783077982329",
+            "extMsg": "",
+            "respCd": "destroy",
+            "intMsgCd": "SUC-001",
+            "status": "success"
+        }
+    }
+}

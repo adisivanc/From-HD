@@ -1,0 +1,15 @@
+apz.cashfl.CashFlow = {};
+apz.data.scrdata.cashfl__Dashboard_Req = {};
+apz.app.onShown_CashFlow = function(params) {
+    debugger;
+    var filePath = apz.getDataFilesPath("cashfl") + "/DashboardStaticData.json";
+    var content = apz.getFile(filePath);
+    var cashflowList = JSON.parse(content);
+    apz.data.scrdata.cashfl__Dashboard_Req = cashflowList;
+    apz.data.loadData("Dashboard", "cashfl");
+}
+apz.app.updateChartBeforeRender = function(chartType, chartData, id, chart) {
+    debugger;
+    chartData.chart.setAdaptiveYMin= "1";
+    chartData.chart.numberPrefix= "Rs";
+}

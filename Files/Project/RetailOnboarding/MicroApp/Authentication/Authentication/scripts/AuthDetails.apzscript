@@ -1,0 +1,129 @@
+apz.onbaut.AuthDetails = {};
+apz.onbaut.AuthDetails.sparams = {};
+apz.onbaut.AuthDetails.sCache = {};
+apz.flowNo = 0;
+apz.docRefNo = "";
+apz.panVerified = false;
+apz.isEmailValid = false;
+apz.isJumioChecked = false;
+apz.selfieImage = "";
+apz.frontsideImage = "";
+apz.backsideImage = "";
+apz.idType = "";
+apz.idDocArray = [];
+apz.documentArray = [];
+apz.checkExistingCustomer = "n";
+apz.kycType = "";
+apz.kycId = "";
+apz.declaration = "Pending";
+apz.app.onLoad_AuthDetails = function(params) {
+    debugger;
+    $("body").removeClass("loginbgg");
+    apz.onbaut.AuthDetails.sparams = params;
+};
+apz.app.onShown_AuthDetails = function(params) {
+    debugger;
+    apz.setElmValue("onbaut__AuthDetails__dob", apz.dob);
+    $("#onbaut__AuthDetails__mobileno").attr({
+        "pattern": "[0-9]*",
+        "inputmode": "numeric"
+    });
+};
+$("#onbaut__AuthDetails__mobileno").on('focus', function() {
+    $("html, body").animate({
+        scrollTop: 0
+    }, 0);
+})
+apz.onbaut.AuthDetails.fnRequestOTP = function() {
+    debugger;
+    apz.changeLanguage("en", "onbaut");
+    var mobilenumber = apz.getElmValue("onbaut__AuthDetails__mobileno");
+    //var email = apz.getElmValue("onbaut__AuthDetails__emailid");
+    var dob = apz.getElmValue("onbaut__AuthDetails__dob");
+    var today = new Date();
+    var olday = new Date(dob);
+    var age = Number((today.getTime() - olday.getTime()) / 31536000000).toFixed(0);
+    var nationalidtxt = apz.getElmValue("onbaut__AuthDetails__nationalid");
+    if (mobilenumber.length != 10) {
+        apz.dispMsg({
+            message: "Enter a valid mobile number"
+        });
+    } else if (dob == "") {
+        apz.dispMsg({
+            message: "Date of birth is required"
+        });
+    }
+        else if(apz.checkExistingCustomer == "y" && nationalidtxt ==""){
+             apz.dispMsg({
+            message: "Enter National Id"
+        });
+        }
+    else if (age < 18) {
+        apz.dispMsg({
+            message: " Please have your guardian details available for onboarding ",
+            type: "I",
+            callBack: apz.onbaut.AuthDetails.fnGuardianCB,
+            callBackObj: {
+                mobile: mobilenumber,
+                dob: dob
+            }
+        });
+    } else {
+        //functionality in AuthLauncher Screen
+        apz.kycId = apz.getElmValue("onbaut__AuthDetails__nationalid");
+        if (apz.kycId == "78785634") {
+            apz.kycType = "norekyc";
+        } else if (apz.kycId == "76761245") {
+            apz.kycType = "rekyc";
+        }
+        apz.onbaut.AuthLauncher.fnInitialiseSMS(mobilenumber, dob)
+    }
+}
+apz.onbaut.AuthDetails.fnGuardianCB = function(params) {
+    apz.kycId = apz.getElmValue("onbaut__AuthDetails__nationalid");
+    if (apz.kycId == "78785634") {
+        apz.kycType = "norekyc";
+    } else if (apz.kycId == "76761245") {
+        apz.kycType = "rekyc";
+    }
+    apz.onbaut.AuthLauncher.fnInitialiseSMS(params.callBackObj.mobile, params.callBackObj.dob)
+    debugger;
+}
+apz.onbaut.AuthDetails.fnFloatMobileNo = function(el) {
+    var digits = el.value.match(/\d{1,10}/) || [""];
+    el.value = digits[0];
+}
+apz.onbaut.AuthDetails.fnBack = function() {
+    //apz.prdsel.ProductLauncher.fnNavigate("SubProducts",{"product":products,"parentdiv":apz.prdsel.Products.sparams.parentdiv});
+    var params = {};
+    params.appId = "navgtr";
+    params.scr = "Navigator";
+    params.div = "apzonb__Navigator__launchdiv";
+    apz.launchApp(params);
+}
+apz.onbaut.AuthDetails.fnUploadID = function() {
+    apz.ocrapp.ScanAndUpload.fnUploadDoc();
+}
+apz.onbaut.AuthDetails.fnChangeLaunguage = function() {
+    if (apz.language === "en") {
+        apz.changeLanguage("ban", "onbaut");
+        apz.onbaut.AuthLauncher.fnNavigator("AuthDetails", apz.onbaut.AuthDetails.sparams);
+    } else {
+        apz.changeLanguage("en", "onbaut");
+        apz.onbaut.AuthLauncher.fnNavigator("AuthDetails", apz.onbaut.AuthDetails.sparams);
+    }
+}
+apz.onbaut.AuthDetails.fnCheckExistingCustomer = function(pthis) {
+    debugger;
+    apz.checkExistingCustomer = apz.getElmValue("onbaut__AuthDetails__el_cbx_1");
+    if (apz.checkExistingCustomer == "y") {
+        $("#onbaut__AuthDetails__rowKYC").removeClass("sno");
+    } else if (apz.checkExistingCustomer == "n") {
+        $("#onbaut__AuthDetails__rowKYC").addClass("sno");
+    }
+}
+apz.onbaut.AuthDetails.fnSelectCustomer = function(pthis, kyctype) {
+    debugger;
+    apz.kycType = kyctype;
+    apz.kycId = pthis.value;
+}

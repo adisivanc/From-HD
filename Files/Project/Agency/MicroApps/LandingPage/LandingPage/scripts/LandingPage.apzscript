@@ -1,0 +1,204 @@
+apz.landpg = {};
+apz.landpg.landingpage = {};
+apz.landpg.landingpage.sCache = "";
+apz.landpg.landingpage.allCount = 0;
+apz.app.onLoad_LandingPage = function(params) {
+    debugger;
+    apz.landpg.landingpage.sCache = params;
+    apz.landpg.landingpage.sCache.appId = "Agency";
+    $("#menuap__Menu__loggedinCust_txtcnt").text("No customer logged in");
+    $("#menuap__Menu__custId_txtcnt").text("Customer Id : Not available");
+    $("#menuap__Menu__custImg").attr("src", "apps/styles/themes/BranchBase/img/Default_User.jpg");
+    $("body").attr('style',
+        'background-image: url("apps/styles/themes/BaseApp/img/backgroundBase.jpg"); background-repeat: no-repeat; background-attachment: fixed; background-position: center center; background-size: cover;'
+    )
+    apz.landpg.landingpage.fnLaunchQuickLinks();
+    apz.landpg.landingpage.fnGetMyTasks();
+};
+apz.app.onShown_LandingPage = function() {
+    debugger;
+    $(".pgn-ctr").addClass("sno");
+    apz.saved = false;
+    apz.product = false;
+    apz.landpg.landingpage.injectFilters();
+};
+apz.landpg.landingpage.injectFilters = function() {
+    debugger;
+    $(".status_filter").on("click", function(pObj) {
+        debugger;
+        var type = $(this).text();
+        var id = $(this)[0].id;
+        if (type.indexOf("All") > -1) {
+            apz.searchRecords("mytask__MyTasks__myTasksTable", "");
+        } else if (type.indexOf("Pending") > -1 || type.indexOf("in-progress") > -1) {
+            apz.searchRecords("mytask__MyTasks__myTasksTable", "Pending");
+        } else if (type.indexOf("Rejected") > -1) {
+            apz.searchRecords("mytask__MyTasks__myTasksTable", "Rejected");
+        } else if (type.indexOf("Approved") > -1) {
+            apz.searchRecords("mytask__MyTasks__myTasksTable", "Approved");
+        } else if (type.indexOf("Initiated") > -1) {
+            apz.searchRecords("mytask__MyTasks__myTasksTable", "Initiated");
+        } else {
+            debugger;
+        }
+        $("#landpg__landingpage__pending_records").removeClass("active");
+        $("#landpg__landingpage__rejected_records").removeClass("active");
+        $("#landpg__landingpage__approved_records").removeClass("active");
+        $("#landpg__landingpage__saved_records").removeClass("active");
+        $("#" + id).addClass("active");
+    });
+};
+apz.landpg.landingpage.fnGetMyTasks = function() {
+    debugger;
+    var lParams = {
+        "appId": "mytask",
+        "scr": "MyTasks",
+        "div": "landpg__LandingPage__service_request_launcher",
+        "type": "CF",
+        "userObj": {
+            "action": "home",
+            "destroyDiv": apz.landpg.landingpage.sCache.destroyDiv,
+            "data": apz.landpg.landingpage.sCache,
+            "parentId": apz.landpg.landingpage.sCache.parentAppId,
+            "loggedCust": apz.landpg.landingpage.sCache.loggedCust,
+            "custImg": apz.landpg.landingpage.sCache.custImg,
+            "custId": apz.landpg.landingpage.sCache.custId,
+            "from": "landing",
+            "callBack": apz.landpg.landingpage.myTaskCB
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.landpg.landingpage.myTaskCB = function(params) {
+    try {
+        apz.setElmValue("landpg__LandingPage__service_req_count", params.serviceRecCount);
+        apz.setElmValue("landpg__LandingPage__onboarding_req_count", params.onboardingCount);
+        // apz.setElmValue("landpg__LandingPage__all", params.totalRecs);
+    } catch (e) {};
+};
+apz.landpg.landingpage.launchHistory = function(pThis, type) {
+    debugger;
+    var appId = "servic";
+    var scr = "StatusScreen";
+    if (pThis == "onb") {
+        appId = "aphist";
+        scr = "ApplicationHistory"
+    }
+    var lParams = {
+        "appId": appId,
+        "scr": scr,
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "userObj": {
+            "action": "home",
+            "destroyDiv": apz.landpg.landingpage.sCache.destroyDiv,
+            "data": apz.landpg.landingpage.sCache,
+            "parentId": apz.landpg.landingpage.sCache.parentAppId,
+            "loggedCust": apz.landpg.landingpage.sCache.loggedCust,
+            "custImg": apz.landpg.landingpage.sCache.custImg,
+            "custId": apz.landpg.landingpage.sCache.custId,
+            "filter": type
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.landpg.landingpage.fnLaunchQuickLinks = function() {
+    debugger;
+    var lParams = {
+        "appId": "quklnk",
+        "scr": "QuickLinks",
+        "div": "landpg__LandingPage__quickLinks",
+        "type": "CF",
+        "userObj": {
+            "action": "home",
+            "destroyDiv": apz.landpg.landingpage.sCache.destroyDiv,
+            "data": apz.landpg.landingpage.sCache,
+            "parentId": apz.landpg.landingpage.sCache.parentAppId,
+            "loggedCust": apz.landpg.landingpage.sCache.loggedCust,
+            "custImg": apz.landpg.landingpage.sCache.custImg,
+            "custId": apz.landpg.landingpage.sCache.custId
+        }
+    };
+    apz.launchApp(lParams);
+}
+apz.landpg.landingpage.loadAgentPerformanceChart = function() {
+    apz.data.loadJsonData("agentPerformance", "landpg")
+};
+apz.landpg.landingpage.fnQueryLeads = function() {
+    apz.data.loadJsonData("newLeadDetails", "landpg")
+};
+apz.landpg.landingpage.queryLeadCallback = function(pResp) {
+    var resp = [];
+    apz.data.scrdata.landpg__NewLeadDetails_Req = {};
+    apz.data.scrdata.landpg__NewLeadDetails_Req.tbAcopCustomerInfo = [];
+    if (pResp.status) {
+        if (pResp.res.landpg__NewLeadDetails_Req === undefined) {
+            resp = pResp.res.landpg__NewLeadDetails_Res.tbAcopCustomerInfo;
+            apz.landpg.landingpage.sCache.leadDetails = pResp.res.landpg__NewLeadDetails_Res
+        } else {
+            resp = pResp.res.landpg__NewLeadDetails_Req.tbAcopCustomerInfo;
+            apz.landpg.landingpage.sCache.leadDetails = pResp.res.landpg__NewLeadDetails_Req;
+        }
+        for (var i = 0; i < resp.length; i++) {
+            apz.data.scrdata.landpg__NewLeadDetails_Req.tbAcopCustomerInfo[i] = {};
+            apz.data.scrdata.landpg__NewLeadDetails_Req.tbAcopCustomerInfo[i] = resp[i];
+        }
+        apz.data.loadData("NewLeadDetails", "landpg");
+        // apz.landpg.landingpage.sCache.leadDetails.tbAcopCustomerInfo = resp.tbAcopCustomerInfo;
+    }
+}
+apz.landpg.landingpage.loadJsonDataFromURLfnCallback = function(params) {
+    if (params.errors == undefined) {}
+};
+apz.landpg.landingpage.launchMyTasks = function(pThis) {}
+apz.landpg.landingpage.fnBeforeCallServer = function(params) {
+    var lServerParams = {
+        "appId": "landpg",
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.lReq,
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.landpg.landingpage.fncallServerCallBack,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.landpg.landingpage.fncallServerCallBack = function(params) {};
+apz.landpg.landingpage.launchScrs = function() {}
+apz.app.updateChartBeforeRender = function(gChartType, gChartData, gId, gChart) {
+    debugger;
+    gChartData.chart.captionFontBold = 0;
+    gChartData.chart.baseFont = "Roboto";
+    gChartData.chart.usePlotGradientColor = 0;
+    if (gId == "landpg__LandingPage__ApplicationChart") {
+        gChartData.chart.defaultCenterLabel = apz.landpg.landingpage.allCount + " <br/>";
+        gChart.removeEventListener("chartClick", apz.landpg.landingpage.drilldownchart);
+        gChart.addEventListener("chartClick", apz.landpg.landingpage.drilldownchart);
+        // setTimeout(function() {
+        //      $("#landpg__LandingPage__ApplicationChart .raphael-group-9-dataset text tspan").attr('style', 'font-size:18px;');
+        //  }, 1000);
+    } //font-weight:bold;
+}
+apz.landpg.landingpage.drilldownchart = function(ev, props) {
+    debugger;
+    ev.stopPropagation();
+}
+apz.landpg.landingpage.getApplicationChart = function(approved, rejected, pending,saved) {
+    debugger;
+    apz.data.scrdata.landpg__TaskSummary_Res = {};
+    apz.data.scrdata.landpg__TaskSummary_Res.taskStatusSummary = [{
+        "desc": "Pending",
+        "value": pending
+    }, {
+        "desc": "Rejected",
+        "value": rejected
+    }, {
+        "desc": "Approved",
+        "value": approved
+    }, {
+        "desc": "Saved",
+        "value": saved
+    }];
+    apz.data.loadData("TaskSummary", "landpg");
+}

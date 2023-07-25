@@ -1,0 +1,30 @@
+{
+    "chqsts__AccountDetails_Res": {
+        "SavingsAccount": [{
+            "accountNo": "47585936513712",
+            "accountBal": "50000",
+            "accountBrnName": "West Bay-30",
+            "accountBrnCd": "619",
+            "accountBrnIFSC": "HKL00000619"
+        }, {
+            "accountNo": "47585936514239",
+            "accountBal": "65000",
+            "accountBrnName": "West Bay-30",
+            "accountBrnCd": "619",
+            "accountBrnIFSC": "HKL00000619"
+        }, {
+            "accountNo": "5785936513734",
+            "accountBal": "60000",
+            "accountBrnName": "West Bay-30",
+            "accountBrnCd": "619",
+            "accountBrnIFSC": "HKL00000619"
+        }],
+        "CurrentAccount": [{
+                "accountNo": "5785936513734",
+                "accountBal": "65000",
+                "accountBrnName": "One Wall Street,New York",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }]
+    }
+}

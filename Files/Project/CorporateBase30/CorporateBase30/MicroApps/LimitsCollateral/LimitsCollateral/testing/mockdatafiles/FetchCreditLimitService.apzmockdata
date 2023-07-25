@@ -1,0 +1,67 @@
+{
+    "CreditLimitList": [
+        {
+            "limitId": "LI90347508568563",
+            "customerName": "Jack Kricher",
+            "limitCurrency": "USD",
+            "limitAmount": "500",
+            "availableAmount": "200"
+        },
+        {
+            "limitId": "LI90347509349056",
+            "customerName": "Jack Kricher",
+            "limitCurrency": "USD",
+            "limitAmount": "1000",
+            "availableAmount": "200"
+        },
+        {
+            "limitId": "LI90347509345673",
+            "customerName": "Jack Kricher",
+            "limitCurrency": "USD",
+            "limitAmount": "600",
+            "availableAmount": "500"
+        },
+        {
+            "limitId": "LI9034750976543",
+            "customerName": "Jack Kricher",
+            "limitCurrency": "USD",
+            "limitAmount": "300",
+            "availableAmount": "50"
+        }
+    ],
+    "CreditLimitDetails":{
+        
+         "limitId":"L123456789",
+         "limitCurrency":"USD",
+         "limitAmount":"2,00,000.00",
+         "availableAmount":"1,00,000.00",
+         "limitType":"Stock",
+         "parentLimit":"-",
+         "utilizeAmount":"1,00,000",
+         "startDate":"2018-02-15",
+         "endDate":"2019-04-11",
+         "remarks":"Security Interests"
+    },
+    
+    "CreditLimitCollateralDetails":[
+         {
+            "collateralCode": "CI90347509348563",
+            "collateralType": "collateral_1",
+            "collateralValue": "1,00,000"
+           
+        },
+         {
+            "collateralCode": "CI90347509348563",
+            "collateralType": "collateral_1",
+            "collateralValue": "1,00,000"
+           
+        },
+         {
+            "collateralCode": "CI90347509348563",
+            "collateralType": "collateral_1",
+            "collateralValue": "1,00,000"
+           
+        }
+    ],
+    "Status":true
+}

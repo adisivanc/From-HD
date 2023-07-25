@@ -1,0 +1,48 @@
+apz.sweep.ConfirmDetails = {};
+apz.sweep.ConfirmDetails.sparams = {};
+apz.app.onLoad_ConfirmDetails = function(params) {
+    debugger;
+    apz.setElmValue("sweep__ConfirmDetails__accNo", apz.sweep.details.accountNumber);
+    apz.setElmValue("sweep__ConfirmDetails__sweep", apz.sweep.details.sweepTo);
+    apz.setElmValue("sweep__ConfirmDetails__threshold", apz.sweep.details.thresholdAmount);
+    apz.setElmValue("sweep__ConfirmDetails__minBal", apz.sweep.details.minimumBalance);
+    apz.setElmValue("sweep__ConfirmDetails__year", apz.sweep.details.tenor);
+   apz.setElmValue("sweep__ConfirmDetails__interest", apz.sweep.details.interestRate);
+}
+apz.sweep.ConfirmDetails.cancel = function() {
+    var params = {};
+    params.div = "sweep__Launcher__launcher";
+    params.scr = 'DetailsScreen';
+    params.animation = 2;
+    apz.launchSubScreen(params);
+}
+apz.sweep.ConfirmDetails.confirm = function() {
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.sweep.ConfirmDetails.confirmCB,
+                "destroyDiv": "landin__Landing__launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.sweep.ConfirmDetails.confirmCB = function() {
+    var lLaunchParams = {
+        "appId": "sucscr",
+        "scr": "SuccessScreen",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "text": "Sweep Setup successfull"
+        }
+    }
+    apz.launchApp(lLaunchParams);
+}

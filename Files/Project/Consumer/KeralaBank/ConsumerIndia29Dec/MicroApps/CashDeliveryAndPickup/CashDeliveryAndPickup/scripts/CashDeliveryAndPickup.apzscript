@@ -1,0 +1,107 @@
+apz.cashdp.CashDeliveryAndPickup = {};
+apz.app.onLoad_CashDeliveryAndPickup = function() {
+ //   apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "CASH PICKUP AND DELIVERY")
+}
+apz.app.onShown_CashDeliveryAndPickup = function()
+{
+    $("#cashdp__CashDeliveryAndPickup__mob").attr("type","tel");
+        $("#cashdp__CashDeliveryAndPickup__mobNo").attr("type","tel");
+
+
+
+}
+apz.cashdp.CashDeliveryAndPickup.dispMsg = function(pResp, type) {
+    var params = {};
+    params.message = pResp;
+    params.type = type;
+    params.callBack = apz.app.displayMessageCallBack;
+    apz.dispMsg(params);
+}
+
+apz.cashdp.CashDeliveryAndPickup.proceedCashDelivery = function() {
+    debugger;
+ 
+    
+   
+       var MobNo = /^[0-9]{10}$/;
+     var Mob = apz.getElmValue("cashdp__CashDeliveryAndPickup__mobNo")
+    if (MobNo.test(Mob)) {
+        var status = true;
+    }if (status != true) {
+        apz.cashdp.CashDeliveryAndPickup.dispMsg("Invalid Mobile Number", "E");
+    } 
+        
+     
+    else {
+        var lLaunchParams = {
+            "appId": "otpeng",
+            "scr": "ProcessOTP",
+            "div": "landin__Landing__launcher",
+            "userObj": {
+                "action": "SetRefNo",
+                "data": {
+                    //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+                },
+                "control": {
+                    "appId": "otpeng",
+                    "callBack": apz.cashdp.CashDeliveryAndPickup.confirmCBDelivery,
+                    "destroyDiv": "landin__Landing__launcher"
+                }
+            }
+        };
+        apz.launchApp(lLaunchParams);
+    }
+}
+apz.cashdp.CashDeliveryAndPickup.confirmCBDelivery = function() {
+    var lLaunchParams = {
+        "appId": "sucscr",
+        "scr": "SuccessScreen",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "text": "The request for the cash delivery has been submitted. We will get in touch with you shortly."
+        }
+    }
+    apz.launchApp(lLaunchParams);
+}
+apz.cashdp.CashDeliveryAndPickup.proceedCashPickup = function() {
+    debugger;
+   
+    var MobNo = /^[0-9]{10}$/;
+    var Mob = apz.getElmValue("cashdp__CashDeliveryAndPickup__mob")
+    if (MobNo.test(Mob)) {
+        var status = true;
+    }
+   
+     if (status != true) {
+        apz.cashdp.CashDeliveryAndPickup.dispMsg("Invalid Mobile Number", "E");
+    } else {
+        var lLaunchParams = {
+            "appId": "otpeng",
+            "scr": "ProcessOTP",
+            "div": "cashdp__Launcher__launcher",
+            "userObj": {
+                "action": "SetRefNo",
+                "data": {
+                    //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+                },
+                "control": {
+                    "appId": "otpeng",
+                    "callBack": apz.cashdp.CashDeliveryAndPickup.confirmCBPickup,
+                    "destroyDiv": "cashdp__Launcher__launcher"
+                }
+            }
+        };
+        apz.launchApp(lLaunchParams);
+    }
+}
+apz.cashdp.CashDeliveryAndPickup.confirmCBPickup = function() {
+    var lLaunchParams = {
+        "appId": "sucscr",
+        "scr": "SuccessScreen",
+        "div": "cashdp__Launcher__launcher",
+        "userObj": {
+            "text": "The request for the cash pickup has been submitted. We will get in touch with you shortly."
+        }
+    }
+    apz.launchApp(lLaunchParams);
+}

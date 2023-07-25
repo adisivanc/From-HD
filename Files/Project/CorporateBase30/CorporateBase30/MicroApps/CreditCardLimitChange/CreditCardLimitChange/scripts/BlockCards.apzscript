@@ -1,0 +1,89 @@
+apz.crlmch.BlockCards = {};
+apz.app.onLoad_BlockCards = function(params) {
+    debugger;
+ 
+    apz.crlmch.BlockCards.fnInitialise(params);
+};
+apz.crlmch.BlockCards.fnInitialise = function(params) {
+    debugger;
+    apz.crlmch.BlockCards.sParams = params;
+    //apz.crlmch.cardoperation.fnCheckStatusDC();
+    apz.crlmch.BlockCards.fnSetValuesStage1();
+};
+
+
+apz.crlmch.BlockCards.fnSetValuesStage1 = function() {
+    debugger;
+    //apz.setElmValue("crlmch__CardOperations__Stage1CardType", apz.crlmch.cardoperation.sParams.action, +"Card");
+    apz.setElmValue("crlmch__BlockCards__Stage1CardNo", apz.crlmch.BlockCards.sParams.cardNo);
+        apz.setElmValue("crlmch__BlockCards__Stage1NameOnCard",     apz.crlmch.BlockCards.sParams.cardHolderName);
+        
+        
+
+    var lObj = {
+        "decimalSep": apz.decimalSep,
+        "thousandSep": apz.thousandSep,
+        "value": apz.crlmch.BlockCards.sParams.availableCreditLimit,
+        "mask": "MILLION",
+        "decimalPoints": 2
+    };
+    var lAmount = apz.formatNumber(lObj);
+     apz.setElmValue("crlmch__BlockCards__Stage1AvlAmt", lAmount);
+    
+    
+   
+};
+
+
+
+apz.crlmch.BlockCards.fnBack = function() {
+    debugger;
+   var params = {};
+    params.appId = "card01";
+    params.scr = "Cards";
+    //params.layout = "All";
+    params.description = "Cards";
+    // params.displayOrder = lOrder;
+    params.div = "ACNR01__Navigator__launchPad";
+     if (apz.deviceGroup == "Mobile") {
+         params.layout = "Mobile";
+    }
+    else {
+         params.layout = "All";
+    }
+    
+    apz.launchApp(params);
+}
+
+apz.crlmch.BlockCards.fnConfirmStage1 = function(){
+    debugger;
+   
+        
+        apz.toggleModal({
+        "targetId": "crlmch__BlockCards__transactionSuccess"
+    });
+    
+}
+
+
+
+apz.crlmch.cardoperation.fnOnClickOk = function() {
+    apz.toggleModal({
+        "targetId": "crlmch__BlockCards__transactionSuccess"
+    });
+    var params = {};
+    params.appId = "card01";
+    params.scr = "Cards";
+    //params.layout = "All";
+    params.description = "Cards";
+    // params.displayOrder = lOrder;
+    params.div = "ACNR01__Navigator__launchPad";
+    
+     if (apz.deviceGroup == "Mobile") {
+         params.layout = "Mobile";
+    }
+    else {
+         params.layout = "All";
+    }
+    apz.launchApp(params);
+};

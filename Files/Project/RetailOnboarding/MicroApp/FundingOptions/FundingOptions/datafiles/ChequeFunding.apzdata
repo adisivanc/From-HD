@@ -1,0 +1,9 @@
+{
+    "fundin__ChequeFunding_Res": [{
+        "chequeNumber": "KEDB000231",
+        "bankName": "HDFC",
+        "cheque": "bill_payment_cheque.png",
+        "drawnOn": "Drawn on",
+        "date": "24-Apr-2020"
+    }]
+}

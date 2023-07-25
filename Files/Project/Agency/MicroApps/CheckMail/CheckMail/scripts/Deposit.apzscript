@@ -1,0 +1,100 @@
+apz.checkm.Deposit = {};
+apz.checkm.Deposit.sparams = {};
+apz.app.onLoad_Deposit = function(params) {
+    debugger;
+    apz.checkm.Deposit.sparams=params;
+    apz.setElmValue("checkm__Deposit__Amount", "61000.00");
+    apz.setElmValue("checkm__Deposit__slideAmt", "61000.00");
+    $("#checkm__Deposit__Amount").blur();
+    $("#checkm__Deposit__slideAmt").attr("step","5000");
+    $("#checkm__Deposit__slideYrs").attr("disabled","disabled");
+    switch (params.subproduct) {
+        case "3 Month Deposit":
+             apz.setElmValue("checkm__Deposit__el_txt_6","0.35%");
+             apz.setElmValue("checkm__Deposit__YearofDeposit", "3");
+             apz.setElmValue("checkm__Deposit__slideYrs", "3");
+             break;
+        case "6 Month Deposit":
+             apz.setElmValue("checkm__Deposit__el_txt_6","0.65%");
+             apz.setElmValue("checkm__Deposit__YearofDeposit", "6");
+             apz.setElmValue("checkm__Deposit__slideYrs", "6");
+             break;
+        case "12 Month Deposit":
+             apz.setElmValue("checkm__Deposit__el_txt_6","2.10%");
+             apz.setElmValue("checkm__Deposit__YearofDeposit", "12");
+             apz.setElmValue("checkm__Deposit__slideYrs", "12");
+             break;
+        case "24 Month Deposit":
+             apz.setElmValue("checkm__Deposit__el_txt_6","2.20%");
+             apz.setElmValue("checkm__Deposit__YearofDeposit", "24");
+             apz.setElmValue("checkm__Deposit__slideYrs", "24");
+             break;
+    }
+    apz.checkm.Deposit.manageHeaders();
+}
+apz.checkm.Deposit.manageHeaders = function() {
+    $("#appdtl__AppLauncher__product_div").addClass('active');
+    $("#appdtl__AppLauncher__nominee_div").removeClass('active');
+    $("#appdtl__AppLauncher__compliance_div").removeClass('active');
+    $("#appdtl__AppLauncher__document_div").removeClass('active');
+}
+apz.checkm.Deposit.preScreen = function() {
+    debugger;
+    // apz.prddtl.ProductInfo.saveApplicationDetails();
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "DocumentSelection",
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.checkm.Deposit.sparams.lRefNo,
+            "product": apz.checkm.Deposit.sparams.product,
+            "subproduct": apz.checkm.Deposit.sparams.subproduct
+        }
+    };
+    apz.launchApp(lParams);
+}
+apz.checkm.Deposit.fnSelectAmt = function() {
+    debugger;
+    var val = apz.getElmValue("checkm__Deposit__slideAmt");
+    var obj = {};
+    obj.value = val;
+    obj.mask = "MILLION";
+    obj.decimalPoints = 2;
+    obj.decimalSep = "."
+    var result = apz.formatNumber(obj);
+    apz.setElmValue("checkm__Deposit__Amount", result);
+}
+apz.checkm.Deposit.fnSelectYrs = function() {
+    debugger;
+    var val = apz.getElmValue("checkm__Deposit__slideYrs");
+    apz.setElmValue("checkm__Deposit__YearofDeposit", val);
+}
+apz.checkm.Deposit.fnsetAmount = function() {
+    debugger;
+    apz.setElmValue("checkm__Deposit__slideAmt", apz.getElmValue("checkm__Deposit__Amount"));
+}
+apz.checkm.Deposit.fnsetYear = function() {
+    debugger;
+    var lVal = apz.getElmValue("checkm__Deposit__YearofDeposit").split(" ");
+    apz.setElmValue("checkm__Deposit__slideYrs", lVal[0]);
+}
+apz.checkm.Deposit.gotoNext = function() {
+    debugger;
+    apz.checkm.Launcher.fnLaunchSubScreens("Mail");
+}
+
+apz.checkm.Deposit.gotoPre = function() {
+    debugger;
+    // apz.prddtl.ProductInfo.saveApplicationDetails();
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "DocumentSelection",
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.checkm.Deposit.sparams.refNo,
+            "product": apz.checkm.Deposit.sparams.product,
+            "subproduct": apz.checkm.Deposit.sparams.subproduct
+        }
+    };
+    apz.launchApp(lParams);
+}

@@ -1,0 +1,5 @@
+apz.Rates.savingsDeposit={};
+apz.app.onLoad_savingsDeposit=function() {
+    debugger;
+    apz.data.loadJsonData("savingDep","Rates");
+}

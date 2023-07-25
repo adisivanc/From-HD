@@ -1,0 +1,33 @@
+apz.kycrsk.Launcher = {}
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+    apz.kycrsk.Launcher.sCache = params
+    apz.kycrsk.Launcher.fnLaunchSubScreen("Risk")
+}
+apz.app.onShown_Launcher = function(params) {
+    debugger;
+}
+apz.kycrsk.Launcher.fnLaunchSubScreen = function(scr) {
+    debugger;
+    if (scr == "submit") {
+        apz.kycrsk.Launcher.sCache.callback();
+    } else {
+        apz.launchSubScreen({
+            appId: "kycrsk",
+            scr: scr,
+            div: "kycrsk__Launcher__launcher"
+        });
+    }
+}
+apz.kycrsk.Launcher.fnBack = function() {
+    apz.kycrsk.Launcher.sCache.currentFlow = 9;
+    var params = {};
+    params.appId = "loanvg";
+    params.scr = "LoanLauncher";
+    params.div = "apzonb__Navigator__launchdiv";
+    params.userObj = apz.kycrsk.Launcher.sCache;
+    apz.launchApp(params);
+}
+apz.kycrsk.Launcher.fnCancel = function() {
+    apz.apzonb.Navigator.fnSaveFlow();
+}

@@ -1,0 +1,272 @@
+apz.ftsmry.pendingTransactionSummary = {};
+apz.ftsmry.pendingTransactionSummary.penExecutionCard
+apz.app.onLoad_PndTrnscSummary = function(params) {
+    debugger;
+    apz.ftsmry.pendingTransactionSummary.fnInitialise(params);
+    $(".fundRequest").unbind().bind("click", apz.ftsmry.pendingTransactionSummary.fnFundTransfer);
+};
+apz.ftsmry.pendingTransactionSummary.fnInitialise = function(params) {
+    debugger;
+    apz.ftsmry.pendingTransactionSummary.sParams = params;
+    if (params.Navigation) {
+        apz.ftsmry.pendingTransactionSummary.fnSetNavigation(params);
+    }
+    apz.ftsmry.pendingTransactionSummary.fnGoToStage1();
+    apz.hide("ftsmry__PndTrnscSummary__transactionStatus");
+};
+apz.ftsmry.pendingTransactionSummary.fnSetNavigation = function(params) {
+    debugger;
+    apz.ftsmry.pendingTransactionSummary.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.showBack = "N";
+    lParams.headerText = "SAVED TRANSACTIONS";
+    apz.ftsmry.pendingTransactionSummary.Navigation(lParams);
+};
+apz.ftsmry.pendingTransactionSummary.fnGoToStage1 = function() {
+    debugger;
+    apz.ftsmry.pendingTransactionSummary.fnGetValueStage1();
+};
+apz.ftsmry.pendingTransactionSummary.fnGetValueStage1 = function() {
+    debugger;
+    var lReq = {
+        "tbDbtpFundsTransfer": {
+            "customerId": apz.ftsmry.pendingTransactionSummary.sParams.data.customerID
+        }
+    };
+    var lServerParams = {
+        "ifaceName": "PndTrnscSummary_Query",
+        "buildReq": "N",
+        "req": lReq
+    };
+
+    apz.ftsmry.pendingTransactionSummary.fnBeforeCallServer(lServerParams);
+};
+apz.ftsmry.pendingTransactionSummary.fnCancel = function(pthis) {
+    debugger;
+    var lRow = $(pthis).attr("rowNo");
+    var lReq = {};
+    //lReq.tbDbtpFundsTransfer=apz.data.scrdata.ftsmry__pendingTransactionSummary_Req.tbDbtpFundsTransfer[lRow];
+    lReq.tbDbtpFundsTransfer = {};
+    lReq.tbDbtpFundsTransfer.txnRefNo = apz.getElmValue("ftsmry__pendingTransactionSummary__i__tbDbtpFundsTransfer__txnRefNo_" + lRow);
+    apz.ftsmry.pendingTransactionSummary.lRefNo = lReq.tbDbtpFundsTransfer.txnRefNo;
+    var msg = {
+        "code": "ftsmry-SUC-001",
+        "args": apz.ftsmry.pendingTransactionSummary.lRefNo + " <#> ",
+        "callBack": apz.ftsmry.pendingTransactionSummary.fnConfirmCB
+    };
+    apz.dispMsg(msg);
+};
+apz.ftsmry.pendingTransactionSummary.fnConfirmCB = function(params) {
+    debugger;
+    if (params.choice == true) {
+        var msg = {
+            "code": "ftsmry-SUC-002",
+            "args": apz.ftsmry.pendingTransactionSummary.lRefNo + " <#> "
+        };
+        apz.dispMsg(msg);
+    }
+}
+apz.ftsmry.pendingTransactionSummary.fnBeforeCallServer = function(params) {
+    debugger;
+    
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": params.buildReq,
+        "paintResp": "Y",
+        "req": params.req,
+        "appId": "ftsmry",
+        "callBack": apz.ftsmry.pendingTransactionSummary.fnCallServerCB
+    };
+            jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("ftsmry")+"/PndTrnscSummary.json"));
+apz.data.scrdata.ftsmry__PndTrnscSummary_Req = {};
+apz.data.scrdata.ftsmry__PndTrnscSummary_Req = jsondata;
+apz.data.loadData("PndTrnscSummary", "ftsmry");
+   apz.ftsmry.pendingTransactionSummary.fnCallServerCB(jsondata);
+};
+apz.ftsmry.pendingTransactionSummary.fnCallServerCB = function(params) {
+    debugger;
+    // if (params.errors) {
+    //     var lMsg = {
+    //         "message": params.errors[0].errorMessage
+    //     };
+    //     apz.dispMsg(lMsg);
+    // } else {
+        apz.ftsmry.pendingTransactionSummary.sParams.pendingTransactionSummary = params.tbDbtpFundsTransfer;
+    //}
+    for (var j = 0; j < params.tbDbtpFundsTransfer.length; j++) {
+        var ltransdate = apz.getElmValue("ftsmry__PndTrnscSummary__i__tbDbtpFundsTransfer__transferDt_" + j);
+        var ltemp = apz.ftsmry.pendingTransactionSummary.fnFutureDate(ltransdate);
+        ltemp =true;
+        if (ltemp == true && (apz.getElmValue("ftsmry__PndTrnscSummary__i__tbDbtpFundsTransfer__externalStatus_" + j) == "Draft")) {
+            // $("#ftsmry__pendingTransactionSummary__el_btn_1_"+j+"_txtcnt").removeClass("sno"); 
+           // apz.show("ftsmry__PndTrnscSummary__el_btn_1_" + j);
+                                $("#ftsmry__PndTrnscSummary__el_btn_2_" + j).removeClass("sno");
+
+
+        } else
+        //$("#ftsmry__pendingTransactionSummary__el_btn_1_"+j+"_txtcnt").addClass("sno"); 
+          //  apz.hide("ftsmry__PndTrnscSummary__el_btn_1_" + j);
+                                $("#ftsmry__PndTrnscSummary__el_btn_2_" + j).addClass("sno");
+
+
+    }
+  //  apz.ftsmry.pendingTransactionSummary.fnDropDownChange();
+};
+apz.ftsmry.pendingTransactionSummary.fnFutureDate = function(ltransdate) {
+    var ltoday = new Date();
+    var lfuturedate = ltransdate;
+    var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    lfuturedate = lfuturedate.split("-");
+    for (i = 0; i < month.length; i++) {
+        if (lfuturedate[1] == month[i]) {
+            lfuturedate[1] = i + 1;
+            break;
+        }
+    }
+    if (lfuturedate[2] > ltoday.getFullYear()) {
+        return true;
+    } else if (lfuturedate[2] == ltoday.getFullYear()) {
+        if ((lfuturedate[1] + 1) > ltoday.getMonth()) return true;
+    } else if ((lfuturedate[1] + 1) == ltoday.getMonth()) {
+        if (lfuturedate[0] > ltoday.getDate()) return true;
+    } else return false;
+}
+apz.ftsmry.pendingTransactionSummary.fnDropDownChange = function() {
+    debugger;
+var lstatus = apz.getElmValue("ftsmry__pendingTransactionSummary__el_dpd_2");
+  //  var lstatus = "Draft";
+    apz.searchRecords("ftsmry__PndTrnscSummary__ct_lst_1", lstatus);
+    apz.data.buildData("PndTrnscSummary", "ftsmry");
+    for (var j = 0; j < apz.data.scrdata.ftsmry__PndTrnscSummary_Req.tbDbtpFundsTransfer.length; j++) {
+        var ltransdate = apz.getElmValue("ftsmry__PndTrnscSummary__i__tbDbtpFundsTransfer__transferDt_" + j);
+        var ltemp = apz.ftsmry.pendingTransactionSummary.fnFutureDate(ltransdate);
+        if (ltemp == true && (apz.getElmValue("ftsmry__PndTrnscSummary__i__tbDbtpFundsTransfer__externalStatus_" + j) == "Draft")) {
+            apz.show("ftsmry__PndTrnscSummary__el_btn_1_" + j);
+
+        } else apz.hide("ftsmry__PndTrnscSummary__el_btn_1_" + j);
+
+    }
+}
+let lrowNo =0;
+apz.ftsmry.pendingTransactionSummary.fnFundTransfer = function(event) {
+    apz.ftsmry.pendingTransactionSummary.penExecutionCard = $.grep(apz.data.scrdata.ftsmry__PndTrnscSummary_Req.tbDbtpFundsTransfer, function(element,
+        index) {
+        if (element.externalStatus == "Draft") return true;
+    });
+    let lLaunchParams = "";
+    apz.hide("ftsmry__PndTrnscSummary__transactionStatus");
+    debugger;
+    lrowNo = event.target.closest("li").getAttribute("rowno");
+    if ($(event.target.closest("svg")).hasClass("removeCard")) {
+        apz.hide("ftsmry__PndTrnscSummary__savedCards");
+        let lOtpRef = "RF0105690";
+        lLaunchParams = {
+            "appId": "otpeng",
+            "scr": "ProcessOTP",
+            "div": "ftsmry__PndTrnscSummary__otpRowMain",
+            "userObj": {
+                "action": "SetRefNo",
+                "data": {
+                    "OTPRefNo": lOtpRef
+                },
+                "control": {
+                    "appId": "otpeng",
+                    "callBack": apz.ftsmry.pendingTransactionSummary.fnDeleteCardConfirmation,
+                    "destroyDiv": "ftsmry__PndTrnscSummary__otpRowMain"
+                }
+            }
+        };
+    } else {
+        // let lrowNo = event.target.closest("li").getAttribute("rowno");
+        lLaunchParams = {
+            "appId": "fndftr",
+            "scr": "FundsTransfer",
+            "div": "landin__Landing__Launcher",
+            "userObj": {
+                "data": {
+                    "action": "PendingTransaction",
+                    "accounts": apz.ftsmry.pendingTransactionSummary.penExecutionCard[lrowNo],
+                    "customerID": "000004712",
+                    "message": apz.data.scrdata.notifyMsg
+                },
+                "Navigation": {
+                    "setNavigation": apz.csmrbk.landingpage.fnSetNavigation
+                },
+                "control": {
+                    "exitApp": {
+                        "appId": "landin",
+                        "div": "landin__Landing__Launcher",
+                        "callBack": apz.landing.Landing.fnHome
+                    }
+                }
+            }
+        };
+    }
+    apz.launchApp(lLaunchParams);
+}
+apz.ftsmry.pendingTransactionSummary.fnDeleteCard = function() {
+// apz.dispMsg({message : "The saved transaction has been deleted"})
+      
+//     }
+//     apz.ftsmry.pendingTransactionSummary.ManageCancel = function(pResp) {
+//         debugger;
+//         if (pResp.choice) {
+//             apz.ftsmry.pendingTransactionSummary.fnDeleteCard();
+//         }
+//     }
+//     apz.ftsmry.pendingTransactionSummary.onCancel = function() {
+//         apz.dispMsg({
+//             message: "Are you sure want to delete?  " ,
+//             type: "C",
+//             callBack: apz.ftsmry.pendingTransactionSummary.ManageCancel
+//         });
+  //  }
+}
+apz.ftsmry.pendingTransactionSummary.fnDeleteCardConfirmation = function(params) {
+    debugger;
+    let deletedCard =  apz.ftsmry.pendingTransactionSummary.penExecutionCard[lrowNo];
+    console.dir(deletedCard);
+    $("#ftsmry__PndTrnscSummary__el_btn_3").removeAttr("disabled");
+    $("#ftsmry__PndTrnscSummary__el_btn_4").removeAttr("disabled")
+    apz.hide("ftsmry__PndTrnscSummary__el_txt_22_txtcnt");
+    apz.show("ftsmry__PndTrnscSummary__transactionStatus");
+    apz.setElmValue("ftsmry__PndTrnscSummary__sendingAmoount",deletedCard.transferAmount);
+    apz.setElmValue("ftsmry__PndTrnscSummary__fromAccount",deletedCard.fromAccountNo);
+    apz.setElmValue("ftsmry__PndTrnscSummary__sendingTo",deletedCard.beneficiaryName);
+    apz.setElmValue("ftsmry__PndTrnscSummary__el_inp_7",deletedCard.beneficiaryAccountNo);
+    apz.setElmValue("ftsmry__PndTrnscSummary__el_inp_3",deletedCard.beneficiaryType);
+    apz.setElmValue("ftsmry__PndTrnscSummary__el_inp_8",deletedCard.remarks);
+}
+
+apz.ftsmry.pendingTransactionSummary.fnDone = function (){
+    debugger;
+    
+    apz.hide("ftsmry__PndTrnscSummary__transactionStatus");
+    apz.show("ftsmry__PndTrnscSummary__savedCards");
+    
+}
+
+
+
+
+
+
+
+apz.ftsmry.pendingTransactionSummary.fnCancel = function() {
+        debugger;
+       apz.dispMsg({message : "The saved transaction has been deleted",type : "S",callBack:    apz.landin.Landing.fnHome});
+    }
+    apz.ftsmry.pendingTransactionSummary.ManageCancel = function(pResp) {
+        debugger;
+        if (pResp.choice) {
+            apz.ftsmry.pendingTransactionSummary.fnCancel();
+        }
+    }
+    apz.ftsmry.pendingTransactionSummary.onCancel = function() {
+        debugger;
+        apz.dispMsg({
+            message: "Are you sure want to delete? ",  type: "C",
+            callBack: apz.ftsmry.pendingTransactionSummary.ManageCancel
+        });
+    }
+

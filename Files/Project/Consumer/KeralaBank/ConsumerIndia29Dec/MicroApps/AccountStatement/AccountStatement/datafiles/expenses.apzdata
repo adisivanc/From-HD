@@ -1,0 +1,21 @@
+{
+    "accstm__expenses_Res": {
+        "widgExpenses": [{
+            "date": "29/08/2020",
+            "amount": "10000.00",
+            "desc": "Rent paid to Owner"
+        }, {
+            "date": "26/08/2020",
+            "amount": " 3000.00",
+            "desc": "Restaurant Bill"
+        }, {
+            "date": "25/08/2020",
+            "amount": "9000.00",
+            "desc": "ATM Clarendon Centre"
+        }, {
+            "date": "24/08/2020",
+            "amount": "300.00",
+            "desc": "Cab Bill"
+        }]
+    }
+}

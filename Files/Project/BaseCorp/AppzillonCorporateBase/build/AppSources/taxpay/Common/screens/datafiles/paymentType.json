@@ -1,0 +1,17 @@
+{
+    "taxpay__PaymentType_Res": {
+        "PaymentDetails": [
+            
+            {
+                "payment": "Federal Tax"
+            },
+            {
+                "payment": "International Tax"
+            },
+            {
+                "payment": "IRS Bulk Tax"
+            }
+            
+        ]
+    }
+}

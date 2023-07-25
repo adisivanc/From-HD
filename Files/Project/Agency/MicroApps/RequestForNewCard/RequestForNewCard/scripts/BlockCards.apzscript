@@ -1,0 +1,68 @@
+apz.crddtl.BlockCards = {};
+apz.app.onLoad_BlockCards = function(params) {
+    debugger;
+    apz.crddtl.BlockCards.sParams = params;
+    apz.crddtl.BlockCards.fnInitialise();
+        // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "BLOCK CARDS")
+
+};
+apz.crddtl.BlockCards.fnInitialise = function(params) {
+    debugger;
+    var lReq = {
+        "cardDetails": {
+            "cardType": apz.crddtl.BlockCards.sParams.CardType
+        }
+    };
+    var lServerParams = {
+        "ifaceName": "ManageCards",
+        "buildReq": "N",
+        "paintResp": "Y",
+        "req": lReq
+    };
+    apz.crddtl.BlockCards.fnBeforeCallServer(lServerParams);
+};
+apz.crddtl.BlockCards.fnBeforeCallServer = function(params) {
+    /*debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.req,
+        "paintResp": "N",
+        "callBack": apz.crddtl.BlockCards.fnCallServerCallBack
+    };*/
+    apz.data.loadJsonData(params.ifaceName, "crddtl");
+    apz.crddtl.BlockCards.fnCallServerCallBack(apz.data.scrdata.crddtl__ManageCards_Res);
+};
+apz.crddtl.BlockCards.fnCallServerCallBack = function(params) {
+    debugger;
+    /*if (params.errors) {
+        var lMsg = {
+            "message": params.errors[0].errorMessage
+        };
+        apz.dispMsg(lMsg);
+    } else {*/
+    apz.crddtl.BlockCards.sParams.CardDetails = params.cardDetails;
+    apz.data.scrdata.crddtl__BlockCards_Res = {};
+    apz.data.scrdata.crddtl__BlockCards_Res.cardDetails = apz.crddtl.BlockCards.sParams.CardDetails;
+    if (apz.crddtl.BlockCards.sParams.CardType == "Credit Card") {
+        $(".Amount").addClass("sno");
+        $(".CreditCardElm").removeClass("sno");
+    } else {
+        $(".Amount").removeClass("sno");
+        $(".CreditCardElm").addClass("sno");
+    }
+    apz.data.loadData("BlockCards", "crddtl");
+    //}
+};
+apz.crddtl.BlockCards.fnCancel = function() {
+    debugger;
+    apz.crddtl.BlockCards.sParams.callBack();
+};
+apz.crddtl.BlockCards.fnConfirm = function() {
+    debugger;
+    var lParams = {
+        'code': "CRE_CARD_001",
+        "callBack": apz.crddtl.BlockCards.sParams.callBack
+    };
+    apz.dispMsg(lParams);
+}

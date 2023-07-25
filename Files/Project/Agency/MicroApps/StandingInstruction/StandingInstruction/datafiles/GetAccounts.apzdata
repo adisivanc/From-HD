@@ -1,0 +1,38 @@
+{
+    "stnint__GetAccounts_Res":{
+    "accountDetail": [{
+                "accountNo": "100009312263",
+                "accountBal": "50000",
+                "accountBrnName": "Clarendon Centre",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "7083",
+                "accountOpnDt": "12/08/2001",
+                "accountType": "Savings Account",
+                "accountStat": "Open",
+                "actCustRel": "Single",
+                "accountPrdct": "1233"
+            }, {
+                "accountNo": "100009312401",
+                "accountBal": "65000",
+                "accountBrnName": "Clarendon Centre",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "7083",
+                "accountOpnDt": "12/08/2001",
+                "accountType": "Savings Account",
+                "accountStat": "Open",
+                "actCustRel": "Single",
+                "accountPrdct": "1233"
+            }, {
+                "accountNo": "100009312274",
+                "accountBal": "60000",
+                "accountBrnName": "Clarendon Centre",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "7083",
+                "accountOpnDt": "22/01/2000",
+                "accountType": "Current Account",
+                "accountStat": "Open",
+                "actCustRel": "Single",
+                "accountPrdct": "9001"
+            }]
+    }
+}

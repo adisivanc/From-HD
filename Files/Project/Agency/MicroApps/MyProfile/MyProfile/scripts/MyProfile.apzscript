@@ -1,0 +1,73 @@
+apz.myprof.MyProfile = {};
+apz.myprof.MyProfile.sCache = "";
+apz.data.scrdata.myprof__customerDetails_Res = {};
+apz.data.scrdata.myprof__customerDetails_Res.SignatoryNode = [];
+apz.app.onShown_MyProfile = function(params) {
+    debugger;
+    apz.myprof.MyProfile.sCache = params;
+    if (apz.myprof.MyProfile.sCache.custType == "Signatory") {
+        apz.myprof.MyProfile.getProfileDetails("FetchSignDetails_Query");
+    } else {
+        apz.myprof.MyProfile.getProfileDetails("FetchBearerDetails_Query");
+    }
+}
+apz.myprof.MyProfile.getProfileDetails = function(iface) {
+    debugger;
+    var ServerParams = {
+        "ifaceName": iface,
+        "appId": "myprof",
+        "buildReq": "Y",
+        "req": {},
+        "paintResp": "Y",
+        "async": "true",
+        "callBack": apz.myprof.MyProfile.getProfileDetailsCB,
+        "callBackObj": "",
+    };
+    apz.server.callServer(ServerParams);
+}
+apz.myprof.MyProfile.fnCancel = function() {
+    debugger;
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": "menuap__Menu__MainLaunchArea",
+            "parentAppId": "menuap",
+            "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+            "custImg": "menuap__Menu__custImg",
+            "custId": "menuap__Menu__custId_txtcnt"
+        }
+    }
+    apz.launchApp(lParams);
+}
+apz.myprof.MyProfile.getProfileDetailsCB = function(params) {
+    debugger;
+    if (params.res.myprof__FetchBearerDetails_Res != undefined) {
+        for (var i = 0; i < params.res.myprof__FetchBearerDetails_Res.tbBearerDetails.length; i++) {
+            if (params.res.myprof__FetchBearerDetails_Res.tbBearerDetails[i].bearerId == apz.myprof.MyProfile.sCache.custId) {
+                $("#myprof__MyProfile__cName").html(params.res.myprof__FetchBearerDetails_Res.tbBearerDetails[i].bearerName);
+                $("#myprof__MyProfile__cEmail").html(params.res.myprof__FetchBearerDetails_Res.tbBearerDetails[i].bearerEmailId);
+                $("#myprof__MyProfile__cDob").html(params.res.myprof__FetchBearerDetails_Res.tbBearerDetails[i].bearerDob);
+                $("#myprof__MyProfile__cPhone").html(params.res.myprof__FetchBearerDetails_Res.tbBearerDetails[i].bearerMobileNo);
+                $("#myprof__MyProfile__cId").html(params.res.myprof__FetchBearerDetails_Res.tbBearerDetails[i].bearerId);
+                $('#myprof__MyProfile__cImage').prop('src', 'data:image;base64,' + params.res.myprof__FetchBearerDetails_Res.tbBearerDetails[i].bearerImage);
+                $("#myprof__MyProfile__requst_type").html("Bearer Id");
+            }
+        }
+    } else if (params.res.myprof__FetchSignDetails_Res != undefined) {
+        for (var i = 0; i < params.res.myprof__FetchSignDetails_Res.tbSignatoryDetails.length; i++) {
+            if (params.res.myprof__FetchSignDetails_Res.tbSignatoryDetails[i].signId == apz.myprof.MyProfile.sCache.custId) {
+                $("#myprof__MyProfile__cName").html(params.res.myprof__FetchSignDetails_Res.tbSignatoryDetails[i].signName);
+                $("#myprof__MyProfile__cEmail").html(params.res.myprof__FetchSignDetails_Res.tbSignatoryDetails[i].signEmailId);
+                $("#myprof__MyProfile__cDob").html(params.res.myprof__FetchSignDetails_Res.tbSignatoryDetails[i].signDob);
+                $("#myprof__MyProfile__cPhone").html(params.res.myprof__FetchSignDetails_Res.tbSignatoryDetails[i].signMobileNo);
+                $("#myprof__MyProfile__cId").html(params.res.myprof__FetchSignDetails_Res.tbSignatoryDetails[i].signId);
+                $('#myprof__MyProfile__cImage').prop('src', 'data:image;base64,' + params.res.myprof__FetchSignDetails_Res.tbSignatoryDetails[i].signImage);
+                $("#myprof__MyProfile__requst_type").html("Signatory Id");
+            }
+        }
+    }
+}

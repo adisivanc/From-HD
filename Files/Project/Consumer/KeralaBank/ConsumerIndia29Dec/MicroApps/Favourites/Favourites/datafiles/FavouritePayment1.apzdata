@@ -1,0 +1,45 @@
+{
+    "favour__FavouritePayment_Res": {
+        "summary": [{
+            "providerImg": "mob.png",
+            "providerName": "Mobile",
+            "status": "Autopay Scheduled",
+            "dueDate": "",
+            "subsriberId": "9600565673",
+            "billType": "Mobile",
+            "providerCategory": "Verizon",
+            "fromAccountNo": "100009312274",
+            "amount": "12000"
+        }, {
+            "providerImg": "gas.png",
+            "providerName": "Gas",
+            "status": "pending",
+            "dueDate": "20/03/2020",
+            "subsriberId": "232323423",
+            "billType": "General",
+            "providerCategory": "Abest Power & Gas",
+            "fromAccountNo": "100009312263",
+            "amount": "5000"
+        }, {
+            "providerImg": "el.png",
+            "providerName": "Electricity",
+            "status": "Autopay Scheduled",
+            "dueDate": "",
+            "subsriberId": "8698345627",
+            "billType": "Mobile",
+            "providerCategory": "Pennsylvania Electric Company",
+            "fromAccountNo": "100009312263",
+            "amount": "878"
+        }, {
+            "providerImg": "insu.png",
+            "providerName": "Insurance",
+            "status": "pending",
+            "dueDate": "28/03/2020",
+            "subsriberId": "100100023234",
+            "billType": "General",
+            "providerCategory": "MetLife",
+            "fromAccountNo": "100009312274",
+            "amount": "3300"
+        }]
+    }
+}

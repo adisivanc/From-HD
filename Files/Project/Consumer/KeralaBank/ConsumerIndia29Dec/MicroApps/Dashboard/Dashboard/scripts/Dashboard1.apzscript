@@ -1,0 +1,475 @@
+apz.dashbo.Dashboard = {};
+apz.dashbo.landingpage = {};
+
+apz.dashbo.landingpage.widgets = [];
+
+apz.app.onLoad_Dashboard = function(params) {
+   
+    $("#dashbo__Dashboard__el_hpl_1").attr("target","_blank");
+     var name = LandingCommon.getLoggedInUser();
+    apz.setElmValue("dashbo__Dashboard__el_txt_1", name)
+    $("body").addClass("dashbody");
+    $("body").addClass("landingtheme2");
+
+    $("#dashbo__LandingPage__sc_col_55").removeClass("sno");
+  //  apz.setElmValue("dashbo__Dashboard__el_txt_1",apz.dashbo.landingpage.currentUser);
+    apz.dashbo.Dashboard.launchAccountDetailsfn();
+    apz.dashbo.Dashboard.launchfavfn();
+    apz.dashbo.Dashboard.launchOverview();
+    
+    $("#landin__Landing__ct_lst_3 ul>li>span svg,#landin__Landing__ct_lst_3 ul>li>span").draggable({
+        helper: "clone",
+        axis: "y",
+        cursor: "crosshair"
+    });
+   
+    $("#scr__dashbo__Dashboard__main").droppable({
+        drop: function(event, ui) {
+            debugger;
+      //  $(this).append(ui.draggable);
+
+            $("#dashbo__LandingPage__sc_col_55>svg").trigger("click")
+            if (apz.dashbo.landingpage.widgets.length < 8) {
+                var rowno = parseInt(ui.draggable.closest("li").attr("rowno"));
+                $("#landin__Landing__el_icn_1").trigger("click");
+                ui.draggable.closest("li").css({
+                    "pointer-events": "none",
+                    "opacity": 0.5
+                });
+                $("#landin__Landing__el_icn_1").trigger("click");
+                // setTimeout(function(){$("#dashbo__LandingPage__ct_lst_3>ul>li").eq(rowno).css({"pointer-events": "none","opacity":0.5})},100)
+                var widget = apz.data.scrdata.landin__widgetIcon_Req.widgetDetails[rowno];
+                apz.dashbo.landingpage.launchwidget(widget.scr, widget.name);
+                apz.dashbo.landingpage.widgets.forEach(function(item, i) {
+                    apz.dashbo.landingpage.launchwidgets(item, i);
+                })
+            } else {
+                apz.dispMsg({
+                    "message": "Only eight widgets can be shown. If you want add widget, delete any existing widget to add new."
+                })
+            }
+        }
+    });
+      //  apz.dashbo.landingpage.initTouch();
+
+}
+
+
+// touchHandler = function(event) {
+//     debugger;
+//     var touches = event.changedTouches,
+//         first = touches[0],
+//         type = "";
+//     switch (event.type) {
+//         case "touchstart":
+//             type = "mousedown";
+//             break;
+//         case "touchmove":
+//             type = "mousemove";
+//             break;
+//         case "touchend":
+//             type = "mouseup";
+//             break;
+//         default:
+//             return;
+//     }
+//     var simulatedEvent = document.createEvent("MouseEvent");
+//     simulatedEvent.initMouseEvent(type, true, true, window, 1, first.screenX, first.screenY, first.clientX, first.clientY, false, false, false, false,
+//         0 /*left*/ , null);
+//     first.target.dispatchEvent(simulatedEvent);
+//     event.preventDefault();
+// }
+// apz.dashbo.landingpage.initTouch = function() {
+//     debugger;
+//     document.addEventListener("touchstart", touchHandler, "true");
+//     document.addEventListener("touchmove", touchHandler, "true");
+//     document.addEventListener("touchend", touchHandler, "true");
+//     document.addEventListener("touchcancel", touchHandler, "true");
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+apz.app.onShown_Dashboard = function(params) {
+        apz.dashbo.landingpage.launchwidget("CreditCardDashboard", "Credit Card Payments");
+        apz.dashbo.landingpage.launchwidget("SpendDashboard", "Spend Analysis");
+ apz.dashbo.landingpage.launchwidget("EarnAndSpend", "Earn and Spends");
+  apz.dashbo.landingpage.launchwidget("demonew", "Calendar");
+
+                        apz.dashbo.landingpage.launchwidget("UpcomingDashboard", "Upcoming Payments");
+           apz.dashbo.landingpage.launchwidget("feDashboard", "Foreign Exchange Rates");
+
+   // apz.dashbo.landingpage.launchwidget("recentTransaction", "Recent Transactions");
+                    apz.dashbo.landingpage.launchwidget("MessageDashboard", "Messages");
+
+        apz.dashbo.landingpage.launchwidget("PromotionDashboard", "Announcements");
+       
+
+
+
+    setTimeout(function() {
+        $("#landin__Landing__ct_lst_3>ul>li:lt(8)").css({
+            "pointer-events": "none",
+            "opacity": 0.5
+        });
+    }, 100)
+    apz.dashbo.landingpage.widgets.forEach(function(item, i) {
+        apz.dashbo.landingpage.launchwidgets(item, i);
+    })
+}
+apz.dashbo.landingpage.launchwidget = function(scrname, colname) {
+    debugger;
+    // if (paramsId == "dashbo__LandingPage__lblLastTransaction") {
+    //     $("#dashbo__LandingPage__lblCard").closest(".ui-draggable").css({"pointer-events": "auto"});
+    // }
+    // if (paramsId == "dashbo__LandingPage__lblCard") {
+    //     $("#dashbo__LandingPage__lblLastTransaction").closest(".ui-draggable").css({"pointer-events": "auto"});
+    // }
+    // $("#"+paramsId).closest(".ui-draggable").css({"pointer-events": "none"});
+    if (apz.dashbo.landingpage.widgets.length < 8) {
+        var obj = {};
+        obj["title"] = colname;
+        obj["scr"] = scrname;
+        apz.dashbo.landingpage.widgets.push(obj);
+        apz.data.scrdata.dashbo__launchWidgets_Res = apz.dashbo.landingpage.widgets;
+        apz.data.loadData("launchWidgets", "dashbo");
+    } else {
+        apz.dispMsg({
+            "message": "Only three widgets can be shown. If you want add widget, delete any existing widget to add new."
+        })
+    }
+};
+apz.dashbo.landingpage.fnExpand = function(ths){
+    debugger;
+if(ths.id == "dashbo__Dashboard__el_icn_11_1")
+{
+    $("body").removeClass("landingtheme2");
+}
+    if (apz.dashbo.landingpage.widgets.length > 1) {
+        var rowno = $(ths).closest("li").index();
+        var closedObj = apz.dashbo.landingpage.widgets[rowno];
+        lparams = {};
+        
+        switch(closedObj.title){
+            case "Earn and Spends": lparams.appId="ernspn";
+                                    lparams.scr = "EarnAndSpendlarge";
+                                    lparams.div = "dashbo__Dashboard__launchexpandChart";
+                                    lparams.layout = "All"
+                                    lparams.userObj = { "from":"widget"}
+                                            apz.toggleModal({targetId:"dashbo__Dashboard__expandmodal"});
+                                                apz.launchApp(lparams);
+
+                                    break;
+            case "Spend Analysis": apz.landin.Landing.fnMenuClickInside("Spend Analysis");break;
+        }
+        
+        
+    
+    }
+}
+apz.dashbo.landingpage.fnCloseWidget = function(ths) {
+    debugger;
+    if (apz.dashbo.landingpage.widgets.length > 1) {
+        var rowno = $(ths).closest("li").index();
+        $("#dashbo__Dashboard__ct_lst_3>ul>li:gt(0)").remove();
+        var closedObj = apz.dashbo.landingpage.widgets[rowno];
+        var enableIconIndex = apz.dashbo.landingpage.fngetRowIndex(closedObj);
+        $("#landin__Landing__el_icn_1").trigger("click");
+        $("#landin__Landing__ct_lst_3>ul>li").eq(enableIconIndex).removeAttr("style");
+        apz.dashbo.landingpage.widgets.splice(rowno, 1);
+        apz.data.scrdata.dashbo__launchWidgets_Res = apz.dashbo.landingpage.widgets;
+        apz.data.loadData("launchWidgets", "dashbo");
+        apz.dashbo.landingpage.widgets.forEach(function(item, i) {
+            apz.dashbo.landingpage.launchwidgets(item, i);
+        });
+    } else {
+        apz.dispMsg({
+            "message": "Atleast one widget is required"
+        })
+    }
+};
+apz.dashbo.landingpage.fngetRowIndex = function(closedObj) {
+    debugger;
+    var enableIconIndex;
+    switch (closedObj.title) {
+        case "Credit Card Payments":
+            enableIconIndex = 0;
+            break;
+        case "Spend Analysis":
+            enableIconIndex = 1;
+            break;
+        case "Earn and Spends":
+            enableIconIndex = 2;
+            break;
+        case "Calendar":
+            enableIconIndex = 3;
+            break;
+        case "Upcoming Payments":
+            enableIconIndex = 4;
+            break;
+            case "Recent Transactions":
+            enableIconIndex = 9;
+            
+            break;
+             case "Messages":
+            enableIconIndex = 6;
+            break;
+             case "Announcements":
+            enableIconIndex = 7;
+            break;
+             case "Expenses":
+            enableIconIndex = 8;
+            break;
+             case "Foreign Exchange Rates":
+            enableIconIndex = 5;
+            break;
+           
+            
+    }
+    return enableIconIndex;
+}
+apz.dashbo.landingpage.launchwidgets = function(item, index) {
+    debugger;
+    var li = $("#dashbo__Dashboard__ct_lst_3>ul>li")[index];
+    var id = 'dashbo__Dashboard__custom_' + li.id + "_" + index;
+    var span = "<span id=" + id + " class='pri'></span>";
+    var ele = $(span);
+    $("#" + li.id).find("#dashbo__Dashboard__sc_row_6_row>span>span").remove();
+    $("#" + li.id).find("#dashbo__Dashboard__sc_row_6_row>span").append(ele);
+    if (item.title == "Messages") {
+        var lparams = {
+            "scr": item.scr,
+            "div": id,
+            "appId": "messag",
+            "layout" : "All"
+        };
+        apz.launchApp(lparams);
+    }else if(item.title == "CashFlow"){
+        var lparams = {
+            "scr": "CashFlow",
+            "div": id,
+            "appId": "cashfl"
+        };
+        apz.launchApp(lparams);
+    }else if(item.title == "Card Details"){
+        var lparams = {
+            "scr": item.scr,
+            "div": id,
+            "appId": "cdtcrd"
+        };
+        apz.launchApp(lparams);
+    }else if(item.title == "Recent Transactions" || item.title == "Last Transactions"){
+        var lparams = {
+            "scr": item.scr,
+            "div": id,
+            "appId": "accstm"
+        };
+        apz.launchApp(lparams);
+    } else if(item.title == "Expenses" ){
+        var lparams = {
+            "scr": item.scr,
+            "div": id,
+            "appId": "accstm"
+        };
+        apz.launchApp(lparams);
+    }else if(item.title == "Average Balances"){
+        var lparams = {
+            "scr": item.scr,
+            "div": id,
+            "appId": "balanc"
+        };
+        apz.launchApp(lparams);
+        
+    }else if(item.title == "Foreign Exchange Rates"){
+        var lparams = {
+            "scr": item.scr,
+            "div": id,
+            "appId": "Rates"
+        };
+        apz.launchApp(lparams);
+        
+    }else if(item.title == "Credit Card Payments"){
+        var lparams = {
+            "scr": item.scr,
+            "div": id,
+            "appId": "cdtcrd"
+        };
+        apz.launchApp(lparams);
+        
+    }else if(item.title == "Spend Analysis"){
+        var lparams = {
+            "scr": item.scr,
+            "div": id,
+            "appId": "spndas"
+        };
+        apz.launchApp(lparams);
+        $("#"+li.id+"> span > span").eq(0).children("span").eq(1).removeClass("sno");
+        
+    }else if(item.title == "Announcements"){
+        var lparams = {
+            "scr": item.scr,
+            "div": id,
+            "appId": "pmtapp",
+            "userObj":{
+                 'userId' : LandingCommon.getLoggedInUser()
+            }
+        };
+        apz.launchApp(lparams);
+        $("#"+li.id).addClass("annoM25");
+        
+    }else if(item.title == "Earn and Spends"){
+        var lparams = {
+            "scr": item.scr,
+            "div": id,
+            "appId": "ernspn"
+        };
+        apz.launchApp(lparams);
+        $("#"+li.id+"> span > span").eq(0).children("span").eq(1).removeClass("sno");
+        
+    }else if(item.title == "Upcoming Payments"){
+        var lparams = {
+            "scr": item.scr,
+            "div": id,
+            "appId": "bllpay"
+        };
+        apz.launchApp(lparams);
+        
+    }else if(item.title == "Calendar"){
+
+        var lparams = {
+            "scr": item.scr,
+            "div": id,
+            "appId": "Calend", 
+            "userObj" : 
+            {
+                "li" : li.id
+            }
+        };
+        apz.launchApp(lparams);
+        
+    }else {
+        var lparams = {
+            "scr": item.scr,
+            "div": id,
+            "appId": "dashbo"
+        };
+        apz.launchSubScreen(lparams);
+    }
+}
+apz.dashbo.Dashboard.launchAccountDetailsfn = function() {
+    debugger;
+
+    var lparams = {
+        "scr": "accountDetails",
+        "div": "dashbo__Dashboard__launchAccountDetailsCol",
+        "appId": "dashbo"
+    };
+    apz.launchSubScreen(lparams);
+}
+apz.dashbo.Dashboard.launchfavfn = function() {
+    debugger;
+
+    var lparams = {
+        "scr": "favorites",
+        "div": "dashbo__Dashboard__launchFavDetailsCol",
+        "appId": "favour"
+    };
+    apz.launchApp(lparams);
+}
+apz.dashbo.Dashboard.launchPromotefn = function() {
+    debugger;
+
+    var lparams = {
+        "div": "dashbo__Dashboard__promotecol",
+        "appId": "pmtapp",
+        "userObj":{
+            "userId":apz.dashbo.landingpage.currentUser,
+            "div":"dashbo__LandingPage__microappLauncherCol",
+            "dispMsg":""
+            
+        }
+       
+    };
+    apz.launchApp(lparams);
+}
+apz.dashbo.Dashboard.fnOpenPromotion = function() {
+    debugger;
+
+    apz.toggleModal({
+        targetId: "dashbo__Dashboard__promotionalModal"
+    })
+    apz.dashbo.Dashboard.launchPromotefn();
+}
+apz.dashbo.Dashboard.launchChatbotfn = function() {
+    debugger;
+
+    var lparams = {
+        "div": "dashbo__Dashboard__chatbot",
+        "appId": "ChatBo",
+         "scr": "chatScreen",
+        "userObj": {
+            "parentAppId": "dashbo"
+        },
+    };
+    apz.launchApp(lparams);
+}
+apz.dashbo.Dashboard.fnOpenChatbot = function() {
+    debugger;
+
+   
+    apz.toggleModal({
+        targetId: "dashbo__Dashboard__pu_mdl_1"
+    })
+    apz.dashbo.Dashboard.launchChatbotfn();
+}
+apz.dashbo.Dashboard.launchOverview = function() {
+    debugger;
+
+    var lparams = {
+        "div": "dashbo__Dashboard__Overview",
+        "appId": "relovr",
+         "scr": "DashboardOverview"
+        
+    };
+    apz.launchApp(lparams);
+}
+
+
+apz.dashbo.Dashboard.launchMicroapps = function(ths) {
+    debugger;
+
+    // lParams = {};
+   textContent = ths;
+  //  apz.landin.Landing.fnMenuClickInside(textContent);
+    // if(textContent == "Bill Payment")
+    // {
+            apz.landin.Landing.fnMenuClickInside(textContent);
+
+   // }
+    
+}
+
+apz.dashbo.Dashboard.fnClose = function() {
+    debugger;
+    $("#dashbo__Dashboard__gr_row_29").addClass("sno");
+}
+
+
+
+apz.dashbo.Dashboard.fnAddEvent = function()
+{
+    debugger;
+     apz.toggleModal({
+            targetId: "Calend__demonew__pu_mdl_1"
+        })
+    
+}

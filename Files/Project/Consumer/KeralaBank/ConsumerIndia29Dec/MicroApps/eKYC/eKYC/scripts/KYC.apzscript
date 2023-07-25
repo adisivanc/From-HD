@@ -1,0 +1,229 @@
+apz.ekycdt = {
+    KYC: {}
+}
+apz.app.onLoad_KYC = function(params) {
+    debugger;
+};
+apz.app.onShown_KYC = function(params) {
+    debugger;
+   // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "ADD/VIEW KYC DETAILS");
+};
+apz.ekycdt.KYC.onCancel = function(param) {}
+apz.ekycdt.KYC.fnGetSession = function() {
+    apz.server.login({
+        "userId": "admin",
+        "pwd": "admin",
+        "callBack": apz.ekycdt.KYC.fnOpenCamera
+        // "callBack": apz.ekycdt.KYC.fnOpenGallery
+    })
+}
+apz.ekycdt.KYC.fnOpenGallery = function() {
+    var json = {
+        "filter": "",
+        "fileCategory": "EXTERNAL",
+        "location": "EXTERNAL",
+        "openFile": "N"
+    };
+    // json.id = id;
+    json.callBack = apz.ekycdt.KYC.fnGetBase64;
+    apz.ns.fileBrowser(json);
+}
+apz.ekycdt.KYC.fnOpenCamera = function(params) {
+    if (params.errors == undefined && params.status) {
+        var jsonobj = {
+            "zoomLevel": "20",
+            "targetWidth": "200",
+            "targetHeight": "200",
+            "crop": "Y", //Y or N
+            "flash": "N",
+            "action": "base64", // save,base64
+            "fileName": "Identity_Image",
+            "quality": "50",
+            "encodingType": "JPG",
+            "sourceType": "camera" // photo
+        };
+        jsonobj.id = "CAMERA_ID";
+        jsonobj.callBack = apz.ekycdt.KYC.fnGetBase64;
+        apz.ns.openCamera(jsonobj);
+    }
+}
+apz.ekycdt.KYC.fnGetBase64 = function(params) {
+    debugger;
+    if (apz.ekycdt.KYC.whichImage == "ekycdt__KYC__browse_aadhaar") {
+        $("#ekycdt__KYC__aadhaar_image").attr("src", "data:image/jpg;base64," + params.encodedImage);
+    } else {
+        $("#ekycdt__KYC__pan_image").attr("src", "data:image/jpg;base64," + params.encodedImage);
+    }
+}
+apz.ekycdt.KYC.onBrowseAadhaar = function(pthis) {
+    debugger;
+    apz.ekycdt.KYC.whichImage = pthis.id;
+    if (apz.deviceType === "ANDROID") {
+        apz.ekycdt.KYC.fnGetSession();
+    }
+}
+apz.ekycdt.KYC.onBrowsePAN = function(pthis) {
+    debugger;
+    apz.ekycdt.KYC.whichImage = pthis.id;
+    if (apz.deviceType === "ANDROID") {
+        apz.ekycdt.KYC.fnGetSession();
+    }
+}
+apz.ekycdt.KYC.BrowsePAN = function(pthis, event) {
+    debugger;
+    let fileObj = pthis.files[0];
+    let apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        let binaryStr = apzFileReader.result;
+        if (pthis.id == "ekycdt__KYC__browse_aadhaar") {
+            $("#ekycdt__KYC__aadhaar_image").attr("src", binaryStr);
+        } else {
+            $("#ekycdt__KYC__pan_image").attr("src", binaryStr);
+        }
+        $("#" + pthis.id).val("");
+    }
+    apzFileReader.readAsDataURL(fileObj);
+}
+apz.ekycdt.KYC.BrowseAadhaar = function(pthis, event) {
+    debugger;
+    let fileObj = pthis.files[0];
+    let apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        let binaryStr = apzFileReader.result;
+        if (pthis.id == "ekycdt__KYC__browse_aadhaar") {
+            $("#ekycdt__KYC__aadhaar_image").attr("src", binaryStr);
+        } else {
+            $("#ekycdt__KYC__pan_image").attr("src", binaryStr);
+        }
+        $("#" + pthis.id).val("");
+    }
+    apzFileReader.readAsDataURL(fileObj);
+}
+apz.ekycdt.KYC.fnVerifyAadhaar = function() {
+    debugger;
+    var passportno = $("#ekycdt__KYC__passportno").val();
+    if (passportno == "") {
+        apz.dispMsg({
+            "message": "Please enter Aadhaar number",
+            "type": "E"
+        });
+    }
+    else {
+        apz.startLoader();
+        setTimeout(function() {
+            apz.stopLoader();
+           // apz.setElmValue("ekycdt__KYC__passportstatus", "Verified");
+            //$("#ekycdt__KYC__passportstatus").css("color", "green");
+        }, 1000)
+    }
+};
+apz.ekycdt.KYC.fnVerifyPAN = function() {
+    debugger;
+    var idno = $("#ekycdt__KYC__pan_number").val();
+    if (idno == "") {
+        apz.dispMsg({
+            "message": "Please enter PAN",
+            "type": "E"
+        });
+    }
+};
+apz.ekycdt.KYC.confirmCB = function() {
+    var lLaunchParams = {
+        "appId": "sucscr",
+        "scr": "SuccessScreen",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "text": "KYC request submitted successfully"
+        }
+    }
+    apz.launchApp(lLaunchParams);
+}
+apz.ekycdt.KYC.proceedKYC = function(param) {
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.ekycdt.KYC.confirmCB,
+                "destroyDiv": "landin__Landing__launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.ekycdt.KYC.fnRequestOTP = function() {
+    debugger;
+    var mobno = $("#ekycdt__KYC__mobno").val();
+    if (mobno == "" || mobno.length != 10) {
+        apz.dispMsg({
+            "message": "Please enter 10 digit mobile number",
+            "type": "E"
+        });
+    } else if (apz.mockServer == true) {
+        $("#ekycdt__KYC__optclm").removeClass("sno");
+        $("#ekycdt__KYC__verifyrow").removeClass("sno");
+        $("#ekycdt__KYC__otpbtn_txtcnt").text("Regenerate OTP");
+    } else {
+        apz.ekycdt.KYC.OTPCode = Math.floor(100000 + Math.random() * 900000);
+        var lmessage = " Your OTP is " + apz.ekycdt.KYC.OTPCode + " , Use This OTP for Registeration.";
+        var lServerParams = {
+            "ifaceName": "sms",
+            "buildReq": "N",
+            "appId": "ACOP01",
+            "req": {
+                "config": {
+                    user: "Iexceed",
+                    apikey: "XOTNwz3OffqcodOubdhl",
+                    mobile: lmobileNo,
+                    message: lmessage,
+                    senderid: "APZBNK",
+                    type: "txt"
+                }
+            },
+            "paintResp": "N",
+            "callBack": apz.ekycdt.KYC.sendMessageCB
+        };
+        debugger;
+        apz.server.callServer(lServerParams);
+        //before
+        // $("#ekycdt__KYC__optclm").removeClass("sno");
+        // $("#ekycdt__KYC__verifyrow").removeClass("sno");
+        // $("#ekycdt__KYC__otpbtn_txtcnt").text("Regenerate OTP");
+    }
+};
+apz.ekycdt.KYC.sendMessageCB = function(data) {
+    if (!data.res || (data.res && +data.res.ekycdt__sms_Res.response)) {
+        // apz.dispMsg({message:"OTP sent successfully",type:"S"});
+        $("#ekycdt__KYC__optclm").removeClass("sno");
+        $("#ekycdt__KYC__verifyrow").removeClass("sno");
+        $("#ekycdt__KYC__otpbtn_txtcnt").text("Regenerate OTP");
+    } else {
+        apz.dispMsg({
+            message: data.res.ACOP01__sms_Res.response
+        });
+    }
+}
+apz.ekycdt.KYC.fnVerifyOTP = function() {
+    var otp = $("#ekycdt__KYC__otp").val();
+    if (otp == "") {
+        apz.dispMsg({
+            "message": "Please enter valid OTP",
+            "type": "E"
+        });
+    } else if (otp == "654321" || otp == apz.ekycdt.KYC.OTPCode) {
+        apz.startLoader();
+        setTimeout(function() {
+            apz.stopLoader();
+            apz.setElmValue("ekycdt__KYC__mobilestatus", "Verified");
+            $("#ekycdt__KYC__mobilestatus").css("color", "green");
+        }, 1000)
+    }
+}

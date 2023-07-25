@@ -1,0 +1,51 @@
+apz.tranfe.Acknowledgement = {};
+apz.tranfe.Acknowledgement.sCache = {};
+apz.app.onLoad_Acknowledgement = function(params) {
+    debugger;
+    apz.tranfe.Acknowledgement.sCache = params;
+    apz.tranfe.Acknowledgement.fnUpdateUI();
+};
+apz.tranfe.Acknowledgement.fnUpdateUI = function() {
+    debugger;
+    if (apz.tranfe.EnterDetails.sTransferType == "ownBank") {
+        apz.setElmValue("tranfe__Acknowledgement__formTitle", "Transfer-Own Account Transfer")
+        apz.setElmValue("tranfe__Acknowledgement__succMsg", "Successfully transferred ₹" + apz.tranfe.Acknowledgement.sCache.Amt + " from A/c " + apz
+            .tranfe.Acknowledgement.sCache.fromAcc + " to A/c " + apz.tranfe.Acknowledgement.sCache.toAcc);
+    } else {
+        apz.setElmValue("tranfe__Acknowledgement__formTitle", "Third party Account Transfer")
+        if (apz.tranfe.Acknowledgement.sCache.BenifName == "Please Select") {
+            apz.tranfe.Acknowledgement.sCache.BenifName = "Johnson";
+        }
+        apz.setElmValue("tranfe__Acknowledgement__succMsg", "Successfully transferred ₹" + apz.tranfe.Acknowledgement.sCache.Amt + " from A/c " + apz
+            .tranfe.Acknowledgement.sCache.fromAcc + " to " + apz.tranfe.Acknowledgement.sCache.BenifName);
+    }
+}
+apz.tranfe.Acknowledgement.No = function() {
+    apz.tranfe.Acknowledgement.sCache.callBack();
+};
+apz.tranfe.Acknowledgement.Yes = function() {
+    var lObj = {
+        "scr": "EnterDetails",
+        "div": apz.tranfe.Acknowledgement.sCache.destroyDiv,
+        "animation": 9,
+        "userObj": {
+            "screen": apz.tranfe.EnterDetails.sTransferType,
+            "destroyDiv": apz.tranfe.Acknowledgement.sCache.destroyDiv,
+            "parentAppId": apz.tranfe.Acknowledgement.sCache.parentAppId,
+            "callBack": apz.tranfe.Acknowledgement.sCache.callBack
+        }
+    };
+    apz.launchSubScreen(lObj);
+};
+apz.tranfe.Acknowledgement.fnPhone = function() {
+    var msg = {
+        "code": "PHN-MSG"
+    };
+    apz.dispMsg(msg);
+};
+apz.tranfe.Acknowledgement.fnMail = function() {
+    var msg = {
+        "code": "MAIL-MSG"
+    };
+    apz.dispMsg(msg);
+};

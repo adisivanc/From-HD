@@ -1,0 +1,39 @@
+apz.chqdep.captureFront = {};
+apz.app.onLoad_captureFront = function(params) {
+    debugger;
+   
+    apz.chqdep.captureFront.frontimage = params.encodedImage;
+    apz.chqdep.captureFront.amount = apz.getElmValue("chqdep__account__inpamount");
+    document.getElementById("chqdep__captureFront__frontimg").src = "data:image/jpg;base64," + params.encodedImage;
+}
+apz.chqdep.captureFront.mobcamera = function() {
+    var jsonobj = {
+        "zoomLevel": "20",
+        "targetWidth": "400",
+        "targetHeight": "400",
+        "crop": "Y", //Y or N  
+        "flash": "N",
+        "action": "base64_Save", // save,base64 
+        "fileName": "Sample",
+        "quality": "50",
+        "encodingType": "JPG",
+        "sourceType": "camera" // photo 
+    };
+    jsonobj.id = "CAMERA_ID";
+    jsonobj.callBack = apz.chqdep.captureFront.mobcameraCallback;
+    apz.ns.openCamera(jsonobj);
+}
+apz.chqdep.captureFront.mobcameraCallback = function(pjson) {
+    if (pjson.status) {
+        //$("#chqdep__account__rowaccount").addClass("sno");
+        var lparams = {
+            "appId": "chqdep",
+            "scr": "captureBack",
+            "div": "chqdep__account__launchdiv",
+            "userObj": pjson
+        }
+        apz.launchSubScreen(lparams);
+    } else {
+        //alert("Failure");
+    }
+};

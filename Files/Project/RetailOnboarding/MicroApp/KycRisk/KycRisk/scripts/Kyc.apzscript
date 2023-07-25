@@ -1,0 +1,15 @@
+apz.kycrsk.Kyc = {}
+apz.app.onLoad_Kyc = function(params) {
+    debugger;
+}
+apz.app.onShown_Kyc = function(params) {
+    debugger;
+}
+apz.kycrsk.Kyc.fnOnSelectYes = function(param, inputId) {
+    debugger;
+    if(param.value == "yes"){
+    $("#"+inputId).removeClass("sno");
+    }else{
+    $("#"+inputId).addClass("sno");
+    }
+}

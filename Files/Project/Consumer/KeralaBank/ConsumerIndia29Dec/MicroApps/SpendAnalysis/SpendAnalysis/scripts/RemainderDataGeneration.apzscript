@@ -1,0 +1,40 @@
+Remainders = (function() {
+        dates = [5, 15, 23];
+        products = ["Home Loan", "Credit Card", "Vehicle Loan"];
+        amounts = ["10000", "5500", "7000"];
+        accountNumber = ["1000xxxx2263", "1000xxxx2274", "1000xxxx2263"];
+        month = "Jan"
+        getMonth = function() {
+            month = TransactionDetails.getTodayMonth();
+        };
+        daysCalculate = function(index) {
+            date = new Date().getDate();
+            datecal = dates[index] - date;
+            if (datecal > 0) {
+                displayString = Math.abs(datecal) + "d to go" ;  
+         }else if(datecal < 0){
+          displayString =Math.abs(datecal) +"d ago "   
+         }else{
+             displayString = "due on today"
+         }
+         return displayString;
+    }
+    return {
+        getRemainders: function(){
+            getMonth();
+            var remainders = [];
+            for(i=0;i<3;i++){
+               var obj = {};
+               obj["month"] = month;
+               obj["day"]  = dates[i];
+               obj["product"] = products[i];
+               obj["amount"] = amounts[i];
+               obj["accno"]  = accountNumber[i];
+               obj["daycal"]   = daysCalculate(i);
+               remainders.push(obj);
+               
+            }
+            return remainders;
+        }
+    };
+})();

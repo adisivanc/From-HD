@@ -1,0 +1,262 @@
+apz.onbaut.OTP = {};
+apz.onbaut.OTP.sparams = {};
+apz.app.onLoad_OTP = function(params) {
+    debugger;
+        apz.onbaut.OTP.sparams = params;
+         if(apz.onbaut.OTP.sparams.from == "MyProfile")
+        {
+         $("#onbaut__OTP__gr_row_4").addClass("sno");
+                  $("#onbaut__OTP__gr_row_5").addClass("sno");
+
+        }
+        apz.onbaut.OTP.fnGenerateOTP();
+    //apz.onbaut.OTP.fnsmsListener();
+};
+apz.app.onShown_OTP = function(params) {
+    debugger;
+     
+    $("#onbaut__OTP__otp").attr({
+        "pattern": "[0-9]*",
+        "inputmode": "numeric"
+    });
+    apz.onbaut.OTP.fnCallOTPCounter();
+    $("#onbaut__OTP__otp").keyup(function(event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            apz.retail.BaseLauncher.nextScreen();
+        }
+    });
+};
+apz.onbaut.OTP.fnBacktoLogin = function()
+{
+    debugger;
+    apz.loginFlag = true;
+    if (apz.common.isMobile) {
+        apz.toggleFooter();
+    }
+    apz.common.launchApp("login", "Launcher", {...apz.onbaut.OTP.sparams.sCache}, apz.onbaut.OTP.sparams.sCache.control.parentDiv);
+}
+apz.onbaut.OTP.fnCallOTPCounter = function() {
+    debugger;
+    $("#onbaut__OTP__el_icn_1_li").empty();
+    $("#onbaut__OTP__el_icn_1_li").html('<svg><circle r="36" cx="40" cy="40"></circle></svg>');
+    var countdownNumberEl = document.getElementById('onbaut__OTP__sc_row_14');
+    var countdown = 30;
+    countdownNumberEl.innerHTML = countdown;
+    var timerInterval = setInterval(function() {
+        countdown = --countdown <= 0 ? 0 : countdown;
+        if (countdown === 0) {
+            $("#onbaut__OTP__sc_row_13").addClass("sno");
+            $("#onbaut__OTP__sc_row_17").removeClass("sno");
+            $("#onbaut__OTP__el_txt_4").addClass("err");
+            apz.onbaut.OTPCode = "101018";
+            clearInterval(timerInterval);
+        }
+        countdownNumberEl.innerHTML = countdown;
+    }, 500);
+}
+// apz.onbaut.OTP.fnsmsListener = function() {
+//     debugger;
+//     var json = {};
+//     if (apz.deviceGroup == "Mobile") {
+//         apz.startLoader();
+//         json.id = "SMSLIST_ID";
+//         json.callBack = apz.onbaut.OTP.startSMSCallback;
+//         apz.ns.startSMSListener(json);
+//     };
+// }
+// apz.onbaut.OTP.startSMSCallback = function(params) {
+//     debugger;
+//     apz.stopLoader();
+//     if (params.message) {
+//         var listenerotp = params.message.match(/[0-9]{6}/)[0];
+//         var generatedotp = apz.onbaut.OTPCode;
+//         if (listenerotp == generatedotp) {
+//             apz.setElmValue("onbaut__OTP__otp", listenerotp);
+//         }
+//     }
+//     apz.ns.stopSMSListener("SMSLIST_ID");
+// };
+apz.onbaut.OTP.fnSaveData = function() {
+    debugger;
+    var enteredOtp = apz.getElmValue("onbaut__OTP__otp");
+    var generatedOtp = apz.onbaut.OTPCode;
+    if (enteredOtp == generatedOtp || enteredOtp == "101018") {
+        if(apz.onbaut.OTP.sparams.from == "MyProfile")
+        {
+            
+
+        apz.dispMsg({"message" : "Profile updated successfully", "type" : "S", "callBack" : apz.landin.Landing.fnHome})
+        }
+        else{
+var params = {};
+params.appId = "onbaut";
+params.scr = "TermsConditions";
+params.div = "baseap__Launcher__Launcher";
+params.userObj = {
+    "data" :  apz.onbaut.OTP.sparams,
+    "sCache" : apz.onbaut.OTP.sparams.sCache
+}
+apz.launchSubScreen(params);
+}
+     }
+     else if((enteredOtp.length >= 6) &&(enteredOtp != generatedOtp) &&( enteredOtp != "101018")) {
+        apz.dispMsg({
+            "message": "Invalid OTP"
+        });
+    }
+}
+// apz.onbaut.OTP.fnlaunchApplicationHistory = function() {
+//     debugger;
+//     var userObj = {
+//         "email": apz.email,
+//         "mobilenumber": apz.onbaut.mobilenumber,
+//         "appId": "ONB"
+//     };
+//     apz.common.launchApp("aphist", "ApplicationHistory", userObj, "retail__BaseLauncher__launcher");
+// }
+// apz.onbaut.OTP.fnIsUserExists = function(refno) {
+//     debugger;
+//     apz.startLoader();
+//     var req = {
+//         "mobileNo": apz.onbaut.mobilenumber,
+//         "email": apz.email
+//     };
+//     apz.common.callServer("onbaut", "ApplicationHistorySQL", "N", "N", req, apz.onbaut.OTP.fnIsUserExistsCB);
+// };
+// apz.onbaut.OTP.fnIsUserExistsCB = function(params) {
+//     debugger;
+//     apz.stopLoader();
+//     if (params.errors == undefined && params.status) {
+//         apz.onbaut.OTP.fnlaunchApplicationHistory();
+//     } else {
+//         apz.onbaut.OTP.fnStartWorkflow();
+//     }
+// }
+// apz.onbaut.OTP.fnStartWorkflow = function() {
+//     apz.startLoader();
+//     var req = {
+//         "appId": "acdp01",
+//         "workFlowId": "",
+//         "userId": "CorpUser"
+//     };
+//     apz.common.callServer("onbaut", "StartWorkFlow", "N", "N", req, apz.onbaut.OTP.fnStartWorkflowCB);
+// };
+// apz.onbaut.OTP.fnStartWorkflowCB = function(pResp) {
+//     debugger;
+//     if (pResp.status) {
+//         if (pResp.res.onbaut__StartWorkFlow_Res) {
+//             apz.isWorkflowStarted = true;
+//             apz.refNo = pResp.res.onbaut__StartWorkFlow_Res.instanceId;
+//             apz.onbaut.OTP.fnAddUser(apz.refNo);
+//         } else {
+//             pResp.res.onbaut__StartWorkFlow_Res = {};
+//             pResp.res.onbaut__StartWorkFlow_Res.instanceId = "CONSONB" + apz.onbaut.OTPCode + apz.onbaut.OTPCode
+//             apz.refNo = pResp.res.onbaut__StartWorkFlow_Res.instanceId;
+//             apz.onbaut.OTP.fnAddUser(apz.refNo);
+//         }
+//     }
+// }
+// apz.onbaut.OTP.fnAddUser = function(refno) {
+//     debugger;
+//     var req = {
+//         "tbDbmiCustomerMaster": {
+//             "email": apz.email,
+//             "mobileNo": apz.onbaut.mobilenumber,
+//             "refNo": refno,
+//             mode: "SELF",
+//             "workFlowIndex": 2
+//         }
+//     };
+//     if (apz.mockServer != true) {
+//         apz.common.callServer("onbaut", "ApplicationDetailsDB_New", "N", "N", req, apz.onbaut.OTP.fnAddUserCB);
+//     }
+// };
+// apz.onbaut.OTP.fnAddUserCB = function(params) {
+//     debugger;
+//     apz.stopLoader();
+//     if (params.status && params.errors === undefined) {
+//         apz.applicationDetails = params.req.tbDbmiCustomerMaster;
+//     }
+//     apz.onbaut.OTP.fnSaveProductDetails();
+// }
+// apz.onbaut.OTP.fnSaveProductDetails = function() {
+//     debugger;
+//     var req = {
+//         "tbDbmiProductDetails": {
+//             "product": apz.product,
+//             "subProduct": apz.subProduct,
+//             "refNo": apz.refNo
+//         }
+//     };
+//     if (apz.mockServer != true) {
+//         apz.common.callServer("onbaut", "ProductDetails_New", "N", "N", req, apz.onbaut.OTP.fnSaveProductDetailsCB);
+//     }
+// }
+// apz.onbaut.OTP.fnSaveProductDetailsCB = function(params) {
+//     debugger;
+//     apz.retail.BaseLauncher.fnLaunchSubScreen();
+// }
+//show password
+apz.onbaut.OTP.fnShowPassword = function(otpInput) {
+    $("#onbaut__OTP__otp").attr("type", "text");
+    setTimeout(function() {
+        $("#onbaut__OTP__otp").attr("type", "password");
+    }, 2000)
+}
+apz.onbaut.OTP.fnGenerateOTP = function() {
+    apz.setElmValue("onbaut__OTP__otp", "");
+    $("#onbaut__OTP__sc_row_13").removeClass("sno");
+    $("#onbaut__OTP__sc_row_17").addClass("sno");
+    apz.onbaut.OTP.fnSendMobileOTP();
+}
+apz.onbaut.OTP.fnSendMobileOTP = function() {
+    apz.onbaut.OTPCode = Math.floor(100000 + Math.random() * 900000);
+    apz.onbaut.OTP.lmessage = " Your OTP is " + apz.onbaut.OTPCode + " , use this OTP for registration.";
+    apz.server.login({
+    "userId":"admin",
+    "pwd":"admin"
+})
+    apz.onbaut.OTP.fnSendEmail();
+    // var req = {
+    //     "config": {
+    //         user: "Iexceed",
+    //         apikey: "XOTNwz3OffqcodOubdhl",
+    //         mobile: apz.onbaut.mobilenumber,
+    //         message: apz.onbaut.OTP.lmessage,
+    //         senderid: "APZBNK",
+    //         type: "txt"
+    //     }
+    // };
+    // apz.common.callServer("onbaut", "sms", "N", "N", req, apz.onbaut.OTP.smsMessageCB);
+}
+// apz.onbaut.OTP.smsMessageCB = function(params) {
+//     debugger;
+//     apz.onbaut.OTP.fnSendEmail();
+// }
+apz.onbaut.OTP.fnSendEmail = function() {
+    debugger;
+    var email = {
+        "mailId": "iexceedemail",
+        "recipientMailId": "manoharmanun25@gmail.com",
+        "senderMailId": "yagnya.dipu@gmail.com",
+        "ccIdList": "",
+        "internal": "Y",
+        "subject": "Validation",
+        "body": apz.onbaut.OTP.lmessage,
+    };
+    email.id = "MAIL_ID";
+    email.callBack = apz.onbaut.OTP.fnSendEmailCB;
+    apz.ns.sendMail(email);
+}
+apz.onbaut.OTP.fnSendEmailCB = function(params) {
+    debugger;
+    apz.onbaut.OTP.fnCallOTPCounter();
+}
+// apz.onbaut.OTP.fnAllowOTP = function(el) {
+//     debugger;
+//     var digits = el.value.match(/\d{1,6}/) || [""];
+//     el.value = digits[0];
+   
+    
+// }

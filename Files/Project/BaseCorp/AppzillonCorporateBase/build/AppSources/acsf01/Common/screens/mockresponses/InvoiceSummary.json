@@ -1,0 +1,61 @@
+{
+    "tbDbmiCorpInvoiceDetails": [
+        {
+            "invoiceNumber": "10004560",
+            "invoiceIssueDate": "12/2/2016",
+            "orderNumber": "00004560",
+            "name": "Microsoft",
+            "partyId": "1",
+            "partyIdType": "Software Seller",
+            "streetName": "CA Avenue",
+            "postalCode": "100001",
+            "townName": "Redmond",
+            "countrySubDivision": "Washington",
+            "country": "USA",
+            "bic": "0022",
+            "bankName": "HSBC",
+            "countryCode": "USA",
+            "paymentType": "Pay On Delivery",
+            "amount": "36700000",
+            "currency": "USD"
+        },
+       {
+            "invoiceNumber": "10004521",
+            "invoiceIssueDate": "12/2/2016",
+            "orderNumber": "00004560",
+            "name": "Microsoft",
+            "partyId": "1",
+            "partyIdType": "Software Seller",
+            "streetName": "CA Avenue",
+            "postalCode": "100001",
+            "townName": "Redmond",
+            "countrySubDivision": "Washington",
+            "country": "USA",
+            "bic": "0022",
+            "bankName": "HSBC",
+            "countryCode": "USA",
+            "paymentType": "Pay On Delivery",
+            "amount": "36700000",
+            "currency": "USD"
+        },
+        {
+            "invoiceNumber": "10004503",
+            "invoiceIssueDate": "12/2/2016",
+            "orderNumber": "00004560",
+            "name": "Microsoft",
+            "partyId": "1",
+            "partyIdType": "Software Seller",
+            "streetName": "CA Avenue",
+            "postalCode": "100001",
+            "townName": "Redmond",
+            "countrySubDivision": "Washington",
+            "country": "USA",
+            "bic": "0022",
+            "bankName": "HSBC",
+            "countryCode": "USA",
+            "paymentType": "Pay On Delivery",
+            "amount": "36700000",
+            "currency": "USD"
+        }
+    ]
+}

@@ -1,0 +1,69 @@
+apz.prddtl.Nominee = {};
+apz.prddtl.Nominee.sCache = {}
+apz.app.onLoad_Nominee = function(params) {
+    apz.prddtl.Nominee.lRefNo = params.refNo;
+    apz.setElmValue("prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__refno", apz.prddtl.Nominee.lRefNo);
+    apz.prddtl.Nominee.fetchApplicationDetails();
+    $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+        $(this).removeClass("active");
+    })
+    $("#navigation_" + apz.flowNo).removeClass("sno");
+    $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+        $(this).removeClass("active");
+    })
+    $("#navigation_"+apz.flowNo+",#navgtn__MobileNavigation__ct_lst_2_row_"+apz.flowNo).addClass("active");
+    $("#prddtl__ProductAccountLauncher__el_btn_6_txtcnt").text("Submit");
+};
+apz.prddtl.Nominee.fetchApplicationDetails = function() {
+    debugger;
+    apz.startLoader();
+    var lParams = {
+        "ifaceName": "ProductAccountDetails_Query",
+        "buildReq": "Y",
+        "appId": "prddtl",
+        "paintResp": "Y",
+        "async": false,
+        "callBack": apz.prddtl.Nominee.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.prddtl.Nominee.fetchApplicationDetailsCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    if (params.errors == undefined && params.status) {
+        var nomineDoB = apz.data.scrdata.prddtl__ProductAccountDetails_Req.tbDbmiAccountProduct.nomineedob;
+        if (nomineDoB != undefined && nomineDoB !== "") {
+            $("#prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__nomineedob").trigger("change");
+        }
+    }
+}
+apz.prddtl.Nominee.saveApplicationDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ProductAccountDetails_Modify",
+        "buildReq": "Y",
+        "appId": "prddtl",
+        "paintResp": "N",
+        "callBack": apz.prddtl.Nominee.saveApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.prddtl.Nominee.saveApplicationDetailsCB = function(pResp) {
+    debugger;
+    apz.navgtn.Navigator.fnLaunchApp();
+}
+apz.prddtl.Nominee.fncheckAge = function(ths) {
+    debugger;
+    var dob = apz.formatDate({
+        val: $(ths).val(),
+        fromFormat: apz.dateFormat,
+        toFormat: "yyyy-MM-dd"
+    })
+    year = parseInt(dob.split("-")[0]);
+    cur_year = new Date().getFullYear();
+    if ((cur_year - year) < 18) {
+        $("#prddtl__Nominee__guardiandetails").removeClass("sno");
+    } else {
+        $("#prddtl__Nominee__guardiandetails").addClass("sno");
+    }
+}

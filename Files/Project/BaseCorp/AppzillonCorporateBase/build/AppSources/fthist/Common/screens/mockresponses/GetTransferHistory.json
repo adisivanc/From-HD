@@ -1,0 +1,132 @@
+{
+    "tbDbtpFundsTransfer": [
+        {
+            "toAccount": "5785936519021",
+            "amount": 5000,
+            "fromAccount": "5785936513734",
+            "transferType": "FTOA",
+            "currency": "INR",
+            "txnDesc": "",
+            "txnDate": "2021-02-13",
+            "txnId": "FTOA20210213053324026",
+            "beneficiaryId": "5785936519021",
+            "initiatedBy":"robert.langford",
+            "isScheduled":"Schedule Payment",
+            "scheduledDate":"2021-03-13"
+        },
+        {
+            "toAccount": "123456765432",
+            "amount": 3000,
+            "fromAccount": "150100159221",
+            "transferType": "FTWB",
+            "currency": "INR",
+            "txnDesc": "",
+            "txnDate": "2018-07-06",
+            "txnId": "FTWB20180706055625533",
+            "beneficiaryId": "123456765432",
+            "initiatedBy":"robert.langford",
+            "isScheduled":"Schedule Payment",
+            "scheduledDate":"2021-03-13"
+        },
+        {
+            "toAccount": "1221978766",
+            "amount": 3000,
+            "fromAccount": "47585936513712",
+            "transferType": "FTWB",
+            "scheduledDate": "2021-03-10",
+            "currency": "INR",
+            "isScheduled": "Schedule Payment",
+            "txnDesc": "",
+            "txnDate": "2020-06-01",
+            "initiatedBy": "robert.langford",
+            "txnId": "FTWB20200601060436141",
+            "beneficiaryId": "1221978766"
+           
+            
+        },
+        {
+            "toAccount": "1221978766",
+            "amount": 2000,
+            "fromAccount": "47585936513712",
+            "transferType": "FTWB",
+            "scheduledDate": "2021-04-12",
+            "currency": "INR",
+            "isScheduled": "Schedule Payment",
+            "txnDesc": "",
+            "txnDate": "2020-08-18",
+            "initiatedBy": "robert.langford",
+            "txnId": "FTWB20200818042532221",
+            "beneficiaryId": "1221978766"
+        },
+        {
+            "toAccount": "1221978766",
+            "amount": 3000,
+            "fromAccount": "47585936514239",
+            "transferType": "FTWB",
+            "currency": "INR",
+            "txnDesc": "",
+            "txnDate": "2020-09-14",
+            "txnId": "FTWB20200914021630669",
+            "beneficiaryId": "1221978766",
+            "initiatedBy":"robert.langford",
+            "isScheduled":"Schedule Payment",
+            "scheduledDate":"2021-03-13"
+            
+        },
+        {
+            "toAccount": "1221978766",
+            "amount": 3000,
+            "fromAccount": "47585936513712",
+            "transferType": "FTWB",
+            "currency": "INR",
+            "txnDesc": "",
+            "txnDate": "2021-01-19",
+            "initiatedBy": "robert.langford",
+            "txnId": "FTWB20210119021135196",
+            "beneficiaryId": "1221978766",
+            
+            "isScheduled":"Schedule Payment",
+            "scheduledDate":"2021-03-13"
+        },
+        {
+            "toAccount": "1221978769",
+            "amount": 3000,
+            "fromAccount": "47585936513712",
+            "transferType": "FTDOM",
+            "scheduledDate": "2021-03-01",
+            "currency": "INR",
+            "isScheduled": "Schedule Payment",
+            "txnDesc": "",
+            "txnDate": "2021-01-19",
+            "txnId": "SIDOM20210119031032631",
+            "beneficiaryId": "1221978769"
+        },
+        {
+            "toAccount": "1234567890",
+            "amount": 4000,
+            "fromAccount": "47585936513712",
+            "transferType": "FTDOM",
+            "currency": "INR",
+            "txnDesc": "",
+            "txnDate": "2021-01-21",
+            "txnId": "SIDOM20210121021002180",
+            "beneficiaryId": "1234567890",
+            "initiatedBy":"robert.langford",
+            "isScheduled":"Schedule Payment",
+            "scheduledDate":"2021-03-13"
+        },
+        {
+            "toAccount": "1234567890",
+            "amount": 40000,
+            "fromAccount": "47585936514239",
+            "transferType": "FTDOM",
+            "scheduledDate": "2021-03-12",
+            "currency": "INR",
+            "isScheduled": "Schedule Payment",
+            "txnDesc": "",
+            "txnDate": "2021-01-21",
+            "txnId": "SIDOM20210121021218006",
+            "beneficiaryId": "1234567890"
+        }
+    ]
+}

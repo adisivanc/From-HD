@@ -1,0 +1,267 @@
+apz.appdtl.IdentityDetail = {};
+apz.appdtl.IdentityDetail.sParams = {};
+apz.appdtl.currentFieldVal = "";
+apz.appdtl.IdentityDetail.saveIt = false;
+apz.appdtl.IdentityDetail.navAction = "";
+apz.app.onLoad_IdentityDetail = function(params) {
+    apz.appdtl.IdentityDetail.sParams = params;
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo", params.refNo);
+    if (apz.country === "IND" || apz.country === "UAE" || apz.country === "UGA" || apz.country === "BD") {
+        var typeOfId = JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/" + apz.country + "typeofID.json"));
+        apz.populateDropdown($("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__typeOfID")[0], typeOfId)
+    }
+    apz.appdtl.IdentityDetail.manageHeaders();
+    if (apz.country == "IND") {
+        $("#appdtl__IdentityDetail__panCol").removeClass("sno");
+        $("#appdtl__IdentityDetail__pepCol").removeClass("sno");
+        $("#appdtl__IdentityDetail__panQuestCol").removeClass("sno");
+    }
+    apz.appdtl.IdentityDetail.fetchApplicationDetails(params);
+};
+apz.app.onShown_IdentityDetail = function(params) {
+    debugger;
+    $("#appdtl__IdentityDetail__form60_hnt").addClass("sno")
+    apz.appdtl.currenctScreen = "identity_details";
+    apz.appdtl.IdentityDetail.saveIt = true;
+    $("#appdtl__IdentityDetail__identity_details_form input").each(function() {
+        $(this).change(function() {
+            if (apz.appdtl.IdentityDetail.saveIt) {
+                var val = apz.getElmValue(this.id);
+                if (val.length <= 0 && apz.appdtl.currentFieldVal.length > 0) { //empty on change
+                    apz.appdtl.identityFieldsCount = apz.appdtl.identityFieldsCount + 1;
+                    apz.appdtl.identityFieldPercentage = apz.appdtl.identityFieldPercentage - apz.appdtl.identityPercentageValue;
+                } else if (val.length > 0 && apz.appdtl.currentFieldVal.length <= 0) { //filled on change
+                    apz.appdtl.identityFieldsCount = apz.appdtl.identityFieldsCount - 1;
+                    apz.appdtl.identityFieldPercentage = apz.appdtl.identityFieldPercentage + apz.appdtl.identityPercentageValue;
+                }
+                if (apz.appdtl.identityFieldsCount < 0) {
+                    apz.appdtl.identityFieldsCount = 0;
+                }
+                apz.setElmValue("appdtl__AppLauncher__employment_fields_to_fill_txtcnt", "" + apz.appdtl.identityFieldsCount);
+                $("#appdtl__AppLauncher__emp_slider").roundSlider("option", "value", apz.appdtl.identityFieldPercentage);
+            }
+        })
+        $(this).focus(function() {
+            apz.appdtl.currentFieldVal = apz.getElmValue(this.id);
+        })
+    });
+    debugger;
+    if (apz.appdtl.identityManageFilled) {
+        apz.appdtl.IdentityDetail.manageFieldsFilled();
+        if (apz.appdtl.identityFieldsCount < 0) {
+            apz.appdtl.identityFieldsCount = 0;
+        }
+        apz.setElmValue("appdtl__AppLauncher__employment_fields_to_fill_txtcnt", "" + apz.appdtl.identityFieldsCount);
+        $("#appdtl__AppLauncher__emp_slider").roundSlider("option", "value", apz.appdtl.identityFieldPercentage);
+        apz.appdtl.identityManageFilled = false;
+    }
+}
+apz.appdtl.IdentityDetail.manageFieldsFilled = function() {
+    debugger;
+    apz.typeOfID = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__typeOfID")
+    apz.appdtl.AppLauncher.onDdChange();
+}
+    
+apz.appdtl.IdentityDetail.manageFieldsFilled = function() {
+    debugger;
+    $("#appdtl__IdentityDetail__identity_details_form input").each(function() {
+        var val = apz.getElmValue(this.id);
+        debugger;
+        if (val != "") {
+            apz.appdtl.identityFieldsCount = apz.appdtl.identityFieldsCount - 1;
+            apz.appdtl.identityFieldPercentage = apz.appdtl.identityFieldPercentage + apz.appdtl.identityPercentageValue;
+        }
+    });
+}
+apz.appdtl.IdentityDetail.manageHeaders = function() {
+    $("#appdtl__AppLauncher__employment_div").addClass('active');
+    $("#appdtl__AppLauncher__personal_div").removeClass('active');
+    $("#appdtl__AppLauncher__document_div").removeClass('active');
+}
+apz.appdtl.IdentityDetail.fetchApplicationDetails = function(params) {
+    debugger;
+    apz.data.buildData("ApplicationInfoDB", "appdtl");
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.refNo = params.refNo;
+    var lParams = {
+        "appId": "appdtl",
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "Y",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.IdentityDetail.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.IdentityDetail.fetchApplicationDetailsCB = function(pResp) {
+    debugger;
+    if (!pResp.errors && pResp.status) {
+        /*if(pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.typeOfID == "" && apz.typeOfID != ""){
+            apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__typeOfID",apz.typeOfID)
+        }*/
+        var pan = "";
+        if (pResp.res.appdtl__ApplicationInfoDB_Req) {
+            pan = pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.panNo;
+        } else {
+            pan = pResp.res.appdtl__ApplicationInfoDB_Res.tbDbmiCustomerMaster.panNo;
+        }
+        if (pan && pan != "") {
+            apz.setElmValue("appdtl__IdentityDetail__isPanAvailable", "Yes");
+            $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo_ul").removeClass("sno")
+            $("#appdtl__IdentityDetail__form60").addClass("sno");
+        } else {
+            apz.setElmValue("appdtl__IdentityDetail__isPanAvailable", "No");
+            $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo_ul").addClass("sno")
+            $("#appdtl__IdentityDetail__form60").removeClass("sno");
+        }
+    }
+}
+apz.appdtl.IdentityDetail.fnPanInput = function(pthis) {
+    debugger;
+    var isPanAvailable = apz.getElmValue("appdtl__IdentityDetail__isPanAvailable");
+    if (isPanAvailable == "Yes") {
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo_ul").removeClass("sno")
+        $("#appdtl__IdentityDetail__form60").addClass("sno");
+    } else {
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo_ul").addClass("sno")
+        $("#appdtl__IdentityDetail__form60").removeClass("sno");
+    }
+}
+apz.appdtl.IdentityDetail.fnPanValidtion = function(pthis) {
+    debugger;
+    var panVal = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo")
+    var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    if (!regex.test(panVal)) {
+        alert("Please enter a valid PAN");
+        apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo", "")
+    }
+}
+apz.appdtl.IdentityDetail.fnUploadFile = function(docType) {
+    apz.appdtl.IdentityDetail.documentType = docType;
+    if (apz.deviceType === "ANDROID") {
+        apz.appdtl.IdentityDetail.fnOpenCamera();
+    } else {
+        $("#appdtl__IdentityDetail__el_fil_1").click();
+    }
+}
+apz.appdtl.IdentityDetail.fnGetNationalId = function(pthis) {
+    apz.startLoader();
+    let fileObj = pthis.files[0];
+    let apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        let binaryStr = apzFileReader.result;
+        apz.appdtl.IdentityDetail.encodedImage = binaryStr.split(",").pop();
+    }
+    apzFileReader.readAsDataURL(fileObj);
+}
+apz.appdtl.IdentityDetail.fnOpenCamera = function() {
+    var jsonobj = {
+        "zoomLevel": "20",
+        "targetWidth": "200",
+        "targetHeight": "200",
+        "crop": "N", //Y or N
+        "flash": "N",
+        "action": "base64", // save,base64
+        "fileName": "Identity_Image",
+        "quality": "50",
+        "encodingType": "JPG",
+        "sourceType": "photo" // photo
+    };
+    jsonobj.id = "CAMERA_ID";
+    jsonobj.callBack = apz.appdtl.IdentityDetail.fnGetBase64;
+    apz.ns.openCamera(jsonobj);
+}
+apz.appdtl.IdentityDetail.fnGetBase64 = function(params) {
+    apz.appdtl.IdentityDetail.encodedImage = params.encodedImage;
+}
+apz.appdtl.IdentityDetail.fnFormUploaded = function() {
+    debugger;
+    $("#appdtl__IdentityDetail__form60_hnt").removeClass("sno")
+}
+apz.appdtl.IdentityDetail.fnPassportValidtion = function(pthis) {
+    debugger;
+    var typeOfId = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__typeOfID")
+    var passportId = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__passportNo")
+    if (typeOfId == "Passport") {
+        var patt = new RegExp("^([A-Z a-z]){1}([0-9]){7}$")
+        if (!patt.test(passportId)) {
+            alert("Please enter a valid Passport ID");
+            apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__passportNo", "")
+        }
+    }
+}
+apz.appdtl.IdentityDetail.saveApplicationDetails = function() {
+    apz.appdtl.IdentityDetail.saveIt = false;
+    debugger;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Modify",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.IdentityDetail.saveApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.IdentityDetail.saveApplicationDetailsCB = function(pResp) {
+    debugger;
+    if (pResp.errors == undefined && pResp.status) {
+        if (!apz.isNull(pResp.res.appdtl__ApplicationInfoDB_Req)) {
+            apz.applicationDetails = jQuery.extend(true, {}, pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster);
+        } else {
+            apz.applicationDetails = jQuery.extend(true, {}, pResp.res.appdtl__ApplicationInfoDB_Res.tbDbmiCustomerMaster);
+        }
+        var action = apz.appdtl.IdentityDetail.navAction;
+        if (action && action != "") {
+            if (action == "next") {
+                apz.appdtl.IdentityDetail.navAction = "";
+                apz.appdtl.IdentityDetail.fnSaveAndGoNext();
+            } else if (action == "back") {
+                apz.appdtl.IdentityDetail.navAction = "";
+                apz.appdtl.IdentityDetail.fnSaveAndGoBack();
+            } else if (action == "cancel") {
+                apz.appdtl.IdentityDetail.navAction = "";
+                apz.appdtl.AppLauncher.onCancel();
+            }
+        }
+    }
+}
+apz.appdtl.IdentityDetail.fnCancel = function() {
+    debugger;
+    apz.appdtl.IdentityDetail.navAction = "cancel";
+    apz.appdtl.IdentityDetail.saveApplicationDetails();
+}
+apz.appdtl.IdentityDetail.nextScreen = function(pResp) {
+    debugger;
+    apz.appdtl.IdentityDetail.navAction = "next";
+    apz.appdtl.IdentityDetail.saveApplicationDetails();
+}
+apz.appdtl.IdentityDetail.preScreen = function(pResp) {
+    debugger;
+    apz.appdtl.IdentityDetail.navAction = "back";
+    apz.appdtl.IdentityDetail.saveApplicationDetails();
+}
+apz.appdtl.IdentityDetail.fnSaveAndGoNext = function() {
+    debugger;
+    apz.appdtl.IdentityDetail.saveIt = false;
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "DocumentSelection",
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo")
+        }
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.appdtl.IdentityDetail.fnSaveAndGoBack = function(pResp) {
+    apz.appdtl.IdentityDetail.saveIt = false;
+    debugger;
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "PersonalDetails",
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo")
+        }
+    };
+    apz.launchSubScreen(lParams);
+}

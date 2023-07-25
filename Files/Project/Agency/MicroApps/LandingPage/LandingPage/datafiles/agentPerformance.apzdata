@@ -1,0 +1,21 @@
+{
+    "landpg__AgentPerformance_Req": {
+        "agentperformance": [{
+            "id": 1,
+            "type": "Deposits",
+            "val": 200000
+        }, {
+            "id": 2,
+            "type": "Opening Balance",
+            "val": 400000
+        }, {
+            "id": 3,
+            "type": "Withdrawal",
+            "val": -120000
+        }, {
+            "id": 4,
+            "type": "Loans",
+            "val": -220000
+        }]
+    }
+}

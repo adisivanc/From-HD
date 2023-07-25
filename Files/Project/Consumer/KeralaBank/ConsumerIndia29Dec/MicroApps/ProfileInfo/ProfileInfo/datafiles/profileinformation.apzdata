@@ -1,0 +1,20 @@
+{
+    "prfinf__profileinformation_Req": {
+        "tbAsmiUser": {
+            "userName": "Phan YangTong",
+            "userEml1": "YangTong@gmail.com",
+            "userPhno1": "9876543210",
+            "userAddr1": "Srok Chek",
+            "addInfo2": "AFYF3467",
+            "userAddr2": "Phnom Penh",
+            "language": "en",
+            "Facebook": "Phan YangTong",
+            "LinkedIn": "Phan YangTong",
+            "Twitter": "YangTong123",
+            "instagram": "Phan_YangTong",
+            "profilePic": "camdef.png",
+            "salutation": "Mr.",
+            "PanNumber": ""
+        }
+    }
+}

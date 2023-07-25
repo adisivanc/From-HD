@@ -1,0 +1,14 @@
+apz.prdsel.Products = {};
+apz.prdsel.Products.sparams = {};
+apz.app.onLoad_Products = function(params){
+    debugger;
+    apz.prdsel.Products.sparams = params;
+    $("body").addClass("loginbgg");
+}
+apz.prdsel.Products.fnShowSubProducts = function(products){
+    debugger;
+    $("#apzonb__Navigator__sc_row_10_div").addClass("sno");
+     apz.newApplication =true;
+     apz.product = products;
+     apz.prdsel.ProductLauncher.fnNavigate("SubProducts",{"product":products,"parentdiv":apz.prdsel.Products.sparams.parentdiv});
+}

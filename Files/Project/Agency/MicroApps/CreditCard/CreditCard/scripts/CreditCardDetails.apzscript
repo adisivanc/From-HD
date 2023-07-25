@@ -1,0 +1,166 @@
+apz.cdtcrd.creditcarddetails = {};
+apz.cdtcrd.creditcarddetails.sParams = {};
+var transAmount={};
+apz.app.onLoad_CreditCardDetails = function(params){
+    // alert("Loaded");
+     debugger;
+    apz.cdtcrd.creditcarddetails.sParams = apz.copyJSONObject(params);
+    
+        if (params.Navigation) {
+            apz.cdtcrd.creditcarddetails.fnSetNavigation(params);
+        }else{
+              $("#csmrbk__LandingPage__ScreenNmeLandingTxt").text("CREDIT CARD SUMMARY");
+        }
+     
+    apz.cdtcrd.creditcarddetails.fnInitialise(params);
+};
+
+ apz.cdtcrd.creditcarddetails.fnInitialise = function(params){
+     var disabled = $("#cdtcrd__CreditCardDetails__el_btn_1").is(":disabled");
+     if(disabled){
+         $('#cdtcrd__CreditCardDetails__el_btn_1').prop('disabled',false);
+     }
+    debugger;
+    apz.data.loadJsonData("CCDetailsReq","cdtcrd");
+    apz.data.scrdata.cdtcrd__CCDetails_Req = {};
+    apz.data.scrdata.cdtcrd__CCDetails_Req.ccSummary = [];
+    apz.data.scrdata.cdtcrd__CCDetails_Req.ccSummary = apz.data.scrdata.cdtcrd__CCDetailsReq_Res.creditCardDtls;//apz.cdtcrd.creditcarddetails.sParams.data.creditCardDtls;
+    
+     apz.data.loadData("CCDetails", "cdtcrd");
+   
+    debugger; 
+    apz.cdtcrd.creditcarddetails.fnGetCCDetails();
+ };
+
+apz.cdtcrd.creditcarddetails.fnSetNavigation = function(params) {
+    debugger;
+    apz.cdtcrd.creditcarddetails.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "CREDIT CARD";
+    }
+    lParams.backPressed = apz.cdtcrd.creditcarddetails.fnBack;
+    apz.cdtcrd.creditcarddetails.Navigation(lParams);
+};
+apz.cdtcrd.creditcarddetails.fnViewTransactions = function(pthis){
+    debugger;
+     var lRowIndex = $("#" + pthis.id).attr("rowno");
+     var lRec = $.extend(apz.data.scrdata.cdtcrd__CCDetails_Res.ccDetailMaster.ccSummary[apz.getRecordNumber("cdtcrd__CreditCardDetails__creditCardList",
+        parseInt(lRowIndex))], {}, true);
+    var lObj = {
+        "scr": "Tabs",
+        "div": "cdtcrd__CreditCardDetails__Stage2",
+        "userObj": {
+            "action": "Summary",
+            "data": lRec,
+            "callBack": apz.cdtcrd.creditcarddetails.fnLaunchDetailsCB
+        }
+    };
+    if (apz.cdtcrd.creditcarddetails.sParams.Navigation) {
+        lObj.userObj.Navigation = {
+            "setNavigation": apz.cdtcrd.creditcarddetails.Navigation
+        }
+    }
+    apz.cdtcrd.creditcarddetails.fnGotoStage2();
+    apz.launchSubScreen(lObj);
+};
+apz.cdtcrd.creditcarddetails.fnGotoStage2 = function(){
+    apz.hide("cdtcrd__CreditCardDetails__Stage1");
+    apz.show("cdtcrd__CreditCardDetails__Stage2");
+}
+apz.cdtcrd.creditcarddetails.fnLaunchDetailsCB = function(){
+    debugger;
+    apz.currAppId = "cdtcrd";
+    if (apz.cdtcrd.creditcarddetails.sParams.Navigation) {
+        var lParams = {};
+        lParams.headerText = "CREDIT CARD";
+        lParams.backPressed = apz.cdtcrd.creditcarddetails.fnBack;
+        apz.cdtcrd.creditcarddetails.Navigation(lParams);
+    }
+    apz.show("cdtcrd__CreditCardDetails__Stage1");
+    apz.hide("cdtcrd__CreditCardDetails__Stage2");
+};
+
+apz.cdtcrd.creditcarddetails.fnGetCCDetails = function() {
+    debugger;
+    var lReq = {};
+    var lParams = {
+        "ifaceName": "CCDetails",
+        "req": lReq
+    };
+    apz.cdtcrd.creditcarddetails.fnBeforeCallServer(lParams);
+     $("#cdtcrd__CreditCardDetails__el_btn_4_0").addClass("sno");
+      transAmount= apz.getElmValue("cdtcrd__CCDetails__o__ccSummary__totalOS_0_txtcnt");
+     //alert(x);
+     
+     if(transAmount>="2500")
+     {
+      $("#cdtcrd__CreditCardDetails__el_btn_4_0").removeClass("sno");
+       
+     }
+      else if(transAmount<="2500")
+      {
+       $("#cdtcrd__CreditCardDetails__el_btn_4_0").addClass("sno");
+        
+      }
+};
+
+apz.cdtcrd.creditcarddetails.fnBeforeCallServer = function(params) {
+    debugger;
+    // var lServerParams = {
+    //     "ifaceName": params.ifaceName,
+    //     "paintResp": "Y",
+    //     "buildReq": "N",
+    //     "req": params.req,
+    //     "callBack": apz.cdtcrd.creditcarddetails.fnCallServerCallBack
+    // };
+    // apz.server.callServer(lServerParams);
+    apz.data.loadJsonData(params.ifaceName,"cdtcrd");
+    apz.cdtcrd.creditcarddetails.fnCallServerCallBack();
+};
+  apz.cdtcrd.creditcarddetails.fnCallServerCallBack = function(){
+      debugger;
+  };
+  
+  apz.cdtcrd.creditcarddetails.emi=function()
+  {
+      debugger;
+    apz.cdtcrd.creditcarddetails.fnGotoStage2();
+  apz.launchSubScreen( {
+      appId : "cdtcrd",
+        scr:"EMI",
+        // div:"cdtcrd__launchScreen__ps_pls_1",
+        div:"cdtcrd__CreditCardDetails__Stage2",
+        
+        userObj : {
+                        ...apz.cdtcrd.creditcarddetails.sParams,
+
+            "amount" : (parseInt(transAmount.replace(",","")) * 0.75)
+        }
+    }       )
+  }
+ 
+   apz.cdtcrd.creditcarddetails.pay = function(pthis)
+   {
+       debugger;
+       $("#cdtcrd__CreditCardDetails__Stage1").addClass("sno");
+            var lRowIndex = $("#" + pthis.id).attr("rowno");
+
+       var cardDetails =    apz.data.scrdata.cdtcrd__CCDetails_Res.ccDetailMaster.ccSummary;
+
+        apz.launchSubScreen( {
+      appId : "cdtcrd",
+        scr:"CreditCardPay",
+        // div:"cdtcrd__launchScreen__ps_pls_1",
+        div:"cdtcrd__CreditCardDetails__Stage2",
+        
+        userObj : {
+                    "cardDetails" : cardDetails,
+                    "rowNo" : lRowIndex
+          //  "amount" : (parseInt(x.replace(",","")) * 0.75)
+        }
+    }       )
+  
+   }

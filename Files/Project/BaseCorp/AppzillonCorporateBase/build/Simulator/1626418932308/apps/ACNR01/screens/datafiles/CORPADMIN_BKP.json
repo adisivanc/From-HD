@@ -1,0 +1,97 @@
+{
+    "ACNR01__MenuList_Req": {
+        "vwMenu": [{
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Home",
+            "displayOrder": "1",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "",
+            "roleId": "Admin",
+            "screenId": ""
+        }, {
+            "appId": "ACDB01",
+            "corporateId": "000FTAC4321",
+            "description": "My Dashboard",
+            "displayOrder": "1",
+            "groupIcon": "",
+            "groupName": "Home",
+            "icon": "icon-cm-dashboard_new",
+            "roleId": "Admin",
+            "screenId": "AdminDashboard"
+        }, {
+            "appId": "actf01",
+            "corporateId": "000FTAC4321",
+            "description": "My Tasks",
+            "displayOrder": "2",
+            "groupName": "Admin",
+            "icon": "icon-cm-mytask",
+            "roleId": "Admin",
+            "screenId": "TaskFlow"
+        }, {
+            "appId": "acus01",
+            "corporateId": "000FTAC4321",
+            "description": "Users",
+            "displayOrder": "3",
+            "groupName": "Admin",
+            "icon": "icon-users",
+            "roleId": "Admin",
+            "screenId": "UserList"
+        }, {
+            "appId": "acrl01",
+            "corporateId": "000FTAC4321",
+            "description": "Roles",
+            "displayOrder": "4",
+            "groupName": "Admin",
+            "icon": "icon-cm-rolee",
+            "roleId": "Admin",
+            "screenId": "RolesList"
+        }, {
+            "appId": "acru01",
+            "corporateId": "000FTAC4321",
+            "description": "Workflows",
+            "displayOrder": "5",
+            "groupName": "Admin",
+            "icon": "icon-cm-rules",
+            "roleId": "Admin",
+            "screenId": "RulesSummary"
+        }, {
+            "appId": "acpr01",
+            "corporateId": "000FTAC4321",
+            "description": "Company Profile",
+            "displayOrder": "6",
+            "groupName": "Admin",
+            "icon": "icon-cm-company-profile",
+            "roleId": "Admin",
+            "screenId": "CorporateInfo"
+        }, {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Admin",
+            "displayOrder": "7",
+            "groupName": "",
+            "groupIcon": "",
+            "roleId": "Admin",
+            "screenId": ""
+        }, {
+            "appId": "acep01",
+            "corporateId": "000FTAC4321",
+            "description": "Organizational Hierarchy",
+            "displayOrder": "7",
+            "groupName": "Admin",
+            "icon": "icon-cm-company-structure",
+            "roleId": "Admin",
+            "screenId": "CorporateHierarchy"
+        }, {
+            "appId": "asntsk",
+            "corporateId": "000FTAC4321",
+            "description": "Assign Tasks",
+            "displayOrder": "8",
+            "groupName": "Admin",
+            "icon": "icon-cm-mytask",
+            "roleId": "Admin",
+            "screenId": "TasksList"
+        }]
+    }
+}

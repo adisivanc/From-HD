@@ -1,0 +1,14 @@
+[
+    {
+        "EducationType": "Under Graduate"
+    },
+    {
+        "EducationType": "Graduate"
+    },
+    {
+        "EducationType": "Post Graduate"
+    },
+    {
+        "EducationType": "Professional"
+    }
+]

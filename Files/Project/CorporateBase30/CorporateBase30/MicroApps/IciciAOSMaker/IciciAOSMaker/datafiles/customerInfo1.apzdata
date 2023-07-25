@@ -1,0 +1,30 @@
+{
+    "details": {
+        "FirstName": "Darren ",
+        "LastName": "Lansterman",
+        "DateOfBirth": "03/10/1978",
+        "Nationality": "Ireland",
+        "Country": "England",
+        "PlaceOfBirth": "Northern Ireland",
+        "BuildingNo": "Flat 31",
+        "BuildingName": " Lakozy House",
+        "Street": "Southampton Row",
+        "City": "London",
+        "PostalCode": "WC1B 5HJ",
+        "TelephoneNumber": "+44 (0) 28 9136 9746",
+        "Email": "info@fundsaxis.com",
+        "IdentificationNumber": "798654333",
+        "TaxReference": "UTR458988764",
+        "AccountNumber": "UBJF00012220",
+        "position":"Managing Director",
+        "country2":"England",
+        "lengthOfTime":"2 hours",
+        "mobileNo":"5645454",
+        "confirmEmail":"Darren.Lansterman@gmail.com",
+        "emailNotify":"y",
+        "smsNotify":"y",
+        "validTill":"03/01/2018",
+        "ownerType":"50",
+        "securityNo":"6876555"
+    }
+}

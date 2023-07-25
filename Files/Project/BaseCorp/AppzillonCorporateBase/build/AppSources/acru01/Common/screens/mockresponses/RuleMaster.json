@@ -1,0 +1,58 @@
+{
+    "tbDbmiWorkflowRuleMaster": [
+        {
+            "corporateId": "000287",
+            "functionId": "Funds Transfer",
+            "verisionNo": "1",
+            "makerId": "Robert",
+            "makerTs": "21-Jan-2018",
+            "checkerId": "",
+            "checkerTs":""
+        },
+        {
+            "corporateId": "000288",
+            "functionId": "Loans",
+            "verisionNo": "1",
+            "makerId": "Robert",
+            "makerTs": "21-Jan-2018",
+            "checkerId": "",
+            "checkerTs":""
+        },
+        {
+            "corporateId": "000289",
+            "functionId": "Limits",
+            "verisionNo": "1",
+            "makerId": "Robert",
+            "makerTs": "21-Jan-2018",
+            "checkerId": "",
+            "checkerTs":""
+        },
+        {
+            "corporateId": "000289",
+            "functionId": "User Management",
+            "verisionNo": "1",
+            "makerId": "Robert",
+            "makerTs": "21-Jan-2018",
+            "checkerId": "",
+            "checkerTs":""
+        },
+        {
+            "corporateId": "000289",
+            "functionId": "Roles",
+            "verisionNo": "1",
+            "makerId": "Robert",
+            "makerTs": "21-Jan-2018",
+            "checkerId": "",
+            "checkerTs":""
+        },
+        {
+            "corporateId": "000289",
+            "functionId": "Offers",
+            "verisionNo": "1",
+            "makerId": "Robert",
+            "makerTs": "21-Jan-2018",
+            "checkerId": "",
+            "checkerTs":""
+        }
+    ]
+}

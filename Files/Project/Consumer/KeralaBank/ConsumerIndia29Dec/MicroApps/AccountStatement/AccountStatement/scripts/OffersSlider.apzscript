@@ -1,0 +1,15 @@
+apz.accstm.OffersSlider = {};
+apz.app.onLoad_OffersSlider = function()
+{
+    debugger;
+    apz.data.loadJsonData("RecentTransactions", "accstm");
+}
+
+
+apz.accstm.OffersSlider.fnOpenLinks = function(element)
+{
+    debugger;
+  
+        apz.landin.Landing.fnMenuClickInside(element);
+    }
+   

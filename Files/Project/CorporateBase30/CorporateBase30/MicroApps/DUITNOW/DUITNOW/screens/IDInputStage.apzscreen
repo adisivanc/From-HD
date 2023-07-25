@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"IDInputStage","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"IDInputStage","interfaces":[{"name":"IDType","request":"Y","response":"Y","fault":"N"},{"name":"AddID","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

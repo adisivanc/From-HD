@@ -1,0 +1,26 @@
+{
+    "landin__Notifications_Res" :[
+        {
+          "message" :"James Requested money of $ 200 . click here to transfer",
+          "icon" :"icon-CNS-notification",
+          "type" :"fundtransfer"
+        },{
+          "message" :"Your password will expire soon. Click here to reset",
+          "icon" :"icon-CNS-notification",
+          "type" :"changepassword"
+        },{
+          "message" :"Your airtel postpaid bill payment is due on 27/09/2020. Click here to pay",
+          "icon" :"icon-CNS-notification",
+          "type" :"billpayment"
+        },{
+          "message" :"Your statement is dispatched to your billing address on 29/08/2020",
+          "icon" :"icon-CNS-notification",
+          "type" :"NA"
+        },{
+          "message" :"Click here to provide your feedback",
+          "icon" :"icon-CNS-notification",
+          "type" :"feedback"
+        }
+        
+        ]
+}

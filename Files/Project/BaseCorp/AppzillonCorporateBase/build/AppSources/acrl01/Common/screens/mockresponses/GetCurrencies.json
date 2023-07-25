@@ -1,0 +1,14 @@
+{
+    "tbDbmiCorpCurrency": [
+        {
+            "id": "1",
+            "currencyDesc": "INR",
+            "currencyVal": "INR"
+        },
+        {
+            "id": "2",
+            "currencyDesc": "USD",
+            "currencyVal": "USD"
+        }
+    ]
+}

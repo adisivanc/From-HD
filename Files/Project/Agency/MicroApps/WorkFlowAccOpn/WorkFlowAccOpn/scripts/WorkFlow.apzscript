@@ -1,0 +1,159 @@
+apz.woslcm.workFlow = {};
+apz.woslcm.workFlow.sInstanceId = "";
+apz.woslcm.workFlow.sCache={};
+apz.app.onLoad_WorkFlow = function(params) {
+    debugger;
+    apz.woslcm.workFlow.sAppId = params.appId;
+    apz.woslcm.workFlow.sUserId = params.userId;
+    apz.woslcm.workFlow.sCorporateId = params.corporateId;
+    apz.woslcm.workFlow.sCache.workflow = params.workflow;
+    apz.woslcm.workFlow.sCache.scrndata = params.scrndata;
+    apz.woslcm.workFlow.sCache.workflowAction=params.workflowAction
+    apz.woslcm.workFlow.sCache.callBack=params.callBack;
+    apz.woslcm.workFlow.sCache.status=params.status;
+    apz.woslcm.workFlow.StartWorkflow(params);
+};
+apz.woslcm.workFlow.StartWorkflow = function(params) {
+    
+    if(params.roleId){
+        apz.woslcm.workFlow.callNextStage();
+        return;
+    }
+    
+    debugger;
+    let lServerParams = {
+        "ifaceName": "StartWorkflow",
+        "buildReq": "N",
+        "req": "",
+        "paintResp": "Y",
+        "callBack": apz.woslcm.workFlow.StartWorkflowCB,
+        "callBackObj": params
+    };
+    let req = {};
+    req.appId = params.appId;
+    req.workFlowId = params.workFlowId;
+    req.userId = params.userId;
+    lServerParams.req = req;
+    apz.server.callServer(lServerParams);
+}
+apz.woslcm.workFlow.StartWorkflowCB = function(pResp) {
+    debugger;
+    if(pResp.callBackObj.callBack){
+        pResp.callBackObj.callBack(pResp);
+        return;
+    }
+    let lresponse = pResp.res.woslcm__StartWorkflow_Res;
+    if (lresponse.status) {
+        apz.woslcm.workFlow.sInstanceId = lresponse.instanceId;
+        apz.setElmValue("woslcm__WorkFlow__headertxt", lresponse.workFlowDesc);
+        apz.setElmValue("woslcm__WorkFlow__stagetxt", lresponse.stageId);
+        let params = {};
+        //params.appId = lresponse.appId;
+        params.appId = "entpro";
+        params.scr = lresponse.screenId;
+        params.div = "woslcm__WorkFlow__launchMicroServiceHere";
+        params.layout = "All";
+        params.userObj = {
+            "corporateId": apz.woslcm.workFlow.sCorporateId,
+            "userId": apz.woslcm.workFlow.sUserId,
+            "div": "woslcm__WorkFlow__launchMicroServiceHere",
+            "screenData": pResp.callBackObj.screenData,
+            "recordNo": pResp.callBackObj.recordNo,
+            "instanceId": apz.woslcm.workFlow.sInstanceId
+        };
+        apz.launchApp(params);
+    } else {
+        let msg = {
+            "message": lresponse.msg
+        };
+        apz.dispMsg(msg)
+    }
+}
+apz.woslcm.workFlow.gotoNextStage = function(pthis) {
+    let lrowNo = $(pthis).attr('rowno');
+    let laction = apz.getElmValue("woslcm__StartWorkflow__o__actionObjectList__action_" + lrowNo);
+     let lScreenData = apz.data.buildData("EntityAddressModify", "entpro");
+     let lEntityMaster = lScreenData.entpro__EntityAddressModify_Req.tbDbmiCorpEntity;
+     apz.entpro.sAddressData.push(lScreenData.entpro__EntityAddressModify_Req.tbDbmiCorpAddress);
+     lScreenData.entpro__EntityAddressModify_Req.tbDbmiCorpAddress = apz.entpro.sAddressData;
+    
+    //let lScreenData = apz["entpro"].getBuildData();
+    
+    let lServerParams = {
+        "ifaceName": "NextStage",
+        "appId": "woslcm",
+        "buildReq": "N",
+        "req": "",
+        "paintResp": "N",
+        "callBack": apz.woslcm.workFlow.gotoNextStageCB,
+    };
+    let req = {};
+    req.appId = apz.woslcm.workFlow.sAppId;
+    req.instanceId = apz.woslcm.workFlow.sInstanceId;
+    req.userId = apz.woslcm.workFlow.sUserId;
+    req.screenData = JSON.stringify(lScreenData);
+    req.action = laction;
+    lServerParams.req = req;
+    apz.server.callServer(lServerParams);
+}
+apz.woslcm.workFlow.gotoNextStageCB = function(pResp) {
+    debugger;
+    let lresponse = pResp.res.woslcm__NextStage_Res;
+    if (lresponse.status) {
+        apz.woslcm.workFlow.sInstanceId = lresponse.instanceId;
+        apz.setElmValue("woslcm__WorkFlow__headertxt", lresponse.workFlowDesc);
+        apz.setElmValue("woslcm__WorkFlow__stagetxt", lresponse.stageId);
+        apz.data.scrdata.woslcm__StartWorkflow_Res.actionObjectList = lresponse.actionObjectList;
+        apz.data.loadData("StartWorkflow", "woslcm");
+        if (lresponse.stageType == "SERVICETASK" && lresponse.screenId == "") {
+            apz["entpro"].executeServiceTask(lresponse);
+            //apz[pResp.appId].executeServiceTask(lresponse);
+            // let promise = new Promise(function(resolve, reject) {
+            //     resolve(apz[pResp.appId].executeServiceTask(lresponse));
+            // });
+            // promise.then((msg) => {
+            //     alert(msg)
+            // });
+        } else {
+            let params = {};
+            //params.appId = lresponse.appId;
+            params.appId = "entpro";
+            params.scr = lresponse.screenId;
+            params.div = "woslcm__WorkFlow__launchMicroServiceHere";
+            params.layout = "All";
+            params.userObj = {
+                "screenData": lresponse.screenData,
+                "instanceId": apz.woslcm.workFlow.sInstanceId
+            };
+            apz.launchApp(params);
+        }
+    } else {
+        let msg = {
+            "message": lresponse.msg
+        };
+        apz.dispMsg(msg);
+    }
+}
+
+apz.woslcm.workFlow.callNextStage=function(){
+    if(!apz.woslcm.workFlow.sCache.workflowAction){
+        apz.woslcm.workFlow.sCache.callBack();
+        return;
+    }
+    let lServerParams = {
+        "ifaceName": "NextStage",
+        "appId": "woslcm",
+        "buildReq": "N",
+        "req": "",
+        "paintResp": "N",
+        "callBack": apz.woslcm.workFlow.sCache.callBack,
+    };
+    let req = {};
+    req.appId = apz.woslcm.workFlow.sAppId;
+    req.instanceId = apz.woslcm.workFlow.sCache.workflow.instanceId;
+    req.userId = apz.woslcm.workFlow.sUserId;
+    req.screenData = JSON.stringify(apz.woslcm.workFlow.sCache.scrndata);
+    req.action=apz.woslcm.workFlow.sCache.workflowAction;
+    lServerParams.req = req;
+    apz.server.callServer(lServerParams);
+}

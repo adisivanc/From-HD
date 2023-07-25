@@ -1,0 +1,161 @@
+apz.rdsmry.rdsummary = {};
+apz.rdsmry.rdsummary.sParams = {};
+apz.rdsmry.rdsummary.sAction = {};
+apz.app.onLoad_RDSummary = function(params) {
+    debugger;
+    apz.rdsmry.rdsummary.sAction = params;
+    if (apz.deviceGroup == "Mobile") {
+        $("#rdsmry__RDSummary__sc_col_62_li").removeClass("sno");
+    }
+    if (params.Navigation) {
+        apz.rdsmry.rdsummary.fnSetNavigation(params);
+    }
+    apz.rdsmry.rdsummary.fnInitialise(params);
+    if (apz.rdsmry.rdsummary.sAction.from == "OverViewRecurringDeposit") {
+        apz.setElmValue("landin__Landing__heading", "RD SUMMARY")
+        // if (apz.rdsmry.rdsummary.sAction.data.currency == "USD") {
+        //     $("body").addClass("dollarCurrency");
+        // }
+        apz.rdsmry.rdsummary.fnLaunchDetails();
+    }
+};
+apz.rdsmry.rdsummary.fnInitialise = function(params) {
+    debugger;
+    apz.rdsmry.rdsummary.sParams = params;
+    apz.data.loadJsonData("RDSavAccDetails", "rdsmry");
+    apz.rdsmry.rdsummary.sParams.data.SavingsAccount = apz.data.scrdata.rdsmry__RDSavAccDetails_Res.SavingsAccount;
+    apz.rdsmry.rdsummary.fnGoToStage1();
+};
+apz.rdsmry.rdsummary.fnSetNavigation = function(params) {
+    debugger;
+    apz.rdsmry.rdsummary.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.headerText = "RD SUMMARY";
+    apz.rdsmry.rdsummary.Navigation(lParams);
+};
+apz.rdsmry.rdsummary.fnGoToStage1 = function() {
+    debugger;
+    apz.rdsmry.rdsummary.fnRenderStage1();
+    apz.rdsmry.rdsummary.fnQuery();
+};
+apz.rdsmry.rdsummary.fnRenderStage1 = function() {
+    debugger;
+    apz.hide("rdsmry__RDSummary__Stage2");
+    apz.show("rdsmry__RDSummary__Stage1");
+};
+apz.rdsmry.rdsummary.fnQuery = function() {
+    // var lReq = {
+    //     "depositSummary": {
+    //         "customerId": apz.rdsmry.rdsummary.sParams.data.customerID
+    //     }
+    // };
+    // var lParams = {
+    //     "ifaceName": "RDSummary",
+    //     "req": lReq,
+    //     "callBack": apz.rdsmry.rdsummary.fnCallServerCallBack
+    // };
+    // apz.rdsmry.rdsummary.fnBeforeCallServer(lParams);
+    apz.data.loadJsonData("RDSummary", "rdsmry");
+};
+apz.rdsmry.rdsummary.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": "Y",
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": params.callBack
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.rdsmry.rdsummary.fnCallServerCallBack = function(params) {
+    debugger;
+};
+apz.rdsmry.rdsummary.fnLaunchDetails = function(pthis) {
+    debugger;
+    if (apz.rdsmry.rdsummary.sAction.from == "OverViewRecurringDeposit") {
+        var lRowIndex = 0;
+    } else {
+        var lRowIndex = $("#" + pthis.id).attr("rowno");
+    }
+    var lRec = $.extend(apz.data.scrdata.rdsmry__RDSummary_Res.depositSummary.depositDtls[apz.getRecordNumber("rdsmry__RDSummary__summaryList",
+        parseInt(lRowIndex))], {}, true);
+    var lObj = {
+        "scr": "RDDetails",
+        "div": "rdsmry__RDSummary__Stage2",
+        "userObj": {
+            "data": lRec,
+            "callBack": apz.rdsmry.rdsummary.fnRDDetailsCB
+        }
+    };
+    if (apz.rdsmry.rdsummary.sParams.Navigation) {
+        lObj.userObj.Navigation = {
+            "setNavigation": apz.rdsmry.rdsummary.Navigation
+        }
+    }
+    apz.rdsmry.rdsummary.fnRenderStage2();
+    apz.launchSubScreen(lObj);
+};
+apz.rdsmry.rdsummary.fnLaunchPayment = function(pthis) {
+    debugger;
+    var lRowIndex = $("#" + pthis.id).attr("rowno");
+    var lRec = $.extend(apz.data.scrdata.rdsmry__RDSummary_Res.depositSummary.depositDtls[apz.getRecordNumber("rdsmry__RDSummary__summaryList",
+        parseInt(lRowIndex))], {}, true);
+    var lObj = {
+        "appId": "insprd",
+        "scr": "PayInstallment",
+        "div": "rdsmry__RDSummary__Stage2",
+        "userObj": {
+            "data": lRec,
+            "callBack": apz.rdsmry.rdsummary.fnRDDetailsCB
+        }
+    };
+    lObj.userObj.data.SavingsAccount = apz.rdsmry.rdsummary.sParams.data.SavingsAccount;
+    if (apz.rdsmry.rdsummary.sParams.Navigation) {
+        lObj.userObj.Navigation = {
+            "setNavigation": apz.rdsmry.rdsummary.Navigation
+        }
+    }
+    apz.rdsmry.rdsummary.fnRenderStage2();
+    apz.launchApp(lObj);
+};
+apz.rdsmry.rdsummary.fnRenderStage2 = function() {
+    debugger;
+    apz.hide("rdsmry__RDSummary__Stage1");
+    apz.show("rdsmry__RDSummary__Stage2");
+};
+apz.rdsmry.rdsummary.fnRDDetailsCB = function() {
+    debugger;
+    apz.resetCurrAppId("rdsmry");
+    if (apz.rdsmry.rdsummary.sParams.Navigation) {
+        var lParams = {};
+        lParams.showBack = "N";
+        lParams.headerText = "RECURRING DEPOSIT SUMMARY";
+        apz.rdsmry.rdsummary.Navigation(lParams);
+    }
+    apz.rdsmry.rdsummary.fnRenderStage1();
+}
+apz.rdsmry.rdsummary.fnShare = function(pthis) {
+    debugger;
+    var RowNo = $(pthis).attr('rowno');
+    var accountNumber = apz.data.scrdata.rdsmry__RDSummary_Res.depositSummary.depositDtls[RowNo].accountNo;
+    var instalmentAmount = apz.data.scrdata.rdsmry__RDSummary_Res.depositSummary.depositDtls[RowNo].installmentAmount;
+    var param = {
+        "decimalSep": ".",
+        "value": instalmentAmount,
+        "mask": "MILLION",
+        "decimalPoints": "2",
+        "displayAsLiteral": "N"
+    };
+    var accountNum = accountNumber.replace(/\d(?=\d{4})/g, "*");
+    var text = "Account Number : " + accountNum + "\n" + "Instalment Amount : " + "Rs." + apz.formatNumber(param);
+    var json = {};
+    json.id = "NATIVE";
+    json.textToShare = text;
+    json.callBack = apz.rdsmry.rdsummary.fnShareCallBack;
+    json.action = "text";
+    apz.ns.nativeShare(json);
+}
+apz.rdsmry.rdsummary.fnShareCallBack = function() {
+    debugger;
+}

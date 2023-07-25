@@ -1,0 +1,31 @@
+apz.achv01 = {};
+apz.achv01.CorporateHierarchy = {};
+apz.app.onShown_CorporateHierarchy = function() {
+    var lServerParams = {
+        "ifaceName": "CorporateHierarchy_Query",
+        "buildReq": "N",
+        "req": "",
+        "paintResp": "N",
+        "async": "true",
+        "callBack": apz.achv01.CorporateHierarchy.FetchCorporateHierarchyCB,
+        "callBackObj": "",
+    };
+    var req = {};
+    lServerParams.req = req;
+    apz.server.callServer(lServerParams);
+};
+apz.achv01.CorporateHierarchy.FetchCorporateHierarchyCB = function(pResp) {
+    var lDataSource = pResp.resFull.appzillonBody.ACHV01__CorporateHierarchy_Res.DataSource;
+    requirejs([apz.getInfraPath() + "/fusioncharts/fusioncharts.js"], function() {
+        var fusioncharts = new FusionCharts({
+            type: 'dragnode',
+            id: 'subwaymap',
+            renderAt: 'ACHV01__CorporateHierarchy__drag_node_loader',
+            width: '800',
+            height: '600',
+            dataFormat: 'json',
+            dataSource: lDataSource,
+        });
+        fusioncharts.render();
+    });
+};

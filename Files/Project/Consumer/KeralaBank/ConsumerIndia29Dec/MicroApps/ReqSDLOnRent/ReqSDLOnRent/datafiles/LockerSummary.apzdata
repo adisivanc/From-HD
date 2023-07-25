@@ -1,0 +1,61 @@
+{
+    "tbDbtpLockerSummary" : [
+            {
+                "branchName" : "Bareilly Sadar",
+                "brnCode" : "BRN00011SDR",
+                "fromAccount": "56XXXXXX01",
+                "rentAmount": "3000",
+                "rentDuedate": "3 May 2018",
+                "lockerSize": "Small",
+                "accountNoForRent" : "12345",
+                "customerId" : "XXX123YZX",
+                "modeOfOperation" : "Self",
+                "nameOfHirer" : "Sanjay",
+                "nomineeName" : "",
+                "nomineeDob" : "",
+                "nomineeRelation" : "",
+                "nomineeAddress" : "",
+                "nomineeContactNo" : "",
+                "addressOfHirer" : "Baheri"
+                
+            },
+            {
+                "branchName" : "Pitampura Ext",
+                "brnCode" : "PTM324ADEXT",
+                "fromAccount": "56XXXXXX01",
+                "rentAmount": "4000",
+                "rentDuedate": "3 AUG 2018",
+                "lockerSize": "Large",
+                "accountNoForRent" : "983627",
+                "customerId" : "ABH45VFd23",
+                "modeOfOperation" : "Self",
+                "nameOfHirer" : "Sunil Kushwaha",
+                "nomineeName" : "",
+                "nomineeDob" : "",
+                "nomineeRelation" : "",
+                "nomineeAddress" : "",
+                "nomineeContactNo" : "",
+                "addressOfHirer" : "New Delhi"
+            },
+            {
+                "branchName" : "CGO Complex",
+                "brnCode" : "BHUAB3J5COM",
+                "fromAccount": "56XXXXXX01",
+                "rentAmount": "11245",
+                "rentDuedate": "6 JUN 2018",
+                "lockerSize": "Extra Large",
+                "accountNoForRent" : "12345",
+                "customerId" : "MNB876VG56",
+                "modeOfOperation" : "Self",
+                "nameOfHirer" : "Rakesh Panda",
+                "nomineeName" : "Tushar Panda",
+                "nomineeDob" : "15 AUG 1963",
+                "nomineeRelation" : "Father",
+                "nomineeAddress" : "Bhuvneshwar Orrisa",
+                "nomineeContactNo" : "9383452345",
+                "addressOfHirer" : "Bhuvneshwar Orrisa"
+            }
+        ]
+}
+
+

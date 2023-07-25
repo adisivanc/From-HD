@@ -1,0 +1,10 @@
+{
+    "MessageDtls": {
+        "data": "",
+        "txnRefNo": "1519305292660303480",
+        "extMsg": "",
+        "respCd": "",
+        "intMsgCd": "SUC-001",
+        "status": "success"
+    }
+}

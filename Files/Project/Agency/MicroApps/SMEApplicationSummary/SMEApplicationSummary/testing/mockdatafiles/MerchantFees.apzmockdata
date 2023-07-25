@@ -1,0 +1,31 @@
+{
+    "tbComiMerchantFees":[
+           {
+               "appNo" :"8948384",
+               "integrationFees":"1000",
+               "product" :"Current Account",
+               "joiningFees" :"2000",
+               "perTransactionFees" :"100",
+               "monthlyServiceFees":"1000",
+               "idNo":"12"
+           },
+           {
+               "appNo" :"8948384",
+               "integrationFees":"1000",
+               "product" :"Current Account",
+               "joiningFees" :"2000",
+               "perTransactionFees" :"100",
+               "monthlyServiceFees":"1000",
+               "idNo":"13"
+           },
+           {
+              "appNo" :"8948384",
+               "integrationFees":"1000",
+               "product" :"Current Account",
+               "joiningFees" :"2000",
+               "perTransactionFees" :"100",
+               "monthlyServiceFees":"1000",
+               "idNo":"14"
+           }
+    ]
+}

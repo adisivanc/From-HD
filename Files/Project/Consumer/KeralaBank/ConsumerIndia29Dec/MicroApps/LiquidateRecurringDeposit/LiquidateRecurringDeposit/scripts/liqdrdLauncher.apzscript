@@ -1,0 +1,8 @@
+apz.liqdrd.checkParams = function(params) {
+    debugger;
+    params.userObj = {
+        "data": {
+            "customerId": "12345"
+        }
+    };
+};

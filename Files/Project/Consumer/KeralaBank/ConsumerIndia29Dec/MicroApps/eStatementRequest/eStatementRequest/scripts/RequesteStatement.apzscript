@@ -1,0 +1,104 @@
+apz.estreq.requestestatement = {};
+apz.app.onLoad_RequesteStatement = function(pParams) {
+    apz.estreq.requestestatement.sParams = pParams;
+    apz.estreq.requestestatement.fnInitialise(pParams);
+    apz.estreq.requestestatement.fnaddRowClicked();
+};
+apz.estreq.requestestatement.fnInitialise = function(pParams) {
+    debugger;
+    if(pParams.Navigation){
+         apz.estreq.requestestatement.fnSetNavigation(pParams);
+    }
+    apz.data.loadJsonData("SavCurrAccDetails","estreq");
+//   // apz.data.scrdata.estreq__CustAccounts_Res = {};
+//     // apz.data.scrdata.estreq__CustAccounts_Res.SavingsAccount = apz.data.scrdata.estreq__SavCurrAccDetails_Res.SavingsAccount;
+//     // apz.data.scrdata.estreq__CustAccounts_Res.CurrentAccount = apz.data.scrdata.estreq__SavCurrAccDetails_Res.CurrentAccount;
+//     if (apz.data.scrdata.estreq__SavCurrAccDetails_Res.SavingsAccount.length === 0) {
+//         apz.hide("estreq__RequesteStatement__savAcc");
+//     }
+//     if (apz.data.scrdata.estreq__SavCurrAccDetails_Res.CurrentAccount.length === 0) {
+//         apz.hide("estreq__RequesteStatement__currAcc");
+ //   }
+    apz.estreq.requestestatement.fnGoToStage1(pParams);
+};
+
+ apz.estreq.requestestatement.fnSetNavigation = function(params){
+     debugger;
+    apz.estreq.requestestatement.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "REQUEST FOR STATEMENT";
+    }
+        apz.estreq.requestestatement.Navigation(lParams);
+ };
+apz.estreq.requestestatement.fnGoToStage1 = function(pParams) {
+    apz.estreq.requestestatement.fnSetDataInStage1(pParams);
+    apz.estreq.requestestatement.fnRenderStage1(pParams);
+};
+apz.estreq.requestestatement.fnSetDataInStage1 = function(pParams) {
+    apz.data.loadData("CustAccounts", "estreq");
+};
+apz.estreq.requestestatement.fnRenderStage1 = function(pParams) {
+    apz.show("estreq__RequesteStatement__Stage1");
+    apz.hide("estreq__RequesteStatement__Stage2");
+};
+apz.estreq.requestestatement.fnaddRowClicked = function() {
+    apz.app.preRowClicked = function(pContainer, pRowNo) {
+        debugger;
+        if (pContainer == "estreq__RequesteStatement__savAcc") {
+            apz.estreq.requestestatement.sAccNo = apz.getElmValue("estreq__CustAccounts__o__SavingsAccount__accountNo_" + pRowNo);
+            apz.estreq.requestestatement.sAccType = "Savings Account ";
+            apz.estreq.requestestatement.fnReqStatement();
+        } else if (pContainer == "estreq__RequesteStatement__currAcc") {
+            apz.estreq.requestestatement.sAccNo = apz.getElmValue("estreq__CustAccounts__o__CurrentAccount__accountNo_" + pRowNo);
+            apz.estreq.requestestatement.sAccType = "Current Account ";
+            apz.estreq.requestestatement.fnReqStatement();
+        }else if(pContainer == "estreq__RequesteStatement__ct_lst_1")
+            // apz.estreq.requestestatement.fnReqStatement();
+            {
+                        apz.estreq.requestestatement.sAccNo = apz.getElmValue("estreq__CustAccounts__o__CreditCards__accountNumber_" + pRowNo);
+                                    apz.estreq.requestestatement.sAccType = "Credit Cards ";
+            apz.estreq.requestestatement.fnReqStatement();
+}
+    };
+};
+apz.estreq.requestestatement.fnReqStatement = function() {
+    // var lReq = {
+    //     "ifaceName": "RequesteStatement",
+    //     "req": {
+    //         "customerID": apz.estreq.requestestatement.sParams.data.customerID,
+    //         "accountNo": apz.estreq.requestestatement.sAccNo,
+    //         "accountType": apz.estreq.requestestatement.sAccType
+    //     }
+    // };
+    // apz.estreq.requestestatement.fnBeforeCallServer(lReq);
+    
+    apz.data.loadJsonData("RequesteStatement","estreq");
+  //  apz.estreq.requestestatement.fnShowConfirmation();
+   apz.estreq.requestestatement.fnGoToStage2();
+};
+
+apz.estreq.requestestatement.fnShowConfirmation = function() {
+    debugger;
+    var lMsg = {
+        "code": "ESTREQ_CONFIRMATION",
+        "callBack" : apz.estreq.requestestatement.fnShowConfirmationCB
+    };
+    apz.dispMsg(lMsg);
+};
+apz.estreq.requestestatement.fnShowConfirmationCB = function(params){
+    debugger;
+    if(params.choice){
+        apz.estreq.requestestatement.fnGoToStage2();
+    }
+}
+apz.estreq.requestestatement.fnGoToStage2 = function() {
+    apz.estreq.requestestatement.fnRenderStage2();
+};
+apz.estreq.requestestatement.fnRenderStage2 = function(pParams) {
+    // apz.hide("estreq__RequesteStatement__Stage1");
+    // apz.show("estreq__RequesteStatement__Stage2");
+    apz.dispMsg({"message":"Request of Statement has been initiated!", type : "S" ,callBack : apz.landin.Landing.fnHome });
+};

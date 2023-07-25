@@ -1,0 +1,34 @@
+apz.spndas.TransactionDetails = {};
+apz.app.onLoad_TransactionDetails = function() {
+    debugger;
+  
+};
+apz.app.onShown_TransactionDetails = function(){
+    debugger;
+      if(apz.deviceGroup!== "Mobile"){
+    var datemonth = apz.getElmValue("spndas__TotalSpends__el_inp_4");
+    var [month,year]=     datemonth.split(" ");
+    apz.spndas.dateMonth = [month,year];
+    apz.spndas.Launcher.fnLoadTranaction(month.substr(0,3)+" "+year,apz.data.scrdata.spndas__TotalSpends_Res.spends[0].value,apz.spndas.Launcher.monthsFilter);
+    }
+    else{
+        $("#spndas__TransactionDetails__backrow").removeClass("sno");
+         todayMonth = TransactionDetails.getTodayMonth();
+    todayyear = TransactionDetails.getTodayYear();
+    TransactionSummary.setMonthYear(todayMonth+" "+todayyear);
+    summary = TransactionSummary.getSummary();
+    apz.spndas.Launcher.fnLoadSummaryData(summary);
+    }
+}
+apz.spndas.TransactionDetails.fnMonthFilter = function(value,category){
+    debugger;
+    apz.spndas.Launcher.monthsFilter = (category == "year")?value * 12:value;
+    
+  //  var datemonth = apz.getElmValue("spndas__TotalSpends__el_inp_4");
+    var [month,year]=     apz.spndas.dateMonth;
+    apz.spndas.Launcher.fnLoadTranaction(month.substr(0,3)+" "+year,apz.data.scrdata.spndas__TotalSpends_Res.spends[0].value,apz.spndas.Launcher.monthsFilter);
+}
+apz.spndas.TransactionDetails.fnBack = function(){
+    debugger;
+    apz.spndas.Launcher.fnLaunchScreen("spndas","TotalSpends","spndas__Launcher__doughnutLauncher");
+}

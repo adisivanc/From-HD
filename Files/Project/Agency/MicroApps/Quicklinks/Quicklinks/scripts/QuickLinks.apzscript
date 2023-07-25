@@ -1,0 +1,220 @@
+ apz.quklnk = {};
+ apz.quklnk.QuickLinks = {};
+ apz.quklnk.QuickLinks.sCache = "";
+ apz.app.onLoad_QuickLinks = function(params) {
+     
+     apz.quklnk.QuickLinks.sCache = params;
+ };
+ apz.app.onShown_QuickLinks = function() {};
+ apz.quklnk.QuickLinks.fnListClick = function(params) {
+     
+     var lListVal = params.textContent;
+     if (lListVal == "Own Account Transfer") {
+         var lParams = {
+             "appId": "tranfe",
+             "scr": "EnterDetails",
+             "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "animation": 9,
+             "type": "CF",
+             "userObj": {
+                 "destroyDiv": apz.quklnk.QuickLinks.sCache.destroyDiv,
+                 "parentAppId": "quklnk",
+                 "screen": "ownBank"
+             }
+         };
+     } else if (lListVal == "Third Party Transfer") {
+         var lParams = {
+             "appId": "tranfe",
+             "scr": "EnterDetails",
+             "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "animation": 9,
+             "type": "CF",
+             "userObj": {
+                 "destroyDiv": apz.quklnk.QuickLinks.sCache.destroyDiv,
+                 "parentAppId": "quklnk",
+                 "screen": "otherBank"
+             }
+         };
+     } else if (lListVal == "Bill Payment") {
+         
+         var lParams = {
+             "appId": "bllpay",
+             "scr": "bllpayLauncher",
+             "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "animation": 9,
+             "type": "CF",
+             "userObj": {
+                 "data": {},
+                 "destroyDiv": apz.quklnk.QuickLinks.sCache.destroyDiv,
+                 "parentAppId": "quklnk"
+             }
+         };
+     } else if (lListVal == "Multiple Transfers") {
+         
+         var lParams = {
+             "appId": "bulktr",
+             "scr": "WithinBank",
+             "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "animation": 9,
+             "type": "CF",
+             "userObj": {
+                 "data": {},
+                 "destroyDiv": apz.quklnk.QuickLinks.sCache.destroyDiv,
+                 "parentAppId": "quklnk"
+             }
+         };
+     } else if (lListVal == "Cash Deposit") {
+         var lParams = {
+             "appId": "cashtr",
+             "scr": "CashTransactionsHome",
+             "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "animation": 9,
+             "type": "CF",
+             "userObj": {
+                 "data": {},
+                 "destroyDiv": apz.quklnk.QuickLinks.sCache.destroyDiv,
+                 "parentAppId": "quklnk",
+                 "type": "deposit"
+             }
+         };
+     } else if (lListVal == "Cash Withdrawal") {
+         var lParams = {
+             "appId": "cashtr",
+             "scr": "CashTransactionsHome",
+             "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "animation": 9,
+             "type": "CF",
+             "userObj": {
+                 "data": {},
+                 "destroyDiv": apz.quklnk.QuickLinks.sCache.destroyDiv,
+                 "parentAppId": "quklnk",
+                 "type": "withdrawal"
+             }
+         };
+     } else if (lListVal == "Create Lead") {
+         var lParams = {
+            "appId": "ACOP01",
+            "scr": "AccountOpening",
+             "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "animation": 9,
+             "type": "CF",
+             "userObj": {
+                 "data": {},
+                 "destroyDiv": apz.quklnk.QuickLinks.sCache.destroyDiv,
+                 "parentAppId": "quklnk"
+             }
+         };
+     } else if (lListVal == "Bearer") {
+         var lParams = {
+             "appId": "beamnt",
+             "scr": "BearerSummary",
+             "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "animation": 9,
+             "type": "CF",
+             "userObj": {
+                 "data": {},
+                 "destroyDiv": apz.quklnk.QuickLinks.sCache.destroyDiv,
+                 "parentAppId": "quklnk"
+             }
+         };
+     } else if (lListVal == "Applications") {
+         var lParams = {
+             "appId": "aphist",
+             "scr": "ApplicationHistory", //"ONBDeshboard",
+             "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "animation": 9,
+             "userObj": {
+                 "corporateId": "000FTAC4321",
+                 "userId": apz.menuap.Menu.userId,
+                 "action": "retrieve",
+                 "appId": "Agency"
+             }
+         }
+     } else if (lListVal == "Customers") {
+         var lParams = {
+             "appId": "cuslst",
+             "scr": "Customers",
+             "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "animation": 9,
+             "type": "CF",
+             "userObj": {
+                 "data": {},
+                 "destroyDiv": apz.quklnk.QuickLinks.sCache.destroyDiv,
+                 "parentAppId": "quklnk",
+                 "loggedCust": apz.quklnk.QuickLinks.sCache.loggedCust,
+                 "custImg": apz.quklnk.QuickLinks.sCache.custImg,
+                 "custId": apz.quklnk.QuickLinks.sCache.custId
+             }
+         };
+     } else if (lListVal == "Utilities") {
+         var lParams = {
+            "appId": "lnsmlr",
+            "scr": "LoanSimulation",
+             "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "animation": 9,
+             "type": "CF",
+             "userObj": {
+                 "data": {},
+                 "destroyDiv": apz.quklnk.QuickLinks.sCache.destroyDiv,
+                 "parentAppId": "quklnk",
+                 "loggedCust": apz.quklnk.QuickLinks.sCache.loggedCust,
+                 "custImg": apz.quklnk.QuickLinks.sCache.custImg,
+                 "custId": apz.quklnk.QuickLinks.sCache.custId
+             }
+         };
+     } else if (lListVal == "My Performance") {
+         var lParams = {
+            "appId": "adsbrd",
+            "scr": "AgentPerformance",
+             "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "animation": 9,
+             "type": "CF",
+             "userObj": {
+                 "data": {},
+                 "destroyDiv": apz.quklnk.QuickLinks.sCache.destroyDiv,
+                 "parentAppId": "quklnk",
+                 "loggedCust": apz.quklnk.QuickLinks.sCache.loggedCust,
+                 "custImg": apz.quklnk.QuickLinks.sCache.custImg,
+                 "custId": apz.quklnk.QuickLinks.sCache.custId
+             }
+         };
+     } else if (lListVal == "Reports") {
+         var lParams = {
+            "appId": "balanc",
+            "scr": "Launcher",
+             "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "animation": 9,
+             "type": "CF",
+             "userObj": {
+                 "data": {},
+                 "destroyDiv": apz.quklnk.QuickLinks.sCache.destroyDiv,
+                 "parentAppId": "quklnk",
+                 "loggedCust": apz.quklnk.QuickLinks.sCache.loggedCust,
+                 "custImg": apz.quklnk.QuickLinks.sCache.custImg,
+                 "custId": apz.quklnk.QuickLinks.sCache.custId
+             }
+         };
+     }
+     if ($("#" + apz.quklnk.QuickLinks.sCache.loggedCust).html() != "No customer logged in") {
+         apz.launchApp(lParams);
+     } else {
+         apz.launchApp(lParams);
+     }
+ };
+ // Transaction module call back method
+ apz.quklnk.QuickLinks.fnFundTranCallback = function(params) {
+     
+     var lParams = {
+         "appId": "landpg",
+         "scr": "LandingPage",
+         "div": apz.quklnk.QuickLinks.sCache.destroyDiv,
+         "type": "CF",
+         "userObj": {
+             "leadDetails": apz.quklnk.QuickLinks.sCache.leadDetails,
+             "destroyDiv": apz.quklnk.QuickLinks.sCache.destroyDiv,
+             "parentAppId": apz.quklnk.QuickLinks.sCache.parentAppId,
+             "loggedCust": apz.quklnk.QuickLinks.sCache.loggedCust
+         }
+     };
+     apz.launchApp(lParams);
+ }

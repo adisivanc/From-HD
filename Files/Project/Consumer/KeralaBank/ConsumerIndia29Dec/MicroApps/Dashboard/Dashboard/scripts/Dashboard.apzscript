@@ -1,0 +1,263 @@
+apz.dashbo.landingpage = {};
+ apz.dashbo.Dashboard = {}
+apz.app.onLoad_Dashboard = function(){
+    debugger;
+         var name = LandingCommon.getLoggedInUser();
+    apz.setElmValue("dashbo__Dashboard__el_txt_1", name);
+      $("body").addClass("dashbody");
+    $("body").addClass("landingtheme2");
+    apz.data.loadJsonData("widgets","dashbo");
+     apz.data.loadJsonData("Persistedwidget","dashbo");
+      apz.data.loadJsonData("widgetNavigation","dashbo");
+     apz.dashbo.widgetnav =     JSON.parse(apz.getFile(apz.getDataFilesPath("dashbo")+"/widgetNavigation.json"));
+   apz.dashbo.fnconfigDragula();
+ apz.dashbo.Dashboard.launchOverview();
+  apz.dashbo.fnLoadMicroapps();
+  
+     
+};
+
+apz.dashbo.fnconfigDragula = function(){
+    debugger;
+dragula([document.querySelector('#dashbo__Dashboard__left > ul'), document.querySelector('#dashbo__Dashboard__right > ul')],{revertOnSpill: true}).on('drag', function (el) {
+   
+  }).on('drop', function (el,target,source,sibling) {
+      debugger;
+      if($("#dashbo__Dashboard__right > ul").children("li").length > 8){
+           $("#dashbo__Dashboard__left > ul").append(el); 
+           apz.dispMsg({"message":"Only eight widgets can be shown. If you want add widget, delete any existing widget to add new.",type:"W"});
+            return;
+          
+      }
+      
+      sourceContainer = $(source).parent("div")[0].id
+      targetContainer = $(target).parent("div")[0].id
+      if(sourceContainer!=targetContainer && targetContainer == "dashbo__Dashboard__right"){
+          $("#landin__Landing__el_icn_1").trigger("click");
+              widgetname = $(el).eq(0).children().children().eq(1).text();
+      $(el).eq(0).children().children().eq(2).removeClass("sno");
+      laucherwidget  = $(el).eq(0).children().children().eq(3);
+      laucherwidget.removeClass("sno");
+      launcherId = $(el).eq(0).attr("id") +""+laucherwidget.attr("id");
+      idexists     = document.getElementById(launcherId);
+     if(idexists == null){
+      span = $("<span></span>");
+      span.attr("id",launcherId);
+      laucherwidget.append(span);   
+     }
+      
+     if(widgetname == "Spend Analysis" || widgetname == "Earn and Spends"){
+          //$(el).eq(0).find("#dashbo__Dashboard__sc_col_12").removeClass("sno");
+          $(el).eq(0).children("span").children().eq(2).children().eq(1).removeClass("sno");
+      }
+      var [appId,scr,userObj] = apz.dashbo.widgetnav[widgetname];
+      
+      userObj = {
+          userId:LandingCommon.getLoggedInUser()
+      };
+      apz.launchApp({
+          "appId":appId,
+          "scr":scr,
+          "userObj":userObj,
+          "div":launcherId
+      });
+    
+      }
+  }).on('over', function (el, container) {
+    //container.className += ' ex-over';
+  }).on('out', function (el, container) {
+    //container.className = container.className.replace('ex-over', '');
+  });
+    
+    
+};
+ apz.dashbo.fnLoadMicroapps = function(){
+     debugger;
+    
+     widgetsloader = apz.data.scrdata.dashbo__persistedwidgets_Res;
+     li = $('#dashbo__Dashboard__right > ul > li'); 
+     for(i=0;i< widgetsloader.length; i++){
+        widgetname = $(li).eq(i).children().children().eq(1).text();
+         laucherwidget  = $(li).eq(i).children().children().eq(3);
+      launcherId = $(li).eq(i).attr("id") +""+laucherwidget.attr("id");
+     idexists     = document.getElementById(launcherId);
+     if(idexists == null){
+      span = $("<span></span>");
+      span.attr("id",launcherId);
+      laucherwidget.append(span);   
+     }
+      if(widgetname == "Spend Analysis" || widgetname == "Earn and Spends"){
+          $(li).eq(i).find("#dashbo__Dashboard__sc_col_12_li").removeClass("sno");
+          $(li).eq(i).children("span").children().eq(2).children().eq(1).removeClass("sno");
+      }
+       var [appId,scr,userObj] = apz.dashbo.widgetnav[widgetname];
+        userObj = {
+          userId:LandingCommon.getLoggedInUser()
+      };
+       apz.launchApp({
+          "appId":appId,
+          "scr":scr,    
+          "userObj": userObj,
+          "div":launcherId
+      });
+      
+     }
+ } 
+apz.dashbo.closewidget = function(ths){
+    debugger;
+   $(ths).parents("li").eq(0).children().children().eq(2).addClass("sno");
+    $(ths).parents("li").eq(0).children().children().eq(3).addClass("sno");
+     closewidget = $(ths).parents("li")[0];
+     $(ths).parents("li").remove();
+     $("#dashbo__Dashboard__left > ul").append(closewidget); 
+};
+apz.dashbo.togglewidbox = function(){
+    debugger;
+   $("#dashbo__Dashboard__gr_row_1").toggleClass("sno");
+};
+apz.dashbo.Dashboard.launchOverview = function() {
+    debugger;
+
+    var lparams = {
+        "div": "dashbo__Dashboard__Overview",
+        "appId": "relovr",
+         "scr": "DashboardOverview"
+        
+    };
+    apz.launchApp(lparams);
+}
+
+apz.dashbo.landingpage.fnExpand = function(ths){
+    debugger;
+if(ths.id == "dashbo__Dashboard__el_icn_11_1")
+{
+    $("body").removeClass("landingtheme2");
+}
+  title = $(ths).parents("li").eq(0).children().children().eq(1).text();
+        lparams = {};
+        
+        switch(title){
+            case "Earn and Spends": lparams.appId="ernspn";
+                                    lparams.scr = "EarnAndSpendlarge";
+                                    lparams.div = "dashbo__Dashboard__launchexpandChart";
+                                    lparams.layout = "All"
+                                    lparams.userObj = { "from":"widget"}
+                                            apz.toggleModal({targetId:"dashbo__Dashboard__expandmodal"});
+                                                apz.launchApp(lparams);
+
+                                    break;
+            case "Spend Analysis": apz.landin.Landing.fnMenuClickInside("Spend Analysis");break;
+        }
+        
+        
+    
+    
+}
+apz.dashbo.Dashboard.launchAccountDetailsfn = function() {
+    debugger;
+
+    var lparams = {
+        "scr": "accountDetails",
+        "div": "dashbo__Dashboard__launchAccountDetailsCol",
+        "appId": "dashbo"
+    };
+    apz.launchSubScreen(lparams);
+}
+apz.dashbo.Dashboard.launchfavfn = function() {
+    debugger;
+
+    var lparams = {
+        "scr": "favorites",
+        "div": "dashbo__Dashboard__launchFavDetailsCol",
+        "appId": "favour"
+    };
+    apz.launchApp(lparams);
+}
+apz.dashbo.Dashboard.launchPromotefn = function() {
+    debugger;
+
+    var lparams = {
+        "div": "dashbo__Dashboard__promotecol",
+        "appId": "pmtapp",
+        "userObj":{
+            "userId":apz.dashbo.landingpage.currentUser,
+            "div":"dashbo__LandingPage__microappLauncherCol",
+            "dispMsg":""
+            
+        }
+       
+    };
+    apz.launchApp(lparams);
+}
+apz.dashbo.Dashboard.fnOpenPromotion = function() {
+    debugger;
+
+    apz.toggleModal({
+        targetId: "dashbo__Dashboard__promotionalModal"
+    })
+    apz.dashbo.Dashboard.launchPromotefn();
+}
+apz.dashbo.Dashboard.launchChatbotfn = function() {
+    debugger;
+
+    var lparams = {
+        "div": "dashbo__Dashboard__chatbot",
+        "appId": "ChatBo",
+         "scr": "chatScreen",
+        "userObj": {
+            "parentAppId": "dashbo"
+        },
+    };
+    apz.launchApp(lparams);
+}
+apz.dashbo.Dashboard.fnOpenChatbot = function() {
+    debugger;
+
+   
+    apz.toggleModal({
+        targetId: "dashbo__Dashboard__pu_mdl_1"
+    })
+    apz.dashbo.Dashboard.launchChatbotfn();
+}
+apz.dashbo.Dashboard.launchOverview = function() {
+    debugger;
+
+    var lparams = {
+        "div": "dashbo__Dashboard__Overview",
+        "appId": "relovr",
+         "scr": "DashboardOverview"
+        
+    };
+    apz.launchApp(lparams);
+}
+
+
+apz.dashbo.Dashboard.launchMicroapps = function(ths) {
+    debugger;
+
+    // lParams = {};
+   textContent = ths;
+  //  apz.landin.Landing.fnMenuClickInside(textContent);
+    // if(textContent == "Bill Payment")
+    // {
+            apz.landin.Landing.fnMenuClickInside(textContent);
+
+   // }
+    
+}
+
+apz.dashbo.Dashboard.fnClose = function() {
+    debugger;
+    $("#dashbo__Dashboard__gr_row_29").addClass("sno");
+}
+
+
+
+apz.dashbo.Dashboard.fnAddEvent = function()
+{
+    debugger;
+     apz.toggleModal({
+            targetId: "Calend__demonew__pu_mdl_1"
+        })
+    
+}

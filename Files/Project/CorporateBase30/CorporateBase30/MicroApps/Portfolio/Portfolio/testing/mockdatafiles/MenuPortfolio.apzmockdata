@@ -1,0 +1,260 @@
+{
+    "BusinessAccounts": [
+        {
+            "accountNumber": "0238473298472313",
+            "accountName": "Operating Account",
+            "accountType": "Checking",
+            "accountBranch": "Mumbai",
+            "currency": "INR",
+            "availableBalance": 250000,
+            "blockedAmount": 5000
+        },
+        {
+            "accountNumber": "0238473298472311",
+            "accountName": "Overdraft Account",
+            "accountType": "Overdraft",
+            "accountBranch": "Bangalore",
+            "currency": "INR",
+            "availableBalance": 250000,
+            "blockedAmount": 1000
+        },
+        {
+            "accountNumber": "0148473298472312",
+            "accountName": "Checking Account",
+            "accountType": "Overdraft",
+            "accountBranch": "Bangalore",
+            "currency": "INR",
+            "availableBalance": 250000,
+            "blockedAmount": 1000
+        }
+    ],
+    "Loans": [
+        {
+            "accountNumber": "0238473298472311",
+            "accountName": "Crop Loan",
+            "accountBranch": "Mumbai",
+            "currency": "INR",
+            "loanAmount": 587999000,
+            "outstandingBalance": 258764000,
+            "newpaymentDate": "02-April-17"
+        },
+        {
+            "accountNumber": "0125473298472312",
+            "accountName": " Project Finance",
+            "accountBranch": "Bangalore",
+            "currency": "INR",
+            "loanAmount": 167799000,
+            "outstandingBalance": 78986000,
+            "newpaymentDate": "30-April-17"
+        },
+        {
+            "accountNumber": "0984573918677314",
+            "accountName": "Acquistion Finance",
+            "accountBranch": "Mumbai",
+            "currency": "INR",
+            "loanAmount": 937476000,
+            "outstandingBalance": 258764000,
+            "newpaymentDate": "22-April-17"
+        },
+        {
+            "accountNumber": "0984473918567318",
+            "accountName": "Business Loans",
+            "accountBranch": "Pune",
+            "currency": "INR",
+            "loanAmount": 937476000,
+            "outstandingBalance": 542364000,
+            "newpaymentDate": "28-April-17"
+        }
+    ],
+    "Deposits": [
+        {
+            "accountNumber": "023847329847112",
+            "accountName": "Demand Deposit",
+            "accountBranch": "Mumbai",
+            "currency": "INR",
+            "maturityDate": "30-April-17",
+            "outstandingBalance": 25000,
+            "lienAmount": 100
+        },
+        {
+            "accountNumber": "456374529847223",
+            "accountName": "Term Deposit",
+            "accountBranch": "Bangalore",
+            "currency": "INR",
+            "maturityDate": "27-April-17",
+            "outstandingBalance": 25000,
+            "lienAmount": 500
+        },
+        {
+            "accountNumber": "456374529843434",
+            "accountName": "Call Deposit",
+            "accountBranch": "Mumbai",
+            "currency": "INR",
+            "maturityDate": "20-April-17",
+            "outstandingBalance": 25000,
+            "lienAmount": 100
+        },
+        {
+            "accountNumber": "012847329847238",
+            "accountName": "Fixed Deposit",
+            "accountBranch": "Bangalore",
+            "currency": "INR",
+            "maturityDate": "22-April-17",
+            "outstandingBalance": 25000,
+            "lienAmount": 500
+        }
+    ],
+    "Investments": [
+        {
+            "accountNumber": "023847329847231",
+            "accountName": "Individual Account",
+            "Depository": "NSDL",
+            "dpId": "IN-9943",
+            "totalHolding": "7000000",
+            "totalPosition": 2500000,
+            "lienAmount": 50000
+        },
+        {
+            "accountNumber": "023847329847231",
+            "accountName": "Individual Account",
+            "Depository": "NSDL",
+            "dpId": "IN-9943",
+            "totalHolding": "7000000",
+            "totalPosition": 2500000,
+            "lienAmount": 50000
+        },
+        {
+            "accountNumber": "023847329847231",
+            "accountName": "Individual Account",
+            "Depository": "NSDL",
+            "dpId": "IN-9943",
+            "totalHolding": "7000000",
+            "totalPosition": 2500000,
+            "lienAmount": 50000
+        }
+    ],
+    "Trading": [
+        {
+            "contractReference": "CCXYZ231",
+            "type": " Letter of Credit",
+            "productDescription": "XDRC-Short term LC",
+            "currency": "USD",
+            "contractAmount": "25000",
+            "issueDate": "01-April-17",
+            "expiryDate": "30-April-17"
+        },
+           {
+            "contractReference": "CCXYZ231",
+            "type": " Letter of Credit",
+            "productDescription": "XDRC-Short term LC",
+            "currency": "USD",
+            "contractAmount": "65000",
+            "issueDate": "21-April-17",
+            "expiryDate": "30-May-17"
+        },
+        {
+            "contractReference": "CCXYZ231",
+            "type": " Letter of Credit",
+            "productDescription": "XDRC-Short term LC",
+            "currency": "USD",
+            "contractAmount": "89000",
+            "issueDate": "01-April-17",
+            "expiryDate": "30-April-17"
+        }
+    ],
+    "CorporateCards": [
+        {
+            "cardNumber": "****-****-***-6452",
+            "cardHolder": "Joe Joseph",
+            "currency": "INR",
+            "location": "INDIA",
+            "dueAmount": 100000000,
+            "creditLimit": 258000,
+            "dueDate": "02-July-17"
+        },
+        {
+            "cardNumber": "****-****-***-9672",
+            "cardHolder": "Sundar Rajan",
+            "currency": "INR",
+            "location": "INDIA",
+            "dueAmount": 324322000,
+            "creditLimit": 7978000,
+            "dueDate": "15-May-17"
+        },
+           {
+            "cardNumber": "****-****-***-4822",
+            "cardHolder": "Robert John",
+            "currency": "INR",
+            "location": "INDIA",
+            "dueAmount": 873098210,
+            "creditLimit": 9879800,
+            "dueDate": "19-Aug-17"
+        }
+    ],
+    "Limits": [
+        {
+            "lineid": "LN00452",
+            "parentLine": "LN988",
+            "currency": "INR",
+            "limitAmount": "10000000",
+            "utilization": 0,
+            "collateralType": "Security",
+            "limitExpirydate": "12-July-17"
+        },
+        {
+            "lineid": "LN00752",
+            "parentLine": "LN0088",
+            "currency": "INR",
+            "limitAmount": "999000000",
+            "utilization": 0,
+            "collateralType": "Security",
+            "limitExpirydate": "12-July-17"
+        },
+        {
+            "lineid": "LN00542",
+            "parentLine": "LN0033",
+            "currency": "INR",
+            "limitAmount": "879000000",
+            "utilization": 0,
+            "collateralType": "Security",
+            "limitExpirydate": "12-July-17"
+        }
+    ],
+    "BusinessAcc_List": [
+        {
+            "image": "Business.png",
+            "accountName": "BUSINESS ACCOUNTS",
+            "heading": "Available Balance",
+            "currency": "INR",
+            "availableAmt": 750000
+        },
+        {
+            "image": "Loan.png",
+            "accountName": "LOANS",
+            "heading": "Available Balance",
+            "currency": "INR",
+            "availableAmt": 250000
+        },
+        {
+            "image": "Deposits.png",
+            "accountName": "DEPOSITS",
+            "heading": "Available Balance",
+            "currency": "INR",
+            "availableAmt": 250000
+        },
+        {
+            "image": "Investments.png",
+            "accountName": "INVESTMENTS",
+            "heading": "Available Balance",
+            "currency": "INR",
+            "availableAmt": 250000
+        },
+        {
+            "image": "Trading.png",
+            "accountName": "TRADING",
+            "heading": "Available Balance",
+            "currency": "INR",
+            "availableAmt": 250000
+        }
+    ]
+}

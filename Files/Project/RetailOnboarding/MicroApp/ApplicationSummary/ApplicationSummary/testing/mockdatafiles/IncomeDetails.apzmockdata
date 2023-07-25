@@ -1,0 +1,15 @@
+{
+    "tbDbmiIncomeDetails":[{
+         "refno":"834898943",
+         "bankName":"Axis Bank",
+         "branch":"Marahalli",
+         "accountType":"Current",
+         "accountNo":"9349949009334"
+    },{
+         "refno":"834898943",
+         "bankName":"HDFC",
+         "branch":"Koramangala",
+         "accountType":"Savings",
+         "accountNo":"343434344377"
+    }]
+}

@@ -1,0 +1,119 @@
+apz.travel.DetailsScreen = {};
+apz.app.onLoad_DetailsScreen = function() {
+}
+apz.travel.DetailsScreen.dispMsg = function(pResp, type) {
+    var params = {};
+    params.message = pResp;
+    params.type = type;
+    params.callBack = apz.app.displayMessageCallBack;
+    apz.dispMsg(params);
+}
+apz.travel.DetailsScreen.selButton = function() 
+{
+    debugger;
+    var dep = apz.getElmValue("travel__DetailsScreen__depDate");
+   var dateParams = {
+        "id": "travel__DetailsScreen__retDate",
+        "dataType": "DATE",
+        "lookAndFeel": "GENERIC",
+        "parentDisplay": "BUBBLE",
+        "style": "ANDROID-HOLO",
+        "parentPreset": "CALENDAR",
+        "parentMinDate": dep,
+        "parentMaxDate": "",
+        "closeOnSel": "Y",
+        "multiSel": "N",
+        "parentStartYear": "",
+        "parentEndYear": "",
+        "parentRangePick": "N",
+        "secInputId": "",
+        "parentMultiInput": "N",
+        "dateType": "GENERIC"
+    }
+apz.initDates(dateParams);
+
+
+}
+
+// apz.travel.DetailsScreen.confirm = function() {
+    
+// var lObj = {
+//         "scr": "SuccessScreen",
+//         "appId": "sucscr",
+//         "div": "travel__Launcher__launcher",
+//         "userObj" :
+//         {
+//             "text" : "Your travel details have been saved"
+//         }
+//     }
+//     apz.launchApp(lObj);
+// }
+
+apz.travel.DetailsScreen.confirm = function() {
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "travel__Launcher__launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.travel.DetailsScreen.confirmCB,
+                "destroyDiv": "travel__Launcher__launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.travel.DetailsScreen.confirmCB = function() {
+    var lLaunchParams = {
+        "appId": "sucscr",
+        "scr": "SuccessScreen",
+        "div": "travel__Launcher__launcher",
+        "userObj": {
+            "text": "Your travel details have been saved"
+        }
+    }
+    apz.launchApp(lLaunchParams);
+}
+
+
+apz.travel.DetailsScreen.cancel = function() {
+    var lObj = {
+        "scr": "ViewScreen",
+        "appId": "travel",
+        "div": "travel__Launcher__launcher"
+    }
+    apz.launchSubScreen(lObj);
+}
+
+
+apz.travel.DetailsScreen.selCard = function() {
+    debugger;
+    var debitstatus = apz.getElmValue("travel__DetailsScreen__el_cbx_4");
+        var creditstatus = apz.getElmValue("travel__DetailsScreen__el_cbx_3");
+
+    if(debitstatus == "y")
+    {
+        $("#travel__DetailsScreen__debitCard_ul").removeClass("sno");
+    }
+    else
+    {
+                $("#travel__DetailsScreen__debitCard_ul").addClass("sno");
+
+    }
+    
+     if(creditstatus == "y")
+    {
+        $("#travel__DetailsScreen__creditCard_ul").removeClass("sno");
+    }
+    else
+    {
+                $("#travel__DetailsScreen__creditCard_ul").addClass("sno");
+
+    }
+    
+}

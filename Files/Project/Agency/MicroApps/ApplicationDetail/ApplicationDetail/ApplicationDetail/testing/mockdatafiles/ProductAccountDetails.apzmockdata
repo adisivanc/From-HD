@@ -1,0 +1,15 @@
+{"tbDbmiAccountProduct": {
+    "refno": "CONSONB34417872082120",
+    "internetbanking": "N",
+    "smsnotification": "Y",
+    "chequebook": "Y",
+    "atmcard": "N",
+    "mobilebnaking": "Y",
+    "productname": "Saving Account",
+    "nomineename":"Manohar",
+    "nomineerelationship":"Brother",
+    "nomineedob":"07-Jun-2019",
+    "guardianname":"Regunath",
+    "guardianrelationship":"Father",
+    "guardianaddress":"Beach valley, NYC"
+}}

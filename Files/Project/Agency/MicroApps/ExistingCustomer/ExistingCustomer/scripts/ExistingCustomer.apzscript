@@ -1,0 +1,124 @@
+apz.excust = {};
+apz.excust.ExistingCustomer = {};
+apz.excust.ExistingCustomer.sCache = {};
+apz.app.onLoad_ExistingCustomer = function(params) {
+    debugger;
+    apz.excust.ExistingCustomer.sCache = params;
+    apz.excust.ExistingCustomer.fnUpdateUI();
+};
+apz.app.onShown_ExistingCustomer = function() {
+    debugger;
+    apz.excust.ExistingCustomer.fnlaunchAuth();
+};
+apz.excust.ExistingCustomer.fnUpdateUI = function() {
+    debugger;
+    apz.setElmValue("excust__ExistingCustomer__custName", apz.excust.ExistingCustomer.sCache.custName);
+    apz.setElmValue("excust__ExistingCustomer__custId", apz.excust.ExistingCustomer.sCache.custId);
+    apz.setElmValue("excust__ExistingCustomer__custDob", apz.excust.ExistingCustomer.sCache.custDOB);
+    apz.setElmValue("excust__ExistingCustomer__email", apz.excust.ExistingCustomer.sCache.custemail);
+    apz.setElmValue("excust__ExistingCustomer__phn", apz.excust.ExistingCustomer.sCache.custphn);
+    apz.setElmValue("excust__ExistingCustomer__custAddres", apz.excust.ExistingCustomer.sCache.custAddr);
+    apz.setElmValue("excust__ExistingCustomer__branch", apz.excust.ExistingCustomer.sCache.custBranch);
+    document.getElementById("excust__ExistingCustomer__custImage").src = apz.excust.ExistingCustomer.sCache.custImage;
+}
+apz.excust.ExistingCustomer.fnlaunchAuth = function() {
+    debugger;
+    $(".active").removeClass("active");
+    var lParams = {
+        "appId": "pfauth",
+        "scr": "Authentication",
+        "div": "excust__ExistingCustomer__authlaunchArea",
+        "type": "CF",
+        "userObj": {
+            "action": "",
+            "data": apz.excust.ExistingCustomer.sCache,
+            "customerDetails": {
+                "name": apz.excust.ExistingCustomer.sCache.custName,
+                "customerId": apz.excust.ExistingCustomer.sCache.custId,
+                "mobileNumber": apz.excust.ExistingCustomer.sCache.custphn,
+                "email": apz.excust.ExistingCustomer.sCache.custemail,
+                "address": apz.excust.ExistingCustomer.sCache.custAddr,
+                "branch": apz.excust.ExistingCustomer.sCache.custBranch,
+                "image":apz.excust.ExistingCustomer.sCache.custImage.split(",")[1]
+            },
+            "destroyDiv": apz.excust.ExistingCustomer.sCache.destroyDiv,
+            "parentAppId": apz.excust.ExistingCustomer.sCache.parentAppId,
+            "callBack": apz.excust.ExistingCustomer.fnCustomerDashboard,
+            "loggedCust": apz.excust.ExistingCustomer.sCache.loggedCust,
+            "loggedCustImg": apz.excust.ExistingCustomer.sCache.loggedCustImg,
+            "loggedCustId": apz.excust.ExistingCustomer.sCache.loggedCustId,
+            "loggedCustBranch": apz.excust.ExistingCustomer.sCache.loggedCustBranch,
+            "selectedCustImg": apz.excust.ExistingCustomer.sCache.custImage
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.excust.ExistingCustomer.fnCustomerDashboard = function() {
+    debugger;
+    var lParentID = apz.excust.ExistingCustomer.sCache.parentAppId;
+    apz.excust.ExistingCustomer.sCache.custContext = true;
+    apz.store("setCustContext", true);
+    apz.store("setCustName", apz.excust.ExistingCustomer.sCache.custName);
+    apz.currAppId = "excust";
+    var lAppid;
+    var lScr;
+    if (apz.excust.ExistingCustomer.sCache.validationType == "forTransaction") {
+        if (apz.excust.ExistingCustomer.sCache.taskDetails.serviceType == "DEMAND DRAFT") {
+            lAppid = "dmddft";
+            lScr = "DemandDraft";
+        } else {
+            lAppid = "cashtr";
+            lScr = "CashTransactionsHome";
+        }
+        var lParams = {
+            "appId": lAppid,
+            "scr": lScr,
+            "div": apz.excust.ExistingCustomer.sCache.destroyDiv,
+            "animation": 9,
+            "userObj": {
+                "type": apz.excust.ExistingCustomer.sCache.taskDetails.serviceType,
+                "from": "myTasks",
+                "taskDetails": apz.excust.ExistingCustomer.sCache.taskDetails,
+                "destroyDiv": apz.excust.ExistingCustomer.sCache.destroyDiv,
+                "parentAppId": apz.excust.ExistingCustomer.sCache.parentAppId,
+                "callBack": apz.excust.ExistingCustomer.fnOnCancel
+            }
+        };
+        apz.launchApp(lParams);
+    } else {
+        var lParams = {
+            "appId": "excust",
+            "scr": "CustomerDashboard",
+            "div": apz.excust.ExistingCustomer.sCache.destroyDiv,
+            "type": "CF",
+            "animation": 9,
+            "userObj": {
+                "data": apz.excust.ExistingCustomer.sCache,
+                "destroyDiv": apz.excust.ExistingCustomer.sCache.destroyDiv,
+                "parentAppId": apz.excust.ExistingCustomer.sCache.parentAppId,
+                "loggedCust": apz.excust.ExistingCustomer.sCache.loggedCust,
+                "loggedCustImg": apz.excust.ExistingCustomer.sCache.loggedCustImg,
+                "loggedCustId": apz.excust.ExistingCustomer.sCache.loggedCustId,
+                "loggedCustBranch": apz.excust.ExistingCustomer.sCache.loggedCustBranch,
+                "selectedCustImg": apz.excust.ExistingCustomer.sCache.custImage
+            }
+        };
+        apz.launchSubScreen(lParams);
+    }
+};
+apz.excust.ExistingCustomer.fnOnCancel = function() {
+    debugger;
+    apz.store("setCustContext", false);
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": apz.excust.ExistingCustomer.sCache.destroyDiv,
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": apz.excust.ExistingCustomer.sCache.destroyDiv,
+            "parentAppId": apz.excust.ExistingCustomer.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+}

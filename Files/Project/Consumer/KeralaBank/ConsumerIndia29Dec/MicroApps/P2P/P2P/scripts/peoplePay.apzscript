@@ -1,0 +1,110 @@
+apz.pplpay.peoplePay = {};
+apz.app.onLoad_peoplePay = function(params) {
+    debugger;
+    apz.dateFormat = "MM/dd/yyyy";
+    console.log(params);
+    apz.pplpay.peoplePay.sparams = params;
+    //if (params.Navigation) {
+     //   apz.pplpay.peoplePay.fnSetNavigation(params);
+    //}
+};
+apz.app.onShown_peoplePay = function()
+{
+    debugger;
+            $("#pplpay__searchPeople__o__searchDetails__mob").attr("type", "tel");
+
+}
+apz.pplpay.peoplePay.fnSetNavigation = function(params) {
+    debugger;
+    apz.pplpay.peoplePay.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "P2P Pay";
+    }
+    lParams.backPressed = apz.pplpay.peoplePay.fnBack;
+    apz.pplpay.peoplePay.Navigation(lParams);
+};
+apz.pplpay.peoplePay.fnSearch = function() {
+    debugger;
+    apz.setElmValue("pplpay__searchPeople__o__searchDetails__Name", "");
+    apz.setElmValue("pplpay__searchPeople__o__searchDetails__mob", "");
+    apz.setElmValue("pplpay__searchPeople__o__searchDetails__Email", "");
+    if (apz.pplpay.peoplePay.ismobile()) {
+        let json = {};
+        json.id = "SEARCHCONTACT_ID";
+        json.callBack = apz.pplpay.peoplePay.fetchContactCallback;
+        apz.ns.fetchContact(json);
+    } else {
+        var val = apz.getElmValue("pplpay__peoplePay__inpsearch");
+        if (val.length >= 2) {
+            debugger;
+            var lServerParams = {
+                "ifaceName": "searchPeople",
+                "buildReq": "Y",
+                "paintResp": "Y",
+                "req": val,
+                "callBack": apz.pplpay.peoplePay.searchPeopleCB
+            };
+            apz.server.callServer(lServerParams);
+        }
+    }
+}
+apz.pplpay.peoplePay.fetchContactCallback = function(json) {
+    $("#scr__pplpay__peoplePay__main input").each(function() {
+        $(this).val("");
+    });
+    apz.setElmValue("pplpay__searchPeople__o__searchDetails__Name", json.name);
+    apz.setElmValue("pplpay__searchPeople__o__searchDetails__mob", json.phoneno[0]);
+    if (json.email.length > 0) {
+        apz.setElmValue("pplpay__searchPeople__o__searchDetails__Email", json.email[0]);
+    }
+}
+apz.pplpay.peoplePay.ismobile = function() {
+    if (/android|webos|iphone|ipad|ipod|blackberry|opera mini|Windows Phone|iemobile|WPDesktop|XBLWP7/i.test(navigator.userAgent.toLowerCase())) {
+        return true;
+    } else return false;
+}
+apz.pplpay.peoplePay.searchPeopleCB = function(pResp) {
+    debugger;
+    var result = pResp.pplpay__searchPeople_Res.searchDetails;
+}
+apz.pplpay.peoplePay.gotoOTP = function() {
+    apz.pplpay.peoplePay.name = apz.getElmValue("pplpay__searchPeople__o__searchDetails__Name");
+    apz.pplpay.peoplePay.email = apz.getElmValue("pplpay__searchPeople__o__searchDetails__Email");
+    apz.pplpay.peoplePay.amount = apz.getElmValue("pplpay__peoplePay__inpAmount");
+    apz.pplpay.peoplePay.payfrom = apz.getElmValue("pplpay__peoplePay__ddlpayfrom");
+    apz.pplpay.peoplePay.sendon = apz.getElmValue("pplpay__peoplePay__inpsendon");
+    apz.pplpay.peoplePay.howtopay = apz.getElmValue("pplpay__peoplePay__ddlhowtopay");
+    apz.pplpay.peoplePay.freq = apz.getElmValue("pplpay__peoplePay__inpfreq");
+    var div = apz.pplpay.peoplePay.sparams.control.exitApp.div;
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": div,
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                "mobNo": apz.pplpay.peoplePay.sparams.mobNo,
+                "emailId": apz.pplpay.peoplePay.sparams.emailId
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.pplpay.peoplePay.gotoOTPCB,
+                "destroyDiv": div
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.pplpay.peoplePay.gotoOTPCB = function() {
+    debugger;
+    var div = apz.pplpay.peoplePay.sparams.control.exitApp.div;
+    var lLaunchParams = {
+        "appId": "pplpay",
+        "scr": "SuccessScreen",
+        "div": div
+    };
+    apz.launchSubScreen(lLaunchParams);
+}

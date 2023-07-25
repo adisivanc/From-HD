@@ -1,0 +1,67 @@
+{
+    "AccountStatus": true,
+    "cardSummary": [
+        {
+            "unbilledPurchases": "5",
+            "totalOutstanding": 5000,
+            "cardHolderName": "John Thomas",
+            "cashLimit": 30000,
+            "masterAccountNo": "10056454567890",
+            "totalAmountDue": 1000,
+            "lastBilledDate": "2017-11-01",
+            "cardAccountNo": "50000123890654",
+            "unbilledPayments": "5",
+            "lastBilledAmount": 1500,
+            "minAmountDue": 500,
+            "creditLimit": 50000,
+            "availableCashLimit": 10000,
+            "availableCreditLimit": 10000,
+            "cardStatus":"Active"
+        },
+        {
+            "unbilledPurchases": "2",
+            "totalOutstanding": 7000,
+            "cardHolderName": "Tim Jones",
+            "cashLimit": 30000,
+            "masterAccountNo": "10056454567890",
+            "totalAmountDue": 2000,
+            "lastBilledDate": "2017-11-01",
+            "cardAccountNo": "50000123890655",
+            "unbilledPayments": "5",
+            "lastBilledAmount": 3500,
+            "minAmountDue": 500,
+            "creditLimit": 30000,
+            "availableCashLimit": 10000,
+            "availableCreditLimit": 10000,
+            "cardStatus":"Active"
+        },
+        {
+            "unbilledPurchases": "5",
+            "totalOutstanding": 8000,
+            "cardHolderName": "William Scott",
+            "cashLimit": 40000,
+            "masterAccountNo": "10056454567890",
+            "totalAmountDue": 1000,
+            "lastBilledDate": "2017-08-01",
+            "cardAccountNo": "50000123890656",
+            "unbilledPayments": "1",
+            "lastBilledAmount": 1500,
+            "minAmountDue": 1000,
+            "creditLimit": 20000,
+            "availableCashLimit": 20000,
+            "availableCreditLimit": 1000,
+            "cardStatus":"Inactive"
+        }
+    ],
+    "accountDetails": {
+        "cardAccountNo": "10056454567890",
+        "cardAccountName": "Sales",
+        "cashLimit": 200000,
+        "creditLimit": 300000,
+        "availableCashLimit": 100000,
+        "availableCreditLimit": 100000,
+        "categoryId": "Business Cards",
+        "corporateId": "000FTAC4321"
+    },
+    "CardStatus": true
+}

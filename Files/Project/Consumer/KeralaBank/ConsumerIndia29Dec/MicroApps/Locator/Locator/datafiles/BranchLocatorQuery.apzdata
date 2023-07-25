@@ -1,0 +1,87 @@
+
+{
+    "tbDbtpLocations": [{
+        "area": "110 Washington Pl, New York, NY 10014, United States",
+        "country": "United States",
+        "pincode": "12301",
+        "code": "000001",
+        "address": "110 Washington Pl, New York, NY 10014, United States",
+        "city": " New York",
+        "latitude": "11.569550",
+        "bankName": "Appzillon Bank", 
+        "type": "Branch",
+        "bankDescription": "Appzillon Bank",
+        "partCity": "New York",
+        "state": "New York",
+        "longitude": "104.924460"
+    }, {
+        "area": "85 Broad St, New York, NY 10004, United States",
+        "country": "United States",
+        "pincode": "12210",
+        "code": "000002",
+        "address": "85 Broad St, New York, NY 10004, United States",
+        "city": "New York",
+        "latitude": "11.569550",
+        "bankName": "Appzillon Bank", 
+        "type": "Branch",
+        "bankDescription": "Appzillon Bank",
+        "partCity": "New York",
+        "state": "New York",
+        "longitude": "104.924460"
+    }, {
+        "area": "150 Broadway, New York, NY 10038, United States",
+        "country": "United States",
+        "pincode": "13451",
+        "code": "000005",
+        "address": "150 Broadway, New York, NY 10038, United States",
+        "city": "New York",
+        "latitude": "12.635759",
+        "bankName": "Appzillon Bank", 
+        "type": "zonal",
+        "bankDescription": "Appzillon Bank",
+        "partCity": "New York",
+        "state": "New York",
+        "longitude": "104.480812"
+    },{
+        "area": "200 Park Ave, New York, NY 10166, United States",
+        "country": "United States",
+        "pincode": "06203",
+        "code": "000003",
+        "address": "200 Park Ave, New York, NY 10166, United States",
+        "city": "Kampong Thom Province",
+        "latitude": "12.520540", 
+        "bankName": "Appzillon Bank",
+        "type": "Branch",
+        "bankDescription": "Appzillon Bank",
+        "partCity": "New York",
+        "state": " New York",
+        "longitude": "105.146340"
+    }, {
+        "area": "10 E 14th St, New York, NY 10003, United States",
+        "country": "United States",
+        "pincode": "12202",
+        "code": "000004",
+        "address": "10 E 14th St, New York, NY 10003, United States.",
+        "city": "Phnom Penh",
+        "latitude": "11.575070",
+        "bankName": "Appzillon Bank",
+        "type": "Branch",
+        "bankDescription": "Appzillon Bank",
+        "partCity": "New York",
+        "state": "New York",
+        "longitude": "104.927160"
+    }, {
+        "area": "60 Wall St, New York, NY 10005, United States",
+        "country": "United States",
+        "pincode": "12151",
+        "code": "000005",
+        "address": "60 Wall St, New York, NY 10005, United States",
+        "latitude": "11.584730",
+        "bankName": "Appzillon Bank",
+        "type": "Branch",
+        "bankDescription": "Appzillon Bank",
+        "partCity": "New York",
+        "state": "New York",
+        "longitude": "104.901270"
+    }]
+}

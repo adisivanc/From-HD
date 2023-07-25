@@ -1,0 +1,86 @@
+apz.CRAC01.productdetails = {};
+apz.CRAC01.productdetails.sCache = {};
+apz.app.onLoad_ProductDetails = function(params) {
+    debugger;
+    //Loading the icon
+    apz.data.loadJsonData("ProductDescription");
+    apz.CRAC01.productdetails.sCache = params;
+    apz.CRAC01.productdetails.fnUpdateUI();
+};
+apz.CRAC01.productdetails.fnOnclickCheckbox = function(pthis) {
+    debugger;
+    for (i = 0; i < apz.data.scrdata.CRAC01__ProductDescription_Req.ProductDetails.length; i++) {
+        if ($(pthis).prop("checked") == true) {
+            if ($(pthis).next('label').text() == apz.data.scrdata.CRAC01__ProductDescription_Req.ProductDetails[i].productCategory) {
+                var lOption = {};
+                lOption.productCategory = apz.data.scrdata.CRAC01__ProductDescription_Req.ProductDetails[i].productCategory;
+                lOption.icon = apz.data.scrdata.CRAC01__ProductDescription_Req.ProductDetails[i].icon;
+                lOption.ProductId = pthis.id;
+                apz.data.scrdata.CRAC01__ProductDetails_Req.ProductDesc.push(lOption);
+            }
+        } else {
+            if (apz.data.scrdata.CRAC01__ProductDetails_Req.ProductDesc.length > 0) {
+                if ($(pthis).next('label').text() == apz.data.scrdata.CRAC01__ProductDetails_Req.ProductDesc[i].productCategory) {
+                    apz.data.scrdata.CRAC01__ProductDetails_Req.ProductDesc.splice(i, 1);
+                }
+            }
+        }
+    }
+};
+apz.CRAC01.productdetails.fnOnclickSave = function() {
+    debugger;
+    var lObj = {
+        "scr": "Products",
+        "div": "CRAC01__OnboardCustomerVerification__onboardLaunchArea",
+        "animation": 10,
+        "userObj": {
+            "action": "backToDetails",
+            "destroyDiv": "CRAC01__OnboardCustomerVerification__onboardLaunchArea",
+            "parentAppId": "",
+            "count": apz.data.scrdata.CRAC01__ProductDetails_Req.ProductDesc.length,
+            "sourceOfLead": apz.getElmValue("CRAC01__ProductDetails__sourceOfLeadDropDown")
+        }
+    };
+    apz.launchSubScreen(lObj);
+}
+apz.CRAC01.productdetails.fnUpdateUI = function() {
+    if (apz.CRAC01.productdetails.sCache.action == "New") {
+        apz.data.scrdata.CRAC01__ProductDetails_Req = [];
+        apz.data.scrdata.CRAC01__ProductDetails_Req.ProductDesc = [];
+    } else {
+        debugger;
+        for (i = 0; i < apz.data.scrdata.CRAC01__ProductDetails_Req.ProductDesc.length; i++) {
+            $("#" + apz.data.scrdata.CRAC01__ProductDetails_Req.ProductDesc[i].ProductId).prop('checked', true);
+        }
+        apz.setElmValue("CRAC01__ProductDetails__sourceOfLeadDropDown", apz.CRAC01.productdetails.sCache.sourceOfLead)
+    }
+}
+apz.CRAC01.productdetails.fnOnclickCancel = function() {
+    var lObj = {
+        "appId": "AGHM01",
+        "scr": "AgentHome",
+        "div": "BSAP01__BaseApp__MainLaunchArea",
+        "animation": 21,
+        "userObj": {
+            "action": "",
+            "data": {},
+            "destroyDiv": "BSAP01__BaseApp__MainLaunchArea",
+            "parentId": "BSAP01",
+        }
+    }
+    apz.launchApp(lObj);
+}
+
+apz.CRAC01.productdetails.fncontinue = function(){
+    var lObj = {
+        "scr": "SelectedProducts",
+        "div": "CRAC01__OnboardCustomerVerification__onboardLaunchArea",
+        "animation": 10,
+        "userObj": {
+            "destroyDiv": "CRAC01__OnboardCustomerVerification__onboardLaunchArea",
+            "parentAppId": "",
+            "products": apz.data.scrdata.CRAC01__ProductDetails_Req.ProductDesc
+        }
+    };
+    apz.launchSubScreen(lObj);
+}

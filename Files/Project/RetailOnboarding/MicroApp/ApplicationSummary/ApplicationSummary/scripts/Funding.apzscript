@@ -1,0 +1,18 @@
+apz.appsum.Funding = {};
+apz.app.onLoad_Funding = function(params) {
+   apz.appsum.Funding.params=params;
+   $("#appsum__Funding__el_inp_2,#appsum__Funding__el_sortcode_1,#appsum__Funding__el_inp_4").attr({"pattern":"[0-9]*","inputmode":"numeric"});
+}
+apz.appsum.Funding.fnSubmitAccountDetails=function(){
+    $("#appsum__Funding__gr_row_1,#appsum__Funding__sc_row_13").addClass("sno")
+    $("#appsum__Funding__gr_row_2").removeClass("sno");
+}
+apz.appsum.Funding.fnBackToRefScr=function(){
+    debugger;
+    var params = {};
+    params.appId = "appsum";
+    params.scr = "SuccessScreen";
+    params.div = "navgtn__Navigator__launcher";
+    params.userObj = apz.appsum.Funding.params;
+    apz.launchSubScreen(params);
+}

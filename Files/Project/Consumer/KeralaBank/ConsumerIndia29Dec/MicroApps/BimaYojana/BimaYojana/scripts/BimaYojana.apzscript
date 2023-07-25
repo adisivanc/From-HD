@@ -1,0 +1,381 @@
+apz.bmyjna.bimayojana = {};
+apz.app.onShown_BimaYojana = function(params) {
+    debugger;
+    apz.bmyjna.bimayojana.fnInitialise(params);
+            $("#bmyjna__BimaYojana__i__BYDtls__mobileNo").attr("type", "tel");
+
+};
+apz.bmyjna.bimayojana.fnInitialise = function(params) {
+    debugger;
+    apz.bmyjna.bimayojana.sParams = params;
+    if (params.Navigation) {
+        apz.bmyjna.bimayojana.fnSetNavigation(params);
+    }
+    apz.bmyjna.bimayojana.fnGoToStage1();
+};
+apz.bmyjna.bimayojana.fnSetNavigation = function(params) {
+    debugger;
+    apz.bmyjna.bimayojana.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (apz.bmyjna.bimayojana.sParams.data.typeOfBima == "PMJJBY") {
+        lParams.headerText = "PM JEEVAN JYOTI BIMA YOJANA";
+    } else if (apz.bmyjna.bimayojana.sParams.data.typeOfBima == "PMSBY") {
+        lParams.headerText = "PM SURAKSHA BIMA YOJANA";
+    }
+    apz.bmyjna.bimayojana.Navigation(lParams);
+};
+apz.bmyjna.bimayojana.fnGoToStage1 = function() {
+    apz.bmyjna.bimayojana.fnPopulateDropdown();
+    apz.bmyjna.bimayojana.fnSetValueStage1();
+    apz.bmyjna.bimayojana.fnRenderStage1();
+};
+apz.bmyjna.bimayojana.fnCheckForExistingBima = function() {
+    debugger;
+    apz.bmyjna.bimayojana.sAction = "QueryBima";
+    var lParams = {
+        "ifaceName": "BimaYojanaQuery_Query",
+        "req": {
+            "tbDbtpByDet": {
+                "customerId": apz.bmyjna.bimayojana.sParams.data.customerID,
+                "fromAccountNo": apz.getElmValue("bmyjna__BimaYojana__i__BYDtls__fromAccountNo"),
+                "typeOfBima": apz.bmyjna.bimayojana.sParams.data.typeOfBima
+            }
+        },
+        "callBack": apz.bmyjna.bimayojana.fnCallBackSeverCB
+    };
+    apz.bmyjna.bimayojana.fnBeforeCallServer(lParams);
+};
+apz.bmyjna.bimayojana.fnPopulateDropdown = function() {
+    debugger;
+    var lSavingsAccounts = apz.bmyjna.bimayojana.sParams.data.SavingsAccount;
+    var lObj1 = [];
+    var lOption1;
+    lOption1 = {
+        "val": "",
+        "desc": "Please Select"
+    };
+    lObj1.push(lOption1);
+    for (i = 0; i < lSavingsAccounts.length; i++) {
+        lOption1 = {
+            "val": lSavingsAccounts[i].accountNo,
+            "desc": lSavingsAccounts[i].accountType + " - " + lSavingsAccounts[i].accountNo
+        };
+        lObj1.push(lOption1);
+    }
+    apz.populateDropdown(document.getElementById("bmyjna__BimaYojana__i__BYDtls__fromAccountNo"), lObj1);
+};
+apz.bmyjna.bimayojana.fnSetValueStage1 = function() {
+    debugger;
+    apz.setElmValue("bmyjna__BimaYojana__i__BYDtls__customerId", apz.bmyjna.bimayojana.sParams.data.customerID);
+    if (apz.bmyjna.bimayojana.sParams.data.typeOfBima == "PMJJBY") {
+        apz.setElmValue("bmyjna__BimaYojana__i__BYDtls__typeOfBima", "Pradhana Mandhri Jeevan Jyoti Bima Yojana");
+    } else if (apz.bmyjna.bimayojana.sParams.data.typeOfBima == "PMSBY") {
+        apz.setElmValue("bmyjna__BimaYojana__i__BYDtls__typeOfBima", "Pradhana Mandhri Suraksha Bima Yojana");
+    }
+};
+apz.bmyjna.bimayojana.fnToGetBranchStage1 = function() {
+    debugger;
+    var lSavingsAccounts = apz.bmyjna.bimayojana.sParams.data.SavingsAccount;
+    for (i = 0; i < lSavingsAccounts.length; i++) {
+        if (lSavingsAccounts[i].accountNo == apz.getElmValue("bmyjna__BimaYojana__i__BYDtls__fromAccountNo")) {
+            apz.setElmValue("bmyjna__BimaYojana__i__BYDtls__branch", lSavingsAccounts[i].BranchCd);
+        }
+    }
+};
+apz.bmyjna.bimayojana.fnRenderStage1 = function() {
+    debugger;
+    apz.show("bmyjna__BimaYojana__Stage1");
+    apz.hide("bmyjna__BimaYojana__Stage2");
+    apz.hide("bmyjna__BimaYojana__Stage3");
+};
+apz.bmyjna.bimayojana.fnContinueStage1 = function() {
+    debugger;
+    var lValid = apz.bmyjna.bimayojana.fnValidateStage1();
+    if (lValid) {
+        apz.data.buildData("bmyjna", "BimaYojana");
+        apz.bmyjna.bimayojana.fnGoToStage2();
+    }
+};
+apz.bmyjna.bimayojana.fnValidateStage1 = function() {
+    var lValid = apz.val.validateContainer("bmyjna__BimaYojana__Stage1Form");
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "VAL-MAD"
+        };
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.bmyjna.bimayojana.fnGoToStage2 = function() {
+    debugger;
+    apz.bmyjna.bimayojana.fnSetValuesStage2();
+    apz.bmyjna.bimayojana.fnRenderStage2();
+};
+apz.bmyjna.bimayojana.fnSetValuesStage2 = function() {
+    debugger;
+    var lDtls = apz.data.scrdata.bmyjna__BimaYojana_Req.BYDtls;
+    apz.setElmValue("bmyjna__BimaYojana__Stage2FrmSavingsAcc", lDtls.fromAccountNo);
+    apz.setElmValue("bmyjna__BimaYojana__Stage2Gender", lDtls.gender);
+    apz.setElmValue("bmyjna__BimaYojana__Stage2AadharNo", lDtls.aadhaarNo);
+    apz.setElmValue("bmyjna__BimaYojana__Stage2NomineeName", lDtls.nomineeName);
+    apz.setElmValue("bmyjna__BimaYojana__Stage2NomineeRelation", lDtls.nomineeRelation);
+    apz.setElmValue("bmyjna__BimaYojana__Stage2NomineeAddr", lDtls.nomineeAddress);
+    apz.setElmValue("bmyjna__BimaYojana__Stage2GuardianName", lDtls.guardianName);
+    apz.setElmValue("bmyjna__BimaYojana__Stage2GuardianAddr", lDtls.guardianAddress);
+    apz.setElmValue("bmyjna__BimaYojana__Stage2MobileNo", lDtls.mobileNo);
+    apz.setElmValue("bmyjna__BimaYojana__Stage2Email", lDtls.emailId);
+    if (apz.isNull(lDtls.aadhaarNo)) {
+        apz.hide("bmyjna__BimaYojana__Stage2AadharNo_ctrl_grp_div");
+    } else {
+        apz.show("bmyjna__BimaYojana__Stage2AadharNo_ctrl_grp_div");
+    }
+    if (apz.isNull(lDtls.nomineeAddress)) {
+        apz.hide("bmyjna__BimaYojana__Stage2NomineeAddr_ctrl_grp_div");
+    } else {
+        apz.show("bmyjna__BimaYojana__Stage2NomineeAddr_ctrl_grp_div");
+    }
+    if (apz.isNull(lDtls.guardianName)) {
+        apz.hide("bmyjna__BimaYojana__Stage2GuardianName_ctrl_grp_div");
+    } else {
+        apz.show("bmyjna__BimaYojana__Stage2GuardianName_ctrl_grp_div");
+    }
+    if (apz.isNull(lDtls.guardianAddress)) {
+        apz.hide("bmyjna__BimaYojana__Stage2GuardianAddr_ctrl_grp_div");
+    } else {
+        apz.show("bmyjna__BimaYojana__Stage2GuardianAddr_ctrl_grp_div");
+    }
+};
+apz.bmyjna.bimayojana.fnRenderStage2 = function() {
+    debugger;
+    apz.hide("bmyjna__BimaYojana__Stage1");
+    apz.show("bmyjna__BimaYojana__Stage2");
+    apz.hide("bmyjna__BimaYojana__Stage3");
+};
+apz.bmyjna.bimayojana.fnEditStage2 = function() {
+    debugger;
+    apz.bmyjna.bimayojana.fnRenderStage1();
+};
+apz.bmyjna.bimayojana.fnConfirmStage2 = function() {
+    debugger;
+    apz.bmyjna.bimayojana.sAction="Confirm";
+    var lCheckBox = apz.getElmValue("bmyjna__BimaYojana__AgreeCheckBox");
+    if (lCheckBox == "y") {
+        var lReq = {
+            "action": "Confirm",
+            "BYDtls": apz.data.scrdata.bmyjna__BimaYojana_Req.BYDtls
+        }
+        lReq.BYDtls.currency = "INR";
+        var lServerParams = {
+            "ifaceName": "BimaYojana",
+            "req": lReq,
+            "callBack": apz.bmyjna.bimayojana.fnCallBackSeverCB
+        }
+        apz.bmyjna.bimayojana.fnBeforeCallServer(lServerParams);
+    } else {
+        var lMsg = {
+            "code": "VAL-AGREE"
+        }
+        apz.dispMsg(lMsg);
+    }
+}
+apz.bmyjna.bimayojana.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.req,
+        "paintResp": "N",
+        "callBack": params.callBack
+    };
+      if(params.ifaceName == "BimaYojana")
+    {
+     jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("bmyjna")+"/BimaYojana.json"));
+       apz.data.scrdata.bmyjna__BimaYojana_Res = {};
+                      apz.data.scrdata.bmyjna__BimaYojana_Res= jsondata;
+                   apz.bmyjna.bimayojana.fnCallBackSeverCB(jsondata);
+    }
+    else if(params.ifaceName == "BimaYojanaQuery")
+    {
+     jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("bmyjna")+"/BimaYojanaQuery.json"));
+      apz.data.scrdata.bmyjna__BimaYojanaQuery_Res = {};
+                      apz.data.scrdata.bmyjna__BimaYojanaQuery_Res  = jsondata;
+                  apz.bmyjna.bimayojana.fnCallBackSeverCB(jsondata);
+    }
+    //apz.server.callServer(lServerParams);
+};
+apz.bmyjna.bimayojana.fnCallBackSeverCB = function(params) {
+    debugger;
+  //  if (!params.errors) {
+        if (apz.bmyjna.bimayojana.sAction == "QueryBima") {
+            // apz.params.res.bmyjna__BimaYojanaQuery_Res ={};
+            if (apz.getElmValue("bmyjna__BimaYojana__i__BYDtls__fromAccountNo") ==  apz.data.scrdata.bmyjna__BimaYojanaQuery_Res.tbDbtpByDet.fromAccountNo) {
+             //   apz.data.scrdata.bmyjna__BimaYojanaQuery_Res.tbDbtpByDet = params.res.bmyjna__BimaYojanaQuery_Res.tbDbtpByDet;
+                apz.data.scrdata.bmyjna__BimaYojana_Req = {};
+                apz.data.scrdata.bmyjna__BimaYojana_Req.BYDtls = apz.data.scrdata.bmyjna__BimaYojanaQuery_Res.tbDbtpByDet;
+                apz.data.loadData("BimaYojana", "bmyjna");
+                $(".querysucdis").find("input").attr("disabled", true);
+                $(".querysucdis").find("input").removeAttr("enabled");
+                $(".querysuchide").addClass("sno");
+                $(".querysucshow").removeClass("sno");
+            } else {
+                apz.data.scrdata.bmyjna__BimaYojana_Req.BYDtls = {};
+                apz.data.scrdata.bmyjna__BimaYojana_Req.BYDtls.fromAccountNo = apz.getElmValue("bmyjna__BimaYojana__i__BYDtls__fromAccountNo");
+                apz.data.loadData("BimaYojana", "bmyjna");
+                $(".querysucdis").find("input").removeAttr("disabled");
+                $(".querysucdis").find("input").attr("enabled", true);
+                $(".querysuchide").removeClass("sno");
+                $(".querysucshow").addClass("sno");
+            }
+        } else {
+             if (apz.data.scrdata.bmyjna__BimaYojana_Res.BYDtls.respCd == "app"){
+            apz.bmyjna.bimayojana.sParams.OtpRes =  apz.data.scrdata.bmyjna__BimaYojana_Res.BYDtls;
+            apz.bmyjna.bimayojana.fnRenderOTP();
+            var lLaunchParams = {
+                "appId": "otpeng",
+                "scr": "ProcessOTP",
+                "div": "bmyjna__BimaYojana__launcher",
+                "userObj": {
+                    "action": "SetRefNo",
+                    "data": {
+                        "OTPRefNo":  apz.data.scrdata.bmyjna__BimaYojana_Res.BYDtls.data.OTPRefNo
+                    },
+                    "control": {
+                        "appId": "otpeng",
+                        "callBack": apz.bmyjna.bimayojana.fnGotoStage3,
+                        "destroyDiv": "bmyjna__BimaYojana__launcher"
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        }
+        }
+    //}
+};
+apz.bmyjna.bimayojana.fnUnsubscribe = function() {
+    lParams={};
+    if (apz.bmyjna.bimayojana.sParams.data.typeOfBima == "PMJJBY") {
+        lParams.args = "PM JEEVAN JYOTI BIMA YOJANA";
+    } else if (apz.bmyjna.bimayojana.sParams.data.typeOfBima == "PMSBY") {
+        lParams.args = "PM SURAKSHA BIMA YOJANA";
+    }
+    var lMsg = {
+        "code": "CONF_UNSUBS01",
+        "callBack": apz.bmyjna.bimayojana.fnUnsubscribeCB,
+        "args":lParams.args
+    }
+    apz.dispMsg(lMsg);
+}
+apz.bmyjna.bimayojana.fnUnsubscribeCB = function(params) {
+    debugger;
+    if (params.choice) {
+        lParams={};
+        if (apz.bmyjna.bimayojana.sParams.data.typeOfBima == "PMJJBY") {
+            lParams.args = "PM JEEVAN JYOTI BIMA YOJANA";
+        } else if (apz.bmyjna.bimayojana.sParams.data.typeOfBima == "PMSBY") {
+            lParams.args = "PM SURAKSHA BIMA YOJANA";
+        }
+        var lMsg = {
+            "code": "SUCC_UNSUBS01",
+            "args":lParams.args
+        }
+        apz.dispMsg(lMsg);
+    }
+}
+apz.bmyjna.bimayojana.fnRenderOTP = function() {
+    debugger;
+    apz.hide("bmyjna__BimaYojana__Stage1");
+    apz.hide("bmyjna__BimaYojana__Stage2");
+    apz.show("bmyjna__BimaYojana__launcher");
+    apz.hide("bmyjna__BimaYojana__Stage3");
+};
+apz.bmyjna.bimayojana.fnGotoStage3 = function() {
+    debugger;
+    apz.bmyjna.bimayojana.fnSetValueStage3();
+    apz.bmyjna.bimayojana.fnRenderStage3();
+};
+apz.bmyjna.bimayojana.fnSetValueStage3 = function() {
+    debugger;
+    var lDtls = apz.data.scrdata.bmyjna__BimaYojana_Req.BYDtls;
+    apz.setElmValue("bmyjna__BimaYojana__Stage3FrmSavingsAcc", lDtls.fromAccountNo);
+    apz.setElmValue("bmyjna__BimaYojana__Stage3Gender", lDtls.gender);
+    apz.setElmValue("bmyjna__BimaYojana__Stage3AadharNo", lDtls.aadhaarNo);
+    apz.setElmValue("bmyjna__BimaYojana__Stage3NomineeName", lDtls.nomineeName);
+    apz.setElmValue("bmyjna__BimaYojana__Stage3NomineeRelation", lDtls.nomineeRelation);
+    apz.setElmValue("bmyjna__BimaYojana__Stage3NomineeAddr", lDtls.nomineeAddress);
+    apz.setElmValue("bmyjna__BimaYojana__Stage3GuardianName", lDtls.guardianName);
+    apz.setElmValue("bmyjna__BimaYojana__Stage3GuardianAddr", lDtls.guardianAddress);
+    apz.setElmValue("bmyjna__BimaYojana__Stage3MobileNo", lDtls.mobileNo);
+    apz.setElmValue("bmyjna__BimaYojana__Stage3Email", lDtls.emailId);
+    var lRefNo = "Your Reference number is " + apz.bmyjna.bimayojana.sParams.OtpRes.txnRefNo;
+    apz.setElmValue("bmyjna__BimaYojana__RefNo", lRefNo);
+    if (apz.bmyjna.bimayojana.sParams.data.typeOfBima == "PMJJBY") {
+        var lSuccessMsg = "Your Request for Pradhana Mandhri Jeevan Jyoti Bima Yojana is initiated";
+    } else if (apz.bmyjna.bimayojana.sParams.data.typeOfBima == "PMSBY") {
+        var lSuccessMsg = "Your Request for Pradhana Mandhri Suraksha Bima Yojana is initiated";
+    }
+    apz.setElmValue("bmyjna__BimaYojana__SuccessMsg", lSuccessMsg)
+    if (apz.isNull(lDtls.aadhaarNo)) {
+        apz.hide("bmyjna__BimaYojana__Stage3AadharNo_ctrl_grp_div");
+    } else {
+        apz.show("bmyjna__BimaYojana__Stage3AadharNo_ctrl_grp_div");
+    }
+    if (apz.isNull(lDtls.nomineeAddress)) {
+        apz.hide("bmyjna__BimaYojana__Stage3NomineeAddr_ctrl_grp_div");
+    } else {
+        apz.show("bmyjna__BimaYojana__Stage3NomineeAddr_ctrl_grp_div");
+    }
+    if (apz.isNull(lDtls.guardianName)) {
+        apz.hide("bmyjna__BimaYojana__Stage3GuardianName_ctrl_grp_div");
+    } else {
+        apz.show("bmyjna__BimaYojana__Stage3GuardianName_ctrl_grp_div");
+    }
+    if (apz.isNull(lDtls.guardianAddress)) {
+        apz.hide("bmyjna__BimaYojana__Stage3GuardianAddr_ctrl_grp_div");
+    } else {
+        apz.show("bmyjna__BimaYojana__Stage3GuardianAddr_ctrl_grp_div");
+    }
+};
+apz.bmyjna.bimayojana.fnRenderStage3 = function() {
+    debugger;
+    apz.hide("bmyjna__BimaYojana__Stage1");
+    apz.hide("bmyjna__BimaYojana__Stage2");
+    apz.show("bmyjna__BimaYojana__Stage3");
+};
+apz.bmyjna.bimayojana.fnValidateNumber = function(pthis) {
+    debugger;
+    var lValue = $(pthis).val();
+    if (!apz.val.isNumber(lValue)) {
+        var lResetValue = $("#bmyjna__BimaYojana__i__BYDtls__mobileNo").val().slice(0, -1);
+        apz.setElmValue("bmyjna__BimaYojana__i__BYDtls__mobileNo", lResetValue);
+    }
+}
+apz.bmyjna.bimayojana.fnValidatePhone = function(pobj) {
+    debugger;
+    var lError = apz.val.validateInputAct(document.getElementById("bmyjna__BimaYojana__i__BYDtls__mobileNo"), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            "code": 'VAL-PHONE'
+        };
+        apz.dispMsg(lErrorParams);
+    } else {
+        return true;
+    }
+};
+apz.bmyjna.bimayojana.fnValidateEmail = function(pobj) {
+    debugger;
+    var lError = apz.val.validateInputAct(document.getElementById("bmyjna__BimaYojana__i__BYDtls__emailId"), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            "code": 'VAL-EMAIL'
+        };
+        apz.dispMsg(lErrorParams);
+    } else {
+        return true;
+    }
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+}

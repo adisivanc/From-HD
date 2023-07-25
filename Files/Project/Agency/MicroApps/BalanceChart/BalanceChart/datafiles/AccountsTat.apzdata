@@ -1,0 +1,70 @@
+{
+    "balanc__MonthlyBalance_Res": {
+        "datasets": [
+            {
+            "Months": "January",
+            "Amount": "11",
+            "Account": "Savings Account"
+        }, {
+            "Months": "January",
+            "Amount": "8",
+            "Account": "Current Account"
+        }, {
+            "Months": "January",
+            "Amount": "30",
+            "Account": "Total Checking"
+        }, {
+            "Months": "January",
+            "Amount": "20",
+            "Account": "Premier Savings"
+        },{
+            "Months": "February",
+            "Amount": "19",
+            "Account": "Savings Account"
+        }, {
+            "Months": "February",
+            "Amount": "7",
+            "Account": "Current Account"
+        }, {
+            "Months": "February",
+            "Amount": "20",
+            "Account": "Total Checking"
+        }, {
+            "Months": "February",
+            "Amount": "10",
+            "Account": "Premier Savings"
+        },{
+            "Months": "March",
+            "Amount": "11",
+            "Account": "Savings Account"
+        }, {
+            "Months": "March",
+            "Amount": "23",
+            "Account": "Current Account"
+        }, {
+            "Months": "March",
+            "Amount": "30",
+            "Account": "Total Checking"
+        }, {
+            "Months": "March",
+            "Amount": "12",
+            "Account": "Premier Savings"
+        },{
+            "Months": "April",
+            "Amount": "11",
+            "Account": "Savings Account"
+        }, {
+            "Months": "April",
+            "Amount": "28",
+            "Account": "Current Account"
+        }, {
+            "Months": "April",
+            "Amount": "30",
+            "Account": "Total Checking"
+        }, {
+            "Months": "April",
+            "Amount": "13",
+            "Account": "Premier Savings"
+        }]
+    }
+}

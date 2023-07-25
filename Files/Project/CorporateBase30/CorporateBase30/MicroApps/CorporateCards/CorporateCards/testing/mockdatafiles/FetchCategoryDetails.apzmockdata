@@ -1,0 +1,45 @@
+{
+    "AccountStatus": true,
+    "accountDetails": [
+        {
+            "cardAccountNo": "10056454567890",
+            "cardAccountName": "Marketing",
+            "cashLimit": 200000,
+            "cardCount": 4,
+            "creditLimit": 300000,
+            "availableCashLimit": 100000,
+            "availableCreditLimit": 100000,
+            "categoryId": "Business Cards",
+            "corporateId": "000FTAC4321"
+        },
+        {
+            "cardAccountNo": "10056454567891",
+            "cardAccountName": "Sales",
+            "cashLimit": 600000,
+            "cardCount": 2,
+            "creditLimit": 700000,
+            "availableCashLimit": 10000,
+            "availableCreditLimit": 20000,
+            "categoryId": "Business Cards",
+            "corporateId": "000FTAC4321"
+        },
+        {
+            "cardAccountNo": "10056454567892",
+            "cardAccountName": "Marketing",
+            "cashLimit": 500000,
+            "cardCount": 0,
+            "creditLimit": 700000,
+            "availableCashLimit": 300000,
+            "availableCreditLimit": 200000,
+            "categoryId": "Business Cards",
+            "corporateId": "000FTAC4321"
+        }
+    ],
+    "categoryDetails": {
+        "corpID": "000FTAC4321",
+        "categoryID": "Business Cards",
+        "categoryDesc": "Business Cards",
+        "availableBalance": 320000
+    },
+    "CategoryStatus": true
+}

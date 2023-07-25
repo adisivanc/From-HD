@@ -1,0 +1,36 @@
+apz.travel.ViewScreen = {};
+apz.app.onLoad_ViewScreen = function() {
+    debugger;
+            //apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "TRAVEL NOTICE")
+
+    apz.data.loadJsonData("TravelDetails","travel")
+
+}
+apz.travel.ViewScreen.addNew = function()
+{
+            var lObj = {
+            "scr": "DetailsScreen",
+            "appId": "travel",
+            "div": "travel__Launcher__launcher"
+           
+        }
+        apz.launchSubScreen(lObj);
+    }
+
+apz.travel.ViewScreen.viewDetails = function(ths)
+{
+    debugger;
+    var rowno = $(ths).attr("rowno");
+    var data = apz.data.scrdata.travel__TravelDetailsInterface_Res.data[rowno]
+   
+            var lObj = {
+            "scr": "Summary",
+            "appId": "travel",
+            "div": "travel__Launcher__launcher",
+            "userObj" : {
+               "data" : data
+            }
+           
+        }
+        apz.launchSubScreen(lObj);
+    }

@@ -1,0 +1,21 @@
+{
+	"amlHitlistDowjones": [
+	    {
+	  	"description":"Chairman, ACME Corporation Holdings",
+		"documentName":"ACME Corporation HOLDINGS_PEP1.pdf",
+		"entityIndividualName":"James Smith",
+		"status":"ACME Corporation",
+		"systemId":"DowJones",
+		"systemName":"PEP",
+		"type":"I"
+	    },{
+	  	"description":"Member, Board of Directors, ACME Corporation Holdings",
+		"documentName":"ACME Corporation HOLDINGS_PEP2.pdf",
+		"entityIndividualName":"Michael Smith",
+		"status":"ACME Corporation",
+		"systemId":"DowJones",
+		"systemName":"PEP",
+		"type":"I"
+	    }
+	]
+}

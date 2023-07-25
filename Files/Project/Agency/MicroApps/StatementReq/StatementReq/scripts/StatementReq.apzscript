@@ -1,0 +1,23 @@
+apz.issdeb = {};
+apz.stareq.StatementReq = {}
+apz.stareq.StatementReq.sCache = {};
+
+apz.app.onLoad_StatementReq = function(params) {
+    debugger;
+    apz.stareq.StatementReq.sCache = params;
+    $("#stareq__StatementReq__ct_frm_1_title").attr("onclick", "apz.stareq.StatementReq.fnBackToList()");
+};
+
+apz.stareq.StatementReq.fnSubmit = function() {
+    var lParams = {
+        "message": 'Requested statement has been sent to your registered email id',
+        "callBack": apz.stareq.StatementReq.fnBackToList,
+        "type":"S"
+    };
+    apz.dispMsg(lParams);
+};
+
+apz.stareq.StatementReq.fnBackToList = function() {
+   apz.stareq.StatementReq.sCache.callBack();
+   
+}

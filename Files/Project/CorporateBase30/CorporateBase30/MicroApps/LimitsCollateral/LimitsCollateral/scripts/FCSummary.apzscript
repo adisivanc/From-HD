@@ -1,0 +1,63 @@
+apz.ficl01.FCSummary = {};
+apz.app.onLoad_FCSummary = function(params) {
+    //apz.hide("ficl01__FCSummary__backIcon");
+    //apz.show("ficl01__FCSummary__limitsHeaderRow");
+    apz.ficl01.FCSummary.showCreditLimit();
+};
+apz.ficl01.FCSummary.showCreditLimit = function() {
+    //$("#ficl01__FCSummary__creditlimitpnl_div").addClass("current");
+    $("#ficl01__FCSummary__limitscol .current").removeClass("current");
+    $("#ficl01__FCSummary__CLpanel").addClass("current");
+    var params = {};
+    params.appId = "ficl01";
+    params.scr = "CreditLimitsList";
+    params.layout = "All";
+    params.div = "ficl01__FCSummary__limitsDivLauncher";
+    $("#ficl01__FCSummary__limHeader").removeClass("sno");
+    $("#ficl01__FCSummary__colHeader").addClass("sno");
+    $("#ficl01__FCSummary__lineHeader").addClass("sno");
+    $("#ficl01__FCSummary__commHeader").addClass("sno");
+    apz.launchInDiv(params);
+};
+apz.ficl01.FCSummary.showCollaterals = function() {
+    $("#ficl01__FCSummary__limitscol .current").removeClass("current");
+    $("#ficl01__FCSummary__collateralPanel").addClass("current");
+    var params = {};
+    params.appId = "ficl01";
+    params.scr = "CollateralList";
+    params.layout = "All";
+    params.div = "ficl01__FCSummary__limitsDivLauncher";
+    $("#ficl01__FCSummary__limHeader").addClass("sno");
+    $("#ficl01__FCSummary__colHeader").removeClass("sno");
+    $("#ficl01__FCSummary__lineHeader").addClass("sno");
+    $("#ficl01__FCSummary__commHeader").addClass("sno");
+    apz.launchInDiv(params);
+};
+apz.ficl01.FCSummary.showCreditLine = function() {
+    $("#ficl01__FCSummary__limitscol .current").removeClass("current");
+    $("#ficl01__FCSummary__CreditLpanel").addClass("current");
+    var params = {};
+    params.appId = "ficl01";
+    params.scr = "CreditLineList";
+    params.layout = "All";
+    params.div = "ficl01__FCSummary__limitsDivLauncher";
+    $("#ficl01__FCSummary__limHeader").addClass("sno");
+    $("#ficl01__FCSummary__colHeader").addClass("sno");
+    $("#ficl01__FCSummary__lineHeader").removeClass("sno");
+    $("#ficl01__FCSummary__commHeader").addClass("sno");
+    apz.launchInDiv(params);
+};
+apz.ficl01.FCSummary.showCommitment = function() {
+    $("#ficl01__FCSummary__limitscol .current").removeClass("current");
+    $("#ficl01__FCSummary__commitmentPanel").addClass("current");
+    var params = {};
+    params.appId = "ficl01";
+    params.scr = "CommitmentList";
+    params.layout = "All";
+    params.div = "ficl01__FCSummary__limitsDivLauncher";
+    $("#ficl01__FCSummary__limHeader").addClass("sno");
+    $("#ficl01__FCSummary__colHeader").addClass("sno");
+    $("#ficl01__FCSummary__lineHeader").addClass("sno");
+    $("#ficl01__FCSummary__commHeader").removeClass("sno");
+    apz.launchInDiv(params);
+};

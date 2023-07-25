@@ -1,0 +1,160 @@
+{
+    "DataSource": {
+        "chart": {
+            "palette": "2",
+            "xaxisminvalue": "0",
+            "xaxismaxvalue": "100",
+            "yaxisminvalue": "-5",
+            "yaxismaxvalue": "225",
+            "is3d": "0",
+            "showformbtn": "0",
+            "viewmode": "1",
+            "allowdrag": "0",
+            "showBorder": "0",
+            "bgAlpha": "0",
+            "showCanvasBorder": "0",
+            "showFormBtn": "0",
+            "showRestoreBtn": "0"
+        },
+        "dataset": [
+            {
+                "allowdrag": "0",
+                "showformbtn": "0",
+                "plotBorderColor": "ffffff",
+                "color": "0693ea",
+                "data": [
+                    {
+                        "x": "30",
+                        "y": "190",
+                        "width": "110",
+                        "height": "100",
+                        "color": "d9d9db",
+                        "name": "Mr. Jacob Marley, CEO",
+                        "alpha": "100",
+                        "id": "CEO1",
+                        "imagenode": "1",
+                        "imageurl": "apps/styles/themes/CorporateHierarchy/img/2.jpg",
+                        "imagealign": "top",
+                        "imageheight": "75",
+                        "imagewidth": "108",
+                        "labelAlign": "bottom"
+                    },
+                    {
+                        "x": "60",
+                        "y": "190",
+                        "width": "110",
+                        "height": "100",
+                        "color": "d9d9db",
+                        "name": "Mr. Harry Sawyer, CEO",
+                        "alpha": "100",
+                        "id": "CEO2",
+                        "imagenode": "1",
+                        "imageurl": "apps/styles/themes/CorporateHierarchy/img/1.jpg",
+                        "imagealign": "top",
+                        "imageheight": "75",
+                        "imagewidth": "108",
+                        "labelAlign": "bottom"
+                    },
+                    {
+                        "x": "15",
+                        "y": "120",
+                        "width": "110",
+                        "height": "100",
+                        "color": "d9d9db",
+                        "name": "Mr. Anderson, Manager",
+                        "alpha": "100",
+                        "id": "Manager1",
+                        "imagenode": "1",
+                        "imageurl": "apps/styles/themes/CorporateHierarchy/img/3.jpg",
+                        "imagealign": "top",
+                        "imageheight": "75",
+                        "imagewidth": "108",
+                        "labelAlign": "bottom"
+                    },
+                    {
+                        "x": "45",
+                        "y": "120",
+                        "width": "110",
+                        "height": "100",
+                        "color": "d9d9db",
+                        "name": " Mr. Robert Jr, Manager",
+                        "alpha": "100",
+                        "id": "Manager2",
+                        "imagenode": "1",
+                        "imageurl": "apps/styles/themes/CorporateHierarchy/img/4.jpg",
+                        "imagealign": "top",
+                        "imageheight": "75",
+                        "imagewidth": "108",
+                        "labelAlign": "bottom"
+                    },
+                    {
+                        "x": "70",
+                        "y": "120",
+                        "width": "110",
+                        "height": "100",
+                        "color": "d9d9db",
+                        "name": "Mrs.Hermitage, Manager",
+                        "alpha": "100",
+                        "id": "Manager3",
+                        "imagenode": "1",
+                        "imageurl": "apps/styles/themes/CorporateHierarchy/img/5.jpg",
+                        "imagealign": "top",
+                        "imageheight": "75",
+                        "imagewidth": "108",
+                        "labelAlign": "bottom"
+                    }
+                    
+                    
+                ]
+            }
+        ],
+        "connectors": [
+            {
+                "color": "0693ea",
+                "stdthickness": "5",
+                "connector": [
+                    {
+                        "strength": "0.3",
+                        "from": "CEO1",
+                        "label": "",
+                        "to": "Manager1",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    },
+                    {
+                        "strength": "0.3",
+                        "from": "CEO1",
+                        "label": "",
+                        "to": "Manager2",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    },
+                    {
+                        "strength": "0.3",
+                        "from": "CEO2",
+                        "label": "",
+                        "to": "Manager2",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    },
+                    {
+                        "strength": "0.3",
+                        "from": "CEO2",
+                        "label": "",
+                        "to": "Manager3",
+                        "arrowatstart": "0",
+                        "arrowatend": "0"
+                    }
+                    
+                ]
+            }
+        ],
+        "labels": [
+            {
+                "label": [
+                    
+                ]
+            }
+        ]
+    }
+}

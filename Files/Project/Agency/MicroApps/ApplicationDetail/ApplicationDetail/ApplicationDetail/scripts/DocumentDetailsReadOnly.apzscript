@@ -1,0 +1,385 @@
+apz.appdtl.DocumentDetailsReadOnly = {};
+apz.appdtl.DocumentDetailsReadOnly.sDocData = {};
+apz.app.onLoad_DocumentDetailsReadOnly = function(params) {
+    debugger;
+    apz.appdtl.DocumentDetailsReadOnly.refNo = params.refNo;
+    //apz.setElmValue("appdtl__DocumentDetail__i__tbDbmiCustomerDocuments__refNo", apz.appdtl.DocumentDetailsReadOnly.refNo);
+    apz.appdtl.DocumentDetailsReadOnly.fetchDocument(params);
+};
+apz.app.onShown_DocumentDetailsReadOnly = function() {
+    $("#appdtl__DocumentDetailsReadOnly__ct_tbl_2_add_btn").addClass("sno");
+    $("#appdtl__DocumentDetailsReadOnly__ct_tbl_2_rem_btn").addClass("sno");
+}
+apz.appdtl.DocumentDetailsReadOnly.uploadDocument = function(pthis) {
+    debugger;
+    apz.appdtl.DocumentDetailsReadOnly.RowNo = $(pthis).attr('rowno');
+    $("#appdtl__DocumentDetailsReadOnly__documnetUpload").unbind().bind("change", function(event) {
+        debugger;
+        apz.appdtl.DocumentDetailsReadOnly.BrowseToUploadCB(this, event);
+    });
+    $("#appdtl__DocumentDetailsReadOnly__documnetUpload").trigger("click");
+}
+apz.appdtl.DocumentDetailsReadOnly.fetchDocument = function(params) {
+    debugger;
+    apz.data.buildData("ApplicationInfoDB", "appdtl");
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req = {
+        tbDbmiCustomerMaster: {
+            refNo: params.refNo
+        }
+    }
+    apz.data.scrdata.appdtl__DocumentsTypes_Res = {
+        photoIdDocuments: [],
+        addressDocuments: [],
+        additionalDocuments: [],
+        photoDocuments: [],
+        signatureDocuments: []
+    };
+    var lParams = {
+        "ifaceName": "DocumentDetail_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": {
+                "refNo": apz.appdtl.DocumentDetailsReadOnly.refNo
+            }
+        },
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.DocumentDetailsReadOnly.fetchDocumentCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.appdtl.DocumentDetailsReadOnly.fetchDocumentCB = function(params) {
+    console.log("document params")
+    console.log(params)
+    debugger;
+    // docData: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABVYA"
+    // docId: "1560261793180"
+    // docName: "Photo"
+    // docSeq: 54
+    // docType: "Photo"
+    // refNo: "CONSONB126022992528429"
+    // var lphotoandsign = jQuery.grep(params.res.appdtl__DocumentDetail_Req.tbDbmiCustomerDocuments, function(obj) {
+    //     return (obj.docType == "Signature" || obj.docType == "Photo");
+    // });
+    // var lidProof = jQuery.grep(params.res.appdtl__DocumentDetail_Req.tbDbmiCustomerDocuments, function(obj) {
+    //     return (obj.docType != "Signature" && obj.docType != "Photo");
+    // });
+    // apz.data.scrdata.appdtl__DocumentDetail_Req.tbDbmiCustomerDocuments = lidProof;
+    // apz.data.loadData("DocumentDetail", "appdtl");
+    // lphotoandsign.forEach(function(lobj) {
+    //     if (lobj.docType == "Signature") {
+    //         $("#appdtl__DocumentDetailsReadOnly__signature").attr("src", lobj.docData);
+    //         apz.setElmValue("appdtl__DocumentDetailsReadOnly__signature_name",lobj.docName);
+    //         apz.setElmValue("appdtl__DocumentDetailsReadOnly__signature_type",lobj.docType);
+    //     } else {
+    //         $("#appdtl__DocumentDetailsReadOnly__profillePic").attr("src", lobj.docData);
+    //         apz.setElmValue("appdtl__DocumentDetailsReadOnly__profile_pic_name",lobj.docName);
+    //         apz.setElmValue("appdtl__DocumentDetailsReadOnly__profile_pic_type",lobj.docType);
+    //     }
+    // });
+    if (params.errors == undefined && params.status) {
+        // var lphotoandsign = jQuery.grep(params.res.appdtl__DocumentDetail_Req.tbDbmiCustomerDocuments, function(obj) {
+        //     return (obj.docType == "Signature" || obj.docType == "Photo");
+        // });
+        // var lidProof = jQuery.grep(params.res.appdtl__DocumentDetail_Req.tbDbmiCustomerDocuments, function(obj) {
+        //     return (obj.docType != "Signature" && obj.docType != "Photo");
+        // });
+        var allProof = jQuery.grep(params.res.appdtl__DocumentDetail_Req.tbDbmiCustomerDocuments, function(obj) {
+            return obj;
+        });
+        apz.data.scrdata.appdtl__DocumentDetail_Req.tbDbmiCustomerDocuments = allProof;
+        apz.data.loadData("DocumentDetail", "appdtl");
+        // lphotoandsign.forEach(function(lobj) {
+        //     if (lobj.docType === "Signature") {
+        //         $("#appdtl__DocumentDetails__signature").attr("src", lobj.docData);
+        //     } else {
+        //         $("#appdtl__DocumentDetails__profillePic").attr("src", lobj.docData);
+        //     }
+        // });
+        allProof.forEach(function(lobj) {
+            if (lobj.docType === "photoProof") {
+                apz.data.scrdata.appdtl__DocumentsTypes_Res.photoIdDocuments.push(lobj);
+            } else if (lobj.docType === "addressProof") {
+                apz.data.scrdata.appdtl__DocumentsTypes_Res.addressDocuments.push(lobj);
+            } else if (lobj.docType === "additionalProof") {
+                apz.data.scrdata.appdtl__DocumentsTypes_Res.additionalDocuments.push(lobj);
+            } else if (lobj.docType === "Signature") {
+                apz.data.scrdata.appdtl__DocumentsTypes_Res.photoDocuments.push(lobj);
+            } else if (lobj.docType === "Photo") {
+                apz.data.scrdata.appdtl__DocumentsTypes_Res.signatureDocuments.push(lobj);
+            }
+        });
+        
+        if (apz.data.scrdata.appdtl__DocumentsTypes_Res.photoIdDocuments.length > 0) {
+            $("#appdtl__DocumentDetailsReadOnly__photoProof_lst").removeClass("sno");
+        }
+        if (apz.data.scrdata.appdtl__DocumentsTypes_Res.addressDocuments.length > 0) {
+            $("#appdtl__DocumentDetailsReadOnly__addressProof_lst").removeClass("sno");
+        }
+        if (apz.data.scrdata.appdtl__DocumentsTypes_Res.additionalDocuments.length > 0) {
+            $("#appdtl__DocumentDetailsReadOnly__additionalProof_lst").removeClass("sno");
+        }
+        if (apz.data.scrdata.appdtl__DocumentsTypes_Res.addressDocuments.length > 0) {
+            $("#appdtl__DocumentDetailsReadOnly__photo_lst").removeClass("sno");
+        }
+        if (apz.data.scrdata.appdtl__DocumentsTypes_Res.additionalDocuments.length > 0) {
+            $("#appdtl__DocumentDetailsReadOnly__signature_lst").removeClass("sno");
+        }
+        apz.data.loadData("DocumentsTypes", "appdtl");
+    }
+}
+apz.appdtl.DocumentDetailsReadOnly.saveDocument = function() {
+    debugger;
+    apz.appdtl.DocumentDetailsReadOnly.sDocData = apz.copyJSONObject(apz.data.scrdata.appdtl__DocumentDetail_Req);
+    var lParams = {
+        "ifaceName": "DocumentDetail_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": {
+                "refNo": apz.appdtl.DocumentDetailsReadOnly.refNo
+            }
+        },
+        "appId": "appdtl",
+        "paintResp": "N",
+        "callBack": apz.appdtl.DocumentDetailsReadOnly.saveDocumentCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.DocumentDetailsReadOnly.saveDocumentCB = function(params) {
+    debugger;
+    apz.data.buildData();
+    var lDocumentArray = apz.appdtl.DocumentDetailsReadOnly.sDocData.tbDbmiCustomerDocuments;
+    var lSignature = $("#appdtl__DocumentDetailsReadOnly__signature").attr("src");
+    var lPhoto = $("#appdtl__DocumentDetailsReadOnly__profillePic").attr("src");
+    if ($("#appdtl__DocumentDetailsReadOnly__signature").attr("src") != "") {
+        var lSignatureObj = {
+            "refNo": apz.appdtl.DocumentDetailsReadOnly.refNo,
+            "docType": "Signature",
+            "docData": lSignature
+        };
+        lDocumentArray.push(lSignatureObj);
+    }
+    if ($("#appdtl__DocumentDetailsReadOnly__profillePic").attr("src") != "") {
+        var lPhotoObj = {
+            "refNo": apz.appdtl.DocumentDetailsReadOnly.refNo,
+            "docType": "Photo",
+            "docData": lPhoto
+        };
+        lDocumentArray.push(lPhotoObj);
+    }
+    apz.appdtl.DocumentDetailsReadOnly.insertDocument();
+};
+
+
+apz.appdtl.DocumentDetailsReadOnly.zoomIt =  function(params){
+    console.log(params);
+    debugger;
+    var modalimg = $(params).attr("src");
+    document.getElementById('appdtl__DocumentDetailsReadOnly__preview_image').src=modalimg;
+    
+    apz.toggleModal({
+        targetId: "appdtl__DocumentDetailsReadOnly__uploadedPreview"
+    });
+}
+apz.appdtl.DocumentDetailsReadOnly.insertDocument = function() {
+    debugger;
+    var lDocArray = apz.appdtl.DocumentDetailsReadOnly.sDocData.tbDbmiCustomerDocuments;
+    lDocArray.forEach(function(doc) {
+        doc.refNo = apz.appdtl.DocumentDetailsReadOnly.refNo;
+        if (doc.seqNo) {
+            delete doc.seqNo;
+        }
+    });
+    var lParams = {
+        "ifaceName": "DocumentDetail_New",
+        "buildReq": "N",
+        "req": apz.appdtl.DocumentDetailsReadOnly.sDocData,
+        "appId": "appdtl",
+        "paintResp": "N",
+        "callBack": apz.appdtl.DocumentDetailsReadOnly.insertDocumentCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.appdtl.DocumentDetailsReadOnly.insertDocumentCB = function(params) {
+    debugger;
+}
+apz.appdtl.DocumentDetailsReadOnly.BrowseToUploadCB = function(pthis, event) {
+    debugger;
+    apz.data.buildData("DocumentDetail", "appdtl");
+    let fileObj = pthis.files[0];
+    let rowNo = apz.appdtl.DocumentDetailsReadOnly.RowNo;
+    let apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        let binaryStr = apzFileReader.result;
+        let base64Str = btoa(binaryStr);
+        apz.data.scrdata.appdtl__DocumentDetail_Req.tbDbmiCustomerDocuments[rowNo].docData = base64Str;
+        apz.data.loadData("DocumentDetail", "appdtl");
+        //apz.setElmValue("appdtl__DocumentDetail__i__tbDbmiCustomerDocuments__docData_" + rowNo+"_txtcnt", base64Str);
+    }
+    apzFileReader.readAsBinaryString(fileObj);
+};
+apz.appdtl.DocumentDetailsReadOnly.BrowsePhotoAndSign = function(pthis, event) {
+    debugger;
+    apz.data.buildData("DocumentDetail", "appdtl");
+    let fileObj = pthis.files[0];
+    let apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        let binaryStr = apzFileReader.result;
+        let base64Str = btoa(binaryStr);
+        if (pthis.id == "appdtl__DocumentDetailsReadOnly__browsePhoto") {
+            $("#appdtl__DocumentDetailsReadOnly__profillePic").attr("src", ("data:image/png;base64," + base64Str));
+        } else {
+            $("#appdtl__DocumentDetailsReadOnly__signature").attr("src", ("data:image/png;base64," + base64Str));
+        }
+    }
+    apzFileReader.readAsBinaryString(fileObj);
+};
+apz.appdtl.DocumentDetailsReadOnly.uploadPhoto = function(pthis) {
+    $("#appdtl__DocumentDetailsReadOnly__browsePhoto").bind("change", function(event) {
+        debugger;
+        apz.appdtl.DocumentDetailsReadOnly.BrowsePhotoAndSign(this, event);
+    });
+    $("#appdtl__DocumentDetailsReadOnly__browsePhoto").trigger("click");
+}
+apz.appdtl.DocumentDetailsReadOnly.uploadSignature = function(pthis) {
+    $("#appdtl__DocumentDetailsReadOnly__browseSignature").bind("change", function(event) {
+        debugger;
+        apz.appdtl.DocumentDetailsReadOnly.BrowsePhotoAndSign(this, event);
+    });
+    $("#appdtl__DocumentDetailsReadOnly__browseSignature").trigger("click");
+}
+apz.appdtl.DocumentDetailsReadOnly.nextScreen = function() {
+    // apz.appdtl.DocumentDetailsReadOnly.saveDocument()
+    var params = {};
+    params.appId = "appdtl";
+    params.scr = "ProductLauncher";
+    params.div = "appdtl__AppLauncher__screenLauncher";
+    params.userObj = {
+        "refNo": apz.appdtl.DocumentDetailsReadOnly.refNo,
+        "product": apz.appdtl.AppLauncher.sCache.product,
+        "appId": apz.appdtl.AppLauncher.sCache.appId
+    };
+    apz.launchSubScreen(params);
+    //apz.appdtl.DocumentDetailsReadOnly.launchScreen(scr);
+}
+apz.appdtl.DocumentDetailsReadOnly.preScreen = function() {
+    //apz.appdtl.DocumentDetailsReadOnly.saveDocument();
+    debugger;
+    var scr = "ContactDetailsReadOnly";
+    apz.appdtl.DocumentDetailsReadOnly.launchScreen(scr);
+}
+apz.appdtl.DocumentDetailsReadOnly.launchScreen = function(scr) {
+    debugger;
+    // apz.appdtl.DocumentDetailsReadOnly.saveDocument();
+    var lParams = {
+        "appId": "appdtl",
+        "scr": scr,
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.appdtl.DocumentDetailsReadOnly.refNo
+        }
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.appdtl.DocumentDetailsReadOnly.fnCallNextStateWorkFlow = function() {
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "appdtl",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appdtl.DocumentDetailsReadOnly.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "SUBMIT"
+        },
+        "paintResp": "N",
+        "callBack": apz.appdtl.DocumentDetailsReadOnly.fnNexttWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.appdtl.DocumentDetailsReadOnly.fnNexttWorkflowCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        apz.appdtl.DocumentDetailsReadOnly.fnApprove();
+    }
+}
+apz.appdtl.DocumentDetailsReadOnly.fnApprove = function() {
+    debugger;
+    apz.dispMsg({
+        "message": "The application has been verified",
+        "type": "S",
+        "callBack": apz.appdtl.DocumentDetailsReadOnly.fnApproveCB
+    })
+}
+apz.appdtl.DocumentDetailsReadOnly.fnApproveCB = function() {
+    apz.appdtl.AppLauncher.fnCancel();
+}
+apz.appdtl.DocumentDetailsReadOnly.fnRejectApplicationConfirmation = function() {
+    debugger;
+    if (apz.isNull(apz.getElmValue("appdtl__DocumentDetailsReadOnly__el_txa_3"))) {
+        apz.dispMsg({
+            "message": "Please add comments in remarks section about rejection."
+        });
+    } else {
+        apz.dispMsg({
+            "message": "Please confirm if you want to reject this application",
+            "type": "C",
+            "callBack": apz.appdtl.DocumentDetailsReadOnly.fnRejectCB
+        });
+    }
+}
+apz.appdtl.DocumentDetailsReadOnly.fnRejectCB = function(params) {
+    debugger;
+    if (params.choice) {
+        apz.appdtl.DocumentDetailsReadOnly.fnRejectApplication()
+    }
+}
+apz.appdtl.DocumentDetailsReadOnly.fnCallNextStateWorkFlow = function() {
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "appdtl",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appdtl.DocumentDetailsReadOnly.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "SUBMIT"
+        },
+        "paintResp": "N",
+        "callBack": apz.appdtl.DocumentDetailsReadOnly.fnNexttWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.appdtl.DocumentDetailsReadOnly.fnRejectApplication = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "appdtl",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appdtl.DocumentDetailsReadOnly.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "REJECT",
+            "remarks": apz.getElmValue("appdtl__DocumentDetailsReadOnly__el_txa_3")
+        },
+        "paintResp": "N",
+        "callBack": apz.appdtl.DocumentDetailsReadOnly.fnRejectWFStageCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.appdtl.DocumentDetailsReadOnly.fnRejectWFStageCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        apz.dispMsg({
+            "message": "The application has been rejected",
+            "type": "S",
+            "callBack": apz.appdtl.DocumentDetailsReadOnly.fnApproveCB
+        });
+    }
+}

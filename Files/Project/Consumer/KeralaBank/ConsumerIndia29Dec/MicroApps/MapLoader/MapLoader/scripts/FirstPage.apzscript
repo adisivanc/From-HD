@@ -1,0 +1,30 @@
+getLoc = function(){
+    debugger;
+    gps = {};
+gps.id = "LOCATEUSER";
+gps.callBack = getLocCallBack;
+apz.ns.getLocation(gps);
+};
+getLocCallBack = function(params){
+    debugger;
+currentLocation(params.latitude,params.longitude);
+}
+
+currentLocation = function(lat,long) {
+debugger;
+var json = {
+"markerInfo": [{
+"locationLatitude": lat,
+"locationLongitude": long,
+"locationName": "Me",
+"locationDescription": "My Location"
+}]
+};
+json.id = "MAP3_ID";
+json.callBack = locCallback;
+apz.ns.loadMap(json);
+}
+locCallback = function(json) {
+ debugger;
+    
+}

@@ -1,0 +1,171 @@
+apz.prddtl.ProductInfo = {};
+apz.prddtl.ProductInfo.sCache = {}
+apz.app.onLoad_ProductInfo = function(params) {
+    apz.prddtl.ProductInfo.lRefNo = params.refNo;
+    apz.prddtl.ProductInfo.sCache = params;
+    apz.setElmValue("prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__productname", params.subproduct);
+    apz.setElmValue("prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__refno", apz.prddtl.ProductInfo.lRefNo);
+    var filePath = apz.getDataFilesPath("prddtl") + "/Branches.json";
+    apz.prddtl.ProductInfo.branches = JSON.parse(apz.getFile(filePath));
+    if (apz.country === "IND") {
+        $("#prddtl__ProductInfo__ct_nav_2,#prddtl__ProductInfo__sc_row_12").removeClass("sno");
+    }
+    apz.prddtl.ProductInfo.fetchApplicationDetails();
+    $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+        $(this).removeClass("active");
+    })
+    $("#navigation_" + apz.flowNo).removeClass("sno");
+    $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+        $(this).removeClass("active");
+    })
+    $("#navigation_"+apz.flowNo+",#navgtn__MobileNavigation__ct_lst_2_row_"+apz.flowNo).addClass("active");
+    $("#prddtl__ProductAccountLauncher__el_btn_6_txtcnt").text("Next");
+    if (apz.deviceGroup == "Mobile") {
+        $("#prddtl__ProductAccountLauncher__gr_col_6").addClass("sno");
+    }
+};
+apz.prddtl.ProductInfo.fetchApplicationDetails = function() {
+    debugger;
+    apz.startLoader();
+    var lParams = {
+        "ifaceName": "ProductAccountDetails_Query",
+        "buildReq": "Y",
+        "appId": "prddtl",
+        "paintResp": "Y",
+        "async": false,
+        "callBack": apz.prddtl.ProductInfo.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.prddtl.ProductInfo.fetchApplicationDetailsCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    var products = ["mobilebnaking", "internetbanking", "atmcard", "chequebook", "smsnotification", "upi"];
+    for (var i = 0, len = products.length; i < len; i++) {
+        apz.prddtl.ProductInfo.fnShowSelectedService(products[i]);
+    }
+}
+apz.prddtl.ProductInfo.saveApplicationDetails = function() {
+    debugger;
+    apz.prddtl.ProductInfo.fnDeleteData();
+}
+apz.prddtl.ProductInfo.fnDeleteData = function() {
+    var lParams = {
+        "ifaceName": "ProductAccountDetails_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiAccountProduct": {
+                "refno": apz.prddtl.ProductInfo.lRefNo
+            }
+        },
+        "appId": "prddtl",
+        "paintResp": "N",
+        "callBack": apz.prddtl.ProductInfo.fnInsertProduct
+    }
+    apz.server.callServer(lParams);
+}
+apz.prddtl.ProductInfo.fnInsertProduct = function() {
+    var lParams = {
+        "ifaceName": "ProductAccountDetails_New",
+        "buildReq": "Y",
+        "appId": "prddtl",
+        "paintResp": "N",
+        "callBack": apz.prddtl.ProductInfo.fnInsertProductCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.prddtl.ProductInfo.fnInsertProductCB = function() {
+    apz.navgtn.Navigator.fnLaunchApp();
+}
+apz.prddtl.ProductInfo.fnSelectFeatures = function(iFaceName) {
+    var productChecked = apz.getElmValue("prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__" + iFaceName);
+    if (productChecked === "N") {
+        apz.setElmValue("prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__" + iFaceName, "Y");
+        $("#prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__" + iFaceName).parents(".checkparent").addClass("selected");
+    } else {
+        apz.setElmValue("prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__" + iFaceName, "N");
+        $("#prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__" + iFaceName).parents(".checkparent").removeClass("selected");
+    }
+}
+apz.prddtl.ProductInfo.fnSelectState = function(element) {
+    debugger;
+    var state = apz.getElmValue(element.id);
+    if (!apz.isNull(state)) {
+        $("#prddtl__ProductInfo__sc_row_15").removeClass("sno");
+        apz.setElmValue("prddtl__ProductInfo__selected_state", state);
+        $("#prddtl__ProductInfo__sc_row_14").addClass("sno");
+    }
+    var branches = apz.prddtl.ProductInfo.branches;
+    for (var i = 0, len = branches.length; i < len; i++) {
+        if (branches[i].state == state) {
+            apz.populateDropdown($("#prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__branch")[0], branches[i].branch);
+            break;
+        }
+    }
+    $("body").removeClass("modal-open");
+}
+apz.prddtl.ProductInfo.fnBackToState = function() {
+    debugger;
+    $("#prddtl__ProductInfo__sc_row_15").addClass("sno");
+    $("#prddtl__ProductInfo__sc_row_14").removeClass("sno");
+}
+apz.prddtl.ProductInfo.fnShowBranchDiv = function() {
+    debugger;
+    apz.toggleModal({
+        targetId: "prddtl__ProductInfo__stateBranchModal"
+    })
+    /*if($("#prddtl__ProductInfo__gr_state_branch").hasClass("sno")){
+       $("#prddtl__ProductInfo__gr_state_branch").removeClass("sno"); 
+    }
+    else{
+        $("#prddtl__ProductInfo__gr_state_branch").addClass("sno");
+    }*/
+}
+apz.prddtl.ProductInfo.fnCloseBranchDiv = function() {
+    debugger;
+    $("#prddtl__ProductInfo__gr_state_branch").addClass("sno");
+    apz.toggleModal({
+        targetId: "prddtl__ProductInfo__stateBranchModal"
+    })
+}
+$('#prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__city').on('select2:closing', function(e) {
+    debugger;
+    $('#prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__city').trigger("change");
+});
+apz.prddtl.ProductInfo.fnSelectBranch = function(element) {
+    debugger;
+    var branch = apz.getElmValue(element.id);
+    if (!apz.isNull(branch)) {
+        apz.setElmValue("prddtl__ProductInfo__selected_branch", branch);
+        $("#prddtl__ProductInfo__selectedBranchRow").removeClass("sno");
+        $("#prddtl__ProductInfo__el_btn_1").addClass("sno");
+        // $("#prddtl__ProductInfo__gr_state_branch").addClass("sno");
+        apz.toggleModal({
+            targetId: "prddtl__ProductInfo__stateBranchModal"
+        })
+    }
+}
+$('#prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__branch').on('select2:closing', function(e) {
+    //hidden by anand
+    //$('#prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__branch').trigger("change");
+});
+apz.prddtl.ProductInfo.fnShowSelectedService = function(iFaceName) {
+    var checkboxValue = apz.getElmValue("prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__" + iFaceName);
+    if (checkboxValue === "Y") {
+        $("#prddtl__ProductInfo__sc_col_" + iFaceName).removeClass("sno");
+        $("#prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__" + iFaceName).parents(".checkparent").addClass("selected");
+    } else {
+        $("#prddtl__ProductInfo__sc_col_" + iFaceName).addClass("sno");
+        $("#prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__" + iFaceName).parents(".checkparent").removeClass("selected");
+    }
+}
+apz.prddtl.ProductInfo.fnOnSelectService = function(pthis) {
+    debugger;
+    var lval = apz.getElmValue(pthis.id);
+    if (lval == "Y") {
+        $("#" + pthis.id).parents(".checkparent").addClass("selected");
+    }
+    if (lval == "N") {
+        $("#" + pthis.id).parents(".checkparent").removeClass("selected");
+    }
+}

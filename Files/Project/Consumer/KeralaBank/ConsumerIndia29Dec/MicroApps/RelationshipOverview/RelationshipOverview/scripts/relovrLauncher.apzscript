@@ -1,0 +1,7 @@
+apz.relovr.checkParams = function(params) {
+    debugger;
+    params.userObj = {"data":{
+        "customerID":"12345"
+    }
+    };
+};

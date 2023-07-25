@@ -1,0 +1,63 @@
+{
+    "menuitems": [{
+        "childMenu": "Home",
+        "menuicon": "icon-nav-relationOverview",
+        "parentMenu": "None",
+        "selected": "SELECTED"
+    }, {
+        "childMenu": "My Tasks",
+        "menuicon": "icon-cm-mytask",
+        "parentMenu": "None",
+        "selected": "None"
+    }, {
+        "childMenu": "Customers",
+        "menuicon": "icon-customer",
+        "parentMenu": "None",
+        "selected": "None"
+    }, {
+        "childMenu": "Applications",
+        "menuicon": "icon-applications",
+        "parentMenu": "None",
+        "selected": "None"
+    }, {
+        "childMenu": "Service Request",
+        "menuicon": "icon-nav-serviceRequest",
+        "parentMenu": "None",
+        "selected": "None"
+    }, {
+        "childMenu": "Create Lead",
+        "menuicon": "icon-lead-details",
+        "parentMenu": "None",
+        "selected": "None"
+    }, {
+        "childMenu": "Utilities",
+        "menuicon": "icon-nav-utilities",
+        "parentMenu": "None",
+        "selected": "None"
+    }, {
+        "childMenu": "My Profile",
+        "menuicon": "icon-cm-company-profile",
+        "parentMenu": "None",
+        "selected": "None"
+    }, {
+        "childMenu": "My Performance",
+        "menuicon": "icon-performance",
+        "parentMenu": "None",
+        "selected": "None"
+    }, {
+        "childMenu": "Contact Us",
+        "menuicon": "icon-phone",
+        "parentMenu": "None",
+        "selected": "None"
+    }, {
+        "childMenu": "Reports",
+        "menuicon": "icon-home",
+        "parentMenu": "None",
+        "selected": "None"
+    }, {
+        "childMenu": "Logout",
+        "menuicon": "icon-signout",
+        "parentMenu": "None",
+        "selected": "None"
+    }]
+}

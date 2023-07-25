@@ -1,0 +1,79 @@
+//apz.cuacpf = {};
+apz.cuacpf.CustAccPort = {};
+apz.cuacpf.CustAccPort.sParams = {};
+apz.app.onLoad_CustAccPort = function(param) {
+    debugger;
+    apz.cuacpf.CustAccPort.sParams = param;
+    if (param.Navigation) {
+        apz.cuacpf.CustAccPort.fnSetNavigation(param);
+    }
+    apz.data.loadJsonData("custaccportfolio", "cuacpf");
+}
+apz.cuacpf.CustAccPort.fnSetNavigation = function(param) {
+    debugger;
+    apz.cuacpf.CustAccPort.Navigation = param.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(param.headerText)) {
+        lParams.headerText = param.headerText;
+    } else {
+        lParams.headerText = "CUSTOMER ACCOUNT PORTFOLIO";
+    }
+    // lParams.backPressed = apz.cuacpf.CustAccPort.fnBack;
+    apz.cuacpf.CustAccPort.Navigation(lParams);
+};
+apz.cuacpf.CustAccPort.update = function(pthis) {
+    apz.data.buildData("custaccportfolio", "cuacpf");
+    var lRow = $(pthis).attr("rowno");
+    apz.dispMsg({"message": "Updated Successfully", "type" :"S" });
+}
+apz.cuacpf.fnLinkAccount = function() {
+    var obj = {
+        "customerId": "",
+        "accountNo": "100009312274",
+        "accountBrn": "",
+        "accountCcy": "",
+        "primaryAcc": "N",
+        "accNickName": "Card10003",
+        "includeInPortfolio": "N"
+    }
+    var accno = apz.getElmValue("cuacpf__CustAccPort__accno");
+    var nickname = apz.getElmValue("cuacpf__CustAccPort__nickname");
+    if (accno != "") {
+        if (nickname != "") {
+            obj["accountNo"] = accno;
+            obj["accNickName"] = nickname;
+            apz.data.scrdata.cuacpf__custaccportfolio_Req.tbDbtmCusacPrtfolioMaint.push(obj);
+            apz.data.loadData("custaccportfolio", "cuacpf");
+            apz.toggleModal({
+                "targetId": "cuacpf__CustAccPort__modal"
+            });
+        } else {
+            apz.dispMsg({
+                "message": "Please enter nick name",
+                callBack: function() {
+                    $("#cuacpf__CustAccPort__nickname").focus();
+                }
+            });
+        }
+    } else {
+        apz.dispMsg({
+            "message": "Please enter account number",
+            callBack: function() {
+                    $("#cuacpf__CustAccPort__accno").focus();
+                }
+        });
+       
+    }
+}
+apz.cuacpf.fnDeLink = function(ths) {
+    debugger;
+    var rowno = parseInt($(ths).attr("rowno"));
+    if (apz.data.scrdata.cuacpf__custaccportfolio_Req.tbDbtmCusacPrtfolioMaint[rowno].primaryAcc == "Y") {
+        apz.dispMsg({
+            message: "Please change the primary account before you de-link this account"
+        });
+    } else {
+        apz.data.scrdata.cuacpf__custaccportfolio_Req.tbDbtmCusacPrtfolioMaint.splice(rowno, 1);
+        apz.data.loadData("custaccportfolio", "cuacpf");
+    }
+}

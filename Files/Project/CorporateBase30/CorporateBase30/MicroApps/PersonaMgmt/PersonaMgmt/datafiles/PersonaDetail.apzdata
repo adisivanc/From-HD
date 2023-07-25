@@ -1,0 +1,120 @@
+{
+    "permgt__PersonaDetail_Res": {
+        "accountTransactionDetails": [{
+            "amount": 10000,
+            "balance": 20000,
+            "txnRefNo": 1,
+            "accountNo": "9848022331",
+            "txnCurrency": "AED",
+            "valDate": "2017-12-04 03:40:12.0",
+            "description": "Withdrawal",
+            "indicator": "Dr",
+            "txnDate": "2017-12-11 03:40:12.0"
+        }, {
+            "amount": 20000,
+            "balance": 20000,
+            "txnRefNo": 1,
+            "accountNo": "9848022331",
+            "txnCurrency": "AED",
+            "valDate": "2017-12-04 03:40:12.0",
+            "description": "Withdrawal",
+            "indicator": "Dr",
+            "txnDate": "2017-12-11 03:40:12.0"
+        }, {
+            "amount": 30000,
+            "balance": 20000,
+            "txnRefNo": 1,
+            "accountNo": "9848022331",
+            "txnCurrency": "AED",
+            "valDate": "2017-12-04 03:40:12.0",
+            "description": "Withdrawal",
+            "indicator": "Dr",
+            "txnDate": "2017-12-11 03:40:12.0"
+        }, {
+            "amount": 40000,
+            "balance": 20000,
+            "txnRefNo": 1,
+            "accountNo": "9848022331",
+            "txnCurrency": "AED",
+            "valDate": "2017-12-04 03:40:12.0",
+            "description": "Withdrawal",
+            "indicator": "Dr",
+            "txnDate": "2017-12-11 03:40:12.0"
+        }, {
+            "amount": 50000,
+            "balance": 20000,
+            "txnRefNo": 1,
+            "accountNo": "9848022331",
+            "txnCurrency": "AED",
+            "valDate": "2017-12-04 03:40:12.0",
+            "description": "Withdrawal",
+            "indicator": "Dr",
+            "txnDate": "2017-12-11 03:40:12.0"
+        }],
+        "accountTransactionSummary": [{
+            "desc": "Withdrawal",
+            "refNo": 1,
+            "amount": "10000",
+            "indicator": "Dr",
+            "txnDate": "2017-12-11 03:40:12.0",
+            "valDate": "2017-12-04 03:40:12.0",
+            "txnCurrency": "AED",
+            "balance": 2000
+        }, {
+            "desc": "Withdrawal",
+            "refNo": 2,
+            "amount": "8000",
+            "indicator": "Dr",
+            "txnDate": "2017-12-12 03:40:12.0",
+            "valDate": "2017-12-04 03:40:12.0",
+            "txnCurrency": "AED",
+            "balance": 2000
+        }, {
+            "desc": "Withdrawal",
+            "refNo": 3,
+            "amount": "6000",
+            "indicator": "Cr",
+            "txnDate": "2017-12-13 03:40:12.0",
+            "valDate": "2017-12-04 03:40:12.0",
+            "txnCurrency": "AED",
+            "balance": 2000
+        }, {
+            "desc": "Withdrawal",
+            "refNo": 4,
+            "amount": "12000",
+            "indicator": "Dr",
+            "txnDate": "2017-12-14 03:40:12.0",
+            "valDate": "2017-12-04 03:40:12.0",
+            "txnCurrency": "AED",
+            "balance": 2000
+        }, {
+            "desc": "Withdrawal",
+            "refNo": 5,
+            "amount": "14000",
+            "indicator": "Cr",
+            "txnDate": "2017-12-15 03:40:12.0",
+            "valDate": "2017-12-04 03:40:12.0",
+            "txnCurrency": "AED",
+            "balance": 2000
+        }, {
+            "desc": "Withdrawal",
+            "refNo": 6,
+            "amount": "10000",
+            "indicator": "Dr",
+            "txnDate": "2017-12-16 03:40:12.0",
+            "valDate": "2017-12-04 03:40:12.0",
+            "txnCurrency": "AED",
+            "balance": 2000
+        }, {
+            "desc": "Withdrawal",
+            "refNo": 7,
+            "amount": "8000",
+            "indicator": "Cr",
+            "txnDate": "2017-12-17 03:40:12.0",
+            "valDate": "2017-12-04 03:40:12.0",
+            "txnCurrency": "AED",
+            "balance": 2000
+        }],
+        "Status": true
+    }
+} 

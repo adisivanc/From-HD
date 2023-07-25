@@ -1,0 +1,146 @@
+apz.appdtl.IdentityDetail = {};
+apz.appdtl.IdentityDetail.sParams = {};
+apz.appdtl.currentFieldVal = "";
+apz.appdtl.IdentityDetail.saveIt = false;
+apz.app.onLoad_IdentityDetail = function(params) {
+    apz.appdtl.IdentityDetail.sParams = params;
+    console.log("loded");
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo", params.refNo);
+    apz.appdtl.IdentityDetail.manageHeaders();
+    apz.appdtl.IdentityDetail.fetchApplicationDetails(params);
+};
+apz.app.onShown_IdentityDetail = function(params) {
+    debugger;
+    if(apz.country == "IND"){
+    $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo_ul").removeClass("sno");
+    $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__pep_ul").removeClass("sno");
+    apz.populateDropdown(document.getElementById("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__typeOfID"), [{
+        "val": "",
+        "desc": "Please Select"
+    },{
+        "val": "Driver’s License",
+        "desc": "Driver’s License"
+    },{
+        "val": "Passport",
+        "desc": "Passport"
+    },{
+        "val": "State ID",
+        "desc": "State ID"
+    },{
+        "val": "Voter's ID",
+        "desc": "Voter's ID"
+    }]);
+    
+    }else{
+    $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__panNo_ul").addClass("sno");
+    $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__pep_ul").addClass("sno");
+    }
+    apz.appdtl.currenctScreen = "identity_details";
+    apz.appdtl.IdentityDetail.saveIt = true;
+    $("#appdtl__IdentityDetail__identity_details_form input").each(function() {
+        $(this).change(function() {
+            if (apz.appdtl.IdentityDetail.saveIt) {
+                var val = apz.getElmValue(this.id);
+                if (val.length <= 0 && apz.appdtl.currentFieldVal.length > 0) { //empty on change
+                    apz.appdtl.identityFieldsCount = apz.appdtl.identityFieldsCount + 1;
+                    apz.appdtl.identityFieldPercentage = apz.appdtl.identityFieldPercentage - apz.appdtl.identityPercentageValue;
+                } else if (val.length > 0 && apz.appdtl.currentFieldVal.length <= 0) { //filled on change
+                    apz.appdtl.identityFieldsCount = apz.appdtl.identityFieldsCount - 1;
+                    apz.appdtl.identityFieldPercentage = apz.appdtl.identityFieldPercentage + apz.appdtl.identityPercentageValue;
+                }
+                apz.setElmValue("appdtl__AppLauncher__employment_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.identityFieldsCount);
+                $("#appdtl__AppLauncher__emp_slider").roundSlider("option", "value", apz.appdtl.identityFieldPercentage);
+            }
+        })
+        $(this).focus(function() {
+            apz.appdtl.currentFieldVal = apz.getElmValue(this.id);
+        })
+    });
+    debugger;
+    if (apz.appdtl.identityManageFilled) {
+        apz.appdtl.IdentityDetail.manageFieldsFilled();
+        apz.setElmValue("appdtl__AppLauncher__employment_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.identityFieldsCount);
+        $("#appdtl__AppLauncher__emp_slider").roundSlider("option", "value", apz.appdtl.identityFieldPercentage);
+        apz.appdtl.identityManageFilled = false;
+    }
+}
+apz.appdtl.IdentityDetail.manageFieldsFilled = function() {
+    debugger;
+    $("#appdtl__IdentityDetail__identity_details_form input").each(function() {
+        var val = apz.getElmValue(this.id);
+        debugger;
+        if (val != "") {
+            apz.appdtl.identityFieldsCount = apz.appdtl.identityFieldsCount - 1;
+            apz.appdtl.identityFieldPercentage = apz.appdtl.identityFieldPercentage + apz.appdtl.identityPercentageValue;
+        }
+    });
+}
+apz.appdtl.IdentityDetail.manageHeaders = function() {
+    $("#appdtl__AppLauncher__employment_div").addClass('active');
+    $("#appdtl__AppLauncher__personal_div").removeClass('active');
+    $("#appdtl__AppLauncher__document_div").removeClass('active');
+}
+apz.appdtl.IdentityDetail.fetchApplicationDetails = function(params) {
+    debugger;
+    apz.data.buildData("ApplicationInfoDB", "appdtl");
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.refNo = params.refNo;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.IdentityDetail.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.IdentityDetail.fetchApplicationDetailsCB = function(pResp) {
+    debugger;
+}
+apz.appdtl.IdentityDetail.saveApplicationDetails = function() {
+apz.appdtl.IdentityDetail.saveIt = false;
+    debugger;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Modify",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "N",
+        "callBack": apz.appdtl.IdentityDetail.saveApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.IdentityDetail.saveApplicationDetailsCB = function(pResp) {
+    debugger;
+    if (!apz.isNull(pResp.res.appdtl__ApplicationInfoDB_Req)) {
+        apz.applicationDetails = jQuery.extend(true, {}, pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster);
+    } else {
+        apz.applicationDetails = jQuery.extend(true, {}, pResp.res.appdtl__ApplicationInfoDB_Res.tbDbmiCustomerMaster);
+    }
+}
+apz.appdtl.IdentityDetail.fnCancel = function() {
+    debugger;
+    apz.appdtl.IdentityDetail.saveApplicationDetails();
+        apz.appdtl.AppLauncher.onCancel();
+}
+apz.appdtl.IdentityDetail.nextScreen = function(pResp) {
+    var scr = "DocumentDetails";
+    apz.appdtl.IdentityDetail.launchScreen(scr);
+}
+apz.appdtl.IdentityDetail.preScreen = function(pResp) {
+    debugger;
+    var scr = "PersonalDetails";
+    apz.appdtl.IdentityDetail.launchScreen(scr);
+}
+apz.appdtl.IdentityDetail.launchScreen = function(pResp) {
+apz.appdtl.IdentityDetail.saveIt = false;
+    debugger;
+    apz.appdtl.IdentityDetail.saveApplicationDetails();
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "" + pResp,
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo")
+        }
+    };
+    apz.launchSubScreen(lParams);
+}

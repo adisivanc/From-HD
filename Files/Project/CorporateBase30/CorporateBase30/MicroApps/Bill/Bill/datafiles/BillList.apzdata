@@ -1,0 +1,29 @@
+{
+    "bill01__BillList_Res": {
+        "list": [{
+            "DueDate": "2019-01-21",
+            "Currency": "USD",
+            "TotalAmt": 24000,
+            "VendorName": "Robertson & Associates",
+            "VendorId": "46",
+            "BillId": "126",
+            "AccountNo":"12219XXXXX"
+        }, {
+            "DueDate": "2019-01-21",
+            "Currency": "USD",
+            "TotalAmt": 5000,
+            "VendorName": "Norton Lumber and Building Materials",
+            "VendorId": "46",
+            "BillId": "126",
+             "AccountNo":"12219XXXXX"
+        }, {
+            "DueDate": "2019-01-21",
+            "Currency": "USD",
+            "TotalAmt": 12000,
+            "VendorName": "Arlington Travel Services",
+            "VendorId": "46",
+            "BillId": "126",
+            "AccountNo":"13419XXXXX"
+        }]
+    }
+}

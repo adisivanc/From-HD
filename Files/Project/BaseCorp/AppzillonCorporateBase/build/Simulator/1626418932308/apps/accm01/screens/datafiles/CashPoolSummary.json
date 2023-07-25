@@ -1,0 +1,39 @@
+{
+    "accm01__CashPoolSummary_Res": {
+        "tbDbmiCorpCashPool": [
+            {
+                "corporateId": "000FTAC4321",
+                "poolId": "pool1",
+                "desc": "first level",
+                "status": "Active",
+                "balance": 250000,
+                "refNo": "0022215512",
+                "poolName": "pool1",
+                "parentAcc": "150100222321",
+                "type": "AutoReverse"
+            },
+            {
+                "corporateId": "000FTAC4321",
+                "poolId": "pool2",
+                "desc": "second level",
+                "status": "Active",
+                "balance": 150000,
+                "refNo": "0022215512",
+                "poolName": "pool2",
+                "parentAcc": "150100222321",
+                "type": "AutoReverse"
+            },
+            {
+                "corporateId": "000FTAC4321",
+                "poolId": "pool3",
+                "desc": "third level",
+                "status": "Active",
+                "balance": 50000,
+                "refNo": "0022215512",
+                "poolName": "pool3",
+                "parentAcc": "150100222321",
+                "type": "ZeroBal"
+            }
+        ]
+    }
+}

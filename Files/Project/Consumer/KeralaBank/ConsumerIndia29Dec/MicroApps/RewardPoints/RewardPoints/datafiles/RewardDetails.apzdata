@@ -1,0 +1,70 @@
+{"rewdpt__RewardDetails_Req":
+    {
+    "tbDbtpRewardDetails": [
+        {
+            "itemCode": "SC91058P",
+            "itemCategory": "Accessories",
+            "itemDescription": "Polo Perfume GV K.500",
+            "itemHeading": "Perfume",
+            "itemPoints": "1650",
+            "webUrl": "",
+            "itemImage": ""
+        },
+        {
+            "itemCode": "SC91069P",
+            "itemCategory": "Accessories",
+            "itemDescription": "Titan Watches GV K.1500",
+            "itemHeading": "Watches",
+            "itemPoints": "3400",
+            "webUrl": "",
+            "itemImage": ""
+        },
+        {
+            "itemCode": "SC91072P",
+            "itemCategory": "Accessories",
+            "itemDescription": "Bata Shoes GV K.1000",
+            "itemHeading": "Shoes",
+            "itemPoints": "1700",
+            "webUrl": "",
+            "itemImage": ""
+        },
+        {
+            "itemCode": "SC91072P",
+            "itemCategory": "Apparels",
+            "itemDescription": "Nike Shoes GV K.1000",
+            "itemHeading": "Shorts",
+            "itemPoints": "1500",
+            "webUrl": "",
+            "itemImage": ""
+        },
+        {
+            "itemCode": "SC91072P",
+            "itemCategory": "Apparels",
+            "itemDescription": "Pantaloons GV K.1000",
+            "itemHeading": "Clothes",
+            "itemPoints": "1700",
+            "webUrl": "",
+            "itemImage": ""
+        },
+        {
+            "itemCode": "SC91072P",
+            "itemCategory": "Apparels",
+            "itemDescription": "Arrow GV K.1000",
+            "itemHeading": "Clothes",
+            "itemPoints": "1700",
+            "webUrl": "",
+            "itemImage": ""
+        },
+        {
+            "itemCode": "SC91072P",
+            "itemCategory": "Apparels",
+            "itemDescription": "Lee GV K.1000",
+            "itemHeading": "Clothes",
+            "itemPoints": "1700",
+            "webUrl": "",
+            "itemImage": ""
+        }
+    ]
+}
+
+}

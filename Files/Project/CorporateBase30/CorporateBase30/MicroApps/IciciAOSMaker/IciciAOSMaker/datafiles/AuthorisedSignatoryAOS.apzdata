@@ -1,0 +1,25 @@
+{
+    "details": {
+        "customerFirstName": "Darren ",
+        "customerLastName": "Lansterman",
+        "customerDob": "2018-04-22",
+        "customerNationality": "Ireland",
+        "customerCountryOfResidence": "England",
+        "customerPlaceOfBirth": "Northern Ireland",
+        "customerRegistredCity": "London",
+        "customerRegistredPostalCode": "WC1B 5HJ",
+        "customerTelephoneNo": "+44 (0) 28 9136 9746",
+        "customerEmail1": "info@fundsaxis.com",
+        "identificationNo": "798654333",
+        "taxRefNo": "UTR458988764",
+        "country2": "customerPreviousCountry",
+        "lengthOfTimeAddress": "2 hours",
+        "customerMobileNo": "5645454",
+        "customerEmail2": "Darren.Lansterman@gmail.com",
+        "emailNotification": "y",
+        "smsNotification": "y",
+        "validity": "2018-04-22",
+        "socialSecurityNo": "6876555",
+        "existingRelationship": "Y"
+    }
+}

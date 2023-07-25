@@ -1,0 +1,22 @@
+apz.cracop.Common = {};
+apz.cracop.Common.launchSubScreen = function(lParams) {
+    debugger;
+    var lObj = {
+        "scr": lParams.launchScreen,
+        "div": lParams.launchDiv,
+        "animation": 9,
+        "userObj": lParams.lUserObj
+    };
+    apz.launchSubScreen(lObj);
+}
+apz.cracop.Common.launchApp = function(lParams) {
+    debugger;
+    var lObj = {
+        "scr": lParams.launchScreen,
+        "div": lParams.launchDiv,
+        "animation": 9,
+        "type": "CF",
+        "userObj": lParams.lUserObj
+    };
+    apz.launchApp(lObj);
+}

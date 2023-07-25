@@ -1,0 +1,74 @@
+
+
+apz.budget.BudgetSummary = {};
+apz.app.onLoad_BudgetSummary = function(params) {
+    debugger;
+        apz.budget.BudgetSummary.sParams = params;
+
+    if( apz.budget.BudgetSummary.sParams.from == "AddBudget")
+    {
+         apz.data.scrdata.budget__SetupBudget_Res.Budget = apz.budget.BudgetSummary.sParams.data;
+                     apz.data.loadData("SetupBudget", "budget");
+
+        
+    }
+    else
+    {
+  apz.data.loadJsonData("Summary", "budget");
+    }
+  $("#budget__BudgetSummary__ct_lst_1_row_6").addClass("enter");
+};
+
+
+
+apz.budget.editBudget = function (ths) {
+    debugger;
+        $("#budget__Launcher__gr_row_3").removeClass("sno");
+var rowNo =$(ths).attr("rowno");
+     var params = {
+                "appId": "budget",
+                "scr": "EditBudget",
+                "div": "budget__Launcher__editBudget",
+                "userObj": {
+                    "from" : "Edit",
+                    "data" : apz.data.scrdata.budget__SetupBudget_Res.Budget[rowNo]
+
+                }
+     };
+    apz.launchSubScreen(params)
+    
+}
+
+
+
+apz.budget.launchStatement = function (pthis) {
+    debugger;
+        $("#budget__Launcher__gr_row_3").removeClass("sno");
+
+ 
+    var rowNo = $(pthis).attr("rowno");
+    var params = {
+                "appId": "budget",
+                "scr": "Statement",
+                "div": "budget__Launcher__editBudget",
+                "userObj": {
+                    "budgetName" : apz.data.scrdata.budget__SetupBudget_Res.Budget[rowNo].budgetCategory
+                    
+                }
+     };
+    apz.launchSubScreen(params)
+    
+}
+
+apz.budget.fnDelete = function()
+{
+    debugger;
+    apz.dispMsg({message : "Are you sure you want to delete?", type : "S" , callBack : apz.budget.fnDeleteCB  })
+}
+
+
+apz.budget.fnDeleteCB = function()
+{
+    debugger;
+    apz.dispMsg({message : "Deleted successfully" , type : "S", callBack :    apz.landin.Landing.fnHome })
+}

@@ -1,0 +1,56 @@
+{
+    "International": [
+        {
+            "fromAccount": "10020323100",
+            "nickName": "Lannis",
+            "chargeWhom": "",
+            "amount": "",
+            "toAccount": "234564546771",
+            "beneficiaryName": "Robert Lannis",
+            "beneficiaryAddress": "Oxford Street",
+            "beneficiaryBankName": "Karur",
+            "remarks": "",
+            "swiftCode": "CFT543",
+            "amountCurrency": ""
+        },
+        {
+            "fromAccount": "10012023124",
+            "nickName": "Jerry",
+            "chargeWhom": "",
+            "amount": "",
+            "toAccount": "234564545472",
+            "beneficiaryName": "Sam George",
+            "beneficiaryAddress": "24th Street Park",
+            "beneficiaryBankName": "ING",
+            "remarks": "",
+            "swiftCode": "XOP974",
+            "amountCurrency": ""
+        },
+        {
+            "fromAccount": "15920323100",
+            "nickName": "Joseph",
+            "chargeWhom": "",
+            "amount": "",
+            "toAccount": "234564545473",
+            "beneficiaryName": "Joseph Jain",
+            "beneficiaryAddress": "Oxford Street",
+            "beneficiaryBankName": "BOI",
+            "remarks": "",
+            "swiftCode": "CUY654",
+            "amountCurrency": ""
+        },
+        {
+            "fromAccount": "10012023920",
+            "nickName": "Jain",
+            "chargeWhom": "",
+            "amount": "",
+            "toAccount": "234564546771",
+            "beneficiaryName": "Robert Jain",
+            "beneficiaryAddress": "Fazor Street",
+            "beneficiaryBankName": "Karur",
+            "remarks": "",
+            "swiftCode": "XDS321",
+            "amountCurrency": ""
+        }
+    ]
+}

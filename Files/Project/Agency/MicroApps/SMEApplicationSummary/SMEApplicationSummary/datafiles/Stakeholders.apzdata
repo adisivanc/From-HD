@@ -1,0 +1,19 @@
+{
+    "corsum__Stakeholders_Res": {
+        "stakeholderDetails": [{
+            "name": "StakeHolder1",
+            "type":"Personal",
+            "percentageOfShare":"30",
+            "nationality":"Indian",
+            "isSignatory":"Signatory",
+            "email":"StakeHolder1@gmail.com"
+        }, {
+            "name": "StakeHolder2",
+            "type":"Self",
+            "percentageOfShare":"30",
+            "nationality":"Indian",
+            "isSignatory":"Signatory",
+            "email":"StakeHolder2@gmail.com"
+        }]
+    }
+}

@@ -1,0 +1,282 @@
+apz.app.icaosm.UltimateBeneficialOwnersAOS = {};
+apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache = {};
+apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction = "";
+apz.app.icaosm.UltimateBeneficialOwnersAOS.sFlag = false;
+apz.app.onLoad_UltimateBeneficialOwnersAOS = function(params) {
+	apz.app.icaosm.UltimateBeneficialOwnersAOS.fnClearData();
+    apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache = params;
+    apz.app.manageCrub(4);
+    var UserID = apz.retrieve("CurrentUser");
+    $("#icaosm__UltimateBeneficialOwnersAOS__ct_frm_6").addClass("shownone");
+    if (UserID == "User2") {
+        $("#icaosm__UltimateBeneficialOwnersAOS__ct_frm_6").removeClass("shownone");
+    }
+    if (params.action == "submitted") {
+        var lpath = apz.getDataFilesPath();
+        var lData = apz.getFile(lpath + "/UltimateBeneficialOwnersAOS.json")
+        lData = JSON.parse(lData);
+        apz.data.buildData("UltimateBeneficialOwnersAOS", "icaosm");
+        apz.data.scrdata.icaosm__UltimateBeneficialOwnersAOS_Res.details = lData.details;
+        apz.data.loadData("UltimateBeneficialOwnersAOS", "icaosm");
+    } else if (params.action == "New") {
+        if (apz.app.icaosm.Common.addUltimateControl == "") {
+            apz.data.scrdata.icaosm__UltimateBeneficialOwnersAOS_Res = [];
+            apz.data.scrdata.icaosm__UltimateBeneficialOwnersAOS_Res.details = {};
+            apz.data.loadData("UltimateBeneficialOwnersAOS", "icaosm");
+        }
+    }
+    apz.app.icaosm.UltimateBeneficialOwnersAOS.fnQueryData();
+};
+apz.app.icaosm.UltimateBeneficialOwnersAOS.fnClearData = function(){
+	apz.data.clearMRMV("icaosm__UltimateBeneficialOwnersAOS__ct_frm_1");
+	apz.data.clearMRMV("icaosm__UltimateBeneficialOwnersAOS__ct_frm_2");
+	apz.data.clearMRMV("icaosm__UltimateBeneficialOwnersAOS__ct_frm_4");
+};
+apz.app.icaosm.UltimateBeneficialOwnersAOS.fnQueryData = function() {
+    apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction = "query";
+    var req = {};
+    req.tbBenificialOwnersDetails = {
+        "companyid": apz.icaosm.Home.sCompanyID
+    };
+    var lParams = {
+        "ifaceName": "UltimateBeneficialOwnersAOS_Query",
+        "paintResp": "Y",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.UltimateBeneficialOwnersAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.UltimateBeneficialOwnersAOS.fnBeforCallServer = function(params) {
+    var lReq = {
+        "ifaceName": params.ifaceName,
+        "paintResp": params.paintResp,
+        "buildReq": params.buildReq,
+        "req": params.lReq,
+        "appId": params.appId,
+        "async": false,
+        "callBack": apz.app.icaosm.UltimateBeneficialOwnersAOS.callServerCB,
+        "callBackObj": ""
+    };
+    apz.server.callServer(lReq);
+};
+apz.app.icaosm.UltimateBeneficialOwnersAOS.callServerCB = function(params) {
+    debugger;
+    if (apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction == "query") {
+        apz.app.icaosm.UltimateBeneficialOwnersAOS.fnQueryDataCB(params);
+    } else if (apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction == "modifySave" || apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction == "newSave") {
+        apz.app.icaosm.UltimateBeneficialOwnersAOS.fnModifySaveUltimateBeneficialOwnersAOSCB(params);
+    } else if (apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction == "modifyNext" || apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction == "newNext") {
+        apz.app.icaosm.UltimateBeneficialOwnersAOS.fnModifyNextUltimateBeneficialOwnersAOSCB(params);
+    }
+};
+apz.app.icaosm.UltimateBeneficialOwnersAOS.fnQueryDataCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.UltimateBeneficialOwnersAOS.sFlag = true;
+    } else {
+        apz.app.icaosm.UltimateBeneficialOwnersAOS.sFlag = false;
+    }
+};
+apz.app.icaosm.UltimateBeneficialOwnersAOS.fnSave = function() {
+    if (apz.app.icaosm.UltimateBeneficialOwnersAOS.sFlag) {
+        apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction = "modifySave";
+    } else {
+        apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction = "newSave";
+    }
+    apz.app.icaosm.UltimateBeneficialOwnersAOS.fnModifySaveUltimateBeneficialOwnersAOS();
+    /*
+    if (apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache == "submitted") {
+        apz.app.icaosm.Common.addUltimateControl = "";
+        apz.launchSubScreen({
+            "scr": "Home",
+            "div": "icaosm__LandingHeader__scrlaunchingdiv",
+            "userObj": {
+                "percentage": "",
+                "val": "Personal Details of Ultimate Benificial Owners(s)",
+                "action": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.action,
+                "accNum": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.accNum,
+                "appNo": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.appNo
+            }
+        });
+    } else {
+        apz.app.icaosm.Common.addUltimateControl = "Saved"
+        debugger;
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__UltimateBeneficialOwnersAOS__main input[type='text'],#scr__icaosm__UltimateBeneficialOwnersAOS__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $("#scr__icaosm__UltimateBeneficialOwnersAOS__main input[type='radio']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[3].progress = percentage;
+        apz.data.buildData("UltimateBeneficialOwnersAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "Home",
+            "div": "icaosm__LandingHeader__scrlaunchingdiv",
+            "userObj": {
+                "percentage": percentage,
+                "val": "Personal Details of Ultimate Benificial Owners(s)",
+                "action": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.action,
+                "accNum": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.accNum,
+                "appNo": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.appNo
+            }
+        });
+    }
+    */
+};
+apz.app.icaosm.UltimateBeneficialOwnersAOS.fnModifySaveUltimateBeneficialOwnersAOS = function() {
+    apz.data.buildData("UltimateBeneficialOwnersAOS", "icaosm");
+    var req = {};
+    req.tbBenificialOwnersDetails = apz.data.scrdata.icaosm__UltimateBeneficialOwnersAOS_Req.tbBenificialOwnersDetails;
+    req.tbBenificialOwnersDetails.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction == "modifySave") {
+        lParams.ifaceName = "UltimateBeneficialOwnersAOS_Modify";
+    } else if (apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction == "newSave") {
+        lParams.ifaceName = "UltimateBeneficialOwnersAOS_New";
+    }
+    apz.app.icaosm.UltimateBeneficialOwnersAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.UltimateBeneficialOwnersAOS.fnModifySaveUltimateBeneficialOwnersAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.UltimateBeneficialOwnersAOS.sFlag = false;
+        if (apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache == "submitted") {
+            apz.app.icaosm.Common.addUltimateControl = "";
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": "",
+                    "val": "Personal Details of Ultimate Benificial Owners(s)",
+                    "action": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.action,
+                    "accNum": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.appNo,
+                    "companyID" : apz.icaosm.Home.sCompanyID
+                }
+            });
+        } else {
+            apz.app.icaosm.Common.addUltimateControl = "Saved"
+            debugger;
+            var lTotCount = 0;
+            var lFilled = 0,
+                lRadio = 0;
+            $("#scr__icaosm__UltimateBeneficialOwnersAOS__main input[type='text'],#scr__icaosm__UltimateBeneficialOwnersAOS__main select").each(
+                function() {
+                    lTotCount++;
+                    if ($(this).val() != "" && $(this).val() != "Select") {
+                        lFilled++;
+                    }
+                });
+            $("#scr__icaosm__UltimateBeneficialOwnersAOS__main input[type='radio']").each(function() {
+                if ($("#" + this.id + ":Checked").length) {
+                    lFilled++;
+                }
+                lRadio++;
+            });
+            lTotCount = (lRadio / 2) + lTotCount;
+            percentage = (lFilled / lTotCount);
+            apz.data.scrdata.icaosm__Home_Req.Home[3].progress = percentage;
+            apz.data.buildData("UltimateBeneficialOwnersAOS", "icaosm");
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": percentage,
+                    "val": "Personal Details of Ultimate Benificial Owners(s)",
+                    "action": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.action,
+                    "accNum": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.appNo,
+                    "companyID" : apz.icaosm.Home.sCompanyID
+                }
+            });
+        }
+    } else {
+        lmsg = {
+            "message": "Ultimate Beneficial Owners details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.UltimateBeneficialOwnersAOS.fnModifyNextUltimateBeneficialOwnersAOS = function() {
+    if (apz.app.icaosm.UltimateBeneficialOwnersAOS.sFlag) {
+        apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction = "modifyNext";
+    } else {
+        apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction = "newNext";
+    }
+    apz.data.buildData("UltimateBeneficialOwnersAOS", "icaosm");
+    var req = {};
+    req.tbBenificialOwnersDetails = apz.data.scrdata.icaosm__UltimateBeneficialOwnersAOS_Req.tbBenificialOwnersDetails;
+    req.tbBenificialOwnersDetails.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction == "modifyNext") {
+        lParams.ifaceName = "UltimateBeneficialOwnersAOS_Modify";
+    } else if (apz.app.icaosm.UltimateBeneficialOwnersAOS.sAction == "newNext") {
+        lParams.ifaceName = "UltimateBeneficialOwnersAOS_New";
+    }
+    apz.app.icaosm.UltimateBeneficialOwnersAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.UltimateBeneficialOwnersAOS.fnModifyNextUltimateBeneficialOwnersAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.UltimateBeneficialOwnersAOS.sFlag = false;
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__UltimateBeneficialOwnersAOS__main input[type='text'],#scr__icaosm__UltimateBeneficialOwnersAOS__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $("#scr__icaosm__UltimateBeneficialOwnersAOS__main input[type='radio']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[3].progress = percentage;
+        apz.data.buildData("UltimateBeneficialOwnersAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "ChannelRegistrationAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            //"animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum,
+                "companyID" : apz.icaosm.Home.sCompanyID
+            }
+        });
+    } else {
+        lmsg = {
+            "message": "Ultimate Beneficial Owners details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};

@@ -1,0 +1,5 @@
+apz.csmrbk.lastTransaction={};
+apz.app.onLoad_lastTransaction=function(params){
+      apz.data.loadJsonData("lastTransactions","accstm");
+      
+}

@@ -1,0 +1,35 @@
+{
+    "bill01__Favourites_Res": {
+        "FundDetails": [{
+            "BeneficiaryName":"Norton Lumber",
+            "BeneficiaryAccNo":"1221978769",
+            "RoutingId":"253177832",
+            "DueDate": "2019-01-21",
+            "Currency": "USD",
+            "TotalAmt": 24000,
+            "VendorName": "Robertson & Associates",
+            "VendorId": "46",
+            "BillId": "126"
+        }, {
+            "BeneficiaryName":"Robertson & Associates",
+            "BeneficiaryAccNo":"4558978769",
+            "RoutingId":"253177832",
+            "DueDate": "2019-01-21",
+            "Currency": "USD",
+            "TotalAmt": 5000,
+            "VendorName": "Norton Lumber and Building Materials",
+            "VendorId": "46",
+            "BillId": "126"
+        }, {
+            "BeneficiaryName":"Albertson Heavy Machinery",
+            "BeneficiaryAccNo":"1221978739",
+            "RoutingId":"165788900",
+            "DueDate": "2019-01-21",
+            "Currency": "USD",
+            "TotalAmt": 12000,
+            "VendorName": "Arlington Travel Services",
+            "VendorId": "46",
+            "BillId": "126"
+        }]
+    }
+}

@@ -1,0 +1,155 @@
+{
+    "getCardTransacDet":
+    {
+  "xStatus": {
+    "statusMessage": "End of Transactions",
+    "severity": "I",
+    "statusCd": 41000,
+    "applicationCd": 841
+  },
+  "limit": 8,
+  "offset": "99999999999999999999999999",
+  "standardAccountInfo": {
+    "companyNbr": 24024,
+    "ownerLevel1": null,
+    "ownerLevel2": null,
+    "ownerLevel3": null,
+    "channelCd": null,
+    "accountNbr": "1234560001053",
+    "accountTypeCd": "BAS",
+    "accountName": "RAY LAKEMAN",
+    "accountStatusCd": "BD",
+    "accountStatusReasonCd": "DVL",
+    "currencyCd": "840"
+  },
+  "financialInfo": {
+    "availableCreditAmt": 0,
+    "availableCashAmt": 0,
+    "creditLineAmt": 5000,
+    "cashLineAmt": 500,
+    "currentBalanceAmt": 5173.48
+  },
+  "transactionInfo": [
+    {
+      "cardNbr": "4211205530018011",
+      "transactionAmt": 50.44,
+      "merchantAmt": 50.44,
+      "merchantCurrencyCd": "840",
+      "transactionDt": "2017-05-14",
+      "postingDt": "2017-05-15",
+      "transactionCd": 1035,
+      "transactionDescription": "BOWL ARAMA               MESQUITE     US",
+      "merchantCategoryCd": "5542",
+      "cashbackAmt": 0,
+      "transactionReferenceNbr": "24299127134180300000179",
+      "loyaltyAwardInd": "N",
+      "adjustmentReasonCd": null
+    },
+    {
+      "cardNbr": "4211205530018011",
+      "transactionAmt": 17.44,
+      "merchantAmt": 17.44,
+      "merchantCurrencyCd": "840",
+      "transactionDt": "2017-05-15",
+      "postingDt": "2017-05-15",
+      "transactionCd": 1035,
+      "transactionDescription": "TXNTAX01                 MESQUITE     US",
+      "merchantCategoryCd": "5542",
+      "cashbackAmt": 0,
+      "transactionReferenceNbr": "24299107135180300000189",
+      "loyaltyAwardInd": "N",
+      "adjustmentReasonCd": null
+    },
+    {
+      "cardNbr": "5317395530021014",
+      "transactionAmt": 3939,
+      "merchantAmt": 3939,
+      "merchantCurrencyCd": "840",
+      "transactionDt": "2017-05-15",
+      "postingDt": "2017-05-15",
+      "transactionCd": 1035,
+      "transactionDescription": "ALBERTA FERRETTI      DAY FOUR 4250",
+      "merchantCategoryCd": "5331",
+      "cashbackAmt": 0,
+      "transactionReferenceNbr": "75234567135000000042704",
+      "loyaltyAwardInd": "N",
+      "adjustmentReasonCd": null
+    },
+    {
+      "cardNbr": null,
+      "transactionAmt": 8,
+      "merchantAmt": 0,
+      "merchantCurrencyCd": null,
+      "transactionDt": "2017-05-15",
+      "postingDt": "2017-05-15",
+      "transactionCd": 1255,
+      "transactionDescription": "LATE CHARGE FEE",
+      "merchantCategoryCd": "0000",
+      "cashbackAmt": 0,
+      "transactionReferenceNbr": "00201705150912148548006",
+      "loyaltyAwardInd": "N",
+      "adjustmentReasonCd": null
+    },
+    {
+      "cardNbr": null,
+      "transactionAmt": 6.12,
+      "merchantAmt": 0,
+      "merchantCurrencyCd": null,
+      "transactionDt": "2017-05-15",
+      "postingDt": "2017-05-15",
+      "transactionCd": 1201,
+      "transactionDescription": "FINANCE CHARGE",
+      "merchantCategoryCd": "0000",
+      "cashbackAmt": 0,
+      "transactionReferenceNbr": "00201705150912148548014",
+      "loyaltyAwardInd": "N",
+      "adjustmentReasonCd": null
+    },
+    {
+      "cardNbr": "4211205530018011",
+      "transactionAmt": 602.95,
+      "merchantAmt": 547,
+      "merchantCurrencyCd": "978",
+      "transactionDt": "2017-05-18",
+      "postingDt": "2017-05-18",
+      "transactionCd": 1035,
+      "transactionDescription": "FIORUCCI                 MILANO       JP",
+      "merchantCategoryCd": "5311",
+      "cashbackAmt": 0,
+      "transactionReferenceNbr": "20000027138220234011507",
+      "loyaltyAwardInd": "N",
+      "adjustmentReasonCd": null
+    },
+    {
+      "cardNbr": "5317395530021014",
+      "transactionAmt": 22.11,
+      "merchantAmt": 22.11,
+      "merchantCurrencyCd": "840",
+      "transactionDt": "2017-05-18",
+      "postingDt": "2017-05-18",
+      "transactionCd": 1035,
+      "transactionDescription": "FORESTWOOD FLORIST    DAY FIVE 5225",
+      "merchantCategoryCd": "5193",
+      "cashbackAmt": 0,
+      "transactionReferenceNbr": "75234567138000000057605",
+      "loyaltyAwardInd": "N",
+      "adjustmentReasonCd": null
+    },
+    {
+      "cardNbr": "5317395530021014",
+      "transactionAmt": 10.54,
+      "merchantAmt": 10.54,
+      "merchantCurrencyCd": "840",
+      "transactionDt": "2017-05-18",
+      "postingDt": "2017-05-18",
+      "transactionCd": 1035,
+      "transactionDescription": "CVS PHARMACY #55      1 CVS LANE",
+      "merchantCategoryCd": "5193",
+      "cashbackAmt": 0,
+      "transactionReferenceNbr": "75234567138000000057605",
+      "loyaltyAwardInd": "N",
+      "adjustmentReasonCd": null
+    }
+  ]
+}
+}

@@ -1,0 +1,22 @@
+apz.regapp.FirstFatca = {};
+apz.regapp.FirstFatca.sParams = {};
+apz.app.onLoad_FirstFatca = function(params) {
+    debugger;
+apz.regapp.FirstFatca.sParams = params;
+};
+apz.app.onShown_FirstFatca = function(params) {
+    debugger;
+};
+apz.regapp.FirstFatca.fnCancel = function(){
+    debugger;
+}
+
+apz.regapp.FirstFatca.launchSecondFatca = function(){
+    
+    var lParams = {
+        "appId": "regapp",
+        "scr": "SecondFatca",
+        "div": "regapp__Launcher__launcher"
+    };
+    apz.launchSubScreen(lParams);
+}

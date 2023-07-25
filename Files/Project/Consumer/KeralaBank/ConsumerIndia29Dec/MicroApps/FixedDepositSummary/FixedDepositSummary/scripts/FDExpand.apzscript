@@ -1,0 +1,44 @@
+apz.fdsumm.FDExpand = {};
+apz.fdsumm.FDExpand.sparams = {};
+apz.app.onLoad_FDExpand = function(params)
+{
+    debugger;
+    apz.fdsumm.FDExpand.sparams = params;
+    if(params.rowno == "0")
+    {
+    apz.setElmValue("fdsumm__FDExpand__title",apz.fdsumm.FDExpand.sparams.data.title );
+        apz.setElmValue("fdsumm__FDExpand__accno",apz.fdsumm.FDExpand.sparams.data.accno );
+            apz.setElmValue("fdsumm__FDExpand__balance",apz.fdsumm.FDExpand.sparams.data.totalBalance );
+                apz.data.loadJsonData("FDExpand", "fdsumm");
+
+}
+else
+{
+      apz.setElmValue("fdsumm__FDExpand__title",apz.fdsumm.FDExpand.sparams.data.titleRD );
+        apz.setElmValue("fdsumm__FDExpand__accno",apz.fdsumm.FDExpand.sparams.data.accnoRD );
+            apz.setElmValue("fdsumm__FDExpand__balance",apz.fdsumm.FDExpand.sparams.data.totalBalanceRD );
+                apz.data.loadJsonData("RDExpand", "fdsumm");
+
+}
+
+}
+
+apz.fdsumm.FDExpand.fnBack = function()
+{
+    debugger;
+   apz.fdsumm.FDExpand.sparams.callback();
+}
+
+apz.fdsumm.FDExpand.fnLaunchBookDeposit = function()
+{
+    debugger;
+    if(  apz.fdsumm.FDExpand.sparams.rowno == "0")
+    {
+        apz.landin.Landing.fnMenuClickInside("Book Fixed Deposit");
+    }
+    else if(apz.fdsumm.FDExpand.sparams.rowno == "1")
+    {
+                apz.landin.Landing.fnMenuClickInside("Book Recurring Deposit");
+
+    }
+}

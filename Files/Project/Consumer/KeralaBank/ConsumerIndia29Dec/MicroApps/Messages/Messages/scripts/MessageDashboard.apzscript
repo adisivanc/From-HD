@@ -1,0 +1,17 @@
+apz.messag.MessageDashboard = {};
+apz.app.onLoad_MessageDashboard = function()
+{
+    debugger;
+    apz.data.loadJsonData("MessageDash", "messag");
+      // apz.data.loadData("MsgInbox", "messag");
+
+}
+
+
+
+apz.messag.MessageDashboard.fnMessage = function() {
+    debugger;
+    // lParams = {};
+//    lParams.textContent = "Messages";
+    apz.landin.Landing.fnMenuClickInside("Messages");
+}

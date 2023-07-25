@@ -1,0 +1,124 @@
+apz.Invoic.InvoiceList = {};
+apz.Invoic.InvoiceList.sum = 0;
+apz.app.onLoad_InvoiceList = function() {
+    if (firstLoad == "Y") {
+        apz.data.loadJsonData("InvoiceListResp")
+        apz.data.loadJsonData("InvoiceDetailsResp")
+        firstLoad = "N";
+        ResUpdated = apz.data.scrdata.Invoic__QbookInvoiceList_Res.QueryResponse;
+    } else {
+        apz.data.scrdata.Invoic__QbookInvoiceList_Res.QueryResponse = ResUpdated;
+        apz.data.loadData("QbookInvoiceDetails", "Invoic");
+    }
+    $("#Invoic__InvoiceList__AvailableInvoiceListTable_tbody tr td:nth-child(1)").find("input").attr("disabled", true)
+    $("#Invoic__InvoiceList__AvailableInvoiceListTable_0_th").find("input").attr("disabled", true);
+    //apz.data.loadJsonData("CashFlowChart","Invoic");
+    apz.Invoic.InvoiceList.fnPaintInitialCashFlow();
+    apz.Invoic.InvoiceList.fnLoadUpdateCashFlow();
+}
+apz.Invoic.InvoiceList.fnPaintInitialCashFlow = function() {
+    debugger;
+    var account = apz.getElmValue("Invoic__InvoiceList__account");
+    var data = apz.data.scrdata.ACDB01__Dashboard_Req;
+    apz.data.scrdata.Invoic__CashFlowChart_Res = {};
+    apz.data.scrdata.Invoic__CashFlowChart_Res.data = []
+    var result = data.balanceMovement.filter(function(item) {
+        if (item.account == account) return item;
+    });
+    apz.data.scrdata.Invoic__CashFlowChart_Res.data = result;
+    apz.data.loadData("CashFlowChart", "Invoic");
+}
+apz.Invoic.InvoiceList.fnSyncQuickBook = function() {
+    apz.Invoic.InvoiceList.fnLaunchScreenInDialog();
+   
+}
+apz.Invoic.InvoiceList.fnToggleModal = function(){
+     var lDialog = {};
+    lDialog.targetId = "Invoic__InvoiceList__pu_dlg_1";
+    lDialog.callBack = apz.Invoic.InvoiceList.dialogCallBack;
+    apz.toggleModal(lDialog);
+}
+apz.Invoic.InvoiceList.fnLaunchScreenInDialog = function() {
+    var param = {};
+    param.appId = apz.currAppId
+    param.scr = "InvoiceSelection";
+    param.layout = "All"
+    param.div = "Invoic__InvoiceList__gr_row_4";
+    apz.launchSubScreen(param);
+}
+apz.data.rowClicked = function(p) {
+    debugger;
+    if (p.parentElement.id.match("AvailableInvoiceListTable") != null) {
+        var InvoiveNo = p.firstChild.textContent
+        apz.data.scrdata.Invoic__QbookInvoiceDetails_Res.QueryResponse.Invoice[0].BillAddr.Line1 = ""
+        for (var i = 0; i < apz.data.scrdata.Invoic__QbookInvoiceList_Res.QueryResponse.Invoice.length; i++) {
+            var listClickedItemResp = apz.data.scrdata.Invoic__QbookInvoiceList_Res.QueryResponse.Invoice[i];
+            if (InvoiveNo == apz.data.scrdata.Invoic__QbookInvoiceList_Res.QueryResponse.Invoice[i].Id) {
+                var IssueDate = apz.data.scrdata.Invoic__QbookInvoiceList_Res.QueryResponse.Invoice[i].MetaData.CreateTime
+                IssueDate = IssueDate.split("T")[0];
+                apz.data.scrdata.Invoic__QbookInvoiceDetails_Res.QueryResponse.Invoice[0] = apz.data.scrdata.Invoic__QbookInvoiceList_Res.QueryResponse
+                    .Invoice[i]
+                if (listClickedItemResp.BillAddr.Line4) {
+                    apz.data.scrdata.Invoic__QbookInvoiceDetails_Res.QueryResponse.Invoice[0].BillAddr.Line1 = listClickedItemResp.BillAddr.Id + ", " +
+                        listClickedItemResp.BillAddr.Line1 + ", " + listClickedItemResp.BillAddr.Line2 + ", " + listClickedItemResp.BillAddr.Line3 +
+                        ", " + listClickedItemResp.BillAddr.Line4;
+                } else {
+                    apz.data.scrdata.Invoic__QbookInvoiceDetails_Res.QueryResponse.Invoice[0].BillAddr.Line1 = listClickedItemResp.BillAddr.Id + ", " +
+                        listClickedItemResp.BillAddr.Line1 + ", " + listClickedItemResp.BillAddr.Line2 + ", " + listClickedItemResp.BillAddr.Line3
+                }
+                apz.data.scrdata.Invoic__QbookInvoiceDetails_Res.QueryResponse.Invoice[0].PaymentType = "Pay On Delivery";
+                apz.data.scrdata.Invoic__QbookInvoiceDetails_Res.QueryResponse.Invoice[0].BIC = "CITIUS33";
+                apz.data.scrdata.Invoic__QbookInvoiceDetails_Res.QueryResponse.Invoice[0].BankName = "CitiBankUS";
+                apz.data.scrdata.Invoic__QbookInvoiceDetails_Res.QueryResponse.Invoice[0].CountryCode = "USA";
+                apz.data.scrdata.Invoic__QbookInvoiceDetails_Res.QueryResponse.Invoice[0].MetaData.CreateTime = IssueDate;
+            }
+        }
+        var param = {};
+        param.appId = apz.currAppId
+        param.scr = "InvoiceDetails";
+        param.layout = "All"
+        param.div = "Invoic__InvoiceLauncher__gr_row_2";
+        apz.launchSubScreen(param);
+    }
+}
+apz.Invoic.InvoiceList.dialogCallBack = function(param) {
+    if (param.innerText == "Submit") apz.Invoic.InvoiceSelection.onClickOk();
+    $("#Invoic__InvoiceList__financing").removeClass("sno");
+}
+apz.Invoic.InvoiceList.fnFinancing = function() {
+    debugger;
+    $("#Invoic__InvoiceList__AvailableInvoiceListTable_tbody tr td:nth-child(1)").find("input").attr("disabled", false)
+    $("#Invoic__InvoiceList__AvailableInvoiceListTable_tbody tr td:nth-child(1)").find("input").on("click", apz.Invoic.InvoiceList.rowSelectorClicked)
+    $("#Invoic__InvoiceList__AvailableInvoiceListTable_0_th").find("input").attr("disabled", false);
+};
+apz.Invoic.InvoiceList.rowSelectorClicked = function(event) {
+    debugger;
+    $("#Invoic__InvoiceList__financingform").removeClass("sno");
+    var rowno = parseInt($(event.target).attr("rowno"))
+    apz.Invoic.InvoiceList.sum += apz.data.scrdata.Invoic__QbookInvoiceList_Res.QueryResponse.Invoice[rowno].HomeTotalAmt;
+    $("#Invoic__InvoiceList__totalamount_txtcnt").text(apz.formatNumber({
+        value: apz.Invoic.InvoiceList.sum,
+        decimalSep: ".",
+        mask: "MILLION",
+        decimalPoints: 2
+    }))
+}
+apz.Invoic.InvoiceList.fnSubmit = function() {
+    debugger;
+    apz.dispMsg({
+        "message": "Request for financing submitted successfully",
+        "type": "S"
+    });
+}
+apz.Invoic.InvoiceList.fnLoadUpdateCashFlow = function() {
+    debugger;
+    var filePath = apz.getDataFilesPath("Invoic") + "/InvoiceCashFlow.json";
+    var content = apz.getFile(filePath);
+    if (!apz.isNull(content)) apz.Invoic.InvoiceList.cashFlowPostInvoice = JSON.parse(content);
+}
+apz.Invoic.InvoiceList.fnUpdateCashFlow = function(){
+    debugger;
+    apz.data.scrdata.ACDB01__Dashboard_Req = apz.copyJSONObject(apz.Invoic.InvoiceList.cashFlowPostInvoice);
+    apz.Invoic.InvoiceList.fnPaintInitialCashFlow();
+    
+}

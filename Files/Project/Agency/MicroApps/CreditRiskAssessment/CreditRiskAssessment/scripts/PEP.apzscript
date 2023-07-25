@@ -1,0 +1,347 @@
+apz.crsapp.PEP = {};
+apz.crsapp.PEP.hasRecord = "";
+var DowJonelist = [];
+var Shareholderlist = [];
+var PEPArray = [];
+apz.crsapp.PEP.stackholderCount = 0;
+apz.app.onLoad_PEP = function(params) {
+    apz.data.createRow("crsapp__PEP__addForm");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1ajust");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1bjust");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1cjust");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1djust");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1ejust");
+    apz.setElmValue("crsapp__AddPEP__i__corporatePep__applicationId", "ONBAgency");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1asys_ul");
+    //crsapp__AddPEP__i__corporatePep__answer1asys
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1bsys_ul");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answericsys_ul");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1dsys_ul");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1esys_ul");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1avalsys");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1bvalsys");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1cvalsys");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1dsysval");
+    apz.hide("crsapp__AddPEP__i__corporatePep__answer1esysval");
+    $("#crsapp__PEP__colhit").addClass("sno");
+    $("#crsapp__PEP__tblpep").addClass("sno");
+    apz.hide("crsapp__PEP__addForm_add_btn");
+    apz.hide("crsapp__PEP__addForm_rem_btn");
+    apz.hide("crsapp__PEP__tblpep_add_btn");
+    apz.hide("crsapp__PEP__tblpep_rem_btn");
+    //apz.crsapp.PEP.fetchDowJones();
+    //applicationId = $.corporatePep.applicationId
+    $("#crsapp__AddPEP__i__corporatePep__answer1a").addClass("disabled");
+    $("#crsapp__AddPEP__i__corporatePep__answer1b").addClass("disabled");
+    $("#crsapp__AddPEP__i__corporatePep__answer1c").addClass("disabled");
+    $("#crsapp__AddPEP__i__corporatePep__answer1d").addClass("disabled");
+    $("#crsapp__AddPEP__i__corporatePep__answer1e").addClass("disabled");
+    // apz.crsapp.PEP.fetchPEP();
+    apz.data.loadJsonData("AddPEP", "crsapp");
+    apz.crsapp.PEP.fnFetchPEPDetails();
+};
+//Anand
+apz.crsapp.PEP.stackholderChange = function(option) {
+    debugger;
+    if (option == "prev") {
+        prevVal = --apz.crsapp.PEP.stackholderCount;
+        if (prevVal >= 0 && prevVal < apz.crsapp.PEP.stakeholderDetails.length) {
+            // apz.data.scrdata.crsapp__Dowjones_Req.amlHitlistDowjones = apz.crsapp.PEP.stakeholderDetails[prevVal];
+            // $("#crsapp__PEP__stakeholderName").text("Stakeholder " + (prevVal + 1));
+        } else {
+            apz.crsapp.PEP.stackholderCount = 0
+        }
+    } else if (option == "next") {
+        nextVal = ++apz.crsapp.PEP.stackholderCount;
+        if (nextVal >= 0 && nextVal < apz.crsapp.PEP.stakeholderDetails.length) {
+            // apz.data.scrdata.crsapp__Dowjones_Req.amlHitlistDowjones = apz.crsapp.PEP.stakeholderDetails[nextVal];
+            // $("#crsapp__PEP__stakeholderName").text("Stakeholder " + (nextVal + 1));
+        } else {
+            apz.crsapp.PEP.stackholderCount = apz.crsapp.PEP.stakeholderDetails.length - 1
+        }
+    }
+    // apz.data.loadData("AddPEP", "crsapp");
+}
+apz.crsapp.PEP.fnFetchPEPDetails = function() {
+    debugger;
+    apz.startLoader();
+    var lParams = {
+        "ifaceName": "PepDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbComiSignatoryInfo": {
+                "appNo": apz.appNo,
+                // "refNo": "CONSONB13476307636198",
+                "pep": "Yes"
+            }
+        },
+        "appId": "crsapp",
+        "paintResp": "Y",
+        "callBack": apz.crsapp.PEP.fnFetchPEPDetailsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.crsapp.PEP.fnFetchPEPDetailsCB = function(pResp) {
+    debugger;
+    if (!pResp.errors && pResp.status) {
+        apz.crsapp.PEP.PEPResponse = pResp;
+        apz.crsapp.PEP.stakeholderDetails = apz.data.scrdata.crsapp__PepDetails_Req.tbComiSignatoryInfo;
+        apz.setElmValue("crsapp__AddPEP__i__corporatePep__answer1aval", apz.data.scrdata.crsapp__PepDetails_Req.tbComiSignatoryInfo[apz.crsapp.PEP.stackholderCount]
+            .firstName);
+        //apz.setElmValue("crsapp__CorporateAml__i__corporateAml__answer1cval", apz.data.scrdata.crsapp__PepDetails_Req.tbComiSignatoryInfo[apz.crsapp.PEP.stackholderCount].firstName);
+    }
+}
+//anand
+apz.crsapp.PEP.fetchPEP = function() {
+    // applicationId  = $.this.applicationId
+    /*var lServerParams = {
+        "ifaceName": "AddPEP_Query",
+        "buildReq": "N",
+        "req": {},
+        "paintResp": "Y",
+        "callBack": apz.crsapp.PEP.fetchPEPCB
+    };*/
+    /*lServerParams.req.corporatePep = {};
+    lServerParams.req.corporatePep.applicationId = "ONBAgency";
+    apz.server.callServer(lServerParams);*/
+    // apz.data.loadJsonData("AddPEP","crsapp");
+}
+apz.app.onShown_PEP = function() {
+    if (apz.menuap.Menu.userId == "LA004" || apz.menuap.Menu.userId == "SLA004") {
+        $("#crsapp__PEP__gr_col_4").addClass("sno");
+        $("#crsapp__PEP__gr_col_3").addClass("gcb-col12");
+        $("#crsapp__PEP__el_btn_3").trigger("click");
+    }
+}
+apz.crsapp.PEP.fnDeleteRecs = function() {
+    // applicationId  = $.this.applicationId
+    var lServerParams = {
+        "ifaceName": "AddPEP_Delete",
+        "buildReq": "N",
+        "req": {},
+        "paintResp": "N",
+        "callBack": apz.crsapp.PEP.fnDeleteRecsCB
+    };
+    lServerParams.req.corporatePep = {};
+    lServerParams.req.corporatePep.applicationId = "ONBAgency";
+    //apz.server.callServer(lServerParams);
+}
+apz.crsapp.PEP.fnDeleteRecsCB = function(params) {
+    debugger;
+};
+apz.crsapp.PEP.fetchDowJones = function() {
+    debugger;
+    //systemName  = $.this.systemName
+    /*var lServerParams = {
+        "ifaceName": "Dowjones_Query",
+        "buildReq": "N",
+        "req": {},
+        "paintResp": "Y",
+        "callBack": apz.crsapp.PEP.fetchDowJonesCB
+    };*/
+    /*lServerParams.req.amlHitlistDowjones = {};
+    lServerParams.req.amlHitlistDowjones.systemName = "PEP";
+    lServerParams.req.amlHitlistDowjones.status = "CIMB GROUP";
+    apz.server.callServer(lServerParams);*/
+    apz.data.loadJsonData("Dowjones", "crsapp");
+    apz.crsapp.PEP.fetchDowJonesCB();
+};
+apz.crsapp.PEP.fetchDowJonesCB = function(presp) {
+    debugger;
+    DowJonelist = apz.data.scrdata.crsapp__Dowjones_Req.amlHitlistDowjones;
+    apz.stopLoader();
+    //apz.crsapp.PEP.fetchShareHolders();
+    var larray = [];
+    for (var k = 0; k < DowJonelist.length; k++) {
+        var lobj = {};
+        lobj.answer1a = "y";
+        lobj.answer1aval = DowJonelist[k].entityIndividualName + " " + DowJonelist[k].description;
+        if (apz.crsapp.PEP.PEPResponse.res.crsapp__PepDetails_Req) {
+            lobj.answer1aval = apz.crsapp.PEP.PEPResponse.res.crsapp__PepDetails_Req.tbComiSignatoryInfo[0].firstName;
+        }
+        lobj.answer1asys = "y";
+        lobj.answer1asysval = DowJonelist[k].entityIndividualName + " " + DowJonelist[k].description;
+        lobj.answer1b = "n";
+        lobj.answer1bval = "";
+        lobj.answer1c = "n";
+        lobj.answer1cval = "";
+        lobj.answer1d = "n";
+        lobj.answer1dval = "";
+        lobj.answer1e = "n";
+        lobj.answer1eval = "";
+        lobj.answer3a = "y";
+        lobj.answer3b = "n";
+        lobj.answer3c = "n";
+        lobj.answer3d = "n";
+        lobj.answer3e = "n";
+        lobj.answer3dval = "";
+        lobj.answer3eval = "";
+        lobj.applicationId = "ONBAgency";
+        larray.push(lobj);
+    }
+    apz.data.scrdata.crsapp__AddPEP_Req = {};
+    apz.data.scrdata.crsapp__AddPEP_Req.corporatePep = larray;
+    apz.data.loadData("AddPEP", "crsapp");
+    $("#crsapp__PEP__colhit").removeClass("sno");
+    apz.stopLoader();
+}
+apz.crsapp.PEP.fetchShareHolders = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "Shareholder_Query",
+        "buildReq": "N",
+        "req": {},
+        "paintResp": "Y",
+        "callBack": apz.crsapp.PEP.fetchShareholdersCB
+    };
+    lServerParams.req.tbShareholderApplication = {};
+    lServerParams.req.tbShareholderApplication.applicationId = "ONBAgency";
+    //apz.server.callServer(lServerParams);
+}
+apz.crsapp.PEP.fetchShareholdersCB = function(presp) {
+    debugger;
+    Shareholderlist = presp.res.crsapp__Shareholder_Req.tbShareholderApplication;
+    for (var i = 0; i < Shareholderlist.length; i++) {
+        for (var j = 0; j < DowJonelist.length; j++) {
+            if (Shareholderlist[i].shareholderName == DowJonelist[j].entityIndividualName) {
+                PEPArray.push(DowJonelist[j]);
+            }
+        }
+    }
+    console.log(PEPArray);
+    apz.data.scrdata.crsapp__AddPEP_Req = {};
+    apz.data.scrdata.crsapp__AddPEP_Req.corporatePep = lCollArr;
+}
+var lscrdata = {};
+apz.crsapp.PEP.saveDetails = function() {
+    debugger;
+    apz.data.buildData("AddPEP", "crsapp");
+    lscrdata = apz.data.scrdata.crsapp__AddPEP_Req;
+    apz.crsapp.PEP.fnDeleteRecs();
+    /*var lServerParams = {
+        "ifaceName": "AddPEP_New",
+        "buildReq": "N",
+        "appId": "crsapp",
+        "req": lscrdata,
+        "paintResp": "N",
+        "callBack": apz.crsapp.PEP.saveDetailsCB,
+        "callBackObj": "",
+    };*/
+    var req = {};
+    req.corporatePep = apz.data.buildData("AddPEP", "crsapp");
+    apz.crsapp.PEP.saveDetailsCB();
+    //req.corporatePep.applicationId = "8765342567";
+    //lServerParams.req = req;
+    //apz.server.callServer(lServerParams);
+}
+apz.crsapp.PEP.saveDetailsCB = function(params) {
+    debugger;
+    apz.data.scrdata.crsapp__AddPEP_Req = lscrdata;
+    apz.data.loadData("AddPEP", "crsapp");
+    $("#crsapp__ProgressStep__el_progressstep_1_ext li:nth-child(3)").trigger("click");
+    //$("#crsapp__ProgressStep__raBadge").click();
+};
+apz.crsapp.PEP.fnShowJustification = function(quetno) {
+    var getQuestno = quetno;
+    if (getQuestno == "1a") {
+        apz.show("crsapp__AddPEP__i__corporatePep__answer1ajust");
+        apz.show("crsapp__AddPEP__i__corporatePep__answer1asys_ul");
+        apz.show("crsapp__AddPEP__i__corporatePep__answer1avalsys");
+        apz.hide("crsapp__AddPEP__i__corporatePep__answer1a_ul");
+        apz.hide("crsapp__AddPEP__i__corporatePep__answer1aval");
+    }
+    if (getQuestno == "1b") {
+        apz.show("crsapp__AddPEP__i__corporatePep__answer1bjust");
+        apz.show("crsapp__AddPEP__i__corporatePep__answer1bsys_ul");
+        apz.show("crsapp__AddPEP__i__corporatePep__answer1bvalsys");
+        apz.hide("crsapp__AddPEP__i__corporatePep__answer1b_ul");
+        apz.hide("crsapp__AddPEP__i__corporatePep__answer1bval");
+    }
+    if (getQuestno == "1c") {
+        apz.show("crsapp__AddPEP__i__corporatePep__answer1cjust");
+        apz.show("crsapp__AddPEP__i__corporatePep__answer1csys_ul");
+        apz.show("crsapp__AddPEP__i__corporatePep__answer1cvalsys");
+        apz.hide("crsapp__AddPEP__i__corporatePep__answer1c_ul");
+        apz.hide("crsapp__AddPEP__i__corporatePep__answer1cval");
+    }
+    if (getQuestno == "1d") {
+        apz.show("crsapp__AddPEP__i__corporatePep__answer1djust");
+        apz.show("crsapp__AddPEP__i__corporatePep__answer1dsys_ul");
+        apz.hide("crsapp__AddPEP__i__corporatePep__answer1dvalsys");
+        apz.hide("crsapp__AddPEP__i__corporatePep__answer1d_ul");
+        apz.hide("crsapp__AddPEP__i__corporatePep__answer1dval");
+    }
+    if (getQuestno == "1e") {
+        apz.show("crsapp__AddPEP__i__corporatePep__answer1ejust");
+        apz.hide("crsapp__AddPEP__i__corporatePep__answer1esys_ul");
+        apz.hide("crsapp__AddPEP__i__corporatePep__answer1evalsys");
+        apz.hide("crsapp__AddPEP__i__corporatePep__answer1e_ul");
+        apz.hide("crsapp__AddPEP__i__corporatePep__answer1eval");
+    }
+}
+apz.crsapp.PEP.fnhit = function() {
+    debugger;
+    //Anand
+    $("#crsapp__PEP__colhit").addClass("sno");
+    $("#crsapp__PEP__tblpep").removeClass("sno");
+    if (apz.crsapp.PEP.PEPResponse.errors) {
+        if ((!apz.mockServer && apz.crsapp.PEP.PEPResponse.errors[0].errorCode == "APZ_FM_EX_038") || apz.mockServer) {
+            $("#crsapp__PEP__noPEProw").removeClass("sno");
+            apz.data.scrdata.crsapp__PepDetails_Req.tbComiSignatoryInfo = {};
+            apz.data.loadData("PepDetails", "crsapp");
+        }
+    }
+    $("#crsapp__PEP__btnshowhit").removeClass("sno");
+    $("#crsapp__PEP__sc_col_21").addClass("sno");
+    $("#crsapp__PEP__el_btn_3").addClass("sno");
+    apz.crsapp.PEP.fetchDowJones();
+}
+apz.crsapp.PEP.fndownloadpdf = function() {
+    // var lDocName = 
+    var json = {
+        "id": "FormDownload",
+        "destinationPath": "docs",
+        "filePath": "DownloadDocs",
+        "screenId": "Documents",
+        "fileName": "CORP_STRUCTURE.xlsx",
+        "base64": "N",
+        "sessionReq": "N",
+        "callBack": apz.crsapp.PEP.downloadFileCallback
+    };
+    apz.ns.downloadFile(json);
+}
+apz.crsapp.PEP.downloadFileCallback = function() {}
+apz.crsapp.PEP.fnPrevious = function() {
+    $("#crsapp__ProgressStep__el_progressstep_1_ext li:nth-child(1)").trigger("click")
+    //$("#crsapp__ProgressStep__amlBadge").click();
+}
+apz.app.postChangeRow = function(containerId, ind) {
+    if (containerId == "crsapp__PEP__addForm") {
+        debugger;
+        if ($("#crsapp__AddPEP__i__corporatePep__answer1ajust").val() == "") {
+            apz.hide("crsapp__AddPEP__i__corporatePep__answer1ajust")
+        } else {
+            apz.show("crsapp__AddPEP__i__corporatePep__answer1ajust")
+        }
+        if ($("#crsapp__AddPEP__i__corporatePep__answer1bjust").val() == "") {
+            apz.hide("crsapp__AddPEP__i__corporatePep__answer1bjust")
+        } else {
+            apz.show("crsapp__AddPEP__i__corporatePep__answer1bjust")
+        }
+        if ($("#crsapp__AddPEP__i__corporatePep__answer1cjust").val() == "") {
+            apz.hide("crsapp__AddPEP__i__corporatePep__answer1cjust")
+        } else {
+            apz.show("crsapp__AddPEP__i__corporatePep__answer1cjust")
+        }
+        if ($("#crsapp__AddPEP__i__corporatePep__answer1djust").val() == "") {
+            apz.hide("crsapp__AddPEP__i__corporatePep__answer1djust")
+        } else {
+            apz.show("crsapp__AddPEP__i__corporatePep__answer1djust")
+        }
+        if ($("#crsapp__AddPEP__i__corporatePep__answer1ejust").val() == "") {
+            apz.hide("crsapp__AddPEP__i__corporatePep__answer1ejust")
+        } else {
+            apz.show("crsapp__AddPEP__i__corporatePep__answer1ejust")
+        }
+    }
+};

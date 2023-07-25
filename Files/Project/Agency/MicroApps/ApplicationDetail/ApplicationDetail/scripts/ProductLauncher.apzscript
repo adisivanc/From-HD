@@ -1,0 +1,81 @@
+apz.appdtl.ProductLauncher = {};
+apz.app.onLoad_ProductLauncher = function(params) {
+    apz.appdtl.ProductLauncher.fnCallProductApp(params);
+}
+apz.appdtl.ProductLauncher.fnCallProductApp = function(params) {
+    debugger;
+    var cachedvalue = apz.appdtl.AppLauncher.sCache
+    var lparams = {}
+    switch (cachedvalue.product) {
+        case "Accounts":
+            lparams.appId = "prddtl";
+            lparams.scr = "ProductAccountLauncher";
+            lparams.div = "appdtl__ProductLauncher__productlauncher";
+            lparams.userObj = {
+                "refNo": cachedvalue.refNo,
+                "product": cachedvalue.product,
+                "appId": cachedvalue.appId,
+                "subproduct": cachedvalue.subproduct,
+                "screen": cachedvalue.screen
+            };
+            break;
+        case "Loans":
+            lparams.appId = "agloan";
+            lparams.scr = "Applyloan";
+            lparams.div = "appdtl__ProductLauncher__productlauncher";
+            lparams.userObj = {
+                "refNo": cachedvalue.refNo,
+                "product": cachedvalue.product,
+                "appId": cachedvalue.appId,
+                "subproduct": cachedvalue.subproduct,
+                "amount": cachedvalue.amount,
+                "tenor": cachedvalue.tenor,
+                "screen": cachedvalue.screen
+            };
+            break;
+        case "Deposits":
+            lparams.appId = "checkm";
+            lparams.scr = "Launcher";
+            lparams.div = "appdtl__ProductLauncher__productlauncher";
+            // lparams.div = "appdtl__AppLauncher__screenLauncher";
+            
+            lparams.userObj = {
+                "refNo": cachedvalue.refNo,
+                "product": cachedvalue.product,
+                "appId": cachedvalue.appId,
+                "subproduct": cachedvalue.subproduct
+            };
+            break;
+        case "Cards":
+            if (cachedvalue.subproduct == "Prepaid Card") {
+                lparams.appId = "agloan";
+                lparams.scr = "PrepaidCard";
+                lparams.div = "appdtl__ProductLauncher__productlauncher";
+                lparams.userObj = {
+                    "refNo": cachedvalue.refNo,
+                    "product": cachedvalue.product,
+                    "appId": cachedvalue.appId,
+                    "subproduct": cachedvalue.subproduct,
+                    "amount": cachedvalue.amount,
+                    "tenor": cachedvalue.tenor,
+                    "screen": cachedvalue.screen
+                };
+                break;
+            } else {
+                lparams.appId = "agloan";
+                lparams.scr = "Applyloan";
+                lparams.div = "appdtl__ProductLauncher__productlauncher";
+                lparams.userObj = {
+                    "refNo": cachedvalue.refNo,
+                    "product": cachedvalue.product,
+                    "appId": cachedvalue.appId,
+                    "subproduct": cachedvalue.subproduct,
+                    "amount": cachedvalue.amount,
+                    "tenor": cachedvalue.tenor,
+                    "screen": cachedvalue.screen
+                };
+                break;
+            }
+    }
+    apz.launchApp(lparams);
+};

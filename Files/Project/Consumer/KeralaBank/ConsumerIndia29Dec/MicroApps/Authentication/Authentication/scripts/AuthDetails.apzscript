@@ -1,0 +1,80 @@
+apz.onbaut.AuthDetails = {};
+apz.app.onLoad_AuthDetails = function(params) {
+    debugger;
+    apz.onbaut.AuthDetails.sparams = {};
+    $("#retail__BaseLauncher__sc_col_3").addClass("sno");
+    $("#footer").removeClass("sno");
+    $(".progressWrapper").addClass("pg0");
+    $("#onbaut__AuthDetails__mobileno").attr({"pattern":"[0-9]*","inputmode":"numeric"});
+    $("#retail__BaseLauncher__el_btn_7").removeAttr("onclick");
+};
+apz.onbaut.AuthDetails.fnSaveData = function() {
+    debugger;
+    apz.onbaut.mobilenumber = apz.getElmValue("onbaut__AuthDetails__mobileno");
+    apz.mobileNo = apz.onbaut.mobilenumber;
+    apz.email = apz.getElmValue("onbaut__AuthDetails__emailid");
+    var emailRegex =
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (apz.onbaut.mobilenumber.length < 10) {
+        apz.dispMsg({
+            message: "Enter valid mobile number"
+        });
+        --apz.retail.BaseLauncher.currentFlowIndex;
+        $("#retail__BaseLauncher__el_btn_3").removeAttr("disabled");
+    } else if (!emailRegex.test(apz.email)) {
+        apz.dispMsg({
+            message: "Enter valid EmailId"
+        });
+        --apz.retail.BaseLauncher.currentFlowIndex;
+        $("#retail__BaseLauncher__el_btn_3").removeAttr("disabled");
+    } else {
+        apz.startLoader();
+        apz.onbaut.AuthDetails.fnSendMobileOTP();
+    }
+}
+apz.onbaut.AuthDetails.fnFloatMobileNo = function(el) {
+    var digits = el.value.match(/\d{1,12}/) || [""];
+    el.value = digits[0];
+}
+
+apz.onbaut.AuthDetails.fnSendMobileOTP = function() {
+    apz.onbaut.OTPCode = Math.floor(100000 + Math.random() * 900000);
+    apz.onbaut.AuthDetails.sparams.lmessage = " Your OTP is " + apz.onbaut.OTPCode + " , use this OTP for registration.";
+    
+    var req = {
+            "config": {
+                user: "Iexceed",
+                apikey: "XOTNwz3OffqcodOubdhl",
+                mobile: apz.onbaut.mobilenumber,
+                message: apz.onbaut.AuthDetails.sparams.lmessage,
+                senderid: "APZBNK",
+                type: "txt"
+            }
+        };
+    apz.common.callServer("onbaut","sms","N","N",req,apz.onbaut.AuthDetails.smsMessageCB);
+}
+apz.onbaut.AuthDetails.smsMessageCB = function(params) {
+    debugger;
+    apz.onbaut.AuthDetails.fnSendEmail();
+}
+apz.onbaut.AuthDetails.fnSendEmail = function(){
+    debugger;
+    var email = {
+        "mailId": "iexceedemail",
+        "recipientMailId": apz.email,
+        "senderMailId": "yagnya.dipu@gmail.com",
+        "ccIdList": "",
+        "internal": "Y",
+        "subject": "Appzillon Bank OTP",
+        "body": apz.onbaut.AuthDetails.sparams.lmessage,
+    };
+    email.id = "MAIL_ID";
+    email.callBack = apz.onbaut.AuthDetails.fnSendEmailCB;
+    apz.ns.sendMail(email);
+}
+apz.onbaut.AuthDetails.fnSendEmailCB = function(params){
+    debugger;
+    $("#retail__BaseLauncher__sc_col_3").removeClass("sno");
+    apz.retail.BaseLauncher.fnLaunchSubScreen();
+}
+

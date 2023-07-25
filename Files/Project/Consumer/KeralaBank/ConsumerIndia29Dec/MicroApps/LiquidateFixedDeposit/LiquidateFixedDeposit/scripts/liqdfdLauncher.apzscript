@@ -1,0 +1,8 @@
+apz.liqdfd.checkParams = function(params) {
+    debugger;
+    params.userObj = {"data":{
+        "customerId": "12345",
+        "accountNo": ["129285756574", "272648595857", "262526275845", "543218765432", "756584936252"]
+    }
+    };
+};

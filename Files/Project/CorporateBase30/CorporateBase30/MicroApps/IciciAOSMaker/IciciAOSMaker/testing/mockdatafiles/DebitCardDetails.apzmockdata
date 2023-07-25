@@ -1,0 +1,11 @@
+{
+    "tbDebitCardDetails": [{
+        "userName": "Nayan",
+        "mobileNo": "7645378614",
+        "email": "Nayan@gmail.com"
+    }, {
+        "userName": "Joe",
+        "mobileNo": "9711378614",
+        "email": "Joe@gmail.com"
+    }]
+}

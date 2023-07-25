@@ -1,0 +1,93 @@
+apz.login.Login = {};
+Login =apz.login.Login;
+
+apz.app.onLoad_Login = function(params){
+    Login.sCache = params;
+    Login.init();
+    $("body").addClass("loginby");
+};
+apz.app.onShown_Login = function(){}
+Login.init = function(){
+    debugger;
+   LoginCommon.setUserId("John");
+   apz.languagedChanged = false;
+};
+
+Login.fnLogin = function(){
+    debugger;
+    if(!LoginCommon.isMpin() && LoginCommon.isFingerPrint){
+        if(Login.fnvalidatpassword() === 0){
+         apz.common.dispMsg("Please enter the password","E",function(){});
+        }else{
+            if(apz.common.isMobile()){
+                apz.toggleFooter();
+            }
+            LoginCommon.signIn(function(pResp){
+               Login.fnLaunchApp();
+               if(apz.common.isMobile()){
+     $("body").addClass("loginby");  
+   }else{
+       $("body").removeClass("loginby");
+   }
+               
+            });
+        }  
+    }
+};
+
+Login.fnvalidatpassword = function(){
+     var password = $("#login__Login__password").val();
+     return password.length
+};
+Login.fnMpinkeypress = function(){
+    debugger;
+    mpinEle = $("#login__Login__mpin");
+     apz.common.numberMask("login__Login__mpin");
+      if(LoginCommon.isMpin()){
+       val = mpinEle.val();
+         if(val.length >= 3){
+               apz.toggleFooter(); 
+        LoginCommon.signIn(function(pResp){
+               Login.fnLaunchApp();
+               if(apz.common.isMobile()){
+     $("body").addClass("loginby");  
+   }else{
+       $("body").removeClass("loginby");
+   }
+            });
+    } 
+   } 
+};
+Login.fnContinue = function(){
+    debugger;
+    LoginCommon.showMpin();
+};
+Login.fnforgot = function(cate){
+    debugger;
+    if(apz.common.isMobile()){
+     apz.toggleFooter();
+      cate = LoginCommon.isMpin() && cate!=="User ID" ? "MPIN" : "Password"; 
+    }
+     var userObj =  {
+            "action": "ForgotPassword",
+            "callBack": apz.login.Launcher.fncallBack,
+            "from" : cate,
+            "distroyDiv": Login.sCache.control.parentDiv
+        };
+    apz.common.launchApp("fgtpwd","ForgotPassword",userObj,Login.sCache.control.parentDiv);
+};
+
+ Login.fnLaunchApp = function(){
+     debugger;
+$("body").removeClass("loginby");
+     var userObj= {
+            data :{
+              userId:  LoginCommon.getUserId()
+            },
+             control:{
+                  "distroyDiv": Login.sCache.control.parentDiv
+             }
+        };
+     apz.common.launchApp("landin","Landing",userObj,Login.sCache.control.parentDiv);
+ };
+

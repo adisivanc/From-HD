@@ -1,0 +1,10 @@
+{
+    "document":{
+        "status":"APPROVED_VERIFIED"
+    },
+    "verification":{
+        "identityVerification":{
+            "similarity":"MATCH"
+        }
+    }
+}

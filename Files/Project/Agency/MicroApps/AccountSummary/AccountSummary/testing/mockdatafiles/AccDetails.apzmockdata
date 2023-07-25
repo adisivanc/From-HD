@@ -1,0 +1,26 @@
+{
+    "accDetailMaster": {
+        "txnRefNo": "",
+        "status": "",
+        "respCd": "",
+        "intMsgCd": "",
+        "extMsg": "",
+        "accSummary": {
+            "accountNo": "753410000076",
+            "txnRefNo": "",
+            "accountId": "",
+            "accountBrnName": "",
+            "accountBrnCd": "",
+            "accountBrnIFSC": "IPPB00001248",
+            "accountOpnDt": "24Apr 2015",
+            "accountType": "Savings Account",
+            "accountStat": "",
+            "actCustRel": "",
+            "accountPrdct": "",
+            "accountBal": "71178",
+            "linkedMobno": "9686736353",
+            "linkedCardno": "2324 XXXX XXXX XX34",
+            "address":"Domlur Layout, Bangalore-71"
+        }
+    }
+}

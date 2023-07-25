@@ -1,0 +1,28 @@
+{
+    "tbDbmiCorpNotionalPool": [
+        {
+            "corporateId": "000FTAC4321",
+            "poolId": "pool1",
+            "desc": "first level",
+            "status": "Active",
+            "balance": 250000,
+            "parentAccount":"00028829921"
+        },
+        {
+            "corporateId": "000FTAC4321",
+            "poolId": "pool2",
+            "desc": "second level",
+            "status": "Active",
+            "balance": 250000,
+            "parentAccount":"08778222334"
+        },
+        {
+            "corporateId": "000FTAC4321",
+            "poolId": "pool3",
+            "desc": "third level",
+            "status": "Active",
+            "balance": 250000,
+            "parentAccount":"28800323232"
+        }
+    ]
+}

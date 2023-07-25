@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="584" height="95" viewBox="0 0 584 95">
+  <defs>
+    <clipPath id="clip-logo">
+      <rect width="584" height="95"/>
+    </clipPath>
+  </defs>
+  <g id="logo" clip-path="url(#clip-logo)">
+    <text id="AppzillonBANK" transform="translate(106.194 73.301)" fill="#ef3e42" font-size="68" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Appzillon</tspan><tspan y="0" fill="#484848" font-family="SegoeUI-Bold, Segoe UI" font-weight="700">BANK</tspan></text>
+    <g id="Group_6074" data-name="Group 6074">
+      <path id="Path_7455" data-name="Path 7455" d="M5988.775-2579.289c0-7.006-44.891-90.041-44.891-90.041s-15.57,27.247-13.756,34.513,12.973,1.815,17.387,7.006S5988.775-2572.282,5988.775-2579.289Z" transform="translate(-5897.694 2669.33)" fill="#ef3e42"/>
+      <path id="Path_7456" data-name="Path 7456" d="M5896.8-2578.635s23.1-37.887,39.963-37.627,49.82,39.963,49.82,39.963-35.941-21.993-48-21.02S5896.8-2578.635,5896.8-2578.635Z" transform="translate(-5896.8 2667.901)" fill="#484848"/>
+    </g>
+  </g>
+</svg>

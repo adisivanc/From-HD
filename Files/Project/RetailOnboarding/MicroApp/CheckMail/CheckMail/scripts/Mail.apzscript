@@ -1,0 +1,53 @@
+apz.checkm.Mail = {};
+var censorWord = function(str) {
+    return str[0] + "*".repeat(str.length - 2) + str.slice(-1);
+}
+apz.app.onShown_Mail = function(params) {
+    debugger;
+    apz.checkm.Mail.sCache = params;
+    apz.flowNo = params.currentFlow;
+    $("#navigation_" + apz.flowNo).removeClass("sno");
+    $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+        $(this).removeClass("active");
+    })
+    $("#navigation_"+apz.flowNo+",#navgtn__MobileNavigation__ct_lst_2_row_"+apz.flowNo).addClass("active");
+    var mail = apz.userEmail.split("@");
+    $("#checkm__Mail__appendMail_txtcnt").append(censorWord(mail[0]) + '@' + mail[1]);
+}
+apz.checkm.Mail.fnVerifyMail = function(element) {
+    debugger;
+    var emailStr = $(element).val();
+    if (emailStr.length > 0) {
+        if (emailStr === "101018") {
+            $("#checkm__Mail__email_error_ul").addClass("sno");
+            $("#checkm__Mail__email_success_ul").removeClass("sno");
+            apz.isEmailValid = true;
+        } else {
+            $("#checkm__Mail__email_error_ul").removeClass("sno");
+            $("#checkm__Mail__email_success_ul").addClass("sno");
+        }
+    }
+}
+apz.checkm.Mail.fnResendCode = function(params) {
+    debugger;
+    apz.dispMsg({
+        message: "Code resent successfully!",
+        type: "S"
+    })
+}
+apz.checkm.Mail.saveApplicationDetails = function() {
+    if (apz.isEmailValid) {
+        apz.navgtn.Navigator.fnLaunchApp();
+    } else {
+        $("#navgtn__Navigator__el_btn_2,#navgtn__Navigator__el_btn_3").removeAttr("disabled");
+        if(apz.navgtn.Navigator.navigate === "Previous"){
+            apz.flowNo++;
+        }
+        else{
+           apz.flowNo--; 
+        }
+        apz.dispMsg({
+            message: "Enter a valid email OTP"
+        })
+    }
+}

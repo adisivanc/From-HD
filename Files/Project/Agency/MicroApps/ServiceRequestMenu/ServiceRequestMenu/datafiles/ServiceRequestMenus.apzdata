@@ -1,0 +1,290 @@
+{
+   "srmenu__ServiceRequestMenus_Res":{
+	"menuList": {
+		"Account Services": [{
+			"name": "Cash Delivery and Pickup",
+			"scr": "Launcher",
+			"appId": "cashdp"
+		}, {
+			"name": "Change Home Branch",
+			"scr": "ChangeBranch",
+			"appId": "change"
+		},  {
+			"name": "Demand Draft",
+			"scr": "DemandDraft",
+			"appId": "dmddft"
+		}, {
+			"name": "Download Deposit Slip",
+			"scr": "DepositSlip",
+			"appId": "deslip"
+		}, {
+			"name": "Generate / View MMID",
+			"scr": "GenerateMMID",
+			"appId": "genmid"
+		}, {
+			"name": "Nominee Maintenance",
+			"scr": "NomineeSummary",
+			"appId": "nomimt"
+		}, {
+			"name": "Request for e-Statement",
+			"scr": "RequesteStatement",
+			"appId": "estreq"
+		}, {
+			"name": "Request for Printed Statement",
+			"scr": "Launcher",
+			"appId": "prtstm"
+		}, {
+			"name": "Cheque Book Request",
+			"scr": "ChequeBookRequest",
+			"appId": "nchqbk"
+		}, {
+			"name": "Passbook Request",
+			"scr": "Launcher",
+			"appId": "passbk"
+		}, {
+			"name": "Update Contact",
+			"scr": "UpdateContact",
+			"appId": "update"
+		},  {
+			"name": "QR Code",
+			"scr": "QRGenerator",
+			"appId": "accsnp",
+			"userObj" : {
+			    "customerDetail": {
+                "customerID": "000004712"
+            }
+			    
+			}
+		}],
+		"Loan Services": [{
+			"name": "Request NOC Letter",
+			"scr": "NOCLetter",
+			"appId": "reqnoc"
+		}],
+		"Card Services": [{
+			"name": "Request for Change in Billing Cycle",
+			"scr": "Launcher",
+			"appId": "chgbil"
+		}, {
+			"name": "Upgrade Card",
+			"scr": "Launcher",
+			"appId": "upgcrd"
+		}, {
+			"name": "Issue Debit Card",
+			"scr": "IssueDebit",
+			"appId": "issdeb"
+		}],	
+		"Social Security Schemes": [{
+			"name": "Atal Pension Yojana",
+			"scr": "APY",
+			"appId": "atpsyj",
+			"userObj" : {
+			    "data": {
+                "accounts": [{
+                    "accountNo": "100009312263",
+                    "accountType": "Savings",
+                    "accountBalance": "10,00,996"
+                }, {
+                    "accountNo": "100009312401",
+                    "accountType": "Savings",
+                    "accountBalance": "1,88,373"
+                }, {
+                    "accountNo": "100009312274",
+                    "accountType": "Current",
+                    "accountBalance": "2,84,748"
+                }],
+                "customerID": "1"
+            },
+            "customerID": "1"
+			}
+		}, {
+			"name": "LPG ID update for DBTL",
+			"scr": "EnrollDBTLPG",
+			"appId": "dbtlpg"
+		}, {
+			"name": "Jeevan Jyoti Bima",
+			"scr": "BimaYojana",
+			"appId": "bmyjna",
+			"userObj" : {
+			    "data": {
+                "customerID": "2",
+                "typeOfBima": "PMJJBY",
+                "SavingsAccount": [{
+                    "accountNo": "100009312263",
+                    "accountType": "Savings",
+                    "accountBalance": "10,00,996",
+                    "Branch": "West Bay-30",
+                    "BranchCd": "612"
+                }, {
+                    "accountNo": "100009312401",
+                    "accountType": "Savings",
+                    "accountBalance": "1,88,373",
+                    "Branch": "West Bay-30",
+                    "BranchCd": "613"
+                }, {
+                    "accountNo": "100009312274",
+                    "accountType": "Current",
+                    "accountBalance": "2,84,748",
+                    "Branch": "West Bay-30",
+                    "BranchCd": "610"
+                }]
+            }
+			}
+		}, {
+			"name": "Suraksha Bima",
+			"scr": "BimaYojana",
+			"appId": "bmyjna",
+			"userObj" : {
+			    "data": {
+                "customerID": "2",
+                "typeOfBima": "PMSBY",
+                "SavingsAccount": [{
+                    "accountNo": "100009312263",
+                    "accountType": "Savings",
+                    "accountBalance": "10,00,996",
+                    "Branch": "West Bay-30",
+                    "BranchCd": "612"
+                }, {
+                    "accountNo": "100009312401",
+                    "accountType": "Savings",
+                    "accountBalance": "1,88,373",
+                    "Branch": "West Bay-30",
+                    "BranchCd": "613"
+                }, {
+                    "accountNo": "100009312274",
+                    "accountType": "Current",
+                    "accountBalance": "2,84,748",
+                    "Branch": "West Bay-30",
+                    "BranchCd": "610"
+                }]
+            }
+			}
+		}, {
+			"name": "Sukanya Samriddhi Yojana",
+			"scr": "Launcher",
+			"appId": "yojna"
+		}],
+		"Cheque Services": [{
+			"name": "Cheque Book Request",
+			"scr": "ChequeBookRequest",
+			"appId": "nchqbk",
+			"userObj" : {
+			      "customerID": "1234"
+			}
+		}, {
+			"name": "Cheque Status Enquiry",
+			"scr": "ChequeStatusEnquiry",
+			"appId": "chqsts"
+		}, {
+			"name": "Inward Clearing",
+			"scr": "ClearingChequeSummary",
+			"appId": "chqsts",
+			"userObj" : {
+			     "customerID": "000004712",
+            "SavingsAccount": [{
+                "accountNo": "100009312263",
+                "accountBal": "50000",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }, {
+                "accountNo": "100009312401",
+                "accountBal": "65000",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }, {
+                "accountNo": "100009312274",
+                "accountBal": "60000",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }],
+            "CurrentAccount": []
+			}
+		}, {
+			"name": "Outward Clearing",
+			"scr": "OutwardSummary",
+			"appId": "chqsts",
+			"userObj": {
+			    "customerID": "000004712",
+            "SavingsAccount": [{
+                "accountNo": "100009312263",
+                "accountBal": "50000",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }, {
+                "accountNo": "100009312401",
+                "accountBal": "65000",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }, {
+                "accountNo": "100009312274",
+                "accountBal": "60000",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }],
+            "CurrentAccount": []
+			}
+		}, {
+			"name": "Stop Cheque Payment",
+			"scr": "StopCheque",
+			"appId": "stpchq"
+		}],
+		"Customer Services": [{
+			"name": "Account Management",
+			"scr": "CustAccPort",
+			"appId": "cuacpf"
+		},  {
+			"name": "My Appointment",
+			"scr": "MyAppointments",
+			"appId": "srvreq"
+		},  {
+			"name": "Travel Notice",
+			"scr": "Launcher",
+			"appId": "travel"
+
+		}],
+		"Tax Corner": [{
+			"name": "CBDT",
+			"scr": "TaxTransaction",
+			"appId": "cbdtax"
+
+		}, {
+			"name": "Form 60",
+			"scr": "PANForm",
+			"appId": "pannad"
+
+		}, {
+			"name": "Form 15G/H",
+			"scr": "Launcher",
+			"appId": "tdsfrm",
+			"userObj":{"type":"Form15"}
+
+		}, {
+			"name": "Form 16A",
+			"scr": "Form16A",
+			"appId": "form16"
+
+		}, {
+			"name": "Generic Forms",
+			"scr": "Summary",
+			"appId": "genfrm"
+
+		}, {
+			"name": "GST",
+			"scr": "Launcher",
+			"appId": "gstapp"
+
+		}, {
+			"name": "Tax Payment",
+			"scr": "InputTaxPayment",
+			"appId": "taxpay"
+
+		}]
+	}
+}
+}

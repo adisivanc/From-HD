@@ -1,0 +1,87 @@
+
+{
+    "tbDbtpLocations": [{
+        "area": "Hosakerehalli main road, Banashankari Stage III",
+        "country": "India",
+        "pincode": "12301",
+        "code": "000001",
+        "address": "Vishwabharati Housing Society, Hosakerehalli main road, Banashankari Stage III, Bengaluru, Karnataka 560085",
+        "city": " Bengaluru",
+        "latitude": "11.569550",
+        "bankName": "Appzillon Bank", 
+        "type": "Branch",
+        "bankDescription": "Appzillon Bank",
+        "partCity": "Bengaluru",
+        "state": "Karnataka",
+        "longitude": "104.924460"
+    }, {
+        "area": "Banashankari 3rd Stage, Banashankari",
+        "country": "India",
+        "pincode": "12210",
+        "code": "000002",
+        "address": "No.113, Outer Ring Rd, 5th Block, Banashankari 3rd Stage, Banashankari, Bengaluru, Karnataka 560085",
+        "city": "Bengaluru",
+        "latitude": "11.569550",
+        "bankName": "Appzillon Bank", 
+        "type": "Branch",
+        "bankDescription": "Appzillon Bank",
+        "partCity": "Bengaluru",
+        "state": "Karnataka",
+        "longitude": "104.924460"
+    }, {
+        "area": "Gandhi Nagar, Bengaluru",
+        "country": "India",
+        "pincode": "13451",
+        "code": "000005",
+        "address": "Bangalore Turf Club Premises, No.52, Race Course Rd, Racecourse, Gandhi Nagar, Bengaluru, Karnataka 560001",
+        "city": "Bengaluru",
+        "latitude": "12.635759",
+        "bankName": "Appzillon Bank", 
+        "type": "zonal",
+        "bankDescription": "Appzillon Bank",
+        "partCity": "Bengaluru",
+        "state": "Karnataka",
+        "longitude": "104.480812"
+    },{
+        "area": "Raghuvanahalli, Bengaluru",
+        "country": "India",
+        "pincode": "06203",
+        "code": "000003",
+        "address": " Y29/A, Kanakapura Rd, Raghuvanahalli, Bangalore City Municipal Corporation Layout, Bengaluru, Karnataka 560062",
+        "city": "Bengaluru",
+        "latitude": "12.520540", 
+        "bankName": "Appzillon Bank",
+        "type": "Branch",
+        "bankDescription": "Appzillon Bank",
+        "partCity": "Bengaluru",
+        "state": "Karnataka",
+        "longitude": "105.146340"
+    }, {
+        "area": "Basaveshwar Nagar, Bengaluru",
+        "country": "India",
+        "pincode": "12202",
+        "code": "000004",
+        "address": "No.488/5, 3rd Stage, 3rd Block,1st Floor, 8th Main Rd, Basaveshwar Nagar, Bengaluru, Karnataka 560079",
+        "city": "Bengaluru",
+        "latitude": "11.575070",
+        "bankName": "Appzillon Bank",
+        "type": "Branch",
+        "bankDescription": "Appzillon Bank",
+        "partCity": "Bengaluru",
+        "state": "Karnataka",
+        "longitude": "104.927160"
+    }, {
+        "area": "Basavanagudi, Bengaluru",
+        "country": "India",
+        "pincode": "12151",
+        "code": "000005",
+        "address": "No.16, Fateh Complex, S Kariyappa Road, Basavanagudi, Bengaluru, Karnataka 560004",
+        "latitude": "11.584730",
+        "bankName": "Appzillon Bank",
+        "type": "Branch",
+        "bankDescription": "Appzillon Bank",
+        "partCity": "Bengaluru",
+        "state": "Karnataka",
+        "longitude": "104.901270"
+    }]
+}

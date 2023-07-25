@@ -1,0 +1,35 @@
+{
+     "moblan__HomePageAccounts_Res":[{
+         "type":"Savings",
+         "accno":"100009312263",
+         "balance":"110000",
+         "number" : "2",
+         "icon":"icon-CS-LDSavings"
+     },{
+         "type":"Current",
+         "accno":"100009312274",
+         "balance":"65000",
+         "number" : "1",
+         "icon":"icon-CS-LDCurrent"
+     },{
+         "type":"Deposits",
+         "accno":"100009312263",
+         "balance":"215000",
+         "number" : "3",
+         "icon":"icon-CS-LDDeposits"
+     },
+     {
+         "type":"Loans",
+         "accno":"124312341",
+         "balance":"50000",
+         "number" : "2",
+         "icon":"icon-CS-LDLoan"
+     },
+      {
+         "type":"Cards",
+         "accno":"124312341",
+         "balance":"50000",
+         "number" : "2",
+         "icon":"icon-CS-LDLoan"
+     }]
+}

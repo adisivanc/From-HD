@@ -1,0 +1,151 @@
+apz.viewst.viewstatement = {};
+apz.app.onLoad_viewstatement = function() {
+    debugger;
+  //  apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "VIEW/DOWNLOAD STATEMENT");
+    //  apz.data.loadJsonData("Statement", "viewst");
+
+apz.viewst.fnLoadMonths();
+    
+}
+apz.viewst.viewstatement.fnDownload = function(params, fileType) {
+    debugger;
+    var file = apz.getElmValue("viewst__viewstatement__el_dpd_2");
+    if ((file == "Savings - 10009312263") || (file == "Savings - 100009312401")) {
+        var jsonFilePath = apz.getDataFilesPath("viewst") + "/SavingsStatement.json";
+    } else if (file == "Current - 100009312274") {
+        var jsonFilePath = apz.getDataFilesPath("viewst") + "/CurrentStatement.json";
+    } else if ((file == "Loan - 100009312343") || (file == "Loan - 100009312252")) {
+        var jsonFilePath = apz.getDataFilesPath("viewst") + "/LoanStatement.json";
+    } else if ((file == "Card - 7349 XX7X X8XX 2345") || (file == "Card - 6493 XX3X X2XX 1143")) {
+        var jsonFilePath = apz.getDataFilesPath("viewst") + "/CardStatement.json";
+    }
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    for (var i = 0; i < ljsondata.data.length; i++) {
+        var mimetype = ljsondata.data[i].mimeType;
+        var lMimeType = mimetype.slice(-3);
+        if (fileType == lMimeType.toLowerCase()) {
+            apz.viewst.viewstatement.ReportdwnldMethod(ljsondata.data[i]);
+        }
+    }
+}
+apz.viewst.viewstatement.ReportdwnldMethod = function(lbodyobj) {
+    debugger;
+    var file = apz.getElmValue("viewst__viewstatement__el_dpd_2");
+    var blob;
+    var fileType = "";
+    if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+        blob = apz.viewst.viewstatement.b64toBlob(lbodyobj.content, "application/pdf");
+        fileType = ".pdf";
+    }
+    var blobUrl = URL.createObjectURL(blob);
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.viewst.viewstatement.base64tofilecallBack;
+        json.base64 = lbodyobj.content;
+        if ((file == "Savings - 10009312263") || (file == "Savings - 100009312401") || (file == "Current - 100009312274")) {
+            json.fileName = "SavingsStatement" + fileType;
+        } else if (file == "Current - 100009312274") {
+            json.fileName = "CurrentStatement" + fileType;
+        } else if ((file == "Loan - 100009312343") || (file == "Loan - 100009312252")) {
+            json.fileName = "LoanStatement" + fileType;
+        } else if ((file == "Card - 7349 XX7X X8XX 2345") || (file == "Card - 6493 XX3X X2XX 1143")) {
+            json.fileName = "CardStatement" + fileType;
+        }
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    } else {
+        window.open(blobUrl);
+    }
+};
+apz.viewst.viewstatement.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};
+apz.viewst.viewstatement.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.viewst.viewstatement.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.viewst.viewstatement.openFileCallback = function(params) {
+    debugger;
+};
+
+apz.viewst.fnIndexMonth = function(month) {
+    debugger;
+    switch (month) {
+        case 1:
+            return "Jan";
+        case 2:
+            return "Feb";
+        case 3:
+            return "Mar";
+        case 4:
+            return "Apr";
+        case 5:
+            return "May";
+        case 6:
+            return "Jun";
+        case 7:
+            return "Jul";
+        case 8:
+            return "Aug";
+        case 9:
+            return "Sep";
+        case 10:
+            return "Oct";
+        case 11:
+            return "Nov";
+        case 12:
+            return "Dec";
+    }
+}
+
+apz.viewst.fnLoadMonths = function()
+{
+    debugger;
+    var now = new Date();
+    var monthDisplayed = (now.getMonth() + 1);
+    apz.data.loadJsonData("Statement", "viewst");
+    var obj = {};
+    var storedMonths = [];
+    
+    for(var i = 0; i < 12 ; i++)
+    {
+
+        storedMonths.push(apz.viewst.fnIndexMonth(monthDisplayed));
+        monthDisplayed--;
+//apz.data.scrdata.viewst__AccountStatement_Res.statementdate[i].push(obj);
+}
+for(let i =0 ; i < 12; i++)
+{
+    apz.data.scrdata.viewst__AccountStatement_Res.statementdate[i].date = storedMonths[i];
+}
+    apz.data.loadData("AccountStatement", "viewst");
+
+}

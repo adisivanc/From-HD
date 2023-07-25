@@ -1,0 +1,430 @@
+apz.cdtcrd.accstatement = {};
+apz.cdtcrd.accstatement.sParams = {};
+apz.app.onLoad_AccStatement = function(params) {
+    debugger;
+    apz.cdtcrd.accstatement.sParams = params;
+    apz.cdtcrd.accstatement.fnInitialise(params);
+    apz.cdtcrd.accstatement.fnDropDownChange();
+};
+apz.cdtcrd.accstatement.fnInitialise = function(params) {
+    apz.hide("cdtcrd__AccStatement__accStmtList");
+    if (params.Navigation) {
+        apz.cdtcrd.accstatement.fnSetNavigation(params);
+    }
+    if (params.action == "Acc") {
+        apz.show("cdtcrd__AccStatement__BackNav");
+        if (apz.deviceGroup == "Web") {
+            var lObj = {
+                "value": apz.cdtcrd.accstatement.sParams.data.accountBal,
+                "decimalSep": ".",
+                "mask": "LAKH",
+                "displayAsLiteral": "N",
+                "decimalPoints": "2"
+            }
+            var lAccNo = apz.formatNumber(lObj);
+            apz.show("cdtcrd__AccStatement__AvailaleBalanceCol")
+            apz.setElmValue("cdtcrd__AccStatement__AvailabelBlnce", lAccNo)
+        }
+    }
+    //   apz.cdtcrd.accstatement.fnCalenderFromDate();
+    // $("#cdtcrd__AccStatement__passbookStmtType").setAttribute("onchange",apz.cdtcrd.accstatement.fnDropDownChange);
+};
+apz.cdtcrd.accstatement.fnDropDownChange = function(event) {
+    debugger;
+    //   apz.setElmValue("cdtcrd__AccountStatement__i__accStmtMaster__customerId", apz.cdtcrd.accstatement.sParams.data.customerID);
+    apz.setElmValue("cdtcrd__AccountStatement__i__accStmtMaster__accountNo", apz.cdtcrd.accstatement.sParams.data.accountNo);
+    var select = apz.getElmValue("cdtcrd__AccStatement__passbookStmtType");
+    if (select === 'Last 1 Month') {
+        $("#cdtcrd__AccStatement__sc_row_2").addClass("sno");
+        apz.setElmValue("cdtcrd__AccountStatement__i__accStmtMaster__stmtType", 30);
+        apz.data.buildData("AccountStatement", "cdtcrd");
+        apz.cdtcrd.accstatement.fnAccountStmt();
+        apz.cdtcrd.accstatement.fnAccountStmt();
+    } else if (select === 'Last 2 Months') {
+        $("#cdtcrd__AccStatement__sc_row_2").addClass("sno");
+        apz.setElmValue("cdtcrd__AccountStatement__i__accStmtMaster__stmtType", 60);
+        apz.data.buildData("AccountStatement", "cdtcrd");
+        apz.cdtcrd.accstatement.fnAccountStmt();
+    } else if (select === 'Last 3 Months') {
+        $("#cdtcrd__AccStatement__sc_row_2").addClass("sno");
+        apz.setElmValue("cdtcrd__AccountStatement__i__accStmtMaster__stmtType", 90);
+        apz.data.buildData("AccountStatement", "cdtcrd");
+        apz.cdtcrd.accstatement.fnAccountStmt();
+    } else if (select == "Between") {
+        $("#cdtcrd__AccStatement__sc_row_2").removeClass("sno");
+    } else if (select == "Select") {
+        $("#cdtcrd__AccStatement__sc_row_2").addClass("sno");
+    }
+    window.scrollTo(0, document.body.scrollHeight);
+};
+apz.cdtcrd.accstatement.fnSetNavigation = function(params) {
+    debugger;
+    apz.cdtcrd.accstatement.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "STATEMENT";
+    }
+    lParams.backPressed = apz.cdtcrd.accstatement.fnBack;
+    apz.cdtcrd.accstatement.Navigation(lParams);
+};
+apz.cdtcrd.accstatement.fnAccountStmt = function() {
+    debugger;
+    apz.cdtcrd.accstatement.sParams.sAction = 'getStmt';
+    var lServerParams = {
+        "ifaceName": "AccountStatement",
+        "buildReq": "N",
+        "req": apz.data.scrdata.cdtcrd__AccountStatement_Req
+    };
+    apz.cdtcrd.accstatement.fnBeforeCallServer(lServerParams);
+};
+apz.cdtcrd.accstatement.fnBeforeCallServer = function(params) {
+    debugger;
+    // var lServerParams = {
+    //     "ifaceName": params.ifaceName,
+    //     "buildReq": params.buildReq,
+    //     "req": params.req,
+    //     "paintResp": "N",
+    //     "callBack": apz.cdtcrd.accstatement.fnCallServerCallBack,
+    //     "appId": "cdtcrd",
+    //     "internal": false
+    // };
+    // apz.server.callServer(lServerParams);
+    apz.data.loadJsonData(params.ifaceName, "cdtcrd");
+    apz.cdtcrd.accstatement.fnCallServerCallBack()
+};
+apz.cdtcrd.accstatement.fnCallServerCallBack = function(params) {
+    debugger;
+    var query;
+    if (apz.cdtcrd.accstatement.sParams.sAction == 'getStmt') {
+        query = apz.data.scrdata.cdtcrd__AccountStatement_Res.accStmtMaster.accStmtDtls;
+    } else if (apz.cdtcrd.accstatement.sParams.sAction == 'BetweenDates') {
+        var fromDate = apz.getElmValue("cdtcrd__AccStatement__FromDate");
+        var toDate = apz.getElmValue("cdtcrd__AccStatement__ToDate");
+        var fdate = apz.formatDate({
+            "val": fromDate,
+            "fromFormat": "dd/MM/yyyy",
+            "toFormat": "yyyy-MM-dd"
+        });
+        var tdate = apz.formatDate({
+            "val": toDate,
+            "fromFormat": "dd/MM/yyyy",
+            "toFormat": "yyyy-MM-dd"
+        });
+        var fMonth = parseInt(fdate.split("-")[1]);
+        var tMonth = parseInt(tdate.split("-")[1]);
+        var fday = parseInt(fdate.split("-")[2]);
+        var tday = parseInt(tdate.split("-")[2]);
+        var months = [];
+        for (i = fMonth; i <= tMonth; i++) {
+            months.push(i);
+        }
+        var result = apz.data.scrdata.cdtcrd__AccStatementBtwnDates_Res.accStmtMaster.accStmtDtls;
+         query = result.filter(function(item) {
+            debugger;
+            imonth = parseInt(item.trnDate.split("/")[1]);
+            if (months.indexOf(imonth) != -1) {
+                if (tMonth == imonth || fMonth == imonth) {
+                    iday = parseInt(item.trnDate.split("/")[0]);
+                    if (iday <= tday && iday >= fday) {
+                        return item;
+                    }
+                }
+                // else{
+                //     return item;
+                // }
+            }
+        });
+        if (query.length == 0) {
+            apz.dispMsg({
+                "message": "No records found"
+            });
+        }
+        apz.data.scrdata.cdtcrd__AccStatementBtwnDates_Res.accStmtMaster.accStmtDtls = query;
+        apz.data.loadData("AccStatementBtwnDates", "cdtcrd");
+    }
+    var lArr = {};
+    lArr.cdtcrd__AccountStatement_Res = {};
+    lArr.cdtcrd__AccountStatement_Res.accStmtMaster = {};
+    lArr.cdtcrd__AccountStatement_Res.accStmtMaster.accStmtDtls = [];
+
+ lArr.cdtcrd__AccountStatement_Res.accStmtMaster.accStmtDtls = query;
+ // for (var i = 0; i < lAccStmt.length; i++) {
+        /*if (lAccStmt[i].drcrInd == "C") {
+            $("#cdtcrd__AccountStatement__o__accStmtDtls__trnAmount_" + i).addClass("suc");
+            lAccStmt[i].drcrInd = "credit.png";
+        } else if (lAccStmt[i].drcrInd == "D") {
+            $("#cdtcrd__AccountStatement__o__accStmtDtls__trnAmount_" + i).addClass("err");
+            lAccStmt[i].drcrInd = "debit.png";
+        }*/
+     //   lArr.cdtcrd__AccountStatement_Res.accStmtMaster.accStmtDtls.push(lAccStmt[i]);
+    //}
+    // if (apz.cdtcrd.accstatement.sParams.sAction == 'getStmt') {
+    //     lAccStmt = apz.data.scrdata.cdtcrd__AccountStatement_Res.accStmtMaster.accStmtDtls;
+    // } else if (apz.cdtcrd.accstatement.sParams.sAction == 'BetweenDates') {
+    //     lAccStmt = apz.data.scrdata.cdtcrd__AccStatementBtwnDates_Res.accStmtMaster.accStmtDtls;
+    // }
+    //     for (var i = 0; i < lAccStmt.length; i++) {
+    //         if (lAccStmt[i].drcrInd == "C") {
+    //             $("#cdtcrd__AccountStatement__o__accStmtDtls__trnAmount_" + i).addClass("suc");
+    //         } else if (lAccStmt[i].drcrInd == "D") {
+    //             $("#cdtcrd__AccountStatement__o__accStmtDtls__trnAmount_" + i).addClass("err");
+    //         }
+    //     }
+    apz.data.appendData(lArr);
+    // apz.hide("cdtcrd__AccStatement__passbookStmtType");
+    // apz.hide("cdtcrd__AccStatement__orTxt");
+    // apz.hide("cdtcrd__AccStatement__BetweenDatesForm");
+    // apz.hide("cdtcrd__AccStatement__serchCriteria");
+    if(query.length !=0)
+    {
+    apz.show("cdtcrd__AccStatement__accStmtList");
+    apz.hide("cdtcrd__AccStatement__BackNav");
+    }
+    else
+    {
+         apz.hide("cdtcrd__AccStatement__accStmtList");
+    apz.show("cdtcrd__AccStatement__BackNav");
+    }
+    apz.data.loadData("AccountStatement", "cdtcrd");
+    for (var i = 0; i < query.length; i++) {
+        if (query[i].drcrInd == "C") {
+            $("#cdtcrd__AccountStatement__o__accStmtDtls__trnAmount_" + i).removeClass("err");
+            $("#cdtcrd__AccountStatement__o__accStmtDtls__trnAmount_" + i).addClass("suc");
+        } else if (query[i].drcrInd == "D") {
+            $("#cdtcrd__AccountStatement__o__accStmtDtls__trnAmount_" + i).removeClass("suc");
+            $("#cdtcrd__AccountStatement__o__accStmtDtls__trnAmount_" + i).addClass("err");
+        }
+    }
+};
+apz.cdtcrd.accstatement.fnValidate = function() {
+    debugger;
+    if (apz.isNull(apz.getElmValue("cdtcrd__AccStatement__FromDate")) || apz.isNull(apz.getElmValue("cdtcrd__AccStatement__ToDate"))) {
+        var lMsg = {
+            "code": "ERR_DATE"
+        }
+        apz.dispMsg(lMsg);
+        return false;
+    } else {
+        return true;
+    }
+};
+apz.cdtcrd.accstatement.fnViewTransaction = function() {
+    debugger;
+    var lValid = apz.cdtcrd.accstatement.fnValidate();
+    if (lValid) {
+        apz.cdtcrd.accstatement.sParams.sAction = 'BetweenDates';
+        var lReq = {
+            "customerId": apz.cdtcrd.accstatement.sParams.data.customerID,
+            "fromDate": apz.cdtcrd.accstatement.fnFormatDate(apz.getElmValue("cdtcrd__AccStatement__FromDate"), "dd/MM/yyyy", "yyyy/MM/dd"),
+            "toDate": apz.cdtcrd.accstatement.fnFormatDate(apz.getElmValue("cdtcrd__AccStatement__ToDate"), "dd/MM/yyyy", "yyyy/MM/dd")
+        };
+        var lServerParams = {
+            "ifaceName": "AccStatementBtwnDates",
+            "buildReq": "N",
+            "req": lReq
+        };
+        apz.cdtcrd.accstatement.fnBeforeCallServer(lServerParams);
+    }
+};
+apz.cdtcrd.accstatement.fnFormatDate = function(value, fromformat, toformat) {
+    debugger;
+    var lObj = {
+        "val": value,
+        "fromFormat": fromformat,
+        "toFormat": toformat
+    };
+    var lDate = apz.formatDate(lObj);
+    return lDate;
+};
+apz.cdtcrd.accstatement.fnBack = function() {
+    debugger;
+    // apz.show("cdtcrd__AccStatement__passbookStmtType");
+    // apz.show("cdtcrd__AccStatement__orTxt");
+    // apz.show("cdtcrd__AccStatement__BetweenDatesForm");
+    apz.show("cdtcrd__AccStatement__serchCriteria");
+    apz.hide("cdtcrd__AccStatement__accStmtList");
+    if (apz.cdtcrd.accstatement.sParams.action == "Acc") {
+        apz.show("cdtcrd__AccStatement__BackNav")
+    } else {
+        apz.hide("cdtcrd__AccStatement__BackNav");
+    }
+};
+// apz.cdtcrd.accstatement.fnCalenderFromDate = function() {
+//     debugger;
+//     var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+//     var ldate = new Date();
+//     ldate.setFullYear(ldate.getFullYear());
+//     var lobj = {};
+//     lobj.maxMonth = (monthNames[ldate.getMonth()]).substring(0, 3);
+//     lobj.maxdata = ("0" + ldate.getDate()).slice(-2) + "-" + lobj.maxMonth + "-" + ldate.getFullYear()
+//     var params = {};
+//     params.id = "cdtcrd__AccStatement__FromDate";
+//     params.dataType = "DATE";
+//     params.lookAndFeel = "GENERIC";
+//     params.parentDisplay = "CENTER";
+//     params.style = "MATERIAL";
+//     params.parentPreset = "CALENDAR";
+//     params.parentMinDate = "";
+//     params.parentMaxDate = lobj.maxdata;
+//     params.closeOnSel = "Y";
+//     params.multiSel = "N";
+//     params.parentStartYear = "";
+//     params.parentEndYear = "";
+//     params.parentRangePick = "N";
+//     params.secInputId = "";
+//     params.parentMultiInput = "N";
+//     params.dateType = "GENERIC";
+//     apz.initDates(params);
+// };
+// apz.cdtcrd.accstatement.fnCalenderForTodate = function() {
+//     debugger;
+//     var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+//     var lobj = {};
+//     var ldate = new Date();
+//     ldate.setFullYear(ldate.getFullYear());
+//     var lobj = {};
+//     lobj.maxMonth = (monthNames[ldate.getMonth()]).substring(0, 3);
+//     lobj.maxdata = ("0" + ldate.getDate()).slice(-2) + "-" + lobj.maxMonth + "-" + ldate.getFullYear()
+//     lobj.mindata = apz.getElmValue("cdtcrd__AccStatement__FromDate");
+//     var params = {};
+//     params.id = "cdtcrd__AccStatement__ToDate";
+//     params.dataType = "DATE";
+//     params.lookAndFeel = "GENERIC";
+//     params.parentDisplay = "CENTER";
+//     params.style = "MATERIAL";
+//     params.parentPreset = "CALENDAR";
+//     params.parentMinDate = lobj.mindata;
+//     params.parentMaxDate = lobj.maxdata;
+//     params.closeOnSel = "Y";
+//     params.multiSel = "N";
+//     params.parentStartYear = "";
+//     params.parentEndYear = "";
+//     params.parentRangePick = "N";
+//     params.secInputId = "";
+//     params.parentMultiInput = "N";
+//     params.dateType = "GENERIC";
+//     apz.initDates(params);
+// };
+apz.cdtcrd.accstatement.fnBackToBase = function() {
+    debugger;
+    apz.cdtcrd.accstatement.sParams.callBack();
+};
+apz.cdtcrd.accstatement.fnDownload = function(fileType) {
+    debugger;
+    apz.cdtcrd.accstatement.getDocument(fileType);
+};
+apz.cdtcrd.accstatement.fnDownloadCB = function(params) {
+    debugger;
+    var lBodyobj = params.res.ACOP01__Report_Res;
+    if (navigator.userAgent.indexOf("Chrome") != -1) {
+        var uri = 'data:application/' + lBodyobj + ';base64,';
+        var link = document.createElement("a");
+        link.download = "export." + lBodyobj;
+        link.href = uri + lBodyobj.file;
+        link.click();
+    } else if (navigator.userAgent.indexOf("Firefox") != -1) {
+        window.open("data:application/" + lBodyobj + ";base64," + lBodyobj.file, "", "");
+    } else if ((navigator.userAgent.indexOf("MSIE") != -1) || ( !! document.documentMode == true)) //IF IE > 10
+    {
+        // alert('IE'); 
+        /* var uri = 'data:application/vnd.ms-excel;base64,';
+                        var link = document.createElement("a");
+                        link.download = "export.pdf";
+                        link.href = uri + lbodyobj.file;
+                        link.click();*/
+        window.open("data:application/" + lBodyobj + ";base64," + lBodyobj.file, "", "");
+    }
+};
+apz.cdtcrd.accstatement.getDocument = function(fileType) {
+    debugger;
+    var jsonFilePath = apz.getDataFilesPath("cdtcrd") + "/CreditCardStatement.json";
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    for (var i = 0; i < ljsondata.data.length; i++) {
+        var mimetype = ljsondata.data[i].mimeType;
+        var lMimeType = mimetype.slice(-3);
+        if (fileType == lMimeType.toLowerCase()) {
+            apz.cdtcrd.accstatement.getDocumentCB(ljsondata.data[i]);
+        }
+    }
+};
+apz.cdtcrd.accstatement.getDocumentCB = function(pbody) {
+    debugger;
+    apz.cdtcrd.accstatement.ReportdwnldMethod(pbody);
+};
+apz.cdtcrd.accstatement.ReportdwnldMethod = function(lbodyobj) {
+    var blob;
+    var fileType = "";
+    if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+        blob = apz.cdtcrd.accstatement.b64toBlob(lbodyobj.content, "application/pdf");
+        fileType = ".pdf";
+    } else if (lbodyobj.mimeType == "application/ondemand extension-field=DOCX") {
+        blob = appzillon.app.appattachments.b64toBlob(lbodyobj.content, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        fileType = ".docx";
+    } else if (lbodyobj.mimeType == "application/ondemand extension-field=tiff") {
+        blob = appzillon.app.appattachments.b64toBlob(lbodyobj.content, "image/tiff");
+        fileType = ".tiff";
+    } else if (lbodyobj.mimeType == "application/ondemand extension-field=msg") {
+        blob = appzillon.app.appattachments.b64toBlob(lbodyobj.content, "application/vnd.ms-outlook");
+        fileType = ".msg";
+    } else if (lbodyobj.mimeType == "application/ondemand extension-field=doc") {
+        blob = appzillon.app.appattachments.b64toBlob(lbodyobj.content, "application/msword");
+        fileType = ".doc";
+    } else if (lbodyobj.mimeType == "application/ondemand extension-field=xls") {
+        blob = apz.cdtcrd.accstatement.b64toBlob(lbodyobj.content, "application/xls");
+        fileType = ".xlsx";
+    } else if (lbodyobj.mimeType == "application/ondemand extension-field=txt") {
+        blob = apz.cdtcrd.accstatement.b64toBlob(lbodyobj.content, "application/txt");
+        fileType = ".txt";
+    }
+    var blobUrl = URL.createObjectURL(blob);
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.cdtcrd.accstatement.base64tofilecallBack;
+        json.base64 = lbodyobj.content;
+        json.fileName = "CreditCardStatement" + fileType;
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    } else {
+        window.open(blobUrl);
+    }
+};
+apz.cdtcrd.accstatement.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.cdtcrd.accstatement.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.cdtcrd.accstatement.openFileCallback = function(params) {
+    debugger;
+};
+apz.cdtcrd.accstatement.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};

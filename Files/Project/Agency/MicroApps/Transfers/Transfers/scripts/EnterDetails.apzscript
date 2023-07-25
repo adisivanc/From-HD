@@ -1,0 +1,191 @@
+apz.tranfe.EnterDetails = {};
+apz.tranfe.EnterDetails.sCache = {};
+apz.tranfe.EnterDetails.AccountData = [];
+apz.tranfe.EnterDetails.sTransferType = "";
+apz.tranfe.EnterDetails.lAccountNumber = "";
+apz.tranfe.EnterDetails.lFinalAmount = "";
+apz.tranfe.EnterDetails.lAmount = "";
+apz.app.onLoad_EnterDetails = function(params) {
+    debugger;
+    apz.tranfe.EnterDetails.sCache = params;
+    apz.tranfe.EnterDetails.fnUpdateUI();
+    if (apz.tranfe.EnterDetails.sCache.screen == "otherBank") {
+        $("#tranfe__EnterDetails__thirdPartyTab_li").click();
+    } else {
+        apz.tranfe.EnterDetails.ownBank();
+    }
+    apz.tranfe.EnterDetails.fnBeforeCallServer();
+    apz.tranfe.EnterDetails.fnGraph();
+};
+apz.tranfe.EnterDetails.ownBank = function() {
+    apz.tranfe.EnterDetails.sTransferType = "ownBank";
+    apz.hide("tranfe__EnterDetails__other");
+    apz.show("tranfe__EnterDetails__own");
+};
+apz.tranfe.EnterDetails.fnOther = function() {
+    apz.tranfe.EnterDetails.sTransferType = "otherBank";
+    apz.hide("tranfe__EnterDetails__own");
+    apz.show("tranfe__EnterDetails__other");
+};
+apz.tranfe.EnterDetails.fnAddPayee = function() {
+    var lParams = {
+        "appId": "ADPY01",
+        "scr": "AddPayeeEnterDetails",
+        "div": apz.tranfe.EnterDetails.sCache.destroyDiv,
+        "type": "CF",
+        "animation": 9,
+        "userObj": {
+            "destroyDiv": apz.tranfe.EnterDetails.sCache.destroyDiv,
+            "parentAppId": apz.tranfe.EnterDetails.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.tranfe.EnterDetails.Continue = function() {
+    debugger;
+    if ($('#tranfe__EnterDetails__own').is(':hidden')) {
+        var lObj = {
+            "scr": "Verification",
+            "div": apz.tranfe.EnterDetails.sCache.destroyDiv,
+            "animation": 9,
+            "userObj": {
+                "action": apz.tranfe.EnterDetails.sCache.action,
+                "destroyDiv": apz.tranfe.EnterDetails.sCache.destroyDiv,
+                "parentAppId": apz.tranfe.EnterDetails.sCache.parentAppId,
+                "fromAcc": apz.getElmValue("tranfe__EnterDetails__fromAccOtherBank"),
+                "Amt": apz.getElmValue("tranfe__EnterDetails__amount"),
+                "callBack": apz.tranfe.EnterDetails.sCache.callBack,
+                "BenifName": apz.getElmValue("tranfe__EnterDetails__beneficiaryName"),
+                "transferType": apz.tranfe.EnterDetails.sTransferType
+            }
+        };
+        apz.launchSubScreen(lObj);
+    } else {
+        var lObj = {
+            "scr": "Verification",
+            "div": apz.tranfe.EnterDetails.sCache.destroyDiv,
+            "animation": 9,
+            "userObj": {
+                "action": apz.tranfe.EnterDetails.sCache.action,
+                "destroyDiv": apz.tranfe.EnterDetails.sCache.destroyDiv,
+                "parentAppId": apz.tranfe.EnterDetails.sCache.parentAppId,
+                "parentDivId": apz.tranfe.EnterDetails.sCache.parentDivId,
+                "fromAcc": apz.getElmValue("tranfe__EnterDetails__fromOwnAcc"),
+                "toAcc": apz.getElmValue("tranfe__EnterDetails__toAcc"),
+                "Amt": apz.getElmValue("tranfe__EnterDetails__amt"),
+                "callBack": apz.tranfe.EnterDetails.sCache.callBack,
+                "transferType": apz.tranfe.EnterDetails.sTransferType
+            }
+        };
+        apz.launchSubScreen(lObj);
+    }
+}
+apz.tranfe.EnterDetails.fnBeforeCallServer = function() {
+    var lServerParams = {
+        "ifaceName": "TransctionDetails_Query",
+        "buildReq": "N",
+        "req": {
+            agencybankingtransactions: {
+                "accountNumber": "%"
+            }
+        },
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.tranfe.EnterDetails.callServerCallBack,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.tranfe.EnterDetails.callServerCallBack = function(params) {
+    apz.tranfe.EnterDetails.AccountData = params.res.tranfe__TransctionDetails_Res.agencybankingtransactions;
+    apz.tranfe.EnterDetails.ldropdownArr = [];
+    for (i = 0; i < params.res.tranfe__TransctionDetails_Res.agencybankingtransactions.length; i++) {
+        var lAccType = params.res.tranfe__TransctionDetails_Res.agencybankingtransactions[i].accountType;
+        if (lAccType == "Savings" || lAccType == "Current") {
+            var option = {};
+            option.val = params.res.tranfe__TransctionDetails_Res.agencybankingtransactions[i].accountNumber;
+            option.desc = params.res.tranfe__TransctionDetails_Res.agencybankingtransactions[i].accountNumber;
+            apz.tranfe.EnterDetails.ldropdownArr.push(option);
+        }
+    }
+    apz.populateDropdown(document.getElementById("tranfe__EnterDetails__fromOwnAcc"), apz.tranfe.EnterDetails.ldropdownArr);
+    apz.populateDropdown(document.getElementById("tranfe__EnterDetails__toAcc"), apz.tranfe.EnterDetails.ldropdownArr);
+    apz.populateDropdown(document.getElementById("tranfe__EnterDetails__fromAccOtherBank"), apz.tranfe.EnterDetails.ldropdownArr);
+};
+apz.tranfe.EnterDetails.fnBackToCustomerDashboard = function() {
+    apz.tranfe.EnterDetails.sCache.callBack();
+};
+apz.tranfe.EnterDetails.fnUpdateUI = function() {
+    apz.tranfe.EnterDetails.ownBank();
+};
+apz.tranfe.EnterDetails.fnGraph = function() {
+    debugger;
+    if (apz.tranfe.EnterDetails.sTransferType == "ownBank") {
+        apz.tranfe.EnterDetails.lAccountNumber = apz.getElmValue("tranfe__EnterDetails__fromOwnAcc");
+        apz.tranfe.EnterDetails.lAmount = apz.getElmValue("tranfe__EnterDetails__amt");
+        if (apz.getElmValue("tranfe__EnterDetails__amt") == "") {
+            apz.tranfe.EnterDetails.lAmount = 0;
+        } else {
+            apz.tranfe.EnterDetails.lAmount = parseInt(apz.tranfe.EnterDetails.lAmount);
+        }
+    } else {
+        apz.tranfe.EnterDetails.lAccountNumber = apz.getElmValue("tranfe__EnterDetails__fromAccOtherBank");
+        apz.tranfe.EnterDetails.lAmount = apz.getElmValue("tranfe__EnterDetails__amount");
+        if (apz.getElmValue("tranfe__EnterDetails__amount") == "") {
+            apz.tranfe.EnterDetails.lAmount = 0;
+        } else {
+            apz.tranfe.EnterDetails.lAmount = parseInt(apz.tranfe.EnterDetails.lAmount);
+        }
+    }
+    for (i = 0; i < apz.data.scrdata.tranfe__TransctionDetails_Res.agencybankingtransactions.length; i++) {
+        if (apz.tranfe.EnterDetails.lAccountNumber == apz.data.scrdata.tranfe__TransctionDetails_Res.agencybankingtransactions[i].accountNumber) {
+            apz.tranfe.EnterDetails.lFinalAmount = parseInt(apz.data.scrdata.tranfe__TransctionDetails_Res.agencybankingtransactions[i].balance) -
+                apz.tranfe.EnterDetails.lAmount;
+        }
+    }
+    apz.data.loadData("Chart", "tranfe");
+}
+apz.app.updateChartBeforeRender = function(pchartType, pchartData, pid, pchart) {
+    debugger;
+    if (pchartType == "Marimekko") {
+        pchartData.chart = {
+            "caption": "Account Overview",
+            "xaxisname": "Account Number",
+            "yaxisname": "Balance",
+            "showvalues": "0",
+            "numberprefix": "$",
+            "showborder": "0",
+            "usePercentDistribution": "0",
+            "bgcolor": "FFFFFF",
+            "canvasborderthickness": "1",
+            "canvasbordercolor": "999999",
+            "plotgradientcolor": "",
+            "palettecolors": "#7DCEA0,#F09F97,#AFC0CF,#C1D0DF,#C0C0CF,#F0F0F0",
+            "basefontsize": "9",
+            "outcnvbasefontsize": "11",
+            "legendshadow": "0",
+            "legendborderalpha": "0",
+            "plotbordercolor": "999999"
+        };
+        pchartData.categories = [{
+            "category": [{
+                "label": apz.tranfe.EnterDetails.lAccountNumber,
+                "x": -0.028967254408060417,
+                "plotWidth": 109.51511335012594,
+                "stepSkipped": false,
+                "appliedSmartLabel": true
+            }]
+        }];
+        pchartData.dataset = [{
+            "seriesname": "Available Balance",
+            "data": [{
+                "value": apz.tranfe.EnterDetails.lFinalAmount
+            }]
+        }, {
+            "seriesname": "Deducted Amount",
+            "data": [{
+                "value": apz.tranfe.EnterDetails.lAmount
+            }]
+        }];
+    }
+}

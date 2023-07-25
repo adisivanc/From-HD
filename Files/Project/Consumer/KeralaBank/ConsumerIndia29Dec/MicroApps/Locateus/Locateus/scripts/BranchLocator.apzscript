@@ -1,0 +1,428 @@
+apz.lcteus.BranchLocator = {};
+apz.lcteus.BranchLocator.sParams = {};
+apz.lcteus.BranchLocator.sCache = {};
+var sMarkers = [];
+var sCurrentPosition = {};
+var sRadiusCircle, sNearByPlaces, data;
+apz.app.onLoad_BranchLocator = function(params) {
+    debugger;
+    apz.mockServer = true;
+    apz.lcteus.BranchLocator.sParams = params;
+    if (apz.getLayout({
+        "appId": "lcteus",
+        "scr": "BranchLocator"
+    }) == "Mobile") {
+        startGesture();
+    }
+    apz.lcteus.BranchLocator.getCurrentLocation();
+    $("#lcteus__BranchLocator__MapContainer").attr("style", "margin: 10px;height:330px;border: 1px solid grey;");
+     //$("#lcteus__BranchLocator__image").css("background-image", 'url("apps/styles/themes/ConsumerBank/img/bg.png")');
+    var img = document.createElement("img");
+    img.src = apz.getStylesPath() + "/" + apz.theme + "/" + "img/branchmap.jpg";
+    var src = document.getElementById("lcteus__BranchLocator__MapContainer");
+    src.appendChild(img);
+};
+apz.lcteus.BranchLocator.getCurrentLocation = function() {
+    var gps = {};
+    gps.id = "GETLOCATION";
+    gps.callBack = apz.lcteus.BranchLocator.getCurrentLocationCB;
+    apz.ns.getLocation(gps);
+};
+apz.lcteus.BranchLocator.getCurrentLocationCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        var lCurrPos = {};
+        lCurrPos.locationName = "I am here";
+        lCurrPos.locationDescription = "";
+        lCurrPos.locationLatitude = pResp.latitude;
+        lCurrPos.locationLongitude = pResp.longitude;
+        sCurrentPosition = lCurrPos;
+        sMarkers = [];
+        sMarkers.push(lCurrPos);
+        apz.lcteus.BranchLocator.loadCustomMap();
+    }
+};
+apz.lcteus.BranchLocator.loadCustomMap = function() {
+    debugger;
+    var lScript = document.createElement('script');
+    lScript.setAttribute("type", "text/javascript");
+    lScript.setAttribute("src", "https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBunSQGLDbjuQQ-pTCTESP5aWkNFiCTfIk&callback=mapCallBack");
+    document.getElementsByTagName("head")[0].appendChild(lScript);
+};
+
+function mapCallBack() {
+    apz.lcteus.BranchLocator.initializeMaps(sMarkers);
+}
+apz.lcteus.BranchLocator.initializeMaps = function(sMarkers) {
+    debugger;
+    var infowindow = new google.maps.InfoWindow();
+    var marker, i;
+    var pos = new google.maps.LatLng(sMarkers[0].locationLatitude, sMarkers[0].locationLongitude);
+    var myOptions = {
+        zoom: 15,
+        center: pos,
+        mapTypeControl: false
+    };
+    var map = new google.maps.Map(document.getElementById("lcteus__BranchLocator__MapContainer"), myOptions);
+    debugger;
+    marker = new google.maps.Marker({
+        position: pos,
+        map: map,
+        icon: apz.getStylesPath() + '/' + apz.theme + '/' + 'img/red-dot.png'
+    });
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+            infowindow.setContent(sMarkers[0].locationName + "," + sMarkers[0].locationDescription);
+            infowindow.open(map, marker);
+        }
+    })(marker, i));
+    apz.lcteus.BranchLocator.initializeSelector();
+};
+apz.app.onShown_BranchLocator = function() {
+    debugger;
+    var lreq = {
+        "tbDbtpLocations": {
+            "area": "%%",
+            "partCity": "%%",
+            "city": "%%",
+            "state": "%%",
+            "pincode": "%%",
+            "type": "%%"
+        }
+    };
+    var lActionParams = {
+        "ifaceName": "BranchLocatorQuery_Query",
+        "req": lreq,
+        "paintResp": "N",
+        "async": false,
+        "callBack": apz.lcteus.BranchLocator.fnCallServerCallBack
+    };
+    apz.lcteus.BranchLocator.fnBeforeCallServer(lActionParams);
+};
+apz.lcteus.BranchLocator.fnBeforeCallServer = function(params) {
+    debugger;
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.req,
+        "paintResp": params.paintResp,
+        "async": false,
+        "callBack": params.callBack,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.lcteus.BranchLocator.fnCallServerCallBack = function(params) {
+    debugger;
+    apz.stopLoader();
+    if (params.status) {
+        if (params.resFull.appzillonHeader.status) {
+            data = params.resFull.appzillonBody.lcteus__BranchLocatorQuery_Req;
+            var state = [{
+                "val": "",
+                "desc": "Select State"
+            }];
+            var statearr = apz.lcteus.BranchLocator.removeDuplicates(data.tbDbtpLocations, ['state']);
+            for (var i = 0; i < statearr.length; i++) {
+                var lObj = {
+                    "val": statearr[i].state,
+                    "desc": statearr[i].state,
+                }
+                state.push(lObj);
+            }
+            apz.populateDropdown(document.getElementById("lcteus__BranchLocator__stateDropdown"), state);
+        }
+    }
+};
+apz.lcteus.BranchLocator.stateChange = function(lObj) {
+    debugger;
+    var city = [{
+        "val": "",
+        "desc": "Select City"
+    }];
+    apz.data.scrdata.lcteus__BranchLocatorQuery_Req.tbDbtpLocations =data.tbDbtpLocations
+    var allbranches = apz.data.scrdata.lcteus__BranchLocatorQuery_Req.tbDbtpLocations;
+    var bystates = allbranches.filter(function(item){if(item.state == lObj.value){return true;}});
+    apz.data.scrdata.lcteus__BranchLocatorQuery_Req.tbDbtpLocations = bystates;
+    apz.data.loadData("BranchLocatorQuery","lcteus");
+    var cityArr = apz.lcteus.BranchLocator.removeDuplicates(data.tbDbtpLocations, ['city']);
+    for (var i = 0; i < cityArr.length; i++) {
+        if (cityArr[i].state == lObj.value) {
+            var lTemp = {
+                "val": cityArr[i].city,
+                "desc": cityArr[i].city,
+            };
+            city.push(lTemp);
+        }
+    }
+    apz.populateDropdown(document.getElementById("lcteus__BranchLocator__cityDropDown"), city);
+    var cityPart = [{
+        "val": "",
+        "desc": "Select Part of City"
+    }];
+   // apz.populateDropdown(document.getElementById("lcteus__BranchLocator__cityPartDropdown"), cityPart);
+};
+apz.lcteus.BranchLocator.cityChange = function(lTemp) {
+    debugger;
+    var cityPart = [{
+        "val": "",
+        "desc": "Select Part of City"
+    }];
+    var allbranches = data.tbDbtpLocations;//apz.data.scrdata.lcteus__BranchLocatorQuery_Req.tbDbtpLocations;
+    var bycity = allbranches.filter(function(item){if(item.city == lTemp.value){return true;}});
+    apz.data.scrdata.lcteus__BranchLocatorQuery_Req.tbDbtpLocations = bycity;
+    apz.data.loadData("BranchLocatorQuery","lcteus");
+    var cityPartArr = apz.lcteus.BranchLocator.removeDuplicates(data.tbDbtpLocations, ['partCity']);
+    for (var i = 0; i < cityPartArr.length; i++) {
+        if (cityPartArr[i].city == lTemp.value) {
+            var lPart = {
+                "val": cityPartArr[i].partCity,
+                "desc": cityPartArr[i].partCity,
+            };
+            cityPart.push(lPart);
+        }
+    }
+   // apz.populateDropdown(document.getElementById("lcteus__BranchLocator__cityPartDropdown"), cityPart);
+};
+apz.lcteus.BranchLocator.close = function() {
+    apz.show("csmrbk__Login__sc_col_36");
+    apz.show("csmrbk__Login__tick");
+    apz.lcteus.BranchLocator.sParams.callBack();
+};
+apz.lcteus.BranchLocator.removeDuplicates = function(originalArray, properties) {
+    var newArray = [];
+    var index = 0;
+    var lookupObject = {};
+    var totalProperties = properties.length;
+    for (var i = 0; i < originalArray.length; i++) {
+        var exists = false;
+        for (var a = 0; a < newArray.length; a++) {
+            var propsFound = 0;
+            for (var b = 0; b < totalProperties; b++) {
+                if (originalArray[i][properties[b]] == newArray[a][properties[b]]) {
+                    propsFound++;
+                }
+            } //If there is a match then break the for loop
+            if (propsFound == totalProperties) {
+                exists = true;
+                break;
+            }
+        } //End of New Array
+        if (!exists) {
+            newArray[index] = originalArray[i];
+            index++;
+        }
+    } //End of originalArray
+    return newArray;
+};
+apz.lcteus.BranchLocator.initializeSelector = function() {
+    debugger;
+    geocoder = new google.maps.Geocoder();
+    var center = new google.maps.LatLng(sCurrentPosition.locationLatitude, sCurrentPosition.locationLongitude);
+    sRadiusCircle = 300; // in km // draw map
+    var mapOptions = {
+        center: center,
+        zoom: 12,
+        mapTypeControl: false
+    };
+    map = new google.maps.Map(document.getElementById("lcteus__BranchLocator__MapContainer"), mapOptions);
+    apz.lcteus.BranchLocator.showMarkers(center);
+    /*google.maps.event.addListener(map, 'click', function(e) {
+        var clickPos = new google.maps.LatLng(e.latLng.lat(), e.latLng.lng());
+        apz.lcteus.BranchLocator.showMarkers(clickPos);
+    });*/
+};
+apz.lcteus.BranchLocator.showMarkers = function(clickPos) {
+    debugger;
+    sMarkers = [];
+    apz.lcteus.BranchLocator.createCurrentMarker(clickPos);
+    apz.lcteus.BranchLocator.checkNearByPlaces(clickPos);
+};
+apz.lcteus.BranchLocator.createCurrentMarker = function(clickPos) {
+    debugger;
+    var infowindow = new google.maps.InfoWindow();
+    geocoder.geocode({
+        'latLng': clickPos
+    }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            if (results[0]) {
+                placeNameval = results[0].formatted_address;
+            }
+        } else {
+            alert("The Geocode was not successful for the following reason: " + status);
+        }
+    });
+    marker = new google.maps.Marker({
+        map: map,
+        position: clickPos
+    });
+    sMarkers.push(marker);
+    google.maps.event.addListener(marker, 'click', function() {
+        infowindow.setContent(placeNameval);
+        infowindow.open(map, this);
+    });
+};
+apz.lcteus.BranchLocator.checkNearByPlaces = function(clickPos) {
+    debugger;
+    var lreq = {
+        "tbDbtpLocations": {
+            "area": "%" + apz.getElmValue("lcteus__BranchLocator__areacode") + "%",
+            
+            "city": "%" + apz.getElmValue("lcteus__BranchLocator__cityDropDown") + "%",
+            "state": "%" + apz.getElmValue("lcteus__BranchLocator__stateDropdown") + "%",
+            "pincode": "%" + apz.getElmValue("lcteus__BranchLocator__pincode") + "%",
+            "type": "%" + apz.getElmValue("lcteus__BranchLocator__type") + "%"
+        }
+    };
+    var lActionParams = {
+        "ifaceName": "BranchLocatorQuery_Query",
+        "req": lreq,
+        "paintResp": "Y",
+        "async": false,
+        "callBack": apz.lcteus.BranchLocator.initializeSelectorCB
+    };
+    apz.lcteus.BranchLocator.fnBeforeCallServer(lActionParams);
+}
+apz.lcteus.BranchLocator.initializeSelectorCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    var flg;
+    for (var i = 0; i < pResp.res.lcteus__BranchLocatorQuery_Req.tbDbtpLocations.length; i++) {
+        var searchLat = parseFloat(pResp.res.lcteus__BranchLocatorQuery_Req.tbDbtpLocations[i].latitude);
+        var searchLong = parseFloat(pResp.res.lcteus__BranchLocatorQuery_Req.tbDbtpLocations[i].longitude);
+        var Latlng = new google.maps.LatLng(pResp.res.lcteus__BranchLocatorQuery_Req.tbDbtpLocations[i].latitude, pResp.res.lcteus__BranchLocatorQuery_Req
+            .tbDbtpLocations[i].longitude);
+        apz.lcteus.BranchLocator.ceateMarkers(Latlng);
+        var flag = 1;
+    }
+    if (flag == 1) {
+        apz.lcteus.BranchLocator.calcpos(pResp);
+    } else {}
+}
+apz.lcteus.BranchLocator.ceateMarkers = function(Latlng) {
+    debugger;
+    /*   var mapOptions = {
+        center: Latlng,
+        zoom: 12,
+        mapTypeControl: false
+    };
+    var map = new google.maps.Map(document.getElementById("lcteus__BranchLocator__MapContainer"), mapOptions);*/
+    var marks = new google.maps.Marker({
+        position: Latlng,
+        map: map
+    });
+    sMarkers.push(marks);
+    var infowindow = new google.maps.InfoWindow();
+    google.maps.event.addListener(marks, 'click', (function() {
+        var placeNameval1;
+        var latlng = new google.maps.LatLng(Latlng.lat(), Latlng.lng());
+        geocoder.geocode({
+            'latLng': latlng
+        }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                    placeNameval1 = results[0].formatted_address;
+                    infowindow.setContent(placeNameval1);
+                }
+            } else {
+                alert('Request failed due to ' + status);
+            }
+        });
+        infowindow.open(map, this);
+    }));
+};
+apz.lcteus.BranchLocator.calcpos = function(pResp) {
+    debugger;
+    var marker = pResp.res.lcteus__BranchLocatorQuery_Req.tbDbtpLocations;
+    for (var i = 1; i <= pResp.res.lcteus__BranchLocatorQuery_Req.tbDbtpLocations.length; i++) {
+        sMarkers[i].setIcon(apz.getStylesPath() + '/' + apz.theme + '/' + 'img/blue-dot.png');
+        //sMarkers[0].setIcon(apz.getStylesPath() + '/' + apz.theme + '/' + 'img/red-dot.png');
+    }
+};
+apz.lcteus.BranchLocator.launchAR = function() {
+    debugger;
+    var pjson = {
+        "thresholdDistance": "200000",
+        "maxPlaces": "3",
+        "Places": [{
+            "image": "bitcoin.png",
+            "title": "Appzillon Bank",
+            "description": "150 Broadway, New York, NY 10038, United States",
+            "additionalInfo": "",
+            "latitude": "11.57903",
+            "longitude": "104.91455",
+            "category": "Branch"
+        },{
+            "image": "bitcoin.png",
+            "title": "Appzillon Bank",
+            "description": "5 % off on dining ; MGN Bank Credit Cards powered by Visa",
+            "additionalInfo": "",
+            "latitude": "11.56406",
+            "longitude": "104.87408",
+            "category": "Branch"
+        },
+        {
+            "image": "bitcoin.png",
+            "title": "Appzillon Bank",
+            "description": "60 Wall St, New York, NY 10005, United States",
+            "additionalInfo": "",
+            "latitude": "11.56422",
+            "longitude": "104.90101",
+            "category": "Branch"
+        }],
+    };
+    pjson.id = "AUGMENTEDREALITY_ID";
+    pjson.callBack = ARCallback;
+    apz.ns.startAugmentation(pjson);
+}
+ARCallback = function(pJson) {
+    debugger;
+    var lLat = pJson.latitude;
+    var lLong = pJson.longitude
+    apz.fnDrivingDirection(lLat,lLong);
+    
+}
+
+apz.fnDrivingDirection = function(pLat,pLong) {
+    var json = {
+        "fromLocation": "",
+        "toLocation": pLat + ',' + pLong
+    };
+    json.id = "MAP3_ID";
+    json.mapDiv = "lcteus__BranchLocator__MapContainer";
+    json.height = "330px";
+    json.width = "100%";
+    json.callBack = apz.fnDrivdirecCallback;
+    apz.ns.drivingDirection(json);
+};
+apz.fnDrivdirecCallback = function(json) {
+    debugger;
+};
+//call plugin
+
+
+
+
+apz.lcteus.fnCallBranch = function(){
+    debugger
+    if(apz.deviceGroup == "Web")
+    {
+   apz.dispMsg({"message" : "Contact us - 1800-419-8300"})
+    }
+    else{
+    var json = {};
+json.phoneNo = "8951519545";
+json.id = "CALL_ID";
+json.callBack = apz.lcteus.fnCallBranchCB;
+apz.ns.callNumber(json);
+}
+}
+apz.lcteus.fnCallBranchCB = function(pResp){
+    debugger;
+    if(pResp.status){
+        
+    }else{
+        
+    }
+}

@@ -1,0 +1,524 @@
+apz.bulktr.WithinBank = {};
+apz.bulktr.WithinBank.getFromAccId = "";
+apz.bulktr.WithinBank.getBenAccId = "";
+apz.bulktr.WithinBank.getWBBenDetails = {};
+apz.bulktr.WithinBank.getOBBenDetails = {};
+apz.bulktr.WithinBank.sCache = {};
+apz.bulktr.WithinBank.viewObject;
+
+apz.app.onLoad_WithinBank = function(params) {
+debugger;
+    
+    apz.bulktr.WithinBank.resetTableContainer();
+    apz.bulktr.WithinBank.sCache = params;
+    apz.data.scrdata.bulktr__WithinBankDetails_Req = {};
+    apz.hide("bulktr__BulkTransfers__mainheader");
+    $("#bulktr__WithinBank__transfer_table").attr("style","visibility:visible");
+    $("#bulktr__WithinBank__appntAmount").attr("style","visibility:hidden");
+
+    apz.bulktr.WithinBank.sCorporateId = apz.Login.sCorporateId;
+    apz.bulktr.WithinBank.sRoleId = apz.Login.sRoleId;
+    
+    if(params.data && params.data.tfrDtls && params.data.tfrDtls.length){
+        apz.bulktr.WithinBank.fnInitialize(params);
+    	apz.bulktr.WithinBank.sCache = $.extend(true, {}, params);
+    }
+    if(apz.bulktr.WithinBank.sCache.appntData){
+	apz.bulktr.WithinBank.checkTrxn();
+	}
+};
+
+apz.app.onShown_WithinBank = function(params) {
+    var requested_type = $('#bulktr__WithinBank__arrivedPerson').val();
+    apz.bulktr.WithinBank.sCache.request_type = requested_type;
+   
+};
+
+apz.bulktr.WithinBank.checkTrxn = () => {
+debugger;
+	$("#bulktr__WithinBank__el_txt_1").html(apz.bulktr.WithinBank.sCache.appntData.serviceType);
+	$("#bulktr__WithinBank__transfer_table").attr("style","visibility:hidden");
+         $("#bulktr__WithinBank__appntAmount").attr("style","visibility:visible");
+        
+
+
+	switch(apz.bulktr.WithinBank.sCache.appntData.serviceType){
+	case "CASH DEPOSIT":
+		$("#bulktr__WithinBank__FromAccount_grp_lbl").html("To Account");
+		$("#bulktr__WithinBank__FromAccount").val(apz.bulktr.WithinBank.sCache.appntData.toAcc);
+		$("#bulktr__WithinBank__FromAccount").val("150100159221");
+		break;
+	case "CASH WITHDRAWAL":
+		$("#bulktr__WithinBank__FromAccount_grp_lbl").html("From Account");
+		//$("#bulktr__WithinBank__FromAccount").val(apz.bulktr.WithinBank.sCache.appntData.toAcc);
+		$("#bulktr__WithinBank__FromAccount").val("150100159221");
+		break;
+	case "DEMAND DRAFT REQUEST":
+		$("#bulktr__WithinBank__FromAccount_grp_lbl").html("From Account");
+		//$("#bulktr__WithinBank__FromAccount").val(apz.bulktr.WithinBank.sCache.appntData.toAcc);
+		$("#bulktr__WithinBank__FromAccount").val("150100159221");
+		break;
+	default:		
+}
+apz.bulktr.WithinBank.fnGetAccountNo();
+setTimeout(function(){
+
+$("#bulktr__WithinBank__tbwithinbank_add_btn").trigger("click");
+$("#bulktr__WithinBankDetails__i__Details__type_0").trigger("click");
+$("#bulktr__WithinBankDetails__i__Details__type_0").val("Own Account");
+$("#bulktr__WithinBankDetails__i__Details__type_0").trigger("click");
+//$("#bulktr__WithinBankDetails__i__Details__type_0").trigger("change");
+
+
+$("#bulktr__WithinBankDetails__i__Details__benificiaryName_0").trigger("click");
+$("#bulktr__WithinBankDetails__i__Details__benificiaryName_0").trigger("click");
+        
+},1000)
+
+}
+
+apz.bulktr.WithinBank.resetTableContainer = () => {
+    var tableContainer = apz.scrMetaData.containersMap["bulktr__WithinBank__tbwithinbank"]
+    tableContainer.totalRecs = 0;
+    tableContainer.totalPages = 0;
+    tableContainer.pageRows = 0;
+    tableContainer.currRec = -1;
+    tableContainer.currPage = 0;
+}
+   
+
+
+//get customer id
+apz.bulktr.WithinBank.getCustId = function(element) {
+    apz.bulktr.WithinBank.sCache.user_id = apz.getElmValue("bulktr__WithinBank__requested_by");
+
+   
+};
+
+//get account number
+apz.bulktr.WithinBank.fnGetAccountNo = function() {
+    
+    var lfromAccount = apz.getElmValue("bulktr__WithinBank__FromAccount");
+    var serverObject={
+        "callBack":apz.bulktr.WithinBank.fnGetAccountNoCB,
+        "ifaceName":"vwAccountDetails_Query",
+        "buildReq":"N",
+        "req":{
+            "vwaccountdetail":{
+                "accountNo":lfromAccount,
+                "corporateId":apz.bulktr.WithinBank.sCorporateId 
+            }
+        },
+        "paintResp":"N",
+        "appId":"bulktr"
+    }
+    
+    apz.server.callServer(serverObject);
+    
+};
+
+apz.bulktr.WithinBank.fnGetAccountNoCB=res=>{
+    apz.bulktr.WithinBank.viewObject = {
+        signatory: [{val:"",desc:"Select"}],
+        bearer: [{val:"",desc:"Select"}],
+        beneficiary: {},
+        transfertype: [{val:"",desc:"Select"}],
+	    accountDetail:{},
+	    beneficiaryDetail:{}
+    }
+    
+    if(!apz.data.scrdata.bulktr__vwAccountDetails_Res.vwaccountdetail){
+	return;
+    }	
+    	    
+    apz.bulktr.WithinBank.viewObject.accountDetail=apz.data.scrdata.bulktr__vwAccountDetails_Res.vwaccountdetail[0];		
+    
+    apz.data.scrdata.bulktr__vwAccountDetails_Res.vwaccountdetail.forEach((obj) => {
+	
+        if (!apz.bulktr.WithinBank.viewObject.beneficiary[obj.beneficaryType]) {
+            apz.bulktr.WithinBank.viewObject.beneficiary[obj.beneficaryType] = [{val:"",desc:"Select"}];
+        } 
+        if (!apz.bulktr.WithinBank.viewObject.signatory.some(s => s.val == obj.signId)) {
+            apz.bulktr.WithinBank.viewObject.signatory.push({
+                val: obj.signId,
+                desc: obj.signName
+            })
+        }
+        if (!apz.bulktr.WithinBank.viewObject.bearer.some(s => s.val == obj.bearerId)) {
+            apz.bulktr.WithinBank.viewObject.bearer.push({
+                val: obj.bearerId,
+                desc: obj.bearerName
+            })
+        }
+        if (!apz.bulktr.WithinBank.viewObject.transfertype.some(s => s.val == obj.beneficaryType)) {
+            apz.bulktr.WithinBank.viewObject.transfertype.push({
+                val: obj.beneficaryType,
+                desc: obj.beneficaryType
+            })
+        }
+        if (!apz.bulktr.WithinBank.viewObject.beneficiary[obj.beneficaryType].some(s => s.val == obj.beneficaryName)) {
+            apz.bulktr.WithinBank.viewObject.beneficiary[obj.beneficaryType].push({
+                val: obj.beneficaryName,
+                desc: obj.beneficaryName
+            })
+        }
+	apz.bulktr.WithinBank.viewObject.beneficiaryDetail[obj.beneficaryName]=obj;
+
+    });
+
+     apz.bulktr.WithinBank.getRequestedValue({value:"Signatory"});
+	var amount=apz.bulktr.WithinBank.viewObject.accountDetail.accountCurrency + " " + parseFloat(apz.bulktr.WithinBank.viewObject.accountDetail.availableBalance,
+                10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString()
+
+     apz.setHtml("bulktr__WithinBank__current_balance",amount);
+	if(apz.bulktr.WithinBank.sCache.appntData){
+	apz.setHtml("bulktr__WithinBank__current_accountName",apz.bulktr.WithinBank.sCache.appntData.name);
+}else{
+     apz.setHtml("bulktr__WithinBank__current_accountName",apz.bulktr.WithinBank.viewObject.accountDetail.accountName);
+}
+       $("#bulktr__WithinBank__add_requesters,#bulktr__WithinBank__transfer_table,#bulktr__WithinBank__continue_to_verify,#bulktr__WithinBank__current_balance_ul,#bulktr__WithinBank__current_accountName_ul").removeClass("sno");
+     $("#bulktr__WithinBank__sc_row_11").addClass("sno"); 
+}
+
+
+
+apz.bulktr.WithinBank.getRequestedValue=ths=>{
+	var option;	
+	switch(ths.value){
+		case "Signatory":
+			option=apz.bulktr.WithinBank.viewObject.signatory;		
+			break;
+		case "Bearer"	:
+			option=apz.bulktr.WithinBank.viewObject.bearer;		
+			break;
+	}
+	
+	apz.populateDropdown(document.getElementById("bulktr__WithinBank__requested_by"),option);
+	apz.setHtml("bulktr__WithinBank__requested_by_grp_lbl",ths.value+" Id");
+	apz.bulktr.WithinBank.sCache.request_type=ths.value;
+		
+}
+
+
+apz.bulktr.WithinBank.OnchangeFrmAccCB = function(params) {
+
+};
+
+
+
+
+apz.bulktr.WithinBank.fnOnchangeBenAcc=ths=>{
+	var rowIndex=ths.id.split("_").pop();
+	var obj=apz.bulktr.WithinBank.viewObject && apz.bulktr.WithinBank.viewObject.beneficiaryDetail[ths.value];
+	if(ths.value=="Select" && apz.getElmValue("bulktr__WithinBankDetails__i__Details__type_"+rowIndex)=="Intra Bank"){		
+		$("#bulktr__WithinBankDetails__i__Details__toAccount_"+rowIndex).attr("readonly",false);
+		apz.setElmValue("bulktr__WithinBankDetails__i__Details__toAccount_"+rowIndex,"");
+	}else{
+		$("#bulktr__WithinBankDetails__i__Details__toAccount_"+rowIndex).attr("readonly",true);
+	}
+	if(!obj)return;
+	    apz.setElmValue("bulktr__WithinBankDetails__i__Details__bankName_"+rowIndex,obj.bankName);
+	    apz.setElmValue("bulktr__WithinBankDetails__i__Details__emailId_"+rowIndex,obj.emailId);
+	    apz.setElmValue("bulktr__WithinBankDetails__i__Details__toAccount_"+rowIndex,obj.accountNumber);
+
+}
+
+apz.bulktr.WithinBank.fetchbeneficiaryDetails=(ths,eve)=>{
+	var rowIndex=ths.id.split("_").pop();
+	var option=apz.bulktr.WithinBank.viewObject && apz.bulktr.WithinBank.viewObject.beneficiary[ths.value]||[{val:"",desc:"Select"}];
+	if(ths.value=="Intra Bank"){		
+		$("#bulktr__WithinBankDetails__i__Details__toAccount_"+rowIndex).attr("readonly",false);
+		apz.setElmValue("bulktr__WithinBankDetails__i__Details__toAccount_"+rowIndex,"");
+	}else{
+		$("#bulktr__WithinBankDetails__i__Details__toAccount_"+rowIndex).attr("readonly",true);
+	}
+	apz.populateDropdown(document.getElementById("bulktr__WithinBankDetails__i__Details__benificiaryName_"+rowIndex),option);
+	
+setTimeout(function(){
+    
+   var obj=apz.bulktr.WithinBank.viewObject.accountDetail;
+	if(!obj)return;
+	    apz.setElmValue("bulktr__WithinBankDetails__i__Details__currency_"+rowIndex,obj.accountCurrency);
+	    apz.setElmValue("bulktr__WithinBank__FromAccount",obj.accountNo);
+	var beneName=apz.getElmValue("bulktr__WithinBankDetails__i__Details__benificiaryName_"+rowIndex);
+	var beneDetail=apz.bulktr.WithinBank.viewObject.beneficiaryDetail[beneName];
+	if(beneDetail){
+		apz.setElmValue("bulktr__WithinBankDetails__i__Details__toAccount_"+rowIndex,beneDetail.accountNumber);
+		apz.setElmValue("bulktr__WithinBankDetails__i__Details__bankName_"+rowIndex,beneDetail.bankName);
+	   	apz.setElmValue("bulktr__WithinBankDetails__i__Details__emailId_"+rowIndex,beneDetail.emailId);
+	}
+
+
+
+},500);
+
+	
+	
+}
+
+
+
+apz.bulktr.WithinBank.cancel = function() {
+    debugger;
+    $("#bulktr__BulkTransfers__navigator").removeClass('sno');
+    $("#bulktr__BulkTransfers__launchrow").addClass('sno');
+    apz.show("bulktr__BulkTransfers__mainheader");
+};
+
+apz.bulktr.WithinBank.SaveDetails = function() {
+    debugger;
+    var proceed = true;
+    var totalRec = apz.scrMetaData.containersMap['bulktr__WithinBank__tbwithinbank'].totalRecs;
+    if (apz.val.validateContainer("bulktr__WithinBank__tbwithinbank")) {
+        // workflow
+        //  var lscreenData = apz.data.buildData("WithinBankDetails", "bulktr");
+	var tempdata = Object.assign({},apz.bulktr.WithinBank.sCache.appntData);
+        apz.data.buildData("WithinBankDetails", "bulktr");
+	//apz.bulktr.WithinBank.sCache.appntData = tempdata;
+        var lscreenData = {
+            "bulktr__WithinBankDetails_Req": apz.data.scrdata.bulktr__WithinBankDetails_Req
+        };
+        var lfromAccount = apz.getElmValue("bulktr__WithinBank__FromAccount");
+        var lTotAmount = 0;
+        var ldata = [];
+        if (lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details.length > 0) {
+            for (var i = 0; i < lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details.length; i++) {
+                if (lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].type != "") {
+                    lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].fromAccount = lfromAccount;
+			let beneName=lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].benificiaryName;
+			var benenObject=apz.bulktr.WithinBank.viewObject.beneficiaryDetail[beneName];	
+			if(apz.bulktr.WithinBank.sCache.appntData){
+				lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].toAccount="150100159221";
+lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].type = apz.bulktr.WithinBank.sCache.appntData.serviceType;
+lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].benificiaryName = apz.bulktr.WithinBank.sCache.appntData.name;
+lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].emailId = apz.bulktr.WithinBank.sCache.appntData.emailId;
+lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].bankName="Kotak Bank";
+			lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].currency="INR";
+			lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].amount = $("#bulktr__WithinBank__el_inp_2").val();
+			}
+			else if(benenObject){
+			lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].toAccount=benenObject.accountNumber;
+			lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].emailId=benenObject.emailId;
+			lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].bankName=benenObject.accountName;
+			lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].currency=benenObject.accountCurrency;
+			}
+                    lTotAmount = lTotAmount + parseFloat(lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i].amount);
+                    ldata.push(lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details[i]);
+                    //ldata[i].fromAccount = lfromAccount;
+                }
+            }
+            lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.Details = ldata;
+        }
+        lscreenData.bulktr__WithinBankDetails_Req.TxnMaster.amount = lTotAmount;
+        var taskObj = {};
+        taskObj.workflowId = "TFTR";
+        taskObj.status = "U";
+        taskObj.taskType = "WITHINBANK_DETAILS";
+        taskObj.versionNo = "1";
+        taskObj.screenData = JSON.stringify(lscreenData);
+        taskObj.action = "";
+        taskObj.referenceId = apz.bulktr.WithinBank.sCorporateId + "__" + apz.Login.sUserId;
+        taskObj.taskDesc = taskObj.referenceId + "'s Funds Transfer details have been submitted";
+        var lUserObj = {};
+        lUserObj.taskDetails = taskObj;
+        lUserObj.callBack = apz.bulktr.WithinBank.workflowMicroServiceCB;
+        lUserObj.operation = "NEWWORKFLOW";
+        var lParams = {
+            "appId": "acwf01",
+            "scr": "WorkFlow",
+            "div": "bulktr__WithinBank__launchMicroService",
+            "layout": "All",
+            "type": "CF",
+            "userObj": lUserObj
+        };
+        apz.launchApp(lParams);
+    } else if (!apz.val.validateContainer("bulktr__WithinBank__tbwithinbank")) {
+        apz.dispMsg({
+            "message": "Please provide value for mandatory field(s)",
+            "type": "E"
+        });
+    }
+};
+apz.bulktr.WithinBank.workflowMicroServiceCB = function(pNextStageObj) {
+    debugger;
+    apz.currAppId = "bulktr";
+    if (pNextStageObj.tbDbmiWorkflowMaster.status != "COMPLETED") {
+        if (pNextStageObj.tbDbmiWorkflowMaster.stageType == "USERTASK") {
+            /*    if (pNextStageObj.stageAccess) {
+                if (apz.getElmValue("bulktr__WithinBank__arrivedPerson") != "Signatory") {
+                    apz.bulktr.WithinBank.generateBitlyUrl();
+                    var lmsg = {
+                        "message": "A link is sent to the registered customer for verification",
+                        "type": "S",
+                        "callBack": apz.bulktr.WithinBank.onSuccessCallback
+                    };
+                    apz.dispMsg(lmsg);
+                } else {*/
+            var lReqObj = {};
+            lReqObj.currentTask = pNextStageObj.tbDbmiWorkflowMaster;
+            lReqObj.currentWfDetails = pNextStageObj.tbDbmiWorkflowDetail;
+            lReqObj.destroyDiv = apz.bulktr.WithinBank.sCache.destroyDiv;
+            lReqObj.arrivedPerson = apz.getElmValue("bulktr__WithinBank__arrivedPerson");
+            lReqObj.userinfo = {};
+            lReqObj.userinfo.id = apz.bulktr.WithinBank.sCache.user_id;
+            lReqObj.userinfo.type = apz.bulktr.WithinBank.sCache.request_type;
+	    lReqObj.accopAppData = apz.bulktr.WithinBank.sCache.appntData;
+            var lParams = {
+                "appId": lReqObj.currentWfDetails.appId,
+                "scr": lReqObj.currentWfDetails.screenId,
+                "userObj": lReqObj,
+                "div": apz.bulktr.WithinBank.sCache.destroyDiv,
+                "layout": "All",
+                "arrivedPerson": apz.getElmValue("bulktr__WithinBank__arrivedPerson")
+            };
+            apz.launchSubScreen(lParams);
+            //  }
+            //  }
+        }
+    }
+};
+apz.bulktr.WithinBank.fnScanAndUpload = function() {
+    var lParams = {
+        "appId": "upldoc",
+        "scr": "UploadDocument",
+        "div": "scr__bulktr__WithinBank__main",
+        "userObj": {
+            "callBack": apz.bulktr.WithinBank.fnScanAndUploadCB,
+            "onOCRUPloadCBmethod": apz.bulktr.WithinBank.fnScanAndUploadCB,
+            "backFunction": apz.bulktr.WithinBank.fnBackToInput,
+            "destroyDiv": apz.bulktr.WithinBank.sCache.destroyDiv,
+            "parentAppId": apz.bulktr.WithinBank.sCache.parentAppId
+        }
+    }
+    apz.launchApp(lParams);
+};
+apz.bulktr.WithinBank.fnScanAndUploadCB = function(params, lLaunch) {
+    debugger;
+    var lparams = {};
+    lparams.appId = "bulktr";
+    lparams.scr = "WithinBank";
+    lparams.layout = "All";
+    lparams.div = lLaunch.destroyDiv;
+    $("#bulktr__BulkTransfers__launchrow").removeClass('sno');
+    lparams.userObj = {
+        "data": {
+            "tfrDtls": params,
+            "fromOCR": true
+        },
+        "destroyDiv": apz.bulktr.WithinBank.sCache.destroyDiv,
+        "parentAppId": apz.bulktr.WithinBank.sCache.parentAppId
+    }
+    apz.launchApp(lparams);
+};
+apz.bulktr.WithinBank.fnBackToInput = function() {
+    debugger;
+    var lParams = {
+        "appId": "bulktr",
+        "scr": "WithinBank",
+        "div": apz.bulktr.WithinBank.sCache.destroyDiv,
+        "animation": 9,
+        "type": "CF",
+        "userObj": {
+            "data": {},
+            "destroyDiv": apz.bulktr.WithinBank.sCache.destroyDiv,
+            "parentAppId": apz.bulktr.WithinBank.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.bulktr.WithinBank.fnExcelUpload = function() {
+    debugger;
+    var lParams = {
+        "appId": "upldoc",
+        "scr": "UploadXLDocument",
+        "div": "scr__bulktr__WithinBank__main",
+        "userObj": {
+            "callBack": apz.bulktr.WithinBank.fnExcelUploadCB,
+            "onXLUPloadCBmethod": apz.bulktr.WithinBank.fnExcelUploadCB,
+            "backFunction": apz.bulktr.WithinBank.fnBackToInput,
+            "destroyDiv": apz.bulktr.WithinBank.sCache.destroyDiv,
+            "parentAppId": apz.bulktr.WithinBank.sCache.parentAppId
+        }
+    }
+    apz.launchApp(lParams);
+};
+apz.bulktr.WithinBank.fnExcelUploadCB = function(params, lLaunch) {
+    debugger;
+    var lparams = {};
+    lparams.appId = "bulktr";
+    lparams.scr = "WithinBank";
+    lparams.layout = "All";
+    lparams.div = lLaunch.destroyDiv;
+    $("#bulktr__BulkTransfers__launchrow").removeClass('sno');
+    lparams.userObj = {
+        "data": {
+            "tfrDtls": params,
+            "fromOCR": true
+        },
+        "destroyDiv": apz.bulktr.WithinBank.sCache.destroyDiv,
+        "parentAppId": apz.bulktr.WithinBank.sCache.parentAppId
+    }
+    apz.launchApp(lparams);
+};
+
+
+
+
+apz.bulktr.WithinBank.fnInitialize = function(params) {
+        //$("#bulktr__WithinBank__tbwithinbank_add_btn").click();
+        apz.bulktr.WithinBank.xlJson = params;
+        if (params != undefined) {
+            if (!apz.isNull(params.data)) {
+                if (!apz.isNull(params.data.fromOCR)) {
+                    if (params.data.fromOCR) {
+                        if (params.data.tfrDtls && params.data.tfrDtls.length) {
+                            apz.bulktr.WithinBank.sCache.accountCurrency = params.data.tfrDtls[0].currency;
+                            apz.scrMetaData.containersMap["bulktr__WithinBank__tbwithinbank"].pageRows = 0;
+                        }
+                        for (var i = 0; i < params.data.tfrDtls.length; i++) {
+                            apz.data.createRow('bulktr__WithinBank__tbwithinbank');
+                            $("#bulktr__WithinBank__tbwithinbank_row_" + i).click();
+                            if (i == 0) {
+                                apz.setElmValue("bulktr__WithinBank__FromAccount", params.data.tfrDtls[i].fromAccount);
+                                $("#bulktr__WithinBank__el_btn_5").click();
+                            }
+                            apz.setElmValue("bulktr__WithinBankDetails__i__Details__type_" + i, params.data.tfrDtls[i].type);
+                            apz.setElmValue("bulktr__WithinBankDetails__i__Details__toAccount_" + i, params.data.tfrDtls[i].toAccount);
+                            apz.setElmValue("bulktr__WithinBankDetails__i__Details__amount_" + i, params.data.tfrDtls[i].amount);
+ 				apz.setElmValue("bulktr__WithinBankDetails__i__Details__currency_" + i, params.data.tfrDtls[i].amount);
+                        }
+                        apz.data.scrdata.bulktr__WithinBankDetails_Req = {};
+                        apz.data.scrdata.bulktr__WithinBankDetails_Req.TxnMaster = {};
+                        apz.data.scrdata.bulktr__WithinBankDetails_Req.TxnMaster.Details = params.data.tfrDtls;
+                        apz.data.loadData("WithinBankDetails", "bulktr");
+                        apz.bulktr.WithinBank.sCache = {};
+                    }
+                }
+            }
+        } else {
+            apz.data.createRow('bulktr__WithinBank__tbwithinbank');
+        }
+        //apz.data.createRow('bulktr__WithinBank__tbwithinbank');
+        apz.setElmValue("bulktr__WithinBank__FromAccount", apz.getElmValue("bulktr__WithinBankDetails__i__Details__fromAccount_0"));
+        apz.setElmValue("bulktr__WithinBankDetails__i__TxnMaster__appId", apz.currAppId);
+        apz.setElmValue("bulktr__WithinBankDetails__i__TxnMaster__userId", apz.Login.sCorporateId);
+        apz.setElmValue("bulktr__WithinBankDetails__i__TxnMaster__customerId", apz.Login.sCorporateId);
+        apz.setElmValue("bulktr__WithinBankDetails__i__TxnMaster__txnType", "TFTR");
+        apz.setElmValue("bulktr__WithinBankDetails__i__TxnMaster__txnStatus", "INPUT");
+    };
+
+
+apz.bulktr.WithinBank.onSuccessCallback = function() {
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": apz.bulktr.WithinBank.sCache.destroyDiv,
+        "layout": "All",
+        "type": "CF",
+        "userObj": {
+            "destroyDiv": apz.bulktr.WithinBank.sCache.destroyDiv,
+            "parentAppId": apz.bulktr.WithinBank.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+}

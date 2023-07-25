@@ -1,0 +1,58 @@
+{
+    "authma__AccountGroup_Res":[
+        {
+            "name":"Expenses",
+            "description":"Expenses accounts",
+            "active":"Yes",
+            "details":[
+                {
+                    "acc_type":"Savings",
+                    "acc_no":"47585936513712",
+                    "access_rights":"Authorize"
+                },{
+                    "acc_type":"Checkings",
+                    "acc_no":"7356329872139",
+                    "access_rights":"Authorize"
+                }
+                ]
+        },{
+            "name":"Receivables",
+            "description":"Receivable accounts",
+            "active":"Yes",
+            "details":[
+                {
+                    "acc_type":"Checkings",
+                    "acc_no":"5785936513734",
+                    "access_rights":"Authorize"
+                }
+                ]
+        },{
+            "name":"Operating Capital",
+            "description":"Operating capital accounts",
+            "active":"Yes",
+            "details":[
+                {
+                    "acc_type":"Savings",
+                    "acc_no":"47585936513712",
+                    "access_rights":"Authorize"
+                    
+                },{
+                    "acc_type":"Checkings",
+                    "acc_no":"5785936513734",
+                    "access_rights":"Authorize"
+                }
+                ]
+        },{
+            "name":"Escrow",
+            "description":"Escrow accounts",
+            "active":"Yes",
+            "details":[
+                {
+                    "acc_type":"Checkings",
+                    "acc_no":"8274239482711",
+                    "access_rights":"Authorize"
+                }
+                ]
+        }
+        ]
+}

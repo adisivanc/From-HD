@@ -1,0 +1,46 @@
+[{
+    "STATUS": "PENDING APPROVAL",
+    "workflow_ref_no": "CONSONB3021573586085",
+    "start_ts": "15/02/2020",
+    "product":"Accounts",
+    "subproduct":"Savings Account",
+    "STAGE_ID":"RM001"
+    
+},{
+    "STATUS": "PENDING APPROVAL",
+    "workflow_ref_no": "CONSONB3021573586086",
+    "start_ts": "12/02/2020",
+    "product":"Loans",
+    "subproduct":"Home Loan",
+    "STAGE_ID":"RM001"
+},{
+    "STATUS": "INITIATED",
+    "workflow_ref_no": "CONSONB3021573586085",
+    "start_ts": "15/02/2020",
+    "product":"Accounts",
+    "subproduct":"Savings Account",
+    "STAGE_ID":"RM001"
+    
+},{
+    "STATUS": "REJECTED",
+    "workflow_ref_no": "CONSONB3021573586086",
+    "start_ts": "12/02/2020",
+    "product":"Loans",
+    "subproduct":"Home Loan",
+    "STAGE_ID":"RM001"
+},{
+    "STATUS": "INITIATED",
+    "workflow_ref_no": "CONSONB3021573586085",
+    "start_ts": "15/02/2020",
+    "product":"Accounts",
+    "subproduct":"Savings Account",
+    "STAGE_ID":"RM001"
+    
+},{
+    "STATUS": "APPROVED",
+    "workflow_ref_no": "CONSONB3021573586086",
+    "start_ts": "12/02/2020",
+    "product":"Loans",
+    "subproduct":"Home Loan",
+    "STAGE_ID":"RM001"
+}]

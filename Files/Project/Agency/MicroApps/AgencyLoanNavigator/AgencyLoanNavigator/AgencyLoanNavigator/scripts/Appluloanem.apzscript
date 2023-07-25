@@ -1,0 +1,752 @@
+apz.agloan.Appluloanem = {};
+apz.agloan.Appluloanem.sCache = {};
+apz.agloan.Appluloanem.currentTab = "Employee"
+apz.agloan.Appluloanem.sParams = {};
+apz.agloan.currentFieldVal = "";
+apz.agloan.Appluloanem.saveIt = false;
+apz.app.onLoad_Appluloanem = function(params) {
+    apz.agloan.Appluloanem.manageHeaders();
+    apz.dateFormat = "dd/MMM/yyyy"
+    apz.agloan.Appluloanem.sparams = params;
+    apz.setElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__refno", params.refNo);
+    apz.agloan.Appluloanem.loanScrdata = params.loanScrdata;
+    apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan = params.loanScrdata;
+    apz.agloan.Appluloanem.fetchApplicationDetails();
+};
+apz.app.onShown_Appluloanem = function(params) {
+    debugger;
+    var additionalIncome = apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.additionalincomesource;
+    if (apz.country === "IND") {
+        if (additionalIncome === "Yes") {
+            $("#agloan__Appluloanem__income_row").removeClass("sno");
+            $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__additionalincomeamount_ul").addClass("sno");
+            apz.agloan.Appluloanem.fnGetIncomeDetails();
+        } else {
+            $("#agloan__Appluloanem__income_row").addClass("sno");
+        }
+    } else {
+        if (additionalIncome === "Yes") {
+            $("#agloan__Appluloanem__income_row").addClass("sno");
+            $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__additionalincomeamount_ul").removeClass("sno");
+        } else {
+            $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__additionalincomeamount_ul").addClass("sno");
+        }
+    }
+    var monthlyDebtObligation = apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.monthlydeptobligation;
+    if (apz.country === "IND" && monthlyDebtObligation === "Yes") {
+        if (monthlyDebtObligation == "Yes") {
+            $("#agloan__Appluloanem__gr_row_5").removeClass("sno");
+            $("#agloan__Appluloanem__sc_row_152").addClass("sno");
+            apz.agloan.Appluloanem.fnGetCardDetails();
+        } else {
+            $("#agloan__Appluloanem__gr_row_5").addClass("sno");
+        }
+    } else {
+        if (monthlyDebtObligation == "Yes") {
+            $("#agloan__Appluloanem__sc_row_152").removeClass("sno");
+            $("#agloan__Appluloanem__gr_row_5").addClass("sno");
+        } else {
+            $("#agloan__Appluloanem__sc_row_152").addClass("sno");
+        }
+    }
+    apz.appdtl.currenctScreen = "appluloanem";
+    if (apz.agloan.Appluloanem.sparams.subproduct === 'Home Loan') {
+        $('.mortgageLoan').removeClass('sno');
+    } else {
+        $('#agloan__Appluloanem__ps_pls_6_li').addClass('sno');
+    }
+    apz.agloan.Appluloanem.saveIt = true;
+    $("#agloan__Appluloanem__employment_loan_details input").each(function() {
+        $(this).change(function() {
+            var type = $(this).attr("type");
+            if (apz.agloan.Appluloanem.saveIt && type != "radio") {
+                var val = apz.getElmValue(this.id);
+                if (val.length <= 0 && apz.agloan.currentFieldVal.length > 0) { //empty on change
+                    apz.appdtl.productFieldsCount = apz.appdtl.productFieldsCount + 1;
+                    apz.appdtl.productFieldPercentage = apz.appdtl.productFieldPercentage - apz.appdtl.productPercentageValue;
+                } else if (val.length > 0 && apz.agloan.currentFieldVal.length <= 0) { //filled on change
+                    apz.appdtl.productFieldsCount = apz.appdtl.productFieldsCount - 1;
+                    apz.appdtl.productFieldPercentage = apz.appdtl.productFieldPercentage + apz.appdtl.productPercentageValue;
+                }
+                apz.setElmValue("appdtl__AppLauncher__product_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.productFieldsCount);
+                $("#appdtl__AppLauncher__prod_slider").roundSlider("option", "value", apz.appdtl.productFieldPercentage);
+            }
+        })
+        $(this).focus(function() {
+            apz.agloan.currentFieldVal = apz.getElmValue(this.id);
+        })
+    });
+    debugger;
+    if (apz.appdtl.productEmpManageFilled) {
+        apz.agloan.Appluloanem.manageFieldsFilled("agloan__Appluloanem__employment_loan_details");
+        apz.appdtl.productEmpManageFilled = false;
+    }
+}
+apz.agloan.Appluloanem.manageFieldsFilled = function(param) {
+    debugger;
+    var id = "#" + param + " " + "input";
+    $(id).each(function() {
+        var val = apz.getElmValue(this.id);
+        debugger;
+        var isParent8Hidden = $("#" + this.id).parent().parent().parent().parent().parent().parent().parent().parent().hasClass("sno");
+        var isParent7Hidden = $("#" + this.id).parent().parent().parent().parent().parent().parent().parent().hasClass("sno");
+        var isParent6Hidden = $("#" + this.id).parent().parent().parent().parent().parent().parent().hasClass("sno");
+        var isParent5Hidden = $("#" + this.id).parent().parent().parent().parent().parent().hasClass("sno");
+        var isParent4Hidden = $("#" + this.id).parent().parent().parent().parent().hasClass("sno");
+        var isParent3Hidden = $("#" + this.id).parent().parent().parent().hasClass("sno");
+        var isParent2Hidden = $("#" + this.id).parent().parent().hasClass("sno");
+        var isParent1Hidden = $("#" + this.id).parent().hasClass("sno");
+        var isHidden = $("#" + this.id).hasClass("sno");
+        var type = $(this).attr("type");
+        if (type != "radio" && val != "" && type != "CHECKBOX" && !isHidden && !isParent1Hidden && !isParent2Hidden && !isParent3Hidden && !
+            isParent4Hidden && !isParent5Hidden && !isParent6Hidden && !isParent7Hidden && !isParent8Hidden) {
+            apz.appdtl.productFieldsCount = apz.appdtl.productFieldsCount - 1;
+            apz.appdtl.productFieldPercentage = apz.appdtl.productFieldPercentage + apz.appdtl.productPercentageValue;
+        }
+    });
+    apz.setElmValue("appdtl__AppLauncher__product_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.productFieldsCount);
+    $("#appdtl__AppLauncher__prod_slider").roundSlider("option", "value", apz.appdtl.productFieldPercentage);
+}
+apz.agloan.Appluloanem.manageHeaders = function() {
+    $("#appdtl__AppLauncher__product_div").addClass('active');
+    $("#appdtl__AppLauncher__document_div").removeClass('active');
+}
+apz.agloan.Appluloanem.fetchApplicationDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ProductLoanDetails_Query",
+        "buildReq": "N",
+        "appId": "agloan",
+        "req": {
+            "tbDbmiProductLoan": {
+                "refno": apz.agloan.Appluloanem.sparams.refNo
+            }
+        },
+        "paintResp": "Y",
+        "callBack": apz.agloan.Appluloanem.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.agloan.Appluloanem.fetchApplicationDetailsCB = function(params) {
+    debugger;
+    apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan = params.res.agloan__ProductLoanDetails_Req.tbDbmiProductLoan;
+    //apz.setElmValue("prddtl__ProductAccountDetails__i__tbDbmiAccountProduct__productname", apz.agloan.Appluloanem.sCache.product);
+    apz.setElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__refno", apz.agloan.Appluloanem.sparams.refNo);
+    var lParams = {
+        "ifaceName": "CustomerDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                "refNo": apz.agloan.Appluloanem.sparams.refNo
+            }
+        },
+        "appId": "agloan",
+        "paintResp": "Y",
+        "callBack": apz.agloan.Appluloanem.fetchCustomerDetailsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.agloan.Appluloanem.fetchCustomerDetailsCB = function(pResp) {
+    debugger;
+    if (!apz.isNull(pResp.res.agloan__CustomerDetails_Req)) {
+        apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.employmentstatus = pResp.res.agloan__CustomerDetails_Req.tbDbmiCustomerMaster
+            .profession;
+        apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.currentoccupation = pResp.res.agloan__CustomerDetails_Req.tbDbmiCustomerMaster
+            .occupation;
+    } else {
+        apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.employmentstatus = pResp.res.agloan__CustomerDetails_Res.tbDbmiCustomerMaster
+            .profession;
+        apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.currentoccupation = pResp.res.agloan__CustomerDetails_Res.tbDbmiCustomerMaster
+            .occupation;
+    }
+    apz.data.loadData("ProductLoanDetails", "agloan");
+    apz.agloan.Appluloanem.fnGetIncomeDetails();
+}
+apz.agloan.Appluloanem.fnGetIncomeDetails = function() {
+    var lParams = {
+        "ifaceName": "IncomeDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiIncomeDetails": {
+                "refno": apz.agloan.Appluloanem.sparams.refNo
+            }
+        },
+        "appId": "agloan",
+        "paintResp": "Y",
+        "callBack": apz.agloan.Appluloanem.fnGetIncomeDetailsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.agloan.Appluloanem.fnGetIncomeDetailsCB = function(params) {
+    debugger;
+    //Clearly data comes here
+    /*apz.data.scrdata.agloan__IncomeDetails_Req = {
+        tbDbmiIncomeDetails: []
+    }
+    if (params.status && params.errors === undefined) {
+        apz.data.scrdata.agloan__IncomeDetails_Req.tbDbmiIncomeDetails = params.res.agloan__IncomeDetails_Req.tbDbmiIncomeDetails;
+    }
+    apz.data.loadData("IncomeDetails", "agloan");*/
+}
+apz.agloan.Appluloanem.fnGetCardDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ExitingCardDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiExitCeditCardDetails": {
+                "refno": apz.agloan.Appluloanem.sparams.refNo
+            }
+        },
+        "appId": "agloan",
+        "paintResp": "Y",
+        "callBack": apz.agloan.Appluloanem.fnGetCardDetailsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.agloan.Appluloanem.fnGetCardDetailsCB = function(params) {
+    debugger;
+    /*apz.data.scrdata.agloan__ExitingCardDetails_Req = {
+        tbDbmiExitCeditCardDetails: []
+    }
+    if (params.status && params.errors === undefined) {
+        apz.data.scrdata.agloan__ExitingCardDetails_Req.tbDbmiExitCeditCardDetails = params.res.agloan__ExitingCardDetails_Req.tbDbmiExitCeditCardDetails;
+    }
+    apz.data.loadData("ExitingCardDetails", "agloan");*/
+    apz.agloan.Appluloanem.fnGetLoanDetails();
+}
+apz.agloan.Appluloanem.fnGetLoanDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ExitingLoanDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiExitLoanDetails": {
+                "refno": apz.agloan.Appluloanem.sparams.refNo
+            }
+        },
+        "appId": "agloan",
+        "paintResp": "Y",
+        "callBack": apz.agloan.Appluloanem.fnGetLoanDetailsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.agloan.Appluloanem.fnGetLoanDetailsCB = function(params) {
+    debugger;
+    /*apz.data.scrdata.agloan__ExitingLoanDetails_Req = {
+        tbDbmiExitLoanDetails: []
+    }
+    if (params.status && params.errors === undefined) {
+        apz.data.scrdata.agloan__ExitingLoanDetails_Req.tbDbmiExitLoanDetails = params.res.agloan__ExitingLoanDetails_Req.tbDbmiExitLoanDetails;
+    }
+    apz.data.loadData("ExitingLoanDetails", "agloan");*/
+}
+apz.agloan.Appluloanem.fnFloatMobileNo = function(el) {
+    var digits = el.value.match(/\d{1,10}/) || [""];
+    el.value = digits[0];
+}
+apz.agloan.Appluloanem.saveApplicationDetails = function() {
+    debugger;
+    apz.agloan.Appluloanem.fnDeleteLoanDetails();
+};
+apz.agloan.Appluloanem.fnDeleteLoanDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ProductLoanDetails_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiProductLoan": {
+                "refno": apz.agloan.Appluloanem.sparams.refNo
+            }
+        },
+        "appId": "agloan",
+        "paintResp": "N",
+        "callBack": apz.agloan.Appluloanem.fnInsertLoanDetails
+    }
+    apz.server.callServer(lParams);
+};
+apz.agloan.Appluloanem.fnInsertLoanDetails = function(pResp) {
+    debugger;
+    var lParams = {
+        "ifaceName": "ProductLoanDetails_New",
+        "buildReq": "Y",
+        "appId": "agloan",
+        "paintResp": "Y",
+        "callBack": apz.agloan.Appluloanem.fnInsertLoanDetailsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.agloan.Appluloanem.fnInsertLoanDetailsCB = function(params) {
+    var callfunction = true;
+    if (apz.country === "IND" && apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.additionalincomesource === "Yes") {
+        callfunction = false;
+        apz.agloan.Appluloanem.fnDeleteIncomeDetails();
+    }
+    if (callfunction) {
+        if (apz.country === "IND" && apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.monthlydeptobligation === "Yes") {
+            apz.agloan.Appluloanem.fnDeleteExitLoanDetails();
+        } else {
+            //apz.agloan.LoanLauncher.fnLaunchSubScreen();
+        }
+    }
+}
+apz.agloan.Appluloanem.fnDeleteIncomeDetails = function() {
+    apz.data.buildData("IncomeDetails", "agloan");
+    apz.agloan.Appluloanem.incomeScrdata = apz.data.scrdata.agloan__IncomeDetails_Req.tbDbmiIncomeDetails;
+    var lParams = {
+        "ifaceName": "IncomeDetails_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiIncomeDetails": {
+                "refno": apz.agloan.Appluloanem.sparams.refNo
+            }
+        },
+        "appId": "agloan",
+        "paintResp": "N",
+        "callBack": apz.agloan.Appluloanem.fnInsertIncomeDetails
+    }
+    apz.server.callServer(lParams);
+}
+// apz.agloan.Appluloanem.incomeDetail;
+apz.agloan.Appluloanem.fnInsertIncomeDetails = function(pResp) {
+    debugger;
+    var incomeDetail = apz.data.scrdata.agloan__IncomeDetails_Req.tbDbmiIncomeDetails = apz.agloan.Appluloanem.incomeScrdata;
+    var incomeArray = [];
+    for (var i = 0, len = incomeDetail.length; i < len; i++) {
+        var obj = {
+            "refno": apz.agloan.Appluloanem.sparams.refNo,
+            "loanid": +new Date() + i,
+            "bankName": apz.getElmValue("agloan__IncomeDetails__i__tbDbmiIncomeDetails__bankName_" + i),
+            "branch": apz.getElmValue("agloan__IncomeDetails__i__tbDbmiIncomeDetails__branch_" + i),
+            "accountNo": apz.getElmValue("agloan__IncomeDetails__i__tbDbmiIncomeDetails__accountNo_" + i),
+            "accountType": apz.getElmValue("agloan__IncomeDetails__i__tbDbmiIncomeDetails__accountType_" + i)
+        }
+        incomeArray.push(obj);
+    }
+    var lParams = {
+        "ifaceName": "IncomeDetails_New",
+        "buildReq": "N",
+        "appId": "agloan",
+        "req": {
+            "tbDbmiIncomeDetails": incomeArray
+        },
+        "paintResp": "N",
+        "callBack": apz.agloan.Appluloanem.fnInsertIncomeDetailsCB
+    }
+    apz.agloan.Appluloanem.incomeScrdata = incomeArray;
+    apz.server.callServer(lParams);
+}
+apz.agloan.Appluloanem.fnInsertIncomeDetailsCB = function(params) {
+    debugger;
+    apz.data.scrdata.agloan__IncomeDetails_Req.tbDbmiIncomeDetails = apz.agloan.Appluloanem.incomeScrdata;
+    apz.data.buildData("IncomeDetails", "agloan");
+    if (apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.monthlydeptobligation === "Yes") {
+        apz.agloan.Appluloanem.fnDeleteExitLoanDetails();
+    } else {
+        //apz.agloan.LoanLauncher.fnLaunchSubScreen();
+    }
+}
+apz.agloan.Appluloanem.fnDeleteExitLoanDetails = function() {
+    apz.data.buildData("ExitingLoanDetails", "agloan");
+    if (apz.data.scrdata.agloan__ExitingLoanDetails_Req && apz.data.scrdata.agloan__ExitingLoanDetails_Req.tbDbmiExitLoanDetails) {
+        apz.agloan.Appluloanem.exitLoanScrdata = apz.data.scrdata.agloan__ExitingLoanDetails_Req.tbDbmiExitLoanDetails;
+        var lParams = {
+            "ifaceName": "ExitingLoanDetails_Delete",
+            "buildReq": "N",
+            "req": {
+                "tbDbmiExitLoanDetails": {
+                    "refno": apz.agloan.Appluloanem.sparams.refNo
+                }
+            },
+            "appId": "agloan",
+            "paintResp": "N",
+            "callBack": apz.agloan.Appluloanem.fnInsertExitLoanDetails
+        }
+        apz.server.callServer(lParams);
+    }
+}
+apz.agloan.Appluloanem.fnInsertExitLoanDetails = function(pResp) {
+    debugger;
+    var exitLoanDetail = apz.data.scrdata.agloan__ExitingLoanDetails_Req.tbDbmiExitLoanDetails = apz.agloan.Appluloanem.exitLoanScrdata;
+    var exitLoanArray = [];
+    for (var i = 0, len = exitLoanDetail.length; i < len; i++) {
+        var obj = {
+            "refno": apz.agloan.Appluloanem.sparams.refNo,
+            "loanid": +new Date() + i,
+            "nameOfInstitution": apz.getElmValue("agloan__ExitingLoanDetails__i__tbDbmiExitLoanDetails__nameOfInstitution_" + i),
+            "loanType": apz.getElmValue("agloan__ExitingLoanDetails__i__tbDbmiExitLoanDetails__loanType_" + i),
+            "sanctionedAmount": apz.getElmValue("agloan__ExitingLoanDetails__i__tbDbmiExitLoanDetails__sanctionedAmount_" + i),
+            "presentOutstanding": apz.getElmValue("agloan__ExitingLoanDetails__i__tbDbmiExitLoanDetails__presentOutstanding_" + i),
+            "tenor": apz.getElmValue("agloan__ExitingLoanDetails__i__tbDbmiExitLoanDetails__tenor_" + i),
+            "emi": apz.getElmValue("agloan__ExitingLoanDetails__i__tbDbmiExitLoanDetails__emi_" + i)
+        }
+        exitLoanArray.push(obj);
+    }
+    var lParams = {
+        "ifaceName": "ExitingLoanDetails_New",
+        "buildReq": "N",
+        "appId": "agloan",
+        "req": {
+            "tbDbmiExitLoanDetails": exitLoanArray
+        },
+        "paintResp": "N",
+        "callBack": apz.agloan.Appluloanem.fnInsertExitLoanDetailsCB
+    }
+    apz.agloan.Appluloanem.exitLoanScrdata = exitLoanArray;
+    apz.server.callServer(lParams);
+}
+apz.agloan.Appluloanem.fnInsertExitLoanDetailsCB = function(params) {
+    debugger;
+    apz.data.scrdata.agloan__ExitingLoanDetails_Req.tbDbmiExitLoanDetails = apz.agloan.Appluloanem.exitLoanScrdata;
+    apz.data.buildData("ExitingLoanDetails", "agloan");
+    apz.agloan.Appluloanem.fnDeleteExitCardDetails();
+}
+apz.agloan.Appluloanem.fnDeleteExitCardDetails = function() {
+    apz.data.buildData("ExitingCardDetails", "agloan");
+    apz.agloan.Appluloanem.exitCardScrdata = apz.data.scrdata.agloan__ExitingCardDetails_Req.tbDbmiExitCeditCardDetails;
+    var lParams = {
+        "ifaceName": "ExitingCardDetails_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiExitCeditCardDetails": {
+                "refno": apz.agloan.Appluloanem.sparams.refNo
+            }
+        },
+        "appId": "agloan",
+        "paintResp": "N",
+        "callBack": apz.agloan.Appluloanem.fnInsertExitCardDetails
+    }
+    apz.server.callServer(lParams);
+}
+apz.agloan.Appluloanem.fnInsertExitCardDetails = function(pResp) {
+    debugger;
+    var exitCardDetail = apz.data.scrdata.agloan__ExitingCardDetails_Req.tbDbmiExitCeditCardDetails = apz.agloan.Appluloanem.exitCardScrdata;
+    var exitCardArray = [];
+    for (var i = 0, len = exitCardDetail.length; i < len; i++) {
+        var obj = {
+            "refno": apz.agloan.Appluloanem.sparams.refNo,
+            "loanid": +new Date() + i,
+            "creditCardNumber": apz.getElmValue("agloan__ExitingCardDetails__i__tbDbmiExitCeditCardDetails__creditCardNumber_" + i),
+            "bankName": apz.getElmValue("agloan__ExitingCardDetails__i__tbDbmiExitCeditCardDetails__bankName_" + i)
+        }
+        exitCardArray.push(obj);
+    }
+    var lParams = {
+        "ifaceName": "ExitingCardDetails_New",
+        "buildReq": "N",
+        "appId": "agloan",
+        "req": {
+            "tbDbmiExitCeditCardDetails": exitCardArray
+        },
+        "paintResp": "N",
+        "callBack": apz.agloan.Appluloanem.fnInsertExitCardDetailsCB
+    }
+    apz.agloan.Appluloanem.exitCardScrdata = exitCardArray;
+    apz.server.callServer(lParams);
+}
+apz.agloan.Appluloanem.fnInsertExitCardDetailsCB = function(params) {
+    debugger;
+    apz.data.scrdata.agloan__ExitingCardDetails_Req.tbDbmiExitCeditCardDetails = apz.agloan.Appluloanem.exitCardScrdata;
+    apz.data.buildData("ExitingCardDetails", "agloan");
+    //apz.agloan.LoanLauncher.fnLaunchSubScreen();
+}
+apz.agloan.Appluloanem.goForward = function() {
+    //apz.agloan.Appluloanem.fnCallNextStateWorkFlow();
+    var params = {};
+    params.appId = "appsum";
+    params.scr = "SummaryLauncher";
+    params.div = "appdtl__ProductLauncher__productlauncher";
+    params.userObj = {
+        "product": apz.agloan.Appluloanem.sparams.product,
+        "subproduct": apz.agloan.Appluloanem.sparams.subproduct,
+        "refNo": apz.agloan.Appluloanem.sparams.refNo
+    }
+    apz.launchApp(params);
+}
+apz.agloan.Appluloanem.fnCallNextStateWorkFlow = function() {
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "agloan",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.agloan.Appluloanem.sparams.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "SUBMIT"
+        },
+        "paintResp": "N",
+        "callBack": apz.agloan.Appluloanem.fnNexttWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.agloan.Appluloanem.fnNexttWorkflowCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        if (apz.appId == "soprab") {
+            var params = {};
+            params.appId = "agloan";
+            params.scr = "SuccessScreen";
+            params.div = "appdtl__ProductLauncher__productlauncher";
+            params.userObj = {
+                "message": "The application has been Approved successfull.",
+                "refNo": "Your reference number is " + apz.prddtl.ProductInfo.lRefNo
+            }
+            apz.launchSubScreen(params);
+        } else {
+            var params = {};
+            params.appId = "agloan";
+            params.scr = "SuccessScreen";
+            params.div = "appdtl__ProductLauncher__productlauncher";
+            params.userObj = {
+                "message": "The application has been submitted successfully and is pending verification.",
+                "refNo": "Your reference number is " + apz.agloan.Appluloanem.sparams.refNo
+            }
+            apz.launchSubScreen(params);
+        }
+    }
+}
+apz.agloan.Appluloanem.gotoNext = function() {
+    apz.agloan.Appluloanem.saveIt = false;
+    debugger;
+    /*logic for changing tabs when click on next button*/
+    if (apz.agloan.Appluloanem.currentTab == "Employee") {
+        $("#agloan__Appluloanem__ps_pls_3_li").trigger("onclick")
+        apz.agloan.Appluloanem.currentTab = "Finance"
+        /*var addIncSrc = apz.getElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__additionalincomesource");
+        var mntDbtObl = apz.getElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__monthlydeptobligation");
+        if (addIncSrc == "Yes") {
+            $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__additionalincomeamount_ul").removeClass("sno");
+        } else {
+            $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__additionalincomeamount_ul").addClass("sno");
+        }
+        if (mntDbtObl == "Yes") {
+            $("#agloan__Appluloanem__ddldebt_ul").removeClass("sno");
+        } else {
+            $("#agloan__Appluloanem__ddldebt_ul").addClass("sno");
+        }*/
+        if (apz.country == "IND") {
+            $("#agloan__Appluloanem__sc_row_56").addClass("sno");
+        } else {
+            $("#agloan__Appluloanem__sc_row_56").removeClass("sno");
+        }
+        if (apz.agloan.Appluloanem.sparams.subproduct == "Home Loan") { //HOME LOAN
+            $("#agloan__Appluloanem__el_btn_1_txtcnt").text("Next");
+            $("#agloan__Appluloanem__financial_loan_details input").each(function() {
+                $(this).change(function() {
+                    var type = $(this).attr("type");
+                    if (apz.agloan.Appluloanem.saveIt && type != "radio") {
+                        var val = apz.getElmValue(this.id);
+                        if (val.length <= 0 && apz.agloan.currentFieldVal.length > 0) { //empty on change
+                            apz.appdtl.productFieldsCount = apz.appdtl.productFieldsCount + 1;
+                            apz.appdtl.productFieldPercentage = apz.appdtl.productFieldPercentage - apz.appdtl.productPercentageValue;
+                        } else if (val.length > 0 && apz.agloan.currentFieldVal.length <= 0) { //filled on change
+                            apz.appdtl.productFieldsCount = apz.appdtl.productFieldsCount - 1;
+                            apz.appdtl.productFieldPercentage = apz.appdtl.productFieldPercentage + apz.appdtl.productPercentageValue;
+                        }
+                        apz.setElmValue("appdtl__AppLauncher__product_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.productFieldsCount);
+                        $("#appdtl__AppLauncher__prod_slider").roundSlider("option", "value", apz.appdtl.productFieldPercentage);
+                    }
+                })
+                $(this).focus(function() {
+                    apz.agloan.currentFieldVal = apz.getElmValue(this.id);
+                })
+            });
+            if (apz.appdtl.productFinManageFilled) {
+                apz.agloan.Appluloanem.manageFieldsFilled("agloan__Appluloanem__financial_loan_details");
+                apz.appdtl.productFinManageFilled = false;
+            }
+        } else {
+            $("#agloan__Appluloanem__el_btn_1_txtcnt").text("Submit")
+        }
+    } else if (apz.agloan.Appluloanem.currentTab == "Finance") {
+        if (apz.agloan.Appluloanem.sparams.subproduct == "Home Loan") {
+            apz.agloan.Appluloanem.saveApplicationDetails();
+            $("#agloan__Appluloanem__ps_pls_6_li").trigger("onclick");
+            apz.agloan.Appluloanem.currentTab = "person"
+            $("#agloan__Appluloanem__el_btn_1_txtcnt").text("Submit")
+            $("#agloan__Appluloanem__personal_loan_details input").each(function() {
+                $(this).change(function() {
+                    var type = $(this).attr("type");
+                    if (apz.agloan.Appluloanem.saveIt && type != "radio") {
+                        var val = apz.getElmValue(this.id);
+                        if (val.length <= 0 && apz.agloan.currentFieldVal.length > 0) { //empty on change
+                            apz.appdtl.productFieldsCount = apz.appdtl.productFieldsCount + 1;
+                            apz.appdtl.productFieldPercentage = apz.appdtl.productFieldPercentage - apz.appdtl.productPercentageValue;
+                        } else if (val.length > 0 && apz.agloan.currentFieldVal.length <= 0) { //filled on change
+                            apz.appdtl.productFieldsCount = apz.appdtl.productFieldsCount - 1;
+                            apz.appdtl.productFieldPercentage = apz.appdtl.productFieldPercentage + apz.appdtl.productPercentageValue;
+                        }
+                        apz.setElmValue("appdtl__AppLauncher__product_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.productFieldsCount);
+                        $("#appdtl__AppLauncher__prod_slider").roundSlider("option", "value", apz.appdtl.productFieldPercentage);
+                    }
+                })
+                $(this).focus(function() {
+                    apz.agloan.currentFieldVal = apz.getElmValue(this.id);
+                })
+            });
+            debugger;
+            if (apz.appdtl.productCoAppManageFilled) {
+                apz.agloan.Appluloanem.manageFieldsFilled("agloan__Appluloanem__financial_loan_details");
+                apz.appdtl.productCoAppManageFilled = false;
+            }
+        } else {
+            apz.agloan.Appluloanem.saveApplicationDetails();
+            apz.agloan.Appluloanem.goForward();
+        }
+    } else {
+        apz.agloan.Appluloanem.saveApplicationDetails();
+        apz.agloan.Appluloanem.goForward();
+    }
+    apz.agloan.Appluloanem.saveIt = true;
+}
+// apz.agloan.Appluloanem.onTabBarChange = function(params){
+//     console.log(params)
+//     var curTab = apz.agloan.Appluloanem.currentTab;
+// }
+// apz.agloan.Appluloanem.onEmploymentLoad = function(params) {
+//     console.log("params " + params);
+// }
+apz.agloan.Appluloanem.fnChangePersonal = function() {
+    $("#agloan__Appluloanem__coapplicantdetails").addClass("sno");
+    $("#agloan__Appluloanem__personalDetails").removeClass("sno");
+}
+apz.agloan.Appluloanem.fnChangeCoApplicant = function() {
+    debugger;
+    var val = apz.getElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__havecoapplicant");
+    if (val == "Yes") {
+        $("#agloan__Appluloanem__personalDetails").addClass("sno");
+        $("#agloan__Appluloanem__coapplicantdetails").removeClass("sno");
+        debugger;
+        if (apz.appdtl.productPerManageFilled) {
+            apz.agloan.Appluloanem.manageFieldsFilled("agloan__Appluloanem__personal_loan_details");
+            apz.appdtl.productPerManageFilled = false;
+            apz.appdtl.productLoanCount = apz.appdtl.productLoanCount + 10;
+            apz.appdtl.productFieldsCount = apz.appdtl.productFieldsCount + 10;
+            apz.appdtl.productPercentageValue = (1 / apz.appdtl.productLoanCount) * 100;
+        }
+    } else {
+        $("#agloan__Appluloanem__coapplicantdetails").addClass("sno");
+        $("#agloan__Appluloanem__personalDetails").removeClass("sno");
+    }
+    var fieldFilled = apz.appdtl.productLoanCount - apz.appdtl.productFieldsCount;
+    apz.appdtl.productFieldPercentage = fieldFilled * apz.appdtl.productPercentageValue;
+    apz.setElmValue("appdtl__AppLauncher__product_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.productFieldsCount);
+    $("#appdtl__AppLauncher__prod_slider").roundSlider("option", "value", apz.appdtl.productFieldPercentage);
+}
+apz.agloan.Appluloanem.fnChangePersonalDetails = function() {
+    debugger;
+    $("#agloan__Appluloanem__coapplicantdetails").addClass("sno");
+    $("#agloan__Appluloanem__personalDetails").removeClass("sno");
+}
+apz.agloan.Appluloanem.fnBack = function() {
+    apz.agloan.Appluloanem.saveIt = false;
+    apz.agloan.Appluloanem.saveApplicationDetails();
+    var lParams = {
+        "appId": "agloan",
+        "scr": "Applyloan",
+        "div": "appdtl__ProductLauncher__productlauncher",
+        "userObj": {
+            "refNo": apz.agloan.Appluloanem.sparams.refNo,
+            "product": apz.agloan.Appluloanem.sparams.product,
+            "subproduct": apz.agloan.Appluloanem.sparams.subproduct
+        }
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.agloan.Appluloanem.fnonRadIncome = function() {
+    var val = apz.getElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__additionalincomesource");
+    // apz.data.buildData("IncomeDetails", "agloan");
+    if (apz.country == "IND") {
+        if (val == "Yes") {
+            apz.appdtl.productLoanCount++;
+            apz.appdtl.productFieldsCount++;
+            apz.appdtl.productPercentageValue = (1 / apz.appdtl.productLoanCount) * 100;
+            $("#agloan__Appluloanem__income_row").removeClass("sno");
+            apz.data.loadData("IncomeDetails", "agloan");
+        } else {
+            $("#agloan__Appluloanem__income_row").addClass("sno");
+            apz.appdtl.productLoanCount--;
+            apz.appdtl.productFieldsCount--;
+            apz.appdtl.productPercentageValue = (1 / apz.appdtl.productLoanCount) * 100;
+        }
+    } else {
+        if (val == "Yes") {
+            apz.appdtl.productLoanCount++;
+            apz.appdtl.productFieldsCount++;
+            apz.appdtl.productPercentageValue = (1 / apz.appdtl.productLoanCount) * 100;
+            $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__additionalincomeamount_ul").removeClass("sno");
+            apz.data.loadData("IncomeDetails", "agloan");
+        } else {
+            $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__additionalincomeamount_ul").addClass("sno");
+            apz.appdtl.productLoanCount--;
+            apz.appdtl.productFieldsCount--;
+            apz.appdtl.productPercentageValue = (1 / apz.appdtl.productLoanCount) * 100;
+        }
+    }
+    var fieldFilled = apz.appdtl.productLoanCount - apz.appdtl.productFieldsCount;
+    apz.appdtl.productFieldPercentage = fieldFilled * apz.appdtl.productPercentageValue;
+    apz.setElmValue("appdtl__AppLauncher__product_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.productFieldsCount);
+    $("#appdtl__AppLauncher__prod_slider").roundSlider("option", "value", apz.appdtl.productFieldPercentage);
+}
+apz.agloan.Appluloanem.fnonRaddebt = function() {
+    debugger;
+    var val = apz.getElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__monthlydeptobligation");
+    /*apz.data.buildData("ExitingCardDetails","agloan");
+    apz.data.buildData("ExitingLoanDetails","agloan");*/
+    if (apz.country == "IND") {
+        if (val == "Yes") {
+            apz.appdtl.productLoanCount++;
+            apz.appdtl.productFieldsCount++;
+            apz.appdtl.productPercentageValue = (1 / apz.appdtl.productLoanCount) * 100;
+            $("#agloan__Appluloanem__gr_row_5").removeClass("sno");
+        } else {
+            apz.appdtl.productLoanCount--;
+            apz.appdtl.productFieldsCount--;
+            apz.appdtl.nomineePercentageValue = (1 / apz.appdtl.productLoanCount) * 100;
+            $("#agloan__Appluloanem__gr_row_5").addClass("sno");
+            apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.monthlydeptobligation = "";
+        }
+    } else {
+        if (val == "Yes") {
+            apz.appdtl.productLoanCount++;
+            apz.appdtl.productFieldsCount++;
+            apz.appdtl.productPercentageValue = (1 / apz.appdtl.productLoanCount) * 100;
+            $("#agloan__Appluloanem__sc_row_152").removeClass("sno");
+        } else {
+            apz.appdtl.productLoanCount--;
+            apz.appdtl.productFieldsCount--;
+            apz.appdtl.nomineePercentageValue = (1 / apz.appdtl.productLoanCount) * 100;
+            $("#agloan__Appluloanem__sc_row_152").addClass("sno");
+            apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.monthlydeptobligation = "";
+        }
+    }
+    var fieldFilled = apz.appdtl.productLoanCount - apz.appdtl.productFieldsCount;
+    apz.appdtl.productFieldPercentage = fieldFilled * apz.appdtl.productPercentageValue;
+    apz.setElmValue("appdtl__AppLauncher__product_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.productFieldsCount);
+    $("#appdtl__AppLauncher__prod_slider").roundSlider("option", "value", apz.appdtl.productFieldPercentage);
+}
+apz.agloan.Appluloanem.fnonRadFinance = function() {
+    var val = apz.getElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__financialaffiliation");
+    if (val == "Yes") {
+        $("#agloan__Appluloanem__chkfinance_ul").removeClass("sno");
+    } else {
+        $("#agloan__Appluloanem__chkfinance_ul").addClass("sno");
+    }
+}
+apz.agloan.Appluloanem.fnChangeCoApplicant = function() {
+    debugger;
+    var val = apz.getElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__havecoapplicant");
+    if (val == "Yes") {
+        $("#agloan__Appluloanem__coapplicantdetails").removeClass("sno");
+        $("#agloan__Appluloanem__personalDetails").addClass("sno");
+    } else {
+        $("#agloan__Appluloanem__coapplicantdetails").addClass("sno");
+        $("#agloan__Appluloanem__personalDetails").removeClass("sno");
+    }
+}
+apz.agloan.Appluloanem.fnRestrictCharacter = function(el) {
+    debugger;
+    var digits = el.value.match(/\d{1,20}/) || [""];
+    el.value = digits[0];
+}

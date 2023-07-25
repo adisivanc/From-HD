@@ -1,0 +1,121 @@
+apz.checkm.Mail = {};
+apz.checkm.Mail.sCache = {};
+var censorWord = function(str) {
+    return str[0] + "*".repeat(str.length - 2) + str.slice(-1);
+}
+apz.app.onLoad_Mail = function(params) {
+    debugger;
+    apz.checkm.Mail.sCache = params;
+}
+apz.app.onShown_Mail = function(params) {
+    debugger;
+    apz.checkm.Mail.sCache = params;
+    apz.setElmValue("appdtl__AppLauncher__product_fields_to_fill_txtcnt", "0");
+    $("#appdtl__AppLauncher__prod_slider").roundSlider("option", "value", "100");
+    /* $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+        $(this).removeClass("active");
+    })
+     var dotsLenth=$("#apzonb__Navigator__el_progressstep_1_ext li").length;
+    if ((dotsLenth == 5 && apz.country !== "US")|| (dotsLenth == 4 && apz.country === "US")) {
+        $("#apzonb__Navigator__el_progressstep_1_ext").append(
+            '<li class="pgst-step pgs-100 active" scrname="Mail" title="Mail Validation" appid="checkm"  divname="' + params.parentdiv +
+            '" title="" refNo="' + params.refNo + '" currentflow="6" product="' + params.product + '" subproduct="' + params.subproduct +
+            '"><span></span><span></span></li>');
+    } else {
+        $("#apzonb__Navigator__el_progressstep_1_ext li:nth-child(5)").addClass("active");
+    }*/
+    var mail = apz.applicationDetails.email.split("@");
+    $("#checkm__Mail__appendMail_txtcnt").append(censorWord(mail[0]) + '@' + mail[1]);
+}
+apz.checkm.Mail.fnVerifyMail = function(element) {
+    debugger;
+    var emailStr = $(element).val();
+    if (emailStr.length > 0) {
+        if (emailStr === "101018") {
+            $("#checkm__Mail__email_error_ul").addClass("sno");
+            $("#checkm__Mail__email_success_ul").removeClass("sno");
+            apz.isEmailValid = true;
+        } else {
+            $("#checkm__Mail__email_error_ul").removeClass("sno");
+            $("#checkm__Mail__email_success_ul").addClass("sno");
+        }
+    }
+}
+apz.checkm.Mail.fnResendCode = function(params) {
+    debugger;
+    apz.dispMsg({
+        message: "Code resent successfully!",
+        type: "S"
+    })
+}
+apz.checkm.Mail.preScreen = function() {
+    debugger;
+    apz.checkm.Launcher.fnLaunchSubScreens("Deposit")
+}
+apz.checkm.Mail.nextScreen = function() {
+    debugger;
+    if (apz.isEmailValid) {
+        /*if (apz.country == "US") {
+            var params = {};
+            params.appId = "disclo";
+            params.scr = "Launcher";
+            params.div = "appdtl__ProductLauncher__productlauncher";
+            params.userObj = {
+                "refNo": apz.checkm.Mail.sCache.refNo,
+                "product": apz.checkm.Mail.sCache.product,
+                "subproduct": apz.checkm.Mail.sCache.subproduct,
+                "parentDiv": "appdtl__ProductLauncher__productlauncher"
+            }
+            apz.launchApp(params);
+        } else if (apz.country == "UK" || apz.country == "BD" || apz.country == "UAE" || apz.country == "UGA") {
+            var params = {};
+            params.appId = "appsum";
+            params.scr = "SummaryLauncher";
+            params.div = "appdtl__ProductLauncher__productlauncher";
+            params.userObj = {
+                "refNo": apz.checkm.Mail.sCache.refNo,
+                "product": apz.checkm.Mail.sCache.product,
+                "subproduct": apz.checkm.Mail.sCache.subproduct,
+            }
+            apz.launchApp(params);
+        } else if (apz.country == "IND") {
+            var params = {};
+            params.appId = "declar";
+            params.scr = "Dbt";
+            params.div = "appdtl__ProductLauncher__productlauncher";
+            params.userObj = {
+                "refNo": apz.checkm.Mail.sCache.refNo,
+                "product": apz.checkm.Mail.sCache.product,
+                "subproduct": apz.checkm.Mail.sCache.subproduct,
+            }
+            apz.launchApp(params);
+        }*/
+        /*var params = {};
+            params.appId = "declar";
+            params.scr = "Dbt";
+            // params.div = "appdtl__AppLauncher__screenLauncher";
+            params.div = "appdtl__ProductLauncher__productlauncher";
+            params.userObj = {
+                "refNo": apz.checkm.Mail.sCache.refNo,
+                "product": apz.checkm.Mail.sCache.product,
+                "subproduct": apz.checkm.Mail.sCache.subproduct,
+            }
+            apz.launchApp(params);*/
+        var lparams = {}
+        lparams.appId = "prddtl";
+        lparams.scr = "ProductAccountLauncher";
+        lparams.div = "appdtl__ProductLauncher__productlauncher";
+        lparams.userObj = {
+            "refNo": apz.checkm.Mail.sCache.refNo,
+            "product": apz.checkm.Mail.sCache.product,
+            "appId": apz.checkm.Mail.sCache.appId,
+            "subproduct": apz.checkm.Mail.sCache.subproduct,
+            "screen": "funding"
+        };
+        apz.launchApp(lparams);
+    } else {
+        apz.dispMsg({
+            message: "Enter a valid email OTP"
+        })
+    }
+}

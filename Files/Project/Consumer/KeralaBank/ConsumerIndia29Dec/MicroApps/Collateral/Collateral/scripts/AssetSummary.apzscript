@@ -1,0 +1,77 @@
+apz.assets.AssetSummary = {};
+apz.assets.AssetSummary.sCache = {}
+apz.app.onLoad_AssetSummary = function(params) {
+    debugger;
+    if (params.Navigation) {
+        apz.assets.AssetSummary.fnSetNavigation(params);
+    }
+    apz.assets.AssetSummary.sCache = params;
+    apz.assets.AssetSummary.fetchAssetSummary();
+};
+apz.assets.AssetSummary.fnSetNavigation = function(params) {
+    debugger;
+    apz.assets.AssetSummary.fnSetNavigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.headerText = "COLLATERAL SUMMARY";
+    apz.assets.AssetSummary.fnSetNavigation(lParams);
+};
+apz.assets.AssetSummary.fetchAssetSummary = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "AssetSummary",
+        "buildReq": "N",
+        "req": "",
+        "paintResp": "Y",
+        "callBack": apz.assets.AssetSummary.fetchAssetSummaryCB
+    };
+      jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("assets")+"/AssetSummary.json"));
+      apz.data.scrdata.assets__AssetSummary_Res = {};
+            apz.data.scrdata.assets__AssetSummary_Res = jsondata;
+            apz.data.loadData("AssetSummary", "assets");
+
+              apz.assets.AssetSummary.fetchAssetSummaryCB(jsondata)
+    //apz.server.callServer(lServerParams);
+};
+apz.assets.AssetSummary.fetchAssetSummaryCB = function(pResp) {
+    debugger;
+    if( apz.assets.AssetSummary.sCache.from == "Loan"){
+            apz.setElmValue("landin__Landing__heading", "COLLATERAL SUMMARY")
+
+        var col_Id = apz.assets.AssetSummary.sCache.colId 
+        var assetDetails = apz.data.scrdata.assets__AssetSummary_Res.assetDtls
+        var index = assetDetails.findIndex(function(item){ if(item.collatCode == col_Id){return item}});
+        apz.assets.AssetSummary.fnLaunchScreen(index);    
+        
+    }
+}
+apz.assets.AssetSummary.fetchAssetDetails = function(pObj) {
+    debugger;
+    var rowno = "";
+  //    var rowno = $(pObj).attr("rowno");
+
+    if (apz.scrMetaData.containersMap["assets__AssetSummary__CollateralSummList"].paginationStyle !== "") {
+        rowno = (apz.scrMetaData.containersMap["assets__AssetSummary__CollateralSummList"].currPage - 1) * apz.scrMetaData.containersMap[
+            "assets__AssetSummary__CollateralSummList"].pagesize + parseInt($("#" + pObj.id).attr("rowno"));
+    } else {
+        rowno = pObj.id.split("_")[6];
+    }
+apz.assets.AssetSummary.fnLaunchScreen(rowno);    
+}
+apz.assets.AssetSummary.fnLaunchScreen = function(rowno){
+    debugger;
+    apz.hide("assets__AssetSummary__rowheader");
+    apz.show("assets__AssetSummary__subScreenLauncher");
+    apz.hide("assets__AssetSummary__rowlist");
+    var params = {};
+    params.appId = "assets";
+    params.scr = "AssetDetails";
+    //.layout = "All";
+    params.div = "assets__AssetSummary__subScreenLauncher";
+    params.userObj = {
+        "data": apz.data.scrdata.assets__AssetSummary_Res.assetDtls[rowno],
+        "from" : apz.assets.AssetSummary.sCache.from
+        
+    };
+    apz.launchSubScreen(params);
+}
+

@@ -1,0 +1,23 @@
+apz.regapp.Launcher = {};
+apz.regapp.Launcher.sParams = {};
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+apz.regapp.Launcher.sParams = params;
+    apz.regapp.Launcher.launchFirstFatca();
+};
+apz.app.onShown_Launcher = function(params) {
+    debugger;
+};
+apz.regapp.Launcher.fnCancel = function(){
+    debugger;
+}
+
+apz.regapp.Launcher.launchFirstFatca = function(){
+    
+    var lParams = {
+        "appId": "regapp",
+        "scr": "FirstFatca",
+        "div": "regapp__Launcher__launcher"
+    };
+    apz.launchSubScreen(lParams);
+}

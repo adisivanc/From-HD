@@ -1,0 +1,73 @@
+apz.omnise.SearchChatImpl = {};
+commonId = "#omnise__SearchChatImpl__";
+searchObj = {};
+apz.omnise.SearchChatImpl.speechToText = true;
+
+apz.app.onLoad_SearchChatImpl = function(params){
+    debugger;
+    apz.omnise.SearchChatImpl.sparams = params;
+     searchObj = SearchChat.create();
+};
+
+apz.omnise.SearchChatImpl.fnSearch = function(){
+    debugger;
+
+    var message = $(commonId+"searchbox").val();
+    if(message!="" && message!=undefined){
+        apz.mockServer = false;
+        apz.startLoader();
+        searchObj.fetch(message,apz.omnise.SearchChatImpl.fnSearchCB);
+    }else{
+        apz.dispMsg({"message":"Enter the text to search",type:"E"});
+    }
+}
+
+apz.omnise.SearchChatImpl.fnSearchCB = function(resp){
+    debugger;
+    apz.stopLoader();
+    if (resp.status && resp.res.omnise__SearchChat_Res.status) {
+        
+        intentData = resp.res.omnise__SearchChat_Res.search;
+        intent = resp.res.omnise__SearchChat_Res.search.intent;
+        apz.omnise.SearchChatImpl.fnClear();
+        apz.omnise.SearchChatImpl.sparams.callBack(intent,intentData);
+    }else{
+        apz.dispMsg({message:"Please try again",type:"E"});
+    }
+};
+apz.omnise.SearchChatImpl.fnClear = function(){
+    debugger;
+    $(commonId+"mic_ul").removeClass("sno");
+     $(commonId+"clear_ul").addClass("sno");
+     $(commonId+"searchbox").val("");
+};
+apz.omnise.SearchChatImpl.fnOnSearchfocus = function(){
+    debugger;
+    $(commonId+"mic_ul").addClass("sno");
+     $(commonId+"clear_ul").removeClass("sno");
+    
+};
+apz.omnise.SearchChatImpl.fnCancel = function(){
+    debugger;
+   apz.toggleModal({
+        targetId: "landin__Landing__search"
+    });
+};
+apz.omnise.SearchChatImpl.fnSpeechToText = function() {
+    debugger;
+    if (apz.omnise.SearchChatImpl.speechToText) {
+        apz.omnise.SearchChatImpl.speechToText = false;
+        var json = {};
+        json.id = "NATIVE";
+        json.action = "speechToText";
+        json.callBack = apz.omnise.SearchChatImpl.fnSpeechToTextCB;
+        apz.ns.nativeServiceExt(json);
+    }
+}
+apz.omnise.SearchChatImpl.fnSpeechToTextCB = function(params) {
+    debugger;
+    apz.omnise.SearchChatImpl.speechToText = true;
+    $(commonId+"searchbox").val(params.speechResult);
+    $(commonId+"mic_ul").addClass("sno");
+     $(commonId+"clear_ul").removeClass("sno");
+}

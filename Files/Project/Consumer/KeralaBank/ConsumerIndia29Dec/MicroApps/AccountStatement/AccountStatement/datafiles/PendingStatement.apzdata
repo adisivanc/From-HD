@@ -1,0 +1,81 @@
+{
+    "accstm__PendingStatement_Res": {
+        "miniStmtMaster": {
+            "txnRefNo": "",
+            "status": "",
+            "respCd": "",
+            "intMsgCd": "",
+            "extMsg": "",
+            "miniStmtDtls": {
+                "Checking": [{
+                    "trnId": "",
+                    "accountNo": "xxxxxxxx2263",
+                    "trnDescription": "CREDIT CARD CHECK 5676546534",
+                    "type": "check",
+                    "withdraw": "",
+                    "debit": "500",
+                    "balance": "7117",
+                    "trnDate": "19/06/2019",
+                    "drcrInd": "D",
+                    "pageNo": ""
+                }, {
+                    "trnId": "",
+                    "accountNo": "xxxxxxxx2263",
+                    "trnDescription": "TELLER DEPOSIT 5676546581",
+                    "withdraw": "1000",
+                    "type": "withdraw",
+                    "debit": "",
+                    "balance": "7617",
+                    "trnDate": "05/06/2019",
+                    "drcrInd": "D",
+                    "pageNo": ""
+                }, {
+                    "trnId": "",
+                    "accountNo": "xxxxxxxx2263",
+                    "trnDescription": "CASHBACK REWARD",
+                    "withdraw": "",
+                    "type": "deposit",
+                    "debit": "1000",
+                    "balance": "8617",
+                    "trnDate": "12/06/2019",
+                    "drcrInd": "D",
+                    "pageNo": ""
+                }],
+                "Savings": [{
+                    "trnId": "",
+                    "accountNo": "xxxxxxxx2263",
+                    "trnDescription": "INTEREST PAYMENT",
+                    "type": "check",
+                    "withdraw": "",
+                    "debit": "50",
+                    "balance": "9617",
+                    "trnDate": "20/06/2020",
+                    "drcrInd": "D",
+                    "pageNo": ""
+                }, {
+                    "trnId": "",
+                    "accountNo": "xxxxxxxx2263",
+                    "trnDescription": "ONLINE TRANSFER TO  XXXXXXXX2274",
+                    "withdraw": "100",
+                    "type": "withdraw",
+                    "debit": "",
+                    "balance": "9667",
+                    "trnDate": "25/06/2019",
+                    "drcrInd": "D",
+                    "pageNo": ""
+                }, {
+                    "trnId": "",
+                    "accountNo": "xxxxxxxx2263",
+                    "trnDescription": "ONLINE TRANSFER FROM XXXXXXXX2419",
+                    "withdraw": "",
+                    "type": "deposit",
+                    "debit": "155",
+                    "balance": "9767",
+                    "trnDate": "26/06/2019",
+                    "drcrInd": "D",
+                    "pageNo": ""
+                }]
+            }
+        }
+    }
+}

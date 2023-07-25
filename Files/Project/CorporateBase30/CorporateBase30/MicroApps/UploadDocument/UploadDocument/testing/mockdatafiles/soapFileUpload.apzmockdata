@@ -1,0 +1,15 @@
+{
+    "GetExtratedTextResponse": {
+        "GetExtratedTextResult": {
+            "ExtractedText": "From Account , Beneficiary Account, Beneficiary Name, Currency, Amount
+150100159221 , 177654456664 , Gowtham ,USD , 10000
+150100159221 , 177654456664 , Gowtham ,USD , 20000
+150100159221 , 177654456664 , Gowtham ,USD , 30000
+150100159221 , 177654456664 , Gowtham ,USD , 40000
+150100159221 , 177654456664 , Gowtham ,USD , 50000
+150100159221 , 177654456664 , Gowtham ,USD , 60000
+
+"
+        }
+    }
+}

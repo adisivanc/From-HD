@@ -1,0 +1,236 @@
+apz.chqsts.chequestatusenquiry = {};
+apz.app.onShown_ChequeStatusEnquiry = function(pParams) {
+    debugger;
+    apz.chqsts.chequestatusenquiry.sParams = pParams;
+    apz.chqsts.chequestatusenquiry.fnInitialise(pParams);
+    apz.chqsts.chequestatusenquiry.fnaddRowClicked();
+};
+apz.chqsts.chequestatusenquiry.fnInitialise = function(pParams) {
+    
+    apz.data.loadJsonData("AccountDetails","chqsts");
+    
+    apz.data.scrdata.chqsts__DebitAccount_Res = {};
+    apz.data.scrdata.chqsts__DebitAccount_Res.SavingsAccount = apz.data.scrdata.chqsts__AccountDetails_Res.SavingsAccount;
+    apz.data.scrdata.chqsts__DebitAccount_Res.CurrentAccount = apz.data.scrdata.chqsts__AccountDetails_Res.CurrentAccount;
+     if(pParams.Navigation){
+         apz.chqsts.chequestatusenquiry.fnSetNavigation(pParams);
+    }
+    if (apz.data.scrdata.chqsts__AccountDetails_Res.SavingsAccount.length === 0) {
+        apz.hide("chqsts__ChequeStatusEnquiry__savAcc");
+    }
+    if (apz.data.scrdata.chqsts__AccountDetails_Res.SavingsAccount.length === 0) {
+        apz.hide("chqsts__ChequeStatusEnquiry__debAcc");
+    }
+    apz.data.loadData("DebitAccount", "chqsts");
+    apz.chqsts.chequestatusenquiry.fnGoToStage1();
+};
+apz.chqsts.chequestatusenquiry.fnGoToStage1 = function() {
+    apz.chqsts.chequestatusenquiry.fnRenderStage1();
+};
+
+ apz.chqsts.chequestatusenquiry.fnSetNavigation = function(params){
+     debugger;
+    apz.chqsts.chequestatusenquiry.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "CHEQUE BOOK ENQUIRY";
+    }
+    lParams.backPressed = apz.chqsts.chequestatusenquiry.fnBack;
+    apz.chqsts.chequestatusenquiry.Navigation(lParams);
+ };
+apz.chqsts.chequestatusenquiry.fnRenderStage1 = function() {
+    apz.hide("chqsts__ChequeStatusEnquiry__displayStatus");
+    apz.hide("chqsts__ChequeStatusEnquiry__chqNo");
+    apz.hide("chqsts__ChequeStatusEnquiry__startChqNo");
+    apz.hide("chqsts__ChequeStatusEnquiry__fromChqNo");
+    apz.hide("chqsts__ChequeStatusEnquiry__endChqNo");
+    apz.hide("chqsts__ChequeStatusEnquiry__toChqNo");
+    apz.hide("chqsts__ChequeStatusEnquiry__chqNoEntering");
+};
+apz.chqsts.chequestatusenquiry.fnChqType = function(pObj) {
+    
+    var lChqType = pObj.value;
+    if (lChqType === "Single Cheque") {
+        apz.show("chqsts__ChequeStatusEnquiry__chqNo");
+        apz.hide("chqsts__ChequeStatusEnquiry__startChqNo");
+        apz.hide("chqsts__ChequeStatusEnquiry__fromChqNo");
+        apz.hide("chqsts__ChequeStatusEnquiry__endChqNo");
+        apz.hide("chqsts__ChequeStatusEnquiry__toChqNo");
+        apz.hide("chqsts__ChequeStatusEnquiry__displayStatus");
+        for (var j = 1; j < 7; j++) {
+            apz.getElmValue("chqsts__ChequeStatusEnquiry__fromChqNo" + j, "");
+            apz.getElmValue("chqsts__ChequeStatusEnquiry__toChqNo" + j, "");
+        }
+    } else {
+        apz.hide("chqsts__ChequeStatusEnquiry__chqNo");
+        apz.show("chqsts__ChequeStatusEnquiry__startChqNo");
+        apz.show("chqsts__ChequeStatusEnquiry__fromChqNo");
+        apz.show("chqsts__ChequeStatusEnquiry__endChqNo");
+        apz.show("chqsts__ChequeStatusEnquiry__toChqNo");
+        apz.hide("chqsts__ChequeStatusEnquiry__displayStatus");
+        for (var i = 1; i < 7; i++) {
+            apz.setElmValue("chqsts__ChequeStatusEnquiry__chqNo" + i, "");
+        }
+    }
+};
+apz.chqsts.chequestatusenquiry.fnaddRowClicked = function() {
+    
+    apz.app.preRowClicked = function(pContainer, pRowNo) {
+        if (pContainer == "chqsts__ChequeStatusEnquiry__savAcc") {
+            apz.chqsts.chequestatusenquiry.sAccNo = apz.getElmValue("chqsts__DebitAccount__o__SavingsAccount__accountNo_" + pRowNo);
+            apz.chqsts.chequestatusenquiry.sAccType = "Savings Account";
+            apz.chqsts.chequestatusenquiry.fnFromAccSel();
+        } else if (pContainer == "chqsts__ChequeStatusEnquiry__debAcc") {
+            apz.chqsts.chequestatusenquiry.sAccNo = apz.getElmValue("chqsts__DebitAccount__o__CurrentAccount__accountNo_" + pRowNo);
+            apz.chqsts.chequestatusenquiry.sAccType = "Current Account";
+            apz.chqsts.chequestatusenquiry.fnFromAccSel();
+        }
+    };
+};
+apz.chqsts.chequestatusenquiry.fnFromAccSel = function() {
+    
+    apz.show("chqsts__ChequeStatusEnquiry__chqNoEntering");
+    apz.hide("chqsts__ChequeStatusEnquiry__displayAccDtls");
+    apz.setElmValue("chqsts__ChequeStatusEnquiry__debitAccType", apz.chqsts.chequestatusenquiry.sAccType);
+    apz.setElmValue("chqsts__ChequeStatusEnquiry__debitAccNum", apz.chqsts.chequestatusenquiry.sAccNo);
+};
+apz.chqsts.chequestatusenquiry.fnBackchqNoEntering = function() {
+    
+    apz.hide("chqsts__ChequeStatusEnquiry__chqNoEntering");
+    apz.show("chqsts__ChequeStatusEnquiry__displayAccDtls");
+    apz.setElmValue("chqsts__ChequeStatusEnquiry__debitAccType", '');
+    apz.setElmValue("chqsts__ChequeStatusEnquiry__debitAccNum",'');
+};
+
+apz.chqsts.chequestatusenquiry.fnSwitchOver = function(pObj, pEvent) {
+    
+    if (pEvent.which === 8) {
+        $("#" + pObj.id.slice(0, -1) + (Number(pObj.id.slice("-1")) - 1)).focus();
+    } else {
+        $("#" + pObj.id.slice(0, -1) + (Number(pObj.id.slice("-1")) + 1)).focus();
+    }
+};
+apz.chqsts.chequestatusenquiry.fnStatusEnq = function() {
+    
+    var lSingleChequeValue = "";
+    var lMultiChecqueValue = "";
+    var lChequeRadioBtnValue = apz.getElmValue("chqsts__ChequeStatusEnquiry__options");
+    if (lChequeRadioBtnValue === "Single Cheque") {
+        for (var i = 1; i < 7; i++) {
+            var lsingleInputValue = apz.getElmValue("chqsts__ChequeStatusEnquiry__chqNo" + i);
+            if (!(apz.isNull(lsingleInputValue)) && !(isNaN(lsingleInputValue))) {
+                lSingleChequeValue = lSingleChequeValue.concat(lsingleInputValue);
+            } else {
+                break;
+            }
+        }
+        apz.chqsts.chequestatusenquiry.fnCallBeforeChqStsRslt(lSingleChequeValue, "singleCheque");
+    } else {
+        for (var j = 1; j < 7; j++) {
+            var lStartChqValue = apz.getElmValue("chqsts__ChequeStatusEnquiry__fromChqNo" + j);
+            var lLastChqValue = apz.getElmValue("chqsts__ChequeStatusEnquiry__toChqNo" + j);
+            if (!(apz.isNull(lStartChqValue && lLastChqValue)) && !(isNaN(lStartChqValue)) && !(isNaN(lLastChqValue))) {
+                lSingleChequeValue = lSingleChequeValue.concat(lStartChqValue);
+                lMultiChecqueValue = lMultiChecqueValue.concat(lLastChqValue);
+            } else {
+                break;
+            }
+        }
+        apz.chqsts.chequestatusenquiry.fnCallBeforeChqStsRslt(lSingleChequeValue, lMultiChecqueValue);
+    }
+};
+apz.chqsts.chequestatusenquiry.fnCallBeforeChqStsRslt = function(respSingleChequeValue, respMultiChecqueValue) {
+    
+    if (respMultiChecqueValue === "singleCheque") {
+        if (respSingleChequeValue.length != 6) {
+            var lMsg = {
+                "code": "VAL-001"
+            };
+            apz.dispMsg(lMsg);
+        } else {
+            apz.chqsts.chequestatusenquiry.sFromChqNo = respSingleChequeValue;
+            apz.chqsts.chequestatusenquiry.fnChqStsRslt("singleCheque");
+        }
+    } else {
+        if (respSingleChequeValue.length != 6 && respMultiChecqueValue.length != 6) {
+            var lMsg = {
+                "code": "VAL-001"
+            };
+            apz.dispMsg(lMsg);
+        } else {
+            apz.chqsts.chequestatusenquiry.sFromChqNo = respSingleChequeValue;
+            apz.chqsts.chequestatusenquiry.sToChqNo = respMultiChecqueValue;
+            apz.chqsts.chequestatusenquiry.fnChqStsRslt("multipleCheque");
+        }
+    }
+};
+apz.chqsts.chequestatusenquiry.fnChqStsRslt = function(pResp) {
+    
+    if (pResp === "singleCheque") {
+        var lReq = {};
+        lReq.chequeStatusEnq = {};
+        lReq.chequeStatusEnq.startChequeNumber = apz.chqsts.chequestatusenquiry.sFromChqNo;
+        lReq.chequeStatusEnq.customerId = apz.chqsts.chequestatusenquiry.sParams.data.customerID;
+        lReq.chequeStatusEnq.accountNo = apz.chqsts.chequestatusenquiry.sAccNo;
+    } else {
+        var lReq = {};
+        lReq.chequeStatusEnq = {};
+        lReq.chequeStatusEnq.startChequeNumber = apz.chqsts.chequestatusenquiry.sFromChqNo;
+        lReq.chequeStatusEnq.endChequeNumber = apz.chqsts.chequestatusenquiry.sToChqNo;
+        lReq.chequeStatusEnq.customerId = apz.chqsts.chequestatusenquiry.sParams.data.customerID;
+        lReq.chequeStatusEnq.accountNo = apz.chqsts.chequestatusenquiry.sAccNo;
+    }
+    var lPar = {
+        "ifaceName": "ChequeStatusEnquiry",
+        "req": lReq
+    };
+    apz.chqsts.chequestatusenquiry.fnBeforeCallServer(lPar);
+};
+apz.chqsts.chequestatusenquiry.fnBeforeCallServer = function(pParams) {
+    debugger;
+    // var lServerParams = {
+    //     "ifaceName": pParams.ifaceName,
+    //     "req": pParams.req,
+    //     "paintResp": "N",
+    //     "appId": "chqsts",
+    //     "callBack": apz.chqsts.chequestatusenquiry.fnCallServerCallBack
+    // };
+    // apz.server.callServer(lServerParams);
+    apz.data.loadJsonData(pParams.ifaceName,"chqsts");
+    apz.chqsts.chequestatusenquiry.fnCallServerCallBack({"errors":false});
+};
+apz.chqsts.chequestatusenquiry.fnCallServerCallBack = function(pParams) {
+    debugger;
+    if (!(pParams.errors)) {
+        if (apz.data.scrdata.chqsts__ChequeStatusEnquiry_Res.chequeStatusEnq.status === "success") {
+            apz.hide("chqsts__ChequeStatusEnquiry__chqNoEntering");
+            apz.show("chqsts__ChequeStatusEnquiry__displayStatus");
+            apz.setElmValue("chqsts__ChequeStatusEnquiry__accNo", apz.chqsts.chequestatusenquiry.sAccNo);
+            apz.setElmValue("chqsts__ChequeStatusEnquiry__accType", apz.chqsts.chequestatusenquiry.sAccType);
+            apz.data.loadData("ChequeStatusEnquiry", "chqsts");
+        } else if (apz.data.scrdata.chqsts__ChequeStatusEnquiry_Res.chequeStatusEnq.status === "failure" && apz.data.scrdata.chqsts__ChequeStatusEnquiry_Res.chequeStatusEnq
+            .respCode === "disp") {
+            apz.hide("chqsts__ChequeStatusEnquiry__chqNoEntering");
+            apz.show("chqsts__ChequeStatusEnquiry__displayStatus");
+            apz.setElmValue("chqsts__ChequeStatusEnquiry__accNo", apz.chqsts.chequestatusenquiry.sAccNo);
+            apz.setElmValue("chqsts__ChequeStatusEnquiry__accType", apz.chqsts.chequestatusenquiry.sAccType);
+            apz.setElmValue("chqsts__ChequeStatusEnquiry__o__chequeStatusEnq__chequeNumber_0_txtcnt", apz.chqsts.chequestatusenquiry.sFromChqNo);
+            apz.setElmValue("chqsts__ChequeStatusEnquiry__o__chequeStatusEnq__chequeStatus_0_txtcnt", apz.data.scrdata.chqsts__ChequeStatusEnquiry_Res.ExtMsg);
+        }
+    } else {
+        apz.hide("chqsts__ChequeStatusEnquiry__chqNoEntering");
+        apz.show("chqsts__ChequeStatusEnquiry__displayStatus");
+        apz.setElmValue("chqsts__ChequeStatusEnquiry__accNo", apz.chqsts.chequestatusenquiry.sAccNo);
+        apz.setElmValue("chqsts__ChequeStatusEnquiry__accType", apz.chqsts.chequestatusenquiry.sAccType);
+        apz.setElmValue("chqsts__ChequeStatusEnquiry__o__chequeStatusEnq__chequeNumber_0_txtcnt", apz.chqsts.chequestatusenquiry.sFromChqNo);
+        apz.setElmValue("chqsts__ChequeStatusEnquiry__o__chequeStatusEnq__chequeStatus_0_txtcnt", pParams.errors[0].errorMessage);
+    }
+};
+
+
+apz.chqsts.chequestatusenquiry.fnDone = function(){
+    // apz.csmrbk.landingpage.fnHome();
+     apz.cmrnav.fnLaunchConsumerHome();
+};

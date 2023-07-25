@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"ApproveRequest","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"ApproveRequest","interfaces":[{"name":"NewCardRequest","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

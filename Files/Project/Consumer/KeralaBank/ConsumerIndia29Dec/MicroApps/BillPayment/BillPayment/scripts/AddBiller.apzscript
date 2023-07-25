@@ -1,0 +1,399 @@
+apz.bilpay.AddBiller = {};
+apz.bilpay.AddBiller.sCustomerCOntext = {};
+apz.bilpay.AddBiller.sData = {};
+apz.app.onLoad_AddBiller = function(params) {
+    apz.bilpay.AddBiller.fnInitialise(params);
+};
+apz.app.onShown_AddBiller = function() {
+    debugger;
+    $(".siReqCol").addClass("sno");
+        $("#bilpay__AddBiller__retryCount").attr("type","tel");
+
+    apz.bilpay.AddBiller.fn_getServiceList();
+};
+apz.bilpay.AddBiller.fnInitialise = function(params) {
+    debugger;
+    apz.bilpay.AddBiller.sParams = params;
+    if (params.customerContext.Navigation) {
+        apz.bilpay.AddBiller.fnsetNavi = params.customerContext.Navigation.setNavigation;
+        var lParams = {};
+        lParams.showImage = "N";
+        lParams.showHome = "Y";
+        lParams.headerText = "Add Biller";
+        lParams.DashBd = false;
+        //lParams.directHome = apz.bilpay.AddBiller.fndirectHome;
+        lParams.backPressed = apz.bilpay.AddBiller.fnBack;
+        // apz.bilpay.AddBiller.fnsetNavi(lParams);
+    }
+    apz.bilpay.AddBiller.fnNavig = function(params) {
+        apz.bilpay.AddBiller.fnsetNavi = params.customerContext.Navigation.setNavigation;
+        apz.bilpay.AddBiller.fnsetNavigation(params);
+    };
+    apz.bilpay.AddBiller.sCustContext = params.customerContext;
+    apz.hide("bilpay__AddBiller__billeraddconfirmation");
+    apz.bilpay.AddBiller.fnPopulateAcc();
+};
+apz.bilpay.AddBiller.fnPopulateAcc = function() {
+    debugger;
+    var lArr = [{
+        "val": "",
+        "desc": "Select Account"
+    }];
+    debugger;
+    var lRecs = apz.bilpay.AddBiller.sParams.customerContext.data.accounts;
+    for (i = 0; i < lRecs.length; i++) {
+        lArr.push({
+            "val": lRecs[i].accountNo,
+            "desc": lRecs[i].accountType + "- " + lRecs[i].accountNo
+        });
+    }
+    apz.populateDropdown(document.getElementById("bilpay__AddBiller__account"), lArr);
+};
+apz.bilpay.AddBiller.fncancel = function() {
+    debugger;
+    var lparams = {};
+    lparams.div = $("#scr__bilpay__MultipleBillPay__main").parent()[0].id;
+    lparams.scr = "MultipleBillPay";
+    lparams.userObj = apz.bilpay.AddBiller.sParams.customerContext;
+    apz.launchSubScreen(lparams);
+};
+apz.bilpay.AddBiller.fn_getServiceList = function() {
+    debugger;
+    var lserver = {};
+    lserver.appId = "bilpay";
+    lserver.scrName = "ServiceName";
+    lserver.ifaceName = "ServiceName_Query";
+    lserver.buildReq = "Y";
+    lserver.paintResp = "N";
+    lserver.id = "New";
+    lserver.req = "";
+    lserver.async = true;
+    lserver.callBack = apz.bilpay.AddBiller.fn_ServiceListCallback;
+    apz.startLoader();
+   // apz.server.callServer(lserver);
+     apz.data.loadJsonData("ServiceName","bilpay");
+     apz.stopLoader();
+       var lserviceList = apz.bilpay.AddBiller.sortObj(apz.data.scrdata.bilpay__ServiceName_Req.tbRbBillpServicename);
+            apz.bilpay.AddBiller.serviceList = lserviceList;
+            /*apz.data.scrdata.bilpay__ServiceName_Req.tbRbBillpServicename = lserviceList;
+            apz.data.loadData("ServiceName", "bilpay");*/
+            var lArr = [{
+                "val": "",
+                "desc": "Service Provider"
+            }];
+            for (var i = 0; i < lserviceList.length; i++) {
+                lArr.push({
+                    "val": lserviceList[i].serviceName,
+                    "desc": lserviceList[i].serviceName
+                })
+            }
+            apz.populateDropdown(document.getElementById("bilpay__AddBiller__serviceprovider"), lArr)
+};
+apz.bilpay.AddBiller.fn_ServiceListCallback = function(presp) {
+    debugger;
+    apz.stopLoader();
+    if (presp.status) {
+        if (presp.res && presp.res.bilpay__ServiceName_Req) {
+            var lserviceList = apz.bilpay.AddBiller.sortObj(presp.res.bilpay__ServiceName_Req.tbRbBillpServicename);
+            apz.bilpay.AddBiller.serviceList = lserviceList;
+            /*apz.data.scrdata.bilpay__ServiceName_Req.tbRbBillpServicename = lserviceList;
+            apz.data.loadData("ServiceName", "bilpay");*/
+            var lArr = [{
+                "val": "",
+                "desc": "Service Provider"
+            }];
+            for (var i = 0; i < lserviceList.length; i++) {
+                lArr.push({
+                    "val": lserviceList[i].serviceName,
+                    "desc": lserviceList[i].serviceName
+                })
+            }
+            apz.populateDropdown(document.getElementById("bilpay__AddBiller__serviceprovider"), lArr)
+        } else {
+            ///// check for error
+        }
+    } else {
+        //// Handle error
+        var lmsg = {
+            "message": presp.resFull.appzillonErrors[0].errorMessage
+        };
+        if (presp.errors[0].errorCode !== "$APZ-SMS-EX-003") {
+            apz.dispMsg(lmsg);
+        }
+    }
+};
+apz.bilpay.AddBiller.fn_cancel = function() {
+    debugger;
+    apz.hide("bilpay__AddBiller__billeraddconfirmation");
+    apz.show("bilpay__AddBiller__addbillerstage1");
+};
+apz.bilpay.AddBiller.fn_SIrequired = function() {
+    debugger;
+    if (apz.getElmValue("bilpay__AddBiller__siReq") == "YES") {
+        $(".siReqCol").removeClass("sno");
+    } else {
+        $(".siReqCol").addClass("sno");
+    }
+};
+apz.bilpay.AddBiller.fn_continue = function() {
+    debugger;
+    var check = apz.bilpay.AddBiller.fn_validateFields();
+    if (check) {
+        if ($(".siReqCol").hasClass("sno")) {
+            apz.bilpay.AddBiller.fnContinueStage1();
+        } else {
+            var lmsg = {
+                "code": "CONF_AUTO",
+                "callBack": apz.bilpay.AddBiller.fnContinueCB
+            };
+            apz.dispMsg(lmsg);
+        }
+    } else {
+        var lmsg = {
+            "code": "ERR_MandFields"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.bilpay.AddBiller.fnContinueCB = function(params) {
+    debugger;
+    if (params.choice) {
+        //give the calendar event 
+        apz.bilpay.AddBiller.sCalendarReq = true;
+        apz.bilpay.AddBiller.fnContinueStage1();
+    } else {
+          apz.bilpay.AddBiller.sCalendarReq = false;
+        apz.bilpay.AddBiller.fnContinueStage1();
+    }
+};
+apz.bilpay.AddBiller.fnContinueStage1 = function() {
+    debugger;
+    /* var check = apz.bilpay.AddBiller.fn_validateFields();
+    if (check) {*/
+    apz.setElmValue("bilpay__AddBiller__confBillerNickName", apz.getElmValue("bilpay__AddBiller__nickname"));
+    apz.setElmValue("bilpay__AddBiller__confBillerConsumerNo", apz.getElmValue("bilpay__AddBiller__consumeraccountno"));
+    apz.setElmValue("bilpay__AddBiller__confBillerServiceProv", apz.getElmValue("bilpay__AddBiller__serviceprovider"));
+    apz.setElmValue("bilpay__AddBiller__confSIreq", apz.getElmValue("bilpay__AddBiller__siReq"));
+    apz.setElmValue("bilpay__AddBiller__confTrancLimit", apz.getElmValue("bilpay__AddBiller__trancLimit"));
+    apz.setElmValue("bilpay__AddBiller__confAccount", apz.getElmValue("bilpay__AddBiller__account"));
+    apz.setElmValue("bilpay__AddBiller__confRetryCount", apz.getElmValue("bilpay__AddBiller__retryCount"));
+    apz.setElmValue("bilpay__AddBiller__confPrefDay", apz.getElmValue("bilpay__AddBiller__PrefPaymentDay"));
+    apz.bilpay.AddBiller.sData.BillerNickName = apz.getElmValue("bilpay__AddBiller__nickname");
+    apz.bilpay.AddBiller.sData.BillerConsumerNo = apz.getElmValue("bilpay__AddBiller__consumeraccountno");
+    apz.bilpay.AddBiller.sData.BillerServProv = apz.getElmValue("bilpay__AddBiller__serviceprovider");
+    apz.bilpay.AddBiller.sData.BillerSiReq = apz.getElmValue("bilpay__AddBiller__siReq");
+    apz.bilpay.AddBiller.sData.BillerTxnLimit = apz.getElmValue("bilpay__AddBiller__trancLimit");
+    apz.bilpay.AddBiller.sData.BillerAccount = apz.getElmValue("bilpay__AddBiller__account");
+    apz.bilpay.AddBiller.sData.BillerRetryCount = apz.getElmValue("bilpay__AddBiller__retryCount");
+    apz.bilpay.AddBiller.sData.BillerPrefPayDay = apz.getElmValue("bilpay__AddBiller__PrefPaymentDay");
+    apz.show("bilpay__AddBiller__billeraddconfirmation");
+    apz.hide("bilpay__AddBiller__addbillerstage1");
+    /* } else {
+        var lmsg = {
+            "code": "ERR_MandFields"
+        };
+        apz.dispMsg(lmsg);
+    }*/
+};
+apz.bilpay.AddBiller.fn_validateFields = function() {
+    debugger;
+    var status = true;
+    var err = 0;
+    if (apz.isNull(apz.getElmValue("bilpay__AddBiller__nickname"))) {
+        err++;
+    }
+    if (apz.isNull(apz.getElmValue("bilpay__AddBiller__consumeraccountno"))) {
+        err++;
+    }
+    if (apz.isNull(apz.getElmValue("bilpay__AddBiller__serviceprovider"))) {
+        err++;
+    }
+    if (apz.getElmValue("bilpay__AddBiller__siReq") == "YES") {
+        if (apz.isNull(apz.getElmValue("bilpay__AddBiller__trancLimit"))) {
+            err++;
+        }
+        if (apz.isNull(apz.getElmValue("bilpay__AddBiller__account"))) {
+            err++;
+        }
+    }
+    if (err > 0) {
+        status = false;
+    }
+    return status;
+};
+apz.bilpay.AddBiller.fn_confirm = function() {
+    debugger;
+    var req = {};
+    var lObj = {
+        "value": apz.bilpay.AddBiller.sData.BillerTxnLimit,
+        "decimalSep": '.',
+        "displayAsLiteral": 'N'
+    };
+    req.action = "ADD";
+    req.billerDtls = {};
+    req.billerDtls.nickName = apz.getElmValue("bilpay__AddBiller__nickname");
+    req.billerDtls.consumerNumber = apz.getElmValue("bilpay__AddBiller__consumeraccountno");
+    req.billerDtls.serviceProvider = apz.getElmValue("bilpay__AddBiller__serviceprovider");
+    req.billerDtls.customerPin = apz.getElmValue("bilpay__AddBiller__customerpin");
+    req.billerDtls.authenticationType = "OTP";
+    req.billerDtls.customerId = apz.bilpay.AddBiller.sParams.customerContext.data.customerID;
+    req.billerDtls.siReq = apz.bilpay.AddBiller.sData.BillerSiReq;
+    if (apz.bilpay.AddBiller.sData.BillerSiReq == "YES") {
+        req.billerDtls.txnLimit = apz.unFormatNumber(lObj);
+        req.billerDtls.account = apz.bilpay.AddBiller.sData.BillerAccount;
+        req.billerDtls.retryCount = apz.bilpay.AddBiller.sData.BillerRetryCount;
+        req.billerDtls.prefPayDay = apz.bilpay.AddBiller.sData.BillerPrefPayDay;
+    }
+    apz.startLoader();
+    var lParams = {
+        "appId": "bilpay",
+        "ifaceName": "AddBiller",
+        "paintResp": "N",
+        "buildReq": "N",
+        "req": req,
+        "async": true,
+        "callBack": apz.bilpay.AddBiller.fn_AddBillerCallback
+    };
+    //apz.server.callServer(lParams);
+     apz.data.loadJsonData("AddBiller","bilpay");
+     var refNo = apz.data.scrdata.bilpay__AddBiller_Res.billerDtls.data.OTPRefNo;
+        apz.bilpay.AddBiller.sData.refNO = refNo;
+        apz.bilpay.AddBiller.fn_openOTP(refNo);
+    
+};
+apz.bilpay.AddBiller.fn_AddBillerCallback = function(presp) {
+    debugger;
+    apz.stopLoader();
+    if (presp.errors) {
+        var lmsg = {
+            "message": presp.resFull.appzillonErrors[0].errorMessage
+        };
+        if (presp.errors[0].errorCode !== "$APZ-SMS-EX-003") {
+            apz.dispMsg(lmsg);
+        }
+    } else {
+        var refNo = presp.res.bilpay__AddBiller_Res.billerDtls.data.OTPRefNo;
+        apz.bilpay.AddBiller.sData.refNO = refNo;
+        apz.bilpay.AddBiller.fn_openOTP(refNo);
+    }
+};
+apz.bilpay.AddBiller.fn_openOTP = function(refNo) {
+    debugger;
+    apz.hide("bilpay__AddBiller__billeraddconfirmation");
+   // apz.show("bilpay__AddBiller__addbillerstage2");
+      apz.show("bilpay__AddBiller__otpstage");
+
+    apz.hide("bilpay__AddBiller__addbillerstage1");
+    var lparams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "bilpay__AddBiller__otpstage",
+        
+        "userObj": {
+            "from" : "billPayment",
+            "action": "SetRefNo",
+            "data": {
+                "OTPRefNo": refNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.bilpay.AddBiller.fn_OTPCallback,
+                "destroyDiv": "bilpay__AddBiller__otpstage"
+            }
+        }
+    };
+    apz.launchApp(lparams);
+};
+apz.bilpay.AddBiller.fn_OTPCallback = function(presp) {
+    debugger;
+    apz.hide("NBBA01__LandingPage__backButton");
+    var lParams = {};
+    lParams.showHome = 'Y';
+    lParams.showImage = 'N';
+    //lParams.directHome = apz.bilpay.MultipleBillPay.fndirectHome;
+    lParams.headerText = "Add Biller";
+    //apz.bilpay.MultipleBillPay.fnsetNavi(lParams);
+    $("body").removeClass('ter');
+    $("body").addClass('pri');
+    // if (presp.resFull.appzillonHeader.status) {
+    $("#bilpay__AddBiller__otpstage").remove();
+    var date = new Date();
+    apz.setElmValue("bilpay__AddBiller__addBillerSuccDate", date.format('d M Y h:mA'));
+    apz.setElmValue("bilpay__AddBiller__addBillerNickName", apz.bilpay.AddBiller.sData.BillerNickName);
+    apz.setElmValue("bilpay__AddBiller__addBillerConsumerNo", apz.bilpay.AddBiller.sData.BillerConsumerNo);
+    apz.setElmValue("bilpay__AddBiller__addBillerServiceProvider", apz.bilpay.AddBiller.sData.BillerServProv);
+    apz.setElmValue("bilpay__AddBiller__addBillerSIreq", apz.bilpay.AddBiller.sData.BillerSiReq);
+  //  apz.setElmValue("bilpay__AddBiller__addBillerTrancLimit", apz.bilpay.AddBiller.sData.BillerTxnLimit);
+ //   apz.setElmValue("bilpay__AddBiller__addBillerAccount", apz.bilpay.AddBiller.sData.BillerAccount);
+    apz.setElmValue("bilpay__AddBiller__addBillerRetryCount", apz.bilpay.AddBiller.sData.BillerRetryCount);
+  //  apz.setElmValue("bilpay__AddBiller__addBillerPreferPayDay", apz.bilpay.AddBiller.sData.BillerPrefPayDay);
+    // var lRefNo = "Your Reference no is " + apz.bilpay.AddBiller.sData.refNO;
+    // apz.setElmValue("bilpay__AddBiller__addBillerReferencNo", lRefNo);
+    apz.show("bilpay__AddBiller__addbillerstage3");
+    if (apz.deviceType !== "SIMULATOR" && apz.bilpay.AddBiller.sCalendarReq) {
+        apz.bilpay.AddBiller.fnCalendarAdd();
+    }
+};
+/**
+ * @purpouse - Function for sorting the service provider names in alphabetical order
+ *
+ * @Params -  Json array to be sorted in alphabetical order
+ * @Return - Sorted array
+ **/
+apz.bilpay.AddBiller.sortObj = function(result) {
+    debugger;
+    var length = result.length;
+    for (var i = 0; i < length; i++) {
+        for (var j = 0; j < (length - i - 1); j++) {
+            if (result[j].serviceName > result[j + 1].serviceName) {
+                var tmp = result[j];
+                result[j] = result[j + 1];
+                result[j + 1] = tmp;
+            }
+        }
+    }
+    return result;
+};
+apz.bilpay.AddBiller.fnBack = function() {
+    debugger;
+    var lparams = {};
+    lparams.div = "NBBA01__LandingPage__BillPaymentRow";
+    lparams.scr = "MultipleBillPay";
+    lparams.userObj = apz.bilpay.AddBiller.sParams.customerContext;
+    apz.launchSubScreen(lparams);
+};
+////calendar
+apz.bilpay.AddBiller.fnCalendarAdd = function() {
+    debugger;
+    var json = {
+        "title": "Bill payment for biller" + apz.bilpay.AddBiller.sData.BillerNickName,
+        "alarm": "on",
+        "startDate": new Date().format(apz.bilpay.AddBiller.sData.BillerPrefPayDay + '-M-Y'),
+        "endDate": new Date().addYears(1).format(apz.bilpay.AddBiller.sData.BillerPrefPayDay + '-M-Y'),
+        "startTime": "00:00:00",
+        "endTime": "00:00:00",
+        "priority": "N",
+        "summary": "Bill Payment for Biller ID" + apz.bilpay.AddBiller.sData.refNO,
+        "recurrence": "Monthly",
+        "recurrenceEndDate": "",
+        "location": "Bangalore"
+    };
+    json.id = "CALENDARADD_ID";
+    json.callBack = apz.bilpay.AddBiller.fnCalendarAddCallback;
+    apz.ns.createCalendarEvent(json);
+};
+apz.bilpay.AddBiller.fnCalendarAddCallback = function(params) {
+    debugger;
+    if (params.status) {
+        var lmsg = {
+            "appId": "bilpay",
+            "code": "CAL_CREATE"
+        };
+        apz.dispMsg(lmsg);
+    } else {
+        var lmsg = {
+            "code": params.errorCode
+        };
+        apz.dispMsg(lmsg);
+    }
+};

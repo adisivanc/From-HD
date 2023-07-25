@@ -1,0 +1,132 @@
+apz.form16.Form16A = {};
+apz.app.onLoad_Form16A = function() {
+   // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt_txtcnt", "FORM 16A");
+    apz.show("form16__Form16A__Stage1");
+    apz.hide("form16__Form16A__Stage2");
+}
+apz.form16.Form16A.dispMsg = function(pResp, type) {
+    var params = {};
+    params.message = pResp;
+    params.type = type;
+    params.callBack = apz.app.displayMessageCallBack;
+    apz.dispMsg(params);
+}
+apz.form16.Form16A.back = function() {
+    apz.show("form16__Form16A__Stage1");
+    apz.hide("form16__Form16A__Stage2");
+}
+apz.form16.Form16A.front = function() {
+    apz.hide("form16__Form16A__Stage1");
+    apz.show("form16__Form16A__Stage2");
+    apz.data.loadJsonData("TDSForm", "form16");
+}
+apz.form16.Form16A.view = function() {
+    debugger;
+    var choice = apz.getElmValue("form16__Form16A__radio");
+    if (choice == "previous") {
+        apz.form16.Form16A.fnDownload("previous", "pdf");
+    } else {
+        apz.form16.Form16A.fnDownload("current", "pdf")
+    }
+}
+apz.form16.Form16A.download = function() {
+    debugger;
+    var pan = apz.getElmValue("form16__Form16A__pan");
+    var year = apz.getElmValue("form16__Form16A__year");
+    if (pan == "") {
+        apz.form16.Form16A.dispMsg("Please enter the PAN Number");
+    } else if (year == "Select") {
+        apz.form16.Form16A.dispMsg("Please select the Financial year");
+    } else {
+        apz.dispMsg({
+            message: "Form 16A has been sent to your registered email id!",
+            type: "S",
+            callBack: apz.form16.Form16A.showServiceReqeustHome
+        });
+    }
+}
+apz.form16.Form16A.showServiceReqeustHome = function() {
+    // apz.csmrbk.fnLaunchApp({
+    //     "appId": "srmenu",
+    //     "scr": "MenuList"
+    // });
+    apz.landin.Landing.fnMenuClickInside("Service Requests")
+}
+apz.form16.Form16A.fnDownload = function(params, fileType) {
+    debugger;
+    var jsonFilePath = "";
+    var fileName = "";
+    if (params == "current") {
+        jsonFilePath = apz.getDataFilesPath("form16") + "/CurrentFormSixteen.json";
+        fileName = "CurrentFormSixteen";
+    } else {
+        jsonFilePath = apz.getDataFilesPath("form16") + "/PreviousFormSixteen.json";
+        fileName = "PreviousFormSixteen";
+    }
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    for (var i = 0; i < ljsondata.data.length; i++) {
+        var mimetype = ljsondata.data[i].mimeType;
+        var lMimeType = mimetype.slice(-3);
+        if (fileType == lMimeType.toLowerCase()) {
+            apz.form16.Form16A.ReportdwnldMethod(ljsondata.data[i], fileName);
+        }
+    }
+}
+apz.form16.Form16A.ReportdwnldMethod = function(lbodyobj, filename) {
+    debugger;
+    var blob;
+    var fileType = "";
+    if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+        blob = apz.form16.Form16A.b64toBlob(lbodyobj.content, "application/pdf");
+        fileType = ".pdf";
+    }
+    var blobUrl = URL.createObjectURL(blob);
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.form16.Form16A.base64tofilecallBack;
+        json.base64 = lbodyobj.content;
+        json.fileName = filename + fileType;
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    } else {
+        window.open(blobUrl);
+    }
+};
+apz.form16.Form16A.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};
+apz.form16.Form16A.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.form16.Form16A.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.form16.Form16A.openFileCallback = function(params) {
+    debugger;
+};

@@ -1,0 +1,62 @@
+{"cdtcrd__MiniStatement_Res":{
+    "miniStmtMaster": {
+        "txnRefNo": "",
+        "status": "",
+        "respCd": "",
+        "intMsgCd": "",
+        "extMsg": "",
+        "miniStmtDtls": [
+            {
+                "trnDescription": "Transfer",
+                "trnId": "C",
+                "trnDate": "14/11/2019",
+                "trnType": "",
+                "instrumentNo": "",
+                "trnAmount": "7600.00",
+                "drcrInd": "C",
+                "runningBalance": "45432"
+            },
+            {
+                "trnDescription": "Credit card payment",
+                "trnId": "C",
+                "trnDate": "10/11/2019",
+                "trnType": "",
+                "instrumentNo": "",
+                "trnAmount": "1460.00",
+                "drcrInd": "D",
+                "runningBalance": "45343"
+            },
+            {
+                "trnDescription": "Walmart-0987",
+                "trnId": "C",
+                "trnDate": "07/11/2019",
+                "trnType": "",
+                "instrumentNo": "",
+                "trnAmount": "2000.00",
+                "drcrInd": "D",
+                "runningBalance": "56784"
+            },
+            {
+                "trnDescription": "Emirates",
+                "trnId": "C",
+                "trnDate": "04/11/2019",
+                "trnType": "",
+                "instrumentNo": "",
+                "trnAmount": "4500.00",
+                "drcrInd": "D",
+                "runningBalance": "21234"
+            },
+            {
+                "trnDescription": "Phone Bill 93XXXXX34X1",
+                "trnId": "C",
+                "trnDate": "02/11/2019",
+                "trnType": "",
+                "instrumentNo": "",
+                "trnAmount": "3400.00",
+                "drcrInd": "D",
+                "runningBalance": "43233"
+            }
+        ]
+    }
+}
+}

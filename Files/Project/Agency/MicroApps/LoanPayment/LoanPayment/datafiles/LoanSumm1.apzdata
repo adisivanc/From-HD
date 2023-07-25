@@ -1,0 +1,100 @@
+{
+    "lnpymt__LoanSumm_Res": {
+        "loanSummary": {
+            "txnRefNo": "987654345",
+            "status": true,
+            "respCd": "",
+            "extMsg": "",
+            "intMsgCd": "",
+            "loanDtls": [{
+                "borrower":"Phan YangTong",
+                "loanAccountNo": "001234545545",
+                "branch": "One Wall Street, New York",
+                "loanType": "Vehicle",
+                "loanAmount": "100000",
+                "loanDt": "01-Mar-2018",
+                "disbursedAmount": "30000",
+                "outstandingAmount": "30000",
+                "currEMI": "10000",
+                "currROI": "10000",
+                "loanTermBal": "29 Months",
+                "loanTermOrig": "36 Months",
+                "unpostedTranc": "",
+                "lastInstallmentDt": "02-Mar-2020",
+                "currentDue": "234",
+                "nextPayable": "4321",
+                                "paymentamount" : "10000",
+
+                "paymentSchedule": [{
+                    "loanAccountNo": "001234545545",
+                    "branchCode": "114",
+                    "scheduleDt": "5-JAN-2019",
+                    "paidAmount": "23987",
+                    "dueAmount": "23234",
+                    "PrincipleAmount": "93000",
+                    "interestAmount": "123"
+                }, {
+                    "loanAccountNo": "001234545545",
+                    "branchCode": "114",
+                    "scheduleDt": "5-FEB-2019",
+                    "paidAmount": "23112",
+                    "dueAmount": "3322",
+                    "PrincipleAmount": "71857",
+                    "interestAmount": "543"
+                }, {
+                    "loanAccountNo": "001234545545",
+                    "branchCode": "114",
+                    "scheduleDt": "5-MAR-2019",
+                    "paidAmount": "32212",
+                    "dueAmount": "43221",
+                    "PrincipleAmount": "50364",
+                    "interestAmount": "1237"
+                }]
+            }, {
+                "borrower": "Phan YangTong",
+                "loanAccountNo": "001234590880",
+                "branch": "One Wall Street, New Yor",
+                "loanType": "Home",
+                "loanAmount": "200000",
+                "loanDt": "01-Mar-2020",
+                "disbursedAmount": "40000",
+                "outstandingAmount": "20000",
+                "currEMI": "10000",
+                "currROI": "10000",
+                "loanTermBal": "7 Months",
+                "loanTermOrig": "24 Months",
+                "unpostedTranc": "",
+                "lastInstallmentDt": "02-Mar-2020",
+                "currentDue": "234",
+                "nextPayable": "4321",
+                                "paymentamount" : "20000",
+
+                "paymentSchedule": [{
+                    "loanAccountNo": "001234545545",
+                    "branchCode": "111",
+                    "scheduleDt": "5-JAN-2019",
+                    "paidAmount": "23987",
+                    "dueAmount": "23234",
+                    "PrincipleAmount": "93000",
+                    "interestAmount": "123"
+                }, {
+                    "loanAccountNo": "001234545545",
+                    "branchCode": "111",
+                    "scheduleDt": "5-FEB-2019",
+                    "paidAmount": "23112",
+                    "dueAmount": "3322",
+                    "PrincipleAmount": "71857",
+                    "interestAmount": "543"
+                }, {
+                    "loanAccountNo": "001234545545",
+                    "branchCode": "111",
+                    "scheduleDt": "5-MAR-2019",
+                    "paidAmount": "32212",
+                    "dueAmount": "43221",
+                    "PrincipleAmount": "50364",
+                    "interestAmount": "1237"
+                }]
+            }]
+        }
+    }
+}

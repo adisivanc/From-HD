@@ -1,0 +1,62 @@
+{"sdlsum__SDLSummary_Res":{
+            "customerID": "000004712",
+            "lockerId": "LOC1234XDA3",
+            "rentDueDate": "23 Apr 2018",
+            "rentAmount": "2000",
+            "penlRate": "0.00",
+            "penlAmount": "0.00",
+            "branchName": "West Bay-30",
+            "branchCode": "619",
+            "SavingsAccount": [{
+                "accountNo": "100009312263",
+                "accountBal": "1000996",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }, {
+                "accountNo": "100009312401",
+                "accountBal": "188373",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }, {
+                "accountNo": "732510006721",
+                "accountBal": "284748",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }],
+            "CurrentAccount": [{
+                "accountNo": "100009312274",
+                "accountBal": "46504",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }, {
+                "accountNo": "753410000895",
+                "accountBal": "657498",
+                "accountBrnName": "West Bay-30",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "HKL00000619"
+            }],
+            "branchDetails": [{
+                "branchName": "West Bay-30",
+                "branchCode": "KOR12345"
+            }, {
+                "branchName": "West Bay-30",
+                "branchCode": "MAD09878"
+            }, {
+                "branchName": "West Bay-30",
+                "branchCode": "JNG25834"
+            }, {
+                "branchName": "West Bay-30",
+                "branchCode": "MJC48207"
+            }, {
+                "branchName": "West Bay-30",
+                "branchCode": "USR98237"
+            }, {
+                "branchName": "West Bay-30",
+                "branchCode": "JPN28472"
+            }]
+        }
+}

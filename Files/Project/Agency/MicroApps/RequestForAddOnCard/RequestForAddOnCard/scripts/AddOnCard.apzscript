@@ -1,0 +1,102 @@
+apz.addonc.AddOnCard={};
+apz.app.onLoad_AddOnCard = function() {
+        // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt_txtcnt", "MANAGE CARDS")
+
+}
+apz.addonc.AddOnCard.dispMsg = function(pResp, type) {
+    var params = {};
+    params.message = pResp;
+    params.type = type;
+    params.callBack = apz.app.displayMessageCallBack;
+    apz.dispMsg(params);
+}
+apz.addonc.AddOnCard.submit=function() {
+    debugger;
+  var MobNo = /^[0-9]{10}$/;
+     var Mob = apz.getElmValue("addonc__AddOnCard__mobNo")
+    if (MobNo.test(Mob)) {
+        var status = true;
+    }if (status != true) {
+        apz.dispMsg({"message" : "Invalid Mobile Number"});
+    } 
+    else{
+       
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "addonc__Launcher__launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.addonc.AddOnCard.confirmCB,
+                "destroyDiv": "addonc__Launcher__launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+}
+apz.addonc.AddOnCard.confirmCB = function() {
+    var lLaunchParams = {
+        "appId": "sucscr",
+        "scr": "SuccessScreen",
+        "div": "addonc__Launcher__launcher",
+        "userObj": {
+            "text": "The request for the Add-On Card has been submitted successfully"
+        }
+    }
+    apz.launchApp(lLaunchParams);
+}
+
+        
+
+        
+        
+        
+        
+// apz.dispMsg({message:"The request for the Add-On Card has been submitted successfully", type:"S",callBack:apz.csmrbk.landingpage.fnInitialise});
+// }
+
+
+
+
+apz.addonc.AddOnCard.selIdentity = function () {
+    debugger;
+      //  apz.show("addonc__AddonCard__identity");
+
+        $("#addonc__AddOnCard__identity_ul").removeClass("sno");
+        $("#addonc__AddOnCard__el_label_1_ul").removeClass("sno");
+
+    var identity = apz.getElmValue("addonc__AddOnCard__el_dpd_2");
+
+$("#addonc__AddOnCard__el_label_1").html(identity + " Number")
+
+}
+
+
+
+
+
+apz.addonc.AddOnCard.selAddress = function () {
+    debugger;
+      //  apz.show("addonc__AddonCard__identity");
+
+        $("#addonc__AddOnCard__address_ul").removeClass("sno");
+        $("#addonc__AddOnCard__el_label_2_ul").removeClass("sno");
+
+    var address = apz.getElmValue("addonc__AddOnCard__el_dpd_3");
+    
+
+$("#addonc__AddOnCard__el_label_2").html(address + " Number")
+
+    
+}
+
+apz.addonc.AddOnCard.fnBack = function(){
+    debugger;
+    apz.csmrbk.landingpage.fnOrbitLaunch("Manage Cards");
+}

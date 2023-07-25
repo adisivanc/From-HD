@@ -1,0 +1,104 @@
+apz.contactUs = {};
+var sLink = "https://in.linkedin.com/company/i-exceed-technology-solutions-private-limited";
+apz.app.onLoad_contactUs = function() {};
+apz.contactUs.showSubmitModal = function() {
+    var param = {};
+    param.targetId = 'ACPL01__ContactUs__submitModal';
+    param.callBack = null;
+    param.callBackObj = this;
+    apz.toggleModal(param);
+};
+apz.contactUs.chatOnSkype = function() {
+    debugger;
+    if (apz.deviceType == "SIMULATOR") {
+        window.open("https://login.skype.com/login?client_id=578134&redirect_uri=https%3A%2F%2Fweb.skype.com%2F");
+    } else {
+        var params = {};
+        params.type = "chat"; //chat/call/video,
+        params.userId = ["iexceed"];
+        params.callBack = apz.contactUs.skypeCallback;
+        params.id = "SKYPECALLBACK";
+        apz.ns.makeSkypeCall(params);
+    }
+};
+apz.contactUs.skypeCallback = function(params) {
+    //alert(JSON.stringify(params));
+};
+apz.contactUs.chatOnFaceBook = function() {
+    if (apz.deviceType == "SIMULATOR") {
+        window.open("https://www.facebook.com/iexceedltd/");
+    } else {
+        var params = {};
+        params.id = "FACEBOOK_ID";
+        params.callBack = apz.contactUs.facebookCallback;
+        apz.ns.facebookLogin(params);
+    }
+};
+apz.contactUs.facebookCallback = function(params) {
+    var id = params.fbId;
+    var email = params.email;
+    var name = params.name;
+    var pictureURL = params.pictureURL;
+    var firstName = params.firstName;
+    var lastName = params.lastName;
+    var gender = params.gender;
+    var locale = params.locale;
+};
+apz.contactUs.googlePlus = function() {
+    if (apz.deviceType == "SIMULATOR") {
+        window.open("https://plus.google.com/explore");
+    } else {
+        var params = {};
+        params.id = "GOOGLEPLUS_ID";
+        params.callBack = apz.contactUs.googlePlusInCallback;
+        apz.ns.googleLogin(params);
+    }
+};
+apz.contactUs.googlePlusInCallback = function(message) {
+    var id = message.gplusId;
+    var email = message.email;
+    var name = message.name;
+    var pictureURL = message.pictureURL;
+    var firstName = message.firstName;
+    var lastName = message.lastName;
+    var gender = message.gender;
+    var locale = message.locale;
+};
+apz.contactUs.linkedInId = function() {
+    if (apz.deviceType == "SIMULATOR") {
+        window.open(sLink);
+    } else {
+        var params = {};
+        params.id = "LINKEDIN_ID";
+        params.callBack = apz.contactUs.linkedInCallback;
+        apz.ns.linkedinLogin(params);
+    }
+};
+apz.contactUs.linkedInCallback = function(params) {
+    // alert(JSON.stringify(params));
+};
+apz.contactUs.twitterLogin = function() {
+    if (apz.deviceType == "SIMULATOR") {
+        window.open("https://twitter.com/iexceedltd/");
+    } else {
+        var params = {};
+        params.id = "TWITTER_ID";
+        params.callBack = apz.contactUs.twitterCallback;
+        apz.ns.twitterLogin(params);
+    }
+};
+apz.contactUs.twitterCallback = function(params) {
+    //alert(JSON.stringify(params));
+};
+
+apz.contactUs.close = function(){
+   var params = {};
+        params.scr = "PreLogin";
+    apz.launchScreen(params);
+    setTimeout(function() {
+        $("#ACPL01__PreLogin__ArrowDown").trigger("click");
+    }, 50);
+};
+
+
+

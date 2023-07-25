@@ -1,0 +1,272 @@
+apz.cracop.SelectedProducts = {};
+apz.cracop.SelectedProducts.sData = {};
+apz.cracop.SelectedProducts.sCache = {};
+apz.app.onLoad_SelectedProducts = function(params) {
+    debugger;
+    apz.cracop.SelectedProducts.sCache = params;
+        var requestStr = {};
+        requestStr.tbAcopCustomerInfo = {}
+        requestStr.tbAcopCustomerInfo.referenceNo = params.data.referenceNo;
+        var lServerParams = {
+            "ifaceName": "QueryLeadDetails_Query",
+            "buildReq": "N",
+            "appId": "cracop",
+            "req": requestStr,
+            "paintResp": "Y",
+            "async": "true",
+            "callBack": apz.cracop.SelectedProducts.callBackFunc,
+            "callBackObj": "",
+        };
+        apz.server.callServer(lServerParams);
+  
+}
+apz.cracop.SelectedProducts.callBackFunc = function(pResp) {
+    if (pResp.status) {
+        apz.cracop.SelectedProducts.sData = pResp.res.cracop__QueryLeadDetails_Res.tbAcopCustomerInfo;
+       
+        apz.setElmValue("cracop__SelectedProducts__id", apz.cracop.SelectedProducts.sData.referenceNo);
+        apz.setElmValue("cracop__SelectedProducts__name_txt", apz.cracop.SelectedProducts.sData.firstName);
+        apz.setElmValue("cracop__SelectedProducts__dob_txt", apz.cracop.SelectedProducts.sData.dateOfBirth);
+        apz.setElmValue("cracop__SelectedProducts__ph_txt", apz.cracop.SelectedProducts.sData.mobileNo);
+        apz.setElmValue("cracop__SelectedProducts__email_txt", apz.cracop.SelectedProducts.sData.emailId);
+        document.getElementById("cracop__SelectedProducts__img_lead").src =  apz.cracop.SelectedProducts.sData.leadImage;
+    }
+    apz.cracop.SelectedProducts.fnRender();
+    if (apz.cracop.SelectedProducts.sCache.action == "showapplication") {}
+    if (apz.cracop.SelectedProducts.sCache.data.productCategory == "Home Loan" || apz.cracop.SelectedProducts.sCache.data.productCategory ==
+        "Vehicle Loan") {
+        $(".service").removeClass("sno");
+    } else {
+        $(".service").addClass("sno");
+    }
+    $(".progress").parent("hide");
+    $(".progress").parents("span").prepend(
+        '<ul class="ett-pgst pri hor var1"><li class="pgst-step pgs-50 active"><span></span><span>Step</span></li></ul>')
+};
+//,#cracop__SelectedProducts__ct_lst_2 > ul >li
+apz.app.onShown_SelectedProducts = function() {
+    debugger;
+    var i = 0;
+    var keys = Object.keys(apz.data.scrdata.cracop__SelectedProducts_Res.progress);
+    $("#cracop__SelectedProducts__details  > ul >li").each(function() {
+        debugger;
+        $("#cracop__SelectedProducts__details  > ul >li").css({"cursor":"pointer"});
+        for (i = 0; i < keys.length; i++) {
+            var lTxt = $(this).find(".category").text().toLowerCase();
+            if (lTxt.indexOf(keys[i]) != -1) {
+                if (apz.data.scrdata.cracop__SelectedProducts_Res.progress[keys[i]] != 1) {
+                    $(this).find(".ett-pgst").show();
+                    $(this).find(".img img").hide();
+                    $(this).find(".pgst-step").attr("class", "pgst-step active");
+                    $(this).find(".pgst-step").addClass("pgs-" + (parseFloat(apz.data.scrdata.cracop__SelectedProducts_Res.progress[keys[i]]).toFixed(
+                        1)) * 100);
+                    //  alert(parseInt(apz.data.scrdata.cracop__SelectedProducts_Res.progress[keys[i]])*100);
+                } else {
+                    $(this).find(".ett-pgst").hide();
+                    $(this).find(".img img").show();
+                }
+            }
+        }
+    });
+};
+apz.cracop.SelectedProducts.fnRender = function() {
+    debugger;
+    $(".img").hide();
+    apz.data.loadData("SelectedProducts", "cracop");
+    if (apz.cracop.SelectedProducts.sCache.listIndex != undefined) {
+        var keys = Object.keys(apz.data.scrdata.cracop__SelectedProducts_Res.progress);
+        if (apz.data.scrdata.cracop__SelectedProducts_Res.progress.services == 1) {
+            $("#cracop__SelectedProducts__el_icn_11").attr("onclick", "");
+        } else {
+            $("#cracop__SelectedProducts__el_icn_11").attr("onclick", "apz.cracop.SelectedProducts.fnEditDetails(this)");
+        }
+        var lDetailFlag = 0;
+        $("#cracop__SelectedProducts__details li").each(function() {
+            debugger;
+            if (apz.data.scrdata.cracop__SelectedProducts_Res.progress[keys[lDetailFlag]] == 1) {
+                $(this).find(".progress").parent().hide();
+                $(this).find(".img").show();
+                if (apz.data.scrdata.cracop__SelectedProducts_Res.progress.services == 1) {
+                    $("#cracop__SelectedProducts__el_icn_11").attr("onclick", "");
+                } else {
+                    $("#cracop__SelectedProducts__el_icn_11").attr("onclick", "apz.cracop.SelectedProducts.fnEditDetails(this)");
+                }
+            } else {
+                $(this).find(".progress").parent().show();
+                $(this).find(".img").hide();
+            }
+            lDetailFlag++;
+        });
+        var i = 0;
+        var keys = Object.keys(apz.data.scrdata.cracop__SelectedProducts_Res.progress);
+        $("#cracop__SelectedProducts__details  > ul >li").each(function() {
+            debugger;
+            for (i = 0; i < keys.length; i++) {
+                var lTxt = $(this).find(".category").text().toLowerCase();
+                if (lTxt.indexOf(keys[i]) != -1) {
+                    $(this).find(".pgst-step").attr("class", "pgst-step active");
+                    $(this).find(".pgst-step").addClass("pgs-" + (parseFloat(apz.data.scrdata.cracop__SelectedProducts_Res.progress[keys[i]])) *
+                        100);
+                    //  alert(parseInt(apz.data.scrdata.cracop__SelectedProducts_Res.progress[keys[i]])*100);
+                }
+            }
+        });
+    } else if (apz.cracop.SelectedProducts.sCache.action == "cancel") {
+        apz.data.loadData("SelectedProducts", "cracop");
+    } else {
+        apz.data.scrdata.cracop__SelectedProducts_Res = {};
+        apz.data.scrdata.cracop__SelectedProducts_Res.Products = [];
+        apz.data.scrdata.cracop__SelectedProducts_Res.Products = apz.cracop.SelectedProducts.sCache.products;
+        // apz.data.buildData("SelectedProducts", "cracop");
+        var lObj = {
+            "action": "C",
+            "dataPointers": [],
+            "containerId": "cracop__SelectedProducts__details"
+        }
+        apz.data.setContainerData(lObj);
+        /*  var lObj1 = {
+            "action": "C",
+            "dataPointers": [],
+            "containerId": "cracop__SelectedProducts__ct_lst_2"
+        }
+        apz.data.setContainerData(lObj1);*/
+        $.each(apz.data.scrdata.cracop__SelectedProducts_Res.progress, function(key, value) {
+            debugger;
+            apz.data.scrdata.cracop__SelectedProducts_Res.progress[key] = "0";
+        });
+        apz.data.scrdata.cracop__SelectedProducts_Res.progress.primary = "0.3";
+        apz.data.scrdata.cracop__SelectedProducts_Res.progress.contact = "0.25";
+        apz.data.scrdata.cracop__SelectedProducts_Res.progress.professional = "0";
+        apz.data.scrdata.cracop__SelectedProducts_Res.progress.address = "0.5";
+        apz.data.scrdata.cracop__SelectedProducts_Res.progress.nominee = "0";
+        apz.data.scrdata.cracop__SelectedProducts_Res.progress.minor = "0";
+        apz.data.scrdata.cracop__SelectedProducts_Res.progress.other = "0";
+        apz.data.scrdata.cracop__SelectedProducts_Res.progress.services = "0";
+        apz.data.scrdata.cracop__SelectedProducts_Res.progress.product = "0";
+        apz.data.scrdata.cracop__SelectedProducts_Res.progress.document = "0";
+    }
+    apz.data.loadData("SelectedProducts", "cracop");
+}
+apz.cracop.SelectedProducts.fnEditDetails = function(pobj) {
+    debugger;
+    var lCategory = $(pobj).parents("li").find("p").text().toLowerCase();
+    var lIndex = $(pobj).parents("li").index();
+    if (lCategory.indexOf("primary") != -1 || lCategory.indexOf("professional") != -1 || lCategory.indexOf("contact") != -1 || lCategory.indexOf(
+        "other") != -1) {
+        var lObj = {
+            "scr": "CustomerInfo",
+            "div": apz.cracop.SelectedProducts.sCache.destroyDiv,
+            "animation": 9,
+            "userObj": {
+                "destroyDiv": apz.cracop.SelectedProducts.sCache.destroyDiv,
+                "data": apz.cracop.SelectedProducts.sData,
+                "parentAppId": "",
+                "Category": lCategory,
+                "listIndex": lIndex,
+                "leadDetails": apz.cracop.SelectedProducts.sCache.leadDetails
+            }
+        };
+        apz.launchSubScreen(lObj);
+    } else {
+        var lObj = {
+            "scr": "OtherDetails",
+            "div": apz.cracop.SelectedProducts.sCache.destroyDiv,
+            "animation": 9,
+            "userObj": {
+                "destroyDiv": apz.cracop.SelectedProducts.sCache.destroyDiv,
+                "parentAppId": "",
+                "data": apz.cracop.SelectedProducts.sData,
+                "Category": lCategory,
+                "listIndex": lIndex,
+                "leadDetails": apz.cracop.SelectedProducts.sCache.leadDetails
+            }
+        };
+        apz.launchSubScreen(lObj);
+    }
+}
+apz.cracop.SelectedProducts.fnSubmit = function() {
+    var req = {};
+    req.tbAcopCustomerInfo = {};
+    req.tbAcopCustomerInfo.referenceNo = apz.cracop.SelectedProducts.sData.referenceNo;
+    req.tbAcopCustomerInfo.submitStatus = "Submitted";
+    var lServerParams = {
+        "ifaceName": "SubmitAppln_Modify",
+        "buildReq": "N",
+        "appId": "cracop",
+        "req": req,
+        "paintResp": "N",
+        "async": "true",
+        "callBack": apz.cracop.SelectedProducts.callbackFn,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.cracop.SelectedProducts.callbackFn = function(pResp) {
+    var msg = {
+        'message': "Application Submitted successfully.",
+        'callBack': apz.cracop.SelectedProducts.fnSuccessCallBack,
+        "type": "S"
+    };
+    apz.dispMsg(msg);
+}
+apz.cracop.SelectedProducts.fnSuccessCallBack = function() {
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": apz.cracop.SelectedProducts.sCache.destroyDiv,
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": apz.cracop.SelectedProducts.sCache.destroyDiv,
+            "parentAppId": apz.cracop.SelectedProducts.sCache.parentId,
+            "leadDetails": apz.cracop.SelectedProducts.sCache.leadDetails
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.cracop.SelectedProducts.fnCancel = function() {
+    if (apz.cracop.SelectedProducts.sCache.action == "home") {
+        var lParams = {
+            "appId": "landpg",
+            "scr": "LandingPage",
+            "div": apz.cracop.SelectedProducts.sCache.destroyDiv,
+            "type": "CF",
+            "animation": 9,
+            "userObj": {
+                "destroyDiv": apz.cracop.SelectedProducts.sCache.destroyDiv,
+                "parentAppId": apz.cracop.SelectedProducts.sCache.parentId,
+                "leadDetails": apz.cracop.SelectedProducts.sCache.leadDetails
+            }
+        };
+    } else {
+        var lParams = {
+            "appId": "sumary",
+            "scr": "Summary",
+            "div": apz.cracop.SelectedProducts.sCache.destroyDiv,
+            "type": "CF",
+            "animation": 9,
+            "userObj": {
+                "destroyDiv": apz.cracop.SelectedProducts.sCache.destroyDiv,
+                "parentAppId": apz.cracop.SelectedProducts.sCache.parentId,
+                "leadDetails": apz.cracop.SelectedProducts.sCache.leadDetails
+            }
+        };
+    }
+    apz.launchApp(lParams);
+};
+apz.cracop.SelectedProducts.fnEditProducts = function() {
+    var lObj = {
+        "scr": "Products",
+        "div": apz.cracop.SelectedProducts.sCache.destroyDiv,
+        "animation": 10,
+        "userObj": {
+            "action": "backToDetails",
+            "destroyDiv": apz.cracop.SelectedProducts.sCache.destroyDiv,
+            "parentAppId": apz.cracop.SelectedProducts.sCache.parentId,
+            "data": apz.cracop.SelectedProducts.sCache.data,
+            "count": apz.data.scrdata.cracop__ProductDetails_Req.ProductDesc.length,
+            "leadDetails": apz.cracop.SelectedProducts.sCache.leadDetails
+        }
+    };
+    apz.launchSubScreen(lObj);
+};

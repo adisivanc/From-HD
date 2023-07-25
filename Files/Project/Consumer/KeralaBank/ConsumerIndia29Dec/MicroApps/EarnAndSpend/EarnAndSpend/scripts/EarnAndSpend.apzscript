@@ -1,0 +1,70 @@
+// apz.app.onLoad_EarnAndSpend = function(){
+//     debugger;
+//     // apz.data.scrdata.ernspn__EarnSpend_Res= {};
+//     // apz.data.scrdata.ernspn__EarnSpend_Res.Transactions= DataRecord.getDetails(5);
+//     // apz.data.loadData("EarnSpend","ernspn");
+// }
+apz.app.onShown_EarnAndSpend = function(params){
+    debugger; 
+    if(params.from !=undefined && params.from== "widget"){
+        $("#csmrbk__Dashboard__launchexpandChart_apz_2").removeClass("sno");
+    $("#csmrbk__Dashboard__launchexpandChart_apz_2").removeClass("ssp");
+    }
+    
+    apz.data.scrdata.ernspn__EarnSpend_Res= {};
+    apz.data.scrdata.ernspn__EarnSpend_Res.Transactions= DataRecord.getDetails(5);
+    setTimeout(function(){
+        apz.data.loadData("EarnSpend","ernspn");
+    },100)
+    
+     apz.data.scrdata.ernspn__EarnSpend1_Res= {};
+    apz.data.scrdata.ernspn__EarnSpend1_Res.Transactions= DataRecord.getDetails(5);
+      setTimeout(function(){
+        apz.data.loadData("EarnSpend1","ernspn");
+    },150)
+}
+apz.ernspn.fnChangeMonths = function(month){
+    debugger;
+     apz.data.scrdata.ernspn__EarnSpend_Res= {};
+    apz.data.scrdata.ernspn__EarnSpend_Res.Transactions= DataRecord.getDetails(month);
+    apz.data.loadData("EarnSpend","ernspn");
+}
+apz.app.updateChartBeforeRender = function(gChartType, gChartData, gId, gChart) {
+    debugger;
+    //console.log(gChartType);
+    if (gChartType === "MSColumn2D" && gId == "ernspn__EarnAndSpend__ct_cht_1") {
+       //gChartData.chart.showvalues = "1";
+      //  gChartData.chart.showyaxisvalues = "1";
+        //gChartData.chart.yaxisvaluesstep = "100";
+         gChartData.chart.animation='0';
+       // gChart.addEventListener("dataPlotClick", apz.spndas.fnOnPlotClick)
+    } else if (gChartType =="ScrollColumn2D") {
+        gChartData.chart.scrollheight = "5"
+        gChartData.chart.caption = "Spends on " + apz.spndas.Launcher.columColor.name
+        gChartData.chart.flatScrollBars = "1"
+        gChartData.chart.palettecolors = apz.spndas.Launcher.columColor.color;
+        gChart.addEventListener("dataPlotClick", apz.spndas.fnOnColumnPlotClick)
+    }else if (gChartType === "Doughnut2D") {
+        var value = apz.ernspn.fngetTotalSpends(apz.data.scrdata.spndas__TotalSpends_Res.spends);
+        var formatedvalue = apz.formatNumber({
+            value: value,
+            mask: "MILLION",
+            decimalPoints: "1",
+            decimalSep: ".",
+            displayAsLiteral: "Y"
+        });
+        gChartData.chart.defaultCenterLabel = "Total Spends $ " + formatedvalue.replace(/\.[0-9]/, "");
+        gChartData.chart.centerLabel = "Total Spend on $label : $value"
+        gChartData.chart.enableMultiSlicing = "0";
+        gChartData.chart.minAngleForLabel = "75";
+       // gChart.addEventListener("dataPlotClick", apz.spndas.fnOnPlotClick)
+    }
+};
+apz.ernspn.fngetTotalSpends = function(spends) {
+    debugger;
+    var total = spends.reduce(function(temp, item) {
+        temp = temp + parseInt(item.value);
+        return temp;
+    }, 0);
+    return total;
+}

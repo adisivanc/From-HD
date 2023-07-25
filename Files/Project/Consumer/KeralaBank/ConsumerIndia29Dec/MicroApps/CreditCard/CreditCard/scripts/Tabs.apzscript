@@ -1,0 +1,122 @@
+apz.cdtcrd.tabs = {};
+apz.cdtcrd.tabs.sParams = {};
+apz.app.onLoad_Tabs = function(params) {
+    debugger;
+    apz.cdtcrd.tabs.sParams = params;
+    if( apz.cdtcrd.tabs.sParams.from == "Dashboard")
+    {
+        $("#cdtcrd__Tabs__ct_frm_1").addClass("sno");
+    }
+    apz.cdtcrd.tabs.fnInitialise(params);
+    apz.cdtcrd.tabs.fnLaunchMiniStatement();
+};
+
+apz.cdtcrd.tabs.fnLaunchAccountStatement = function() {
+    debugger;
+    $("#cdtcrd__Tabs__gr_row_4").addClass("sno");
+    $("#cdtcrd__Tabs__launchMiniStatement").addClass("sno");
+    apz.cdtcrd.tabs.sParams.action = "Acc";
+    var lParams = {
+        "scr": "AccStatement",
+        "div": "cdtcrd__Tabs__launchAccountStatement",
+        "userObj": apz.cdtcrd.tabs.sParams
+        };
+
+    apz.launchSubScreen(lParams);
+    
+        window.scrollTo(0, document.body.scrollHeight);
+};
+apz.cdtcrd.tabs.fnMore = function() {
+    debugger;
+    apz.toggleModal({
+        targetId: "cdtcrd__Tabs__moreCardDetails"
+    })
+}
+apz.cdtcrd.tabs.fnBack = function() {
+    debugger;
+  if(  apz.cdtcrd.tabs.sParams.from == "Dashboard")
+    {
+         $("#landin__Landing__gr_row_16").toggleClass("expandmenu");
+                  $("#landin__Landing__gr_row_16").toggleClass("sno");
+                       $("#landin__Landing__gr_row_17").toggleClass("xband"); 
+        apz.launchApp({
+            "scr": "Home",
+            "div": "landin__Landing__launcher",
+            "appId": "moblan",
+            "userObj": {
+                
+                "control": {
+                    "exitApp": {
+                        "appId": "",
+                        "div": "landin__Landing__launcher",
+                        "callBack": ""
+                    }
+                }
+                //apz.csmrbk.landingpage.fnInitialise();
+            }
+        });
+    }
+    else
+    {
+    apz.launchSubScreen({
+        appId: "cdtcrd",
+        scr: "CreditCardDetails",
+        div: "landin__Landing__launcher"
+    });
+    }
+}
+apz.cdtcrd.tabs.fnInitialise = function(params) {
+    debugger;
+    
+    apz.setElmValue("cdtcrd__Tabs__cardName",params.data.cardName);
+    apz.setElmValue("cdtcrd__Tabs__cardNo",params.data.cardNumber);
+    var creditLimit = params.data.creditLimit;
+    var param = {
+            "decimalSep": ".",
+            "value": creditLimit,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    apz.setElmValue("cdtcrd__Tabs__cardLimit",apz.formatNumber(param));
+    var outbalance = params.data.totalOS;
+     var param = {
+            "decimalSep": ".",
+            "value": outbalance,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    apz.setElmValue("cdtcrd__Tabs__outstandingBalance",apz.formatNumber(param));
+    var cashLimit = params.data.cashLimit;
+    var param = {
+            "decimalSep": ".",
+            "value": outbalance,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    apz.setElmValue("cdtcrd__Tabs__cashLimit",apz.formatNumber(param));
+    apz.setElmValue("cdtcrd__Tabs__paymentDueDate",params.data.paymentDueDate);
+    var lastBilledAmt = params.data.lastBilledAmount;
+     var param = {
+            "decimalSep": ".",
+            "value": lastBilledAmt,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    apz.setElmValue("cdtcrd__Tabs__lastBilledAmount",apz.formatNumber(param));
+    apz.setElmValue("cdtcrd__Tabs__status", params.data.status);
+};
+apz.cdtcrd.tabs.fnLaunchMiniStatement = function() {
+    debugger;
+    apz.cdtcrd.tabs.sParams.action = "Mini";
+    var lParams = {
+        "scr": "MiniStatement",
+        "div": "cdtcrd__Tabs__launchMiniStatement",
+        "userObj": apz.cdtcrd.tabs.sParams
+
+    };
+    apz.launchSubScreen(lParams);
+};

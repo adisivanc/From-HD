@@ -1,0 +1,50 @@
+apz.spndas.SpendDashboard = {};
+// apz.app.onLoad_SpendDashboard = function() {
+//     debugger;
+    
+//  //   setTimeout(function(){apz.data.loadJsonData("TotalSpends", "spndas");},100)
+//  apz.data.loadJsonData("TotalSpends", "spndas");
+//     setTimeout(function(){apz.data.loadJsonData("TotalSpends1", "spndas");},100) 
+
+// }
+apz.app.onShown_SpendDashboard = function() {
+    debugger;
+    
+    //setTimeout(function(){apz.data.loadJsonData("TotalSpends", "spndas");},50)
+ apz.data.loadJsonData("TotalSpends", "spndas");
+    setTimeout(function(){apz.data.loadJsonData("TotalSpends1", "spndas");},50) 
+apz.data.loadJsonData("TotalSpends1", "spndas");
+}
+apz.app.updateChartBeforeRender = function(gChartType, gChartData, gId, gChart) {
+    debugger;
+    //console.log(gChartType);
+    if (gChartType === "Doughnut2D") {
+        var value = apz.spndas.fngetTotalSpends(apz.data.scrdata.spndas__TotalSpends_Res.spends);
+        var formatedvalue = apz.formatNumber({
+            value: value,
+            mask: "MILLION",
+            decimalPoints: "1",
+            decimalSep: ".",
+            displayAsLiteral: "Y"
+        });
+        gChartData.chart.defaultCenterLabel = "Total Spends $ " + formatedvalue.replace(/\.[0-9]/, "");
+        gChartData.chart.centerLabel = "Total Spend on $label : $value"
+        gChartData.chart.enableMultiSlicing = "0";
+        gChartData.chart.minAngleForLabel = "75";
+       // gChart.addEventListener("dataPlotClick", apz.spndas.fnOnPlotClick)
+    } else if (gChartType =="ScrollColumn2D") {
+        gChartData.chart.scrollheight = "5"
+        gChartData.chart.caption = "Spends on " + apz.spndas.Launcher.columColor.name
+        gChartData.chart.flatScrollBars = "1"
+        gChartData.chart.palettecolors = apz.spndas.Launcher.columColor.color;
+        gChart.addEventListener("dataPlotClick", apz.spndas.fnOnColumnPlotClick)
+    }
+};
+apz.spndas.fngetTotalSpends = function(spends) {
+    debugger;
+    var total = spends.reduce(function(temp, item) {
+        temp = temp + parseInt(item.value);
+        return temp;
+    }, 0);
+    return total;
+}

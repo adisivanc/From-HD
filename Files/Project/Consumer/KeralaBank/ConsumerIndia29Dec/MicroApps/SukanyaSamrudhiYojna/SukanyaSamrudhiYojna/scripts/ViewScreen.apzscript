@@ -1,0 +1,21 @@
+apz.yojna.ViewScreen = {};
+apz.app.onLoad_ViewScreen = function() {
+    apz.data.loadJsonData("Details", "yojna")
+   // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt_txtcnt", "SUKANYA SAMRIDDHI YOJANA")
+}
+apz.yojna.ViewScreen.addNew = function() {
+    var lObj = {
+        "scr": "PersonalDetails",
+        "appId": "yojna",
+        "div": "yojna__Launcher__launcher"
+    }
+    apz.launchSubScreen(lObj);
+}
+apz.yojna.ViewScreen.viewDetails = function() {
+    var lObj = {
+        "scr": "Summary",
+        "appId": "yojna",
+        "div": "yojna__Launcher__launcher"
+    }
+    apz.launchSubScreen(lObj);
+}

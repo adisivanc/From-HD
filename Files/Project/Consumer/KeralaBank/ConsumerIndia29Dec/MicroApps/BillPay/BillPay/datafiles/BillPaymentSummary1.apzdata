@@ -1,0 +1,65 @@
+{
+    "bllpay__BillPaymentSummary_Res": {
+        "summary": [
+            {
+            
+            "providerImg": "MOEE.png",
+            "providerName": "BESCOM",
+            "status": "Bill not generated yet",
+            "dueDate": "",
+            "subsriberId": "3231212",
+            "billType": "General",
+            "providerCategory": "Electricity",
+            "amount":""
+        },{
+            "providerImg": "Mandalay Stars.png",
+            "providerName": "Indian Gas",
+            "status": "---",
+            "dueDate": "",
+            "subsriberId": "77211121",
+            "billType": "General",
+            "providerCategory": "LPG",
+            "amount":""
+        },{
+            "providerImg": "Telenor.png",
+            "providerName": "Vodafone",
+            "status": "Autopay Scheduled",
+            "dueDate": "",
+            "subsriberId": "9600565673",
+            "billType": "Mobile",
+            "providerCategory": "Mobile",
+            "amount":"12,000.00"
+        },
+        {
+           "providerImg": "Skynet.png",
+            "providerName": "Skynet",
+            "status": "pending",
+            "dueDate": "25/03/2020",
+            "subsriberId": "232323423",
+            "billType": "General",
+            "providerCategory": "DTH",
+            "amount":"5,000.00"
+        },
+        {
+            "providerImg": "Ooredoo.png",
+            "providerName": "Idea",
+            "status": "Autopay Scheduled",
+            "dueDate": "",
+            "subsriberId": "8698345627",
+            "billType": "Mobile",
+            "providerCategory": "Mobile",
+            "amount":"878.00"
+        },
+        {
+            "providerImg": "GGI.png",
+            "providerName": "AXA Insurance",
+            "status": "pending",
+            "dueDate": "28/03/2020",
+            "subsriberId": "100100023234",
+            "billType": "General",
+            "providerCategory": "Insurance",
+            "amount":"3,300.00"
+        }
+        ]
+    }
+}

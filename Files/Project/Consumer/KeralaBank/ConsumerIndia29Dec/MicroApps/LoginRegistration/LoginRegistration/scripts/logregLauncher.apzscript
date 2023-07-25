@@ -1,0 +1,7 @@
+apz.logreg.checkParams = function(params){
+    params.userObj = {
+            "action": "Registration",
+            //"callBack": apz.csmrbk.login.fnSignUpCB,
+            "distroyDiv": "csmrbk__Login__Launcher"
+        }
+}

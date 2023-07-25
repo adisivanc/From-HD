@@ -1,0 +1,66 @@
+{
+    "balanc__QuarterlyBalance_Res": {
+        "datasets": [
+        {
+            "Months": "Home Loan",
+            "Amount": "11",
+            "Account": "New"
+        }, {
+            "Months": "Home Loan",
+            "Amount": "8",
+            "Account": "Existing"
+        }, {
+            "Months": "Home Loan",
+            "Amount": "30",
+            "Account": "Approved"
+        }, {
+            "Months": "Home Loan",
+            "Amount": "20",
+            "Account": "Pending"
+        }, {
+            "Months": "Home Loan",
+            "Amount": "10",
+            "Account": "Rejected"
+        },{
+            "Months": "Auto Loan",
+            "Amount": "11",
+            "Account": "New"
+        }, {
+            "Months": "Auto Loan",
+            "Amount": "27",
+            "Account": "Existing"
+        }, {
+            "Months": "Auto Loan",
+            "Amount": "25",
+            "Account": "Approved"
+        }, {
+            "Months": "Auto Loan",
+            "Amount": "22",
+            "Account": "Pending"
+        }, {
+            "Months": "Auto Loan",
+            "Amount": "3",
+            "Account": "Rejected"
+        },{
+            "Months": "Personal Line of Credit",
+            "Amount": "13",
+            "Account": "New"
+        }, {
+            "Months": "Personal Line of Credit",
+            "Amount": "23",
+            "Account": "Existing"
+        }, {
+            "Months": "Personal Line of Credit",
+            "Amount": "12",
+            "Account": "Approved"
+        }, {
+            "Months": "Personal Line of Credit",
+            "Amount": "19",
+            "Account": "Pending"
+        }, {
+            "Months": "Personal Line of Credit",
+            "Amount": "13",
+            "Account": "Rejected"
+        }]
+    }
+}

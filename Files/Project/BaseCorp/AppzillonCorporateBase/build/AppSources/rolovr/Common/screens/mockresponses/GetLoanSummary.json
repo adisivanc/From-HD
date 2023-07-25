@@ -1,0 +1,44 @@
+{
+    "tbDbmiLoanMaster": [
+        {
+            "product": "Bridging Loan",
+            "amount": 128000,
+            "cutomerId": "00012844",
+            "applicationNumber": "1615931893705",
+            "currency": "USD",
+            "accountNumber": "003409853252",
+            "branch": "LOC",
+            "customerName": "ACME Food Processing"
+        },
+        {
+            "statusChangeMode": "Manual",
+            "frequencyUnit": "1",
+            "product": "Real-Estate",
+            "amount": 31000,
+            "applicationNumber": "1615937385230",
+            "valueDate": "2021-03-16",
+            "accountNumber": "768464738283",
+            "branch": "YOW",
+            "customerName": "ACME Corp",
+            "amendPastPaidSchedules": "Y",
+            "liquidationMode": "Auto",
+            "reminderFrequency": "Quaterly",
+            "loanStatementRequired": "Y",
+            "maturityDate": "2022-03-15",
+            "liquidateBack": "Y",
+            "currency": "USD",
+            "partialLiquidation": "Y",
+            "statementStartDate": "2021-03-16"
+        },
+        {
+            "product": "Working Capital",
+            "amount": 22000.12,
+            "cutomerId": "00012842",
+            "applicationNumber": "2915931892506",
+            "currency": "EUR",
+            "accountNumber": "002909833224",
+            "branch": "NYC",
+            "customerName": "ACME"
+        }
+    ]
+}

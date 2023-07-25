@@ -1,0 +1,11 @@
+apz.cashdp.Launcher={};
+apz.app.onLoad_Launcher = function() {
+    var params = {};
+    params.div = 'cashdp__Launcher__launcher';
+    params.scr = 'CashDeliveryAndPickup';
+    params.appId = "cashdp";
+    apz.launchSubScreen(params);
+}
+apz.app.onShown_Launcher = function(){
+    debugger;
+}

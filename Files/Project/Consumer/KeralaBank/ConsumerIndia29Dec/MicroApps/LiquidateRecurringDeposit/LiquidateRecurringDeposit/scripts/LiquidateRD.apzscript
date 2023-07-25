@@ -1,0 +1,302 @@
+apz.liqdrd.liquidaterd = {};
+apz.liqdrd.liquidaterd.sParams = {};
+apz.liqdrd.liquidaterd.sAction = {};
+apz.app.onLoad_LiquidateRD = function(params) {
+    debugger;
+    if (params.Navigation) {
+        apz.liqdrd.liquidaterd.fnSetNavigation(params);
+    }
+    apz.liqdrd.liquidaterd.fnInitialise(params);
+};
+apz.app.onShown_LiquidateRD = function() {
+    debugger;
+    
+    $(".crt-form.ver .ecn > .syl > span").text("Rs.");
+};
+apz.liqdrd.liquidaterd.fnInitialise = function(params) {
+    debugger;
+    apz.liqdrd.liquidaterd.sParams = params;
+    $("#liqdrd__LiquidateRD__continue").prop("disabled", true);
+    apz.liqdrd.liquidaterd.fnGoToStage1();
+};
+apz.liqdrd.liquidaterd.fnSetNavigation = function(params) {
+    debugger;
+    apz.liqdrd.liquidaterd.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.showBack = "N";
+    lParams.headerText = "LIQUIDATE RD";
+    apz.liqdrd.liquidaterd.Navigation(lParams);
+};
+apz.liqdrd.liquidaterd.fnGoToStage1 = function() {
+    debugger;
+ 
+    apz.liqdrd.liquidaterd.fnRenderStage1();
+    apz.liqdrd.liquidaterd.fnGetAccDetails();
+};
+
+apz.liqdrd.liquidaterd.fnGetAccDetails = function() {
+    debugger;
+    apz.liqdrd.liquidaterd.sParams.sAction = 'GetAccountDetails';
+    // var lReq = {
+    //     "RecurringDeposit": {
+    //         "customerId": apz.liqdrd.liquidaterd.sParams.data.userId
+    //     }
+    // };
+    // var lParams = {
+    //     "ifaceName": "AccountDetails",
+    //     "req": lReq,
+    //     "paintResp": "Y",
+    //     "callBack": apz.liqdrd.liquidaterd.fnLaunchDetailsCB
+    // };
+    // apz.liqdrd.liquidaterd.fnBeforeCallServer(lParams);
+    apz.data.loadJsonData("AccountDetails","liqdrd");
+
+    
+};
+apz.liqdrd.liquidaterd.fnRenderStage1 = function() {
+    debugger;
+    apz.show("liqdrd__LiquidateRD__Stage1");
+    apz.hide("liqdrd__LiquidateRD__Stage2");
+};
+apz.liqdrd.liquidaterd.fnCheck = function() {
+    debugger;
+    var lValue = apz.getElmValue("liqdrd__LiquidateRD__checkbox");
+    if (!apz.isNull(apz.getElmValue("liqdrd__LiquidateRD__AccNo")) && (lValue == 'y')) {
+        apz.setElmValue("liqdrd__LiquidateRD__AckAccNo", apz.getElmValue("liqdrd__LiquidateRD__AccNo"));
+        $("#liqdrd__LiquidateRD__continue").prop("disabled", false);
+    } else {
+        $("#liqdrd__LiquidateRD__continue").prop("disabled", true);
+    }
+};
+apz.liqdrd.liquidaterd.fnLaunchDetails = function(pthis) {
+    debugger;
+    var lRowIndex = $("#" + pthis.id).attr("rowno");
+    var lRec = apz.data.scrdata.liqdrd__AccountDetails_Res.RecurringDeposit.depositDtls[lRowIndex];
+    apz.liqdrd.liquidaterd.sParams.sAction = "Query";
+    var lReq = {
+        "RecurringDeposit": {
+            "customerId": lRec.accountNo
+        },
+        "action": "Query"
+    };
+    var lParams = {
+        "ifaceName": "LiquidateRD",
+        "req": lReq,
+        "paintResp": "Y",
+        "callBack": apz.liqdrd.liquidaterd.fnCallServerCallBackQuery
+    };
+     apz.data.loadJsonData("LiquidateRD","liqdrd");
+       apz.liqdrd.liquidaterd.fnLaunchDetailsScreen();
+    //apz.liqdrd.liquidaterd.fnBeforeCallServer(lParams);
+};
+apz.liqdrd.liquidaterd.fnLaunchDetailsCB = function(params) {
+    debugger;
+    if (!params.errors) {
+        apz.liqdrd.liquidaterd.sParams.AccDetails = params.res.liqdrd__AccountDetails_Res.RecurringDeposit.depositDtls;
+    }
+}
+apz.liqdrd.liquidaterd.fnContinueStage1 = function() {
+    debugger;
+    apz.liqdrd.liquidaterd.sAction = "Query";
+    // var lReq = {
+    //     "depositDtls": {
+    //         "accountNo": apz.getElmValue("liqdrd__LiquidateRD__AccNo")
+    //     },
+    //     "action": "Continue"
+    // };
+    // var lParams = {
+    //     "ifaceName": "LiquidateRD",
+    //     "req": lReq,
+    //     "callBack": apz.liqdrd.liquidaterd.fnCallServerCallBackQuery
+    // };
+    // apz.liqdrd.liquidaterd.fnBeforeCallServer(lParams);
+    apz.data.loadJsonData("LiquidateRD","liqdrd");
+      apz.liqdrd.liquidaterd.fnLaunchDetailsScreen();
+};
+apz.liqdrd.liquidaterd.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": "Y",
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": params.callBack
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.liqdrd.liquidaterd.fnCallServerCallBackQuery = function(params) {
+    debugger;
+    if (!params.errors) {
+        apz.data.scrdata.liqdrd__LiquidateRD_Req.depositDtls = {};
+        if (apz.mockServer) {
+            apz.data.scrdata.liqdrd__LiquidateRD_Req.depositDtls = params.res.liqdrd__LiquidateRD_Res.depositDtls.data.depositDtls;
+        }
+        apz.liqdrd.liquidaterd.fnLaunchDetailsScreen();
+    }
+};
+apz.liqdrd.liquidaterd.fnLaunchDetailsScreen = function() {
+    debugger;
+    var lObj = {
+        "data": "", //apz.data.scrdata.liqdrd__LiquidateRD_Res.depositDtls.data,
+        "action": "Summary",
+    };
+    apz.liqdrd.liquidaterd.fnGotoStage2();
+};
+apz.liqdrd.liquidaterd.fndone = function(){
+  apz.landin.Landing.fnHome();
+};
+apz.liqdrd.liquidaterd.fnGotoStage2 = function() {
+    if (apz.deviceGroup == "Mobile") {
+        if (apz.liqdrd.liquidaterd.sParams.Navigation) {
+            var lParams = {};
+            lParams.showBack = "N";
+            lParams.headerText = "LIQUIDATE DETAILS";
+            apz.liqdrd.liquidaterd.Navigation(lParams);
+        }
+    }
+    apz.liqdrd.liquidaterd.fnSetData();
+    apz.liqdrd.liquidaterd.fnRenderStage2();
+};
+apz.liqdrd.liquidaterd.fnRenderStage2 = function() {
+    debugger;
+    if (apz.liqdrd.liquidaterd.sParams.Navigation) {
+        var lParams = {};
+        lParams.showBack = "N";
+        lParams.headerText = "LIQUIDATE DETAILS";
+        apz.liqdrd.liquidaterd.Navigation(lParams);
+    }
+     var maturityType = apz.getElmValue("liqdrd__LiquidateRD__i__depositDtls__maturityType");
+    if (maturityType == "TransferAcc" || maturityType == "RenewPrinciple") {
+        apz.show("liqdrd__LiquidateRD__i__depositDtls__creditAccountNo_ctrl_grp_div");
+    } else {
+        apz.hide("liqdrd__LiquidateRD__i__depositDtls__creditAccountNo_ctrl_grp_div");
+    }
+    apz.show("liqdrd__LiquidateRD__Stage2");
+    apz.hide("liqdrd__LiquidateRD__Stage1");
+    apz.hide("liqdrd__LiquidateRD__Stage3");
+    apz.hide("liqdrd__LiquidateRD__OTPlauncherRow");
+};
+apz.liqdrd.liquidaterd.fnEdit = function() {
+    debugger;
+    if (apz.liqdrd.liquidaterd.sParams.Navigation) {
+        var lParams = {};
+        lParams.showBack = "N";
+        lParams.headerText = "LIQUIDATE RD";
+        apz.liqdrd.liquidaterd.Navigation(lParams);
+    }
+    apz.liqdrd.liquidaterd.fnRenderStage1();
+}
+apz.liqdrd.liquidaterd.fnGotoStage3 = function() {
+    apz.liqdrd.liquidaterd.fnRenderStage3();
+};
+apz.liqdrd.liquidaterd.fnRenderStage3 = function() {
+    debugger;
+    apz.hide("liqdrd__LiquidateRD__Stage2");
+    apz.hide("liqdrd__LiquidateRD__Stage1");
+    apz.show("liqdrd__LiquidateRD__OTPlauncherRow");
+    apz.hide("liqdrd__LiquidateRD__Stage3");
+};
+apz.liqdrd.liquidaterd.fnSetData = function() {
+    debugger;
+    apz.data.loadData("LiquidateRD", "liqdrd");
+};
+apz.liqdrd.liquidaterd.fnConfirmStage2 = function() {
+    apz.liqdrd.liquidaterd.sParams.sAction = "Confirm";
+    // var lReq = {
+    //     "depositDtls": {
+    //         "txnRefNo": "",
+    //         "customerId": "2343",
+    //         "accountNo": "001234545545",
+    //         "branchName": "Koramangala",
+    //         "interestType": "Interest",
+    //         "tenor": "1 Year",
+    //         "interestRate": "0",
+    //         "maturityType": "Credit to Acc",
+    //         "creditAccountNo": "001234545545",
+    //         "maturityAmount": "344",
+    //         "depositAmount": "23",
+    //         "interestEarned": "2",
+    //         "penalty": "2",
+    //         "authenticationType": "OTP",
+    //         "authenticationTarget": ""
+    //     },
+    //     "action": "Confirm"
+    // };
+    // var lParams = {
+    //     "ifaceName": "LiquidateRD",
+    //     "req": lReq,
+    //     "callBack": apz.liqdrd.liquidaterd.fnCallServerCallBackLiquidate
+    // };
+    // apz.liqdrd.liquidaterd.fnBeforeCallServer(lParams);
+    apz.liqdrd.liquidaterd.fnCallServerCallBackLiquidate("34256");
+};
+apz.liqdrd.liquidaterd.fnCallServerCallBackLiquidate = function(params) {
+    debugger;
+    if (!params.errors) {
+        apz.liqdrd.liquidaterd.fnGotoStage3();
+        var lLaunchParams = {
+            "appId": "otpeng",
+            "scr": "ProcessOTP",
+            "div": "liqdrd__LiquidateRD__OTPlauncher",
+            "userObj": {
+                "action": "SetRefNo",
+                "data": {
+                    "OTPRefNo": params
+                },
+                "control": {
+                    "appId": "otpeng",
+                    "callBack": apz.liqdrd.liquidaterd.fnOtpCB,
+                    "destroyDiv": "liqdrd__LiquidateRD__OTPlauncher"
+                }
+            }
+        };
+        apz.launchApp(lLaunchParams);
+    }
+};
+apz.liqdrd.liquidaterd.fnOtpCB = function(params) {
+    apz.liqdrd.liquidaterd.fnGotoStage4(params);
+};
+apz.liqdrd.liquidaterd.fnGotoStage4 = function(params) {
+    apz.resetCurrAppId("liqdrd");
+    apz.liqdrd.liquidaterd.fnSetDataInStage4(params);
+    apz.liqdrd.liquidaterd.fnRenderStage4();
+};
+apz.liqdrd.liquidaterd.fnSetDataInStage4 = function(params) {
+    var lDetails = apz.data.scrdata.liqdrd__LiquidateRD_Req.depositDtls;
+    apz.setElmValue("liqdrd__LiquidateRD__AckAccNo", lDetails.accountNo);
+    apz.setElmValue("liqdrd__LiquidateRD__Stage3BookDt", lDetails.bookDate);
+    apz.setElmValue("liqdrd__LiquidateRD__Stage3InterestRate", lDetails.interestRate);
+    apz.setElmValue("liqdrd__LiquidateRD__Stage3Tenor", lDetails.tenor);
+    apz.setElmValue("liqdrd__LiquidateRD__Stag3DebitAccNo", lDetails.debitAccountNo);
+    apz.setElmValue("liqdrd__LiquidateRD__CreditAccount", lDetails.creditAccountNo);
+    apz.setElmValue("liqdrd__LiquidateRD__StageMaturityDate", lDetails.maturityDate);
+    var lObj1 = {
+        "value": lDetails.maturityAmount,
+        "decimalSep": '.',
+        "displayAsLiteral": 'N',
+        "mask": "LAKH"
+    }
+    apz.setElmValue("liqdrd__LiquidateRD__Stage3MaturityAmt", " " + apz.formatNumber(lObj1));
+    apz.setElmValue("liqdrd__LiquidateRD__Stage3MaturityIns", lDetails.maturityType);
+    var lRefNo = "Your Reference no is " + params.depositDtls.txnRefNo;
+    apz.setElmValue('liqdrd__LiquidateRD__txnRefNo', lRefNo);
+};
+apz.liqdrd.liquidaterd.fnRenderStage4 = function() {
+    debugger;
+    var maturityType= apz.getElmValue("liqdrd__LiquidateRD__Stage3MaturityIns");
+     if (maturityType == "TransferAcc" || maturityType == "RenewPrinciple") {
+        apz.show("liqdrd__LiquidateRD__CreditAccount_ctrl_grp_div");
+    } else {
+        apz.hide("liqdrd__LiquidateRD__CreditAccount_ctrl_grp_div");
+    }
+    apz.hide("liqdrd__LiquidateRD__Stage2");
+    apz.hide("liqdrd__LiquidateRD__Stage1");
+    apz.hide("liqdrd__LiquidateRD__OTPlauncherRow");
+    apz.show("liqdrd__LiquidateRD__Stage3");
+};
+/*
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};
+*/

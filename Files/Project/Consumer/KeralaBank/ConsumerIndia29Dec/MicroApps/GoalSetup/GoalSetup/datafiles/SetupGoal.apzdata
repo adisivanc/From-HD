@@ -1,0 +1,27 @@
+{
+    "golstp__SetupGoal_Req":{
+    "tbDbtpSetupGoal": [
+        {
+            "goalId": "B100744",
+            "customerId": "100032892",
+            "goalDescription": "Buy a new Luxury Car",
+            "expTimeforGoalUnit": "5",
+            "amtReqforGoal": 1000000,
+            "expTimeforGoalFreq": "Years",
+            "goalFundBy": "Savings",
+            "goalStatus": "No"
+        },
+        {
+            "goalId": "B100745",
+            "customerId": "100032892",
+            "goalDescription": "Foreign Trip",
+            "expTimeforGoalUnit": "10",
+            "amtReqforGoal": "500000",
+            "expTimeforGoalFreq": "Months",
+            "goalFundBy": "Savings",
+            "goalStatus": "Yes"
+        }
+    ]
+}
+
+}

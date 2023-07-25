@@ -1,0 +1,48 @@
+{
+    "customerDetail": {
+        "customerID": "000001673",
+        "customerName": "",
+        "aadhaarNo": "",
+        "DOB": "dd-MMM-yyyy",
+        "mobileNo": "",
+        "email": "",
+        "ib": "Y/N",
+        "mb": "Y/N"
+    },
+    "customerAddress": {
+        "addressline1": "",
+        "addressline2": "",
+        "addressline3": "",
+        "addressline4": "",
+        "city": "",
+        "state": "",
+        "country": "",
+        "zip": ""
+    },
+    "accountDetail": [
+        {
+            "accountNo": "762811000046",
+            "accountBal": "60000",
+            "accountBrnName": "",
+            "accountBrnCd": "",
+            "accountBrnIFSC": "",
+            "accountOpnDt": "",
+            "accountType": "SA",
+            "accountStat": "Open/Closed",
+            "actCustRel": "Single/Joint",
+            "accountPrdct": "Prdct Code"
+        },
+        {
+            "accountNo": "762110004739",
+            "accountBal": "70000",
+            "accountBrnName": "",
+            "accountBrnCd": "",
+            "accountBrnIFSC": "",
+            "accountOpnDt": "",
+            "accountType": "CA",
+            "accountStat": "Open/Closed",
+            "actCustRel": "Single/Joint",
+            "accountPrdct": "Prdct Code"
+        }
+    ]
+}

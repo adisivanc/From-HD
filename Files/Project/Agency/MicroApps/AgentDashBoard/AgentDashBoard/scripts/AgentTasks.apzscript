@@ -1,0 +1,168 @@
+apz.adsbrd = {};
+apz.adsbrd.AgentTasks = {};
+apz.adsbrd.AgentTasks.taskDetails = {};
+apz.app.onShown_AgentTasks = function() {};
+apz.app.onLoad_AgentTasks = function(params) {
+    apz.adsbrd.AgentTasks.sCache = params;
+    $("#adsbrd__AgentTasks__taskList_table tr").attr("onclick", "apz.adsbrd.AgentTasks.fnSelectTask(this)");
+    $(".pgn-ctr").addClass("sno");
+    apz.adsbrd.AgentTasks.fnDbCall();
+};
+///db call  
+apz.adsbrd.AgentTasks.fnDbCall = function(params) {
+    debugger;
+    var request = {}
+    var lServerParams = {
+        "ifaceName": "AgentTasks_Query",
+        "buildReq": "N",
+        "req": request,
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.adsbrd.AgentTasks.fnDbCallback,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.adsbrd.AgentTasks.fnDbCallback = function(params) {
+    debugger;
+    apz.adsbrd.AgentTasks.taskDetails = params.res.adsbrd__AgentTasks_Req.tbScheduleAppointment;
+}
+apz.adsbrd.AgentTasks.fnSelectTask = function(pThis) {
+    debugger;
+    var lServiceType = $("#adsbrd__AgentTasks__i__tbScheduleAppointment__serviceType_"+$(pThis).attr("rowno")+"_txtcnt").html();
+    var lReferenceNo=$("#adsbrd__AgentTasks__i__tbScheduleAppointment__referenceNo_"+$(pThis).attr("rowno")+"_txtcnt").html().replace(/,/g,'');
+    var lStatus=$("#adsbrd__AgentTasks__i__tbScheduleAppointment__status_"+$(pThis).attr("rowno")+"_txtcnt").html();
+    var lScreen = "";
+    var lAppId = "";
+    var lUserObj = "";
+    if (lServiceType == "MULTIPLE TRANSFER") {
+        lScreen = "WithinBankVerify";
+        lAppId = "bulktr";
+        lUserObj = {
+            "destroyDiv": apz.adsbrd.AgentTasks.sCache.destroyDiv,
+            "parentAppId": apz.adsbrd.AgentTasks.sCache.parentAppId,
+            "parentScr": "MyTasks",
+            "instanceId": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].multInstanceId,
+            "stageSeqNo": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].multSeqNo,
+            "userinfo": {
+                "id": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].customerId,
+                "type": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].remarks
+            }
+        }
+    }else if((lServiceType =="CASH DEPOSIT")||(lServiceType =="CASH WITHDRAWAL")||(lServiceType =="DEMAND DRAFT REQUEST")){
+       debugger;
+	if(lStatus =="Pending"){
+ 	lScreen = "WithinBank";
+        lAppId = "bulktr";
+		lUserObj = {
+		    "destroyDiv": apz.adsbrd.AgentTasks.sCache.destroyDiv,
+		    "parentAppId": "adsbrd",
+		    "parentScr": "AgentTasks",
+		    "instanceId": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].multInstanceId,
+		    "stageSeqNo": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].multSeqNo,
+		    "appntData": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")],
+		    "userinfo": {
+		        "id": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].customerId,
+		        "type": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].remarks,
+		        "referenceNo":lReferenceNo
+		    }
+		}
+	}else{
+		lScreen = "WithinBankVerify";
+       		 lAppId = "bulktr";
+       			 lUserObj = {
+           		 "destroyDiv": apz.adsbrd.AgentTasks.sCache.destroyDiv,
+           		 "parentAppId": apz.adsbrd.AgentTasks.sCache.parentAppId,
+           		 "parentScr": "MyTasks",
+            		"instanceId": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].multInstanceId,
+            		"stageSeqNo": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].multSeqNo,
+           		 "userinfo": {
+               		 "id": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].customerId,
+                	"type": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].remarks
+            }
+        }
+
+}
+    } else {
+        if (apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].status == "Pending") {
+            var lName = apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].name;
+            var lDob = apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].dateOfBirth;
+            var lEmail = apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].emailId;
+            var lPhoneNo = apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].mobileNumber;
+            var lAddress = apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].branchName;
+            var lImage = apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].customerImage;
+            var lId = apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")].customerId;
+            lScreen = "ExistingCustomer";
+            lAppId = "excust";
+            lUserObj = {
+                "custImage": lImage,
+                "custName": lName,
+                "custId": lId,
+                "custDOB": lDob,
+                "custemail": lEmail,
+                "custphn": lPhoneNo,
+                "custAddr": lAddress,
+                "destroyDiv": apz.adsbrd.AgentTasks.sCache.destroyDiv,
+                "parentAppId": apz.adsbrd.AgentTasks.sCache.parentAppId,
+                "loggedCust": apz.adsbrd.AgentTasks.sCache.loggedCust,
+                "loggedCustId": apz.adsbrd.AgentTasks.sCache.custId,
+                "loggedCustImg": apz.adsbrd.AgentTasks.sCache.custImg,
+                "taskDetails": apz.adsbrd.AgentTasks.taskDetails[$(pThis).attr("rowno")],
+                "validationType": "forTransaction"
+            }
+        }
+    }
+if(lUserObj){
+    var lParams = {
+        "appId": lAppId,
+        "scr": lScreen,
+        "div": apz.adsbrd.AgentTasks.sCache.destroyDiv,
+        "animation": 9,
+        "userObj": lUserObj
+    };
+    apz.launchApp(lParams);
+}
+}
+apz.adsbrd.AgentTasks.fnSendSms = function(pobj) {
+    debugger;
+    var lRowno = $(pobj).parents("li").attr("rowno");
+    var lMobileNo = apz.data.scrdata.adsbrd__Database_Req.agenttasks[lRowno].mobile;
+    var lClientname = apz.data.scrdata.adsbrd__Database_Req.agenttasks[lRowno].clientname;
+    var lDueDate = apz.data.scrdata.adsbrd__Database_Req.agenttasks[lRowno].duedate;
+    if (lDueDate.indexOf("Today") != -1) {
+        var lMsg = "Hi " + lClientname + ",your due date is " + lDueDate + ".Please pay the due as soon as possible";
+    } else if (lDueDate.indexOf("overdue") != -1) {
+        var lMsg = "Hi " + lClientname + ",your due date is " + lDueDate + ".Please pay the due as soon as possible";
+    } else if (lDueDate.indexOf("later") != -1) {
+        var lMsg = "Hi " + lClientname + ",your due date is " + lDueDate + ".Please pay the due as soon as possible";
+    }
+    var jsonObject = {
+        "phoneNo": lMobileNo,
+        "message": lMsg,
+        "type": "BG"
+    }
+    jsonObject.id = "SEND_SMS";
+    jsonObject.callBack = apz.adsbrd.AgentTasks.fnSmsCallback;
+    apz.ns.smsSend(jsonObject);
+}
+apz.adsbrd.AgentTasks.fnSmsCallback = function(params) {
+    debugger;
+    if (params.status) {} else {
+        alert(params.errorCode);
+    }
+}
+apz.adsbrd.AgentTasks.fnPhone = function(pobj) {
+    var lRowno = $(pobj).parents("li").attr("rowno");
+    var lMobileNo = apz.data.scrdata.adsbrd__Database_Req.agenttasks[lRowno].mobile;
+    var lReq = {
+        "phoneNo": lMobileNo,
+        "id": "CALL_ID",
+        "callBack": apz.adsbrd.AgentTasks.fnPhoneCallback
+    }
+    apz.ns.callNumber(lReq);
+}
+apz.adsbrd.AgentTasks.fnPhoneCallback = function(params) {
+    if (params.status) {} else {
+        alert(params.errorCode);
+    }
+}

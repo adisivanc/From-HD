@@ -1,0 +1,21 @@
+{
+    "Rates__ForExchangeDashboard_Res": {
+        "foriegnexchange": [{
+            "Foreign Currencies": "EUR USD",
+            "Cash Buying Rate": "1.1151",
+            "Transfer Buying Rate": "+0.0032"
+        }, {
+            "Foreign Currencies": "USD EUR",
+            "Cash Buying Rate": "0.8968",
+            "Transfer Buying Rate": "-0.0029"
+        }, {
+            "Foreign Currencies": "CHF EUR",
+            "Cash Buying Rate": "1.0955",
+            "Transfer Buying Rate": "+0.0019"
+        }, {
+            "Foreign Currencies": "JPY USD",
+            "Cash Buying Rate": "0.0095",
+            "Transfer Buying Rate": "+0.0002"
+        }]
+    }
+}

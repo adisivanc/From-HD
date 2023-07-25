@@ -1,0 +1,757 @@
+apz.crddtl.newcardrequest = {};
+apz.crddtl.newcardrequest.sParams = {};
+apz.app.onLoad_NewCardRequest = function(params) {
+    debugger;
+    apz.crddtl.newcardrequest.sParams = params;
+    // apz.crddtl.newcardrequest.showDefaultCard();
+    
+    
+}
+apz.app.onShown_NewCardRequest = function(params) {
+    debugger;
+    apz.crddtl.newcardrequest.fnInitialise(params);
+    // $("#crddtl__NewCardRequest__ct_lst_3_row_0").addClass("current");
+    // $("#crddtl__NewCardRequest__ct_lst_3 > ul > li:first-child").addClass("current");
+    // apz.crddtl.newcardrequest.fnCalender();
+};
+apz.crddtl.newcardrequest.showDefaultCard = function(){
+    
+    apz.crddtl.newcardrequest.fnRenderStage3();
+    if( apz.crddtl.newcardrequest.sParams.from == "NewDashboard")
+    {
+    var lParams = {
+        "appId": "crddtl",
+        "scr": "VisaCard",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "data": {
+                "customerID": apz.crddtl.newcardrequest.sParams.data.customerID
+            },
+            "callBack": apz.landin.Landing.fnHome
+        }
+    }
+    }
+    else
+    {
+          var lParams = {
+        "appId": "crddtl",
+        "scr": "VisaCard",
+        "div": "crddtl__NewCardRequest__Launcher",
+        "userObj": {
+            "data": {
+                "customerID": apz.crddtl.newcardrequest.sParams.data.customerID
+            },
+            "callBack": apz.crddtl.managecards.fnBack
+        }
+    }
+    }
+    
+    apz.launchSubScreen(lParams);
+}
+apz.crddtl.newcardrequest.fnInitialise = function(params) {
+    debugger;
+    apz.crddtl.newcardrequest.sParams = params;
+    if (params.Navigation) {
+        apz.crddtl.newcardrequest.fnSetNavigation(params);
+    }
+    // apz.crddtl.newcardrequest.fnCarouselFormBgImage();
+    apz.data.loadJsonData("ProductType", "crddtl");
+    // apz.show("crddtl__NewCardRequest__Stage1");
+    // apz.crddtl.newcardrequest.fnGotoStage1();
+};
+apz.crddtl.newcardrequest.fnSetNavigation = function(params) {
+    debugger;
+    apz.crddtl.newcardrequest.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.headerText = "New Card Request";
+    apz.crddtl.newcardrequest.Navigation(lParams);
+};
+apz.crddtl.newcardrequest.fnDone = function() {
+    apz.landin.Landing.fnHome();
+};
+apz.crddtl.newcardrequest.fnCarouselFormBgImage = function(params) {
+    debugger;
+    // document.getElementById("crddtl__NewCardRequest__DebitCardCarouselForm1").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Debit-Card_Banner.jpg')"; 
+    //document.getElementById("crddtl__NewCardRequest__DebitCardCarouselForm2").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Debit-Card_Banner.jpg')"; 
+    //document.getElementById("crddtl__NewCardRequest__DebitCardCarouselForm3").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Debit-Card_Banner.jpg')"; 
+    //document.getElementById("crddtl__NewCardRequest__CreditCardCarouselForm1").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Credit-Card_Banner.jpg')"; 
+    //document.getElementById("crddtl__NewCardRequest__CreditCardCarouselForm2").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Credit-Card_Banner.jpg')"; 
+    //document.getElementById("crddtl__NewCardRequest__CreditCardCarouselForm3").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Credit-Card_Banner.jpg')"; 
+    //document.getElementById("crddtl__NewCardRequest__GiftCardCarouselForm1").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Gift-Card_Banner.jpg')"; 
+    //document.getElementById("crddtl__NewCardRequest__GiftCardCarouselForm2").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Gift-Card_Banner.jpg')"; 
+    //document.getElementById("crddtl__NewCardRequest__GiftCardCarouselForm3").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Gift-Card_Banner.jpg')"; 
+    //document.getElementById("crddtl__NewCardRequest__GiftCardCarouselForm4").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Gift-Card_Banner.jpg')"; 
+    //document.getElementById("crddtl__NewCardRequest__PrepaidCardCarouselForm1").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Prepaid-Card_Banner.jpg')"; 
+    //document.getElementById("crddtl__NewCardRequest__PrepaidCardCarouselForm2").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Prepaid-Card_Banner.jpg')"; 
+    //document.getElementById("crddtl__NewCardRequest__PrepaidCardCarouselForm3").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Prepaid-Card_Banner.jpg')"; 
+    // document.getElementById("crddtl__NewCardRequest__PrepaidCardCarouselForm4").style.backgroundImage =  "url('apps/styles/themes/ConsumerBank/img/Prepaid-Card_Banner.jpg')"; 
+};
+apz.crddtl.newcardrequest.fnGotoStage1 = function() {
+    apz.data.loadJsonData("ProductType", "crddtl");
+    apz.show("crddtl__NewCardRequest__Stage1");
+    // apz.crddtl.newcardrequest.fnSetValueStage1();
+    // apz.crddtl.newcardrequest.fnRenderStage1();
+};
+apz.crddtl.newcardrequest.fnSetValueStage1 = function() {
+    debugger;
+    apz.data.loadJsonData("ProductType", "crddtl");
+    // apz.crddtl.newcardrequest.fnPopulateDropDown();
+    // apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__customerId", apz.crddtl.newcardrequest.sParams.data.customerId);
+    // apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__accountCcy", apz.crddtl.newcardrequest.sParams.data.accountCcy);
+    // apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__authenticationType", "OTP");
+};
+apz.crddtl.newcardrequest.fnPopulateDropDown = function() {
+    var lAccounts = apz.crddtl.newcardrequest.sParams.data.accounts;
+    var lDropObj = [];
+    var lObj = [{
+        "val": "",
+        "desc": "Select Account"
+    }];
+    for (var i = 0; i < lAccounts.length; i++) {
+        var lObj = {
+            "val": lAccounts[i].accountNo,
+            "desc": lAccounts[i].accountType + " - " + lAccounts[i].accountNo
+        };
+        lDropObj.push(lObj);
+    }
+    apz.populateDropdown(document.getElementById("crddtl__NewCardRequest__i__cardReqDtl__accountNo"), lDropObj);
+    $("crddtl__NewCardRequest__i__cardReqDtl__accountNo").attr("onchange", apz.crddtl.newcardrequest.fnSetAmount());
+};
+apz.crddtl.newcardrequest.fnProductType = function(pthis) {
+    debugger;
+    var lRowNo = $(pthis).attr('rowno');
+    var lProductType = apz.data.scrdata.crddtl__ProductType_Res.Product[lRowNo].title;
+    
+    /*$("#crddtl__NewCardRequest__ct_lst_3 > ul > li").removeClass("current");
+    $("#crddtl__NewCardRequest__ct_lst_3_row_"+lRowNo).addClass("current");*/
+    
+    apz.crddtl.newcardrequest.fnProduct(lProductType);
+};
+apz.crddtl.newcardrequest.fnSetAmount = function() {
+    debugger;
+    var lAccNum = apz.getElmValue("crddtl__NewCardRequest__i__cardReqDtl__accountNo").trim();
+    var lIndex = $("#crddtl__NewCardRequest__i__cardReqDtl__accountNo_div li[value='" + lAccNum + "']").index();
+    var lAccounts = apz.crddtl.newcardrequest.sParams.data.accounts;
+    var lAmount = lAccounts[lIndex].accountBalance;
+    var lObj = {
+        "decimalSep": apz.decimalSep,
+        "thousandSep": apz.thousandSep,
+        "value": lAmount,
+        "mask": "LAKH",
+        "decimalPoints": 2
+    };
+    lAmount = apz.formatNumber(lObj);
+    apz.setElmValue("crddtl__NewCardRequest__AvailableBalance", lAmount);
+    apz.show("crddtl__NewCardRequest__AvailableCol");
+};
+apz.crddtl.newcardrequest.fnRenderStage1 = function() {
+    debugger;
+    apz.show("crddtl__NewCardRequest__Stage1");
+    apz.hide("crddtl__NewCardRequest__CarouselRow");
+    apz.hide("crddtl__NewCardRequest__Stage2");
+    apz.hide("crddtl__NewCardRequest__Stage3");
+    apz.hide("crddtl__NewCardRequest__Stage4");
+};
+apz.crddtl.newcardrequest.fnRenderStage2Elements = function() {
+    apz.hide("crddtl__NewCardRequest__i__cardReqDtl__custImageBase64");
+    apz.hide("crddtl__NewCardRequest__ValidityRadio_ul");
+    apz.hide("crddtl__NewCardRequest__ValidityDate_ul");
+    $("#crddtl__NewCardRequest__i__cardReqDtl__accountNo_ul").addClass("sno");
+    apz.hide("crddtl__NewCardRequest__AvailableBalance_ul");
+    apz.hide("crddtl__NewCardRequest__i__cardReqDtl__amount_ul");
+};
+apz.crddtl.newcardrequest.fnBackStage1 = function() {
+    debugger;
+    apz.crddtl.newcardrequest.sParams.callBack();
+};
+apz.crddtl.newcardrequest.fnBack = function() {
+    debugger;
+   
+    apz.show("crddtl__ManageCards__Stage1");
+    apz.show("crddtl__ManageCards__CardDtlsList");
+    apz.hide("crddtl__ManageCards__Stage2");
+    
+};
+
+apz.crddtl.newcardrequest.fnRenderStage3 = function() {
+    debugger;
+    apz.hide("crddtl__ManageCards__Stage1");
+    apz.hide("crddtl__ManageCards__CardDtlsList");
+    apz.show("crddtl__ManageCards__Stage2");
+};
+apz.crddtl.newcardrequest.fnProduct = function(pProduct) {
+    debugger;
+    // new code by anand
+    // apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__product", pProduct);
+    var scr = "";
+    if(pProduct == "Visa Debit Card"){
+        scr = "DebitCard";
+    }else if(pProduct == "Maestro Credit Card"){
+        scr = "CreditCard";
+    }else if(pProduct == "Gift Card"){
+        scr = "GiftCard";
+    }else{
+        scr = "ForexCard";
+    }
+    apz.crddtl.newcardrequest.fnRenderStage3();
+    if(  apz.crddtl.newcardrequest.sParams.from == "NewDashboard")
+    {
+    var lParams = {
+        "appId": "crddtl",
+        "scr": scr,
+        // "div": "crddtl__NewCardRequest__Launcher",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "data": {
+                "customerID": apz.crddtl.newcardrequest.sParams.data.customerID
+            },
+            "callBack": apz.landin.Landing.fnHome
+        }
+    }
+    }
+    else
+    {
+         var lParams = {
+        "appId": "crddtl",
+        "scr": scr,
+        // "div": "crddtl__NewCardRequest__Launcher",
+        "div": "crddtl__ManageCards__Stage2",
+        "userObj": {
+            "data": {
+                "customerID": apz.crddtl.newcardrequest.sParams.data.customerID
+            },
+            "callBack": apz.crddtl.managecards.fnBack
+        }
+    }
+    }
+    
+    apz.launchSubScreen(lParams);
+    /*//---------------------
+    var lSelectedCardClass = "";
+    apz.crddtl.newcardrequest.fnSetValueStage2(pProduct);
+    apz.crddtl.newcardrequest.fnRenderStage2();
+    apz.crddtl.newcardrequest.fnRenderStage2Elements();
+    if (pProduct == "Visa Credit Card") {
+        apz.crddtl.newcardrequest.sProductType = "Credit Card";
+        apz.crddtl.newcardrequest.fnRenderCarousel("CreditCardElements");
+        lSelectedCardClass = "CreditCardElements";
+    } else if (pProduct == "Maestro Credit Card") {
+        apz.crddtl.newcardrequest.sProductType = "Credit Card";
+        apz.crddtl.newcardrequest.fnRenderCarousel("CreditCardElements");
+        lSelectedCardClass = "CreditCardElements";
+    } else if (pProduct == "Gift Card") {
+        apz.crddtl.newcardrequest.sProductType = "Gift Card";
+        apz.crddtl.newcardrequest.fnRenderCarousel("GiftCardElements");
+        lSelectedCardClass = "GiftCardElements";
+        apz.show("crddtl__NewCardRequest__ValidityRadio_ul");
+        apz.show("crddtl__NewCardRequest__i__cardReqDtl__amount_ul");
+        $("#crddtl__NewCardRequest__i__cardReqDtl__accountNo_ul").removeClass("sno");
+    } else if (pProduct == "Virtual Card") {
+        apz.crddtl.newcardrequest.sProductType = "Virtual Card";
+        apz.crddtl.newcardrequest.fnRenderCarousel("VirtualCardElements");
+        lSelectedCardClass = "VirtualCardElements";
+        apz.show("crddtl__NewCardRequest__ValidityRadio_ul");
+        apz.show("crddtl__NewCardRequest__i__cardReqDtl__amount_ul");
+        $("#crddtl__NewCardRequest__i__cardReqDtl__accountNo_ul").removeClass("sno");
+    } else if (pProduct == "Forex Card") {
+        apz.crddtl.newcardrequest.sProductType = "Prepaid Card";
+        apz.crddtl.newcardrequest.fnRenderCarousel("PrepaidCardElements");
+        $(".PrepaidCardElements").removeClass("sno");
+        $(".forex").removeClass("sno");
+        apz.show("crddtl__NewCardRequest__ValidityRadio_ul");
+        lSelectedCardClass = "GiftCardElements";
+        $("#crddtl__NewCardRequest__i__cardReqDtl__accountNo_ul").removeClass("sno");
+        apz.show("crddtl__NewCardRequest__i__cardReqDtl__amount_ul");
+    }
+    $("#crddtl__NewCardRequest__Stage2Form ul").each(function() {
+        if ($(this).hasClass(lSelectedCardClass)) {
+            $(this).removeClass("sno");
+        } else if ($(this).hasClass("srb")) {
+            $(this).addClass("sno");
+        }
+    });
+    if (pProduct == "Prepaid Card" || pProduct == "Gift Card" || pProduct == "Virtual Card") {
+        $("#crddtl__NewCardRequest__i__cardReqDtl__accountNo_ul").removeClass("sno");
+        apz.hide("crddtl__NewCardRequest__AddPhotoRow");
+        if (pProduct == "Prepaid Card" || pProduct == "Gift Card") {
+            apz.crddtl.newcardrequest.fnSetAmount();
+            $("#crddtl__NewCardRequest__AvailableBalance_ul").removeClass("sno");
+        } else {}
+    }
+    if (pProduct == "Virtual Card") {
+        apz.hide("crddtl__NewCardRequest__i__cardReqDtl__cardType_ul");
+    } else {
+        apz.show("crddtl__NewCardRequest__i__cardReqDtl__cardType_ul");
+    }
+    apz.show("crddtl__NewCardRequest__Stage2");*/
+};
+apz.crddtl.newcardrequest.fnRenderCarousel = function(params) {
+    debugger;
+    apz.show("crddtl__NewCardRequest__CarouselRow");
+    $("#crddtl__NewCardRequest__CarouselRow div").each(function() {
+        if ($(this).hasClass(params)) {
+            $(this).removeClass("sno");
+        } else if ($(this).hasClass("swiper-container")) {
+            $(this).addClass("sno");
+        }
+    });
+};
+apz.crddtl.newcardrequest.fnSetValueStage2 = function(pProduct) {
+    debugger;
+    apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__product", pProduct);
+    apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__cardType", "");
+    apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__nameOnCard", "");
+    apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__amount", '');
+    apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__custImageBase64", '');
+};
+apz.crddtl.newcardrequest.fnCartType = function(params) {
+    debugger;
+    apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__cardType", params);
+    if (params == "Maestro") {
+        apz.setElmValue('crddtl__NewCardRequest__cardType', "mastro.png");
+    } else if (params == "Visa") {
+        apz.setElmValue('crddtl__NewCardRequest__cardType', "visa.png");
+    }
+};
+apz.crddtl.newcardrequest.fnNameonCard = function(params) {
+    debugger;
+    apz.setElmValue("crddtl__NewCardRequest__CustomerName", apz.getElmValue("crddtl__NewCardRequest__i__cardReqDtl__nameOnCard"));
+};
+apz.crddtl.newcardrequest.fnRenderStage2 = function() {
+    apz.hide("crddtl__NewCardRequest__Stage1");
+    apz.show("crddtl__NewCardRequest__CarouselRow");
+    apz.show("crddtl__NewCardRequest__Stage2");
+    apz.hide("crddtl__NewCardRequest__Stage3");
+    apz.hide("crddtl__NewCardRequest__Stage4");
+};
+apz.crddtl.newcardrequest.fnBackStage2 = function() {
+    apz.show("crddtl__NewCardRequest__Stage1");
+    apz.hide("crddtl__NewCardRequest__Stage2");
+    apz.show("crddtl__NewCardRequest__CarouselRow");
+};
+apz.crddtl.newcardrequest.fnCapturePhoto = function(pthis) {
+    debugger;
+    var lValid = apz.crddtl.newcardrequest.fnFileSizeCheck('crddtl__NewCardRequest__CustomerPhotoBrowse');
+    if (lValid) {
+        var fileObj = pthis.files[0];
+        var apzFileReader = new FileReader();
+        apzFileReader.onload = function() {
+            debugger;
+            var binaryStr = apzFileReader.result;
+            var base64Str = btoa(binaryStr);
+            apz.setElmValue("crddtl__NewCardRequest__TempImg", base64Str);
+            apz.startLoader();
+            setTimeout(function() {
+                apz.crddtl.newcardrequest.fnGetImage(base64Str)
+            }, 1000);
+        }
+        apzFileReader.readAsBinaryString(fileObj);
+    }
+};
+apz.crddtl.newcardrequest.fnGetImage = function(base64Str) {
+    debugger;
+    var lImg = document.querySelector("#crddtl__NewCardRequest__TempImg");
+    var lHeight = lImg.naturalHeight;
+    var lWidth = lImg.naturalWidth;
+    apz.stopLoader();
+    if (lHeight <= 230 && lWidth <= 230) {
+        apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__custImageBase64", base64Str);
+        apz.setElmValue("crddtl__NewCardRequest__BackgroundImge", base64Str);
+        document.getElementById("crddtl__NewCardRequest__BackgroundImge").style.backgroundImage = "url('data:image/png;base64," + base64Str + "')";
+        apz.show("crddtl__NewCardRequest__i__cardReqDtl__custImageBase64_ul");
+        apz.show("crddtl__NewCardRequest__i__cardReqDtl__custImageBase64");
+    } else {
+        alert("Height and width");
+        apz.crddtl.newcardrequest.fnRemoveImage();
+    }
+}
+apz.crddtl.newcardrequest.fnFileSizeCheck = function(puploadid) {
+    var lreturn = true;
+    var lidenObj = $('#' + puploadid).prop("files");
+    var lsize = lidenObj[0].size;
+    var ltype = lidenObj[0].type;
+    if (lsize > 200000) {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_200'
+        };
+        apz.dispMsg(msg);
+    } else if (lsize > 200000) {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_200'
+        };
+        apz.dispMsg(msg);
+    } else if (ltype == "application/pdf" || ltype == "image/jpeg" || ltype == "image/png") {} else {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_FORMAT'
+        };
+        apz.dispMsg(msg);
+    }
+    return lreturn;
+};
+apz.crddtl.newcardrequest.fnCheckHeightWidth = function() {
+    debugger;
+    var lImg = document.getElementById('crddtl__NewCardRequest__CustomerPhotoBrowse');
+    var lWidth = lImg.clientWidth
+    var lHeight = lImg.clientHeight
+    if (lWidth <= 230 && lHeight <= 550) {
+        return true
+    } else {
+        var msg = {
+            "code": 'ERR-WIDTH'
+        };
+        apz.dispMsg(msg);
+    }
+}
+apz.crddtl.newcardrequest.fnOnChangeAmount = function(pthis) {
+    debugger;
+    if ((apz.crddtl.newcardrequest.sProductType == "Gift Card") || (apz.crddtl.newcardrequest.sProductType == "Prepaid Card")) {
+        var lAmount = apz.getElmValue("crddtl__NewCardRequest__i__cardReqDtl__amount");
+        var AvailableBalance = apz.getElmValue("crddtl__NewCardRequest__AvailableBalance").split(".")[0].replace(",", "");
+        if (parseInt(lAmount) > parseInt(AvailableBalance)) {
+            var msg = {
+                "code": 'ERR-AMOUNT'
+            };
+            apz.dispMsg(msg);
+        }
+    }
+};
+apz.crddtl.newcardrequest.fnOnValidity = function(pthis) {
+    debugger;
+    var lValidity = $(pthis).val();
+    apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__validity", lValidity);
+};
+apz.crddtl.newcardrequest.fnRemoveImage = function() {
+    debugger;
+    $("#crddtl__NewCardRequest__i__cardReqDtl__custImageBase64").attr("src", "")
+    apz.hide("crddtl__NewCardRequest__i__cardReqDtl__custImageBase64_ul");
+}
+apz.crddtl.newcardrequest.fnContinueStage2 = function() {
+    debugger;
+    var lValid = apz.crddtl.newcardrequest.fnValidateStage2();
+    if (lValid) {
+        apz.data.buildData("NewCardRequest", "crddtl");
+        var lImage = $("#crddtl__NewCardRequest__i__cardReqDtl__custImageBase64").attr("src");
+        if (lImage == "") {
+            apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl.custImageBase64 = "";
+        }
+        apz.crddtl.newcardrequest.fnGoToStage3();
+    }
+};
+apz.crddtl.newcardrequest.fnValidateStage2 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer('crddtl__NewCardRequest__Stage2Form');
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "ERR_MANDATORY"
+        }
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.crddtl.newcardrequest.fnGoToStage3 = function() {
+    debugger;
+    apz.crddtl.newcardrequest.fnSetValueStage3();
+    apz.crddtl.newcardrequest.fnRenderStage3Elements();
+    apz.crddtl.newcardrequest.fnRenderStage3();
+};
+apz.crddtl.newcardrequest.fnSetValueStage3 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl;
+    apz.setElmValue("crddtl__NewCardRequest__Stage3Product", lDetails.product);
+    apz.setElmValue("crddtl__NewCardRequest__Stage3CardType", lDetails.cardType);
+    apz.setElmValue("crddtl__NewCardRequest__Stage3AccNo", lDetails.accountNo);
+    apz.setElmValue("crddtl__NewCardRequest__Stage3NameOnCard", lDetails.nameOnCard);
+    apz.setElmValue("crddtl__NewCardRequest__Stage3CustomerName", lDetails.custName);
+    apz.setElmValue("crddtl__NewCardRequest__Stage3MobileNo", lDetails.mobileNo);
+    apz.setElmValue("crddtl__NewCardRequest__Stage3Email", lDetails.emailId);
+    apz.setElmValue("crddtl__NewCardRequest__Stage3Address", lDetails.address);
+    apz.setElmValue("crddtl__NewCardRequest__Stage3AddressProofDoc", lDetails.addressProofDoc);
+    apz.setElmValue("crddtl__NewCardRequest__Stage3AddressProofId", lDetails.addressProofDocID);
+    apz.setElmValue("crddtl__NewCardRequest__Stage3IdProofDoc", lDetails.idProofDoc);
+    apz.setElmValue("crddtl__NewCardRequest__Stage3IdProofId", lDetails.idProofDocID);
+    apz.setElmValue("crddtl__NewCardRequest__Stage3Amount", lDetails.amount);
+    apz.setElmValue("crddtl__NewCardRequest__Stage3Validity", lDetails.validity);
+};
+// apz.crddtl.newcardrequest.fnRenderStage3 = function() {
+//     debugger;
+//     apz.hide("crddtl__NewCardRequest__Stage1");
+//     apz.hide("crddtl__NewCardRequest__CarouselRow");
+//     apz.hide("crddtl__NewCardRequest__Stage2");
+//     apz.show("crddtl__NewCardRequest__Stage3");
+//     apz.hide("crddtl__NewCardRequest__Stage4");
+// }
+apz.crddtl.newcardrequest.fnRenderStage3Elements = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl;
+    if (apz.crddtl.newcardrequest.sProductType == "Debit Card") {
+        lSelectedCardClass = "DebitCardElements";
+    } else if (apz.crddtl.newcardrequest.sProductType == "Credit Card") {
+        lSelectedCardClass = "CreditCardElements";
+    } else if (apz.crddtl.newcardrequest.sProductType == "Gift Card") {
+        lSelectedCardClass = "GiftCardElements";
+    } else if (apz.crddtl.newcardrequest.sProductType == "Prepaid Card") {
+        lSelectedCardClass = "GiftCardElements";
+    } else if (apz.crddtl.newcardrequest.sProductType == "Virtual Card") {
+        lSelectedCardClass = "GiftCardElements";
+    }
+    $("#crddtl__NewCardRequest__Stage3Form dl").each(function() {
+        if ($(this).hasClass(lSelectedCardClass)) {
+            $(this).removeClass("sno");
+        } else {
+            $(this).addClass("sno");
+        }
+    });
+    apz.hide("crddtl__NewCardRequest__Stage3Amount_ctrl_grp_div");
+    apz.show("crddtl__NewCardRequest__Stage3Product_ctrl_grp_div");
+    if (apz.crddtl.newcardrequest.sProductType == "Prepaid Card" || apz.crddtl.newcardrequest.sProductType == "Gift Card" || apz.crddtl.newcardrequest
+        .sProductType == "Virtual Card") {
+        $("#crddtl__NewCardRequest__Stage3AccNo_ctrl_grp_div").removeClass("sno");
+        apz.hide("crddtl__NewCardRequest__Stage2CustomerPhotoRow");
+        apz.show("crddtl__NewCardRequest__Stage3Amount_ctrl_grp_div");
+        apz.show("crddtl__NewCardRequest__Stage3Validity_ctrl_grp_div");
+    } else {
+        apz.hide("crddtl__NewCardRequest__Stage3Validity_ctrl_grp_div");
+    }
+    if (apz.crddtl.newcardrequest.sProductType == "Virtual Card") {
+        apz.hide("crddtl__NewCardRequest__Stage3CardType_ctrl_grp_div");
+    } else {
+        apz.show("crddtl__NewCardRequest__Stage3CardType_ctrl_grp_div");
+    }
+};
+apz.crddtl.newcardrequest.fnEditStage3 = function() {
+    debugger;
+    apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl = "";
+    apz.crddtl.newcardrequest.fnRenderStage2();
+};
+apz.crddtl.newcardrequest.fnConfirmStage2 = function() {
+    debugger;
+    var lReq = {
+        "action": "Confirm",
+        "cardReqDtl": apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl
+    };
+    var lServerParams = {
+        "ifaceName": "NewCardRequest",
+        "req": lReq,
+        "callBack": apz.crddtl.newcardrequest.fnInsertCallBack
+    };
+    apz.crddtl.newcardrequest.fnBeforeCallServer(lServerParams);
+};
+apz.crddtl.newcardrequest.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.req,
+        "paintResp": "N",
+        "callBack": params.callBack
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.crddtl.newcardrequest.fnInsertCallBack = function(params) {
+    debugger;
+    apz.data.loadJsonData(params.ifaceName, "crddtl");
+    apz.crddtl.newcardrequest.sParams.OtpRes = params.res.crddtl__NewCardRequest_Res.cardReqDtl;
+    apz.crddtl.newcardrequest.fnRenderOTP();
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "crddtl__NewCardRequest__Launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.crddtl__NewCardRequest_Res.cardReqDtl.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.crddtl.newcardrequest.fnGotoStage4,
+                "destroyDiv": "crddtl__NewCardRequest__Launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+};
+apz.crddtl.newcardrequest.fnRenderOTP = function() {
+    debugger;
+    apz.hide("crddtl__NewCardRequest__Stage1");
+    apz.hide("crddtl__NewCardRequest__Stage2");
+    apz.hide("crddtl__NewCardRequest__Stage3");
+    apz.show("crddtl__NewCardRequest__Launcher");
+    apz.hide("crddtl__NewCardRequest__Stage4");
+};
+apz.crddtl.newcardrequest.fnGotoStage4 = function() {
+    debugger;
+    apz.crddtl.newcardrequest.fnSetValueStage4();
+    apz.crddtl.newcardrequest.fnRenderStage4Elements();
+    apz.crddtl.newcardrequest.fnRenderStage4();
+};
+apz.crddtl.newcardrequest.fnSetValueStage4 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl;
+    apz.setElmValue("crddtl__NewCardRequest__Stage4Product", lDetails.product);
+    apz.setElmValue("crddtl__NewCardRequest__Stage4CardType", lDetails.cardType);
+    apz.setElmValue("crddtl__NewCardRequest__Stage4AccNo", lDetails.accountNo);
+    apz.setElmValue("crddtl__NewCardRequest__Stage4NameOnCard", lDetails.nameOnCard);
+    apz.setElmValue("crddtl__NewCardRequest__Stage4CustomerName", lDetails.custName);
+    apz.setElmValue("crddtl__NewCardRequest__Stage4MobileNo", lDetails.mobileNo);
+    apz.setElmValue("crddtl__NewCardRequest__Stage4Email", lDetails.emailId);
+    apz.setElmValue("crddtl__NewCardRequest__Stage4Address", lDetails.address);
+    apz.setElmValue("crddtl__NewCardRequest__Stage4AddressProofDoc", lDetails.addressProofDoc);
+    apz.setElmValue("crddtl__NewCardRequest__Stage4AddressProofId", lDetails.addressProofDocID);
+    apz.setElmValue("crddtl__NewCardRequest__Stage4IdProofDoc", lDetails.idProofDoc);
+    apz.setElmValue("crddtl__NewCardRequest__Stage4IdProofId", lDetails.idProofDocID);
+    apz.setElmValue("crddtl__NewCardRequest__Stage4Amount", lDetails.amount);
+    apz.setElmValue("crddtl__NewCardRequest__Stage4Validity", lDetails.validity);
+    var lSuccessMsg = "Request for " + apz.crddtl.newcardrequest.sProductType + " is Initiated";
+    apz.setElmValue("crddtl__NewCardRequest__SuccessMsg", lSuccessMsg);
+    //var lRefNo = "Your Reference Number is " + apz.crddtl.newcardrequest.sParams.OtpRes.txnRefNo;
+    var lRefNo = "Your Reference Number is " + "AP01038698";
+    apz.setElmValue("crddtl__NewCardRequest__RefNo", lRefNo);
+};
+apz.crddtl.newcardrequest.fnRenderStage4Elements = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl;
+    if (apz.crddtl.newcardrequest.sProductType == "Debit Card") {
+        lSelectedCardClass = "DebitCardElements";
+    } else if (apz.crddtl.newcardrequest.sProductType == "Credit Card") {
+        lSelectedCardClass = "CreditCardElements";
+    } else if (apz.crddtl.newcardrequest.sProductType == "Gift Card") {
+        lSelectedCardClass = "GiftCardElements";
+    } else if (apz.crddtl.newcardrequest.sProductType == "Prepaid Card") {
+        lSelectedCardClass = "GiftCardElements";
+    } else if (apz.crddtl.newcardrequest.sProductType == "Virtual Card") {
+        lSelectedCardClass = "GiftCardElements";
+    }
+    $("#crddtl__NewCardRequest__Stage4Form dl").each(function() {
+        if ($(this).hasClass(lSelectedCardClass)) {
+            $(this).removeClass("sno");
+        } else {
+            $(this).addClass("sno");
+        }
+    });
+    apz.hide("crddtl__NewCardRequest__Stage4Amount_ctrl_grp_div");
+    apz.show("crddtl__NewCardRequest__Stage4Product_ctrl_grp_div");
+    if (apz.crddtl.newcardrequest.sProductType == "Prepaid Card" || apz.crddtl.newcardrequest.sProductType == "Gift Card" || apz.crddtl.newcardrequest
+        .sProductType == "Virtual Card") {
+        $("#crddtl__NewCardRequest__Stage4AccNo_ctrl_grp_div").removeClass("sno");
+        apz.show("crddtl__NewCardRequest__Stage4Amount_ctrl_grp_div");
+        apz.show("crddtl__NewCardRequest__Stage4Validity_ctrl_grp_div");
+    } else {
+        apz.hide("crddtl__NewCardRequest__Stage4Validity_ctrl_grp_div");
+    }
+    if (apz.crddtl.newcardrequest.sProductType == "Virtual Card") {
+        apz.hide("crddtl__NewCardRequest__Stage4CardType_ctrl_grp_div");
+    } else {
+        apz.show("crddtl__NewCardRequest__Stage4CardType_ctrl_grp_div");
+    }
+};
+apz.crddtl.newcardrequest.fnRenderStage4 = function() {
+    debugger;
+    apz.hide("crddtl__NewCardRequest__Stage1");
+    apz.hide("crddtl__NewCardRequest__CarouselRow");
+    apz.hide("crddtl__NewCardRequest__Stage2");
+    apz.hide("crddtl__NewCardRequest__Stage3");
+    apz.hide("crddtl__NewCardRequest__Launcher");
+    apz.show("crddtl__NewCardRequest__Stage4");
+}
+apz.crddtl.newcardrequest.fnCalender = function() {
+    debugger;
+    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var ldate = new Date();
+    ldate.setFullYear(ldate.getFullYear());
+    var lobj = {};
+    lobj.maxMonth = (monthNames[ldate.getMonth()]).substring(0, 3);
+    lobj.maxdata = ("0" + ldate.getDate()).slice(-2) + "-" + lobj.maxMonth + "-" + ldate.getFullYear()
+    var params = {};
+    params.id = "crddtl__NewCardRequest__ValidityDate";
+    params.dataType = "DATE";
+    params.lookAndFeel = "GENERIC";
+    params.parentDisplay = "CENTER";
+    params.style = "MATERIAL";
+    params.parentPreset = "CALENDAR";
+    params.parentMinDate = lobj.maxdata;
+    //params.parentMaxDate = "11-AUG-1999";
+    params.parentMaxDate = "";
+    params.closeOnSel = "Y";
+    params.multiSel = "N";
+    params.parentStartYear = "";
+    params.parentEndYear = "";
+    params.parentRangePick = "N";
+    params.secInputId = "";
+    params.parentMultiInput = "N";
+    params.dateType = "GENERIC";
+    apz.initDates(params);
+};
+apz.crddtl.newcardrequest.fnDone = function() {
+    debugger;
+    apz.crddtl.newcardrequest.sParams.callBack();
+   // var lParams = {};
+    //lParams.textContent = "Manage Cards";
+    apz.landin.Landing.fnMenuClickInside("Manage Cards");
+}
+apz.crddtl.newcardrequest.fnValidateNumber = function(pobj) {
+    debugger;
+    if (!apz.val.isNumber(apz.getElmValue("crddtl__NewCardRequest__i__cardReqDtl__mobileNo"))) {
+        var lValue = $("#crddtl__NewCardRequest__i__cardReqDtl__mobileNo").val().slice(0, -1);
+        apz.setElmValue("crddtl__NewCardRequest__i__cardReqDtl__mobileNo", lValue);
+    }
+};
+apz.crddtl.newcardrequest.fnValidatePhone = function(pobj) {
+    debugger;
+    var lError = apz.val.validateInputAct(document.getElementById("crddtl__NewCardRequest__i__cardReqDtl__mobileNo"), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            "code": 'VAL-PHONE'
+        };
+        apz.dispMsg(lErrorParams);
+    } else {
+        $("#crddtl__NewCardRequest__i__cardReqDtl__mobileNo").val().slice(0, -1);
+    }
+};
+apz.crddtl.newcardrequest.fnValidateEmail = function(pobj) {
+    debugger;
+    var lError = apz.val.validateInputAct(document.getElementById("crddtl__NewCardRequest__i__cardReqDtl__emailId"), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            "code": 'VAL-EMAIL'
+        };
+        apz.dispMsg(lErrorParams);
+    } else {
+        return true;
+    }
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};
+apz.crddtl.newcardrequest.browser = function() {
+    if (apz.deviceGroup == "Mobile" || apz.deviceGroup == "Tablet") {
+        var json = {
+            "filter": "",
+            "fileCategory": "DEFAULT",
+            "location": "",
+            "openFile": "N"
+        };
+        json.id = "FILEBROWSER_ID";
+        json.callBack = apz.crddtl.newcardrequest.fileBrowserCallback;
+        apz.ns.fileBrowser(json);
+    }
+}
+apz.crddtl.newcardrequest.fileBrowserCallback = function(jsonObj) {}
+apz.crddtl.newcardrequest.fnUploadDoc = function() {
+    var json = {};
+    json.fieldID = "crddtl__NewCardRequest__file_uploadPath";
+    json.callBack = apz.crddtl.newcardrequest.uploadFileCallback;
+    json.fileName = "";
+    json.overWrite = "Y";
+    json.destination = "UploadDocs/" + apz.crddtl.newcardrequest.sParams.data.customerId;
+    // alert(JSON.stringify(json));
+    apz.ns.uploadFile(json);
+}
+apz.crddtl.newcardrequest.uploadFileCallback = function(params) {
+    debugger;
+}

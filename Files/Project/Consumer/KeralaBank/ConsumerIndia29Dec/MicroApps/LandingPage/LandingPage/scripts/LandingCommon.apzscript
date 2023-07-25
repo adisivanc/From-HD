@@ -1,0 +1,90 @@
+LandingCommon = (function() {
+    userId = "";
+    cache = {};
+    bclevel = 0;
+    return {
+        setLoggedInUser: function(user) {
+            userId = user;
+        },
+        getLoggedInUser: function() {
+            return cache.data.userId;
+        },
+        setHeading : function(name){
+            apz.setElmValue("landin__Landing__heading",name);
+        },
+        launchApp: function(appId, scr, userObj, div = "landin__Landing__launcher") {
+            apz.common.launchApp(appId, scr,userObj,div);
+        },
+        store: function(cacheObj) {
+            cache = JSON.parse(JSON.stringify(cacheObj));
+        },
+        getPrevStateControls: function() {
+            return cache.control;
+        },
+        launchMicroApp: function(appId, scr, userObj) {
+            $("#header").addClass("expandnav");
+            $("#landin__Landing__gr_row_16").addClass("sno");
+            $("#landin__Landing__sidebar").removeClass("sno");
+            $("#landin__Landing__TitleRow").removeClass("sno");
+            $("body").removeClass("dashbody");
+            $("body").removeClass("landingby");
+            $("body").removeClass("loginby");
+            $(".srbtn1").addClass("sno");
+            $(".srbtn").addClass("sno");
+            this.launchApp(appId, scr, userObj);
+        },
+        getPassingObj: function() {
+            return {
+                data:{
+                      "from":"Dashboard",
+                      "userId" :this.getLoggedInUser()
+                },
+                "control": {
+                    "exitApp": {
+                        "div": "landin__Landing__launcher",
+                        "callBack": apz.landin.Landing.fnHome
+                    }
+                }
+            };
+        },
+        FetchDetails :function(appId, ifaceName, buildReq, paintResp, req){
+            return new Promise(function(resolve,reject){
+                apz.common.callServer(appId, ifaceName, buildReq, paintResp, req, function(resp){
+                  debugger;
+                    resolve(resp)
+                    
+                });
+            });
+        },
+        getStyleLinks : function(){
+            return $("head > link[href*='Theme\.css']");
+        },
+        disableStyleLinks : function(){
+             Array.from(this.getStyleLinks()).forEach(function(link){
+                link.disabled = true;
+            });
+        },
+        disableDefaultStyle : function(){
+            $("head > link[href*='UAB\.css']")[0].disabled = true;
+        },
+        showBreadScrumb: function(name){
+            level = ++bclevel;
+            $("#landin__Landing__bc"+level).removeClass("sno");
+            apz.setElmValue("landin__Landing__bc"+level, name );
+        },
+        clearBreadScrumb : function(){
+            bclevel = 0;
+             $("#landin__Landing__bc1").addClass("sno");
+             $("#landin__Landing__bc2").addClass("sno");
+        },
+        hideBcLevels : function(level){
+            if(level == 1){
+                bclevel = 1;
+                $("#landin__Landing__bc2").addClass("sno");
+            }
+        },
+        getAccountNumbers : function(){
+            return ["100009312263", "100009312401", "100009312274"];
+        }
+    };
+})();

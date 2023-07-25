@@ -1,0 +1,49 @@
+apz.accsum.checkParams = function(params) {
+    debugger;
+    params.userObj = {
+        "data": {
+            "customerID": "000004712",
+            "customerAddress": {
+                "addressline1": "Line 1",
+                "addressline2": "Line 2",
+                "addressline3": "Line 3",
+                "addressline4": "Line 4",
+                "city": "Bangalore",
+                "state": "Karnataka",
+                "country": "India",
+                "zip": "560000"
+            },
+            "accountDetail": [{
+                "accountNo": "753410000076",
+                "accountBal": "987435",
+                "accountBrnName": "Koramangala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "IOB00000619",
+                "accountOpnDt": "12-Aug-2001",
+                "accountType": "Savings Account",
+                "accountStat": "Open",
+                "actCustRel": "Single",
+                "accountPrdct": "1233",
+                "accountBal": "71178",
+                "linkedMobno": "9686736353",
+                "linkedCardno": "2324 XXXX XXXX XX34",
+                "address": "Domlur Layout, Bangalore-71"
+            }, {
+                "accountNo": "732510006721",
+                "accountBal": "332222",
+                "accountBrnName": "Madivala",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "IOB00000619",
+                "accountOpnDt": "22-Jan-2000",
+                "accountType": "Current Account",
+                "accountStat": "Open",
+                "actCustRel": "Single",
+                "accountPrdct": "9001",
+                "accountBal": "71178",
+                "address": "Domlur Layout, Bangalore-71",
+                "linkedCardno": "2324 XXXX XXXX XX34",
+                "linkedMobno": "9686736353"
+            }]
+        }
+    };
+};

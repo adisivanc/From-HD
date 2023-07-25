@@ -1,0 +1,75 @@
+apz.csmrbk.cardDetails = {};
+apz.app.onLoad_cardDetails = function(params) {
+    
+    
+}
+//show card details
+apz.csmrbk.cardDetails.fnShowCardDeatils = function(cardName) {
+    if (cardName === "Visa") {
+        var cardDeatils = {
+            "accountNo": "753410000076",
+            "cardName": "Visa Card",
+            "cardNumber": "7349007258882345",
+            "location": "Bangalore",
+            "balance": "-2345",
+            "creditLimit": "100000",
+            "avlCreditLimit": "5000",
+            "cashLimit": "20000",
+            "avlCashLimit": "12000",
+            "lastBilledDate": "05-Mar-2019",
+            "lastBilledAmount": "6127",
+            "unbilledPurchases": "3125",
+            "unbilledPayments": "8451",
+            "totalOS": "4351",
+            "accountBal": "71178",
+            "customerID": "12345",
+            "paymentDueDate": "15-Apr-2019"
+        }
+    } else {
+        var cardDeatils = {
+            "accountNo": "961897412864",
+            "cardName": "Master Card",
+            "cardNumber": "6493203052001143",
+            "location": "Bangalore",
+            "balance": "-6340",
+            "creditLimit": "100000",
+            "avlCreditLimit": "4357",
+            "cashLimit": "27831",
+            "avlCashLimit": "16371",
+            "lastBilledDate": "05-Mar-2019",
+            "lastBilledAmount": "4371",
+            "unbilledPurchases": "3368",
+            "unbilledPayments": "4471",
+            "totalOS": "6634",
+            "accountBal": "35432",
+            "customerID": "53982",
+            "paymentDueDate": "15-Apr-2019"
+        }
+    }
+    apz.launchApp({
+        "appId": "cdtcrd",
+        "scr": "launchScreen",
+        "div": "cmrnav__Launcher__Launcher",
+        "userObj": {
+            "action": "Summary",
+            "data": cardDeatils,
+            "callBack": apz.csmrbk.cardDetails.fnShowCardDeatilsCB
+        }
+    })
+}
+apz.csmrbk.cardDetails.fnShowCardDeatilsCB = function() {
+    apz.launchApp({
+        "scr": "Dashboard",
+        "div": "cmrnav__Launcher__Launcher",
+        "appId": "csmrbk",
+        "userObj": {
+            "control": {
+                "exitApp": {
+                    "appId": "",
+                    "div": "cmrnav__Launcher__Launcher",
+                    "callBack": ""
+                }
+            }
+        }
+    });
+}

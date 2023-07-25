@@ -1,0 +1,276 @@
+apz.app.icaosm.AuthorisationAOS = {};
+apz.app.icaosm.AuthorisationAOS.sCache = {};
+apz.app.icaosm.AuthorisationAOS.sAction = "";
+apz.app.icaosm.AuthorisationAOS.sFlag = false;
+apz.app.onLoad_AuthorisationAOS = function(params) {
+    apz.app.icaosm.AuthorisationAOS.fnClearData();
+    apz.app.icaosm.AuthorisationAOS.sCache = params;
+    apz.app.manageCrub(8);
+    var UserID = apz.retrieve("CurrentUser");
+    $("#icaosm__AuthorisationAOS__ct_frm_2").addClass("shownone");
+    if (UserID == "User2") {
+        $("#icaosm__AuthorisationAOS__ct_frm_2").removeClass("shownone");
+    }
+    if (apz.data.scrdata.icaosm__AuthorisationAOS_Res != undefined) {
+        apz.data.loadData("AuthorisationAOS", "icaosm");
+    } else {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            var lpath = apz.getDataFilesPath();
+            var lData = apz.getFile(lpath + "/AuthorisationAOS.json")
+            lData = JSON.parse(lData);
+            apz.data.buildData("AuthorisationAOS", "icaosm");
+            apz.data.scrdata.icaosm__AuthorisationAOS_Res.details = lData.details;
+            apz.data.loadData("AuthorisationAOS", "icaosm");
+        }
+    }
+    apz.app.icaosm.AuthorisationAOS.fnQueryData();
+};
+apz.app.icaosm.AuthorisationAOS.fnClearData = function() {
+    apz.data.clearMRMV("icaosm__AuthorisationAOS__ct_frm_1");
+};
+apz.app.icaosm.AuthorisationAOS.fnQueryData = function() {
+    apz.app.icaosm.AuthorisationAOS.sAction = "query";
+    var req = {};
+    req.tbAuthDetails = {
+        "companyid": apz.icaosm.Home.sCompanyID
+    };
+    var lParams = {
+        "ifaceName": "AuthorisationAOS_Query",
+        "paintResp": "Y",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.AuthorisationAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.AuthorisationAOS.fnBeforCallServer = function(params) {
+    var lReq = {
+        "ifaceName": params.ifaceName,
+        "paintResp": params.paintResp,
+        "buildReq": params.buildReq,
+        "req": params.lReq,
+        "appId": params.appId,
+        "async": false,
+        "callBack": apz.app.icaosm.AuthorisationAOS.callServerCB,
+        "callBackObj": ""
+    };
+    apz.server.callServer(lReq);
+};
+apz.app.icaosm.AuthorisationAOS.callServerCB = function(params) {
+    debugger;
+    if (apz.app.icaosm.AuthorisationAOS.sAction == "query") {
+        apz.app.icaosm.AuthorisationAOS.fnQueryDataCB(params);
+    } else if (apz.app.icaosm.AuthorisationAOS.sAction == "modifySave" || apz.app.icaosm.AuthorisationAOS.sAction == "newSave") {
+        apz.app.icaosm.AuthorisationAOS.fnModifySaveAuthorisationAOSCB(params);
+    } else if (apz.app.icaosm.AuthorisationAOS.sAction == "modifyNext" || apz.app.icaosm.AuthorisationAOS.sAction == "newNext") {
+        apz.app.icaosm.AuthorisationAOS.fnModifyNextAuthorisationAOSCB(params);
+    }
+};
+apz.app.icaosm.AuthorisationAOS.fnQueryDataCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.AuthorisationAOS.sFlag = true;
+    } else {
+        apz.app.icaosm.AuthorisationAOS.sFlag = false;
+    }
+};
+apz.app.icaosm.AuthorisationAOS.fnSave = function() {
+    if (apz.app.icaosm.AuthorisationAOS.sFlag) {
+        apz.app.icaosm.AuthorisationAOS.sAction = "modifySave";
+    } else {
+        apz.app.icaosm.AuthorisationAOS.sAction = "newSave";
+    }
+    apz.app.icaosm.AuthorisationAOS.fnModifySaveAuthorisationAOS();
+    /*
+    if (apz.app.icaosm.AuthorisationAOS.sCache.action == "submitted") {
+        apz.launchSubScreen({
+            "scr": "Home",
+            "div": "icaosm__LandingHeader__scrlaunchingdiv",
+            "userObj": {
+                "percentage": "",
+                "val": "Authorisation",
+                "action": apz.app.icaosm.AuthorisationAOS.sCache.action,
+                "accNum": apz.app.icaosm.AuthorisationAOS.sCache.accNum,
+                "appNo": apz.app.icaosm.AuthorisationAOS.sCache.appNo
+            }
+        });
+    } else {
+        debugger;
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__AuthorisationAOS__main input[type='radio']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 3) + lTotCount;
+        lRadio = 0;
+        $("#scr__icaosm__AuthorisationAOS__main input[type='CHECKBOX']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lTotCount++;
+        });
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[7].progress = percentage;
+        apz.data.buildData("AuthorisationAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "Home",
+            "div": "icaosm__LandingHeader__scrlaunchingdiv",
+            "userObj": {
+                "percentage": percentage,
+                "val": "Authorisation",
+                "action": apz.app.icaosm.AuthorisationAOS.sCache.action,
+                "accNum": apz.app.icaosm.AuthorisationAOS.sCache.accNum,
+                "appNo": apz.app.icaosm.AuthorisationAOS.sCache.appNo
+            }
+        });
+    }
+    */
+};
+apz.app.icaosm.AuthorisationAOS.fnModifySaveAuthorisationAOS = function() {
+    apz.data.buildData("AuthorisationAOS", "icaosm");
+    var req = {};
+    req.tbAuthDetails = apz.data.scrdata.icaosm__AuthorisationAOS_Req.tbAuthDetails;
+    req.tbAuthDetails.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.AuthorisationAOS.sAction == "modifySave") {
+        lParams.ifaceName = "AuthorisationAOS_Modify";
+    } else if (apz.app.icaosm.AuthorisationAOS.sAction == "newSave") {
+        lParams.ifaceName = "AuthorisationAOS_New";
+    }
+    apz.app.icaosm.AuthorisationAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.AuthorisationAOS.fnModifySaveAuthorisationAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.AuthorisationAOS.sFlag = false;
+        if (apz.app.icaosm.AuthorisationAOS.sCache.action == "submitted") {
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": "",
+                    "val": "Authorisation",
+                    "action": apz.app.icaosm.AuthorisationAOS.sCache.action,
+                    "accNum": apz.app.icaosm.AuthorisationAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.AuthorisationAOS.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        } else {
+            debugger;
+            var lTotCount = 0;
+            var lFilled = 0,
+                lRadio = 0;
+            $("#scr__icaosm__AuthorisationAOS__main input[type='radio']").each(function() {
+                if ($("#" + this.id + ":Checked").length) {
+                    lFilled++;
+                }
+                lRadio++;
+            });
+            lTotCount = (lRadio / 3) + lTotCount;
+            lRadio = 0;
+            $("#scr__icaosm__AuthorisationAOS__main input[type='CHECKBOX']").each(function() {
+                if ($("#" + this.id + ":Checked").length) {
+                    lFilled++;
+                }
+                lTotCount++;
+            });
+            percentage = (lFilled / lTotCount);
+            apz.data.scrdata.icaosm__Home_Req.Home[7].progress = percentage;
+            apz.data.buildData("AuthorisationAOS", "icaosm");
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": percentage,
+                    "val": "Authorisation",
+                    "action": apz.app.icaosm.AuthorisationAOS.sCache.action,
+                    "accNum": apz.app.icaosm.AuthorisationAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.AuthorisationAOS.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        }
+    } else {
+        lmsg = {
+            "message": "Authorization details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.AuthorisationAOS.fnModifyNextAuthorisationAOS = function() {
+    if (apz.app.icaosm.AuthorisationAOS.sFlag) {
+        apz.app.icaosm.AuthorisationAOS.sAction = "modifyNext";
+    } else {
+        apz.app.icaosm.AuthorisationAOS.sAction = "newNext";
+    }
+    apz.data.buildData("AuthorisationAOS", "icaosm");
+    var req = {};
+    req.tbAuthDetails = apz.data.scrdata.icaosm__AuthorisationAOS_Req.tbAuthDetails;
+    req.tbAuthDetails.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.AuthorisationAOS.sAction == "modifyNext") {
+        lParams.ifaceName = "AuthorisationAOS_Modify";
+    } else if (apz.app.icaosm.AuthorisationAOS.sAction == "newNext") {
+        lParams.ifaceName = "AuthorisationAOS_New";
+    }
+    apz.app.icaosm.AuthorisationAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.AuthorisationAOS.fnModifyNextAuthorisationAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.AuthorisationAOS.sFlag = false;
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__AuthorisationAOS__main input[type='radio']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 3) + lTotCount;
+        lRadio = 0;
+        $("#scr__icaosm__AuthorisationAOS__main input[type='CHECKBOX']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lTotCount++;
+        });
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[7].progress = percentage;
+        apz.data.buildData("AuthorisationAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "MandatesAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            //"animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.AuthorisationAOS.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum,
+                "companyID": apz.icaosm.Home.sCompanyID
+            }
+        });
+    } else {
+        lmsg = {
+            "message": "Authorization details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};

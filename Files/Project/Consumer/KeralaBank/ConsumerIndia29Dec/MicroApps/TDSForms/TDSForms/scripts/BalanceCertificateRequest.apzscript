@@ -1,0 +1,122 @@
+apz.tdsfrm.balanceCertificate = {};
+apz.tdsfrm.balanceCertificate.sparams = {};
+apz.app.onLoad_BalanceCertificateRequest = function(params) {
+    debugger;
+             apz.setElmValue("tdsfrm__BalanceCertificateRequest__accNo", params.accountNumber);
+
+};
+apz.app.onShown_BalanceCertificateRequest = function(params) {
+    debugger;
+    apz.show("tdsfrm__DICertificateRequest__stage_one");
+    //apz.setElmValue("landin__Landing__heading", "BALANCE CERTIFICATE REQUEST");
+
+};
+apz.tdsfrm.balanceCertificate.fnDownload = function(params, fileType) {
+    debugger;
+    var jsonFilePath = apz.getDataFilesPath("tdsfrm") + "/BalanceCertificate.json";
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    for (var i = 0; i < ljsondata.data.length; i++) {
+        var mimetype = ljsondata.data[i].mimeType;
+        var lMimeType = mimetype.slice(-3);
+        if (fileType == lMimeType.toLowerCase()) {
+            apz.tdsfrm.balanceCertificate.ReportdwnldMethod(ljsondata.data[i]);
+        }
+    }
+}
+apz.tdsfrm.balanceCertificate.fnCancel = function(params) {
+    // apz.csmrbk.landingpage.fnInitialise();
+    
+    //lParams = {};
+   // lParams.textContent = "Account Summary";
+    apz.landin.Landing.fnMenuClickInside("Account Summary");
+}
+apz.tdsfrm.balanceCertificate.ReportdwnldMethod = function(lbodyobj) {
+    debugger;
+    var blob;
+    var fileType = "";
+    if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+        blob = apz.tdsfrm.balanceCertificate.b64toBlob(lbodyobj.content, "application/pdf");
+        fileType = ".pdf";
+    }
+    var blobUrl = URL.createObjectURL(blob);
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.tdsfrm.balanceCertificate.base64tofilecallBack;
+        json.base64 = lbodyobj.content;
+        json.fileName = "BalanceCertificate"+fileType;
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    } else {
+        window.open(blobUrl);
+    }
+};
+apz.tdsfrm.balanceCertificate.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};
+
+apz.tdsfrm.balanceCertificate.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.tdsfrm.balanceCertificate.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.tdsfrm.balanceCertificate.openFileCallback = function(params) {
+    debugger;
+};
+apz.tdsfrm.balanceCertificate.selDate = function() 
+{
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var monthname=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug",
+                    "Sep","Oct","Nov","Dec")
+                  var mm=  monthname[today.getMonth()];
+  //  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = dd + '-' + mm + '-' + yyyy;
+    var fromDate = apz.getElmValue("tdsfrm__BalanceCertificateRequest__fromDate");
+    var dateParams = {
+        "id": "tdsfrm__BalanceCertificateRequest__toDate",
+        "dataType": "DATE",
+        "lookAndFeel": "GENERIC",
+        "parentDisplay": "BUBBLE",
+        "style": "ANDROID-HOLO",
+        "parentPreset": "CALENDAR",
+        "parentMinDate": fromDate,
+        "parentMaxDate": "",
+        "closeOnSel": "Y",
+        "multiSel": "N",
+        "parentStartYear": "",
+        "parentEndYear": "",
+        "parentRangePick": "N",
+        "secInputId": "",
+        "parentMultiInput": "N",
+        "dateType": "GENERIC"
+    }
+    apz.initDates(dateParams);
+}

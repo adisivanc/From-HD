@@ -1,0 +1,120 @@
+{
+    "authma__AuthMatrix_Res": {
+        "amount_det": [{
+            "from_amount": "0",
+            "to_amount": "250000",
+            "currency":"USD",
+            "auth_det": [{
+                "auth_grp_type_1": "Role",
+                "authorizer_1": "CashMgmt-auth",
+                "auth_grp_type_2": "Role",
+                "auth_grp_type_3": "",
+                "auth_grp_type_4": "",
+                "authorizer_2": "SeniorManagement",
+                "authorizer_3": "",
+                "authorizer_4": ""
+            }, {
+                "auth_grp_type_1": "Role",
+                "authorizer_1": "CashMgmt-auth",
+                "auth_grp_type_2": "User",
+                "auth_grp_type_3": "",
+                "auth_grp_type_4": "",
+                "authorizer_2": "robert.langford",
+                "authorizer_3": "",
+                "authorizer_4": ""
+            }]
+        }, {
+            "from_amount": "250001",
+            "to_amount": "500000",
+            "currency":"USD",
+            "auth_det": [{
+                "auth_grp_type_1": "Role",
+                "authorizer_1": "CashMgmt-auth",
+                "auth_grp_type_2": "Role",
+                "auth_grp_type_3": "User",
+                "auth_grp_type_4": "",
+                "authorizer_2": "Credit-auth",
+                "authorizer_3": "robert.langford",
+                "authorizer_4": ""
+            }, {
+                "auth_grp_type_1": "Role",
+                "authorizer_1": "SeniorManagement",
+                "auth_grp_type_2": "User",
+                "auth_grp_type_3": "User",
+                "auth_grp_type_4": "",
+                "authorizer_2": "robert.langford",
+                "authorizer_3": "patrick.wilson",
+                "authorizer_4": ""
+            }, {
+                "auth_grp_type_1": "User",
+                "authorizer_1": "robert.langford",
+                "auth_grp_type_2": "Role",
+                "auth_grp_type_3": "",
+                "auth_grp_type_4": "",
+                "authorizer_2": "Credit-auth",
+                "authorizer_3": "",
+                "authorizer_4": ""
+            }]
+        }, {
+            "from_amount": "500001",
+            "to_amount": "750000",
+            "currency":"USD",
+            "auth_det": [{
+                "auth_grp_type_1": "Role",
+                "authorizer_1": "Credit-auth",
+                "auth_grp_type_2": "Role",
+                "auth_grp_type_3": "User",
+                "auth_grp_type_4": "",
+                "authorizer_2": "SeniorManagement",
+                "authorizer_3": "robert.langford",
+                "authorizer_4": ""
+            }, {
+                "auth_grp_type_1": "Role",
+                "authorizer_1": "SeniorManagement",
+                "auth_grp_type_2": "User",
+                "auth_grp_type_3": "User",
+                "auth_grp_type_4": "",
+                "authorizer_2": "robert.langford",
+                "authorizer_3": "patrick.wilson",
+                "authorizer_4": ""
+            }]
+        }, {
+            "from_amount": "750001",
+            "to_amount": "1000000",
+            "currency":"USD",
+            "auth_det": [{
+                "auth_grp_type_1": "Role",
+                "authorizer_1": "SeniorManagement",
+                "auth_grp_type_2": "Role",
+                "auth_grp_type_3": "User",
+                "auth_grp_type_4": "",
+                "authorizer_2": "Master",
+                "authorizer_3": "robert.langford",
+                "authorizer_4": ""
+            }, {
+                "auth_grp_type_1": "User",
+                "authorizer_1": "robert.langford",
+                "auth_grp_type_2": "User",
+                "auth_grp_type_3": "",
+                "auth_grp_type_4": "",
+                "authorizer_2": "patrick.wilson",
+                "authorizer_3": "",
+                "authorizer_4": ""
+            }]
+        }, {
+            "from_amount": "1000001",
+            "to_amount": "",
+            "currency":"USD",
+            "auth_det": [{
+                "auth_grp_type_1": "User",
+                "authorizer_1": "robert.langford",
+                "auth_grp_type_2": "User",
+                "auth_grp_type_3": "User",
+                "auth_grp_type_4": "",
+                "authorizer_2": "patrick.wilson",
+                "authorizer_3": "josh.ackerman",
+                "authorizer_4": ""
+            }]
+        }]
+    }
+}

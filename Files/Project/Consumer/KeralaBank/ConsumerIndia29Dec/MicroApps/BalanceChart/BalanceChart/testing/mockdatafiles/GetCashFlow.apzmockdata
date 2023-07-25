@@ -1,0 +1,110 @@
+{
+        "cashflow": [
+            {
+                "Month": "Oct",
+                "Amount": "13720",
+                "Type": "Income"
+            },
+            
+             {
+                "Month": "Oct",
+                "Amount": "10000",
+                "Type": "Investment"
+            },
+            
+             {
+                "Month": "Oct",
+                "Amount": "3720",
+                "Type": "Expenses"
+            },
+            
+            
+             {
+                "Month": "Nov",
+                "Amount": "13720",
+                "Type": "Income"
+            },
+            
+             {
+                "Month": "Nov",
+                "Amount": "10000",
+                "Type": "Investment"
+            },
+            
+             {
+                "Month": "Nov",
+                "Amount": "3720",
+                "Type": "Expenses"
+            },
+            
+            
+             {
+                "Month": "Dec",
+                "Amount": "10000",
+                "Type": "Income"
+            },
+            
+             {
+                "Month": "Dec",
+                "Amount": "8000",
+                "Type": "Investment"
+            },
+            
+             {
+                "Month": "Dec",
+                "Amount": "5000",
+                "Type": "Expenses"
+            },
+            {
+                "Month": "Jan",
+                "Amount": "12000",
+                "Type": "Income"
+            },
+            
+             {
+                "Month": "Jan",
+                "Amount": "5000",
+                "Type": "Investment"
+            },
+            
+             {
+                "Month": "Jan",
+                "Amount": "1000",
+                "Type": "Expenses"
+            },
+             {
+                "Month": "Feb",
+                "Amount": "15000",
+                "Type": "Income"
+            },
+            
+             {
+                "Month": "Feb",
+                "Amount": "5000",
+                "Type": "Investment"
+            },
+            
+             {
+                "Month": "Feb",
+                "Amount": "3000",
+                "Type": "Expenses"
+            },
+               {
+                "Month": "Mar",
+                "Amount": "3000",
+                "Type": "Income"
+            },
+            
+             {
+                "Month": "Mar",
+                "Amount": "1000",
+                "Type": "Investment"
+            },
+            
+             {
+                "Month": "Mar",
+                "Amount": "500",
+                "Type": "Expenses"
+            }
+        ]
+    }

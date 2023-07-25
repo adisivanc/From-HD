@@ -1,0 +1,70 @@
+{
+    "balanc__MonthlyBalance_Res": {
+        "datasets": [
+        {
+            "Months": "January",
+            "Amount": "11",
+            "Account": "Sapphire Preferred"
+        }, {
+            "Months": "January",
+            "Amount": "8",
+            "Account": "Premier World Elite"
+        }, {
+            "Months": "January",
+            "Amount": "30",
+            "Account": "Travel Rewards"
+        }, {
+            "Months": "January",
+            "Amount": "20",
+            "Account": "Business Unlimited"
+        },{
+            "Months": "February",
+            "Amount": "19",
+            "Account": "Sapphire Preferred"
+        }, {
+            "Months": "February",
+            "Amount": "7",
+            "Account": "Premier World Elite"
+        }, {
+            "Months": "February",
+            "Amount": "20",
+            "Account": "Travel Rewards"
+        }, {
+            "Months": "February",
+            "Amount": "10",
+            "Account": "Business Unlimited"
+        },{
+            "Months": "March",
+            "Amount": "11",
+            "Account": "Sapphire Preferred"
+        }, {
+            "Months": "March",
+            "Amount": "23",
+            "Account": "Premier World Elite"
+        }, {
+            "Months": "March",
+            "Amount": "30",
+            "Account": "Travel Rewards"
+        }, {
+            "Months": "March",
+            "Amount": "12",
+            "Account": "Business Unlimited"
+        },{
+            "Months": "April",
+            "Amount": "11",
+            "Account": "Sapphire Preferred"
+        }, {
+            "Months": "April",
+            "Amount": "28",
+            "Account": "Premier World Elite"
+        }, {
+            "Months": "April",
+            "Amount": "30",
+            "Account": "Travel Rewards"
+        }, {
+            "Months": "April",
+            "Amount": "13",
+            "Account": "Business Unlimited"
+        }]
+    }
+}

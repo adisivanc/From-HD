@@ -1,0 +1,144 @@
+apz.appdtl.BranchManagerLauncher = {};
+apz.appdtl.BranchManagerLauncher.sParams = {}
+apz.appdtl.BranchManagerLauncher.sCache = {};
+apz.app.onLoad_BranchManagerLauncher = function(params){
+    debugger;
+    apz.startLoader();
+   apz.appdtl.BranchManagerLauncher.sParams = params ;
+   apz.appdtl.BranchManagerLauncher.fnLaunchApplicationDetails();
+}
+apz.appdtl.BranchManagerLauncher.fnOnToggleChange = function(){
+    debugger;
+    var value = apz.getElmValue("appdtl__BranchManagerLauncher__el_tgl_1")
+    if(value == "on"){
+       apz.appdtl.BranchManagerLauncher.fnLaunchApplicationDetails(); 
+    }
+    else{
+        apz.appdtl.BranchManagerLauncher.fnLaunchComplianceDetails();
+    }
+    
+}
+
+apz.appdtl.BranchManagerLauncher.fnLaunchApplicationDetails= function(){
+    debugger;
+    lParams = {
+        "appId": "appdtl",
+        "scr": "BranchManagerApplicationDetials",
+        "div": "appdtl__BranchManagerLauncher__detailsLauncher",
+        "userObj":apz.appdtl.BranchManagerLauncher.sParams
+    };
+      apz.launchSubScreen(lParams);
+   
+}; 
+apz.appdtl.BranchManagerLauncher.fnLaunchComplianceDetails = function(){
+    debugger;
+    lParams = {
+        "appId": "crsapp",
+        "scr": "ProgressStep",
+        "div": "appdtl__BranchManagerLauncher__detailsLauncher",
+        "userObj":apz.appdtl.BranchManagerLauncher.sParams
+    };
+      apz.launchApp(lParams);
+   
+}; 
+apz.appdtl.BranchManagerLauncher.fnApprove = function() {
+    debugger;
+    apz.dispMsg({"message":"The application has been approved.","type":"S" ,"callBack":apz.appdtl.BranchManagerLauncher.fnApproveCB})
+}
+apz.appdtl.BranchManagerLauncher.fnApproveCB = function(){
+    apz.appdtl.BranchManagerLauncher.fnSendSMS();
+}
+apz.appdtl.BranchManagerLauncher.fnReject = function() {
+    debugger;
+    
+    if(apz.isNull(apz.getElmValue("appdtl__BranchManagerLauncher__el_txa_1"))){
+        apz.dispMsg({"message":"Please add comments in remarks section about rejection"});
+    }
+    else{
+    apz.dispMsg({"message":"Please confirm if you want to reject this application","type":"C","callBack":apz.appdtl.BranchManagerLauncher.fnRejectCB});
+}
+        
+    
+}
+apz.appdtl.BranchManagerLauncher.fnRejectCB = function(params){
+    debugger;
+    if(params.choice){
+        apz.appdtl.BranchManagerLauncher.fnRejectApplication()
+    }
+    // apz.appdtl.AppLauncher.fnCancel();
+}
+apz.appdtl.BranchManagerLauncher.fnCallNextStateWorkFlow = function() {
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "appdtl",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appdtl.BranchManagerLauncher.sParams.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "SUBMIT"
+        },
+        "paintResp": "N",
+        "callBack": apz.appdtl.BranchManagerLauncher.fnNexttWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.appdtl.BranchManagerLauncher.fnNexttWorkflowCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+         apz.appdtl.BranchManagerLauncher.fnApprove();
+    }
+}
+apz.appdtl.BranchManagerLauncher.fnSendSMS = function() {
+   
+    var lmessage = "Thank you for choosing Appzillon Bank. Your loan has been sanctioned for Rs."+apz.appdtl.BranchManagerLauncher.sCache.amount+". Your Application id is "+apz.appdtl.BranchManagerLauncher.sCache.refNo;
+    var lServerParams = {
+        "ifaceName": "sms",
+        "buildReq": "N",
+        "appId": "appdtl",
+        "req": {
+            "config": {
+                user: "Iexceed",
+                apikey: "XOTNwz3OffqcodOubdhl",
+                mobile: apz.appdtl.BranchManagerLauncher.sCache.mobileNo,
+                message: lmessage,
+                senderid: "APZBNK",
+                type: "txt"
+            }
+        },
+        "paintResp": "N",
+        "async":true,
+        "callBack": apz.appdtl.BranchManagerLauncher.smsMessageCB
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.appdtl.BranchManagerLauncher.smsMessageCB = function(pResp) {
+    debugger;
+   apz.appdtl.AppLauncher.fnCancel();
+}
+apz.appdtl.BranchManagerLauncher.fnRejectApplication = function(){
+    debugger;
+      var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "appdtl",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.appdtl.BranchManagerLauncher.sParams.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "REJECT",
+            "remarks":apz.getElmValue("appdtl__BranchManagerLauncher__el_txa_1")
+        },
+        "paintResp": "N",
+        "callBack": apz.appdtl.BranchManagerLauncher.fnRejectWFStageCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.appdtl.BranchManagerLauncher.fnRejectWFStageCB = function(pResp){
+    debugger;
+      if (pResp.status) {
+          apz.dispMsg({"message":"The application has been rejected","type":"S","callBack":apz.appdtl.AppLauncher.fnCancel});
+    }
+}

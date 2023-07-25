@@ -1,0 +1,171 @@
+apz.ftsmry.ftsummary = {};
+apz.app.onLoad_FTSummary = function(params) {
+    debugger;
+    apz.ftsmry.ftsummary.fnInitialise(params);
+};
+apz.ftsmry.ftsummary.fnInitialise = function(params) {
+    debugger;
+    apz.ftsmry.ftsummary.sParams = params;
+    if (params.Navigation) {
+        apz.ftsmry.ftsummary.fnSetNavigation(params);
+    }
+    apz.ftsmry.ftsummary.fnGoToStage1();
+};
+apz.ftsmry.ftsummary.fnSetNavigation = function(params) {
+    debugger;
+    apz.ftsmry.ftsummary.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.showBack = "N";
+    lParams.headerText = "TRANSFER SUMMARY";
+    apz.ftsmry.ftsummary.Navigation(lParams);
+};
+apz.ftsmry.ftsummary.fnGoToStage1 = function() {
+    debugger;
+    apz.ftsmry.ftsummary.fnGetValueStage1();
+};
+apz.ftsmry.ftsummary.fnGetValueStage1 = function() {
+    debugger;
+    var lReq = {
+        "tbDbtpFundsTransfer": {
+            "customerId": apz.ftsmry.ftsummary.sParams.data.customerID
+        }
+    };
+    var lServerParams = {
+        "ifaceName": "FTSummary_Query",
+        "buildReq": "N",
+        "req": lReq
+    };
+    apz.ftsmry.ftsummary.fnBeforeCallServer(lServerParams);
+};
+apz.ftsmry.ftsummary.fnCancel = function(pthis) {
+    debugger;
+    var lRow = $(pthis).attr("rowNo");
+    var lReq = {};
+    //lReq.tbDbtpFundsTransfer=apz.data.scrdata.ftsmry__FTSummary_Req.tbDbtpFundsTransfer[lRow];
+    lReq.tbDbtpFundsTransfer = {};
+    lReq.tbDbtpFundsTransfer.txnRefNo = apz.getElmValue("ftsmry__FTSummary__i__tbDbtpFundsTransfer__txnRefNo_" + lRow);
+    apz.ftsmry.ftsummary.lRefNo = lReq.tbDbtpFundsTransfer.txnRefNo;
+    var msg = {
+        "code": "FTSMRY-SUC-001",
+        "args": apz.ftsmry.ftsummary.lRefNo + " <#> ",
+        "callBack": apz.ftsmry.ftsummary.fnConfirmCB
+    };
+    apz.dispMsg(msg);
+};
+apz.ftsmry.ftsummary.fnConfirmCB = function(params) {
+    debugger;
+    if (params.choice == true) {
+        var msg = {
+            "code": "FTSMRY-SUC-002",
+            "args": apz.ftsmry.ftsummary.lRefNo + " <#> ",
+            "callBack" : apz.landin.Landing.fnHome
+        };
+        apz.dispMsg(msg);
+    }
+}
+apz.ftsmry.ftsummary.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": params.buildReq,
+        "paintResp": "Y",
+        "req": params.req,
+        "callBack": apz.ftsmry.ftsummary.fnCallServerCB
+    };
+        jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("ftsmry")+"/FTSummary.json"));
+        apz.data.scrdata.ftsmry__FTSummary_Req = {};
+                apz.data.scrdata.ftsmry__FTSummary_Req = jsondata;
+                apz.data.loadData("FTSummary", "ftsmry");
+
+       apz.ftsmry.ftsummary.fnCallServerCB(jsondata);
+};
+apz.ftsmry.ftsummary.fnCallServerCB = function(params) {
+    debugger;
+    // if (params.errors) {
+    //     var lMsg = {
+    //         "message": params.errors[0].errorMessage
+    //     };
+    //     apz.dispMsg(lMsg);
+    // } else {
+        apz.ftsmry.ftsummary.sParams.FtSummary = params.tbDbtpFundsTransfer;
+    //}
+    for (var j = 0; j < params.tbDbtpFundsTransfer.length; j++) {
+        var ltransdate = apz.getElmValue("ftsmry__FTSummary__i__tbDbtpFundsTransfer__transferDt_" + j);
+        var ltemp = apz.ftsmry.ftsummary.fnFutureDate(ltransdate);
+        if ((apz.getElmValue("ftsmry__FTSummary__i__tbDbtpFundsTransfer__externalStatus_" + j) == "Pending Execution")) {
+             //$("#ftsmry__FTSummary__el_btn_1_"+j+"_txtcnt").removeClass("sno"); 
+            apz.show("ftsmry__FTSummary__el_btn_1_" + j);
+        } else
+        //$("#ftsmry__FTSummary__el_btn_1_"+j+"_txtcnt").addClass("sno"); 
+            apz.hide("ftsmry__FTSummary__el_btn_1_" + j);
+    
+    if ((apz.getElmValue("ftsmry__FTSummary__i__tbDbtpFundsTransfer__externalStatus_" + j)) == "Executed") {
+            apz.show("ftsmry__FTSummary__repeat_" + j);
+        } else {
+            apz.hide("ftsmry__FTSummary__repeat_" + j);
+        }
+    }
+};
+apz.ftsmry.ftsummary.fnFutureDate = function(ltransdate) {
+    var ltoday = new Date();
+    var lfuturedate = ltransdate;
+    var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    lfuturedate = lfuturedate.split("/");
+    // for (i = 0; i < month.length; i++) {
+    //     if (lfuturedate[1] == month[i]) {
+    //         lfuturedate[1] = i + 1;
+    //         break;
+    //     }
+    // }
+    if (lfuturedate[2] > ltoday.getFullYear()) {
+        return true;
+    } else if (lfuturedate[2] == ltoday.getFullYear()) {        
+        if (lfuturedate[1] > ltoday.getMonth() + 1)return true;
+    } else if (lfuturedate[1] == ltoday.getMonth() + 1) {
+        if (lfuturedate[0] > ltoday.getDate()) return true;
+    } else return false;
+}
+apz.ftsmry.ftsummary.fnDropDownChange = function(param) {
+    debugger;
+    var lstatus = apz.getElmValue("ftsmry__FTSummary__el_dpd_2");
+    apz.searchRecords("ftsmry__FTSummary__ct_lst_1", lstatus);
+    apz.data.buildData("FTSummary", "ftsmry");
+    for (var j = 0; j < apz.data.scrdata.ftsmry__FTSummary_Req.tbDbtpFundsTransfer.length; j++) {
+        var ltransdate = apz.getElmValue("ftsmry__FTSummary__i__tbDbtpFundsTransfer__transferDt_" + j);
+        var ltemp = apz.ftsmry.ftsummary.fnFutureDate(ltransdate);
+        
+        if (lstatus == "Executed")  {
+            apz.show("ftsmry__FTSummary__repeat_" + j);
+        } else {
+            apz.hide("ftsmry__FTSummary__repeat_" + j);
+        }
+        if (apz.getElmValue("ftsmry__FTSummary__i__tbDbtpFundsTransfer__externalStatus_" + j) == "Pending Execution") {
+            apz.show("ftsmry__FTSummary__el_btn_1_" + j);
+        } else apz.hide("ftsmry__FTSummary__el_btn_1_" + j);
+        if(apz.getElmValue("ftsmry__FTSummary__i__tbDbtpFundsTransfer__externalStatus_" + j) == "Executed")
+        {
+                        apz.show("ftsmry__FTSummary__repeat_" + j);
+
+        }
+        else
+        {
+                        apz.hide("ftsmry__FTSummary__repeat_" + j);
+
+        }
+    }
+}
+apz.ftsmry.ftsummary.fnRepeat = function(param) {
+    debugger;
+    var lRowNo = $(param).parents('li').attr('rowno');
+    var lParams = {};
+   // lParams.textContent = "Send Money";
+    lParams.from = "ftsummary";
+    lParams.summaryData = {};
+    lParams.summaryData.rowNo = lRowNo;
+    lParams.summaryData.txnRefNo = apz.getElmValue("ftsmry__FTSummary__i__tbDbtpFundsTransfer__txnRefNo_" + lRowNo);
+    lParams.summaryData.fromAccountNo = apz.getElmValue("ftsmry__FTSummary__i__tbDbtpFundsTransfer__fromAccountNo_" + lRowNo);
+    lParams.summaryData.transferAmount = apz.getElmValue("ftsmry__FTSummary__i__tbDbtpFundsTransfer__transferAmount_" + lRowNo);
+    lParams.summaryData.transferCurrency = "INR";
+    lParams.summaryData.remarks = apz.getElmValue("ftsmry__FTSummary__i__tbDbtpFundsTransfer__remarks_" + lRowNo);
+   apz.landin.Landing.fnMenuClickInside("Send Money",lParams);
+}

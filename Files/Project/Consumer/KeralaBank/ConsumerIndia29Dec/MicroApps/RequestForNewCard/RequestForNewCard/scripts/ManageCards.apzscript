@@ -1,0 +1,268 @@
+apz.crddtl.managecards = {};
+apz.app.onLoad_ManageCards = function()
+{
+    debugger;
+   
+}
+apz.app.onShown_ManageCards = function(params) {
+    debugger;
+    
+
+    apz.crddtl.managecards.fnInitialise(params);
+};
+apz.crddtl.managecards.fnInitialise = function(params) {
+    debugger;
+    apz.crddtl.managecards.sParams = params;
+    if (params.Navigation) {
+        apz.crddtl.managecards.fnSetNavigation(params);
+    }
+    apz.crddtl.managecards.fnGotoStage1();
+    apz.setElmValue("crddtl__ManageCards__Stage1CardType", "Credit Card");
+    apz.crddtl.managecards.fnSearch();
+};
+apz.crddtl.managecards.fnSetNavigation = function(params) {
+    debugger;
+    apz.crddtl.managecards.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.headerText = "MANAGE CARDS";
+    apz.crddtl.managecards.Navigation(lParams);
+};
+apz.crddtl.managecards.fnGotoStage1 = function() {
+    apz.crddtl.managecards.fnRenderStage1();
+};
+apz.crddtl.managecards.fnRenderStage1 = function() {
+    debugger;
+    apz.show("crddtl__ManageCards__Stage1");
+    apz.hide("crddtl__ManageCards__CardDtlsList");
+    apz.hide("crddtl__ManageCards__Stage2");
+};
+
+apz.crddtl.managecards.onclick = function () {
+    $("#crddtl__ManageCards__el_icn_1").toggleClass('changeicon');
+    $("#crddtl__ManageCards__gr_row_2").toggleClass("showslide");
+    if(apz.deviceGroup == "Mobile"){
+        $("#crddtl__ManageCards__ct_nav_3").toggleClass("sno");
+    }
+};
+apz.crddtl.managecards.fnSearch = function() {
+    debugger;
+    var lCardType = apz.getElmValue("crddtl__ManageCards__Stage1CardType");
+    apz.crddtl.managecards.sParams.CardType = lCardType;
+    apz.crddtl.managecards.mockServerBckup = apz.mockServer;
+    apz.mockServer = true;
+    if (!apz.isNull(lCardType)) {
+        var lReq = {
+            "cardDetails": {
+                "cardType": lCardType
+            }
+        };
+        var lServerParams = {
+            "ifaceName": "ManageCards",
+            "buildReq": "N",
+            "paintResp": "Y",
+            "req": lReq
+        };
+        apz.crddtl.managecards.fnBeforeCallServer(lServerParams);
+    } else {
+        var lMsg = {
+            "code": "ERR_CRDTYP"
+        };
+        apz.dispMsg(lMsg);
+    }
+};
+/*
+apz.crddtl.managecards.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.req,
+        "paintResp": "N",
+        "callBack": apz.crddtl.managecards.fnInsertCallBack
+    };
+    apz.server.callServer(lServerParams);
+};*/
+
+apz.crddtl.managecards.fnCardOption = function(ths){
+    debugger;
+    $(ths).parents("span").eq(3).toggleClass("cardOption");
+}
+apz.crddtl.managecards.fnBeforeCallServer = function(params) {
+    debugger;
+    apz.data.loadJsonData(params.ifaceName, "crddtl");
+    apz.crddtl.managecards.sParams.CardDetails = apz.data.scrdata.crddtl__ManageCards_Res.cardDetails;
+      var name = LandingCommon.getLoggedInUser();
+
+    for(i =0; i< apz.data.scrdata.crddtl__ManageCards_Res.cardDetails.length ; i++)
+ {
+    apz.data.scrdata.crddtl__ManageCards_Res.cardDetails[i].nameOnCard = name;
+ }
+    if (apz.crddtl.managecards.sParams.CardType == "Credit Card") {
+        $(".Amount").addClass("sno");
+        $(".CreditCardElm").removeClass("sno");
+    } else {
+        $(".Amount").removeClass("sno");
+        $(".CreditCardElm").addClass("sno");
+    }
+    apz.data.loadData("ManageCards", "crddtl");
+    apz.crddtl.managecards.fnRenderStage2();
+    apz.mockServer = apz.crddtl.managecards.mockServerBckup;
+};
+apz.crddtl.managecards.fnRenderStage2 = function() {
+    debugger;
+    apz.show("crddtl__ManageCards__Stage1");
+    apz.show("crddtl__ManageCards__CardDtlsList");
+    apz.hide("crddtl__ManageCards__Stage2");
+     $("#crddtl__ManageCards__CardDtlsList_row_3  > span > span:nth-child(3)").addClass("sno");
+$("#crddtl__ManageCards__CardDtlsList_row_3 > span > span:nth-child(5) > span > button").removeClass("sno");
+$("#crddtl__ManageCards__CardDtlsList_row_3 > span > span:nth-child(4) > span > span:nth-child(2) > span:nth-child(2) > button:nth-child(2)").addClass("sno");
+};
+apz.crddtl.managecards.fnRequestForNewCard = function() {
+    debugger;
+        $("#crddtl__ManageCards__ct_nav_3").addClass("sno");
+
+        $("#crddtl__ManageCards__gr_row_2").toggleClass("showslide");
+
+    var lParams = {
+        "appId": "crddtl",
+        "scr": "NewCardRequest",
+        "div": "crddtl__ManageCards__Stage2",
+        "userObj": {
+            "data": {
+                "accounts": [{
+                    "accountNo": "5432xxxxx575",
+                    "accountType": "Savings",
+                    "accountBalance": "50000"
+                }, {
+                    "accountNo": "5432xxxxx858",
+                    "accountType": "Savings",
+                    "accountBalance": "25000"
+                }, {
+                    "accountNo": "5432xxxxx988",
+                    "accountType": "Savings",
+                    "accountBalance": "40000"
+                }, {
+                    "accountNo": "5432xxxxx128",
+                    "accountType": "Savings",
+                    "accountBalance": "100000"
+                }],
+                "customerID": apz.crddtl.managecards.sParams.data.customerID,
+                "accountCcy": "INR"
+            },
+            "control": {
+                "destroyDiv": "crddtl__ManageCards__Stage2"
+            },
+            "callBack": apz.crddtl.managecards.fnBack
+        }
+    };
+    apz.crddtl.managecards.fnRenderStage3();
+    apz.launchSubScreen(lParams);
+};
+apz.crddtl.managecards.fnRenderStage3 = function() {
+    debugger;
+    apz.hide("crddtl__ManageCards__Stage1");
+    apz.hide("crddtl__ManageCards__CardDtlsList");
+    apz.show("crddtl__ManageCards__Stage2");
+};
+apz.crddtl.managecards.fnBack = function() {
+    debugger;
+    apz.show("crddtl__ManageCards__Stage1");
+    apz.show("crddtl__ManageCards__CardDtlsList");
+    apz.hide("crddtl__ManageCards__Stage2");
+};
+apz.crddtl.managecards.fnLaunchCardOperation = function(pthis,op) {
+    debugger;
+    $("#crddtl__ManageCards__ct_nav_3").addClass("sno");
+    var lRownNo = $(pthis).attr('rowno');
+    var lData = apz.crddtl.managecards.sParams.CardDetails[lRownNo];
+    lData.customerId = apz.crddtl.managecards.sParams.data.customerId;
+    var lParams = {
+        "scr": "CardOperations",
+        "div": "crddtl__ManageCards__Stage2",
+        "userObj": {
+            "action": apz.crddtl.managecards.sParams.CardType,
+            "operation": op.slice("0", "-4").trim(),
+            "data": lData,
+            "callBack": apz.crddtl.managecards.fnBackFromCardOperation,
+            "control": {
+                "destroyDiv": "crddtl__ManageCards__Stage2",
+                "callBack": apz.crddtl.managecards.fnBackFromCardOperation
+            }
+        }
+    }
+    apz.crddtl.managecards.fnRenderStage3();
+    apz.launchSubScreen(lParams);
+};
+apz.crddtl.managecards.fnChangeLimitOperation = function(pthis) {
+    var lRownNo = $(pthis).attr('rowno');
+    var lData = apz.crddtl.managecards.sParams.CardDetails[lRownNo];
+    lData.customerId = apz.crddtl.managecards.sParams.data.customerId;
+    lLaunchParams = {
+        "appId": "crdlmt",
+        "scr": "SetUsageLimit",
+        "div": "crddtl__ManageCards__Stage2",
+        "userObj": {
+            "action": apz.crddtl.managecards.sParams.CardType,
+            "operation": $(pthis).text().slice("0", "-4").trim(),
+            "data": lData,
+            "callBack": apz.crddtl.managecards.fnBackFromCardOperation,
+            "control": {
+                "destroyDiv": "crddtl__ManageCards__Stage2",
+                "callBack": apz.crddtl.managecards.fnBackFromCardOperation
+            }
+        }
+    };
+    apz.crddtl.managecards.fnRenderStage3();
+    apz.launchApp(lLaunchParams);
+}
+apz.crddtl.managecards.fnBackFromCardOperation = function() {
+    debugger;
+    apz.show("crddtl__ManageCards__Stage1");
+    apz.show("crddtl__ManageCards__CardDtlsList");
+    apz.hide("crddtl__ManageCards__Stage2");
+};
+apz.crddtl.managecards.fnBlockAllCards = function() {
+        $("#crddtl__ManageCards__ct_nav_3").addClass("sno");
+
+        $("#crddtl__ManageCards__gr_row_2").toggleClass("showslide");
+
+    debugger;
+    apz.hide("crddtl__ManageCards__Stage1");
+    var lParams = {
+        "scr": "BlockCards",
+        "div": "crddtl__ManageCards__Stage2",
+        "userObj": {
+            "CardType": apz.crddtl.managecards.sParams.CardType,
+            "callBack": apz.crddtl.managecards.fnBackFromCardOperation,
+            "control": {
+                "destroyDiv": "crddtl__ManageCards__Stage2",
+                "callBack": apz.crddtl.managecards.fnBackFromCardOperation
+            }
+        }
+    }
+    apz.launchSubScreen(lParams);
+}
+apz.crddtl.managecards.addon = function() {
+        $("#crddtl__ManageCards__ct_nav_3").addClass("sno");
+
+        $("#crddtl__ManageCards__gr_row_2").toggleClass("showslide");
+
+    var lObj = {
+        "scr": "Launcher",
+        "appId": "addonc",
+        "div": "crddtl__ManageCards__Stage1",
+    }
+    apz.launchApp(lObj);
+}
+
+
+apz.crddtl.managecards.fnActivateCard = function()
+{
+    debugger;
+      var lObj = {
+        "scr": "CardActivation",
+        "appId": "actcar",
+        "div": "landin__Landing__launcher"
+    }
+    apz.launchApp(lObj);
+}

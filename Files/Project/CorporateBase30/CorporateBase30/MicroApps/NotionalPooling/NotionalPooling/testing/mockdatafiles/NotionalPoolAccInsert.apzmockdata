@@ -1,0 +1,25 @@
+{
+    "tbDbmiCorpNotionalPoolAcc": [
+        {
+            "corporateId": "000FTAC4321",
+            "poolId": "pool1",
+            "accountNo": "150100159221",
+            "accountType": "Savings",
+            "amount": 100000
+        },
+        {
+            "corporateId": "000FTAC4321",
+            "poolId": "pool1",
+            "accountNo": "150100171542",
+            "accountType": "Savings",
+            "amount": 50000
+        },
+        {
+            "corporateId": "000FTAC4321",
+            "poolId": "pool1",
+            "accountNo": "150100222321",
+            "accountType": "Savings",
+            "amount": 100000
+        }
+    ]
+}

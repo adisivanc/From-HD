@@ -1,0 +1,149 @@
+apz.icaosm.LandingPage = {};
+var dataChart = "",
+    statusCount = "";
+apz.app.onLoad_LandingPageChecker = function() {
+    $("#icaosm__LandingPageChecker__gr_row_6").addClass("shownone");
+    apz.data.loadJsonData('ChartChecker');
+    var lpath = apz.getDataFilesPath();
+    dataChart = apz.getFile(lpath + "/Submitted.json")
+    dataChart = JSON.parse(dataChart);
+    debugger
+    statusCount = (dataChart.icaosm__ChartList_Res.List).reduce(function(intial, val) {
+        intial[val.Status] = (intial[val.Status] || 0) + 1;
+        return intial;
+    }, []);
+    $("#icaosm__LandingPageChecker__searchVal").on('keyup', function(event) {
+        debugger;
+        if (event.keyCode === 13) {
+            apz.icaosm.LandingPage.fnSearch();
+        }
+    });
+}
+apz.app.onShown_LandingPageChecker = function() {
+    
+    $("#icaosm__LandingPageChecker__searchType_so").css("text-align","left")
+    $("#icaosm__LandingPageChecker__ct_lst_1 li").css("cursor","pointer");
+    apz.icaosm.LandingPage.ChartClick("Submitted");
+}
+apz.app.updateChartBeforeRender = function(chartType, chartData, id, chart) {
+    debugger;
+    chartData.chart.enableMultiSlicing = "0";
+   // chart.width = "100%";
+    //chart.height = "100%";
+    chartData.data = [{
+        "label": "Submitted",
+        "value": statusCount["Submitted"],
+        "issliced": "1",
+        "link": "j-apz.icaosm.LandingPage.ChartClick-Submitted"
+    }, {
+        "label": "Approved",
+        "value": statusCount["Approved"],
+        "link": "j-apz.icaosm.LandingPage.ChartClick-Approved"
+    }, {
+        "label": "Rejected",
+        "value": statusCount["Rejected"],
+        "link": "j-apz.icaosm.LandingPage.ChartClick-Rejected"
+    }]
+}
+apz.icaosm.LandingPage.ChartClick = function(p) {
+    debugger;
+    var filterResult = JSLINQ(dataChart.icaosm__ChartList_Res.List).Where(function(item) {
+        return item.Status == p;
+    }).items;
+    console.log(JSON.stringify(filterResult));
+    apz.data.scrdata.icaosm__CheckerList_Res = {};
+    apz.data.scrdata.icaosm__CheckerList_Res.List = filterResult;
+    apz.data.loadData("CheckerList");
+    $("#icaosm__LandingPageChecker__gr_row_6").removeClass("shownone");
+    $("#icaosm__LandingPageChecker__el_label_3").text(p);
+    $("#icaosm__LandingPageChecker__ct_lst_1 li").each(function(){
+       for(i=0;i<apz.data.scrdata.icaosm__CheckerList_Res.List.length;i++){
+           if(apz.data.scrdata.icaosm__CheckerList_Res.List[i].ApplicationNo == $(this).find(".appNo").text()){
+               if(apz.data.scrdata.icaosm__CheckerList_Res.List[i].Status == "Submitted"){
+               $(this).find(".img").attr("src","apps/styles/themes/ICICI/img/submit.svg")
+               }
+               else if(apz.data.scrdata.icaosm__CheckerList_Res.List[i].Status == "Approved"){
+               $(this).find(".img").attr("src","apps/styles/themes/ICICI/img/approve.svg")
+               }
+               else if(apz.data.scrdata.icaosm__CheckerList_Res.List[i].Status == "Rejected"){
+               $(this).find(".img").attr("src","apps/styles/themes/ICICI/img/reject.svg")
+               }
+           }
+       } 
+    });
+}
+apz.icaosm.LandingPage.fnRowClick = function(pthis) {
+    debugger;
+    var lAppNo = $(pthis).find(".appNo").text();
+    var lRow=$(pthis).closest("li").attr("rowno");
+    var lAccNum=apz.data.scrdata.icaosm__CheckerList_Res.List[lRow].custAccNum
+    apz.launchSubScreen({
+        "scr": "Home",
+        "div": "icaosm__LandingHeader__scrlaunchingdiv",
+        "userObj":{
+            "appNo":lAppNo,
+            "accNum":lAccNum
+        }
+    });
+};
+apz.icaosm.LandingPage.fnSearch = function() {
+    debugger;
+    var lSearchVal = $("#icaosm__LandingPageChecker__searchVal").val();
+    lSearchVal = lSearchVal.toLowerCase();
+    var lSearchType = $("#icaosm__LandingPageChecker__searchType").val();
+    var filterResult = "";
+    if (lSearchType == "Application No") {
+        filterResult = JSLINQ(dataChart.icaosm__ChartList_Res.List).Where(function(item) {
+            var lResult = item.ApplicationNo.toLowerCase();
+            if(lResult.indexOf(lSearchVal) != -1){
+            return true;
+            }
+            else{
+             return false;   
+            }
+        }).items;
+    } else {
+        filterResult = JSLINQ(dataChart.icaosm__ChartList_Res.List).Where(function(item) {
+            var lResult = item.CompanyName.toLowerCase();
+            if(lResult.indexOf(lSearchVal) != -1){
+            return true;
+            }
+            else{
+             return false;   
+            }
+        }).items;
+    }
+    apz.data.scrdata.icaosm__CheckerList_Res = {};
+    apz.data.scrdata.icaosm__CheckerList_Res.List = filterResult;
+    apz.data.loadData("CheckerList","icaosm");
+    $("#icaosm__LandingPageChecker__ct_lst_1 li").each(function(){
+       for(i=0;i<apz.data.scrdata.icaosm__CheckerList_Res.List.length;i++){
+           if(apz.data.scrdata.icaosm__CheckerList_Res.List[i].ApplicationNo == $(this).find(".appNo").text()){
+               if(apz.data.scrdata.icaosm__CheckerList_Res.List[i].Status == "Submitted"){
+               $(this).find(".img").attr("src","apps/styles/themes/ICICI/img/submit.svg")
+               }
+               else if(apz.data.scrdata.icaosm__CheckerList_Res.List[i].Status == "Approved"){
+               $(this).find(".img").attr("src","apps/styles/themes/ICICI/img/approve.svg")
+               }
+               else if(apz.data.scrdata.icaosm__CheckerList_Res.List[i].Status == "Rejected"){
+               $(this).find(".img").attr("src","apps/styles/themes/ICICI/img/reject.svg")
+               }
+           }
+       } 
+    });
+}
+apz.icaosm.LandingPage.fnChangeSearchType = function() {
+    $("#icaosm__LandingPageChecker__searchVal").val("");
+};
+apz.icaosm.LandingPage.fnCreate = function() {
+    var lAppNo = Math.floor(Math.random() * 90 + 10);
+    lAppNo = "000024554AA22"+ lAppNo;
+    apz.launchSubScreen({
+        "scr": "Home",
+        "div": "icaosm__LandingHeader__scrlaunchingdiv",
+        "userObj":{
+            "appNo":lAppNo,
+            "action":"NewAdd"
+        }
+    });
+}

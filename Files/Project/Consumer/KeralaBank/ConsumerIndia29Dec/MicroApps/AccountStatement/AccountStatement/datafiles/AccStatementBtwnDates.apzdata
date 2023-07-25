@@ -1,0 +1,39 @@
+{
+    "accstm__AccStatementBtwnDates_Res": {
+        "accStmtMaster": {
+            "txnRefNo": "",
+            "status": "",
+            "respCd": "",
+            "intMsgCd": "",
+            "extMsg": "",
+            "accStmtDtls": [{
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "RF- Shwapno",
+                "trnAmount": "3000",
+                "runningBalance": "71978",
+                "trnDate": "18/06/2020",
+                "drcrInd": "C",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "NEFT-56XXXXXX03",
+                "trnAmount": "4000",
+                "runningBalance": "68978",
+                "trnDate": "22/06/2020",
+                "drcrInd": "D",
+                "pageNo": ""
+            }, {
+                "trnId": "",
+                "accountNo": "56XXXXXX01",
+                "trnDescription": "POS-Services",
+                "trnAmount": "245",
+                "runningBalance": "68457",
+                "trnDate": "25/06/2020",
+                "drcrInd": "C",
+                "pageNo": ""
+            }]
+        }
+    }
+}

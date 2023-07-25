@@ -1,0 +1,94 @@
+apz.FixedDeposit = {};
+apz.modifd.FixedDeposit = {};
+apz.modifd.FixedDeposit.sAction = {};
+
+apz.app.onLoad_FixedDeposit = function()
+{
+    debugger;
+
+    apz.data.loadJsonData("FDSumm", "modifd");
+}
+
+
+
+apz.modifd.FixedDeposit.fnInitialise = function() {
+    debugger;
+    apz.modifd.FixedDeposit.fnRenderStage1();
+};
+
+apz.modifd.FixedDeposit.fnBack = function() {
+    debugger;
+
+    apz.modifd.FixedDeposit.sParams.callBack();
+};
+
+apz.modifd.FixedDeposit.fnRenderStage1 = function() {
+    debugger;
+    apz.hide("modifd__FixedDeposit__Stage2");
+    apz.show("modifd__FixedDeposit__Stage1");
+};
+
+apz.modifd.FixedDeposit.fnLaunchDetails = function(pthis) {
+    debugger;
+    
+    var lRowIndex = $("#" + pthis.id).attr("rowno");
+        
+    var lRec = apz.data.scrdata.modifd__FDSumm_Res.depositSummary.depositDtls[lRowIndex];
+    var lObj = {
+        "scr": "FixedDepositDetails",
+        "div": "modifd__FixedDeposit__Stage2",
+        "userObj": {
+            "action": "Summary",
+            "data": lRec,
+            "callBack": apz.modifd.FixedDeposit.fnRenderStage1 
+        }
+    };
+    apz.modifd.FixedDeposit.fnGotoStage2();
+    apz.launchSubScreen(lObj);
+};
+
+// apz.modifd.FixedDeposit.fnLaunchDetailsCB = function() {
+//     debugger;
+       
+//     apz.modifd.FixedDeposit.fnRenderStage1();
+// }
+apz.modifd.FixedDeposit.fnRenderStage2 = function() {
+    debugger;
+    apz.hide("modifd__FixedDeposit__Stage1");
+    apz.show("modifd__FixedDeposit__Stage2");
+};
+apz.modifd.FixedDeposit.fnGotoStage2 = function() {
+    apz.modifd.FixedDeposit.fnRenderStage2();
+};
+
+
+
+
+apz.modifd.FixedDeposit.fnShare = function(pthis) {
+    debugger;
+    var RowNo = $(pthis).attr('rowno');
+    var accountNumber = apz.data.scrdata.modifd__FDSumm_Res.depositSummary.depositDtls[RowNo].accountNo;
+    var maturityAmount = apz.data.scrdata.modifd__FDSumm_Res.depositSummary.depositDtls[RowNo].maturityAmount;
+    var param = {
+            "decimalSep": ".",
+            "value": maturityAmount,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    
+var accountNum = accountNumber.replace(/\d(?=\d{4})/g, "*");
+    var text = "Account Number : " + accountNum +"\n" + "Maturity Amount : " + "Rs." + apz.formatNumber(param);
+         
+         
+    var json = {};
+    json.id = "NATIVE";
+    json.textToShare = text;
+    json.callBack = apz.modifd.FixedDeposit.fnShareCallBack;
+    json.action = "text";
+    apz.ns.nativeShare(json);
+}
+apz.modifd.FixedDeposit.fnShareCallBack = function() {
+    debugger;
+    
+}

@@ -1,0 +1,46 @@
+{
+    "achpay__SECCode_Res": {
+        "SECCodeDetails": [
+            {
+                "code": "CCD",
+                "description":"Cash Concentration or Disbursement"
+            },
+            {
+                "code": "CTX",
+                "description":"Corporate Trade Exchange"
+            },
+            {
+                "code": "ARC",
+                "description":"Account Recievables Conversion"
+            },
+            {
+                "code": "BOC",
+                "description":"Back Office conversion"
+            },
+            {
+                "code": "IAT",
+                "description":"International"
+            },
+            {
+                "code": "POP",
+                "description":"Point of Purchase Entry"
+            },
+            {
+                "code": "PPD",
+                "description":"Prearranged payment and  Deposit Entry"
+            },
+            {
+                "code": "RCK",
+                "description":"Represented check entry"
+            },
+            {
+                "code": "TEL",
+                "description":"Telephone Initiated Entry"
+            },
+            {
+                "code": "WEB",
+                "description":"Web internet initiated Entry"
+            }
+        ]
+    }
+}

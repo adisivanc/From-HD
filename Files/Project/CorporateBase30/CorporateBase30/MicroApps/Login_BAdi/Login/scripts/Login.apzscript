@@ -1,0 +1,214 @@
+apz.Login = {};
+apz.Login.sUser = "";
+apz.Login.sUserId = "";
+apz.Login.sCorporateId = "";
+apz.Login.sRoleId = "";
+apz.Login.sUserName = "";
+apz.app.onLoad_Login = function() {
+    apz.setElmValue("ACLI01__Login__CorporateId", "ACMECORP");
+    apz.setElmValue("ACLI01__Login__UserName", "abdul.hamid");
+    apz.setElmValue("ACLI01__Login__Password", "Password@1");
+};
+apz.app.onShown_Login = function() {
+    document.getElementById("ACLI01__Login__CorporateId").focus();
+    constructKeyboard();
+};
+apz.Login.submitLogin = function() {
+    apz.Login.sUser = $("#ACLI01__Login__UserName").val();
+    var lCorpID = apz.getElmValue("ACLI01__Login__CorporateId");
+    if (lCorpID == "ACMECORP") {
+        lCorpID = "000FTAC4321";
+    }
+    var userId = lCorpID + "__" + apz.getElmValue("ACLI01__Login__UserName");
+    var password = apz.getElmValue("ACLI01__Login__Password");
+    if (apz.isNull(userId) || apz.isNull(password)) {
+        var params = {
+            'code': 'APZ-LOG-ERR'
+        };
+        apz.dispMsg(params);
+    } else {
+        debugger;
+        var req = {};
+        req.userId = userId;
+        req.pwd = password;
+        req.scrsAccessType = 'A';
+        req.ifacesAccessType = 'A';
+        req.controlsAccessType = 'A';
+        req.callBack = apz.Login.loginCB;
+        apz.server.login(req);
+    }
+};
+apz.Login.loginCB = function(params) {
+    debugger;
+    if (params.status) {
+        var status = params.resFull.appzillonHeader.status;
+        if (status) {
+            if (apz.mockServer) {
+                if (apz.Login.sUser == "CorpAdmin") {
+                    apz.Login.sUserId = "CorpAdmin";
+                    apz.Login.sCorporateId = "000FTAC4321"
+                    apz.Login.sRoleId = "admin"
+                } else if (apz.Login.sUser == "CorpUser") {
+                    apz.Login.sUserId = "CorpUser";
+                    apz.Login.sCorporateId = "000FTAC4321"
+                    apz.Login.sRoleId = "Corpuser"
+                } else if (apz.Login.sUser == "CorpUser2") {
+                    apz.Login.sUserId = "CorpUser2";
+                    apz.Login.sCorporateId = "000FTAC4321"
+                    apz.Login.sRoleId = "Corpuser"
+                }
+            } else {
+                var luserDetails = params.res.loginResponse.userDet;
+                apz.Login.sUserId = params.res.loginResponse.userDet.id.split("__")[1];
+                apz.Login.sCorporateId = params.res.loginResponse.userDet.id.split("__")[0];
+                apz.Login.sRoleId = params.res.loginResponse.userDet.privs.roles[0].split("__")[1];
+                apz.Login.sUserName = params.res.loginResponse.userDet.name;
+            }
+            var params = {};
+            /*params.appId = "ACNR01";
+            params.scr = "Navigator";
+            params.layout = "Web";
+            params.userObj = {
+                "userId": apz.Login.sUserId,
+                "roleId": apz.Login.sRoleId,
+                "corporateId": apz.Login.sCorporateId
+            };*/
+            /*params.appId = "onbaut";
+            params.scr = "CorpOTP";
+            params.layout = "Web";
+            params.userObj = {
+                "userId": apz.Login.sUserId,
+                "roleId": apz.Login.sRoleId,
+                "corporateId": apz.Login.sCorporateId,
+                "userName" : apz.Login.sUserName
+            };
+            apz.launchApp(params);*/
+            apz.Login.viewUserPersona();
+        } else if (!status) {
+            if (params.resFull.hasOwnProperty('appzillonErrors')) {
+                var perrorCode = params.resFull.appzillonErrors;
+                if (perrorCode[0].errorCode === 'APZ-SMS-EX-004') {
+                    msg = {
+                        'code': 'APZ-SMS-CONF',
+                        'callBack': apz.app.relogin
+                    };
+                } else if (perrorCode[0].errorCode === 'APZ-DM-031') {
+                    msg = {
+                        'code': 'APZ-LOG-PASS-EXP',
+                        'callBack': apz.Login.launchChangePassword
+                    };
+                } else if (perrorCode[0].errorCode === 'APZ-SMS-EX-003') {
+                    msg = {
+                        'code': 'APZ-SMS-EX-003',
+                    };
+                } else {
+                    msg = {
+                        'code': perrorCode[0].errorCode
+                    };
+                }
+                apz.dispMsg(msg);
+            }
+        }
+    } else {
+        msg = {
+            'code': 'APZ-SVR-ERR'
+        };
+        apz.dispMsg(msg);
+    }
+};
+apz.Login.getUserRoleCB = function(pResp) {
+    if (!pResp.errors) {} else {
+        var msg = {
+            "code": 'LOG_FAIL'
+        };
+        apz.dispMsg(msg);
+    }
+};
+apz.Login.keyupevent = function(event) {
+    if (event.keyCode == 13) {
+        apz.Login.submitLogin();
+    }
+};
+apz.Login.close = function() {
+    var params = {};
+    params.appId = "ACPL01";
+    params.scr = "PreLogin";
+    params.layout = "Web";
+    apz.launchApp(params);
+};
+apz.Login.launchForgotPassword = function() {};
+apz.Login.launchChangePassword = function() {
+    debugger;
+    var params = {};
+    params.appId = "accp01";
+    params.scr = "ChangePassword";
+    params.layout = "All";
+    var lCorpID = apz.getElmValue("ACLI01__Login__CorporateId");
+    if (lCorpID == "ACMECORP") {
+        lCorpID = "000FTAC4321";
+    }
+    params.userObj = {
+        "userId": lCorpID + "__" + apz.getElmValue("ACLI01__Login__UserName")
+    };
+    apz.launchApp(params);
+};
+apz.Login.fnOnboardClick = function() {
+    debugger;
+    var params = {};
+    params.appId = "Regist";
+    params.scr = "RegisterPage";
+    params.layout = "Web";
+    apz.launchApp(params);
+};
+apz.Login.fnOnenterClick = function(event) {
+    if (event.keyCode == 13) {
+        apz.Login.submitLogin();
+    }
+}
+apz.Login.launchChat = function() {
+    window.open('http://localhost:8080/ChatBot_01', 'newwindow', 'width=500,height=1250');;
+};
+apz.Login.viewUserPersona = function() {
+    apz.server.callServer({
+        ifaceName: 'UserPersona_Query',
+        appId: 'ACLI01',
+        buildReq: 'N',
+        req: {
+            tbDbmiUserPersona: {
+                userId: apz.Login.sUserId,
+                corporateId: apz.Login.sCorporateId
+            }
+        },
+        paintResp: 'N',
+        callBack: apz.Login.viewUserPersonaCB
+    });
+};
+apz.Login.viewUserPersonaCB = function(pResp) {
+    debugger;
+    try {
+        if (pResp.status) {
+            if (pResp.res.ACLI01__UserPersona_Res.tbDbmiUserPersona.personaName) {
+                apz.Login.sPersona = pResp.res.ACLI01__UserPersona_Res.tbDbmiUserPersona.personaName;
+            }
+        }
+    } catch (e) {}
+    var params = {};
+    params.appId = "onbaut";
+    params.scr = "CorpOTP";
+    params.layout = "Web";
+    params.userObj = {
+        "userId": apz.Login.sUserId,
+        "roleId": apz.Login.sRoleId,
+        "corporateId": apz.Login.sCorporateId,
+        "userName": apz.Login.sUserName
+    };
+    apz.launchApp(params);
+};
+apz.Login.changeLanguage = function(pObj){
+    var lang = $(pObj).text();
+    if(lang=="Malay"){
+        apz.changeLanguage("ml");
+    }else{
+        apz.changeLanguage("en");
+    }
+};

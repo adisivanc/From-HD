@@ -1,0 +1,359 @@
+apz.tdsfrm.tdsform = {};
+apz.app.onLoad_TDSForm = function(params) {
+    debugger;
+    apz.tdsfrm.tdsform.fnInitialise(params);
+    apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt_txtcnt", "FORM 15G/H")
+};
+apz.tdsfrm.tdsform.fnInitialise = function(params) {
+    debugger;
+    apz.data.loadJsonData("AccountDetails", "tdsfrm");
+    apz.tdsfrm.tdsform.sParams = apz.data.scrdata.tdsfrm__AccountDetails_Res;
+    if (params.Navigation) {
+        apz.tdsfrm.tdsform.fnSetNavigation(params);
+    }
+    apz.tdsfrm.tdsform.fnGoToStage1();
+};
+apz.tdsfrm.tdsform.fnSetNavigation = function(params) {
+    debugger;
+    apz.tdsfrm.tdsform.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "FORM 15G/H";
+    }
+    lParams.backPressed = apz.tdsfrm.tdsform.fnBack;
+    apz.tdsfrm.tdsform.Navigation(lParams);
+};
+apz.tdsfrm.tdsform.fnGoToStage1 = function() {
+    apz.tdsfrm.tdsform.fnSetValueStage1();
+    apz.tdsfrm.tdsform.fnRenderStage1();
+};
+apz.tdsfrm.tdsform.fnSetValueStage1 = function() {
+    debugger;
+    // apz.setElmValue("tdsfrm__TDSForm15GH__i__TDSForm15GHDtls__customerId", apz.tdsfrm.tdsform.sParams.data.customerID);
+    apz.tdsfrm.tdsform.fnPopulateDropdown();
+};
+apz.tdsfrm.tdsform.fnRenderStage1 = function() {
+    apz.show("tdsfrm__TDSForm__Stage1");
+    apz.hide("tdsfrm__TDSForm__Stage2");
+    apz.hide("tdsfrm__TDSForm__Stage3");
+};
+apz.tdsfrm.tdsform.fnContinueBtn = function() {
+    debugger;
+    var choice = apz.getElmValue("tdsfrm__TDSForm__el_rdo_1");
+    if (choice == "one") {
+        var lValid = apz.tdsfrm.tdsform.fnValidateStage1();
+        if (lValid) {
+            apz.data.buildData("TDSForm", "tdsfrm");
+            apz.tdsfrm.tdsform.fnGoToStage2();
+        }
+    } else {
+        apz.tdsfrm.tdsform.fnDownload("", "pdf");
+    }
+};
+apz.tdsfrm.tdsform.fnGoToStage2 = function() {
+    // apz.tdsfrm.tdsform.fnSetValueStage2();
+    apz.tdsfrm.tdsform.fnRenderStage2();
+    apz.data.loadJsonData("TDSForm", "tdsfrm");
+};
+apz.tdsfrm.tdsform.fnSetValueStage2 = function() {
+    // apz.data.scrdata.tdsfrm__TDSForm15GH_Req.TDSForm15GHDtls.customerId = apz.tdsfrm.tdsform.sParams.customerId;
+    debugger;
+    var lDetails = apz.data.scrdata.tdsfrm__TDSForm15GH_Req.TDSForm15GHDtls;
+    apz.setElmValue("tdsfrm__TDSForm__stage2AccNumber", lDetails.accountNo);
+    apz.setElmValue("tdsfrm__TDSForm__stage2TotalEstIncome", lDetails.totalInc);
+    apz.setElmValue("tdsfrm__TDSForm__stage2NoOfForms", lDetails.noOfFormsFiled);
+    apz.setElmValue("tdsfrm__TDSForm__stage2AggAmount", lDetails.aggregateAmount);
+    if (lDetails.panNo != '') {
+        apz.show("tdsfrm__TDSForm__stage2PANNumber_ctrl_grp_div");
+        apz.setElmValue("tdsfrm__TDSForm__stage2PANNumber", lDetails.panNo);
+    } else {
+        apz.hide("tdsfrm__TDSForm__stage2PANNumber_ctrl_grp_div");
+    }
+    if (lDetails.dob != '') {
+        apz.setElmValue("tdsfrm__TDSForm__stage2DOB", lDetails.dob);
+        apz.show("tdsfrm__TDSForm__stage2DOB_ctrl_grp_div");
+    } else {
+        apz.hide("tdsfrm__TDSForm__stage2DOB_ctrl_grp_div");
+    }
+    if (lDetails.status != '') {
+        apz.setElmValue("tdsfrm__TDSForm__stage2Status", lDetails.status);
+        apz.show("tdsfrm__TDSForm__stage2Status");
+    } else {
+        apz.hide("tdsfrm__TDSForm__stage2Status");
+    }
+    if (lDetails.assessedUnderITAct != '') {
+        apz.setElmValue("tdsfrm__TDSForm__stage2Weather", lDetails.assessedUnderITAct);
+        apz.show("tdsfrm__TDSForm__stage2Weather");
+    } else {
+        apz.hide("tdsfrm__TDSForm__stage2Weather");
+    }
+    if (lDetails.latestAssessmentYear != '') {
+        apz.setElmValue("tdsfrm__TDSForm__stage2AssYear", lDetails.latestAssessmentYear);
+        apz.show("tdsfrm__TDSForm__stage2AssYear");
+    } else {
+        apz.hide("tdsfrm__TDSForm__stage2AssYear");
+    }
+    if (lDetails.estimatedIncByDep != '') {
+        apz.setElmValue("tdsfrm__TDSForm__stage2EstIncome", lDetails.estimatedIncByDep);
+        apz.show("tdsfrm__TDSForm__stage2EstIncome_ctrl_grp_div");
+    } else {
+        apz.hide("tdsfrm__TDSForm__stage2EstIncome_ctrl_grp_div");
+    }
+};
+apz.tdsfrm.tdsform.fnConfirmBtn = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "TDSForm15GH",
+        "req": {
+            "TDSForm15GHDtls": apz.data.scrdata.tdsfrm__TDSForm15GH_Req.TDSForm15GHDtls,
+            "action": "Confirm"
+        },
+        "callBack": apz.tdsfrm.tdsform.fnCallServerCallBack
+    };
+    apz.tdsfrm.tdsform.fnBeforeCallServer(lParams);
+};
+apz.tdsfrm.tdsform.fnEditBtn = function() {
+    apz.tdsfrm.tdsform.fnRenderStage1();
+};
+apz.tdsfrm.tdsform.fnRenderStage2 = function() {
+    apz.hide("tdsfrm__TDSForm__Stage1");
+    apz.show("tdsfrm__TDSForm__Stage2");
+    apz.hide("tdsfrm__TDSForm__Stage3");
+};
+apz.tdsfrm.tdsform.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": "N",
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": params.callBack
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.tdsfrm.tdsform.fnCallServerCallBack = function(params) {
+    debugger;
+    if (!params.errors) {
+        if (params.res.tdsfrm__TDSForm15GH_Res.TDSForm15GHDtls.respCd == "app") {
+            apz.tdsfrm.tdsform.sParams.RefNum = params.res.tdsfrm__TDSForm15GH_Res.TDSForm15GHDtls.txnRefNo;
+            apz.tdsfrm.tdsform.fnRenderOtpScreen();
+            var lLaunchParams = {
+                "appId": "otpeng",
+                "scr": "ProcessOTP",
+                "div": "tdsfrm__TDSForm__launchMicroApp",
+                "userObj": {
+                    "action": "SetRefNo",
+                    "data": {
+                        "OTPRefNo": params.res.tdsfrm__TDSForm15GH_Res.TDSForm15GHDtls.data.OTPRefNo
+                    },
+                    "control": {
+                        "appId": "otpeng",
+                        "callBack": apz.tdsfrm.tdsform.fnOtpCB,
+                        "destroyDiv": "tdsfrm__TDSForm__launchMicroApp"
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        }
+    } else {}
+};
+apz.tdsfrm.tdsform.fnRenderOtpScreen = function() {
+    debugger;
+    apz.hide("tdsfrm__TDSForm__Stage1");
+    apz.hide("tdsfrm__TDSForm__Stage2");
+    apz.hide("tdsfrm__TDSForm__Stage3");
+    apz.show("tdsfrm__TDSForm__launchMicroApp");
+};
+apz.tdsfrm.tdsform.fnOtpCB = function(params) {
+    debugger;
+    // apz.tdsfrm.tdsform.fnSetValueStage3();
+    // apz.tdsfrm.tdsform.fnRenderStage3();
+    apz.dispMsg({
+        message: "Form has been submitted successfully!",
+        type: "S",
+        callBack: apz.tdsfrm.tdsform.showServiceReqeustHome
+    });
+};
+apz.tdsfrm.tdsform.showServiceReqeustHome = function() {
+    apz.csmrbk.fnLaunchApp({
+        "appId": "srmenu",
+        "scr": "MenuList"
+    });
+}
+apz.tdsfrm.tdsform.fnSetValueStage3 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.tdsfrm__TDSForm15GH_Req.TDSForm15GHDtls;
+    apz.setElmValue("tdsfrm__TDSForm__stage3AccNumber", lDetails.accountNo);
+    apz.setElmValue("tdsfrm__TDSForm__stage3TotalEstIncome", lDetails.totalInc);
+    apz.setElmValue("tdsfrm__TDSForm__stage3NoOfForms", lDetails.noOfFormsFiled);
+    apz.setElmValue("tdsfrm__TDSForm__stage3AggAmount", lDetails.aggregateAmount);
+    if (lDetails.panNo != '') {
+        apz.show("tdsfrm__TDSForm__stage3PANNumber_ctrl_grp_div");
+        apz.setElmValue("tdsfrm__TDSForm__stage3PANNumber", lDetails.panNo);
+    } else {
+        apz.hide("tdsfrm__TDSForm__stage3PANNumber_ctrl_grp_div");
+    }
+    if (lDetails.dob != '') {
+        apz.setElmValue("tdsfrm__TDSForm__stage3DOB", lDetails.dob);
+        apz.show("tdsfrm__TDSForm__stage3DOB_ctrl_grp_div");
+    } else {
+        apz.hide("tdsfrm__TDSForm__stage3DOB_ctrl_grp_div");
+    }
+    if (lDetails.status != '') {
+        apz.setElmValue("tdsfrm__TDSForm__stage3Status", lDetails.status);
+        apz.show("tdsfrm__TDSForm__stage3Status");
+    } else {
+        apz.hide("tdsfrm__TDSForm__stage3Status");
+    }
+    if (lDetails.assessedUnderITAct != '') {
+        apz.setElmValue("tdsfrm__TDSForm__stage3Weather", lDetails.assessedUnderITAct);
+        apz.show("tdsfrm__TDSForm__stage3Weather");
+    } else {
+        apz.hide("tdsfrm__TDSForm__stage3Weather");
+    }
+    if (lDetails.latestAssessmentYear != '') {
+        apz.setElmValue("tdsfrm__TDSForm__stage3AssYear", lDetails.latestAssessmentYear);
+        apz.show("tdsfrm__TDSForm__stage3AssYear");
+    } else {
+        apz.hide("tdsfrm__TDSForm__stage3AssYear");
+    }
+    if (lDetails.estimatedIncByDep != '') {
+        apz.setElmValue("tdsfrm__TDSForm__stage3EstIncome", lDetails.estimatedIncByDep);
+        apz.show("tdsfrm__TDSForm__stage3EstIncome_ctrl_grp_div");
+    } else {
+        apz.hide("tdsfrm__TDSForm__stage3EstIncome_ctrl_grp_div");
+    }
+    var lRefNo = "Your Reference no is " + apz.tdsfrm.tdsform.sParams.RefNum;
+    apz.setElmValue("tdsfrm__TDSForm__RefNo", lRefNo);
+};
+apz.tdsfrm.tdsform.fnPopulateDropdown = function() {
+    debugger;
+    // var lAccounts =  apz.tdsfrm.tdsform.sParams.data.accounts;
+    var lAccounts = apz.tdsfrm.tdsform.sParams.accounts;
+    var lObj = [];
+    var lOption;
+    for (i = 0; i < lAccounts.length; i++) {
+        if (i === 0) {
+            lOption = {
+                "val": "",
+                "desc": "Please Select"
+            };
+        } else {
+            lOption = {
+                "val": lAccounts[i].accountNo,
+                "desc": lAccounts[i].accountType + " - " + lAccounts[i].accountNo
+            };
+        }
+        lObj.push(lOption);
+    }
+    apz.populateDropdown(document.getElementById("tdsfrm__TDSForm15GH__i__TDSForm15GHDtls__accountNo"), lObj);
+};
+apz.tdsfrm.tdsform.fnRenderStage3 = function() {
+    apz.hide("tdsfrm__TDSForm__Stage1");
+    apz.hide("tdsfrm__TDSForm__Stage2");
+    apz.show("tdsfrm__TDSForm__Stage3");
+};
+apz.tdsfrm.tdsform.fnPrintBtn = function() {
+    //alert("Print");
+};
+apz.tdsfrm.tdsform.fnDoneBtn = function() {
+    alert("Done");
+};
+apz.tdsfrm.tdsform.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("tdsfrm__TDSForm__Stage1Form");
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "ERR_MAND"
+        };
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};
+apz.tdsfrm.tdsform.fnDownload = function(params, fileType) {
+    debugger;
+    var form = apz.getElmValue("tdsfrm__TDSForm__el_dpd_1");
+    var jsonFilePath = "";
+    var fileName = "";
+    if (form == "Form 15G") {
+        jsonFilePath = apz.getDataFilesPath("tdsfrm") + "/Form15G.json";
+        fileName = "FormFifteenG";
+    } else {
+        jsonFilePath = apz.getDataFilesPath("tdsfrm") + "/Form15H.json";
+        fileName = "FormFifteenH";
+    }
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    for (var i = 0; i < ljsondata.data.length; i++) {
+        var mimetype = ljsondata.data[i].mimeType;
+        var lMimeType = mimetype.slice(-3);
+        if (fileType == lMimeType.toLowerCase()) {
+            apz.tdsfrm.tdsform.ReportdwnldMethod(ljsondata.data[i], fileName);
+        }
+    }
+}
+apz.tdsfrm.tdsform.ReportdwnldMethod = function(lbodyobj, filename) {
+    debugger;
+    var blob;
+    var fileType = "";
+    if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+        blob = apz.tdsfrm.tdsform.b64toBlob(lbodyobj.content, "application/pdf");
+        fileType = ".pdf";
+    }
+    var blobUrl = URL.createObjectURL(blob);
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.tdsfrm.tdsform.base64tofilecallBack;
+        json.base64 = lbodyobj.content;
+        json.fileName = filename + fileType;
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    } else {
+        window.open(blobUrl);
+    }
+};
+apz.tdsfrm.tdsform.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};
+apz.tdsfrm.tdsform.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.tdsfrm.tdsform.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.tdsfrm.tdsform.openFileCallback = function(params) {
+    debugger;
+};

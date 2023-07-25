@@ -1,0 +1,11 @@
+{
+    "authma__AuthMatrixSummary_Res": [{
+        "acc_group": "Expenses"
+    }, {
+        "acc_group": "Receivables"
+    }, {
+        "acc_group": "Operating Capital"
+    }, {
+        "acc_group": "Escrow"
+    }]
+}

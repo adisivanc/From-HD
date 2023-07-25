@@ -1,0 +1,10 @@
+apz.cbdtax.checkParams = function(params) {
+    debugger;
+    params.userObj = {"data":{
+        "customerId": "12345",
+        "pan":"689386247882",
+        "typeOfPayment":"Tax on Regular Assesment(400)",
+         "taxApplicable":"Income tax(other than companies"
+    }
+    };
+};

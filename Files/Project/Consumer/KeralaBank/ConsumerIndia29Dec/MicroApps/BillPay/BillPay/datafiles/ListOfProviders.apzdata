@@ -1,0 +1,135 @@
+[{
+    "providerType": "Mobile",
+    "icon":"icon-icc-mobile",
+    "serviceProviders": [{
+        "val": "Airtel",
+        "desc": "Airtel"
+    }, {
+        "val": "Jio",
+        "desc": "Jio"
+    }, {
+        "val": "Vodafone",
+        "desc": "Vodafone"
+    }, {
+        "val": "Docomo",
+        "desc": "Docomo"
+    }]
+}, {
+    "providerType": "DTH",
+    "icon":"icon-icc-dth",
+    "serviceProviders": [{
+        "val": "Tata Sky",
+        "desc": "Tata Sky"
+    }, {
+        "val": "DISH TV",
+        "desc": "DISH TV"
+    }, {
+        "val": "Airtel",
+        "desc": "Airtel"
+    }]
+}, {
+    "providerType": "Electricity",
+    "icon":"icon-icc-electricity",
+    "serviceProviders": [{
+        "val":"BESCOM",
+        "desc": "BESCOM"
+    }, {
+        "val": "Tata Power",
+        "desc": "Tata Power"
+    },
+     {
+        "val": "Reliance Energy Limited",
+        "desc": "Reliance Energy Limited"
+    }]
+}, {
+    "providerType": "Credit Card",
+    "icon":"icon-icc-electricity",
+    "serviceProviders": [{
+        "val": "Citibank",
+        "desc": "Citibank"
+    }, {
+        "val": "American Express",
+        "desc": "American Express"
+    }, {
+        "val": "HSBC",
+        "desc": "HSBC"
+    }]
+},{
+    "providerType": "Gas",
+    "icon":"icon-icc-gas",
+    "serviceProviders": [{
+        "val": "Adani Gas",
+        "desc": "Adani Gas"
+    }, {
+        "val": "Mahanagar Gas",
+        "desc": "Mahanagar Gas"
+    }, {
+        "val": "Limited Nataraj Gas",
+        "desc": "Limited Nataraj Gas"
+    }, {
+        "val": "IndraPrastha Gas Limited",
+        "desc": "IndraPrastha Gas Limited"
+    }]
+}, {
+    "providerType": "Insurance",
+    "icon":"icon-icc-insurance",
+    "serviceProviders": [{
+        "val": "LIC",
+        "desc": "LIC"
+    }, {
+        "val": "SBI Life",
+        "desc": "SBI Life"
+    }, {
+        "val": "Birla Sun Life",
+        "desc": "Birla Sun Life"
+    }]
+}, {
+    "providerType": "Landline",
+    "icon":"icon-icc-landline",
+    "serviceProviders": [{
+        "val": "BSNL",
+        "desc": "BSNL"
+    }, {
+        "val": "Airtel",
+        "desc": "Airtel"
+    }, {
+        "val": "MTNL ",
+        "desc": "MTNL "
+    }]
+},  {
+    "providerType": "Broadband",
+    "icon":"icon-cog",
+    "serviceProviders": [{
+        "val": "Airtel",
+        "desc": "Airtel"
+    }, {
+        "val": "Vodafone",
+        "desc": "Vodafone"
+    }, {
+        "val": "Jio",
+        "desc": "Jio"
+    }, {
+        "val": "BSNL",
+        "desc": "BSNL"
+    }]
+}, {
+    "providerType": "Metro",
+    "icon":"icon-cog",
+    "serviceProviders": [{
+        "val": "Namma Metro",
+        "desc": "Namma Metro"
+    }]
+}, {
+    "providerType": "Loan",
+    "icon":"icon-cog",
+    "serviceProviders": [{
+        "val": "ICICI",
+        "desc": "ICICI"
+    }, {
+        "val": "HDFC",
+        "desc": "HDFC"
+    }, {
+        "val": "SBI",
+        "desc": "SBI"
+    }]
+}]

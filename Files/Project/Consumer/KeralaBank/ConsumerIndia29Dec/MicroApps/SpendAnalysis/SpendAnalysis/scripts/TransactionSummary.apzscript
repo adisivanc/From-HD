@@ -1,0 +1,70 @@
+TransactionSummary = (function() {
+    var summary = [];
+    var month = "Nov";
+    var year = "2019";
+    var selectedamount = 5000;
+    var amountPercentage = [10,20,25,15,30];
+    var description =[];
+    var dummyPercentage =  [];
+    var category = "Bills and Utilities";
+    function copyPercentage(){
+        dummyPercentage = [...amountPercentage];
+    }
+    function getRandomPercentageValue(){
+        var index = Math.floor(Math.random()*dummyPercentage.length);
+    var [value]    = dummyPercentage.splice(index,1);
+    return value;
+        
+    }
+    function copyDescription(){
+        return JSON.parse(JSON.stringify(description));
+    }
+    function filterDescription(){
+        debugger;
+         dummydesc = copyDescription()
+         result = dummydesc.filter(function(desc){
+            if(desc.name == category){
+                return desc;
+            }
+        });
+        return result[0];
+
+    }
+    return {
+        copyDescriptions:function(desc){
+            description = desc;
+        },
+        setCategory :function(cate){
+            category = cate;
+        },
+        setMonthYear: function(my) {
+            [month, year] = my.split(" ");
+            month = TransactionDetails.getIndexOfMonth(month); 
+            month = month > 9 ? month:"0"+month
+        },
+        getSummary: function(){
+            debugger;
+            filteredDescription = filterDescription();
+            copyPercentage()
+            summary.length =0;
+            for (i = 0; i < 5; i++) {
+                var day = Math.floor(Math.random() * 25);
+                day = day>9?day:"0"+day;
+                var date = day + "/" + month + "/" + year;
+                var obj = {};
+                 obj["date"] = date;
+                  descindex = Math.floor(Math.random() * filteredDescription.description.length);
+                 obj["description"] = filteredDescription.description[descindex].value;
+                 filteredDescription.description.splice(descindex,1);
+                 obj["amount"] = selectedamount * (getRandomPercentageValue()/100);
+                 summary.push(obj);
+                
+            }
+            return summary;
+            
+        },
+        setAmount :function(amt){
+            selectedamount = amt;
+        }
+    }
+})()

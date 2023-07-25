@@ -1,0 +1,158 @@
+apz.actcar = {};
+apz.actcar.CardActivation = {};
+apz.app.onLoad_CardActivation = function() {
+    debugger;
+        var now = new Date();
+
+    mobiscroll.date('#actcar__CardActivation__el_inp_3', {
+        dateFormat: 'mm/yy', 
+        min:new Date(),
+        onInit: function (event, inst) { 
+            debugger;
+            inst.setVal(now, true);
+         }
+});
+}
+
+apz.actcar.CardActivation.fnCancel = function()
+{
+    debugger;
+    apz.landin.Landing.fnMenuClickInside("Manage Cards");
+}
+
+apz.actcar.CardActivation.fnActivate = function()
+{
+    apz.hide("actcar__CardActivation__Stage1");
+    debugger;
+     var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "actcar__CardActivation__otp",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                // "OTPRefNo": apz.data.scrdata.fdsumm__FDTopup_Res.fdTopupDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.actcar.CardActivation.fnSuccessScreen,
+                "destroyDiv": "actcar__CardActivation__otp"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+
+apz.actcar.CardActivation.fnSuccessScreen = function()
+{
+       apz.hide("actcar__CardActivation__Stage1");
+           apz.hide("actcar__CardActivation__otp");
+           $("#actcar__CardActivation__success").removeClass("sno");
+
+ 
+}
+
+
+apz.actcar.CardActivation.fnCancelPin = function()
+{
+    apz.show("actcar__CardActivation__Stage1");
+               $("#actcar__CardActivation__success").addClass("sno");
+
+}
+
+apz.actcar.CardActivation.fnConfirmPin = function()
+{
+    var flag = apz.actcar.CardActivation.fnValidatePin();
+    if(flag == true)
+    {
+    apz.dispMsg({message : "Card is activated successfully", type : "S", callBack : apz.landin.Landing.fnHome})
+    }
+    else
+    {
+              apz.dispMsg({message : "Please enter the PIN correctly", type : "E"});
+ 
+    }
+}
+
+
+
+apz.actcar.CardActivation.fnSetPinStages = function(pthis) {
+    debugger;
+    if (apz.isNull(apz.val.validateNumberObj(pthis)) === false) {
+        $("#" + pthis.id).val("");
+    }
+    if ((pthis.value != '') && (apz.getElmValue(pthis.id) != '')) {
+        var lCurrentStage = parseInt(pthis.id.split("_")[4].slice(9));
+        var lSetstage = lCurrentStage + 1;
+        $("#actcar__CardActivation__Stage1PIN" + lSetstage).val('');
+        $("#actcar__CardActivation__Stage1PIN" + lSetstage).focus();
+    }
+    if (pthis.id.split("_")[4].slice(-1) == 4) {
+        var lValue = apz.getElmValue("actcar__CardActivation__Stage1PIN4");
+        lValue = lValue.slice(-1);
+        apz.setElmValue("actcar__CardActivation__Stage1PIN4", lValue);
+    }
+};
+
+apz.actcar.CardActivation.fnRemoveValue = function(pthis) {
+    if (pthis.value != "") {
+        if (pthis.id.split("_")[4].slice(0, -1) == "Stage1PIN") {
+            var lCurrentStage = parseInt(pthis.id.split("_")[4].slice(9));
+            $("#actcar__CardActivation__Stage1PIN" + lCurrentStage).val('');
+        }
+        if (pthis.id.split("_")[4].slice(0, -1) == "Stage1ReEnterPIN") {
+            var lCurrentStage = parseInt(pthis.id.split("_")[4].slice(16));
+            $("#actcar__CardActivation__Stage1ReEnterPIN" + lCurrentStage).val('');
+        }
+    }
+};
+
+
+
+
+apz.actcar.CardActivation.fnValidatePin = function(pthis) {
+    debugger;
+    var lNewPinValue = '';
+    var lReEnterPinValue = '';
+    for (i = 1; i < 5; i++) {
+        var lValue = apz.getElmValue("actcar__CardActivation__Stage1PIN" + i);
+        lNewPinValue = lNewPinValue.concat(lValue);
+        var lValue = apz.getElmValue("actcar__CardActivation__Stage1ReEnterPIN" + i);
+        lReEnterPinValue = lReEnterPinValue.concat(lValue);
+    }
+    /* for (i = 1; i < 5; i++) {
+        var lValue = apz.getElmValue("crddtl__CardOperations__Stage1ReEnterPIN" + i);
+        lReEnterPinValue = lReEnterPinValue.concat(lValue);
+    }*/
+    if (parseInt(lNewPinValue) != parseInt(lReEnterPinValue)) {
+        return false
+        // for (i = 1; i < 5; i++) {
+        //     $("#crddtl__CardOperations__Stage1ReEnterPIN" + i).val('');
+        //     $("#crddtl__CardOperations__Stage1PIN" + i).val('');
+        // }
+    }
+    else
+    {
+        return true;
+    }
+   
+};
+
+
+apz.actcar.CardActivation.fnReEnterSetPinStages = function(pthis) {
+    debugger;
+    if (apz.isNull(apz.val.validateNumberObj(pthis)) === false) {
+        $("#" + pthis.id).val("");
+    }
+    if (pthis.value != '') {
+        var lCurrentStage = parseInt(pthis.id.split("_")[4].slice(16));
+        var lSetstage = lCurrentStage + 1;
+        $("#actcar__CardActivation__Stage1ReEnterPIN" + lSetstage).val('');
+        $("#actcar__CardActivation__Stage1ReEnterPIN" + lSetstage).focus();
+    }
+    if (pthis.id.split("_")[4].slice(-1) == 4) {
+        var lValue = apz.getElmValue("actcar__CardActivation__Stage1ReEnterPIN4");
+        lValue = lValue.slice(-1);
+        apz.setElmValue("actcar__CardActivation__Stage1ReEnterPIN4", lValue);
+    }
+};

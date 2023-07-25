@@ -1,0 +1,411 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+@font-face {
+	font-family: 'LetterGothicMTStd';
+	src: url('2D1961_0_0.eot');
+	src: url('2D1961_0_0.eot?#iefix') format('embedded-opentype'),
+	     url('2D1961_0_0.woff2') format('woff2'),
+		 url('2D1961_0_0.woff') format('woff'),
+		 url('2D1961_0_0.ttf') format('truetype');
+}
+
+
+@font-face {
+    font-family: 'letter_gothicbold';
+    src: url('Letter Gothic Bold-webfont.eot');
+    src: url('Letter Gothic Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Letter Gothic Bold-webfont.woff2') format('woff2'),
+         url('Letter Gothic Bold-webfont.woff') format('woff'),
+         url('Letter Gothic Bold-webfont.ttf') format('truetype'),
+         url('Letter Gothic Bold-webfont.svg#letter_gothicbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+.pull_left { float:left; }
+.pull_right { float:right; }
+* html img,
+* html .png{
+position:relative;
+behavior: expression((this.runtimeStyle.behavior="none")&&(this.pngSet?this.pngSet=true:(this.nodeName == "IMG" && this.src.toLowerCase().indexOf('.png')>-1?(this.runtimeStyle.backgroundImage = "none",
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.src + "', sizingMethod='image')",
+this.src = "images/transparent.gif"):(this.origBg = this.origBg? this.origBg :this.currentStyle.backgroundImage.toString().replace('url("','').replace('")',''),
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.origBg + "', sizingMethod='crop')",
+this.runtimeStyle.backgroundImage = "none")),this.pngSet=true)
+);
+}
+
+
+html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video { margin:0; padding:0; }
+
+h1, h2, h3, h4, h5, h6 { font-style:normal; font-weight:normal; }
+img { border: 0; -ms-interpolation-mode: bicubic; }
+a { text-decoration:none; }
+.cursor { cursor:pointer; }
+
+body { margin:0 0 0 0; padding: 0 0 0 0; background:url(../images/bg1.jpg) repeat; font-family: 'LetterGothicMTStd'; color:#666666; font-size:16px; letter-spacing:-0.8px; }
+.noborder{ border:none;}
+.noborderbtm{ border-bottom:none;}
+.nobordertop{ border-top:none;}
+
+
+
+/*----- Common ----- */
+
+.full_width { width:100%; float:left; }
+.full_width_pad { width:97%; float:left; padding:0 1.5%; }
+
+
+/*----- Input ----- */
+
+.txtbox { border:1px solid #eec290; padding:5px 7px; font-family:Arial, Helvetica, sans-serif; color:#888888; font-size:17px; letter-spacing:0.3px; }
+
+.txtbox_full { width:98%; border:1px solid #eec290; padding:5px 1%; font-family:Arial, Helvetica, sans-serif; color:#888888; font-size:17px; letter-spacing:0.3px; height:28px; }
+.txtarea_full { width:98%; border:1px solid #eec290; padding:5px 1%; font-family:Arial, Helvetica, sans-serif; color:#888888; font-size:17px; letter-spacing:0.3px; height:100px; }
+
+
+
+
+
+
+/*----- Parent Template ----- */
+
+.header_container { width:100%; float:left; background:url(../images/menu_bg.jpg); padding:15px 0; }
+.header_pad { width:96%; padding:0 2%; float:left; }
+.logo { font-size:27px; color:#FFFFFF; float:left; font-family: 'letter_gothicbold'; letter-spacing:-1px; cursor:pointer; }
+
+.indextbl { margin:190px auto 0 auto; border:2px solid #d0a36c; background:#fbf7f1; }
+.parent_login_title { font-size:24px; color:#FFFFFF; text-align:center; padding:15px 0; }
+.loginbtn { color:#FFFFFF; font-size:18px; margin-top:10px; background:url(../images/menu_bg.jpg) repeat; width:130px; padding:8px 0; cursor:pointer; border-radius:4px; }
+
+.indextbl tr td { padding:8px 0; }
+.indextbl tr:nth-child(2) td { padding:27px 0 10px 0; }
+
+
+.welcome { float:right; line-height:60px; color:#FFFFFF; cursor:pointer; }
+.welcome span { font-size:18px; font-weight:600; }
+
+
+
+
+/* --------- Dashboard ------------ */
+
+.panel_left { width:220px; float:left; background:url(../images/menu_bg.jpg);border-top:1px solid #FFFFFF; }
+.panel_right { width:calc(97%-220px); float:left; padding:10px 1.5%; }
+
+.panel_left ul { list-style-type:none; color:#FFFFFF; font-family: 'letter_gothicbold'; font-size:18px; }
+.panel_left > ul > li { padding:13px 0; text-indent:30px; border-bottom:1px solid #FFFFFF; }
+.panel_left ul li img { margin-left:10px; }
+
+.panel_left ul li a { color:#FFFFFF; }
+
+.page_header { width:100%; float:left; padding:0 0 5px 0; }
+.page_header table tr td { padding:4px 0; line-height:30px; }
+.page_header table tr td h2 { font-size:30px; font-family: 'letter_gothicbold'; letter-spacing:-0.3px; }
+
+.page_content { width:100%; float:left; padding:15px 0; clear:both; border-top:2px solid #dab791; }
+
+.dashboard_content { width:1150px; float:left; background:#FFFFFF; }
+.dashboard_upcoming { width:350px; float:left; background:#FFFFFF; margin-left:20px }
+
+.dashboard_content > table { border:1px solid #dab791; }
+.list_menu { list-style-type:none; }
+.list_menu li { display:inline; padding:14px 94px; float:left; }
+
+.list_menu li.active { background:#dab791; color:#FFFFFF; font-weight:600; }
+.list_menu li a { color:#666666; }
+.list_menu li.active a { color:#FFFFFF; }
+
+.recent_list { width:100%; float:left; border-bottom:1px dotted #666666; padding:15px 0; }
+
+.recent_content { float:left; }
+.recent_show_more { float:right; text-transform:uppercase; margin-right:15px; margin-top:50px; cursor:pointer }
+
+.recent_content h3 { color:#dab791; font-weight:bold; font-size:20px; }
+.recent_content h4 { color:#999999; font-size:16px; padding:7px 0 2px 0; }
+.recent_content h4 span { color:#999999; font-size:13px; padding:7px 0 2px 0; }
+.recent_content h2 { font-weight:bold; font-size:19px; letter-spacing:-1.4px; }
+
+
+.upcomingtbl tr td { padding:10px 0; }
+
+.event_list { width:100%; float:left; border-bottom:1px dotted #666666; padding:2px 0; }
+.event_name { float:left; }
+.event_name h3 { color:#dab791; font-weight:bold; font-size:18px; text-indent:6px; }
+.event_name h4 { color:#999999; padding:7px 0 2px 0; text-indent:10px; }
+
+
+.students_list { margin-top:15px; }
+.students_list > li { padding:10px 0; text-indent:35px; border-bottom:1px solid #FFFFFF; background:#dab791; color:#4296d7; font-weight:600; cursor:pointer; }
+.students_list > li:last-child { border-bottom:0; }
+
+.students_list { display:none; }
+.sub_nav { cursor:pointer; }
+.apply_btn { float:right; padding:12px 25px; text-align:center; cursor:pointer; background:#d4a26d; color:#FFFFFF; border-radius:5px; }
+
+
+@media only screen and (min-width: 1600px) and (max-width: 1800px) {
+
+.dashboard_content { width:980px; }
+.dashboard_upcoming { width:290px; }
+.list_menu li { padding:14px 7px; }
+
+.list_menu li { display:inline; padding:14px 72px; float:left; }
+
+}
+
+
+
+
+@media only screen and (min-width: 1300px) and (max-width: 1599px) {
+
+.dashboard_content { width:820px; }
+.dashboard_upcoming { width:290px; }
+.list_menu li { padding:14px 7px; }
+
+.list_menu li { display:inline; padding:14px 52px; float:left; }
+
+}
+
+
+
+
+
+
+/* --------- Communication ------------ */
+
+.mail_home { width:97%; float:left; padding:10px 1.5%; }
+.inbox_title { border-bottom:1px solid #dab791; margin-bottom:7px; padding:3px 0 10px 0; }
+
+.message_center_head { padding:13px 10px; color:#FFFFFF; font-weight:600; }
+.message_center_head a { color:#FFFFFF; text-decoration:underline }
+
+.delete_mail { background:#f3ddc4; color:#666666; cursor:pointer; padding:5px 14px; margin-left:10px; }
+
+
+.mail_menu { list-style-type:none; border:1px solid #dab791; }
+.mail_menu li { padding:7px 0; text-indent:5px; cursor:pointer; }
+.mail_item.active { background:#dab791; color:#FFFFFF; }
+
+.inboxtbl tr th { padding:8px 0; }
+.inboxtbl tr td { padding:8px 5px; line-height:21px; cursor:pointer;  }
+.inboxtbl tr:nth-child(odd) td { background:#f2f2f2; }
+
+
+
+/* --------- Communication Popup------------ */
+
+.inbox_header { width:96%; float:left; background:#dab791 !important; color:#FFFFFF; padding:10px 2%; font-size:17px; letter-spacing:-0.7px; font-weight:600; line-height:27px; }
+.reply_mail { background:#dab791; cursor:pointer; padding:7px 14px; margin-right:10px; width:64px; float:right; text-align:center; font-weight:bold; color:#FFFFFF; border-radius:2px; }
+.inbox_header span { font-size:24px; margin-left:10px; }
+
+.inboxpopup_inner { width:700px; margin:0 auto; font-size:15px; }
+.inbox_content { width:96%; float:left; padding:10px 2%; text-align:justify; line-height:23px; }
+
+
+.inbox_footer { width:96%; float:left; padding:10px 2%; display:none; }
+.replytbl tr td { padding:7px 0; }
+
+
+
+
+/* --------- Compose mail------------ */
+
+.compose_mail_home { width:97%; float:left; padding:10px 1.5%; }
+
+.teacher_list_header { width:99%; float:left; padding:10px 0.5%;  }
+.teacher_list_title { float:left; line-height:27px; }
+.send_mailbtn { background:#dab791; cursor:pointer; padding:6px 10px; margin-right:10px; width:104px; float:right; text-align:center; font-weight:bold; color:#FFFFFF; border-radius:2px; margin-top:-1px; }
+
+
+.teacher_list_content { width:99%; float:left; padding:10px 0.5%; }
+
+.akka_listtbl { border:1px solid #dab791; }
+.akka_listtbl tr th { padding:10px 5px; background:#dab791; color:#FFFFFF; text-align:left; }
+.akka_listtbl tr td { padding:8px 5px; line-height:21px;   }
+.akka_listtbl tr:nth-child(odd) td { background:#f2f2f2; }
+.akka_listtbl input{ cursor:pointer;}
+
+
+.composetbl { border:1px solid #dab791; }
+.composetbl tr th { padding:10px 5px; background:#dab791; color:#FFFFFF; text-align:left; }
+.composetbl tr td { padding:8px 5px; line-height:21px; cursor:pointer;  }
+
+.compose_tbl2 tr:nth-child(even) td { background:#d7d7d7; }
+
+
+.download_tbl2 { margin-top:10px; border:1px solid #dab791; }
+.download_tbl2 tr td { padding:12px 10px; }
+.download_tbl2 tr th { padding:12px 10px; background:#dab791; color:#FFFFFF; text-align:left }
+.download_tbl2 tr:nth-child(odd) td { background:#f1f1f1; }
+
+
+#showon_compose { display:none; }
+#hideon_compose { display:none; }
+ 
+/*----------------------subjects-------------------------*/
+
+.student_teacher { width:24%; float:left; margin-right:1%; margin-top:15px; }
+.student_teacher img { max-width:245px; height:145px; width:100%; float:left; margin-right:15px;}
+.student_teacher p { text-align:center; padding:7px 0 5px 0; line-height:24px;  margin-bottom:15px; }
+
+
+/*------------------subject-------------------------------*/
+
+
+/* ------  Pagination Style  ------ */
+
+.pagination_box { width:24px; height:24px; line-height:24px; float:left; text-align:center; font-family: 'open_sanssemibold'; font-size:12px; color:#FFF; background:url(../images/pagination_normal.png) no-repeat; cursor:pointer; }
+.pagination_active, .pagination_box:hover { background:url(../images/pagination_select.png) no-repeat; }
+#pagination_prev1 { background:url(../images/pagination_left.png) no-repeat; }
+#pagination_next1 { background:url(../images/pagination_right.png) no-repeat; margin-left:1px; }
+
+.pagination_box1 { width:24px; height:24px; line-height:24px; text-align:center; font-family: 'open_sanssemibold'; font-size:12px; color:#555555; /*background:url(../images/pagination_normal.png) no-repeat;*/ cursor:pointer; position:relative; float:left; top:-10px; background:#FFF7E4; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; margin-left:2px;}
+.pagination_active1, .pagination_box1:hover { /*background:url(../images/pagination_select.png) no-repeat;*/ background:#E2D7C3; }
+.pagination_box1 #pagination_prev { /*background:url(../images/pagination_left.png) no-repeat;*/ background:#FFF7E4; }
+.pagination_box1 #pagination_next { /*background:url(../images/pagination_right.png) no-repeat;*/ background:#FFF7E4; margin-left:1px; }
+
+
+
+
+/* ------  Parent Login  ------ */
+
+
+.login_container { width:1050px; margin:150px auto 0 auto; }
+
+.validate_left { width:325px; float:left; margin-right:15px; background:#dab791; color:#FFFFFF; }
+.validate_right { width:710px; float:left; background:#FFFFFF; }
+
+
+.validate_left p { width:92%; float:left; padding:25px 4% 5px 4%; font-family: 'letter_gothicbold'; font-size:18px; letter-spacing:0.5px; text-align:justify; margin:0; line-height:23px; }
+.validate_left p:last-child { padding:5px 4% 25px 4%; }
+
+.validatetbl { border:1px solid #dab791; }
+.validatetbl tr th { text-align:left; padding:13px 18px; border-bottom:1px solid #dab791; font-size:18px; font-family: 'letter_gothicbold'; letter-spacing:0.5px; }
+.validatetbl tr td { text-align:left; padding:9px 25px; }
+.validatetbl tr:nth-child(2) td { font-size:15px; letter-spacing:0.3px; text-align:justify; line-height:23px; }
+
+
+
+.validatetbl tr td a { text-decoration:underline; color:#666666; font-size:16px; font-family: 'letter_gothicbold'; }
+
+.validate_btn { float:right; padding:10px 20px; text-align:center; cursor:pointer; background:#d4a26d; color:#FFFFFF; border-radius:5px; font-family: 'letter_gothicbold'; letter-spacing:0.4px; }
+
+
+.validate_popuptbl tr th { padding:10px 5px; background:#dab791; color:#FFFFFF; }
+.validate_popuptbl tr td { padding:10px 5px; }
+
+.validate_popuptbl { background:#FFFFFF; border:1px solid #dab791; font-family: 'LetterGothicMTStd'; font-size:17px; }
+.close_validate_popup { font-size:22px; float:right; cursor:pointer; margin-right:10px; }
+
+.okbtn { width:65px; padding:10px 20px; text-align:center; cursor:pointer; background:#dab791; color:#FFFFFF; border-radius:5px; font-family: 'letter_gothicbold'; letter-spacing:0.4px; }
+
+
+
+/* ------  Forgot Password  ------ */
+
+.forgot_pwdtbl { width:700px; margin:150px auto 0 auto; background:#FFFFFF; border:1px solid #dab791; }
+.forgot_pwdtbl tr td { padding:10px 25px; }
+.forgot_pwdtbl tr td input { margin:10px 0; }
+
+
+.forgot_pwdtbl .parag { line-height:23px; }
+
+.forgot_emailtbl { background:#fbf8f4; padding:10px 0; }
+.forgot_emailtbl tr:last-child td { font-size:14px; line-height:22px; }
+.forgot_emailtbl tr td { padding:3px 25px; }
+
+
+
+.new_pwdtbl { width:700px; margin:150px auto 0 auto; background:#FFFFFF; border:1px solid #dab791; }
+.new_pwdtbl tr td { padding:10px 25px; }
+.new_pwdtbl tr td input { margin:10px 0 0 0; }
+
+
+.color_box { width:20px; height:20px; float:left; margin-right:7px; border:1px solid #666666; }
+.indication { width:160px; float:left; }
+
+
+/* ------  Calander  ------ */
+
+.calender_alloc_tbl { width:140px; height:140px; border:#DAB791 1px solid; }
+
+.events_popuptbl tr td { font-family: 'LetterGothicMTStd'; color:#666666; font-size:16px; padding:8px 10px; }
+.events_popuptbl tr td:first-child { font-family: 'letter_gothicbold'; letter-spacing:0.5px; }
+.events_popuptbl tr:first-child td { padding:17px 10px 8px 10px; }
+
+
+@media only screen and (min-width: 1600px) and (max-width: 1740px) {
+
+.calender_alloc_tbl { width:123px; height:123px; border:#DAB791 1px solid; }
+
+}
+
+
+@media only screen and (min-width: 1300px) and (max-width: 1599px) {
+
+/* ------  Calander  ------ */
+
+.calender_alloc_tbl { width:105px; height:105px; border:#DAB791 1px solid; }
+
+}
+
+
+
+
+/* ------  Event Popup  ------ */
+
+.event_popouter_tbl { font-family: 'LetterGothicMTStd'; font-size:15px; }
+.event_pop_header { background:#dab791; color:#FFFFFF; font-size:18px; font-family: 'letter_gothicbold'; }
+.event_popouter_tbl tr td { padding:5px 7px; }
+.event_popouter_tbl tr:first-child td { padding:10px 12px; }
+.event_popouter_tbl tr:first-child td span { font-size:24px; transform:scale(1.5,1); }
+
+
+.event_popinner_tbl { border:1px solid #dab791; }
+.event_popinner_tbl tr td { padding:12px 15px; }
+
+.event_popinner_tbl tr td:first-child { background:#fcfcfc; font-weight:bold; }
+
+
+
+.leave_apptbl { font-family: 'LetterGothicMTStd'; font-size:15px; }
+.leave_apptbl tr th { border-bottom:1px solid #eec290; background:url(../images/menu_bg.jpg); line-height:32px; color:#FFFFFF; text-align:left; font-size:17px; padding:8px 7px; }
+.leave_apptbl tr th span { font-size:22px; transform:scale(1.5,1); }
+.leave_apptbl tr td { padding:7px 10px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

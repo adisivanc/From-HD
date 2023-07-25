@@ -1,0 +1,12 @@
+{
+     "accounts": [{
+                "accountNo": "100009312263",
+                "accountType": "Savings"
+            }, {
+                "accountNo": "100009312401",
+                "accountType": "Savings"
+            }, {
+                "accountNo": "732510006721",
+                "accountType": "Savings"
+            }]
+}

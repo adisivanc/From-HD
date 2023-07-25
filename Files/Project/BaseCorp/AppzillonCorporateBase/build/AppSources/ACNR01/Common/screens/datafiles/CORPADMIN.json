@@ -1,0 +1,250 @@
+{
+    "ACNR01__MenuList_Req": {
+        "vwMenu": [{
+            "appId": "ACDB01",
+            "corporateId": "000FTAC4321",
+            "description": "Home",
+            "displayOrder": "1",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "icon-cm-dashboard_new",
+            "roleId": "Admin",
+            "screenId": "AdminDashboard"
+        }, {
+            "appId": "accp01",
+            "corporateId": "000FTAC4321",
+            "description": "Change Password",
+            "displayOrder": "2",
+            "groupName": "My Dashboard",
+            "icon": "icon-users",
+            "roleId": "Admin",
+            "screenId": "ChangePassword"
+        }, {
+            "appId": "promtn",
+            "corporateId": "000FTAC4321",
+            "description": "Promotions",
+            "displayOrder": "2",
+            "groupName": "My Dashboard",
+            "icon": "icon-users",
+            "roleId": "Admin",
+            "screenId": "ViewPromotion"
+        }, {
+            "appId": "prfinf",
+            "corporateId": "000FTAC4321",
+            "description": "My Profile",
+            "displayOrder": "2",
+            "groupName": "My Dashboard",
+            "icon": "icon-users",
+            "roleId": "Admin",
+            "screenId": "profileinfo"
+        }, 
+        
+        {
+            "appId": "actf01",
+            "corporateId": "000FTAC4321",
+            "description": "My Tasks",
+            "displayOrder": "2",
+            "groupName": "My Dashboard",
+            "icon": "icon-cm-mytask",
+            "roleId": "Admin",
+            "screenId": "TaskFlow"
+        }, {
+            "appId": "notifi",
+            "corporateId": "000FTAC4321",
+            "description": "Alerts",
+            "displayOrder": "2",
+            "groupName": "My Dashboard",
+            "icon": "icon-users",
+            "roleId": "Admin",
+            "screenId": "notification"
+        },
+        
+        {
+            "appId": "acus01",
+            "corporateId": "000FTAC4321",
+            "description": "Users",
+            "displayOrder": "2",
+            "groupName": "Admin",
+            "icon": "icon-users",
+            "roleId": "Admin",
+            "screenId": "UserList"
+        }, {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "My Dashboard",
+            "displayOrder": "2",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "icon-TD-MyDashboard",
+            "roleId": "Admin",
+            "screenId": ""
+        }, {
+            "appId": "permgt",
+            "corporateId": "000FTAC4321",
+            "description": "Personas",
+            "displayOrder": "2",
+            "groupName": "Admin",
+            "icon": "icon-users",
+            "roleId": "Admin",
+            "screenId": "PersonaLauncher"
+        },   {
+            "appId": "acrl01",
+            "corporateId": "000FTAC4321",
+            "description": "Roles",
+            "displayOrder": "3",
+            "groupName": "Admin",
+            "icon": "icon-cm-rolee",
+            "roleId": "Admin",
+            "screenId": "RolesList"
+        }, {
+            "appId": "authma",
+            "corporateId": "000FTAC4321",
+            "description": "Account Groups",
+            "displayOrder": "3",
+            "groupName": "Admin",
+            "icon": "icon-cm-rolee",
+            "roleId": "Admin",
+            "screenId": "AccountGroupLauncher"
+        }, 
+        {
+            "appId": "authma",
+            "corporateId": "000FTAC4321",
+            "description": "Authorization Matrix",
+            "displayOrder": "3",
+            "groupName": "Admin",
+            "icon": "icon-cm-rolee",
+            "roleId": "Admin",
+            "screenId": "AuthMatrixLauncher"
+        },
+        {
+            "appId": "acru01",
+            "corporateId": "000FTAC4321",
+            "description": "Rules",
+            "displayOrder": "4",
+            "groupName": "Admin",
+            "icon": "icon-cm-rules",
+            "roleId": "Admin",
+            "screenId": "RulesSummary"
+        }, {
+            "appId": "acwf01",
+            "corporateId": "000FTAC4321",
+            "description": "Workflows",
+            "displayOrder": "4",
+            "groupName": "Admin",
+            "icon": "icon-cm-rules",
+            "roleId": "Admin",
+            "screenId": "WorkflowMaster"
+        }, {
+            "appId": "acpr01",
+            "corporateId": "000FTAC4321",
+            "description": "Company Profile",
+            "displayOrder": "6",
+            "groupName": "Admin",
+            "icon": "icon-cm-company-profile",
+            "roleId": "Admin",
+            "screenId": "CorporateInfo"
+        }, {
+            "appId": "acep01",
+            "corporateId": "000FTAC4321",
+            "description": "Business Units",
+            "displayOrder": "7",
+            "groupName": "Admin",
+            "icon": "icon-cm-company-structure",
+            "roleId": "Admin",
+            "screenId": "CorporateHierarchy"
+        },
+        {
+            "appId": "subact",
+            "corporateId": "000FTAC4321",
+            "description": "Subscription Activation",
+            "displayOrder": "8",
+            "groupName": "Admin",
+            "icon": "icon-cm-company-structure",
+            "roleId": "Admin",
+            "screenId": "SubscriptionActivation"
+        },
+        
+        
+        {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Admin",
+            "displayOrder": "7",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "icon-TD-Admin",
+            "roleId": "Admin",
+            "screenId": ""
+        }, {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Reports",
+            "displayOrder": "10",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "icon-TD-Accounts",
+            "roleId": "Admin",
+            "screenId": ""
+        }, {
+            "appId": "recrep",
+            "corporateId": "000FTAC4321",
+            "description": "Reconciliation Report",
+            "displayOrder": "10",
+            "groupName": "Reports",
+            "icon": "icon-cm-company-structure",
+            "roleId": "Admin",
+            "screenId": "ReportSummary"
+        }, {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Help & Support",
+            "displayOrder": "27",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "icon-TD-HelpSupport",
+            "roleId": "Admin",
+            "screenId": ""
+        },
+        
+        {
+            "appId": "contac",
+            "corporateId": "000FTAC4321",
+            "description": "Contact Us",
+            "displayOrder": "27",
+            "groupName": "Help & Support",
+            "icon": "icon-cm-account_details",
+            "roleId": "Admin",
+            "screenId": "ContactUs"
+        },
+        
+          {
+            "appId": "chatwi",
+            "corporateId": "000FTAC4321",
+            "description": "Chat With Us",
+            "displayOrder": "27",
+            "groupName": "Help & Support",
+            "icon": "icon-cm-account_details",
+            "roleId": "Admin",
+            "screenId": "chat"
+        },{
+            "appId": "messag",
+            "corporateId": "000FTAC4321",
+            "description": "Mail Box",
+            "displayOrder": "27",
+            "groupName": "Help & Support",
+            "icon": "icon-email",
+            "roleId": "Admin",
+            "screenId": "Messages"
+        },
+        {
+            "appId": "faq001",
+            "corporateId": "000FTAC4321",
+            "description": "FAQ",
+            "displayOrder": "3",
+            "groupName": "Help & Support",
+            "icon": "icon-email",
+            "roleId": "Admin",
+            "screenId": "FAQ"
+        }]
+    }
+}

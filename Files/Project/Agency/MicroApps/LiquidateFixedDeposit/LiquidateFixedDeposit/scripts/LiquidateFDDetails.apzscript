@@ -1,0 +1,41 @@
+apz.liqdfd.liquidatefddetails = {};
+apz.app.onLoad_LiquidateFDDetails = function(params) {
+    debugger;
+    apz.liqdfd.liquidatefddetails.fnInitialise(params);
+   // apz.liqfd.liquidatefddetails.calculate();
+ 
+};
+apz.liqdfd.liquidatefddetails.fnInitialise = function(params) {
+    debugger;
+};
+apz.liqdfd.liquidatefddetails.fnSetData = function(params) {
+    apz.liqdfd.liquidatefddetails.sParams = params;
+    apz.liqdfd.liquidatefddetails.sAction = params.action;
+    if (apz.liqdfd.liquidatefddetails.sAction == "Summary") {
+        
+        apz.data.scrdata.liqdfd__LiquidateFD_Req = {};
+        apz.data.scrdata.liqdfd__LiquidateFD_Req.depositDtls =  apz.liqdfd.liquidatefddetails.sParams.data
+        apz.data.loadData("LiquidateFD", "liqdfd");
+    }
+};
+apz.liqdfd.liquidatefddetails.fnBackStage2 = function() {
+    debugger;
+    
+   apz.liqdfd.liquidatefd.fnRenderStage1();
+};
+apz.liqdfd.liquidatefddetails.fnConfirmStage2 = function() {
+    apz.liqdfd.liquidatefd.fnConfirmStage2();
+};
+// apz.liqfd.liquidatefddetails.calculate=function() {
+
+// var compounding=12;
+// var x=current_Date = new Date();
+// var x=apz.getElmvalue("liqdfd__LiquidateFD__i__depositDtls__accountCreationDate");
+// var initialisedDate = new Date(x)
+// var milliseconds =  current_Date.getTime()-initialisedDate.getTime()
+// var days = Math.floor(milliseconds/(1000*24*3600));
+// var months = Math.floor(days/31);
+// var maturityAmount = apz.getFloat(amount) * Math.pow((1 + (interest1 / compounding)), (compounding * (months/12)));
+// alert(maturityAmount)
+// apz.setElmValue("liqdfd__LiquidateFD__i__depositDtls__maturityAmount",maturityAmount)
+// }

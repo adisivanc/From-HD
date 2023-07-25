@@ -1,0 +1,17 @@
+[
+    {
+        "SourceType": "Income from salary / freelance business"
+    },
+    {
+        "SourceType": "Income from pension"
+    },
+    {
+        "SourceType": "Income from investments/dividends"
+    },
+    {
+        "SourceType": "Personal Savings"
+    },
+    {
+        "SourceType": "Alimony"
+    }
+]

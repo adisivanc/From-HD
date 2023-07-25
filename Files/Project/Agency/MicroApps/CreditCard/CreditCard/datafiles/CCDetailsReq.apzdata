@@ -1,0 +1,15 @@
+{"cdtcrd__CCDetailsReq_Res":{
+             "creditCardDtls": [{
+                  "cardProduct": "Capital One",
+                  "accountNo": "753410000076",
+                  "cardNumber": "1234 XXXX XXXX 2345",
+                 "balance": "-2345"
+             }, {
+                    "cardProduct": "Discover",
+                   "accountNo": "753410000076",
+                    "cardName": "City visa card",
+                    "cardNumber": "1234 XXXX XXXX 2345",
+                    "location": "Clarendon Centre",
+                    "balance": "-2345"
+                }]
+}} 

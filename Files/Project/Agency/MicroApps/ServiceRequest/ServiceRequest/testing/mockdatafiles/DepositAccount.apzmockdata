@@ -1,0 +1,22 @@
+{
+    "Accounts":[
+        {
+            "account_no":"98xxxxxxxxxx00",
+            "account_type":"Saving Account",
+            "bank_name":"HDFC Bank",
+            "is_checked":0
+        },
+        {
+            "account_no":"65xxxxxxxxxx87",
+            "account_type":"Current Account",
+            "bank_name":"ICICI Bank",
+            "is_checked":0
+        },
+        {
+            "account_no":"58xxxxxxxxxx65",
+            "account_type":"Saving Account",
+            "bank_name":"SBI Bank",
+            "is_checked":0
+        }
+    ]
+}

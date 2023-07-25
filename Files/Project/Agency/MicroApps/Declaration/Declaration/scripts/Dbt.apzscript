@@ -1,0 +1,110 @@
+apz.declar.Dbt = {};
+apz.declar.Dbt.sCache = {}
+apz.app.onLoad_Dbt = function(params) {
+    debugger;
+    apz.declar.Dbt.sCache = params;
+    apz.declar.Dbt.manageHeaders();
+}
+apz.app.onShown_Dbt = function(params) {
+    debugger;
+}
+apz.declar.Dbt.manageHeaders = function(){
+    debugger;
+    apz.appdtl.currenctScreen = "compliance_details";
+    $("#appdtl__AppLauncher__compliance_div").addClass('active');
+    $("#appdtl__AppLauncher__nominee_div").removeClass('active');
+    $("#appdtl__AppLauncher__product_div").removeClass('active');
+}
+apz.declar.Dbt.populateData = function() {
+    var data = [{
+        "val": "Tamilnadu",
+        "desc": "Tamilnadu"
+    }, {
+        "val": "Karnataka",
+        "desc": "Karnataka"
+    }, {
+        "val": "Kerala",
+        "desc": "Kerala"
+    }, {
+        "val": "Andhra Pradesh",
+        "desc": "Andhra Pradesh"
+    }]
+    apz.populateDropdown($("#declar__Dbt__state")[0], data);
+    var filePath = apz.getDataFilesPath("declar") + "/Branches.json";
+    var content = apz.getFile(filePath);
+    debugger;
+    var upazillaList = JSON.parse(content);
+    var branches = [];
+    for (var i = 0, len = upazillaList.length; i < len; i++) {
+        if (upazillaList[i].state === "Tamilnadu") {
+            debugger;
+            branches = upazillaList[i].branch;
+        }
+    }
+    debugger;
+    apz.populateDropdown($("#declar__Dbt__branch")[0], branches);
+}
+apz.declar.Dbt.fnSelectDD = function(element) {
+    var val = $(element).val();
+    if (val == "two") {
+        apz.show("declar__Dbt__bankRow");
+        apz.declar.Dbt.populateData();
+    } else {
+        apz.hide("declar__Dbt__bankRow");
+    }
+}
+apz.declar.Dbt.fnAgree = function() {
+    /*var params = {};
+    params.appId = "declar";
+    params.scr = "Fatca";
+    params.div = apz.declar.Dbt.sCache.div;
+    params.userObj=apz.declar.Dbt.sCache;
+    params.userObj.from="agreeScreen";
+    apz.launchApp(params);*/
+    
+    
+    var params = {};
+    params.appId = "declar";
+    params.scr = "FourthFatca";
+    // params.div = "declar__Launcher__modelLauncher";
+    // params.div = "prddtl__ProductAccountLauncher__launcher";
+    
+    // params.div = "appdtl__ProductLauncher__productlauncher";
+    params.div = "appdtl__AppLauncher__screenLauncher";
+    
+    params.userObj=apz.declar.Dbt.sCache;
+    params.userObj.from="agreeScreen";
+    apz.launchSubScreen(params);
+}
+apz.declar.Dbt.fnBack = function() {
+    debugger;
+    var params = {};
+        params.appId = "appdtl";
+        params.scr = "ProductLauncher";
+        params.div = "appdtl__AppLauncher__screenLauncher";
+        params.userObj = {
+            "refNo": apz.declar.Dbt.sCache.refNo,
+            "subproduct": apz.appdtl.AppLauncher.sCache.subproduct,
+            "product": apz.appdtl.AppLauncher.sCache.product,
+            "appId": apz.appdtl.AppLauncher.sCache.appId,
+            "screen": "nominee"
+        };
+        apz.launchApp(params);
+}
+apz.declar.Dbt.fnGetBranch = function(element) {
+    debugger;
+    var state = $(element).val();
+    var filePath = apz.getDataFilesPath("declar") + "/Branches.json";
+    var content = apz.getFile(filePath);
+    debugger;
+    var upazillaList = JSON.parse(content);
+    var branches = [];
+    for (var i = 0, len = upazillaList.length; i < len; i++) {
+        if (upazillaList[i].state === state) {
+            debugger;
+            branches = upazillaList[i].branch;
+        }
+    }
+    debugger;
+    apz.populateDropdown($("#declar__Dbt__branch")[0], branches);
+}

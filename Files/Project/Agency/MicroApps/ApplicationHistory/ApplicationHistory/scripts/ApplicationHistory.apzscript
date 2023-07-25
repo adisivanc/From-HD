@@ -1,0 +1,316 @@
+apz.aphist.ApplicationHistory = {};
+apz.aphist.ApplicationHistory.sparams = {}
+apz.app.onLoad_ApplicationHistory = function(params) {
+    debugger;
+    apz.aphist.ApplicationHistory.sparams = params;
+    $(".pgn-ctr").hide();
+    $("#aphist__ApplicationHistory__onboarding_history_tbody>tr").click(function(arg1) {
+        apz.aphist.ApplicationHistory.fnLaunchAppDetails(arg1);
+    })
+    if (apz.menuap.Menu.userRole == "RM") {
+        $("#aphist__ApplicationHistory__onbColumn").removeClass("sno");
+    } else {
+        $("#aphist__ApplicationHistory__onbColumn").addClass("sno");
+    }
+};
+apz.app.onShown_ApplicationHistory = function(params) {
+    debugger;
+    apz.aphist.ApplicationHistory.injectFilters();
+    apz.aphist.ApplicationHistory.fngetApplicationHistory();
+    if (apz.menuap.Menu.userRole == "SRM" || apz.menuap.Menu.userRole == "SCR" || apz.menuap.Menu.userRole == "SLA") {
+        $("#aphist__ApplicationHistory__onboarding_history_col_1_th")[0].innerText = "Company Name";
+        $("#aphist__ApplicationHistory__onboarding_history_col_2_th")[0].innerText = "Trade License No";
+    }
+    if (params.filter) {
+        if (params.filter == "All") {
+            apz.searchRecords("aphist__ApplicationHistory__onboarding_history", "");
+            $("#aphist__ApplicationHistory__all_records").addClass("active");
+        } else if (params.filter == "pending") {
+            apz.searchRecords("aphist__ApplicationHistory__onboarding_history", "Pending");
+            $("#aphist__ApplicationHistory__pending_records").addClass("active");
+        } else if (params.filter == "rejected") {
+            apz.searchRecords("aphist__ApplicationHistory__onboarding_history", "Rejected");
+            $("#aphist__ApplicationHistory__rejected_records").addClass("active");
+        } else if (params.filter == "saved") {
+            apz.searchRecords("aphist__ApplicationHistory__onboarding_history", "Initiated");
+            $("#aphist__ApplicationHistory__saved_records").addClass("active");
+        } else if (params.filter == "approved") {
+            apz.searchRecords("aphist__ApplicationHistory__onboarding_history", "Approved");
+            $("#aphist__ApplicationHistory__approved_records").addClass("active");
+        }
+    } else {
+        $("#aphist__ApplicationHistory__all_records").addClass("active");
+    }
+}
+apz.aphist.ApplicationHistory.injectFilters = function() {
+    debugger;
+    apz.data.scrDataBackup = {};
+    $(".status_filter").on("click", function(pObj) {
+        debugger;
+        var type = $(this).text();
+        var id = $(this)[0].id;
+        if (type.indexOf("All") > -1) {
+            apz.searchRecords("aphist__ApplicationHistory__onboarding_history", "");
+        } else if (type.indexOf("Pending") > -1 || type.indexOf("in-progress") > -1) {
+            apz.searchRecords("aphist__ApplicationHistory__onboarding_history", "Pending");
+        } else if (type.indexOf("Rejected") > -1) {
+            apz.searchRecords("aphist__ApplicationHistory__onboarding_history", "Rejected");
+        } else if (type.indexOf("Approved") > -1) {
+            apz.searchRecords("aphist__ApplicationHistory__onboarding_history", "Approved");
+        } else if (type.indexOf("Initiated") > -1) {
+            apz.searchRecords("aphist__ApplicationHistory__onboarding_history", "Initiated");
+        } else {
+            debugger;
+        }
+        $("#aphist__ApplicationHistory__all_records").removeClass("active");
+        $("#aphist__ApplicationHistory__pending_records").removeClass("active");
+        $("#aphist__ApplicationHistory__rejected_records").removeClass("active");
+        $("#aphist__ApplicationHistory__approved_records").removeClass("active");
+        $("#aphist__ApplicationHistory__saved_records").removeClass("active");
+        $("#" + id).addClass("active");
+    });
+};
+apz.aphist.ApplicationHistory.fnNewOnboarding = function() {
+    debugger;
+    var params = {};
+    params.appId = "prdsel";
+    params.scr = "ProductLauncher";
+    params.div = "menuap__Menu__MainLaunchArea";
+    params.userObj = {
+        "parentdiv": "menuap__Menu__MainLaunchArea",
+    };
+    apz.launchApp(params);
+}
+apz.aphist.ApplicationHistory.fnTimeline = function(pThis, e) {
+    debugger;
+    e.stopPropagation();
+    // var rowNo = $(pThis).parents('li').attr('rowno');
+    var rowNo = $(pThis).attr('rowno');
+    var rowData = apz.data.scrdata.aphist__ApplicationHistorySQL_Res[rowNo];
+    if (rowData.id_status == "Failure") {
+    var msg = rowData.id_status_reason;
+    if(msg && msg !=""){
+        apz.dispMsg({
+            "message": msg
+        });
+    }else{
+        apz.dispMsg({
+            "message": "Sorry! The failure reason is not available"
+        });
+    }
+    }
+}
+apz.aphist.ApplicationHistory.fngetApplicationHistory = function() {
+    debugger;
+    let appId = apz.aphist.ApplicationHistory.sparams.appId;
+    var lStageId = "RMAPPROVE";
+    var lPrevStageId = "";
+    var userRole = apz.menuap.Menu.userRole;
+    if (userRole == "FLD") {
+        lStageId = "FIELDAGENTAPPROVE";
+    } else if (userRole == "CR" || userRole == "SCR") {
+        lStageId = "CREDITCHECK";
+    } else if (userRole == "LA" || userRole == "SLA") {
+        lStageId = "MANAGERAPPROVE";
+    } else if (userRole == "RM") {
+        lPrevStageId = "INPUT";
+    }
+    var interfaceName = "ApplicationHistorySQL"
+    var lReq = {
+        stageId: lStageId,
+        prevStageId: lPrevStageId
+    };
+    var paintResponse = "Y"
+    if (apz.menuap.Menu.userRole == "SRM" || apz.menuap.Menu.userRole == "SCR" || apz.menuap.Menu.userRole == "SLA") {
+        if (apz.menuap.Menu.userId == "MRM001" || apz.menuap.Menu.userId == "MCR003" || apz.menuap.Menu.userId == "MLA004") {
+            lReq = {
+                stageId: lStageId,
+                applicationType: "Merchant"
+            };
+        } else if (apz.menuap.Menu.userId == "SRM001" || apz.menuap.Menu.userId == "SCR003" || apz.menuap.Menu.userId == "SLA004") {
+            lReq = {
+                stageId: lStageId,
+                applicationType: "Corporate"
+            };
+        }
+        interfaceName = "SMEApplicationHistorySQL"
+        paintResponse = "N"
+    }
+    var lServerParams = {
+        "ifaceName": interfaceName,
+        "buildReq": "N",
+        "req": lReq,
+        "appId": "aphist",
+        "paintResp": paintResponse,
+        "callBack": apz.aphist.ApplicationHistory.fngetApplicationHistoryAgencyCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.aphist.ApplicationHistory.fngetApplicationHistoryAgencyCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        if (!pResp.errors) {
+            if (apz.menuap.Menu.userRole == "SRM" || apz.menuap.Menu.userRole == "SCR" || apz.menuap.Menu.userRole == "SLA") {
+                //var records = pResp.res.aphist__SMEApplicationHistorySQL_Res;
+                // Added by Chaitra
+                var records = apz.aphist.ApplicationHistory.fnRemoveDuplicateRecords(pResp.res.aphist__SMEApplicationHistorySQL_Res,
+                    'workflow_ref_no');
+                //
+                apz.data.scrdata.aphist__ApplicationHistorySQL_Res = {}
+                var recordsArray = []
+                records.forEach(function(item, index) {
+                    var recordObject = {}
+                    recordObject.start_ts = item.START_TS
+                    recordObject.STATUS = item.STATUS
+                    recordObject.product = item.COMPANY_NAME
+                    recordObject.srcdata = ""
+                    recordObject.STAGE_ID = item.stage_id
+                    recordObject.subproduct = item.TRADE_LICENSE_NO
+                    recordObject.workflow_ref_no = item.workflow_ref_no
+                    recordObject.source = "sme"
+                    recordObject.COUNTRY_NAME = item.COUNTRY_NAME
+                    recordsArray.push(recordObject)
+                });
+                apz.data.scrdata.aphist__ApplicationHistorySQL_Res = recordsArray;
+                apz.data.loadData("ApplicationHistorySQL", "aphist")
+                apz.aphist.ApplicationHistory.fnFilter(recordsArray)
+            } else {
+                var recsArray = pResp.res.aphist__ApplicationHistorySQL_Res;
+                apz.aphist.ApplicationHistory.fnFilter(recsArray)
+            }
+        }
+    }
+}
+apz.aphist.ApplicationHistory.fnFilter = function(recsArray) {
+    debugger;
+    var totalRecs = recsArray.length;
+    apz.setElmValue("aphist__ApplicationHistory__all_records_count", totalRecs);
+    var approvedRecs = 0;
+    var rejectedRecs = 0;
+    var pendingRecs = 0;
+    var savedRecs = 0;
+    for (var i = 0; i < totalRecs; i++) {
+        if (recsArray[i].STATUS == "APPROVED") {
+            recsArray[i].status_img = "icon-approved-alt";
+            approvedRecs++;
+        } else if (recsArray[i].STATUS == "REJECTED") {
+            recsArray[i].status_img = "icon-rejected-alt";
+            rejectedRecs++;
+        } else if (recsArray[i].STATUS == "PENDING APPROVAL" || recsArray[i].STATUS == "IN-PROGRESS") {
+            recsArray[i].status_img = "icon-pending-alt";
+            pendingRecs++;
+        } else if (recsArray[i].STATUS == "INITIATED") {
+            recsArray[i].status_img = "icon-approved-alt";
+            savedRecs++;
+        } else {
+            debugger;
+        }
+    }
+    debugger;
+    apz.setElmValue("aphist__ApplicationHistory__rejected_records_count", rejectedRecs);
+    apz.setElmValue("aphist__ApplicationHistory__approved_records_count", approvedRecs);
+    apz.setElmValue("aphist__ApplicationHistory__pending_records_count", pendingRecs);
+    apz.setElmValue("aphist__ApplicationHistory__saved_records_count", savedRecs);
+}
+apz.aphist.ApplicationHistory.fnLaunchAppDetails = function(arg1) {
+    debugger;
+    var appId = apz.aphist.ApplicationHistory.sparams.appId;
+    var refNo = apz.getElmValue("aphist__ApplicationHistorySQL__o__aphist__ApplicationHistorySQL_Res__workflow_ref_no_" + (arg1.currentTarget.rowIndex -
+        1));
+    var product = apz.getElmValue("aphist__ApplicationHistorySQL__o__aphist__ApplicationHistorySQL_Res__product_" + (arg1.currentTarget.rowIndex - 1));
+    var subproduct = apz.getElmValue("aphist__ApplicationHistorySQL__o__aphist__ApplicationHistorySQL_Res__subproduct_" + (arg1.currentTarget.rowIndex -
+        1));
+    var records = apz.data.scrdata.aphist__ApplicationHistorySQL_Res;
+    var selectedRow = [];
+    for (var i = 0; i < records.length; i++) {
+        debugger;
+        var record = records[i];
+        if (refNo == record.workflow_ref_no) {
+            debugger;
+            selectedRow = record;
+            if (record.source) {
+                apz.menuap.Menu.sCache.source = "sme";
+            } else {
+                apz.menuap.Menu.sCache.source = "retail";
+            }
+            break;
+        }
+    }
+    var userRole = apz.menuap.Menu.userRole;
+    if (selectedRow.STATUS == "INITIATED") {
+        appId = "ONB";
+        apz.saved = true;
+    }
+    /*
+    var rowno = apz.scrMetaData.containersMap["aphist__ApplicationHistory__onboarding_history"].currRec;
+    let selectedRow = apz.data.scrdata.aphist__ApplicationHistorySQL_Res[rowno];
+    var refNo = apz.data.scrdata.aphist__ApplicationHistorySQL_Res[rowno].WORKFLOW_REF_NO;
+    */
+    debugger;
+    // apz.country = selectedRow.COUNTRY_NAME;
+    if (selectedRow.STATUS == "PENDING APPROVAL" || selectedRow.STATUS == "INITIATED" || selectedRow.STATUS == "IN-PROGRESS") {
+        if (userRole == "SRM") {
+            console.log("SRM into Application summary")
+            apz.appNo = refNo;
+            var params = {};
+            params.appId = "corsum";
+            params.scr = "Launcher";
+            params.div = "menuap__Menu__MainLaunchArea";
+            params.userObj = {
+                "refNo": refNo
+            };
+            apz.launchApp(params);
+        } else {
+            var params = {};
+            params.appId = "appdtl";
+            params.scr = "AppLauncher";
+            params.div = "menuap__Menu__MainLaunchArea";
+            params.userObj = {
+                "refNo": refNo,
+                "appId": appId,
+                "product": product,
+                "subproduct": subproduct,
+                "appId": appId
+            }
+            apz.launchApp(params);
+        }
+    } else {
+        if (selectedRow.STATUS == "APPROVED") {
+            apz.dispMsg({
+                "message": "The application has been approved already and you can not edit it!"
+            });
+        } else if (selectedRow.STATUS == "REJECTED") {
+            apz.dispMsg({
+                "message": "The application has been rejected already and you can not edit it!"
+            });
+        }
+    }
+}
+apz.aphist.ApplicationHistory.fnCancel = function() {
+    debugger;
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": "menuap__Menu__MainLaunchArea",
+            "parentAppId": "menuap",
+            "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+            "custImg": "menuap__Menu__custImg",
+            "custId": "menuap__Menu__custId_txtcnt"
+        }
+    }
+    apz.launchApp(lParams);
+}
+apz.aphist.ApplicationHistory.fnRemoveDuplicateRecords = function(arr, comp) {
+    debugger;
+    // store the comparison  values in array
+    const unique = arr.map(e => e[comp])
+    // store the indexes of the unique objects
+    .map((e, i, final) => final.indexOf(e) === i && i)
+    // eliminate the false indexes & return unique objects
+    .filter((e) => arr[e]).map(e => arr[e]);
+    return unique;
+}

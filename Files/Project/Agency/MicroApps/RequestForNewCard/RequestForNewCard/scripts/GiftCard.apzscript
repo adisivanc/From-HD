@@ -1,0 +1,219 @@
+apz.crddtl.GiftCard = {};
+apz.crddtl.GiftCard.sParams = {};
+apz.app.onShown_GiftCard = function(params) {
+    debugger;
+    apz.crddtl.GiftCard.sParams = params;
+    // apz.crddtl.GiftCard.fnInitialise(params);
+    apz.show("crddtl__GiftCard__Stage1");
+};
+apz.crddtl.GiftCard.fnContinueStage1 = function(params) {
+    debugger;
+    var lValid = apz.crddtl.GiftCard.fnValidateStage1();
+    if (lValid) {
+        apz.data.buildData("NewCardRequest", "crddtl");
+        var lImage = $("#crddtl__NewCardRequest__i__cardReqDtl__custImageBase64").attr("src");
+        if (lImage == "") {
+            apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl.custImageBase64 = "";
+        }
+        apz.crddtl.GiftCard.fnGoToStage2();
+    }
+};
+apz.crddtl.GiftCard.fnDescInfo = function(){
+    apz.toggleModal({
+        "targetId": "crddtl__GiftCard__descModel"
+    });
+}
+apz.crddtl.GiftCard.fnNameonCard = function(params) {
+    debugger;
+    apz.setElmValue("crddtl__GiftCard__CustomerName", apz.getElmValue("crddtl__NewCardRequest__i__cardReqDtl__nameOnCard"));
+};
+apz.crddtl.GiftCard.fnGoToStage2 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl;
+    apz.setElmValue("crddtl__GiftCard__Stage3CardType", "Gift Card");
+    apz.setElmValue("crddtl__GiftCard__Stage3AccNo", lDetails.accountNo);
+    apz.setElmValue("crddtl__GiftCard__Stage3NameOnCard", lDetails.nameOnCard);
+    apz.setElmValue("crddtl__GiftCard__Stage3Amount", lDetails.amount);
+    apz.setElmValue("crddtl__GiftCard__Stage3Validity", lDetails.validity);
+    apz.hide("crddtl__GiftCard__Stage1");
+    apz.show("crddtl__GiftCard__Stage2");
+};
+apz.crddtl.GiftCard.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer('crddtl__GiftCard__Stage2Form');
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "ERR_MANDATORY"
+        }
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.crddtl.GiftCard.fnBack = function() {
+    var lParams = {
+        "appId": "crddtl",
+        "scr": "NewCardRequest",
+        "div": "crddtl__ManageCards__Stage2",
+        "userObj": {
+            "data": {
+                "customerID": apz.crddtl.managecards.sParams.data.customerID,
+                "accountCcy": "INR"
+            },
+            "callBack": apz.crddtl.managecards.fnBack
+        }
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.crddtl.GiftCard.fnBackStage1 = function() {
+    apz.crddtl.GiftCard.sParams.callBack();
+};
+apz.crddtl.GiftCard.fnRenderStage3 = function() {
+    debugger;
+    apz.hide("crddtl__ManageCards__Stage1");
+    apz.hide("crddtl__ManageCards__CardDtlsList");
+    apz.show("crddtl__ManageCards__Stage2");
+};
+apz.crddtl.GiftCard.fnCapturePhoto = function(pthis) {
+    debugger;
+    var lValid = apz.crddtl.GiftCard.fnFileSizeCheck('crddtl__GiftCard__CustomerPhotoBrowse');
+    if (lValid) {
+        var fileObj = pthis.files[0];
+        var apzFileReader = new FileReader();
+        apzFileReader.onload = function() {
+            debugger;
+            var binaryStr = apzFileReader.result;
+            var base64Str = btoa(binaryStr);
+            apz.setElmValue("crddtl__GiftCard__TempImg", base64Str);
+            apz.startLoader();
+            setTimeout(function() {
+                apz.crddtl.GiftCard.fnGetImage(base64Str)
+            }, 1000);
+        }
+        apzFileReader.readAsBinaryString(fileObj);
+    }
+};
+apz.crddtl.GiftCard.fnGetImage = function(base64Str) {
+    debugger;
+    var lImg = document.querySelector("#crddtl__GiftCard__TempImg");
+    var lHeight = lImg.naturalHeight;
+    var lWidth = lImg.naturalWidth;
+    apz.stopLoader();
+    if (lHeight <= 230 && lWidth <= 230) {
+        apz.setElmValue("crddtl__GiftCard__i__cardReqDtl__custImageBase64", base64Str);
+        apz.setElmValue("crddtl__GiftCard__BackgroundImge", base64Str);
+        document.getElementById("crddtl__GiftCard__BackgroundImge").style.backgroundImage = "url('data:image/png;base64," + base64Str + "')";
+        apz.show("crddtl__GiftCard__i__cardReqDtl__custImageBase64_ul");
+        apz.show("crddtl__GiftCard__i__cardReqDtl__custImageBase64");
+    } else {
+        alert("Height and width");
+        apz.crddtl.GiftCard.fnRemoveImage();
+    }
+}
+apz.crddtl.GiftCard.fnRemoveImage = function() {
+    debugger;
+    $("#crddtl__NewCardRequest__i__cardReqDtl__custImageBase64").attr("src", "")
+    apz.hide("crddtl__NewCardRequest__i__cardReqDtl__custImageBase64_ul");
+}
+apz.crddtl.GiftCard.fnFileSizeCheck = function(puploadid) {
+    debugger;
+    var lreturn = true;
+    var lidenObj = $('#' + puploadid).prop("files");
+    var lsize = lidenObj[0].size;
+    var ltype = lidenObj[0].type;
+    if (lsize > 200000) {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_200'
+        };
+        apz.dispMsg(msg);
+    } else if (lsize > 200000) {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_200'
+        };
+        apz.dispMsg(msg);
+    } else if (ltype == "application/pdf" || ltype == "image/jpeg" || ltype == "image/png") {} else {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_FORMAT'
+        };
+        apz.dispMsg(msg);
+    }
+    return lreturn;
+};
+apz.crddtl.GiftCard.fnConfirmStage2 = function() {
+    debugger;
+    var lReq = {
+        "action": "Confirm",
+        "cardReqDtl": apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl
+    };
+    var lServerParams = {
+        "ifaceName": "NewCardRequest",
+        "req": lReq,
+        "callBack": apz.crddtl.GiftCard.fnInsertCallBack
+    };
+    apz.crddtl.GiftCard.fnBeforeCallServer(lServerParams);
+};
+apz.crddtl.GiftCard.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.req,
+        "paintResp": "N",
+        "callBack": params.callBack
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.crddtl.GiftCard.fnInsertCallBack = function(params) {
+    debugger;
+    apz.data.loadJsonData(params.ifaceName, "crddtl");
+    apz.crddtl.GiftCard.sParams.OtpRes = params.res.crddtl__NewCardRequest_Res.cardReqDtl;
+    apz.crddtl.GiftCard.fnRenderOTP();
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "crddtl__GiftCard__Launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.crddtl__GiftCard_Res.cardReqDtl.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.crddtl.GiftCard.fnGotoStage4,
+                "destroyDiv": "crddtl__GiftCard__Launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+};
+apz.crddtl.GiftCard.fnRenderOTP = function() {
+    debugger;
+    apz.hide("crddtl__GiftCard__Stage1");
+    apz.hide("crddtl__GiftCard__Stage2");
+    apz.show("crddtl__GiftCard__Launcher");
+    apz.hide("crddtl__GiftCard__Stage3");
+};
+apz.crddtl.GiftCard.fnGotoStage4 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl;
+    apz.setElmValue("crddtl__GiftCard__Stage4CardType", "Gift Card");
+    apz.setElmValue("crddtl__GiftCard__Stage4AccNo", lDetails.accountNo);
+    apz.setElmValue("crddtl__GiftCard__Stage4NameOnCard", lDetails.nameOnCard);
+    apz.setElmValue("crddtl__GiftCard__Stage4Amount", lDetails.amount);
+    apz.setElmValue("crddtl__GiftCard__Stage4Validity", lDetails.validity);
+    apz.hide("crddtl__GiftCard__Stage1");
+    apz.hide("crddtl__GiftCard__Stage2");
+    apz.hide("crddtl__GiftCard__Launcher");
+    apz.show("crddtl__GiftCard__Stage3");
+};
+apz.crddtl.GiftCard.fnEditStage2 = function() {
+    debugger;
+    apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl = "";
+    debugger;
+    apz.show("crddtl__GiftCard__Stage1");
+    apz.hide("crddtl__GiftCard__Stage2");
+};

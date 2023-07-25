@@ -1,0 +1,30 @@
+{
+    "tbDbmiCorpFavFt": [{
+        "amount": 250,
+        "corporateId": "000FTAC4321",
+        "createdDate": "2019-03-06",
+        "fromAccount": "000288122232",
+        "ftType": "DOM",
+        "name": "My fav",
+        "toAccount": "150100159160987",
+        "userId": "robert.langford"
+    }, {
+        "amount": 2509,
+        "corporateId": "000FTAC4321",
+        "createdDate": "2019-03-06",
+        "fromAccount": "28800323232",
+        "ftType": "DOM",
+        "name": "To Norton",
+        "toAccount": "93857394898732",
+        "userId": "robert.langford"
+    }, {
+        "amount": 110,
+        "corporateId": "000FTAC4321",
+        "createdDate": "2019-03-06",
+        "fromAccount": "00028829921",
+        "ftType": "DOM",
+        "name": "To Robert",
+        "toAccount": "2914802121113",
+        "userId": "robert.langford"
+    }]
+}

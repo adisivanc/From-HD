@@ -1,0 +1,22 @@
+[
+    {
+        "val":"",
+        "desc":"Please Select"
+    },
+    {
+        "val":"Driver’s License",
+        "desc":"Driver’s License"
+    },
+    {
+        "val":"Passport",
+        "desc":"Passport"
+    },
+    {
+        "val":"Resident Identity Card",
+        "desc":"Resident Identity Card"
+    },
+    {
+        "val":"Voter's ID",
+        "desc":"Voter's ID"
+    }
+]

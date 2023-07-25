@@ -1,0 +1,153 @@
+apz.cracop.productdetails = {};
+apz.cracop.productdetails.sCache = {};
+apz.cracop.productdetails.sProductsJson = [];
+apz.cracop.productdetails.sProductName = '';
+apz.app.onLoad_ProductDetails = function(params) {
+    debugger;
+    //Loading the icon
+    apz.data.loadJsonData("ProductDescription");
+    apz.cracop.productdetails.sCache = params;
+    apz.setElmValue("cracop__ProductDetails__productCatDropDown", apz.cracop.productdetails.sCache.data.ProCategory);
+    apz.setElmValue("cracop__ProductDetails__proType", apz.cracop.productdetails.sCache.data.ProType);
+    if (apz.cracop.productdetails.sCache.data.ProCategory == "Vehicle Loan" || apz.cracop.productdetails.sCache.data.ProCategory == "Home Loan") {
+        apz.hide("cracop__ProductDetails__accRow");
+        apz.show("cracop__ProductDetails__loanRow");
+    } else {
+        apz.show("cracop__ProductDetails__accRow");
+        apz.hide("cracop__ProductDetails__loanRow");
+    }
+    if (apz.cracop.productdetails.sCache.action == "fst") {
+        apz.data.scrdata.cracop__ProductDetails_Req = [];
+        apz.data.scrdata.cracop__ProductDetails_Req.ProductDesc = [];
+    }
+    apz.cracop.productdetails.fnUpdateUI();
+};
+apz.cracop.productdetails.fnOnclickCheckbox = function(pthis) {
+    debugger;
+    var lProduct = {};
+    if ($(pthis).prop("checked") == true) {
+        lProduct.productName = $(pthis).next('label').text();
+        apz.cracop.productdetails.sProductsJson.push(lProduct);
+    } else {
+        for (i = 0; i < apz.cracop.productdetails.sProductsJson.length; i++) {
+            if ($(pthis).next('label').text() == apz.cracop.productdetails.sProductsJson[i].productName) {
+                apz.cracop.productdetails.sProductsJson.splice(i, 1);
+            }
+        }
+    }
+};
+apz.cracop.productdetails.fnOnclickSave = function() {
+    debugger;
+    // if (apz.cracop.productdetails.sCache.data.ProCategory == "Vehicle Loan" || apz.cracop.productdetails.sCache.data.ProCategory == "Home Loan") {
+    //     apz.cracop.productdetails.fnConcatinateName();
+    // } else {
+        apz.cracop.productdetails.fnConcatinateProductName();
+    // }
+    var lProductCategory = apz.getElmValue("cracop__ProductDetails__productCatDropDown");
+    for (i = 0; i < apz.data.scrdata.cracop__ProductDescription_Req.ProductDetails.length; i++) {
+        if (lProductCategory == apz.data.scrdata.cracop__ProductDescription_Req.ProductDetails[i].productCategory) {
+            var lData = {};
+            lData.productCategory = apz.data.scrdata.cracop__ProductDescription_Req.ProductDetails[i].productCategory;
+            lData.icon = apz.data.scrdata.cracop__ProductDescription_Req.ProductDetails[i].icon;
+            lData.productNames = apz.cracop.productdetails.sProductName;
+            lData.sourceOfLead = apz.getElmValue("cracop__ProductDetails__sourceOfLeadDropDown")
+            apz.data.scrdata.cracop__ProductDetails_Req.ProductDesc.push(lData);
+        }
+    }
+    var lObj = {
+        "scr": "Products",
+        "div": "BSAP01__BaseApp__MainLaunchArea",
+        "animation": 10,
+        "userObj": {
+            "action": "backToDetails",
+            "destroyDiv": "BSAP01__BaseApp__MainLaunchArea",
+            "parentAppId": "",
+            "data": apz.cracop.productdetails.sCache.data,
+            "count": apz.data.scrdata.cracop__ProductDetails_Req.ProductDesc.length,
+             "leadDetails": apz.cracop.productdetails.sCache.leadDetails
+        }
+    };
+    apz.launchSubScreen(lObj);
+};
+apz.cracop.productdetails.fnUpdateUI = function() {
+    apz.cracop.productdetails.sProductName = '';
+    apz.cracop.productdetails.sProductsJson = [];
+    if (apz.cracop.productdetails.sCache.action == "New") {
+        apz.data.scrdata.cracop__ProductDetails_Req = [];
+        apz.data.scrdata.cracop__ProductDetails_Req.ProductDesc = [];
+    } else {}
+};
+apz.cracop.productdetails.fnOnclickCancel = function() {
+    var lObj = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "BSAP01__BaseApp__MainLaunchArea",
+        "animation": 21,
+        "userObj": {
+            "action": "",
+            "data": {},
+            "destroyDiv": "BSAP01__BaseApp__MainLaunchArea",
+            "parentId": "BSAP01",
+            "leadDetails": apz.cracop.productdetails.sCache.leadDetails
+        }
+    };
+    apz.launchApp(lObj);
+};
+apz.cracop.productdetails.fnConcatinateProductName = function() {
+    for (i = 0; i < apz.cracop.productdetails.sProductsJson.length; i++) {
+        if (apz.cracop.productdetails.sProductName == "") {
+            apz.cracop.productdetails.sProductName = apz.cracop.productdetails.sProductsJson[i].productName;
+        } else {
+            apz.cracop.productdetails.sProductName = apz.cracop.productdetails.sProductName + "," + apz.cracop.productdetails.sProductsJson[i].productName;
+        }
+    }
+};
+apz.cracop.productdetails.fnConcatinateName = function() {
+    
+}
+apz.cracop.productdetails.fnLoadModal = function() {
+    debugger;
+    var lParams = {
+        "scr": "ProductSelectionModal",
+        "animation": 12,
+        "div": "BSAP01__BaseApp__MainLaunchArea",
+        "type": "CF",
+        "userObj": {
+            "action": "OtherDetails",
+            "destroyDiv": "BSAP01__BaseApp__MainLaunchArea",
+            "data": apz.cracop.productdetails.sCache.data,
+            "parentId": "BSAP01",
+            "callBack": "",
+            "leadDetails": apz.cracop.productdetails.sCache.leadDetails
+        }
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.cracop.productdetails.fnCalculateEMI = function() {
+    debugger;
+    var lparams = {
+        "value": apz.getElmValue('cracop__ProductDetails__lanAmt'),
+        "decimalSep": ".",
+        "displayAsLiteral": "N"
+    };
+    lPrincipal = parseInt(apz.unFormatNumber(lparams));
+    lROI = apz.getElmValue("cracop__ProductDetails__roi");
+    lTenure = apz.getElmValue("cracop__ProductDetails__tenor");
+    var lMonthlyTenure = lTenure;
+    var lMonthlyROI = lROI / (12 * 100);
+    var lEmi = apz.cracop.productdetails.valueEMI(lPrincipal, lMonthlyROI, lMonthlyTenure);
+    var lObj = {};
+    lObj = {
+        "value": lEmi,
+        "decimalSep": ".",
+        "displayAsLiteral": "N",
+        "mask": "LAKH",
+        "decimalPoints": "2"
+    }
+    lEmi = apz.formatNumber(lObj);
+    apz.setElmValue("cracop__ProductDetails__emiValue_txtcnt", "EMI : ₹ " + lEmi);
+};
+apz.cracop.productdetails.valueEMI = function(pPrincipal, pMonthlyROI, pMonthlyTenure) {
+    var lMonthyEMI = (pMonthlyROI * pPrincipal * Math.pow((1 + pMonthlyROI), pMonthlyTenure)) / (Math.pow((1 + pMonthlyROI), pMonthlyTenure) - 1);
+    return Math.round((lMonthyEMI * 100) / 100);
+};

@@ -1,0 +1,48 @@
+   {
+       "ovdrfd__SavDepAccDetails_Res": {
+           "SavingsAccount": [{
+               "accountNo": "100009312263",
+               "accountBal": "1000996",
+               "accountBrn": "West Bay-30",
+               "accountBrnCd": "619",
+               "accountBrnIFSC": "HKL00000619"
+           }, {
+               "accountNo": "100009312401",
+               "accountBal": "188373",
+               "accountBrn": "West Bay-30",
+               "accountBrnCd": "619",
+               "accountBrnIFSC": "HKL00000619"
+           }, {
+               "accountNo": "732510006721",
+               "accountBal": "264748",
+               "accountBrn": "West Bay-30",
+               "accountBrnCd": "619",
+               "accountBrnIFSC": "HKL00000619"
+           }],
+           "DepositAccount": [{
+               "accountNo": "001234545849",
+               "accountBal": "45000",
+               "accountBrn": "West Bay-30",
+               "accountBrnCd": "556",
+               "accountBrnIFSC": "HKL00000619"
+           }, {
+               "accountNo": "001234590720",
+               "accountBal": "90000",
+               "accountBrn": "West Bay-30",
+               "accountBrnCd": "098",
+               "accountBrnIFSC": "HKL00000619"
+           }, {
+               "accountNo": "978986887900",
+               "accountBal": "100000",
+               "accountBrn": "West Bay-30",
+               "accountBrnCd": "556",
+               "accountBrnIFSC": "HKL00000619"
+           }, {
+               "accountNo": "558982498972",
+               "accountBal": "200000",
+               "accountBrn": "West Bay-30",
+               "accountBrnCd": "098",
+               "accountBrnIFSC": "HKL00000619"
+           }]
+       }
+   }

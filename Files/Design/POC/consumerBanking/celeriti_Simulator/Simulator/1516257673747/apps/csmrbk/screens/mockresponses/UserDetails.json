@@ -1,0 +1,29 @@
+{
+    "tbCelerityCustomize": [
+        {
+            "sequence": 1,
+            "widgetId": "custdb__Dashboard__accountOverview",
+            "screenName": "Dashboard",
+            "type": "widget",
+            "userId": "admin"
+        }, {
+            "sequence": 2,
+            "widgetId": "custdb__Dashboard__relationshipOverview",
+            "screenName": "Dashboard",
+            "type": "widget",
+            "userId": "admin"
+        }, {
+            "sequence": 1,
+            "widgetId": "custdb__Dashboard__FundTransfer",
+            "screenName": "Dashboard",
+            "type": "microapp",
+            "userId": "admin"
+        }, {
+            "sequence": 2,
+            "widgetId": "custdb__Dashboard__talkBack",
+            "screenName": "Dashboard",
+            "type": "microapp",
+            "userId": "admin"
+        }
+    ]
+}

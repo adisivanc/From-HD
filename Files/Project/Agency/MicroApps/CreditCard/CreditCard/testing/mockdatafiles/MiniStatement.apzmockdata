@@ -1,0 +1,61 @@
+{
+    "miniStmtMaster": {
+        "txnRefNo": "",
+        "status": "",
+        "respCd": "",
+        "intMsgCd": "",
+        "extMsg": "",
+        "miniStmtDtls": [
+            {
+                "trnDescription": "Transfer",
+                "trnId": "C",
+                "trnDate": "30-MAR-2018",
+                "trnType": "",
+                "instrumentNo": "",
+                "trnAmount": "8900.00",
+                "drcrInd": "C",
+                "runningBalance": "45432"
+            },
+            {
+                "trnDescription": "Credit card payment",
+                "trnId": "C",
+                "trnDate": "28-MAR-2018",
+                "trnType": "",
+                "instrumentNo": "",
+                "trnAmount": "1200.00",
+                "drcrInd": "D",
+                "runningBalance": "45343"
+            },
+            {
+                "trnDescription": "Shoppers Stop BTM -0987",
+                "trnId": "C",
+                "trnDate": "27-MAR-2018",
+                "trnType": "",
+                "instrumentNo": "",
+                "trnAmount": "4000.00",
+                "drcrInd": "D",
+                "runningBalance": "56784"
+            },
+            {
+                "trnDescription": "Uber Cabs",
+                "trnId": "C",
+                "trnDate": "24-MAR-2018",
+                "trnType": "",
+                "instrumentNo": "",
+                "trnAmount": "6777.00",
+                "drcrInd": "D",
+                "runningBalance": "21234"
+            },
+            {
+                "trnDescription": "Phone Bill 93XXXXX34X1",
+                "trnId": "C",
+                "trnDate": "21-MAR-2018",
+                "trnType": "",
+                "instrumentNo": "",
+                "trnAmount": "4512.00",
+                "drcrInd": "D",
+                "runningBalance": "43233"
+            }
+        ]
+    }
+}

@@ -1,0 +1,85 @@
+ apz.cdtcrd.EMI = {};
+apz.cdtcrd.EMI.sParams = {};
+ var y = {};
+ apz.app.onLoad_EMI = function(params) {
+apz.cdtcrd.EMI.sParams = params;
+     debugger;
+     y = params.amount;
+     apz.setElmValue("landin__Landing__heading", "CONVERT TO EMI");
+     apz.setElmValue("cdtcrd__EMI__el_inp_13", y)
+ }
+
+ apz.cdtcrd.EMI.back = function() {
+    /* apz.launchSubScreen({
+         appId: "cdtcrd",
+         scr: "CreditCardDetails",
+         div: "cdtcrd__CreditCardDetails__Stage1"
+     })*/
+     
+     
+ apz.launchSubScreen({
+         appId : "cdtcrd",
+         scr: "CreditCardDetails",
+         div : "landin__Landing__launcher",
+         userObj:{...apz.cdtcrd.EMI.sParams}
+     })
+ }
+ apz.cdtcrd.EMI.fnCallback = function(){
+     debugger;
+      apz.launchApp({
+             appId: "sucscr",
+             scr: "SuccessScreen",
+             div:"cdtcrd__CreditCardDetails__Stage2",
+             userObj: {
+                 "text": "EMI conversion is successful"
+             }
+         })
+ }
+ apz.cdtcrd.EMI.submit = function() {
+     debugger;
+     var isAmountGreater = apz.cdtcrd.EMI.fnValidateInput();
+     if(!isAmountGreater){
+          var x = apz.getElmValue("cdtcrd__EMI__el_cbx_3")
+     var y = apz.getElmValue("cdtcrd__EMI__el_inp_14")
+     if ((x == "y") && (y != "")) {
+        var lLaunchParams = {
+            "appId": "otpeng",
+            "scr": "ProcessOTP",
+            "div": "cdtcrd__CreditCardDetails__Stage2",
+            "userObj": {
+                "action": "SetRefNo",
+                "data": {
+                    //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+                },
+                "control": {
+                    "appId": "otpeng",
+                    "callBack": apz.cdtcrd.EMI.fnCallback,
+                    "destroyDiv": "cdtcrd__CreditCardDetails__Stage2"
+                }
+            }
+        };
+        apz.launchApp(lLaunchParams);
+     } else if (x == "n") {
+         apz.dispMsg({"message":"Please agree to the terms and conditions"});
+        
+     } else if (y == "") {
+         apz.dispMsg({"message":"Please enter the amount you would like to convert"});
+        
+     }
+     }
+    
+ }
+
+apz.cdtcrd.EMI.fnValidateInput = function(){
+    debugger;
+    var amount = parseInt((apz.getElmValue("cdtcrd__EMI__el_inp_13")).replace(",",""));
+    var emiamount = parseInt(apz.getElmValue("cdtcrd__EMI__el_inp_14"));
+    
+    if(emiamount >= amount){
+        apz.dispMsg({"message":" Amount you would like to convert should not be greater than the Eligible amount for EMI conversion"});
+        return true;
+    }
+    return false;
+    
+}
+

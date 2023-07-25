@@ -1,0 +1,13 @@
+{
+    "crsapp__Adverse_HitList_Req": {
+        "amlHitlistDowjones": [{
+            "description": "Competitive/Financial, Management Issues: ACME Corporation Chairman Takes Leave of Absence to Help Probe into Money Transfer by USA Leader Michael Smith",
+            "documentName": "https://www.dowjones.com/buying-center/anti-money-laundering-compliance/",
+            "entityIndividualName": "ACME Corporation",
+            "status": "HIT",
+            "systemId": "DOWJONES",
+            "systemName": "ADVERSE_NEWS",
+            "type": "E"
+        }]
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "extracted_entities": {
+        "account_no": "980765476891",
+        "bank_name": "HDFC",
+        "holder_name": "ABC",
+        "cheque_no": "432123",
+        "amount": "20000"
+    }
+}

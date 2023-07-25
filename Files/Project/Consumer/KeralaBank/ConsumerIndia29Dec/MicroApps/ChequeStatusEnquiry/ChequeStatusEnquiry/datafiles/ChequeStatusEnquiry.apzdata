@@ -1,0 +1,31 @@
+{"chqsts__ChequeStatusEnquiry_Res":
+    
+    {
+    "chequeStatusEnq": {
+        "trnRefNo": "0000047121513919901169308946",
+        "respCd": "disp",
+        "intMsgCd": "",
+        "extMsg": "",
+        "chequeStatusDetails": [
+            {
+                "chequeStatus": "Unused",
+                "chequeNumber": 333789
+            },
+            {
+                "chequeStatus": "Cheque used",
+                "chequeNumber": 333790
+            },
+            {
+                "chequeStatus": "Cheque used",
+                "chequeNumber": 333791
+            },
+            {
+                "chequeStatus": "Cheque used",
+                "chequeNumber": 333792
+            }
+        ],
+        "status": "success"
+    }
+}
+
+}

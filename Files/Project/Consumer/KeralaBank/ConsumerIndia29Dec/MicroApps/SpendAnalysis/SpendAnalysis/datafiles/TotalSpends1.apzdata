@@ -1,0 +1,26 @@
+{
+    "spndas__TotalSpends1_Res": {
+        "spends": [{
+            "name": "Bills and Utilities",
+            "value": "5000"
+        }, {
+            "name": "Food and Dining",
+            "value": "20000"
+        },{
+            "name": "Health and Fitness",
+            "value": "15000"
+        },{
+            "name": "Entertainment",
+            "value": "10000"
+        },{
+            "name": "Investments",
+            "value": "12000"
+        },{
+            "name": "Auto and Transport",
+            "value": "5000"
+        },{
+            "name": "Others",
+            "value": "2000"
+        }]
+    }
+}

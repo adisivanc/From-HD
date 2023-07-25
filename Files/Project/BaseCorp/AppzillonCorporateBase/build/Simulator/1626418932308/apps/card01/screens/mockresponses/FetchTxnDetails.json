@@ -1,0 +1,62 @@
+{
+    "cardDetails": {
+        "unbilledPurchases": "5",
+        "totalOutstanding": 5000,
+        "cardHolderName": "John Thomas",
+        "cashLimit": 30000,
+        "masterAccountNo": "10056454567890",
+        "totalAmountDue": 1000,
+        "lastBilledDate": "2017-11-01",
+        "cardAccountNo": "50000123890654",
+        "unbilledPayments": "5",
+        "lastBilledAmount": 1500,
+        "minAmountDue": 500,
+        "creditLimit": 50000,
+        "availableCashLimit": 10000,
+        "availableCreditLimit": 10000
+    },
+    "txtDetails": [
+        {
+            "amount": 100,
+            "statementType": "Current",
+            "txnRef": "012B21J",
+            "cardNumber": "50000123890654",
+            "txnDate": "2018-01-22",
+            "desc": "Central Park Donuts"
+        },
+        {
+            "amount": 200,
+            "statementType": "Current",
+            "txnRef": "011B21S",
+            "cardNumber": "50000123890654",
+            "txnDate": "2017-06-22",
+            "desc": "Shell Gas Station, 5th Avenue"
+        },
+        {
+            "amount": 2000,
+            "statementType": "Current",
+            "txnRef": "082B21S",
+            "cardNumber": "50000123890654",
+            "txnDate": "2017-08-12",
+            "desc": "Macy's Store"
+        },
+        {
+            "amount": 2400,
+            "statementType": "Current",
+            "txnRef": "812B21S",
+            "cardNumber": "50000123890654",
+            "txnDate": "2017-02-14",
+            "desc": "GM Asscoiates"
+        },
+        {
+            "amount": 400,
+            "statementType": "Current",
+            "txnRef": "912B21S",
+            "cardNumber": "50000123890654",
+            "txnDate": "2017-10-11",
+            "desc": "SV Inc."
+        }
+    ],
+    "CardStatus": true,
+    "TxnStatus": true
+}

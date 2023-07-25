@@ -1,0 +1,145 @@
+{
+    "bllpay__PlanList_Res": {
+        "topup": [
+            {
+                "amount": "5000",
+                "talktime": "4237.29",
+                "validity": "28 days",
+                "description": "Enjoy Truly Unlimited Local, STD and Roaming Calls on any Network",
+                "planid": "ATLPAPR5000TOP09"
+            },
+            {
+                "amount": "10",
+                "talktime": "7.47",
+                "validity": "28 days",
+                "description": "Enjoy Truly Unlimited Local, STD and Roaming Calls on any Network",
+                "planid": "ATLPAPR5000TOP09"
+            },
+            {
+                "amount": "20",
+                "talktime": "14.95",
+                "validity": "28 days",
+                "description": "Enjoy Truly Unlimited Local, STD and Roaming Calls on any Network",
+                "planid": "ATLPAPR5000TOP09"
+            },
+            {
+                "amount": "100",
+                "talktime": "81.75",
+                "validity": "28 days",
+                "description": "Enjoy Truly Unlimited Local, STD and Roaming Calls on any Network",
+                "planid": "ATLPAPR5000TOP09"
+            }
+        ],
+        "recommended": [
+            {
+                "amount": "149",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "Enjoy Truly Unlimited Local, STD and Roaming Calls on any Network, 2GB Data, 300 National SMS for 28 day",
+                "planid": "ATLPAPR249STV09"
+            },
+            {
+                "amount": "219",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "Enjoy Truly unlimited Local, STD and Roaming calls on any network, 1GBday, 100 National SMSday for 28 day",
+                "planid": "ATLPAPR219STV09"
+            },
+            {
+                "amount": "249",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "Enjoy Truly unlimited Local, STD and Roaming Calls on any Network, 1.5GBday, 100 National SMSday for 28 day",
+                "planid": "ATLPAPR249STV09"
+            },
+            {
+                "amount": "298",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "Enjoy Truly unlimited Local, STD and Roaming calls on any network, 2GBday, 100 National SMSday for 28 day",
+                "planid": "ATLPAPR249STV09"
+            },
+            {
+                "amount": "398",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "Enjoy Truly unlimited Local, STD and Roaming calls on any network, 3GBday, 100 National SMSday for 28 day",
+                "planid": "ATLPAPR249STV09"
+            }
+        ],
+        "specialTariff": [
+            {
+                "amount": "179",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "Get 2 Lakh Bharti Axa Life Insurance - No medical tests, No paperwork. Also enjoy Truly unlimited calls on any network, 2GB Data, 300 SMS for 28 day",
+                "planid": "ATLPAPR179STV22"
+            },
+            {
+                "amount": "19",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "Enjoy Truly unlimited Local, STD and Roaming calls on any network, 200MB Data for 2 day",
+                "planid": "ATLPAPR19STV09"
+            },
+            {
+                "amount": "149",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "Enjoy Truly unlimited Local, STD and Roaming calls on any network, 2GB Data, 300 National SMS for 28 day",
+                "planid": "ATLPAPR149STV09"
+            },
+            {
+                "amount": "219",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "Enjoy Truly unlimited Local, STD and Roaming calls on any network, 1GBday, 100 National SMSday for 28 day",
+                "planid": "ATLPAPR249STV09"
+            },
+            {
+                "amount": "249",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "Enjoy Truly unlimited Local, STD and Roaming Calls on any Network, 1.5GBday, 100 National SMSday for 28 day",
+                "planid": "ATLPAPR249STV09"
+            },
+            {
+                "amount": "298",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "Enjoy Truly unlimited Local, STD and Roaming calls on any network, 2GBday, 100 National SMSday for 28 day",
+                "planid": "ATLPAPR249STV09"
+            },
+            {
+                "amount": "398",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "Enjoy Truly unlimited Local, STD and Roaming calls on any network, 3GBday, 100 National SMSday for 28 day",
+                "planid": "ATLPAPR249STV09"
+            }
+        ],
+        "roaming": [
+            {
+                "amount": "3997",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "Free incoming, 5 GB, 500mins of local and India calls with 30 day Validity, Covered Countries USA, Kuwait, UK, China, Bahrain, Germany, Canada, Indonesia, France, Hong Kong, Netherlands, Turkey and more countries",
+                "planid": "ATLPAPR3997ROM09"
+            },
+            {
+                "amount": "3998",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "500mins incoming, 500mins local and India calls, 5GB data with 30 day Validity, Covered Countries Brazil, Iran, Iraq, Japan, Jordan, Nepal, Palestine, Qatar, RUSA, Saudi Arabia, UAE",
+                "planid": "ATLPAPR3997ROM09"
+            },
+            {
+                "amount": "6999",
+                "talktime": "NA",
+                "validity": "28 days",
+                "description": "500mins incoming, 500mins local and India calls, 5GB data with 30 day Validity, Covered Countries Oman, Bhutan, Nigeria, South Africa, Afghanistan, Kazakhstan, Kenya, Uganda, Zambia",
+                "planid": "ATLPAPR6999ROM09"
+            }
+        ]
+    }
+}

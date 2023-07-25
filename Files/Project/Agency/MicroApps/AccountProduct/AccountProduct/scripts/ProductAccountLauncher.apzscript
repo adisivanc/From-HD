@@ -1,0 +1,24 @@
+apz.prddtl.ProductAccountLauncher = {};
+apz.prddtl.ProductAccountLauncher.sCache = {}
+apz.app.onLoad_ProductAccountLauncher = function(params) {
+    debugger;
+    apz.prddtl.ProductAccountLauncher.sCache = params;
+    var scr = "";
+    if (apz.prddtl.ProductAccountLauncher.sCache.screen == "product") {
+        scr = "ProductInfo";
+    } else if (apz.prddtl.ProductAccountLauncher.sCache.screen == "funding") {
+        scr = "FundingOptions";
+    } else {
+        scr = "Nominee"
+    }
+    apz.prddtl.ProductAccountLauncher.fnNavigate(scr, params);
+}
+apz.prddtl.ProductAccountLauncher.fnNavigate = function(scr, sparams) {
+    debugger;
+    var params = {};
+    params.appId = "prddtl";
+    params.scr = scr;
+    params.div = "prddtl__ProductAccountLauncher__launcher";
+    params.userObj = sparams
+    apz.launchSubScreen(params);
+}

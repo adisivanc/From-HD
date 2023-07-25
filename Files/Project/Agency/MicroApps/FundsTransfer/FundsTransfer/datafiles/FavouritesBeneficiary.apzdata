@@ -1,0 +1,41 @@
+{
+    "fndftr__FavouritesBebeficiary_Res": {
+        "beneficiaryDetails": [{
+            "accountNo": "129562399110",
+            "branchName": "Koramangala, Bengaluru",
+            "ifsc": "*******",
+            "HolderName": "Girish",
+            "bankName": "HDFC Bank",
+            "status": "Active",
+            "benificiaryPic": "g.png",
+            "currency":"INR"
+        }, {
+            "accountNo": "129848934455",
+            "branchName": "Koramangala, Bengaluru",
+            "ifsc": "*******",
+            "HolderName": "Aarav",
+            "bankName": "City Bank",
+            "status": "Active",
+            "benificiaryPic": "a.png",
+            "currency":"INR"
+        }, {
+            "accountNo": "128723019265",
+            "branchName": "Koramangala, Bengaluru",
+            "ifsc": "*******",
+            "HolderName": "Arjun",
+            "bankName": "ICICI",
+            "status": "Active",
+            "benificiaryPic": "a.png",
+            "currency":"INR"
+        }, {
+            "accountNo": "128928923898",
+            "branchName": "Koramangala, Bengaluru",
+            "ifsc": "*******",
+            "HolderName": "Jaideep",
+            "bankName": "Axis Bank",
+            "status": "Active",
+            "benificiaryPic": "j.png",
+            "currency":"INR"
+        }]
+    }
+}

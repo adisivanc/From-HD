@@ -1,0 +1,25 @@
+{
+    "accstm__lastTransactions_Req": {
+        "widgLastTransac": [{
+            "date": "14/06/2020",
+            "amount": "5000.00",
+            "desc": "Debit Card no.2349xxxxx8747 amount of plaza rent credited"
+        }, {
+            "date": "16/06/2020",
+            "amount": " 2332.00",
+            "desc": "Credit Card no.2349xxxxx8747 was used to make a purchase at Total"
+        }, {
+            "date": "18/06/2020",
+            "amount": "1454.00",
+            "desc": "Credit Card no.2349xxxxx8747 amount of rent credited"
+        }, {
+            "date": "20/06/2020",
+            "amount": "7955.00",
+            "desc": "Cash back is credited to your account"
+        }, {
+            "date": "24/06/2020",
+            "amount": "2332.00",
+            "desc": "Credit Card no.2349xxxxx8747 was used to make a purchase at BigBazar"
+        }]
+    }
+}

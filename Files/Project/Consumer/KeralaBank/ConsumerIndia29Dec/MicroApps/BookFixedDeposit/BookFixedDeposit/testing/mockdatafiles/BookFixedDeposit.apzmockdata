@@ -1,0 +1,12 @@
+{
+    "depositDtls" : {
+        "txnRefNo" : "23456",
+        "status" : "",
+        "respCd" : "app",
+        "extMsg" : "",
+        "intMsgCd" : "",
+        "data" : {
+
+        }
+    }
+}

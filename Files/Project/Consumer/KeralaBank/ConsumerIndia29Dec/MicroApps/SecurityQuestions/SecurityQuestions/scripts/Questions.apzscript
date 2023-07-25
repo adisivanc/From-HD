@@ -1,0 +1,35 @@
+apz.secque.questions = {};
+apz.secque.questions.sParams = {};
+apz.app.onLoad_Questions = function(params) {
+    debugger;
+    apz.secque.questions.loadQuestionsAnswers();
+    $("#secque__Questions__ct_tbl_1_add_btn").addClass("sno");
+    $("#secque__Questions__ct_tbl_1_rem_btn").addClass("sno")
+}
+apz.secque.questions.loadQuestionsAnswers = function() {
+    debugger;
+   // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "CHANGE SECURITY QUESTIONS");
+    var questions = [{
+        "questions": "What was the name of your elementary / primary school?",
+        "answer": "Saint John School"
+    }, {
+        "questions": "In what city or town does your nearest sibling live?",
+        "answer": "Bengaluru"
+    }, {
+        "questions": "What was the name of the company where you had your first job?",
+        "answer": "Google"
+    }]
+    apz.data.scrdata.secque__QuestionsAnswers_Res = {};
+    apz.data.scrdata.secque__QuestionsAnswers_Res.config = questions;
+    apz.data.loadData("QuestionsAnswers", "secque");
+}
+apz.secque.questions.fnSave = function(params) {
+    apz.dispMsg({
+        message: "Security questions and answers changed successfully!",
+        type: "S",
+        callBack:apz.landin.Landing.fnHome
+    });
+}
+apz.secque.questions.fnCancel = function(params) {
+   apz.landin.Landing.fnHome();
+}

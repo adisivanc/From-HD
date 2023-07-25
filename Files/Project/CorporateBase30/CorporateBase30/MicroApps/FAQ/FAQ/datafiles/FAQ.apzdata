@@ -1,0 +1,90 @@
+{
+    "faq001__FAQ_Res": {
+        "Ques": [{
+            "Q": "Who is eligible for Demo Corporate Internet Banking (CIB)?",
+            "Ans": [{
+                "A": "Any non-individual entity having Current/Savings Account with Demo can opt for Corporate Internet Banking."
+            }]
+        }, {
+            "Q": "What is a CIB form?",
+            "Ans": [{
+                "A": "CIB form is an on-boarding form which needs to be filled to define the CIB user profile, roles, and access rights, account linkage etc. The CIB form needs to be signed by the Authorised Signatory(s) of the account on each page of the CIB form along with seal (if applicable). The CIB form also needs to be submitted along with the applicable supporting documents."
+            }]
+        }, {
+            "Q": "Who is a CIB User?",
+            "Ans": [{
+                "A": "Customer appointed individual who can operate Corporate Internet Banking (CIB) on behalf of the customer and perform activities on the linked account as per the user role defined in the CIB on-boarding form."
+            }]
+        }, {
+            "Q": "What is the format of the applicable supporting documents? Are there any templates to be followed?",
+            "Ans": [{
+                "A": "The format of applicable supporting documents is available on the Demo’s website. These documents are to be printed on letter head of the company/organisation (as applicable and mentioned in the document). All the details mentioned in the supporting document template needs to be strictly followed mandatorily. Any missing detail or change in the format can lead to rejection of the CIB request. If you have your own format of the supporting document, then all the details that has been mentioned in the document templates, needs to be incorporated."
+            }]
+        }, {
+            "Q": "How will I know when my CIB request has been processed?",
+            "Ans": [{
+                "A": "Once the documents are submitted, your request will be processed in 10 working days subject to fulfilment of document scrutiny/verification by the bank. CIB Users will receive an E-mail with details of your Corporate ID, User ID, and Login/Transaction Password."
+            }]
+        }, {
+            "Q": "What are Corporate ID, User ID and Login Password?",
+            "Ans": [{
+                "A": "Corporate ID – Unique identifier assigned by the bank to identify the CIB using corporates. Corporate ID is the 1st credential required to log into CIB portal. User ID: Unique identifier assigned by the bank to a CIB user. User ID is the 2nd credential required to log into CIB portal. It is case sensitive. Login Password: It is the 3rd credential required to log into CIB. It is case sensitive."
+            }]
+        }, {
+            "Q": "If the documents submitted by me was rejected due to some details entered was wrong, then do I have to re-submit fresh form and supporting documents again?",
+            "Ans": [{
+                "A": "If the form was rejected due to some missing details then, you may edit the submitted form again by entering the details. The authorised signatory will have to re-sign on the CIB form accepting the addition of details on each page of the CIB form. Fresh supporting documents need not be submitted provided the there is no discrepancy between the supporting document, authorised signatory details and CIB form."
+            }]
+        }, {
+            "Q": "For any modification in CIB users do I need to submit supporting document?",
+            "Ans": [{
+                "A": "For any kind of modification in existing CIB user, like updating mobile number, email ID, user role, limits, department, authorisation matrix (with existing CIB users) and blocking CIB users, only new CIB form is required along with authorised signatory(s) signature and company seal (as applicable) on each page. For addition of new account(s) and CIB User(s), new CIB form and supporting document is required mentioning the required details."
+            }]
+        }, {
+            "Q": "Is mobile number and email ID mandatory to be mentioned in the CIB form?",
+            "Ans": [{
+                "A": "Yes. Email ID of the CIB user will be used to send Corporate ID, User ID and system generated login/transaction password. After entering 1st time login password, the system will prompt the CIB user to change his login/transaction password post OTP verification, which will be sent to CIB user’s registered mobile number. OTP sent to CIB user’s registered mobile number will also be used as a factor of authentication while authorising transaction."
+            }]
+        }, {
+            "Q": "Is Maker-Checker offered in Demo Corporate Internet Banking?",
+            "Ans": [{
+                "A": "Yes. Demo Corporate Internet Banking supports maker-checker concept for greater control to the customers. Different users can be mentioned as maker and checker for a transaction."
+            }]
+        }, {
+            "Q": "How many level of authorisation is supported in Demo Corporate Internet Banking?",
+            "Ans": [{
+                "A": "Dual level of authorisation can be opted for the customers for any type of transactions which are mentioned in the CIB form. For example, if a transaction initiated by a CIB user who is an Initiator (M/B) needs to be approved by CIB user at 1st level and 2nd CIB user at 2nd level, then the number of approvers in this case will be 2 i.e. one at 1st level and second at 2nd level. A transaction initiated by this CIB user will have to be approved by 2 CIB users with Authoriser role (C/B). The transaction will flow from initiator to 1st level authoriser and then 2nd level of authoriser. If no transaction is selected for dual authorisation, then the transaction will be applicable for single level of authorisation i.e. the transaction will flow from initiator and then to 1st level of authoriser. The authorisation matrix to be defined accordingly in the CIB form. The number of CIB user at any level should mandatorily be one CIB user and can also have group of CIB users/Department which is optional."
+            }]
+        }, {
+            "Q": "What all kind of fund transfers are supported in Corporate Internet Banking",
+            "Ans": [{
+                "A": "NEFT, RTGS, IMPS and Internal Fund Transfer. All these can be used for single transfer, multi-fund transfer and file-upload."
+            }]
+        }, {
+            "Q": "Can we schedule one-time/recurring fund transfer?",
+            "Ans": [{
+                "A": "Yes. You can schedule fund transfer (Internal fund transfer/NEFT/RTGS). Based on the date of execution and frequency the transactions will be executed."
+            }]
+        }, {
+            "Q": "Within how many days should a transaction be approved by authorizer?",
+            "Ans": [{
+                "A": "15 days."
+            }]
+        }, {
+            "Q": "When will be my login/transaction password will get expired?",
+            "Ans": [{
+                "A": "After 180 Days"
+            }]
+        }, {
+            "Q": "I have forgotten my login/transaction password, how can I get new password?",
+            "Ans": [{
+                "A": "You can use click on “Forgot Password” to reset your login/transaction password. You will receive system generated credentials on the registered email id."
+            }]
+        }, {
+            "Q": "Within how much time Bill Payments and Recharges should be authorised?",
+            "Ans": [{
+                "A": "Any bill payment/recharge initiated to be authorised within 24 hours of initiation. Otherwise that transaction will be expired and will fail."
+            }]
+        }]
+    }
+}

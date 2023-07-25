@@ -1,0 +1,20 @@
+{
+    "crsapp__ClientRisk_Res": {
+        "clientRiskAssesment": [{
+            "riskCategory": "High",
+            "businessType": "Cross Border Remittance"
+        }, {
+            "riskCategory": "High",
+            "businessType": "Money Instruments"
+        }, {
+            "riskCategory": "High",
+            "businessType": "Money Service Business"
+        }, {
+            "riskCategory": "High",
+            "businessType": "Private Banking"
+        }, {
+            "riskCategory": "High",
+            "businessType": "Trade Finance"
+        }]
+    }
+}

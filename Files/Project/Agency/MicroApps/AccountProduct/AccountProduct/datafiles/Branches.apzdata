@@ -1,0 +1,121 @@
+[{
+    "state": "Tamil Nadu",
+    "branch": [{
+        "val": "",
+        "desc": "Please select"
+    }, {
+        "val": "Chennai",
+        "desc": "Chennai"
+    }, {
+        "val": "Coimbatore",
+        "desc": "Coimbatore"
+    }, {
+        "val": "Kumbakonam",
+        "desc": "Kumbakonam"
+    }, {
+        "val": "Kanchipuram",
+        "desc": "Kanchipuram"
+    }, {
+        "val": "Hosur",
+        "desc": "Hosur"
+    }, {
+        "val": "Madurai",
+        "desc": "Madurai"
+    }]
+}, {
+    "state": "Karnataka",
+    "branch": [{
+        "val": "",
+        "desc": "Please select"
+    }, {
+        "val": "Bengaluru",
+        "desc": "Bengaluru"
+    }, {
+        "val": "Chitradurga",
+        "desc": "Chitradurga"
+    }, {
+        "val": "Hassan",
+        "desc": "Hassan"
+    }, {
+        "val": "Sakleshpur",
+        "desc": "Sakleshpur"
+    }, {
+        "val": "Mysore",
+        "desc": "Mysore"
+    }, {
+        "val": "Ballari",
+        "desc": "Ballari"
+    }]
+}, {
+    "state": "Kerala",
+    "branch": [{
+        "val": "",
+        "desc": "Please select"
+    }, {
+        "val": "Alappuzha",
+        "desc": "Alappuzha"
+    }, {
+        "val": "Cochin",
+        "desc": "Cochin"
+    }, {
+        "val": "Palakkad",
+        "desc": "Palakkad"
+    }, {
+        "val": "Trivandrum",
+        "desc": "Trivandrum"
+    }, {
+        "val": "Ernakulam",
+        "desc": "Ernakulam"
+    }, {
+        "val": "Wayanadu",
+        "desc": "Wayanadu"
+    }]
+}, {
+    "state": "Andhra Pradesh",
+    "branch": [{
+        "val": "",
+        "desc": "Please select"
+    }, {
+        "val": "Anakappale",
+        "desc": "Anakappale"
+    }, {
+        "val": "Chithoor",
+        "desc": "Chithoor"
+    }, {
+        "val": "Kakkinada",
+        "desc": "Kakkinada"
+    }, {
+        "val": "Chittoor",
+        "desc": "Chittoor"
+    }, {
+        "val": "Nellore",
+        "desc": "Nellore"
+    }, {
+        "val": "Krishna",
+        "desc": "Krishna"
+    }]
+}, {
+    "state": "Telangana",
+    "branch": [{
+        "val": "",
+        "desc": "Please select"
+    }, {
+        "val": "Hyderabad",
+        "desc": "Hyderabad"
+    }, {
+        "val": "Karimnagar",
+        "desc": "Karimnagar"
+    }, {
+        "val": "Nalgonda",
+        "desc": "Nalgonda"
+    }, {
+        "val": "Peddapalli",
+        "desc": "Peddapalli"
+    }, {
+        "val": "Sangareddy",
+        "desc": "Sangareddy"
+    }, {
+        "val": "Bhuvanagiri",
+        "desc": "Bhuvanagiri"
+    }]
+}]

@@ -1,0 +1,209 @@
+apz.accsum.accountdetails = {};
+apz.accsum.accountdetails.sParams = {};
+apz.accsum.minbal = 300000;
+apz.app.onLoad_AccountDetails = function(params) {
+    debugger;
+   apz.setElmValue("landin__Landing__heading", "ACCOUNT SUMMARY");
+    if(apz.deviceGroup == "Mobile")
+    {
+        $("#accsum__AccountDetails__sc_col_66_li").removeClass("sno");
+    }
+    apz.accsum.accountdetails.sParams = apz.copyJSONObject(params);
+    if(params.from == "Dashboard")
+    {
+$("#accstm__Navigator__ct_frm_5").addClass("sno");
+}
+    if (params.Navigation) {
+        apz.accsum.accountdetails.fnSetNavigation(params);
+    }
+    apz.accsum.accountdetails.fnInitialise(params);
+    if(apz.accsum.accountdetails.sParams.data.from != undefined)
+    {
+    if(apz.accsum.accountdetails.sParams.data.from == "OverViewSavings" || "OverviewCurrent")
+ {
+    //     if(apz.accsum.accountdetails.sParams.data.currency == "USD")
+    //     {
+    //         $("body").addClass("dollarCurrency");fnLast5Tranc
+    //     }
+        apz.accsum.accountdetails.fnLast5Tranc();
+    }
+    }
+};
+apz.accsum.accountdetails.fnInitialise = function(params) {
+    apz.accsum.accountdetails.fnGetAccountDetails();
+    apz.accsum.accountdetails.fnRenderStage1();
+};
+apz.accsum.accountdetails.fnSetNavigation = function(params) {
+    debugger;
+    apz.accsum.accountdetails.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "ACCOUNT   SUMMARY";
+    }
+    lParams.backPressed = apz.accsum.accountdetails.fnBack;
+    apz.accsum.accountdetails.Navigation(lParams);
+};
+apz.accsum.accountdetails.fnBack = function() {
+    debugger;
+    apz.accsum.accountdetails.sParams.callBack();
+};
+apz.accsum.accountdetails.fnGetAccountDetails = function(params) {
+    
+    debugger;
+    if(apz.kidAccountFlag == "true")
+    {
+            apz.data.loadJsonData("AccountDetails", "accsum");
+
+    }
+    else
+    {
+    apz.data.loadJsonData("AccountDetails", "accsum");
+                apz.data.scrdata.accsum__AccountDetails_Res.accSummary.pop();
+               apz.data.loadData("AccountDetails", "accsum");
+
+    }
+    if(apz.accsum.accountdetails.sParams.from){
+        if(apz.accsum.accountdetails.sParams.type == "Savings"){
+           data = apz.data.scrdata.accsum__AccountDetails_Res.accSummary;
+           accounts = data.filter(function(item){if(item.accountType == "Savings Account"){return item;}})
+        }
+         else if(apz.accsum.accountdetails.sParams.type == "Current"){
+           data = apz.data.scrdata.accsum__AccountDetails_Res.accSummary;
+           accounts = data.filter(function(item){if(item.accountType == "Current Account"){return item;}})
+        }
+        else if(apz.accsum.accountdetails.sParams.type == "KidAccount"){
+           data = apz.data.scrdata.accsum__AccountDetails_Res.accSummary;
+           accounts = data.filter(function(item){if(item.accountType == "Kid Account"){return item;}})
+        }
+        apz.data.scrdata.accsum__AccountDetails_Res.accSummary = accounts;
+        apz.data.loadData("AccountDetails","accsum");
+    }
+    
+    // for (var i = 0; i < apz.data.scrdata.accsum__AccountDetails_Res.accSummary.length; i++) {
+    //     if (parseInt(apz.data.scrdata.accsum__AccountDetails_Res.accSummary[i].accountBal) <= apz.accsum.minbal) {
+    //         //$("#accsum__AccountDetails__el_hpl_1_" + i + "_txtcnt").addClass("ssp"); //Hide element
+    //     }
+    // }
+};
+apz.accsum.accountdetails.fnRenderStage1 = function() {
+    debugger;
+    apz.show("accsum__AccountDetails__Stage1");
+    apz.hide("accsum__AccountDetails__Stage2");
+};
+apz.accsum.accountdetails.fnOpenFD = function(pthis) {
+    debugger;
+    apz.landin.Landing.fnMenuClickInside("Book Fixed Deposit");
+};
+apz.accsum.accountdetails.fnLast5Tranc = function(pthis) {
+   debugger;
+   if(apz.accsum.accountdetails.sParams.data.from == "OverViewSavings")
+   {
+           var lRowNo = apz.accsum.accountdetails.sParams.data.rowNo;
+
+   }
+   else if(apz.accsum.accountdetails.sParams.data.from == "OverViewCurrent")
+   {
+       var lRowNo = 2;
+   }
+   
+   else
+   {
+    var lRowNo = $(pthis).parents('li').attr('rowno');
+   }
+    var lParams = {
+        "appId": "accstm",
+        "scr": "Navigator",
+        "div": "accsum__AccountDetails__accStmtLauncher",
+        "userObj": {
+            "data": apz.data.scrdata.accsum__AccountDetails_Res.accSummary[lRowNo],
+            "callBack": apz.accsum.accountdetails.fnlaunchCallback,
+            "action": "Mini"
+        }
+    };
+    lParams.userObj.control = {
+        "callBack": apz.accsum.accountdetails.fnRenderStage1,
+        "destroyDiv": "accsum__AccountDetails__accStmtLauncher"
+    };
+    if (apz.accsum.accountdetails.sParams.Navigation) {
+        lParams.userObj.Navigation = {
+            "setNavigation": apz.accsum.accountdetails.Navigation
+        }
+    }
+    apz.launchApp(lParams);
+    apz.accsum.accountdetails.fnGotoStage2();
+};
+apz.accsum.accountdetails.fnlaunchCallback = function() {
+    debugger;
+          //  $("body").removeClass("dollarCurrency ");
+
+    apz.currAppId = "accsum";
+    if (apz.accsum.accountdetails.sParams.Navigation) {
+        var lParams = {};
+        lParams.headerText = "ACCOUNT SUMMARY";
+        lParams.backPressed = apz.accsum.accountdetails.fnBack;
+        apz.accsum.accountdetails.Navigation(lParams);
+    }
+    apz.show("accsum__AccountDetails__Stage1");
+    apz.hide("accsum__AccountDetails__Stage2");
+}
+apz.accsum.accountdetails.fnGotoStage2 = function() {
+    debugger;
+    apz.hide("accsum__AccountDetails__Stage1");
+    apz.show("accsum__AccountDetails__Stage2");
+};
+
+
+
+
+
+apz.accsum.accountdetails.fnShare = function(pthis) {
+    debugger;
+    var RowNo = $(pthis).attr('rowno');
+    var accountNumber =   apz.data.scrdata.accsum__AccountDetails_Res.accSummary[RowNo].accountNo;
+    var accountBalance = apz.data.scrdata.accsum__AccountDetails_Res.accSummary[RowNo].accountBal
+     
+     var param = {
+            "decimalSep": ".",
+            "value": accountBalance,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    
+var accountNum = accountNumber.replace(/\d(?=\d{4})/g, "*");
+    var text = "Account Number : " + accountNum +"\n" + "Balance : " + "Rs." + apz.formatNumber(param);
+         
+         
+    var json = {};
+    json.id = "NATIVE";
+    json.textToShare = text;
+    json.callBack = apz.accsum.accountdetails.fnShareCallBack;
+    json.action = "text";
+    apz.ns.nativeShare(json);
+}
+apz.accsum.accountdetails.fnShareCallBack = function() {
+    debugger;
+    
+}
+
+
+ apz.accsum.accountdetails.fnDashboardDetails = function() {
+     debugger;
+     apz.data.loadJsonData("AccountDetails", "accsum")
+       var lRowNo = 0;
+    
+    var lParams = {
+        "appId": "accstm",
+        "scr": "Navigator",
+        "div": "accsum__AccountDetails__accStmtLauncher",
+        "userObj": {
+            "data": apz.data.scrdata.accsum__AccountDetails_Res.accSummary[lRowNo],
+            "callBack": apz.accsum.accountdetails.fnlaunchCallback,
+            "action": "Mini",
+             
+        }
+    };
+ }
+ 

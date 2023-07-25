@@ -1,0 +1,31 @@
+{
+    "lonact__ScheduleData_Res": {
+        "LIstItem": [
+            {
+                "Component": "PRINCIPAL",
+                "Amount": "125000",
+                "DueDate": "20/03/2021",
+                "Status": "Unpaid",
+                "AmountDue": "125000",
+                "AmountPaid": "0"
+            },
+            {
+                "Component": "MAIN_INT",
+                "Amount": "12000",
+                "DueDate": "22/03/2021",
+                "Status": "Unpaid",
+                "AmountDue": "12000",
+                "AmountPaid": "0"
+            },
+            
+            {
+                 "Component": "PROC_CHARGE",
+                "Amount": "500",
+                "DueDate": "25/03/2021",
+                "Status": "Unpaid",
+                "AmountDue": "500",
+                "AmountPaid": "0"
+            }
+        ]
+    }
+}

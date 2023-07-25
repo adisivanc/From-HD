@@ -1,0 +1,86 @@
+{
+    "balanc__QuarterlyBalance_Res": {
+        "datasets": [
+        {
+            "Months": "3 Months Deposit",
+            "Amount": "11",
+            "Account": "New"
+        }, {
+            "Months": "3 Months Deposit",
+            "Amount": "8",
+            "Account": "Existing"
+        }, {
+            "Months": "3 Months Deposit",
+            "Amount": "30",
+            "Account": "Approved"
+        }, {
+            "Months": "3 Months Deposit",
+            "Amount": "20",
+            "Account": "Pending"
+        }, {
+            "Months": "3 Months Deposit",
+            "Amount": "10",
+            "Account": "Rejected"
+        },{
+            "Months": "6 Months Deposit",
+            "Amount": "11",
+            "Account": "New"
+        }, {
+            "Months": "6 Months Deposit",
+            "Amount": "27",
+            "Account": "Existing"
+        }, {
+            "Months": "6 Months Deposit",
+            "Amount": "25",
+            "Account": "Approved"
+        }, {
+            "Months": "6 Months Deposit",
+            "Amount": "22",
+            "Account": "Pending"
+        }, {
+            "Months": "6 Months Deposit",
+            "Amount": "3",
+            "Account": "Rejected"
+        },{
+            "Months": "12 Months Deposit",
+            "Amount": "13",
+            "Account": "New"
+        }, {
+            "Months": "12 Months Deposit",
+            "Amount": "23",
+            "Account": "Existing"
+        }, {
+            "Months": "12 Months Deposit",
+            "Amount": "12",
+            "Account": "Approved"
+        }, {
+            "Months": "12 Months Deposit",
+            "Amount": "19",
+            "Account": "Pending"
+        }, {
+            "Months": "12 Months Deposit",
+            "Amount": "13",
+            "Account": "Rejected"
+        },{
+            "Months": "24 Months Deposit",
+            "Amount": "26",
+            "Account": "New"
+        }, {
+            "Months": "24 Months Deposit",
+            "Amount": "5",
+            "Account": "Existing"
+        }, {
+            "Months": "24 Months Deposit",
+            "Amount": "13",
+            "Account": "Approved"
+        }, {
+            "Months": "24 Months Deposit",
+            "Amount": "19",
+            "Account": "Pending"
+        }, {
+            "Months": "24 Months Deposit",
+            "Amount": "24",
+            "Account": "Rejected"
+        }]
+    }
+}

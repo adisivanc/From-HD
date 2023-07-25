@@ -1,0 +1,496 @@
+apz.app.icaosm.TaxResidencyDetails = {};
+apz.app.icaosm.TaxResidencyDetails.sCache = {};
+apz.app.icaosm.TaxResidencyDetails.sAction = "";
+apz.app.icaosm.TaxResidencyDetails.sHomeFlag = false;
+apz.app.icaosm.TaxResidencyDetails.sTINFlag = false;
+apz.app.icaosm.TaxResidencyDetails.sCountryFlag = false;
+apz.app.onShown_TaxResidencyDetails = function(params) {
+    apz.app.icaosm.TaxResidencyDetails.fnClearData();
+    apz.app.icaosm.TaxResidencyDetails.sCache = params;
+    apz.app.manageCrub(6);
+    var UserID = apz.retrieve("CurrentUser");
+    apz.data.loadJsonData('TaxResidencyDetails');
+    $("#icaosm__TaxResidencyDetails__ct_frm_3").addClass("shownone");
+    if (UserID == "User2") {
+        $("#icaosm__TaxResidencyDetails__ct_frm_3").removeClass("shownone");
+    }
+    if (apz.data.scrdata.icaosm__TaxResidencyDetailsAOS_Res != undefined) {
+        apz.data.loadData("TaxResidencyDetailsAOS", "icaosm");
+    } else {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            var lpath = apz.getDataFilesPath();
+            var lData = apz.getFile(lpath + "/TaxResidencyDetailsAOS.json")
+            lData = JSON.parse(lData);
+            apz.data.buildData("TaxResidencyDetailsAOS", "icaosm");
+            apz.data.scrdata.icaosm__TaxResidencyDetailsAOS_Res.details = lData.details;
+            apz.data.loadData("TaxResidencyDetailsAOS", "icaosm");
+        }
+    }
+    apz.app.icaosm.TaxResidencyDetails.fnQueryHomeData();
+    apz.app.icaosm.TaxResidencyDetails.fnQueryTINData();
+    apz.app.icaosm.TaxResidencyDetails.fnQueryCountryData();
+};
+apz.app.icaosm.TaxResidencyDetails.fnClearData = function() {
+    apz.data.clearMRMV("icaosm__TaxResidencyDetails__ct_frm_1");
+    apz.data.clearMRMV("icaosm__TaxResidencyDetails__ct_lst_1");
+    apz.data.clearMRMV("icaosm__TaxResidencyDetails__ct_tbl_1");
+    apz.data.clearMRMV("icaosm__TaxResidencyDetails__ct_frm_2");
+};
+apz.app.icaosm.TaxResidencyDetails.fnQueryHomeData = function() {
+    apz.app.icaosm.TaxResidencyDetails.sAction = "queryHome";
+    var req = {};
+    req.tbHomeResidencyDetails = {
+        "companyid": apz.icaosm.Home.sCompanyID
+    };
+    var lParams = {
+        "ifaceName": "HomeTaxResidencyDetailsAOS_Query",
+        "paintResp": "Y",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.TaxResidencyDetails.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.TaxResidencyDetails.fnQueryTINData = function() {
+    apz.app.icaosm.TaxResidencyDetails.sAction = "queryTIN";
+    var req = {};
+    req.tbCountryTaxResidencyDetails = {
+        "companyid": apz.icaosm.Home.sCompanyID
+    };
+    var lParams = {
+        "ifaceName": "TINDetails_Query",
+        "paintResp": "Y",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.TaxResidencyDetails.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.TaxResidencyDetails.fnQueryCountryData = function() {
+    apz.app.icaosm.TaxResidencyDetails.sAction = "queryCountry";
+    var req = {};
+    req.tbRecidentCountryDetails = {
+        "companyid": apz.icaosm.Home.sCompanyID
+    };
+    var lParams = {
+        "ifaceName": "CountryDetails_Query",
+        "paintResp": "Y",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.TaxResidencyDetails.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.TaxResidencyDetails.fnBeforCallServer = function(params) {
+    var lReq = {
+        "ifaceName": params.ifaceName,
+        "paintResp": params.paintResp,
+        "buildReq": params.buildReq,
+        "req": params.lReq,
+        "appId": params.appId,
+        "async": false,
+        "callBack": apz.app.icaosm.TaxResidencyDetails.callServerCB,
+        "callBackObj": ""
+    };
+    apz.server.callServer(lReq);
+};
+apz.app.icaosm.TaxResidencyDetails.callServerCB = function(params) {
+    debugger;
+    if (apz.app.icaosm.TaxResidencyDetails.sAction == "queryHome") {
+        apz.app.icaosm.TaxResidencyDetails.fnQueryHomeDataCB(params);
+    } else if (apz.app.icaosm.TaxResidencyDetails.sAction == "modifySave" || apz.app.icaosm.TaxResidencyDetails.sAction == "newSave") {
+        apz.app.icaosm.TaxResidencyDetails.fnModifySaveTaxResidencyDetailsCB(params);
+    } else if (apz.app.icaosm.TaxResidencyDetails.sAction == "modifyNext" || apz.app.icaosm.TaxResidencyDetails.sAction == "newNext") {
+        apz.app.icaosm.TaxResidencyDetails.fnModifyNextHomeResidencyDetailsCB(params);
+    } else if (apz.app.icaosm.TaxResidencyDetails.sAction == "queryTIN") {
+        apz.app.icaosm.TaxResidencyDetails.fnQueryTINDataCB(params);
+    } else if (apz.app.icaosm.TaxResidencyDetails.sAction == "queryCountry") {
+        apz.app.icaosm.TaxResidencyDetails.fnQueryCountryDataCB(params);
+    } else if (apz.app.icaosm.TaxResidencyDetails.sAction == "modifyCountrySave") {
+        apz.app.icaosm.TaxResidencyDetails.fnModifySaveCountryDetailsCB(params);
+    } else if (apz.app.icaosm.TaxResidencyDetails.sAction == "modifyTINSave" || apz.app.icaosm.TaxResidencyDetails.sAction == "newTINSave") {
+        apz.app.icaosm.TaxResidencyDetails.fnModifySaveTINDetailsCB(params);
+    } else if (apz.app.icaosm.TaxResidencyDetails.sAction == "modifyCountryNext") {
+        apz.app.icaosm.TaxResidencyDetails.fnModifyNextTINDetailsCB(params);
+    } else if (apz.app.icaosm.TaxResidencyDetails.sAction == "modifyTINNext" || apz.app.icaosm.TaxResidencyDetails.sAction == "newTINNext") {
+        apz.app.icaosm.TaxResidencyDetails.fnModifyNextTINDetailsCB(params);
+    }
+};
+apz.app.icaosm.TaxResidencyDetails.fnQueryHomeDataCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.TaxResidencyDetails.sHomeFlag = true;
+    } else {
+        apz.app.icaosm.TaxResidencyDetails.sHomeFlag = false;
+    }
+};
+apz.app.icaosm.TaxResidencyDetails.fnQueryTINDataCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.TaxResidencyDetails.sTINFlag = true;
+    } else {
+        apz.app.icaosm.TaxResidencyDetails.sTINFlag = false;
+    }
+};
+apz.app.icaosm.TaxResidencyDetails.fnQueryCountryDataCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.TaxResidencyDetails.sCountryFlag = true;
+    } else {
+        apz.app.icaosm.TaxResidencyDetails.sCountryFlag = false;
+    }
+};
+apz.app.icaosm.TaxResidencyDetails.fnSave = function() {
+    debugger;
+    if (apz.app.icaosm.TaxResidencyDetails.sCountryFlag) {
+        apz.app.icaosm.TaxResidencyDetails.sAction = "modifyCountrySave";
+    } else {
+        apz.app.icaosm.TaxResidencyDetails.sAction = "No Action";
+    }
+    apz.app.icaosm.TaxResidencyDetails.fnModifySaveCountryDetails();
+};
+apz.app.icaosm.TaxResidencyDetails.fnModifySaveCountryDetails = function() {
+    apz.data.buildData("CountryDetails", "icaosm");
+    var req = {};
+    if (apz.data.scrdata.icaosm__CountryDetails_Req != undefined) {
+        if (apz.data.scrdata.icaosm__CountryDetails_Req.tbRecidentCountryDetails != undefined) {
+            if (apz.data.scrdata.icaosm__CountryDetails_Req.tbRecidentCountryDetails.length > 0) {
+                req.tbRecidentCountryDetails = apz.data.scrdata.icaosm__CountryDetails_Req.tbRecidentCountryDetails;
+                for (var i = 0; i < req.tbRecidentCountryDetails.length; i++) {
+                    req.tbRecidentCountryDetails[i].companyid = apz.icaosm.Home.sCompanyID;
+                }
+            } else {
+                req.tbRecidentCountryDetails = [];
+            }
+        } else {
+            req.tbRecidentCountryDetails = [];
+        }
+    } else {
+        req.tbRecidentCountryDetails = [];
+    }
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.TaxResidencyDetails.sAction == "modifyCountrySave") {
+        lParams.ifaceName = "CountryDetails_Modify";
+        apz.app.icaosm.TaxResidencyDetails.fnBeforCallServer(lParams);
+    } else {
+        apz.app.icaosm.TaxResidencyDetails.fnModifySaveTINDetails();
+    }
+};
+apz.app.icaosm.TaxResidencyDetails.fnModifySaveTINDetails = function() {
+    if (apz.app.icaosm.TaxResidencyDetails.sTINFlag) {
+        apz.app.icaosm.TaxResidencyDetails.sAction = "modifyTINSave";
+    } else {
+        apz.app.icaosm.TaxResidencyDetails.sAction = "newTINSave";
+    }
+    apz.data.buildData("TINDetails", "icaosm");
+    var req = {};
+    if (apz.data.scrdata.icaosm__TINDetails_Req != undefined) {
+        if (apz.data.scrdata.icaosm__TINDetails_Req.tbCountryTaxResidencyDetails != undefined) {
+            if (apz.data.scrdata.icaosm__TINDetails_Req.tbCountryTaxResidencyDetails.length > 0) {
+                req.tbCountryTaxResidencyDetails = apz.data.scrdata.icaosm__TINDetails_Req.tbCountryTaxResidencyDetails;
+                for (var i = 0; i < req.tbCountryTaxResidencyDetails.length; i++) {
+                    req.tbCountryTaxResidencyDetails[i].companyid = apz.icaosm.Home.sCompanyID;
+                }
+            } else {
+                req.tbCountryTaxResidencyDetails = [];
+            }
+        } else {
+            req.tbCountryTaxResidencyDetails = [];
+        }
+    } else {
+        req.tbCountryTaxResidencyDetails = [];
+    }
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.TaxResidencyDetails.sAction == "modifyTINSave") {
+        lParams.ifaceName = "TINDetails_Modify";
+    } else if (apz.app.icaosm.TaxResidencyDetails.sAction == "newTINSave") {
+        lParams.ifaceName = "TINDetails_New";
+    }
+    apz.app.icaosm.TaxResidencyDetails.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.TaxResidencyDetails.fnModifySaveCountryDetailsCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.TaxResidencyDetails.sCountryFlag = false;
+        apz.app.icaosm.TaxResidencyDetails.fnModifySaveTINDetails();
+    } else {
+        lmsg = {
+            "message": "Tax Residency Details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.TaxResidencyDetails.fnModifySaveTINDetailsCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.TaxResidencyDetails.sTINFlag = false;
+        apz.app.icaosm.TaxResidencyDetails.fnModifySaveTaxResidencyDetails();
+    } else {
+        lmsg = {
+            "message": "Tax Residency Details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.TaxResidencyDetails.fnModifySaveTaxResidencyDetails = function() {
+    if (apz.app.icaosm.TaxResidencyDetails.sHomeFlag) {
+        apz.app.icaosm.TaxResidencyDetails.sAction = "modifySave";
+    } else {
+        apz.app.icaosm.TaxResidencyDetails.sAction = "newSave";
+    }
+    apz.data.buildData("HomeTaxResidencyDetailsAOS", "icaosm");
+    var req = {};
+    req.tbHomeResidencyDetails = apz.data.scrdata.icaosm__HomeTaxResidencyDetailsAOS_Req.tbHomeResidencyDetails;
+    req.tbHomeResidencyDetails.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.TaxResidencyDetails.sAction == "modifySave") {
+        lParams.ifaceName = "HomeTaxResidencyDetailsAOS_Modify";
+    } else if (apz.app.icaosm.TaxResidencyDetails.sAction == "newSave") {
+        lParams.ifaceName = "HomeTaxResidencyDetailsAOS_New";
+    }
+    apz.app.icaosm.TaxResidencyDetails.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.TaxResidencyDetails.fnModifySaveTaxResidencyDetailsCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.TaxResidencyDetails.sHomeFlag = false;
+        if (apz.app.icaosm.TaxResidencyDetails.sCache.action == "submitted") {
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": "",
+                    "val": "Tax Residency Details",
+                    "action": apz.app.icaosm.TaxResidencyDetails.sCache.action,
+                    "accNum": apz.app.icaosm.TaxResidencyDetails.sCache.accNum,
+                    "appNo": apz.app.icaosm.TaxResidencyDetails.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        } else {
+            var lTotCount = 0;
+            var lFilled = 0,
+                lRadio = 0;
+            $("#scr__icaosm__TaxResidencyDetails__main input[type='text'],#scr__icaosm__TaxResidencyDetails__main select").each(function() {
+                lTotCount++;
+                if ($(this).val() != "" && $(this).val() != "Select") {
+                    lFilled++;
+                }
+            });
+            $("#scr__icaosm__TaxResidencyDetails__main input[type='radio']").each(function() {
+                if ($("#" + this.id + ":Checked").length) {
+                    lFilled++;
+                }
+                lRadio++;
+            });
+            lTotCount = (lRadio / 2) + lTotCount;
+            percentage = (lFilled / lTotCount);
+            apz.data.scrdata.icaosm__Home_Req.Home[5].progress = percentage;
+            apz.data.buildData("TaxResidencyDetailsAOS", "icaosm");
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": percentage,
+                    "val": "Tax Residency Details",
+                    "action": apz.app.icaosm.TaxResidencyDetails.sCache.action,
+                    "accNum": apz.app.icaosm.TaxResidencyDetails.sCache.accNum,
+                    "appNo": apz.app.icaosm.TaxResidencyDetails.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        }
+    } else {
+        lmsg = {
+            "message": "Tax Residency Details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.TaxResidencyDetails.fnModifyNextTaxResidencyDetails = function() {
+    debugger;
+    if (apz.app.icaosm.TaxResidencyDetails.sCountryFlag) {
+        apz.app.icaosm.TaxResidencyDetails.sAction = "modifyCountryNext";
+    } else {
+        apz.app.icaosm.TaxResidencyDetails.sAction = "No Action";
+    }
+    apz.app.icaosm.TaxResidencyDetails.fnModifyNextCountryDetails();
+};
+apz.app.icaosm.TaxResidencyDetails.fnModifyNextCountryDetails = function() {
+    apz.data.buildData("CountryDetails", "icaosm");
+    var req = {};
+    if (apz.data.scrdata.icaosm__CountryDetails_Req != undefined) {
+        if (apz.data.scrdata.icaosm__CountryDetails_Req.tbRecidentCountryDetails != undefined) {
+            if (apz.data.scrdata.icaosm__CountryDetails_Req.tbRecidentCountryDetails.length > 0) {
+                req.tbRecidentCountryDetails = apz.data.scrdata.icaosm__CountryDetails_Req.tbRecidentCountryDetails;
+                for (var i = 0; i < req.tbRecidentCountryDetails.length; i++) {
+                    req.tbRecidentCountryDetails[i].companyid = apz.icaosm.Home.sCompanyID;
+                }
+            } else {
+                req.tbRecidentCountryDetails = [];
+            }
+        } else {
+            req.tbRecidentCountryDetails = [];
+        }
+    } else {
+        req.tbRecidentCountryDetails = [];
+    }
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.TaxResidencyDetails.sAction == "modifyCountryNext") {
+        lParams.ifaceName = "CountryDetails_Modify";
+        apz.app.icaosm.TaxResidencyDetails.fnBeforCallServer(lParams);
+    } else {
+        apz.app.icaosm.TaxResidencyDetails.fnModifyNextTINDetails();
+    }
+};
+apz.app.icaosm.TaxResidencyDetails.fnModifyNextTINDetailsCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.TaxResidencyDetails.sTINFlag = false;
+        apz.app.icaosm.TaxResidencyDetails.fnModifyNextTINDetails();
+    } else {
+        lmsg = {
+            "message": "Tax Residency Details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.TaxResidencyDetails.fnModifyNextTINDetails = function() {
+    if (apz.app.icaosm.TaxResidencyDetails.sTINFlag) {
+        apz.app.icaosm.TaxResidencyDetails.sAction = "modifyTINNext";
+    } else {
+        apz.app.icaosm.TaxResidencyDetails.sAction = "newTINNext";
+    }
+    apz.data.buildData("TINDetails", "icaosm");
+    var req = {};
+    if (apz.data.scrdata.icaosm__TINDetails_Req != undefined) {
+        if (apz.data.scrdata.icaosm__TINDetails_Req.tbCountryTaxResidencyDetails != undefined) {
+            if (apz.data.scrdata.icaosm__TINDetails_Req.tbCountryTaxResidencyDetails.length > 0) {
+                req.tbCountryTaxResidencyDetails = apz.data.scrdata.icaosm__TINDetails_Req.tbCountryTaxResidencyDetails;
+                for (var i = 0; i < req.tbCountryTaxResidencyDetails.length; i++) {
+                    req.tbCountryTaxResidencyDetails[i].companyid = apz.icaosm.Home.sCompanyID;
+                }
+            } else {
+                req.tbCountryTaxResidencyDetails = [];
+            }
+        } else {
+            req.tbCountryTaxResidencyDetails = [];
+        }
+    } else {
+        req.tbCountryTaxResidencyDetails = [];
+    }
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.TaxResidencyDetails.sAction == "modifyTINNext") {
+        lParams.ifaceName = "TINDetails_Modify";
+    } else if (apz.app.icaosm.TaxResidencyDetails.sAction == "newTINNext") {
+        lParams.ifaceName = "TINDetails_New";
+    }
+    apz.app.icaosm.TaxResidencyDetails.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.TaxResidencyDetails.fnModifyNextTINDetailsCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.TaxResidencyDetails.sTINFlag = false;
+        apz.app.icaosm.TaxResidencyDetails.fnModifyNextHomeResidencyDetails();
+    } else {
+        lmsg = {
+            "message": "Tax Residency Details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.TaxResidencyDetails.fnModifyNextHomeResidencyDetails = function() {
+    if (apz.app.icaosm.TaxResidencyDetails.sHomeFlag) {
+        apz.app.icaosm.TaxResidencyDetails.sAction = "modifyNext";
+    } else {
+        apz.app.icaosm.TaxResidencyDetails.sAction = "newNext";
+    }
+    apz.data.buildData("HomeTaxResidencyDetailsAOS", "icaosm");
+    var req = {};
+    req.tbHomeResidencyDetails = apz.data.scrdata.icaosm__HomeTaxResidencyDetailsAOS_Req.tbHomeResidencyDetails;
+    req.tbHomeResidencyDetails.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.TaxResidencyDetails.sAction == "modifyNext") {
+        lParams.ifaceName = "HomeTaxResidencyDetailsAOS_Modify";
+    } else if (apz.app.icaosm.TaxResidencyDetails.sAction == "newNext") {
+        lParams.ifaceName = "HomeTaxResidencyDetailsAOS_New";
+    }
+    apz.app.icaosm.TaxResidencyDetails.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.TaxResidencyDetails.fnModifyNextHomeResidencyDetailsCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.TaxResidencyDetails.sHomeFlag = false;
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__TaxResidencyDetails__main input[type='text'],#scr__icaosm__TaxResidencyDetails__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $("#scr__icaosm__TaxResidencyDetails__main input[type='radio']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[5].progress = percentage;
+        apz.data.buildData("TaxResidencyDetailsAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "DeclarationsAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            // "animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.TaxResidencyDetails.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum,
+                "companyID": apz.icaosm.Home.sCompanyID
+            }
+        });
+    } else {
+        lmsg = {
+            "message": "Tax Residency Details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};

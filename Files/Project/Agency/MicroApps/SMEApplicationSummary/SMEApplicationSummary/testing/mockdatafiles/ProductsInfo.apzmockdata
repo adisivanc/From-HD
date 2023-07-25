@@ -1,0 +1,25 @@
+{
+    "tbComiAccountProducts":[
+           {
+               "appNo" :"8948384",
+               "account":"Corporate Account",
+               "product" :"Current Account",
+               "currency" :"USD",
+               "isCheck" :"Yes"
+           },
+           {
+               "appNo" :"8900384",
+               "account":"Loans",
+               "product" :"Working Capital",
+               "currency" :"AED",
+               "isCheck" :"Yes"
+           },
+           {
+               "appNo" :"3440384",
+               "account":"Loans",
+               "product" :"Mortgage Loan",
+               "currency" :"AED",
+               "isCheck" :"Yes"
+           }
+    ]
+}

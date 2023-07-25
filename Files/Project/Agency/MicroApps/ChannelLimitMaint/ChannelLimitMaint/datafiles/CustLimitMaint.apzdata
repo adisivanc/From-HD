@@ -1,0 +1,14 @@
+{
+  "tbDbmiCustlvlTxnLimit" : [ {
+    "channelId" : "MBCH",
+    "txnMode" : "ALL",
+    "txnType" : "debit",
+    "customerId" : "C006",
+    "currency" : "INR",
+    "txnMinLmt" : 400.00,
+    "txnMaxLmt" : 1400000.00,
+    "dailyLmt" : 100000.00,
+    "monthlyLmt" : 500000.00
+  }
+ ]
+}

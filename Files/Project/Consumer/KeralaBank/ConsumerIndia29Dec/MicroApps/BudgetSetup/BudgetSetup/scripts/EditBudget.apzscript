@@ -1,0 +1,61 @@
+apz.budget.EditBudget = {};
+apz.budget.EditBudget.sParams = {};
+var lValid = "";
+apz.app.onLoad_EditBudget = function(params) {
+    debugger;
+    apz.budget.EditBudget.sParams = params;
+    
+        $("#budget__EditBudget__gr_row_1").removeClass("EditBudget");
+        $("#budget__EditBudget__gr_row_1").addClass("editBudget");
+        $("#budget__EditBudget__gr_row_1").removeClass("sno");
+        apz.setElmValue("budget__EditBudget__el_dpd_1", apz.budget.EditBudget.sParams.data.budgetCategory);
+        apz.setElmValue("budget__EditBudget__el_inp_3", apz.budget.EditBudget.sParams.data.budgetEx.budgetfor1);
+        apz.setElmValue("budget__EditBudget__el_inp_4", "1");
+        var examples = {};
+        var examples1 = [];
+        examples = apz.budget.EditBudget.sParams.data.budgetEx.example;
+        examples = examples.split(",");
+        var number = apz.budget.EditBudget.sParams.data.budgetEx.number;
+        for (i = 0; i < number; i++) {
+            examples1[i] = {
+                'val': i,
+                'desc': examples[i]
+            }
+        }
+        var lObj = document.getElementById("budget__EditBudget__budgetplan");
+        apz.populateDropdown(lObj, examples1);
+    };
+
+apz.budget.EditBudget.fnCancel = function() {
+    debugger;
+    //$("#budget__Launcher__gr_row_3").addClass("sno");
+    $("#budget__EditBudget__gr_row_1").addClass("sno");
+    var params = {
+        "appId": "budget",
+        "scr": "BudgetSummary",
+        "div": "budget__Launcher__Summary",
+    };
+    apz.launchSubScreen(params)
+}
+apz.budget.EditBudget.fnSubmit = function() {
+    debugger;
+    
+        apz.dispMsg({
+            message: "Budget edited successfully",
+            type: "S",
+            callBack: apz.budget.EditBudget.fnCancel
+        })
+    
+}
+
+apz.budget.EditBudget.fnChangeDropDown = function() {
+    debugger;
+    var budgetplan = apz.getElmValue("budget__EditBudget__budgetplan");
+    if (budgetplan == 0) {
+        apz.setElmValue("budget__EditBudget__el_inp_3", apz.budget.EditBudget.sParams.data.budgetEx.budgetfor1)
+    } else if (budgetplan == 1) {
+        apz.setElmValue("budget__EditBudget__el_inp_3", apz.budget.EditBudget.sParams.data.budgetEx.budgetfor2)
+    } else {
+        apz.setElmValue("budget__EditBudget__el_inp_3", apz.budget.EditBudget.sParams.data.budgetEx.budgetfor3)
+    }
+}

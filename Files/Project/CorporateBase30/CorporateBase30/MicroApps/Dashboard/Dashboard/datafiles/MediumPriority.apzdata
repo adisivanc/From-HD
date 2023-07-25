@@ -1,0 +1,11 @@
+{
+    "ACDB01__MediumPriority_Res": {
+        "data": [{
+            "name": "Pending",
+            "value": "50"
+        }, {
+            "name": "Total",
+            "value": "120"
+        }]
+    }
+}

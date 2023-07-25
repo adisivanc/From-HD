@@ -1,0 +1,112 @@
+apz.srvreq.myappointments = {};
+apz.srvreq.myappointments.sCache = {};
+apz.app.onLoad_MyAppointments = function(params) {
+    debugger;
+//  apz.mockServer = false;
+    if (params.Navigation) {
+        apz.srvreq.myappointments.fnSetNavigation(params);
+    }
+    apz.srvreq.myappointments.sCache = params;
+    apz.srvreq.myappointments.fnInitialise();
+    $("#srvreq__MyAppointments__apponitmentViewList li").attr("onclick", "apz.srvreq.myappointments.fnLaunchConfirmation(this)");
+    $("#srvreq__MyAppointments__apponitmentViewList > ul.pri > li.sno").remove();
+};
+apz.srvreq.myappointments.fnInitialise = function() {
+    debugger;
+    var lReq = {
+        "tbScheduleAppointment": {
+            "customerId": apz.srvreq.myappointments.sCache.data.customerID
+        }
+    }
+    var lServerParams = {
+        "ifaceName": "FixAppointment_Query",
+        "buildReq": "N",
+        "req": lReq,
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.srvreq.myappointments.fnCallback,
+        "callBackObj": "",
+    };
+    //apz.server.callServer(lServerParams);
+             jsondata   = JSON.parse(apz.getFile(apz.getDataFilesPath("srvreq") + "/FixAppointment.json"));
+             apz.data.scrdata.srvreq__FixAppointment_Req = {};
+                          apz.data.scrdata.srvreq__FixAppointment_Req = jsondata;
+                          apz.data.loadData("FixAppointment", "srvreq");
+         apz.srvreq.myappointments.fnCallback(jsondata);     
+
+};
+apz.srvreq.myappointments.fnSetNavigation = function(params) {
+    debugger;
+    apz.srvreq.myappointments.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "BOOK APPOINTMENT";
+    }
+    // lParams.backPressed = apz.cuacpf.CustAccPort.fnBack;
+    apz.srvreq.myappointments.Navigation(lParams);
+};
+apz.srvreq.myappointments.fnCallback = function(params) {
+    debugger;
+   // apz.mockServer = true;
+    // if (params.errors) {
+    //     var lMsg = {
+    //         "message": params.errors[0].errorMessage
+    //     }
+    //     apz.dispMsg(lMsg);
+    // }
+};
+apz.srvreq.myappointments.fnLaunchConfirmation = function(pthis) {
+    debugger;
+    var lRowNo = $(pthis).closest("li").attr("rowno");
+    var lData = {};
+    lData.BranchDtls = {};
+    lData.BranchDtls.branch = apz.data.scrdata.srvreq__FixAppointment_Req.tbScheduleAppointment[lRowNo].branchName;
+    lData.BranchDtls.day = apz.data.scrdata.srvreq__FixAppointment_Req.tbScheduleAppointment[lRowNo].date;
+    lData.BranchDtls.time = apz.data.scrdata.srvreq__FixAppointment_Req.tbScheduleAppointment[lRowNo].time;
+    lData.BranchDtls.depAcc = apz.data.scrdata.srvreq__FixAppointment_Req.tbScheduleAppointment[lRowNo].toAcc;
+    lData.BranchDtls.serviceType = apz.data.scrdata.srvreq__FixAppointment_Req.tbScheduleAppointment[lRowNo].serviceType; 
+    lData.BranchDtls.amount = apz.data.scrdata.srvreq__FixAppointment_Req.tbScheduleAppointment[lRowNo].amount
+    lData.BranchDtls.referenceNo = apz.data.scrdata.srvreq__FixAppointment_Req.tbScheduleAppointment[lRowNo].referenceNo
+    apz.srvreq.myappointments.fnRenderConfirmation();
+    var lParams = {
+        "scr": "Confirmation",
+        "div": "srvreq__MyAppointments__Launcher",
+        "type": "CF",
+        "userObj": {
+            "action": "from My Appointment",
+            "destroyDiv": "srvreq__MyAppointments__Launcher",
+            "data": lData,
+            "callBack": apz.srvreq.myappointments.fnRenderMyAppointments
+        }
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.srvreq.myappointments.fnRenderConfirmation = function() {
+    debugger;
+    apz.hide("srvreq__MyAppointments__Stage1");
+    apz.show("srvreq__MyAppointments__Launcher");
+};
+apz.srvreq.myappointments.fnRenderMyAppointments = function() {
+    debugger;
+    apz.show("srvreq__MyAppointments__Stage1");
+    apz.hide("srvreq__MyAppointments__Launcher");
+};
+apz.srvreq.myappointments.fnLaunchBookAppointment = function() {
+    debugger;
+    apz.hide("srvreq__SelectService__Branch");
+    var lData = apz.srvreq.myappointments.sCache.data;
+    apz.srvreq.myappointments.fnRenderConfirmation();
+    var lParams = {
+        "scr": "SelectService",
+        "div": "srvreq__MyAppointments__Launcher",
+        "type": "CF",
+        "userObj": {
+            "destroyDiv": "srvreq__MyAppointments__Launcher",
+            "data": lData,
+            "callBack": apz.srvreq.myappointments.fnRenderMyAppointments
+        }
+    };
+    apz.launchSubScreen(lParams);
+};

@@ -1,0 +1,19 @@
+apz.app.onLoad_GenerateMMID = function(){
+    debugger;
+    apz.data.loadJsonData("MMIDList","genmid");
+          //  apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "VIEW/GENERATE MMID")
+
+}
+
+apz.genmid.fnChangeAccountNumber = function(){
+    debugger;
+    var value = apz.getElmValue("genmid__GenerateMMID__dropdown");
+   var mmid = Math.floor(99999 + Math.random()*100000) ;
+   var data = apz.data.scrdata.genmid__MMIDList_Res ;
+   var obj = {};
+   obj["accountNumber"] = value;
+   obj["mmid"] = mmid;
+   data.push(obj);
+   apz.data.scrdata.genmid__MMIDList_Res = data;
+   apz.data.loadData("MMIDList","genmid");
+}

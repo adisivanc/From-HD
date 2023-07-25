@@ -1,0 +1,31 @@
+apz.favour.transferDashboard = {};
+apz.app.onLoad_transferDashboard = function() {
+    debugger;
+    apz.data.loadJsonData("FavouriteTransfer", "favour");
+}
+apz.favour.transferDashboard.fnLaunchTransferScreen = function(element) {
+    debugger;
+            $("body").removeClass("loginby");
+ $("#header").addClass("expandnav");
+                $("#csmrbk__LandingPage__gr_row_16").addClass("sno");
+                    $("#csmrbk__LandingPage__sidebar").removeClass("sno");
+    var rowNo = $(element).attr("rowno");
+    var paymentObj = apz.data.scrdata.favour__FavouriteTransfer_Res.summary[rowNo];
+    $("#landin__Landing__heading").text("SEND MONEY");
+    apz.launchApp({
+        appId: "fndftr",
+        div: "csmrbk__LandingPage__microappLauncherCol",
+        scr: "FundsTransfer",
+        userObj: {
+            transfer: paymentObj,
+            from: "favAndDash",
+            fromAccontCurrency : "KD",
+            control: {
+                exitApp: {
+                    "div": "landin__Landing__Launcher"
+                }
+            }
+        }
+    })
+}
+

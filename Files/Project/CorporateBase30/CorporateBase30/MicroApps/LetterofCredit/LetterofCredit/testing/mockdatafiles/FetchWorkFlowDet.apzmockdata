@@ -1,0 +1,19 @@
+{
+    "tbDbmiWorkflowDetail": {
+        "actorId": "robert.langford",
+        "appId": "lecr01",
+        "endTs": "2019-11-17 17:32:26",
+        "instanceId": "ILOC17487991117173226",
+        "screenId": "AddLC",
+        "stageSeqNo": 1,
+        "startTs": "2019-11-17 17:32:26",
+        "versionNo": 1,
+        "workflowId": "ILOC",
+        "screenData": "{\"lecr01__LCDetails_Req\": { \"tbDbmiCorpLetterCreditDocuments\": [],\"tbDbmiCorpLetterCredit\": {\"customerId\": \"13\",\"dateOfApplication\": \"2019-11-17\",\"customerRefno\": \"345\",\"toleranceType\": \"\",\"toleranceAbove\": \"\", \"toleranceBelow\": \"\", \"currency\": \"INR\", \"amount\": \"456.00\", \"expiryDate\": \"2019-11-17\", \"placeOfExpiry\": \"fhjk\",\"transferrableCredit\": \"y\", \"templateAccessType\": \"Public\",\"transferrableBy\": \"\", \"referenceNumber\": \"1573992042034\", \"status\": \"Draft\",\"userId\": \"mohammad.nawaz\",\"corporateId\": \"000FTAC4321\", \"operation\": \"Open\", \"effectiveDate\": \"2019-11-17\",\"lcType\": \"Back to Back\", \"relatedLcRefNo\": \"\",\"creditType\": \"Straight\",\"modeOfPayment\": \"Negotiation\",\"creditWith\": \"\",\"chargesBorneBy\": \"Beneficiary\",\"linkedCreditLine\": \"\", \"creditLineCurrency\": \"USD\",\"applicantName\": \"weqwe\", \"applicantAddress1\": \"assad\",\"applicantAddress2\": \"asasd\",\"applicantAddress3\": \"wqw\",\"applicantCountry\": \"qwqwe\",\"beneficiaryName\": \"qwe\",\"beneficiaryAddress1\": \"qdasd\",\"beneficiaryAddress2\": \"sd\",\"beneficiaryAddress3\": \"adqd\",\"beneficiaryCountry\": \"wqqw\",\"advisingBankSwift\": \"\",\"advisingBankName\": \"\", \"advisingBankAddress1\": \"\",\"advisingBankAddress2\": \"\", \"advisingBankAddress3\": \"\",\"advisingBankCountry\": \"\", \"reimbursingBankSwift\": \"\",\"reimbursingBankName\": \"\",\"reimbursingBankAddress1\": \"\",\"reimbursingBankAddress2\": \"\", \"reimbursingBankAddress3\": \"\",\"reimbursingBankCountry\": \"\",\"advisingThroughSwift\": \"\",\"advisingThroughName\": \"\",\"advisingThroughAddress1\": \"\",\"advisingThroughAddress2\": \"\",\"advisingThroughAddress3\": \"\",\"advisingThroughCountry\": \"\",\"confirmingBankSwift\": \"\",\"confirmingBankName\": \"\",\"confirmingBankAddress1\": \"\",\"confirmingBankAddress2\": \"\",\"confirmingBankAddress3\": \"\",\"confirmingBankCountry\": \"\",\"shippmentFrom\": \"\",\"shippmentTo\": \"\", \"portOfLoading\": \"\",\"portOfDischarge\": \"\",\"latestShipmentDate\": \"\",\"transshipment\": \"\",\"partialShipment\": \"\",\"goodsDescription\": \"\",\"periodOfPresentation\": \"\",\"instructionToBank\": \"\"}}}"
+        
+        
+    }
+}
+
+
+

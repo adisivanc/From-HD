@@ -1,0 +1,19 @@
+apz.chqdep.summary = {};
+apz.app.onLoad_summary = function(params) {
+    $("#chqdep__summary__txtaccount").text(apz.chqdep.account.accountno);
+    $("#chqdep__summary__txtamount").text("$"+apz.chqdep.captureFront.amount);
+    document.getElementById("chqdep__summary__frontimg").src = "data:image/jpg;base64," + apz.chqdep.captureFront.frontimage;
+    document.getElementById("chqdep__summary__backimage").src = "data:image/jpg;base64," + apz.chqdep.captureBack.backimg;
+}
+apz.chqdep.summary.fnCancel = function() {
+    $("#chqdep__account__rowaccount").removeClass("sno");
+    $("#chqdep__summary__rowsummary").addClass("sno");
+}
+apz.chqdep.summary.fnSubmit = function() {
+    var lparams = {
+        "appId": "chqdep",
+        "scr": "successmsg",
+        "div": "chqdep__account__launchdiv",
+    }
+    apz.launchSubScreen(lparams);
+}

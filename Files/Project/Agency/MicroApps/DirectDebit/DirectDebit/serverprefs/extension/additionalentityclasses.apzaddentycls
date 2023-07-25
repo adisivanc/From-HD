@@ -1,0 +1,1 @@
+{"typeclass":"OS_SERVERPREFS_EXTENSION_ADDITIONALENTITYCLASSES","name":"additionalentityclasses","type":"OS_SERVERPREFS_EXTENSION_ADDITIONALENTITYCLASSES","additionalclasseslist":[{"tablename":"TB_DBTP_ECS_MANDATE","classname":"com.appzillon.db.ddinst.ecsMandate.tbDbtpEcsMandate"}]}

@@ -1,0 +1,249 @@
+apz.appdtl.DocumentSelection = {};
+apz.appdtl.DocumentSelection.documents = [];
+apz.app.onLoad_DocumentSelection = function(params) {
+    debugger;
+    apz.appdtl.DocumentSelection.refNo = params.refNo;
+    apz.appdtl.DocumentSelection.manageHeaders();
+    setTimeout(function() {
+        apz.appdtl.DocumentSelection.fnGetDocuments();
+    }, 10)
+};
+apz.appdtl.DocumentSelection.manageHeaders = function() {
+    $("#appdtl__AppLauncher__document_div").addClass('active');
+    $("#appdtl__AppLauncher__product_div").removeClass('active');
+    $("#appdtl__AppLauncher__employment_div").removeClass('active');
+}
+apz.appdtl.DocumentSelection.fnGetDocuments = function() {
+    debugger;
+    apz.startLoader();
+    setTimeout(function() {
+        var lParams = {
+            "ifaceName": "DocumentDetails_Query",
+            "buildReq": "N",
+            "req": {
+                "tbDbmiCustomerDocuments": {
+                    "refNo": apz.appdtl.DocumentSelection.refNo
+                }
+            },
+            "appId": "appdtl",
+            "paintResp": "N",
+            "async": false,
+            "callBack": apz.appdtl.DocumentSelection.fnGetDocumentsCB
+        }
+        apz.server.callServer(lParams);
+    }, 10)
+}
+apz.appdtl.DocumentSelection.fnGetDocumentsCB = function(params) {
+    debugger;
+    // apz.appdtl.DocumentSelection.documents = apz.documentArray;
+    apz.documentArray = [];
+    if (params.status) {
+        if (params.errors === undefined && params.res.appdtl__DocumentDetails_Res.tbDbmiCustomerDocuments.length > 0) {
+            apz.appdtl.DocumentSelection.documents = params.res.appdtl__DocumentDetails_Res.tbDbmiCustomerDocuments;
+        }
+        apz.idDocArray = [];
+        var documentList;
+        if (apz.country === "IND") {
+            documentList = JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/DocumentIND.json"));
+        } else if (apz.country === "UAE") {
+            documentList = JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/DocumentUAE.json"));
+        } else {
+            documentList = JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/Document.json"));
+        }
+        if (apz.appdtl.DocumentSelection.documents.length > 0) {
+            var documents = apz.appdtl.DocumentSelection.documents;
+            for (var i = 0, len = documents.length; i < len; i++) {
+                var index = documentList[documents[i].docType].findIndex(obj => obj.documentName === documents[i].docName);
+                documentList[documents[i].docType][index].checked = "Yes";
+            }
+        }
+        apz.data.scrdata.appdtl__DocumentsTypes_Res = documentList;
+        apz.data.loadData("DocumentsTypes", "appdtl");
+        apz.appdtl.DocumentSelection.fnAddSelectedClass(documentList.IdentityDocuments, "ct_lst_1");
+        apz.appdtl.DocumentSelection.fnAddSelectedClass(documentList.AddressDocuments, "ct_lst_2");
+        apz.appdtl.DocumentSelection.fnAddSelectedClass(documentList.OtherDocuments, "ct_lst_3");
+        apz.appdtl.DocumentSelection.fnAddSelectedClass(documentList.PhotoSignature, "ct_lst_4");
+        apz.stopLoader();
+    }
+};
+apz.appdtl.DocumentSelection.fnAddSelectedClass = function(docuArray, elName) {
+    debugger;
+    for (var i = 0, len = docuArray.length; i < len; i++) {
+        if (docuArray[i].checked === "Yes") {
+            var listId = "appdtl__DocumentSelection__" + elName + "_row_" + i;
+            $("#" + listId).addClass("selected");
+        }
+    }
+}
+apz.appdtl.DocumentSelection.fnSelectDocument = function(element) {
+    debugger;
+    var checkboxId = $(element).find("input").attr("id");
+    if (apz.getElmValue(checkboxId) === "No") {
+        apz.setElmValue(checkboxId, "Yes");
+        $(element).addClass("selected");
+    } else {
+        apz.setElmValue(checkboxId, "No");
+        $(element).removeClass("selected");
+    }
+}
+apz.appdtl.DocumentSelection.saveApplicationDetails = function() {
+    debugger;
+    var documentTypes = apz.data.buildData("DocumentsTypes", "appdtl").appdtl__DocumentsTypes_Res;
+    var IdentityDocuments = apz.appdtl.DocumentSelection.documents.filter(item => item.docType === "IdentityDocuments");
+    var OtherDocuments = apz.appdtl.DocumentSelection.documents.filter(item => item.docType === "OtherDocuments");
+    var AddressDocuments = apz.appdtl.DocumentSelection.documents.filter(item => item.docType === "AddressDocuments");
+    var PhotoSignature = apz.appdtl.DocumentSelection.documents.filter(item => item.docType === "PhotoSignature");
+    apz.appdtl.DocumentSelection.fnUpdateDocumentList(documentTypes.IdentityDocuments, IdentityDocuments, "IdentityDocuments");
+    apz.appdtl.DocumentSelection.fnUpdateDocumentList(documentTypes.OtherDocuments, OtherDocuments, "OtherDocuments");
+    apz.appdtl.DocumentSelection.fnUpdateDocumentList(documentTypes.AddressDocuments, AddressDocuments, "AddressDocuments");
+    apz.appdtl.DocumentSelection.fnUpdateDocumentList(documentTypes.PhotoSignature, PhotoSignature, "PhotoSignature");
+    apz.appdtl.DocumentSelection.deletedata();
+    // apz.appdtl.DocumentSelection.insertDocumentCB();
+};
+apz.appdtl.DocumentSelection.fnUpdateDocumentList = function(docuTypeArray, DocumentArrray, docuType) {
+    debugger;
+    for (var i = 0, len = docuTypeArray.length; i < len; i++) {
+        if (docuTypeArray[i].checked === "Yes") {
+            debugger;
+            var obj = DocumentArrray.find(data => data.docName === docuTypeArray[i].documentName)
+            if (obj) {
+                apz.documentArray.push(obj);
+                if (obj.docName === "Passport" || obj.docName === "National ID" || obj.docName === "PAN Card" || obj.docName === "Driving License" ||
+                    obj.docName === "Resident ID Card" || obj.docName === "Voter's ID") {
+                    var docuBack = DocumentArrray.find(data => data.docName === docuTypeArray[i].documentName && data.fileName === "Back");
+                    if (docuBack) {
+                        apz.documentArray.push(docuBack);
+                    }
+                }
+            } else {
+                debugger;
+                if (docuTypeArray[i].documentName === "Passport" || docuTypeArray[i].documentName === "National ID" || docuTypeArray[i].documentName ===
+                    "PAN Card" || docuTypeArray[i].documentName === "Driving License" || docuTypeArray[i].documentName === "Resident ID Card" ||
+                    docuTypeArray[i].documentName === "Voter's ID") {
+                    apz.documentArray.push(apz.appdtl.DocumentSelection.fnCreateDocuObject(docuType, docuTypeArray[i].documentName, "Front"));
+                    apz.documentArray.push(apz.appdtl.DocumentSelection.fnCreateDocuObject(docuType, docuTypeArray[i].documentName, "Back"));
+                } else {
+                    apz.documentArray.push(apz.appdtl.DocumentSelection.fnCreateDocuObject(docuType, docuTypeArray[i].documentName, ""));
+                }
+            }
+        }
+    }
+}
+apz.appdtl.DocumentSelection.fnCreateDocuObject = function(docTyppe, docName, fileName) {
+    debugger;
+    var docObj = {
+        "refNo": apz.appdtl.DocumentSelection.refNo,
+        "docType": docTyppe,
+        "docData": "",
+        "fileName": fileName,
+        "docName": docName
+    }
+    return docObj;
+}
+apz.appdtl.DocumentSelection.deletedata = function() {
+    debugger;
+    apz.startLoader()
+    var lParams = {
+        "ifaceName": "DocumentDetails_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": {
+                "refNo": apz.appdtl.DocumentSelection.refNo
+            }
+        },
+        "appId": "appdtl",
+        "paintResp": "N",
+        "callBack": apz.appdtl.DocumentSelection.deletedataCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.appdtl.DocumentSelection.deletedataCB = function(pResp) {
+    debugger;
+    apz.stopLoader()
+    apz.appdtl.DocumentSelection.insertDocument();
+}
+apz.appdtl.DocumentSelection.insertDocument = function() {
+    debugger
+    apz.startLoader()
+    apz.documentArray.forEach(function(doc, i) {
+        if (doc.seqNo) {
+            delete doc.seqNo;
+        }
+        if (!doc.docId) {
+            doc.docId = +new Date() + i
+        }
+    });
+    var lParams = {
+        "ifaceName": "DocumentDetails_New",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": apz.documentArray
+        },
+        "appId": "appdtl",
+        "paintResp": "N",
+        "callBack": apz.appdtl.DocumentSelection.insertDocumentCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.appdtl.DocumentSelection.insertDocumentCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    var action = apz.appdtl.DocumentSelection.navAction;
+    if (action && action != "") {
+        if (action == "next") {
+            apz.appdtl.DocumentSelection.navAction = "";
+            apz.appdtl.DocumentSelection.fnSaveAndGoNextScreen();
+        } else if (action == "back") {
+            apz.appdtl.DocumentSelection.navAction = "";
+            apz.appdtl.DocumentSelection.fnSaveAndGoBackScreen();
+        } else if (action == "cancel") {
+            apz.appdtl.DocumentSelection.navAction = "";
+            apz.appdtl.AppLauncher.onCancel();
+        }
+    }
+}
+//------------------------
+apz.appdtl.DocumentSelection.nextScreen = function() {
+    debugger;
+    apz.appdtl.DocumentSelection.navAction = "next";
+    apz.appdtl.DocumentSelection.saveApplicationDetails();
+}
+apz.appdtl.DocumentSelection.fnSaveAndGoNextScreen = function() {
+    debugger;
+    var params = {};
+    params.appId = "appdtl";
+    params.scr = "DocumentUpload";
+    params.div = "appdtl__AppLauncher__screenLauncher";
+    params.userObj = {
+        "refNo": apz.appdtl.DocumentSelection.refNo,
+        "subproduct": apz.appdtl.AppLauncher.sCache.subproduct,
+        "product": apz.appdtl.AppLauncher.sCache.product,
+        "appId": apz.appdtl.AppLauncher.sCache.appId,
+        "screen": "product"
+    };
+    apz.launchSubScreen(params);
+}
+apz.appdtl.DocumentSelection.preScreen = function() {
+    debugger;
+    apz.appdtl.DocumentSelection.navAction = "back";
+    apz.appdtl.DocumentSelection.saveApplicationDetails();
+}
+apz.appdtl.DocumentSelection.fnSaveAndGoBackScreen = function() {
+    debugger;
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "IdentityDetail",
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.appdtl.DocumentSelection.refNo,
+            "div": "appdtl__AppLauncher__screenLauncher"
+        }
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.appdtl.DocumentSelection.fnCancel = function(params) {
+    debugger;
+    apz.appdtl.DocumentSelection.navAction = "cancel";
+    apz.appdtl.DocumentSelection.saveApplicationDetails();
+    // apz.appdtl.AppLauncher.onCancel();
+}

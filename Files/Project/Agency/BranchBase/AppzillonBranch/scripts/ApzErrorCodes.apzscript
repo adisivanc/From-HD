@@ -1,0 +1,13 @@
+apz.err={}
+apz.err.checkErrorCase=function(errCode){
+    switch (errCode)
+    {
+        //APZ-DM-031
+        //Password has expired, Please change your password
+        case "":
+        return ("message")
+            break;
+        default:
+            break;
+    }
+}

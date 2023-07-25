@@ -1,0 +1,88 @@
+{
+    "prdsel__AccountsComparisionTemp_Res": {
+        "savingsaccount": [{
+            "feature": "Earns Interest",
+            "A1": "Yes",
+            "type":"accounts"
+        },{
+            "feature": "Earns relationship rates",
+            "A1": "No",
+            "type":"accounts"
+        },{
+            "feature": "Monthly Service Fee($)",
+            "A1": "5.00",
+            "type":"accounts"
+        },{
+            "feature": "Minimum deposit to open($)",
+            "A1": "25.00",
+            "type":"accounts"
+        }, {
+            "feature": "Fees waived for checks",
+            "A1": "No",
+            "type":"accounts"
+        }],
+        "premiersavings": [{
+            "feature": "Earns Interest",
+            "A1": "Yes",
+            "type":"accounts"
+        },{
+            "feature": "Earns relationship rates",
+            "A1": "Yes",
+            "type":"accounts"
+        },{
+            "feature": "Monthly Service Fee($)",
+            "A1": "25.00",
+            "type":"accounts"
+        },{
+            "feature": "Minimum deposit to open($)",
+            "A1": "100.00",
+            "type":"accounts"
+        }, {
+            "feature": "Fees waived for checks",
+            "A1": "Yes",
+            "type":"accounts"
+        }],
+        "totalchecking": [{
+            "feature": "Earns Interest",
+            "A1": "No",
+            "type":"accounts"
+        },{
+            "feature": "Earns relationship rates",
+            "A1": "No",
+            "type":"accounts"
+        },{
+            "feature": "Monthly Service Fee($)",
+            "A1": "12.00",
+            "type":"accounts"
+        },{
+            "feature": "Minimum deposit to open($)",
+            "A1": "25.00",
+            "type":"accounts"
+        }, {
+            "feature": "Fees waived for checks",
+            "A1": "No",
+            "type":"accounts"
+        }],
+		"premierpluschecking": [{
+            "feature": "Earns Interest",
+            "A1": "Yes",
+            "type":"accounts"
+        },{
+            "feature": "Earns relationship rates",
+            "A1": "Yes",
+            "type":"accounts"
+        },{
+            "feature": "Monthly Service Fee($)",
+            "A1": "25.00",
+            "type":"accounts"
+        },{
+            "feature": "Minimum deposit to open($)",
+            "A1": "25.00",
+            "type":"accounts"
+        }, {
+            "feature": "Fees waived for checks",
+            "A1": "Yes",
+            "type":"accounts"
+        }]
+    }
+}

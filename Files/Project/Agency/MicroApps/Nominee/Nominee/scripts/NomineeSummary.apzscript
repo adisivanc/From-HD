@@ -1,0 +1,130 @@
+apz.nomimt = {};
+apz.nomimt.nomineesummary = {};
+apz.nomimt.nomineesummary.sParams = {};
+apz.app.onLoad_NomineeSummary = function(params) {
+    debugger;
+    apz.nomimt.nomineesummary.sParams = params;
+    if (params.Navigation) {
+        apz.nomimt.nomineesummary.fnSetNavigation(params);
+    }
+    apz.data.loadJsonData("NomineeDetail");
+};
+apz.nomimt.nomineesummary.fnEdit = function(pthis) {
+    debugger;
+    var lRowNo = pthis.getAttribute("rowno");
+    var params = {
+        "scr": "AddEditNominee",
+        "div": "nomimt__NomineeSummary__LaunchDiv",
+        "userObj": {
+            "data": apz.data.scrdata.nomimt__NomineeSummary_Res.nomineeDtls.data.nomineeData[lRowNo],
+            "accountNumber" : apz.data.scrdata.nomimt__NomineeSummary_Res.nomineeDtls.data.nomineeData[lRowNo].accountNo,
+            "action": "Edit",
+            "callBack": apz.nomimt.nomineesummary.fnCallBackSummary
+        }
+    };
+    params.userObj.data.customerId = apz.nomimt.nomineesummary.sParams.data.customerID;
+    if (apz.nomimt.nomineesummary.sParams.Navigation) {
+        params.userObj.Navigation = {
+            "setNavigation": apz.nomimt.nomineesummary.Navigation
+        };
+    }
+    apz.launchSubScreen(params);
+    apz.nomimt.nomineesummary.fnRenderStage2();
+};
+apz.nomimt.nomineesummary.fnDelete = function(pthis) {
+    debugger;
+    var lRowNo = pthis.getAttribute("rowno");
+    var params = {
+        "scr": "AddEditNominee",
+        "div": "nomimt__NomineeSummary__LaunchDiv",
+        "userObj": {
+            "data": apz.data.scrdata.nomimt__NomineeSummary_Res.nomineeDtls.data.nomineeData[lRowNo],
+            "action": "Delete",
+            "callBack": apz.nomimt.nomineesummary.fnCallBackSummary
+        }
+    };
+    params.userObj.data.customerId = apz.nomimt.nomineesummary.sParams.data.customerID;
+    if (apz.nomimt.nomineesummary.sParams.Navigation) {
+        params.userObj.Navigation = {
+            "setNavigation": apz.nomimt.nomineesummary.Navigation
+        };
+    }
+    apz.launchSubScreen(params);
+    apz.nomimt.nomineesummary.fnRenderStage2();
+};
+apz.nomimt.nomineesummary.fnCallBackSummary = function() {
+    if (apz.nomimt.nomineesummary.sParams.Navigation) {
+        var lParams = {};
+        lParams.headerText = "NOMINEE SUMMARY";
+        apz.nomimt.nomineesummary.Navigation(lParams);
+    }
+    apz.show("nomimt__NomineeSummary__details");
+    apz.show("nomimt__NomineeSummary__add");
+    apz.hide("nomimt__NomineeSummary__LaunchDiv");
+};
+apz.nomimt.nomineesummary.fnAdd = function() {
+   
+    var params = {
+        "scr": "AddEditNominee",
+        "div": "nomimt__NomineeSummary__LaunchDiv",
+        "userObj": {
+            "data": {},
+            "action": "Add",
+            "callBack": apz.nomimt.nomineesummary.fnCallBackSummary
+        }
+    };
+    params.userObj.data.customerId = apz.nomimt.nomineesummary.sParams.data.customerID;
+    if (apz.nomimt.nomineesummary.sParams.Navigation) {
+        params.userObj.Navigation = {
+            "setNavigation": apz.nomimt.nomineesummary.Navigation
+        };
+    }
+    apz.launchSubScreen(params);
+    apz.nomimt.nomineesummary.fnRenderStage2()
+};
+apz.nomimt.nomineesummary.fnRenderStage2 = function() {
+    apz.hide("nomimt__NomineeSummary__details");
+    apz.hide("nomimt__NomineeSummary__add");
+    apz.show("nomimt__NomineeSummary__LaunchDiv");
+};
+apz.nomimt.nomineesummary.fnSetNavigation = function(params) {
+    debugger;
+    apz.nomimt.nomineesummary.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.showBack = "N";
+    lParams.headerText = "NOMINEE SUMMARY";
+    apz.nomimt.nomineesummary.Navigation(lParams);
+};
+apz.nomimt.nomineesummary.fnInitialise = function(params) {
+    debugger;
+    apz.nomimt.nomineesummary.fnGetNomDetails();
+};
+apz.nomimt.nomineesummary.fnGetNomDetails = function() {
+    apz.data.loadJsonData("NomineeDetail");
+    // remove comment when integrated with core bank
+    /* var lReq = {
+        "action":"Query",
+        "nomineeDtls": {
+            "customerId": apz.nomimt.nomineesummary.sParams.data.customerId
+        }
+    };
+    var lParams = {
+        "ifaceName": "nomineesummary",
+        "req": lReq
+    };
+    apz.nomimt.nomineesummary.fnBeforeCallServer(lParams);*/
+};
+apz.nomimt.nomineesummary.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": "Y",
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": apz.nomimt.nomineesummary.fnCallServerCallBack
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.nomimt.nomineesummary.fnCallServerCallBack = function(params) {
+    debugger;
+};

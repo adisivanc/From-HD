@@ -1,0 +1,29 @@
+apz.taxpay.checkParams = function(params) {
+    debugger;
+    params.userObj = {
+        "data": {
+            "accounts": [{
+                "accountNo": "5432xxxxx575",
+                "accountType": "Savings",
+                "accountBalance": "50,000"
+            }, {
+                "accountNo": "5432xxxxx858",
+                "accountType": "Savings",
+                "accountBalance": "25,000"
+            }, {
+                "accountNo": "5432xxxxx988",
+                "accountType": "Savings",
+                "accountBalance": "40,000"
+            }, {
+                "accountNo": "5432xxxxx128",
+                "accountType": "Savings",
+                "accountBalance": "1,00,000"
+            }],
+            "customerID": "100200011",
+            "emailId": "sandeeo@gmail.com",
+            "mobileNo": "9293849383",
+            "customerName": "Sandeep",
+            "address": "SJR Plaja , Koramangala"
+        }
+    };
+};

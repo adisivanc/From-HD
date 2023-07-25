@@ -1,0 +1,53 @@
+{
+    "balanc__QuarterlyBalance_Res": {
+        "datasets": [{
+            "Months": "Q1",
+            "Amount": "19995",
+            "Account": "100009312263"
+        }, {
+            "Months": "Q1",
+            "Amount": "15992",
+            "Account": "100009312401"
+        }, {
+            "Months": "Q1",
+            "Amount": "46504",
+            "Account": "100009312274"
+        },{
+            "Months": "Q2",
+            "Amount": "10188.33",
+            "Account": "100009312263"
+        }, {
+            "Months": "Q2",
+            "Amount": "17624.33",
+            "Account": "100009312401"
+        },  {
+            "Months": "Q2",
+            "Amount": "52504",
+            "Account": "100009312274"
+        }, {
+            "Months": "Q3",
+            "Amount": "19928.33",
+            "Account": "100009312263"
+        }, {
+            "Months": "Q3",
+            "Amount": "10059.33",
+            "Account": "100009312401"
+        },  {
+            "Months": "Q3",
+            "Amount": "51004",
+            "Account": "100009312274"
+        },{
+            "Months": "Q4",
+            "Amount": "50000",
+            "Account": "100009312263"
+        }, {
+            "Months": "Q4",
+            "Amount": "65000",
+            "Account": "100009312401"
+        },  {
+            "Months": "Q4",
+            "Amount": "60000",
+            "Account": "100009312274"
+        }]
+    }
+}

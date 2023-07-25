@@ -1,0 +1,102 @@
+apz.prdsel.CardEligibility = {};
+apz.dob = "";
+apz.app.onLoad_CardEligibility = function(params) {
+    debugger;
+    apz.prdsel.CardEligibility.sparams = params;
+    $("#prdsel__CardEligibility__btnCreditNo").addClass("current");
+     $("#prdsel__CardEligibility__btnLoanNo").addClass("current");
+     $("#prdsel__CardEligibility__btnOccupation1").addClass("current");
+     
+      var  NationalityList= JSON.parse(apz.getFile(apz.getDataFilesPath("prdsel") + "/NationalityList.json"));
+    apz.data.scrdata.prdsel__NationalityList_Res ={
+        ListItem : NationalityList
+    }
+    apz.data.loadData("NationalityList","prdsel");
+    
+}
+apz.prdsel.CardEligibility.fnCheckCardEligibility = function(){
+    apz.dob = apz.getElmValue("prdsel__CardEligibility__date_of_birth")
+    var dob= apz.formatDate({
+                val: apz.dob,
+                fromFormat: apz.dateFormat,
+                toFormat: "yyyy-MM-dd"
+            });
+    var nationality = apz.getElmValue("prdsel__CardEligibility__nationality");
+    var income = apz.getElmValue("prdsel__CardEligibility__income").split(".")[0];
+    year = parseInt(dob.split("-")[0]);
+    cur_year = new Date().getFullYear();
+    if ((cur_year - year) >= 21 && (cur_year - year) <= 65 && income.split(",").join("") > 25000){
+        apz.prdsel.CardEligibility.fnLaunchAuthentication();
+    }
+    else{
+        apz.dispMsg({
+            "message" :"Sorry, we are unable to proceed with this request. Kindly contact the branch.",
+            "callBack" : apz.apzonb.Navigator.fnLunachHome
+        })
+    }
+}
+apz.prdsel.CardEligibility.fnLaunchAuthentication= function(){
+    debugger;
+    var params = {};
+        params.appId = "onbaut";
+        params.scr = "AuthLauncher";
+        params.div = "apzonb__Navigator__launchdiv";
+        params.userObj = {
+            "parentdiv": "apzonb__Navigator__launchdiv",
+            "subproduct": title,
+            "product": apz.prdsel.CardEligibility.sparams.product,
+            "action": "new"
+        };
+        apz.launchApp(params);
+}
+
+
+apz.prdsel.CardEligibility.fnSelectCreditcard = function(pthis) {
+    $("#prdsel__CardEligibility__btnCreditYes").removeClass("current");
+    $("#prdsel__CardEligibility__btnCreditNo").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+}
+
+
+apz.prdsel.CardEligibility.fnSelectLoan = function(pthis) {
+    $("#prdsel__CardEligibility__btnLoanYes").removeClass("current");
+    $("#prdsel__CardEligibility__btnLoanNo").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+}
+
+apz.prdsel.CardEligibility.fnSelectOccupation = function(pthis) {
+    $("#prdsel__CardEligibility__btnOccupation1").removeClass("current");
+    $("#prdsel__CardEligibility__btnOccupation2").removeClass("current");
+     $("#prdsel__CardEligibility__btnOccupation3").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+}
+
+
+apz.prdsel.CardEligibility.fnOpenNationalityModal = function(ptype) {
+    debugger;
+    if (ptype == "open") {
+        $("#prdsel__CardEligibility__NationalityModal").removeClass("sno");
+        $("#prdsel__CardEligibility_ct_lst_1 li").removeClass("current");
+        var nationalityName = apz.getElmValue("prdsel__CardEligibility__nationality");
+        //var occupationName = $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__occupation").val();
+        var lLength = apz.data.scrdata.prdsel__NationalityList_Res.ListItem.length;
+        for (var i = 0; i < lLength; i++) {
+            var nationalityListName = apz.getElmValue("prdsel__NationalityList__o__ListItem__NationalityType_" + i);
+            if (nationalityName == nationalityListName) {
+                $("#prdsel__CardEligibility_ct_lst_1_row_" + i).addClass("current");
+                break;
+            }
+        }
+    }
+    if (ptype == "close") {
+        $("#prdsel__CardEligibility__NationalityModal").addClass("sno");
+    }
+}
+
+apz.prdsel.CardEligibility.fnSelectNationality = function(pthis) {
+   var lrowno = $(pthis).attr("rowno");
+    var nationality = apz.getElmValue("prdsel__NationalityList__o__ListItem__NationalityType_"+lrowno);
+    //apz.setElmValue("loanvg__ProductLoanDetails__i__tbDbmiProductLoan__employmentstatus",nationality);
+    $("#prdsel__CardEligibility__nationality").val(nationality);
+     $("#prdsel__CardEligibility__NationalityModal").addClass("sno");
+}

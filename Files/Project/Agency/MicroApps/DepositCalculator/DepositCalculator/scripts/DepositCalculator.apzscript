@@ -1,0 +1,102 @@
+apz.dpcalc.depositcalculator = {};
+apz.app.onLoad_DepositCalculator = function() {};
+apz.app.onShown_DepositCalculator = function(params) {
+    debugger;
+    $("#dpcalc__DepositCalculator__LoanAmtSlider").roundSlider({
+        sliderType: "min-range",
+        radius: 48,
+        width: 8,
+        min: 100000,
+        max: 1000000,
+        handleShape: "dot",
+        startAngle: 90,
+        endAngle: "+330",
+        value: "500000",
+        step: 10000,
+        handleSize: "+13",
+        change: function(args) {
+            apz.dpcalc.depositcalculator.fnDepositCalc();
+        }
+    });
+    $("#dpcalc__DepositCalculator__TenorSlider").roundSlider({
+        sliderType: "min-range",
+        radius: 48,
+        width: 8,
+        min: 1,
+        max: 30,
+        handleShape: "dot",
+        startAngle: 90,
+        endAngle: "+330",
+        value: 15,
+        handleSize: "+13",
+        change: function(args) {
+            apz.dpcalc.depositcalculator.fnDepositCalc();
+        }
+    });
+    $("#dpcalc__DepositCalculator__InterestRateSlider").roundSlider({
+        step: 0.25,
+        sliderType: "min-range",
+        radius: 48,
+        width: 8,
+        min: 1,
+        max: 20,
+        handleShape: "dot",
+        startAngle: 90,
+        endAngle: "+330",
+        value: 10,
+        handleSize: "+13",
+        change: function(args) {
+            apz.dpcalc.depositcalculator.fnDepositCalc();
+        }
+    });
+    apz.dpcalc.depositcalculator.fnDepositCalc();
+     if (params.Navigation) {
+            apz.dpcalc.depositcalculator.fnSetNavigation(params);
+        
+    }
+};
+
+apz.dpcalc.depositcalculator.fnSetNavigation = function(params) {
+    debugger;
+    apz.dpcalc.depositcalculator.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.headerText = "DEPOSIT CALCULATOR";
+    apz.dpcalc.depositcalculator.Navigation(lParams);
+};
+//DepositCalculate
+apz.dpcalc.depositcalculator.fnDepositCalc = function() {
+    debugger;
+    var amount = $("#dpcalc__DepositCalculator__LoanAmtSlider").roundSlider("getValue");
+    var interest = $("#dpcalc__DepositCalculator__InterestRateSlider").roundSlider("getValue");
+    var year = $("#dpcalc__DepositCalculator__TenorSlider").roundSlider("getValue");
+    var compounding = apz.getElmValue("dpcalc__DepositCalculator__comp_period");
+    var interest1 = parseFloat(interest / (100));
+    val = apz.getFloat(amount) * Math.pow((1 + (interest1 / compounding)), (compounding * year));
+    //code for pie chart
+    var totalAmountPaid = val.toFixed(2);
+    var totalnterestPaid = (val - amount).toFixed(2);
+    var lObj = {
+        "decimalSep": apz.decimalSep,
+        "thousandSep": apz.thousandSep,
+        "value": totalAmountPaid,
+        "mask": "LAKH",
+        "decimalPoints": 2
+    };
+    maturityAmt = apz.formatNumber(lObj);
+    apz.setElmValue("dpcalc__DepositCalculator__maturity_amt", maturityAmt);
+    //$("#depositResult_main_div").removeClass("dispnone");
+    var lcontnt = {};
+    lcontnt.Deposit = [];
+    lcontnt.Deposit[0] = {};
+    lcontnt.Deposit[0].depositTitle = "Initial investment";
+    lcontnt.Deposit[0].depositValue = totalAmountPaid - totalnterestPaid;
+    lcontnt.Deposit[1] = {};
+    lcontnt.Deposit[1].depositTitle = "Dividend Earned";
+    lcontnt.Deposit[1].depositValue = totalnterestPaid;
+    /*appzillon.data.scrresp = lcontnt;
+        lresp = lcontnt;
+        appzillon.server.updateResponse(lresp);*/
+    apz.data.scrdata.dpcalc__DepositCalculator_Req = lcontnt;
+    apz.data.loadData("DepositCalculator", "dpcalc");
+    //guiutils.readjustHeight();
+};

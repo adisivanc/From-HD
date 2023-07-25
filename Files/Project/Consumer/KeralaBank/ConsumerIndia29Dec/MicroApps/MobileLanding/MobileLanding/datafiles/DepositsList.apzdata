@@ -1,0 +1,56 @@
+{
+    "moblan__DepositInterface_Res": {
+        "FixedDepositDetails": [
+            {
+                "title": "Fixed Deposit",
+                "accno": "100009312285",
+                "totalBalance": "50000",
+                "numberofDeposists": [
+                    {
+                        "depositNumber": "Deposit-1",
+                        "percentage": "2.5%",
+                        "maturityDate": "04/02/2020",
+                        "maturityBalance": "15000"
+                    },
+                    {
+                        "depositNumber": "Deposit-2",
+                        "percentage": "4%",
+                        "maturityDate": "06/03/2020",
+                        "maturityBalance": "20000"
+                    },
+                    {
+                        "depositNumber": "Deposit-3",
+                        "percentage": "8%",
+                        "maturityDate": "08/04/2020",
+                        "maturityBalance": "30000"
+                    }
+                ]
+            },
+            {
+                 "title": "Recurring Deposit",
+                "accno": "100009312985",
+                "totalBalance": "80000",
+                "numberofDeposists": [
+                    {
+                        "depositNumber": "Deposit-1",
+                        "percentage": "3.5%",
+                        "maturityDate": "04/03/2020",
+                        "maturityBalance": "25000"
+                    },
+                    {
+                        "depositNumber": "Deposit-2",
+                        "percentage": "4%",
+                        "maturityDate": "06/04/2020",
+                        "maturityBalance": "40000"
+                    },
+                    {
+                        "depositNumber": "Deposit-3",
+                        "percentage": "7%",
+                        "maturityDate": "08/05/2020",
+                        "maturityBalance": "15000"
+                    }
+                ]
+            }
+        ]
+    }
+}

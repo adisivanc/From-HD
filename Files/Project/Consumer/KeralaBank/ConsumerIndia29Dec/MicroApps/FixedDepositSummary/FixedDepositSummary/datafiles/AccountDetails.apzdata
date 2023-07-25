@@ -1,0 +1,18 @@
+{
+    "fdsumm__AccountDetails_Res": {
+        "accounts": [{
+            "accountNo": "100009312263",
+            "accountType": "Savings",
+            "accountBalance": "50,000"
+        }, {
+            "accountNo": "100009312401",
+            "accountType": "Savings",
+            "accountBalance": "60,000"
+        }, {
+            "accountNo": "100009312274",
+            "accountType": "Current",
+            "accountBalance": "65,000"
+        }],
+        "customerID": "1"
+    }
+}

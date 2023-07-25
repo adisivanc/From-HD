@@ -1,0 +1,7 @@
+apz.loansm.checkParams = function(params) {
+    params.userObj = {
+        "data": {
+            "customerID": "134"
+        }
+    };
+};

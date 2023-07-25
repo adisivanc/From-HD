@@ -1,0 +1,23 @@
+{
+    "tbDbmiCorpLoanDetails": {
+        "interestRate": "15",
+            "overdueAmount": 54000,
+            "nextPaymentDate": "2018-01-04",
+            "accountName": "Captial Loan",
+            "installmentAmount": 55000,
+            "accountType": "Loan",
+            "currentBalance": 250000,
+            "accountOpeningDate": "2017-12-12",
+            "accuredInterest": "34500",
+            "loanAmount": 87698700,
+            "corporateId": "000FTAC4321",
+            "maturityDate": "2018-04-04",
+            "accountNo": "150100159521",
+            "lastPaymentDate": "2017-01-04",
+            "loanStatus": "Overdue",
+            "lastPaymentAmount": 120000,
+            "currency": "USD",
+            "repaymentFrequency": "Yearly",
+            "nextPaymentAmount": 190000
+    }
+}

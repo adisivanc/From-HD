@@ -1,0 +1,13 @@
+{
+    "Rates__gold_Res": {
+        "goldPrice": [{
+            " ": "Gold bars 24 carat",
+            "Buying": "51,990",
+            "Selling": "51,990"
+        }, {
+            " ": "Gold bars 22 carat",
+            "Buying": "47,660",
+            "Selling": "47,660"
+        }]
+    }
+}

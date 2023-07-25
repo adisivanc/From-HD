@@ -1,0 +1,14 @@
+ {
+     "bookrd__AccountDetails_Res": {
+         "accounts": [{
+             "accountNo": "100009312263",
+             "accountType": "Savings"
+         }, {
+             "accountNo": "100009312401",
+             "accountType": "Savings"
+         }, {
+             "accountNo": "100009312274",
+             "accountType": "Current"
+         }]
+     }
+ }

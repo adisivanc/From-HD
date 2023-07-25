@@ -1,0 +1,114 @@
+apz.cashtr.cashtransactionshome = {};
+apz.cashtr.cashtransactionshome.sCache = {};
+apz.cashtr.cashtransactionshome.sTransferType = '';
+apz.app.onLoad_CashTransactionsHome = function(params) {
+    debugger;
+    apz.cashtr.cashtransactionshome.sCache = params;
+    if (apz.cashtr.cashtransactionshome.sCache.type == "withdrawal" || apz.cashtr.cashtransactionshome.sCache.type == "CASH WITHDRAWAL") {
+        apz.show("cashtr__CashTransactionsHome__transactionsSec");
+        apz.hide("cashtr__CashTransactionsHome__ddSec");
+        $("#cashtr__CashTransactionsHome__ps_pls_7_li").click();
+        if(apz.cashtr.cashtransactionshome.sCache.from == "myTasks"){
+        $("#cashtr__CashTransactionsHome__amt").val(apz.cashtr.cashtransactionshome.sCache.taskDetails.amount);    
+        apz.hide("cashtr__CashTransactionsHome__ps_pls_6_li");
+         apz.hide("cashtr__CashTransactionsHome__ps_pls_9_li");
+        }
+       apz.cashtr.cashtransactionshome.fnCashWithdrawal();
+    } 
+    else {
+      apz.show("cashtr__CashTransactionsHome__transactionsSec");
+      apz.hide("cashtr__CashTransactionsHome__ddSec");
+      if(apz.cashtr.cashtransactionshome.sCache.from == "myTasks"){
+       apz.hide("cashtr__CashTransactionsHome__ps_pls_7_li");
+         apz.hide("cashtr__CashTransactionsHome__ps_pls_9_li");
+      }
+      apz.cashtr.cashtransactionshome.fnCashDeposit();
+    }
+
+    //  apz.cashtr.cashtransactionshome.fnBeforeCallServer();
+}
+
+apz.cashtr.cashtransactionshome.fnCashDeposit = function() {
+    apz.show("cashtr__CashTransactionsHome__transactionsSec");
+    apz.hide("cashtr__CashTransactionsHome__ddSec");
+    apz.cashtr.cashtransactionshome.sTransferType = "deposit";
+    apz.hide("cashtr__CashTransactionsHome__fromAcc_ul");
+    apz.show("cashtr__CashTransactionsHome__toAcc_ul");
+};
+apz.cashtr.cashtransactionshome.fnCashWithdrawal = function() {
+    debugger;
+    apz.show("cashtr__CashTransactionsHome__transactionsSec");
+    apz.hide("cashtr__CashTransactionsHome__ddSec");
+    apz.cashtr.cashtransactionshome.sTransferType = "withdrawal";
+    apz.hide("cashtr__CashTransactionsHome__toAcc_ul");
+    apz.show("cashtr__CashTransactionsHome__fromAcc_ul");
+};
+
+
+apz.cashtr.cashtransactionshome.fnBeforeCallServer = function() {
+    var lServerParams = {
+        "ifaceName": "TransctionDetails_Query",
+        "buildReq": "N",
+        "req": {
+            agencybankingtransactions: {
+                "accountNumber": "%"
+            }
+        },
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.cashtr.cashtransactionshome.callServerCallBack,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.cashtr.cashtransactionshome.callServerCallBack = function(params) {
+    apz.cashtr.cashtransactionshome.ldropdownArr = [];
+    for (i = 0; i < params.res.cashtr__TransctionDetails_Res.agencybankingtransactions.length; i++) {
+        var lAccType = params.res.cashtr__TransctionDetails_Res.agencybankingtransactions[i].accountType;
+        if (lAccType == "Savings" || lAccType == "Current") {
+            var option = {};
+            option.val = params.res.cashtr__TransctionDetails_Res.agencybankingtransactions[i].accountNumber;
+            option.desc = params.res.cashtr__TransctionDetails_Res.agencybankingtransactions[i].accountNumber;
+            apz.cashtr.cashtransactionshome.ldropdownArr.push(option);
+        }
+    }
+    apz.populateDropdown(document.getElementById("cashtr__CashTransactionsHome__fromAcc"), apz.cashtr.cashtransactionshome.ldropdownArr);
+    apz.populateDropdown(document.getElementById("cashtr__CashTransactionsHome__toAcc"), apz.cashtr.cashtransactionshome.ldropdownArr);
+    apz.cashtr.cashtransactionshome.AccountData = params.res.cashtr__TransctionDetails_Res.agencybankingtransactions;
+};
+apz.cashtr.cashtransactionshome.fnOnClickCancel = function() {
+    // apz.cashtr.cashtransactionshome.sCache.callBack();
+    apz.cmrnav.fnLaunchConsumerHome()
+    
+};
+apz.cashtr.cashtransactionshome.fnOnClickContinue = function() {
+    debugger;
+
+
+
+var lObj = {
+        "scr": "CashTransactionVerify",
+        "div": apz.cashtr.cashtransactionshome.sCache.destroyDiv,
+        "animation": 9,
+        "userObj": {
+            "action": apz.cashtr.cashtransactionshome.sCache.action,
+            "data": {},
+            "destroyDiv": apz.cashtr.cashtransactionshome.sCache.destroyDiv,
+            "parentAppId": apz.cashtr.cashtransactionshome.sCache.parentAppId,
+            "pastScreen": "SameBank",
+            "fromAcc": apz.getElmValue("cashtr__CashTransactionsHome__fromAcc"),
+            "toAcc": apz.getElmValue("cashtr__CashTransactionsHome__toAcc"),
+            "amount": apz.getElmValue("cashtr__CashTransactionsHome__amt"),
+            "remarks": apz.getElmValue("cashtr__CashTransactionsHome__remarks"),
+            "callBack": apz.cashtr.cashtransactionshome.sCache.callBack,
+            "transferType": apz.cashtr.cashtransactionshome.sTransferType
+        }
+    };
+    apz.launchSubScreen(lObj);
+    
+};
+ 
+apz.cashtr.cashtransactionshome.sCache.callbackFn = function(params){
+    debugger;
+
+}

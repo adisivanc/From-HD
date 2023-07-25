@@ -1,0 +1,540 @@
+apz.bulktr.WithinBankVerify = {};
+apz.bulktr.WithinBankVerify.checkForCustAuth = "";
+apz.bulktr.WithinBankVerify.sTxnRefNo = "";
+apz.bulktr.WithinBankVerify.lCorpImg = "";
+apz.app.onLoad_WithinBankVerify = function(params) {
+    debugger;
+    if (params.parentScr == "MyTasks") {
+        apz.bulktr.WithinBankVerify.sTaskObj = params;
+        apz.bulktr.WithinBankVerify.fnQueryWorkflowMaster();
+        //    apz.bulktr.WithinBankVerify.launchCustProfile();
+        // apz.bulktr.WithinBankVerify.queryCustDetails(apz.bulktr.WithinBankVerify.sTaskObj.arrivedPerson);
+        $("#bulktr__WithinBankVerify__btnSubmit").addClass("sno");
+    } else {
+        apz.bulktr.WithinBankVerify.sTaskObj = params;
+        apz.data.scrdata.bulktr__WithinBankDetailsV_Req = JSON.parse(params.currentWfDetails.screenData).bulktr__WithinBankDetails_Req;
+        apz.data.loadData("WithinBankDetailsV", "bulktr");
+        //  apz.bulktr.WithinBankVerify.launchCustProfile();
+        // apz.bulktr.WithinBankVerify.launchAuthOptions();
+        // apz.bulktr.WithinBankVerify.queryCustDetails(apz.bulktr.WithinBankVerify.sTaskObj.arrivedPerson);
+
+	if(apz.bulktr.WithinBankVerify.sTaskObj.accopAppData){
+	$("#bulktr__WithinBankVerify__el_txt_1").html(apz.bulktr.WithinBankVerify.sTaskObj.accopAppData.serviceType);
+	if(apz.bulktr.WithinBankVerify.sTaskObj.accopAppData.serviceType == "CASH DEPOSIT"){
+		
+	$("#bulktr__WithinBankVerify__el_txt_1").text("Cash Deposit");
+	$("#bulktr__WithinBankVerify__confirmPanel").removeClass("sno");
+		$("#bulktr__WithinBankVerify__FromAccountNo_grp_lbl").html("To Account*");
+	}else{
+		$("#bulktr__WithinBankVerify__FromAccountNo_grp_lbl").html("From Account*");
+	}
+	}
+    }
+    if (params.userinfo.type == 'Bearer') {
+        apz.bulktr.WithinBankVerify.queryCustDetails('BearerDetails_Query');
+    } else {
+        apz.bulktr.WithinBankVerify.queryCustDetails('SignatoryDetails_Query');
+    }
+};
+apz.app.onShown_WithinBankVerify = function() {
+    $(".adr-ctr").addClass("sno");
+	if(apz.data.scrdata.bulktr__WithinBankDetailsV_Req.TxnMaster.Details){
+    apz.setElmValue("bulktr__WithinBankVerify__FromAccountNo", apz.data.scrdata.bulktr__WithinBankDetailsV_Req.TxnMaster.Details[0].fromAccount);}
+    $("#bulktr__WithinBankVerify__waitModal_close").addClass("sno");
+};
+apz.bulktr.WithinBankVerify.viewProfileDetails = function() {
+    if ($("#bulktr__WithinBankVerify__custProDetails").hasClass("sno")) {
+        $("#bulktr__WithinBankVerify__custProDetails").removeClass("sno");
+        // $("#bulktr__WithinBankVerify__shHideBtn")
+    } else {
+        $("#bulktr__WithinBankVerify__custProDetails").addClass("sno")
+    }
+}
+apz.bulktr.WithinBankVerify.launchCustProfile = function() {
+    debugger;
+    var lParams = {
+        "appId": "myprof",
+        "scr": "MyProfile",
+        "div": "bulktr__WithinBankVerify__custProfile",
+        "type": "CF",
+        "userObj": {
+            "custId": apz.bulktr.WithinBankVerify.sTaskObj.userinfo.id,
+            "custType": apz.bulktr.WithinBankVerify.sTaskObj.userinfo.type,
+        }
+    };
+    apz.launchApp(lParams);
+}
+//query methods
+apz.bulktr.WithinBankVerify.fnQueryWorkflowMaster = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "QueryWorkFlowMaster_Query",
+        "buildReq": "Y",
+        "appId": "bulktr",
+        "req": "",
+        "paintResp": "N",
+        "async": "true",
+        "callBack": apz.bulktr.WithinBankVerify.workflowMasterCallback,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.bulktr.WithinBankVerify.workflowMasterCallback = function(params) {
+    debugger;
+    var lLength = params.res.bulktr__QueryWorkFlowMaster_Res.tbDbmiWorkflowMaster.length;
+    apz.bulktr.WithinBankVerify.sTaskObj.currentTask = params.res.bulktr__QueryWorkFlowMaster_Res.tbDbmiWorkflowMaster[lLength - 1];
+    var lServerParams = {
+        "ifaceName": "QueryWorkflowDetails_Query",
+        "buildReq": "Y",
+        "appId": "bulktr",
+        "req": "",
+        "paintResp": "N",
+        "async": "true",
+        "callBack": apz.bulktr.WithinBankVerify.workflowDetailsCallbackInitial,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.bulktr.WithinBankVerify.workflowDetailsCallbackInitial = function(params) {
+    debugger;
+    if( apz.bulktr.WithinBankVerify.sTaskObj.appntdata){
+	
+	apz.data.scrdata.bulktr__WithinBankDetailsV_Req = {
+			 "TxnMaster": {
+        "txnRefNo":apz.bulktr.WithinBankVerify.sTaskObj.appntdata.referenceNo,
+        "appId":"",
+        "userId":"",
+        "customerId":apz.bulktr.WithinBankVerify.sTaskObj.appntdata.customerId,
+        "amount":apz.bulktr.WithinBankVerify.sTaskObj.appntdata.amount,
+        "txnType":"Cash Deposit",
+        "txnStatus":"",
+        "Details":{
+            "fromAccount":apz.bulktr.WithinBankVerify.sTaskObj.appntdata.toAcc,
+            "toAccount":apz.bulktr.WithinBankVerify.sTaskObj.appntdata.toAcc,
+            "amount":apz.bulktr.WithinBankVerify.sTaskObj.appntdata.amount,
+            "remarks":"",
+            "accountBranch":apz.bulktr.WithinBankVerify.sTaskObj.appntdata.branchName,
+            "currency":"INR",
+            "type":apz.bulktr.WithinBankVerify.sTaskObj.appntdata.serviceType,
+            "txnDate":new Date(),
+            "beneficiaryName":apz.bulktr.WithinBankVerify.sTaskObj.appntdata.name,
+            "beneficiaryId":"",
+            "nickName":"",
+            "bankName":"",
+            "ifscCode":"",
+            "swiftCode":"",
+            "beneficiaryType":"",
+            "branchName":"",
+            "emailId":apz.bulktr.WithinBankVerify.sTaskObj.appntdata.emailId,
+            "accountType":"",
+            "benAddr":"",
+            "benCountry":"",
+            
+            
+        }
+        
+    },
+         }//assign the data
+apz.setElmValue("bulktr__WithinBankVerify__FromAccountNo", apz.bulktr.WithinBankVerify.sTaskObj.appntdata.toAcc);
+}else{
+    if (params.res.bulktr__QueryWorkflowDetails_Res != undefined) {
+        for (var i = 0; i < params.res.bulktr__QueryWorkflowDetails_Res.tbDbmiWorkflowDetail.length; i++) {
+            if (params.res.bulktr__QueryWorkflowDetails_Res.tbDbmiWorkflowDetail[i].instanceId == apz.bulktr.WithinBankVerify.sTaskObj.instanceId &&
+                params.res.bulktr__QueryWorkflowDetails_Res.tbDbmiWorkflowDetail[i].stageSeqNo == apz.bulktr.WithinBankVerify.sTaskObj.stageSeqNo) {
+                if (params.res.bulktr__QueryWorkflowDetails_Res.tbDbmiWorkflowDetail[i].screenId == "WithinBankApprove") {
+                    apz.data.scrdata.bulktr__WithinBankDetailsV_Req = JSON.parse(params.res.bulktr__QueryWorkflowDetails_Res.tbDbmiWorkflowDetail[i].screenData)
+                        .bulktr__WithinBankDetailsV_Req;
+                } else {
+                    apz.data.scrdata.bulktr__WithinBankDetailsV_Req = JSON.parse(params.res.bulktr__QueryWorkflowDetails_Res.tbDbmiWorkflowDetail[i].screenData)
+                        .bulktr__WithinBankDetails_Req;
+                }
+                apz.bulktr.WithinBankVerify.sTaskObj.currentWfDetails = params.res.bulktr__QueryWorkflowDetails_Res.tbDbmiWorkflowDetail[i];
+            }
+        }
+    } else {
+        for (var i = 0; i < params.res.bulktr__QueryWorkflowDetails_Req.tbDbmiWorkflowDetail.length; i++) {
+            if (params.res.bulktr__QueryWorkflowDetails_Req.tbDbmiWorkflowDetail[i].instanceId == apz.bulktr.WithinBankVerify.sTaskObj.instanceId &&
+                params.res.bulktr__QueryWorkflowDetails_Req.tbDbmiWorkflowDetail[i].stageSeqNo == apz.bulktr.WithinBankVerify.sTaskObj.stageSeqNo) {
+                if (params.res.bulktr__QueryWorkflowDetails_Req.tbDbmiWorkflowDetail[i].screenId == "WithinBankApprove") {
+                    apz.data.scrdata.bulktr__WithinBankDetailsV_Req = JSON.parse(params.res.bulktr__QueryWorkflowDetails_Req.tbDbmiWorkflowDetail[i].screenData)
+                        .bulktr__WithinBankDetailsV_Req;
+                } else {
+                    apz.data.scrdata.bulktr__WithinBankDetailsV_Req = JSON.parse(params.res.bulktr__QueryWorkflowDetails_Req.tbDbmiWorkflowDetail[i].screenData)
+                        .bulktr__WithinBankDetails_Req;
+                }
+                apz.bulktr.WithinBankVerify.sTaskObj.currentWfDetails = params.res.bulktr__QueryWorkflowDetails_Req.tbDbmiWorkflowDetail[i];
+            }
+        }
+    }
+
+    apz.setElmValue("bulktr__WithinBankVerify__FromAccountNo", apz.data.scrdata.bulktr__WithinBankDetailsV_Req.TxnMaster.Details[0].fromAccount);
+}
+    apz.data.loadData("WithinBankDetailsV", "bulktr");
+    $("#bulktr__WithinBankVerify__authentication").addClass("sno");
+}
+apz.bulktr.WithinBankVerify.fnSubmit = function() {
+    debugger;
+    //get current date
+    var lDate = new Date();
+    var month = lDate.getMonth() + 1;
+    var day = lDate.getDate();
+    if (apz.bulktr.WithinBankVerify.sTaskObj.arrivedPerson == "Bearer") {
+        // Inserting record to mytask table
+        apz.bulktr.WithinBankVerify.sTxnRefNo = Math.floor(1000 + Math.random() * 9000);
+        var reqObj = {
+            "tbScheduleAppointment": {
+                "customerId": apz.bulktr.WithinBankVerify.sTaskObj.userinfo.id,
+                // "status": apz.bulktr.WithinBankVerify.sTaskObj.currentTask.stageId,
+                "status": "Pending Review",
+                "serviceType": "MULTIPLE TRANSFER",
+                "referenceNo": apz.bulktr.WithinBankVerify.sTxnRefNo,
+                "name": apz.bulktr.WithinBankVerify.custDetails.bearerName,
+                "dateOfBirth": apz.bulktr.WithinBankVerify.custDetails.bearerDob,
+                "mobileNumber": apz.bulktr.WithinBankVerify.custDetails.bearerMobileNo,
+                "emailId": apz.bulktr.WithinBankVerify.custDetails.bearerEmailId,
+                "customerImage": apz.bulktr.WithinBankVerify.lCorpImg,
+                "date": (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + lDate.getFullYear(),
+                "multInstanceId": apz.bulktr.WithinBankVerify.sTaskObj.currentWfDetails.instanceId,
+                "multSeqNo": apz.bulktr.WithinBankVerify.sTaskObj.currentWfDetails.stageSeqNo,
+                "remarks": "Bearer"
+            }
+        }
+	if(apz.bulktr.WithinBankVerify.sTaskObj.accopAppData){
+	reqObj.tbScheduleAppointment.serviceType = apz.bulktr.WithinBankVerify.sTaskObj.accopAppData.serviceType;
+}
+        var lServerParams = {
+            "ifaceName": "MyTask_New",
+            "buildReq": "N",
+            "req": reqObj,
+            "appId": "bulktr",
+            "paintResp": "N",
+            "async": false,
+            "callBack": apz.bulktr.WithinBankVerify.updateTaskCB,
+            "callBackObj": "",
+        };
+        apz.server.callServer(lServerParams);
+        apz.bulktr.WithinBankVerify.generateBitlyUrl();
+        var lmsg = {
+            "message": "A link is sent to the registered customer for verification",
+            "type": "S",
+            "callBack": apz.bulktr.WithinBankVerify.onSuccessCallback
+        };
+        apz.dispMsg(lmsg);
+    } else {
+        apz.bulktr.WithinBankVerify.checkForCustAuth = setInterval(apz.bulktr.WithinBankVerify.queryWorkflowDetails, 2000);
+        var lParams = {
+            "targetId": "bulktr__WithinBankVerify__waitModal",
+            "callBack": "",
+            "callBackObj": this
+        }
+        apz.toggleModal(lParams);
+    }
+}
+apz.bulktr.WithinBankVerify.updateTaskCB = function(params) {
+    debugger;
+}
+apz.bulktr.WithinBankVerify.queryCustDetails = function(iface) {
+    debugger;
+    var ServerParams = {
+        "ifaceName": iface,
+        "appId": "bulktr",
+        "buildReq": "Y",
+        "req": {},
+        "paintResp": "Y",
+        "async": "true",
+        "callBack": apz.bulktr.WithinBankVerify.queryCustDetailsCB,
+        "callBackObj": "",
+    };
+    apz.server.callServer(ServerParams);
+}
+//get profile
+apz.bulktr.WithinBankVerify.queryCustDetailsCB = function(resp) {
+    apz.bulktr.WithinBankVerify.custDetails = [];
+    if (resp.res.bulktr__BearerDetails_Res != undefined) {
+        if (resp.res.bulktr__BearerDetails_Res.tbBearerDetails != undefined) {
+            for (var i in resp.res.bulktr__BearerDetails_Res.tbBearerDetails) {
+                if (resp.res.bulktr__BearerDetails_Res.tbBearerDetails[i].bearerId == apz.bulktr.WithinBankVerify.sTaskObj.userinfo.id) {
+                    apz.bulktr.WithinBankVerify.custDetails = resp.res.bulktr__BearerDetails_Res.tbBearerDetails[i];
+                }
+            }
+        }
+    } else if (resp.res.bulktr__BearerDetails_Req != undefined) {
+        if (resp.res.bulktr__BearerDetails_Req.tbBearerDetails != undefined) {
+            for (var i in resp.res.bulktr__BearerDetails_Req.tbBearerDetails) {
+                if (resp.res.bulktr__BearerDetails_Req.tbBearerDetails[i].bearerId == apz.bulktr.WithinBankVerify.sTaskObj.userinfo.id) {
+                    apz.bulktr.WithinBankVerify.custDetails = resp.res.bulktr__BearerDetails_Req.tbBearerDetails[i];
+                }
+            }
+        }
+    } else if (resp.res.bulktr__SignatoryDetails_Res != undefined) {
+        if (resp.res.bulktr__SignatoryDetails_Res.tbSignatoryDetails != undefined) {
+            for (var i in resp.res.bulktr__SignatoryDetails_Res.tbSignatoryDetails) {
+                if (resp.res.bulktr__SignatoryDetails_Res.tbSignatoryDetails[i].signId == apz.bulktr.WithinBankVerify.sTaskObj.userinfo.id) {
+                    apz.bulktr.WithinBankVerify.custDetails = resp.res.bulktr__SignatoryDetails_Res.tbSignatoryDetails[i];
+                }
+            }
+        }
+    } else if (resp.res.bulktr__SignatoryDetails_Req != undefined) {
+        if (resp.res.bulktr__SignatoryDetails_Req.tbSignatoryDetails != undefined) {
+            for (var i in resp.res.bulktr__SignatoryDetails_Req.tbSignatoryDetails) {
+                if (resp.res.bulktr__SignatoryDetails_Req.tbSignatoryDetails[i].signId == apz.bulktr.WithinBankVerify.sTaskObj.userinfo.id) {
+                    apz.bulktr.WithinBankVerify.custDetails = resp.res.bulktr__SignatoryDetails_Req.tbSignatoryDetails[i];
+                }
+            }
+        }
+    }
+    apz.bulktr.WithinBankVerify.launchCustProfile();
+}
+// Bitly url and call back 
+apz.bulktr.WithinBankVerify.generateBitlyUrl = function() {
+    debugger;
+    $.ajax({
+        url: "http://api.bit.ly/v3/shorten",
+        data: {
+            longUrl: "http://192.168.5.84:8080/AppzillonCorporateBase?custId=" + apz.bulktr.WithinBankVerify.sTaskObj.accopAppData.customerId +
+                "&refNo=" + apz.bulktr.WithinBankVerify.sTaskObj.accopAppData.referenceNo,
+            apiKey: "R_80dfe7c8ef0d428999594f75dd0d2c48",
+            domain: "bitly.com",
+            login: "o_588rdn2f74"
+        },
+        dataType: "jsonp",
+        success: function(res) {
+            console.log("======" + res.data.url);
+            apz.bulktr.WithinBankVerify.sendMessage(res.data.url);
+        }
+    });
+}
+apz.bulktr.WithinBankVerify.sendMessage = function(url) {
+    var lmobileNo = "741114095";
+    var lsenderID = "APZBNK";
+    var lmessage = "Click " + url + " to verify and confirm the transaction";
+    var llurl = "http://smshorizon.co.in/api/sendsms.php?user=Iexceed&apikey=XOTNwz3OffqcodOubdhl&mobile=" + lmobileNo + "&message=" + lmessage +
+        "&senderid=" + lsenderID + "&type=txt";
+    $.ajax({
+        url: llurl,
+        dataType: "JSONP",
+        success: function(result, error) {
+            console.log(result, error);
+        }
+    });
+}
+apz.bulktr.WithinBankVerify.fnCancel = function() {
+    clearInterval(apz.bulktr.WithinBankVerify.checkForCustAuth);
+    var lParams = {
+        "targetId": "bulktr__WithinBankVerify__waitModal",
+        "callBack": "",
+        "callBackObj": this
+    }
+    apz.toggleModal(lParams);
+}
+apz.bulktr.WithinBankVerify.launchAuthOptions = function() {
+    debugger;
+    var lParams = {
+        "appId": "pfauth",
+        "scr": "Authentication",
+        "div": "bulktr__WithinBankVerify__authentication",
+        "type": "CF",
+        "userObj": ""
+    };
+    apz.launchApp(lParams);
+}
+//query methods
+apz.bulktr.WithinBankVerify.queryWorkflowDetails = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "QueryWorkflowDetails_Query",
+        "buildReq": "Y",
+        "appId": "bulktr",
+        "req": "",
+        "paintResp": "N",
+        "async": "true",
+        "callBack": apz.bulktr.WithinBankVerify.workflowDetailsCallback,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.bulktr.WithinBankVerify.workflowDetailsCallback = function(params) {
+    debugger;
+    //    apz.startLoader();
+    console.log(params.res);
+    if (params.res.bulktr__QueryWorkflowDetails_Res != undefined) {
+        if (params.res.bulktr__QueryWorkflowDetails_Res.tbDbmiWorkflowDetail[params.res.bulktr__QueryWorkflowDetails_Res.tbDbmiWorkflowDetail.length -
+            1].stageSeqNo == 3) {
+            //clearInterval(apz.bulktr.WithinBankVerify.checkForCustAuth);
+            apz.bulktr.WithinBankVerify.fnCancel();
+            $("#bulktr__WithinBankVerify__submitPanel").addClass("sno");
+            $("#bulktr__WithinBankVerify__confirmPanel").removeClass("sno");
+            //            apz.stopLoader();
+            var lmsg = {
+                "message": "Transaction is approved",
+                "type": "S",
+                "callBack": ""
+            };
+            apz.dispMsg(lmsg);
+        }
+    }
+}
+apz.bulktr.WithinBankVerify.confirm = function() {
+    debugger;
+    var lscreenData = apz.data.buildData("WithinBankDetailsV", "bulktr");
+    var lUserObj = {};
+    lUserObj.currentTask = apz.bulktr.WithinBankVerify.sTaskObj.currentTask;
+    lUserObj.currentWfDetails = apz.bulktr.WithinBankVerify.sTaskObj.currentWfDetails;
+    lUserObj.currentWfDetails.screenData = JSON.stringify(lscreenData);
+    lUserObj.callBack = apz.bulktr.WithinBankVerify.workflowMicroServiceCB;
+    lUserObj.operation = "NEXTTASK";
+    var lParams = {
+        "appId": "acwf01",
+        "scr": "WorkFlow",
+        "div": "bulktr__WithinBankVerify__LaunchMicroService",
+        "layout": "All",
+        "type": "CF",
+        "userObj": lUserObj,
+    };
+    apz.launchApp(lParams);
+};
+apz.bulktr.WithinBankVerify.fnAuthenticateCB = function(params) {
+    debugger;
+    var lscreenData = JSON.parse(apz.bulktr.WithinBankVerify.sTaskObj.currentWfDetails.screenData);
+    var lUserObj = {};
+    lUserObj.currentTask = apz.bulktr.WithinBankVerify.sTaskObj.currentTask;
+    lUserObj.currentWfDetails = apz.bulktr.WithinBankVerify.sTaskObj.currentWfDetails;
+    lUserObj.currentWfDetails.screenData = JSON.stringify(lscreenData);
+    lUserObj.callBack = apz.bulktr.WithinBankVerify.authencticateMicroServiceCB;
+    lUserObj.operation = "NEXTTASK";
+    var lParams = {
+        "appId": "acwf01",
+        "scr": "WorkFlow",
+        "div": "bulktr__BulkTransfers__launchdiv",
+        "layout": "All",
+        "type": "CF",
+        "userObj": lUserObj,
+    };
+    lParams.userObj.taskVariables = [{
+        "name": "amount",
+        "value": parseFloat(lscreenData.bulktr__WithinBankDetailsV_Req.TxnMaster.amount),
+        "type": "Number"
+    }];
+    apz.launchApp(lParams);
+};
+apz.bulktr.WithinBankVerify.authencticateMicroServiceCB = function(pNextStageObj) {
+    debugger;
+    apz.currAppId = "bulktr";
+    var lReqObj = {};
+    lReqObj.currentTask = pNextStageObj.tbDbmiWorkflowMaster;
+    lReqObj.currentWfDetails = pNextStageObj.tbDbmiWorkflowDetail;
+    if (pNextStageObj.tbDbmiWorkflowMaster.status != "COMPLETED") {
+        if (pNextStageObj.tbDbmiWorkflowMaster.stageType == "USERTASK") {
+            if (pNextStageObj.stageAccess) {
+                var lParams = {
+                    "appId": lReqObj.currentWfDetails.appId,
+                    "scr": lReqObj.currentWfDetails.screenId,
+                    "userObj": lReqObj,
+                    "div": "bulktr__BulkTransfers__launchdiv",
+                    "layout": "All"
+                };
+                apz.launchSubScreen(lParams);
+            }
+        }
+    }
+};
+apz.bulktr.WithinBankVerify.workflowMicroServiceCB = function(pNextStageObj) {
+    debugger;
+    apz.currAppId = "bulktr";
+    if (pNextStageObj.tbDbmiWorkflowMaster.status != "COMPLETED") {
+        if (pNextStageObj.tbDbmiWorkflowMaster.stageType == "USERTASK") {
+            if (pNextStageObj.stageAccess) {
+                /*     var lReqObj = {};
+                lReqObj.currentTask = pNextStageObj.tbDbmiWorkflowMaster;
+                lReqObj.currentWfDetails = pNextStageObj.tbDbmiWorkflowDetail;
+                var lParams = {
+                    "appId": lReqObj.currentWfDetails.appId,
+                    "scr": lReqObj.currentWfDetails.screenId,
+                    "div": "bulktr__WithinBankVerify__authentication",
+                    "layout": "All",
+                    "callBack": apz.bulktr.WithinBankVerify.fnAuthenticateCB,
+                };
+                lParams.userObj = {};
+                lParams.userObj.data = lReqObj;
+                apz.launchApp(lParams);*/
+                // Inserting record to mytask table
+
+	
+                var lDate = new Date();
+                var month = lDate.getMonth() + 1;
+                var day = lDate.getDate();
+                var reqObj = {
+                    "tbScheduleAppointment": {
+                        "customerId": apz.bulktr.WithinBankVerify.sTaskObj.userinfo.id,
+                        // "status": apz.bulktr.WithinBankVerify.sTaskObj.currentTask.stageId,
+                        "status": "Completed",
+                        "serviceType": "MULTIPLE TRANSFER",
+                        "referenceNo": Math.floor(1000 + Math.random() * 9000),
+                        "name": apz.bulktr.WithinBankVerify.custDetails.signName,
+                        "dateOfBirth": apz.bulktr.WithinBankVerify.custDetails.signDob,
+                        "mobileNumber": apz.bulktr.WithinBankVerify.custDetails.signMobileNo,
+                        "emailId": apz.bulktr.WithinBankVerify.custDetails.signEmailId,
+                        "customerImage": apz.bulktr.WithinBankVerify.lCorpImg,
+                        "date": (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + lDate.getFullYear(),
+                        "multInstanceId": apz.bulktr.WithinBankVerify.sTaskObj.currentWfDetails.instanceId,
+                        "multSeqNo": apz.bulktr.WithinBankVerify.sTaskObj.currentWfDetails.stageSeqNo,
+                        "remarks": "Signatory"
+                    }
+                }
+		if(apz.bulktr.WithinBankVerify.sTaskObj.accopAppData){
+			reqObj.tbScheduleAppointment.serviceType = apz.bulktr.WithinBankVerify.sTaskObj.accopAppData.serviceType;
+		}
+		if(apz.bulktr.WithinBankVerify.sTaskObj.accopAppData){
+			apz.bulktr.WithinBankVerify.sTaskObj.accopAppData.status = "Completed";
+			reqObj = apz.bulktr.WithinBankVerify.sTaskObj.accopAppData;
+		}
+
+                var lServerParams = {
+                    "ifaceName": "MyTask_New",
+                    "buildReq": "N",
+                    "req": reqObj,
+                    "appId": "bulktr",
+                    "paintResp": "N",
+                    "async": false,
+                    "callBack": apz.bulktr.WithinBankVerify.updateTaskCB,
+                    "callBackObj": "",
+                };
+                apz.server.callServer(lServerParams);
+                var lmsg = {
+                    "message": "Transaction successfully submitted",
+                    "type": "S",
+                    "callBack": apz.bulktr.WithinBankVerify.onSuccessCallback
+                };
+                apz.dispMsg(lmsg);
+            } else {
+                var lParams = {
+                    "appId": "tscm01",
+                    "scr": "TaskCompleted",
+                    "div": apz.bulktr.WithinBankVerify.sTaskObj.destroyDiv,
+                    "layout": "All",
+                    "type": "CF",
+                    "userObj": {
+                        "referenceId": pRespObj.tbDbmiWorkflowMaster.referenceId
+                    }
+                };
+                apz.launchApp(lParams);
+            }
+        }
+    }
+};
+apz.bulktr.WithinBankVerify.onSuccessCallback = function() {
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": apz.bulktr.WithinBankVerify.sTaskObj.destroyDiv,
+        "layout": "All",
+        "type": "CF",
+        "userObj": {
+            "destroyDiv": apz.bulktr.WithinBankVerify.sTaskObj.destroyDiv,
+            "parentAppId": apz.bulktr.WithinBankVerify.sTaskObj.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+}
+
+apz.bulktr.WithinBankVerify.lCorpImg  = "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"

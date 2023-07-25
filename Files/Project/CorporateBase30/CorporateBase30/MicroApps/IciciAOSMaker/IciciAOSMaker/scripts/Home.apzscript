@@ -1,0 +1,346 @@
+apz.icaosm.Home.Cache = {};
+apz.icaosm.Home.sCompanyID = "";
+apz.app.onLoad_Home = function(params) {
+    debugger;
+    $("#Regist__RegisterPage__home").removeClass("sno");
+   // if (params.companyID != undefined) {
+           apz.icaosm.Home.sCompanyID = params.companyID;
+       // apz.icaosm.Home.sCompanyID = "21121";
+ //   }
+    apz.icaosm.Home.Cache = params;
+    if (apz.data.scrdata.icaosm__Home_Req != undefined) {
+        apz.data.loadData("Home", "icaosm");
+    } else {
+    
+        apz.data.loadJsonData('Home');
+        apz.setElmValue("icaosm__Home__i__Home__progress_0","0.1");
+    }
+    
+    $("#icaosm__Home__ct_lst_1 li").css("cursor", "pointer");
+    apz.app.manageCrub(0);
+    $("#icaosm__Home__ct_nav_1").addClass("shownone");
+    $("#icaosm__Home__ct_lst_1_row_9").css("display", "none");
+    if (params.appNo != undefined) {
+        $("#icaosm__Home__el_inp_2").text(params.appNo);
+        $("#icaosm__Home__el_inp_3").text(params.accNum);
+        if (params.action == "New" || params.action == "NewAdd") {
+            $("#icaosm__Home__sc_col_10").addClass("sno");
+        } else {
+            $("#icaosm__Home__sc_col_10").removeClass("sno");
+        }
+    }
+    var UserID = apz.retrieve("CurrentUser");
+    $("#icaosm__Home__ct_nav_1").removeClass("shownone");
+    $("#icaosm__Home__ct_lst_1_row_9").css("display", "block");
+    
+};
+apz.app.onShown_Home = function() {
+    if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+        $(".progress .determinate").attr("style", "width:100%");
+    } else if (apz.icaosm.Home.Cache.action == "NewAdd") {
+        $(".progress .determinate").attr("style", "width:0%");
+    }
+}
+apz.app.manageCrub = function(index) {
+    debugger;
+    index = index + 1;
+    $('#icaosm__Home__ct_brc_1 > li').hide();
+    $('#icaosm__Home__ct_brc_1 > li:first-child').show().removeClass("active");
+    $('#icaosm__Home__ct_brc_1 > li:nth-child(' + index + ')').show().addClass("active");
+}
+apz.icaosm.Home.fnShowDetails = function(pObj) {
+    debugger;
+    var row = parseInt(pObj.id.split("_")[8]);
+    var lDetailsText = $("#icaosm__Home__i__Home__value_" + row).text().trim();
+    //var lDetailsText = pObj.innerText.trim();
+    if (lDetailsText == "Home") {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                // "animation": 40
+                "userObj": {
+                    "action": "submitted",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        } else {
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                // "animation": 40
+                "userObj": {
+                    "action": "New",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        }
+    } else if (lDetailsText == "Business Details") {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            apz.launchSubScreen({
+                "scr": "BusinessDetailsAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                "userObj": {
+                    "action": "submitted",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+                //"animation": 40
+            });
+        } else {
+            apz.launchSubScreen({
+                "scr": "BusinessDetailsAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                //"animation": 40
+                "userObj": {
+                    "action": "New",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        }
+    } else if (lDetailsText == "Accounts Types") {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            apz.launchSubScreen({
+                "scr": "AccountsServicesAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                "userObj": {
+                    "action": "submitted",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+                // "animation": 40
+            });
+        } else {
+            apz.launchSubScreen({
+                "scr": "AccountsServicesAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                "userObj": {
+                    "action": "New",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+                // "animation": 40
+            });
+        }
+    } else if (lDetailsText == "Personal Details of Authorized Signatorie(s)") {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            apz.launchSubScreen({
+                "scr": "AuthorisedSignatoryAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                "userObj": {
+                    "action": "submitted",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+                // "animation": 40
+            });
+        } else {
+            apz.launchSubScreen({
+                "scr": "AuthorisedSignatoryAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                "userObj": {
+                    "action": "New",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+                // "animation": 40
+            });
+        }
+    } else if (lDetailsText == "Personal Details of Ultimate Beneficial Owners(s)") {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            apz.launchSubScreen({
+                "scr": "UltimateBeneficialOwnersAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                //"animation": 40
+                "userObj": {
+                    "action": "submitted",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        } else {
+            apz.launchSubScreen({
+                "scr": "UltimateBeneficialOwnersAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                //"animation": 40
+                "userObj": {
+                    "action": "New",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        }
+    } else if (lDetailsText == "Service Required") {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            apz.launchSubScreen({
+                "scr": "ChannelRegistrationAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                // "animation": 40
+                "userObj": {
+                    "action": "submitted",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        } else {
+            apz.launchSubScreen({
+                "scr": "ChannelRegistrationAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                // "animation": 40
+                "userObj": {
+                    "action": "New",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        }
+    } else if (lDetailsText == "Tax Residency Details") {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            apz.launchSubScreen({
+                "scr": "TaxResidencyDetails",
+                "div": "icaosm__Home__homelaunchingdiv",
+                //  "animation": 40
+                "userObj": {
+                    "action": "submitted",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        } else {
+            apz.launchSubScreen({
+                "scr": "TaxResidencyDetails",
+                "div": "icaosm__Home__homelaunchingdiv",
+                //  "animation": 40
+                "userObj": {
+                    "action": "New",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        }
+    } else if (lDetailsText == "Declarations") {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            apz.launchSubScreen({
+                "scr": "DeclarationsAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                //  "animation": 40
+                "userObj": {
+                    "action": "submitted",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        } else {
+            apz.launchSubScreen({
+                "scr": "DeclarationsAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                //  "animation": 40
+                "userObj": {
+                    "action": "New",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        }
+    } else if (lDetailsText == "Authorization") {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            apz.launchSubScreen({
+                "scr": "AuthorisationAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                //  "animation": 40
+                "userObj": {
+                    "action": "submitted",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        } else {
+            
+            apz.launchSubScreen({
+                "scr": "AuthorisationAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                //  "animation": 40
+                "userObj": {
+                    "action": "New",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+            /*
+            apz.launchSubScreen({
+           "scr": "AuthorisationAOS",
+           "div": "icaosm__Home__homelaunchingdiv",
+           //"animation": 40
+           
+       });
+       */
+        }
+    } else if (lDetailsText == "Mandates/Resolution" || lDetailsText == "Mandates") {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            apz.launchSubScreen({
+                "scr": "MandatesAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                //  "animation": 40
+                "userObj": {
+                    "action": "submitted",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        } else {
+            apz.launchSubScreen({
+                "scr": "MandatesAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                //  "animation": 40
+                "userObj": {
+                    "action": "New",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        }
+    } else if (lDetailsText == "AML Risk Assessement") {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            apz.launchSubScreen({
+                "scr": "RiskAssessmentAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                //  "animation": 40
+                "userObj": {
+                    "action": "submitted",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        } else {
+            apz.launchSubScreen({
+                "scr": "RiskAssessmentAOS",
+                "div": "icaosm__Home__homelaunchingdiv",
+                //  "animation": 40
+                "userObj": {
+                    "action": "New",
+                    "appNo": apz.icaosm.Home.Cache.appNo,
+                    "accNum": apz.icaosm.Home.Cache.accNum
+                }
+            });
+        }
+    }
+};
+apz.Regist.RegisterPage.fnMenuHome = function(){
+     apz.launchSubScreen({
+            "scr": "Home",
+            "div": "Regist__RegisterPage__launchrow1",
+            "userObj": {
+                "action":"",
+                "percentage": "",
+                "val": "",
+                "accNum": "",
+                "appNo": "",
+                "companyID": apz.icaosm.Home.sCompanyID
+            }
+        });
+};

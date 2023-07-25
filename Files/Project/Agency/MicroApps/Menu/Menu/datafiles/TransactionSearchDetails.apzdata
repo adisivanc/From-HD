@@ -1,0 +1,19 @@
+{
+    "TransactionSearchDetails": [
+        {
+            "transName": "Own Account Transfer"
+        },
+        {
+           "transName": "Third Party Transfer"
+        },
+        {
+           "transName": "Cash Deposit"
+        },
+        {
+            "transName": "Cash Withdrawal"
+        },
+        {
+           "transName": "Credit Card Payment"
+        }
+    ]
+}

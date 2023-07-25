@@ -1,0 +1,209 @@
+apz.cuslst.customers = {};
+apz.cuslst.customers.sCache = {};
+apz.app.onLoad_Customers = function(params) {
+    debugger;
+    apz.cuslst.customers.sCache = params;
+    // apz.cuslst.customers.fnQuerySearchDetails();
+};
+apz.app.onShown_Customers = function(params){
+    debugger;
+    $("#cuslst__Customers__debitCard")[0].placeholder = "Debit Card";
+}
+apz.cuslst.customers.fnGetSelection = function(param) {
+    debugger;
+    var val = apz.getElmValue("cuslst__Customers__el_rdo_1");
+    if(val == "cid"){
+        apz.setElmValue("cuslst__Customers__nationalId","");
+        apz.setElmValue("cuslst__Customers__debitCard","");
+        $("#cuslst__Customers__customerId_ul").removeClass("sno")
+        $("#cuslst__Customers__nationalId_ul").addClass("sno")
+        $("#cuslst__Customers__debitCard_ul").addClass("sno")
+    }else if(val == "nid"){
+        apz.setElmValue("cuslst__Customers__customerId","");
+        apz.setElmValue("cuslst__Customers__debitCard","");
+        $("#cuslst__Customers__customerId_ul").addClass("sno")
+        $("#cuslst__Customers__nationalId_ul").removeClass("sno")
+        $("#cuslst__Customers__debitCard_ul").addClass("sno")
+    }else{
+        apz.setElmValue("cuslst__Customers__nationalId","");
+        apz.setElmValue("cuslst__Customers__customerId","");
+        $("#cuslst__Customers__customerId_ul").addClass("sno")
+        $("#cuslst__Customers__nationalId_ul").addClass("sno")
+        $("#cuslst__Customers__debitCard_ul").removeClass("sno")
+        $("#cuslst__Customers__debitCard").removeClass("sno")
+    }
+}
+apz.cuslst.customers.fnGetSearchQury = function() {
+    debugger;
+    var customerId = apz.getElmValue("cuslst__Customers__customerId");
+    var nationalId = apz.getElmValue("cuslst__Customers__nationalId");
+    var debitCard = apz.getElmValue("cuslst__Customers__debitCard");
+    var customerName = apz.getElmValue("cuslst__Customers__customerName");
+    var customerDob = apz.getElmValue("cuslst__Customers__customerDob");
+    var customerMobile = apz.getElmValue("cuslst__Customers__customerMobile");
+    if (customerId) {
+        console.log("cust Id")
+        apz.cuslst.customers.fnSearchCustomers("byId")
+    } else if (customerName && customerDob && customerMobile) {
+        console.log("all others")
+        apz.cuslst.customers.fnSearchCustomers("byOthers")
+    } else {
+        apz.dispMsg({
+            message: "Please enter the mandatory details",
+            "type": "E"
+        })
+    }
+};
+apz.cuslst.customers.fnSearchCustomers = function() {
+    debugger;
+    var customerId = apz.getElmValue("cuslst__Customers__customerId");
+    var nationalId = apz.getElmValue("cuslst__Customers__nationalId");
+    var debitCard = apz.getElmValue("cuslst__Customers__debitCard");
+    var customerName = apz.getElmValue("cuslst__Customers__customerName");
+    var customerDob = apz.getElmValue("cuslst__Customers__customerDob");
+    var customerMobile = apz.getElmValue("cuslst__Customers__customerMobile");
+    if (customerId || nationalId || debitCard || (customerName && customerDob && customerMobile)) {
+        if (!customerId && customerMobile && customerMobile.length < 10) {
+            apz.dispMsg({
+                message: "Please enter a valid mobile number!",
+                "type": "E"
+            })
+            return false;
+        }
+        try {
+            var filePath = apz.getDataFilesPath("cuslst") + "/CustomerDetails.json";
+            var content = apz.getFile(filePath);
+            var data = JSON.parse(content);
+            var realData = data.cuslst__CustomerDetails_Req.tbCustDetails;
+            var records = []
+            for (var i = 0; i < realData.length; i++) {
+                if (customerId) {
+                    if (customerId == realData[i].referenceNo) {
+                        records.push(realData[i])
+                        break;
+                    }
+                }else if(nationalId){
+                    if (nationalId == realData[i].nationalId) {
+                        records.push(realData[i])
+                        break;
+                    }
+                    
+                } else if(debitCard){
+                    if (debitCard == realData[i].debitCardNumber) {
+                        records.push(realData[i])
+                        break;
+                    }
+                    
+                }else {
+                    if (customerName.toLowerCase() == realData[i].custName.toLowerCase() && customerDob == realData[i].custDob && customerMobile == realData[i].custMobileNo) {
+                        records.push(realData[i])
+                        break;
+                    }
+                }
+            }
+            apz.data.scrdata.cuslst__CustomerDetails_Req = {}
+            apz.data.loadData("CustomerDetails", "cuslst");
+            if (records.length) {
+                $("#cuslst__Customers__customerDetailsTable").removeClass("sno");
+                $(".pgn-ctr").addClass("sno");
+                $("#cuslst__Customers__customersTable_table tr").attr("onClick", "apz.cuslst.customers.fnCustomerDetails(this)");
+                $("#cuslst__Customers__customerDetailsTable").css({
+                    "cursor": "pointer"
+                });
+                apz.data.scrdata.cuslst__CustomerDetails_Req = {}
+                apz.data.scrdata.cuslst__CustomerDetails_Req.tbCustDetails = records;
+                apz.data.loadData("CustomerDetails", "cuslst");
+                window.scrollTo(0, document.body.scrollHeight);
+            } else {
+                $("#cuslst__Customers__customerDetailsTable").addClass("sno");
+                apz.dispMsg({
+                    message: "No records found",
+                    "type": "E"
+                })
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        apz.dispMsg({
+            message: "Please enter the mandatory details",
+            "type": "E"
+        })
+    }
+}
+//mobile no
+apz.cuslst.customers.fnFloatMobileNo = function(el) {
+    var digits = el.value.match(/\d{1,10}/) || [""];
+    el.value = digits[0];
+}
+apz.cuslst.customers.fnQuerySearchDetails = function() {
+    // var lParam = {
+    //     "action": "Query",
+    //     "ifaceName": "CustomerDetails_Query"
+    // };
+    // apz.cuslst.customers.fnBeforeCallServer(lParam);
+};
+apz.cuslst.customers.fnCancel = function() {
+    debugger;
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": "menuap__Menu__MainLaunchArea",
+            "parentAppId": "menuap",
+            "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+            "custImg": "menuap__Menu__custImg",
+            "custId": "menuap__Menu__custId_txtcnt"
+        }
+    }
+    apz.launchApp(lParams);
+}
+apz.cuslst.customers.fnBeforeCallServer = function(params) {
+    var lServerParams = {
+        "appId": "cuslst",
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": "",
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.cuslst.customers.fncallServerCallBack,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.cuslst.customers.fncallServerCallBack = function(params) {
+    debugger;
+}
+apz.cuslst.customers.fnCustomerDetails = function(pthis) {
+    debugger;
+    var lRowno = $(pthis).attr("rowno");
+    var lParams = {
+        "appId": "excust",
+        "scr": "ExistingCustomer",
+        "div": apz.cuslst.customers.sCache.destroyDiv,
+        "type": "CF",
+        "userObj": {
+            "custImage": $("#cuslst__CustomerDetails__i__tbCustDetails__custImage_" + lRowno).attr("src"),
+            "custName": $("#cuslst__CustomerDetails__i__tbCustDetails__custName_" + lRowno).text(),
+            "custId": $("#cuslst__CustomerDetails__i__tbCustDetails__referenceNo_" + lRowno).text(),
+            "custDOB": $("#cuslst__CustomerDetails__i__tbCustDetails__custDob_" + lRowno).text(),
+            "custemail": apz.data.scrdata.cuslst__CustomerDetails_Req.tbCustDetails[lRowno].custEmailId,
+            "custphn": apz.data.scrdata.cuslst__CustomerDetails_Req.tbCustDetails[lRowno].custMobileNo,
+            "custAddr": apz.data.scrdata.cuslst__CustomerDetails_Req.tbCustDetails[lRowno].custAddr,
+            "custBranch": apz.data.scrdata.cuslst__CustomerDetails_Req.tbCustDetails[lRowno].custBranch,
+            "debitCard": apz.data.scrdata.cuslst__CustomerDetails_Req.tbCustDetails[lRowno].debitCardNumber,
+            "nationalId": apz.data.scrdata.cuslst__CustomerDetails_Req.tbCustDetails[lRowno].nationalId,
+            "destroyDiv": apz.cuslst.customers.sCache.destroyDiv,
+            "parentAppId": apz.cuslst.customers.sCache.parentAppId,
+            "loggedCust": apz.cuslst.customers.sCache.loggedCust,
+            "loggedCustId": apz.cuslst.customers.sCache.custId,
+            "loggedCustImg": apz.cuslst.customers.sCache.custImg,
+            "loggedCustBranch": apz.data.scrdata.cuslst__CustomerDetails_Req.tbCustDetails[lRowno].custBranch,
+            "validationType": "normal"
+        }
+    };
+    apz.launchApp(lParams);
+};

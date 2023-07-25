@@ -1,0 +1,48 @@
+apz.ACRS01.Portfolio = {};
+apz.app.onLoad_Portfolio = function() {
+    debugger;
+        apz.ACRS01.Portfolio.openTable(document.getElementById("ACRS01__Portfolio__BusinessList"));
+    var lServerParams = {
+        "action": "MenuPortfolio"
+    };
+    apz.ACRS01.Portfolio.beforeCallServer(lServerParams);
+};
+apz.app.onShown_Portfolio = function() {
+    $(".adr-ctr").addClass("sno");
+};
+apz.ACRS01.Portfolio.beforeCallServer = function(Params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "MenuPortfolio_Query",
+        "buildReq": "N",
+        "req": "",
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.ACRS01.Portfolio.callServerCallBack,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.ACRS01.Portfolio.callServerCallBack = function(params) {
+    debugger;
+};
+apz.ACRS01.Portfolio.openTable = function(pa) {
+    var lid = pa.id;
+    debugger;
+    if ($(pa).closest(".acc-dtls").hasClass("current")) {
+        $(pa).closest(".acc-dtls").find(".displayRow").toggleClass("sno");
+        //apz.initDataTables($("table[id].responsive"));
+        apz.initFixedHeaderTables($("table[id].fixedheader"));
+        $('#' + lid + ' .icon-chevron-down use').attr("xlink:href", "#icon-chevron-down");
+        $(".current").removeClass("current");
+    } else {
+        $(".displayRow").addClass("sno");
+        $(".current").removeClass("current");
+        $(pa).closest(".acc-dtls").find(".displayRow").toggleClass("sno");
+       // apz.initDataTables($("table[id].responsive"));
+        apz.initFixedHeaderTables($("table[id].fixedheader"));
+        $(pa).closest(".acc-dtls").addClass("current");
+        $('.acc-dtls .icon-chevron-down use').attr("xlink:href", "#icon-chevron-down");
+        $('#' + lid + ' .icon-chevron-down use').attr("xlink:href", "#icon-chevron-up");
+    }
+};

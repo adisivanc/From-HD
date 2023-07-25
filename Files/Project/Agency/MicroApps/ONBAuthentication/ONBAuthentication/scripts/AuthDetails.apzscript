@@ -1,0 +1,51 @@
+apz.onbaut.AuthDetails = {};
+apz.onbaut.AuthDetails.sparams = {};
+apz.onbaut.AuthDetails.sCache = {};
+apz.flowNo=0;
+apz.docRefNo="";
+apz.panVerified=false;
+apz.isEmailValid=false;
+apz.isJumioChecked = false;
+apz.selfieImage = "";
+apz.idDocArray=[];
+apz.documentArray = [];
+apz.app.onLoad_AuthDetails = function(params) {
+    debugger;
+    $("body").removeClass("loginbgg");
+    apz.onbaut.AuthDetails.sparams = params;
+};
+apz.onbaut.AuthDetails.fnRequestOTP = function() {
+    debugger;
+    var mobilenumber = apz.getElmValue("onbaut__AuthDetails__mobileno");
+    //var email = apz.getElmValue("onbaut__AuthDetails__emailid");
+    var dob = apz.getElmValue("onbaut__AuthDetails__dob");
+    if (mobilenumber.length != 10) {
+        apz.dispMsg({
+            message: "Enter a valid mobile number"
+        });
+    } else if (dob == "") {
+        apz.dispMsg({
+            message: "Date of birth is required"
+        });
+    } else {
+        //functionality in AuthLauncher Screen
+        apz.onbaut.AuthLauncher.fnInitialiseSMS(mobilenumber,dob)
+    }
+}
+apz.onbaut.AuthDetails.fnFloatMobileNo = function(el) {
+    var digits = el.value.match(/\d{1,10}/) || [""];
+    el.value = digits[0];
+}
+apz.onbaut.AuthDetails.fnBack = function() {
+    //apz.prdsel.ProductLauncher.fnNavigate("SubProducts",{"product":products,"parentdiv":apz.prdsel.Products.sparams.parentdiv});
+       var params = {};
+  params.appId = "aphist";
+    params.scr = "ApplicationHistory";
+    params.div = "menuap__Menu__MainLaunchArea";
+    
+    apz.launchApp(params);
+    
+}
+apz.onbaut.AuthDetails.fnUploadID=function(){
+    apz.ocrapp.ScanAndUpload.fnUploadDoc();
+}

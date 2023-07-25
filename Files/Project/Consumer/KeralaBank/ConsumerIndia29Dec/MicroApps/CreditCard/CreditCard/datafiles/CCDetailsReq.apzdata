@@ -1,0 +1,18 @@
+{"cdtcrd__CCDetailsReq_Res":{
+             "creditCardDtls": [{
+                  "cardProduct": "Capital One",
+                  "accountNo": "753410000076",
+                  "cardNumber": "7349 XX7X X8XX 2345",
+                 "balance": "4351",
+                 "accountBal" : "10000"
+             }, {
+                    "cardProduct": "Discover",
+                   "accountNo": "753410000076",
+                    "cardName": "City visa card",
+                    "cardNumber": "6493 XX3X X2XX 1143",
+                    "location": "Koramanagala, Bengaluru",
+                    "balance": "6634",
+                                     "accountBal" : "20000"
+
+                }]
+}} 

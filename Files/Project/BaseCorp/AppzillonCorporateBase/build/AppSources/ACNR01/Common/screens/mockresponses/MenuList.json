@@ -1,0 +1,85 @@
+{
+    "vwMenu": [{
+	"appId":"",
+	"corporateId":"000FTAC4321",
+	"description":"Admin",
+	"displayOrder":"",
+	"groupIcon":"",
+	"groupName":"",
+	"roleId":"Admin",
+	"screenId":""
+},{
+	"appId":"",
+	"corporateId":"000FTAC4321",
+	"description":"Home",
+	"displayOrder":"",
+	"groupIcon":"",
+	"groupName":"",
+	"roleId":"Admin",
+	"screenId":""
+},{
+	"appId":"ACDB01",
+	"corporateId":"000FTAC4321",
+	"description":"My Dashboard",
+	"displayOrder":"1",
+	"groupName":"Home",
+	"icon":"icon-cm-dashboard_new",
+	"roleId":"Admin",
+	"screenId":"AdminDashboard"
+},{
+	"appId":"actf01",
+	"corporateId":"000FTAC4321",
+	"description":"My Tasks",
+	"displayOrder":"2",
+	"groupName":"Admin",
+	"icon":"icon-cm-mytask",
+	"roleId":"Admin",
+	"screenId":"TaskFlow"
+},{
+	"appId":"acus01",
+	"corporateId":"000FTAC4321",
+	"description":"User Profile",
+	"displayOrder":"3",
+	"groupName":"Admin",
+	"icon":"icon-users",
+	"roleId":"Admin",
+	"screenId":"UserList"
+},{
+	"appId":"acrl01",
+	"corporateId":"000FTAC4321",
+	"description":"Role Definition",
+	"displayOrder":"4",
+	"groupName":"Admin",
+	"icon":"icon-cm-rolee",
+	"roleId":"Admin",
+	"screenId":"RolesList"
+},{
+	"appId":"acru01",
+	"corporateId":"000FTAC4321",
+	"description":"Business Rules",
+	"displayOrder":"5",
+	"groupName":"Admin",
+	"icon":"icon-cm-rules",
+	"roleId":"Admin",
+	"screenId":"RulesSummary"
+
+},{
+	"appId":"acpr01",
+	"corporateId":"000FTAC4321",
+	"description":"Organizational Profile",
+	"displayOrder":"6",
+	"groupName":"Admin",
+	"icon":"icon-cm-company-profile",
+	"roleId":"Admin",
+	"screenId":"CorporateInfo"
+},{
+	"appId":"acep01",
+	"corporateId":"000FTAC4321",
+	"description":"Organizational Hierarchy",
+	"displayOrder":"7",
+	"groupName":"Admin",
+	"icon":"icon-cm-company-structure",
+	"roleId":"Admin",
+	"screenId":"CorporateHierarchy"
+}]
+}

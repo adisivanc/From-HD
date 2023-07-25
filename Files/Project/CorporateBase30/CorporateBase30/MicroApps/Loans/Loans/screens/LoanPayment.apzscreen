@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"LoanPayment","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","screencategory":"NONE","displayname":"LoanPayment","interfaces":[{"name":"LoanDetails","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

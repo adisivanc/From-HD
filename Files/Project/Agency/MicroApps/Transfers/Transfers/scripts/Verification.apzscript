@@ -1,0 +1,165 @@
+apz.tranfe.Verification = {};
+apz.tranfe.Verification.sCache = "";
+apz.tranfe.Verification.fromAccountBalance = "";
+apz.tranfe.Verification.fromAccountType = "";
+apz.tranfe.Verification.toAccountBalance = "";
+apz.tranfe.Verification.toAccountType = "";
+apz.tranfe.Verification.TransId = "";
+apz.tranfe.Verification.TransDate = "";
+apz.app.onLoad_Verification = function(params) {
+    debugger;
+    apz.tranfe.Verification.sCache = params;
+    if(apz.tranfe.Verification.sCache.Amt==""){
+        apz.tranfe.Verification.sCache.Amt="3333";
+    }
+    apz.setElmValue("tranfe__Verification__verifyTransAmt", apz.tranfe.Verification.sCache.Amt);
+    apz.setElmValue("tranfe__Verification__verifyFromAcc", apz.tranfe.Verification.sCache.fromAcc);
+    apz.hide("tranfe__Verification__successModal_close");
+};
+apz.app.onShown_Verification = function(params) {
+    apz.tranfe.Verification.Otp();
+};
+apz.tranfe.Verification.Continue = function() {
+    debugger;
+    apz.tranfe.Verification.ModifyDB();
+  if(apz.tranfe.Verification.sCache.transferType == "ownBank"){
+       apz.setElmValue("tranfe__Verification__transferType", "Transfer Type - Own Account Transfer");
+  }
+  else{
+       apz.setElmValue("tranfe__Verification__transferType", "Transfer Type - Other Account Transfer");
+  }
+  apz.setElmValue("tranfe__Verification__transferDesc",  "Successfully transferred ₹" + apz.tranfe.Verification.sCache.Amt + " from A/c " + apz
+            .tranfe.Verification.sCache.fromAcc + " to A/c " + apz.tranfe.Verification.sCache.toAcc);
+  var param = {};
+    param.targetId = 'tranfe__Verification__successModal';
+    param.callBack = null;
+    param.callBackObj = this;
+    apz.toggleModal(param);
+}
+apz.tranfe.Verification.Verify = function() {
+    debugger;
+}
+apz.tranfe.Verification.aadhaarVerify = function() {
+    debugger;
+    var lParams = {
+        "appId": "MKVR01",
+        "scr": "AadhaarVerification",
+        "div": "tranfe__Verification__VerificationDiv",
+        "type": "CF",
+        "userObj": {
+            "destroyDiv": apz.tranfe.Verification.sCache.destroyDiv,
+            "parentAppId": apz.tranfe.Verification.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+}
+apz.tranfe.Verification.Otp = function() {
+    debugger;
+    
+     $(".active").removeClass("active");
+    var lParams = {
+        "appId": "pfauth",
+        "scr": "Authentication",
+        "div": "tranfe__Verification__authlaunchArea",
+        "type": "CF",
+        "userObj": {
+            "action": "",
+            "data": {},
+            "destroyDiv": apz.tranfe.Verification.sCache.destroyDiv,
+            "parentAppId": apz.tranfe.Verification.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+}
+apz.tranfe.Verification.ModifyDB = function() {
+    debugger;
+    apz.tranfe.Verification.TransId = $.now();
+    apz.tranfe.Verification.TransDate = new Date().toString("dd-MMM-yyyy hh:mm tt");
+    for (j = 0; j < apz.tranfe.EnterDetails.AccountData.length; j++) {
+        if (apz.tranfe.EnterDetails.AccountData[j].accountNumber == apz.tranfe.Verification.sCache.fromAcc) {
+            apz.tranfe.Verification.fromAccountBalance = apz.tranfe.EnterDetails.AccountData[j].balance;
+            apz.tranfe.Verification.fromAccountType = apz.tranfe.EnterDetails.AccountData[j].accountType;
+        }
+        if (apz.tranfe.EnterDetails.sTransferType == "ownBank") {
+            if (apz.tranfe.EnterDetails.AccountData[j].accountNumber == apz.tranfe.Verification.sCache.toAcc) {
+                apz.tranfe.Verification.toAccountBalance = apz.tranfe.EnterDetails.AccountData[j].balance;
+                apz.tranfe.Verification.toAccountType = apz.tranfe.EnterDetails.AccountData[j].accountType;
+            }
+        }
+    }
+    apz.tranfe.Verification.beforeCallServer();
+}
+apz.tranfe.Verification.beforeCallServer = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "TransctionDetails_Modify",
+        "buildReq": "N",
+        "req": {
+            "agencybankingtransactions": {
+                "accountNumber": apz.tranfe.Verification.sCache.fromAcc,
+                "balance": apz.tranfe.Verification.fromAccountBalance - parseInt(apz.tranfe.Verification.sCache.Amt),
+                "accountType": apz.tranfe.Verification.fromAccountType,
+                "transactionId": apz.tranfe.Verification.TransId,
+                "transactionType": "FUND TRANSFER",
+                "dateTime": apz.tranfe.Verification.TransDate
+            }
+        },
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.tranfe.Verification.callServerCallBack,
+        "callBackObj": "",
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.tranfe.Verification.callServerCallBack = function(params) {
+    debugger;
+    apz.currAppId = "tranfe";
+    if (apz.tranfe.EnterDetails.sTransferType == "ownBank") {
+        apz.tranfe.Verification.fnsecondModify();
+    }
+}
+apz.tranfe.Verification.callServerCallBackLast = function(params) {
+    debugger;
+};
+apz.tranfe.Verification.fnsecondModify = function() {
+    var lServerParams = {
+        "ifaceName": "TransactionModify_Modify",
+        "buildReq": "N",
+        "req": {
+            "agencybankingtransactions": {
+                "accountNumber": apz.tranfe.Verification.sCache.toAcc,
+                "balance": apz.tranfe.Verification.toAccountBalance + parseInt(apz.tranfe.Verification.sCache.Amt),
+                "accountType": apz.tranfe.Verification.toAccountType,
+                "transactionId": apz.tranfe.Verification.TransId,
+                "transactionType": "FUND TRANSFER",
+                "dateTime": apz.tranfe.Verification.TransDate
+            }
+        },
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.tranfe.Verification.callServerCallBackLast,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.tranfe.Verification.fnBackToCustomerDashboard = function() {
+    apz.tranfe.Verification.sCache.callBack();
+};
+
+apz.tranfe.Verification.No = function() {
+    apz.tranfe.Verification.sCache.callBack();
+};
+apz.tranfe.Verification.Yes = function() {
+    var lObj = {
+        "scr": "EnterDetails",
+        "div": apz.tranfe.Verification.sCache.destroyDiv,
+        "animation": 9,
+        "userObj": {
+            "screen": apz.tranfe.EnterDetails.sTransferType,
+            "destroyDiv": apz.tranfe.Verification.sCache.destroyDiv,
+            "parentAppId": apz.tranfe.Verification.sCache.parentAppId,
+            "callBack": apz.tranfe.Verification.sCache.callBack
+        }
+    };
+    apz.launchSubScreen(lObj);
+};

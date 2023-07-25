@@ -1,0 +1,28 @@
+apz.Rates.feDashboard = {};
+apz.app.onLoad_feDashboard = function() {
+  debugger;
+    apz.data.loadJsonData("forexchangeDash", "Rates");
+    $("#Rates__feDashboard__ct_lst_1 li").addClass("highRate");
+    $("#Rates__feDashboard__ct_lst_1 li").eq(1).addClass("lowRate");
+}
+// apz.Rates.back = function() {
+//     apz.launchScreen({
+//         scr: "MainScreen"
+//     })
+// }
+
+
+apz.Rates.feDashboard.fnView = function ()
+{
+    debugger;
+            apz.setElmValue("landin__Landing__heading", "RATES")
+
+    $("body").removeClass("landingtheme2");
+     var lParams = {
+        "appId": "Rates",
+        "scr": "foreignExchange",
+        "div": "landin__Landing__launcher",
+        
+    }
+    apz.launchSubScreen(lParams);
+}

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="157" height="103" viewBox="0 0 157 103">
+  <defs>
+    <clipPath id="clip-back">
+      <rect width="157" height="103"/>
+    </clipPath>
+  </defs>
+  <g id="back" clip-path="url(#clip-back)">
+    <rect id="Rectangle_4913" data-name="Rectangle 4913" width="157" height="103" rx="5"/>
+    <rect id="Rectangle_4914" data-name="Rectangle 4914" width="149" height="95" rx="5" transform="translate(4 4)" fill="#e7db86"/>
+    <path id="Subtraction_572" data-name="Subtraction 572" d="M-930-3994h-38v-39h38v39Zm-36-37v35h34v-35Z" transform="translate(1073 4046)"/>
+    <path id="Union_300" data-name="Union 300" d="M-941.919-4012H-968a13.512,13.512,0,0,1,9.025-9.388,6.489,6.489,0,0,1-2.485-5.112,6.5,6.5,0,0,1,6.5-6.5,6.5,6.5,0,0,1,6.5,6.5,6.488,6.488,0,0,1-2.484,5.111,13.512,13.512,0,0,1,9.025,9.388h0Z" transform="translate(1079.459 4055)"/>
+    <rect id="Rectangle_4918" data-name="Rectangle 4918" width="63" height="10" transform="translate(18 18)"/>
+    <rect id="Rectangle_4919" data-name="Rectangle 4919" width="63" height="10" transform="translate(18 38)"/>
+    <rect id="Rectangle_4920" data-name="Rectangle 4920" width="125" height="5" transform="translate(18 67)"/>
+    <rect id="Rectangle_4921" data-name="Rectangle 4921" width="125" height="5" transform="translate(18 82)"/>
+  </g>
+</svg>

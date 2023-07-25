@@ -1,0 +1,65 @@
+{
+    "bllpay__BillPaymentSummary_Res": {
+        "summary": [
+            {
+            "providerImg": "bescom.jpg",
+            "providerName": "BESCOM",
+            "status": "Autopay Scheduled",
+            "dueDate": "05/07/2020",
+            "subsriberId": "3231212",
+            "billType": "Electricity",
+            "providerCategory": "BESCOM",
+            "amount":"6000.00"
+        },{
+            "providerImg": "voda.png",
+            "providerName": "Vodafone",
+            "status": "Autopay Scheduled",
+            "dueDate": "08/07/2020",
+            "subsriberId": "9600565673",
+            "billType": "Mobile",
+            "providerCategory": "Vodafone",
+            "amount":"2000.00"
+        },
+        {
+            "providerImg": "Airtel.png",
+            "providerName": "Airtel",
+            "status": "Autopay Scheduled",
+            "dueDate": "03/07/2020",
+            "subsriberId": "9600565673",
+            "billType": "Mobile",
+            "providerCategory": "Airtel",
+            "amount":"8000.00"
+        },
+        {
+            "providerImg": "tatasky.jpg",
+            "providerName": "Tata Sky",
+            "status": "pending",
+            "dueDate": "09/07/2020",
+            "subsriberId": "232323423",
+            "billType": "DishTV",
+            "providerCategory": "Tata Sky",
+            "amount":"5000.00"
+        },
+        {
+            "providerImg": "Telenor.png",
+            "providerName": "Telenor",
+            "status": "Autopay Scheduled",
+            "dueDate": "02/07/2020",
+            "subsriberId": "8698345627",
+            "billType": "Mobile",
+            "providerCategory": "Telenor",
+            "amount":"878.00"
+        },
+        {
+            "providerImg": "axa.png",
+            "providerName": "AXA",
+            "status": "pending",
+            "dueDate": "10/07/2020",
+            "subsriberId": "100100023234",
+            "billType": "Insurance",
+            "providerCategory": "AXA",
+            "amount":"3300.00"
+        }
+        ]
+    }
+}

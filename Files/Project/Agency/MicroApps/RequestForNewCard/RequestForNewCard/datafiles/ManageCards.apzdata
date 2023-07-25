@@ -1,0 +1,29 @@
+{
+    "crddtl__ManageCards_Res": {
+        "cardDetails": [{
+            "cardNumber": "12223123532",
+            "accountNo": "722813105055",
+            "amount": "129700",
+            "unbilledAmount": "97782",
+            "avlLimitAmount": "82191",
+            "nameOnCard" : "Phan YongTong"
+        }, {
+            "cardNumber": "902223123121",
+            "accountNo": "722813105011",
+            "amount": "167200",
+            "unbilledAmount": "89041",
+            "avlLimitAmount": "23234",
+                        "nameOnCard" : "Phan YongTong"
+
+        }, {
+            "cardNumber": "657190921221",
+            "accountNo": "732815105055",
+            "amount": "889110",
+            "unbilledAmount": "12332",
+            "avlLimitAmount": "987883",
+                        "nameOnCard" : "Phan YongTong"
+
+        }
+       ]
+    }
+}

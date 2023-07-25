@@ -1,0 +1,1 @@
+{"typeclass":"STYLESHEET","name":"active","type":"STYLESHEET","cssfiletype":"CUSTOMCSS","csstype":"CSS","content":".selected {\n    background-color:#AAFAFA !important;\n}\n.deleted {\n    background-color:red !important;\n}"}

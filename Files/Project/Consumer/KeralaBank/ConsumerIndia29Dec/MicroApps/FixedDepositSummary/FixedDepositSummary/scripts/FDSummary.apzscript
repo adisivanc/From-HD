@@ -1,0 +1,178 @@
+apz.fdsumm.fdsummary = {};
+apz.fdsumm.fdsummary.sAction = {};
+apz.app.onLoad_FDSummary = function(params) {
+    debugger;
+    apz.fdsumm.fdsummary.sAction = params;
+    if(apz.deviceGroup == "Mobile")
+    {
+        $("#fdsumm__FDSummary__sc_col_51_li").removeClass("sno");
+    }
+    apz.data.loadJsonData("AccountDetails","fdsumm");
+    apz.fdsumm.fdsummary.sParams = apz.data.scrdata.fdsumm__AccountDetails_Res;
+    
+        if (params.Navigation) {
+            apz.fdsumm.fdsummary.fnSetNavigation(params);
+        
+    }
+    if(params.from == "Dashboard")
+    {
+    apz.fdsumm.fdsummary.fnInitialise();
+    }
+        apz.fdsumm.fdsummary.fnInitialise();
+        
+        if(apz.fdsumm.fdsummary.sAction.from == "OverViewFixedDeposit")
+        {
+                    apz.setElmValue("landin__Landing__heading", "FIXED DEPOSIT SUMMARY")
+             if(apz.fdsumm.fdsummary.sAction.data.currency == "USD")
+             {
+                             $("body").addClass("dollarCurrency");
+
+             }
+            apz.fdsumm.fdsummary.fnLaunchDetails();
+        }
+
+};
+apz.fdsumm.fdsummary.fnInitialise = function() {
+    debugger;
+    apz.fdsumm.fdsummary.fnGotoStage1();
+};
+apz.fdsumm.fdsummary.fnSetNavigation = function(params) {
+    debugger;
+    apz.fdsumm.fdsummary.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "FD SUMMARY";
+    }
+    lParams.backPressed = apz.fdsumm.fdsummary.fnBack;
+    apz.fdsumm.fdsummary.Navigation(lParams);
+};
+apz.fdsumm.fdsummary.fnBack = function() {
+    debugger;
+            $("body").removeClass("dollarCurrency");
+
+    apz.fdsumm.fdsummary.sParams.callBack();
+};
+apz.fdsumm.fdsummary.fnGotoStage1 = function() {
+    apz.fdsumm.fdsummary.fnSetDataInStage1();
+    apz.fdsumm.fdsummary.fnRenderStage1();
+};
+apz.fdsumm.fdsummary.fnSetDataInStage1 = function() {
+    apz.fdsumm.fdsummary.fnGetFDDetails();
+};
+apz.fdsumm.fdsummary.fnRenderStage1 = function() {
+    debugger;
+    apz.hide("fdsumm__FDSummary__Stage2");
+    apz.show("fdsumm__FDSummary__Stage1");
+};
+apz.fdsumm.fdsummary.fnGetFDDetails = function() {
+   
+     apz.data.loadJsonData("FDSummary","fdsumm");
+};
+
+apz.fdsumm.fdsummary.fnLaunchDetails = function(pthis) {
+    debugger;
+    if(apz.fdsumm.fdsummary.sAction.from == "OverViewFixedDeposit")
+        {
+          var lRowIndex = apz.fdsumm.fdsummary.sAction.rowNo
+        }
+        else
+        {
+    var lRowIndex = $("#" + pthis.id).attr("rowno");
+        }
+    var lRec = $.extend(apz.data.scrdata.fdsumm__FDSummary_Res.depositSummary.depositDtls[apz.getRecordNumber("fdsumm__FDSummary__fd_SummaryList",
+        parseInt(lRowIndex))], {}, true);
+    var lObj = {
+        "scr": "FDDetails",
+        "div": "fdsumm__FDSummary__Stage2",
+        "userObj": {
+            "action": "Summary",
+            "data": lRec,
+            "callBack": apz.fdsumm.fdsummary.fnLaunchDetailsCB
+        }
+    };
+    if (apz.fdsumm.fdsummary.sParams.Navigation) {
+        lObj.userObj.Navigation = {
+            "setNavigation": apz.fdsumm.fdsummary.Navigation
+        }
+    }
+    apz.fdsumm.fdsummary.fnGotoStage2();
+    apz.launchSubScreen(lObj);
+};
+apz.fdsumm.fdsummary.fnLaunchTopup = function(pthis) {
+    debugger;
+    var lRowIndex = $("#" + pthis.id).attr("rowno");
+    var lRec = $.extend(apz.data.scrdata.fdsumm__FDSummary_Res.depositSummary.depositDtls[apz.getRecordNumber("fdsumm__FDSummary__fd_SummaryList",
+        parseInt(lRowIndex))], {}, true);
+    var lObj = {
+        "scr": "FDTopup",
+        "div": "fdsumm__FDSummary__Stage2",
+        "userObj": {
+            "action": "Summary",
+            "data": lRec,
+            "callBack": apz.fdsumm.fdsummary.fnLaunchDetailsCB,
+            "control":apz.fdsumm.fdsummary.sParams.control
+        }
+    };
+    //lObj.userObj.data.accounts=apz.fdsumm.fdsummary.sParams.data.accounts;
+    lObj.userObj.data.customerId=1234;
+    if (apz.fdsumm.fdsummary.sParams.Navigation) {
+        lObj.userObj.Navigation = {
+            "setNavigation": apz.fdsumm.fdsummary.Navigation
+        }
+    }
+    apz.fdsumm.fdsummary.fnGotoStage2();
+    apz.launchSubScreen(lObj);
+};
+apz.fdsumm.fdsummary.fnLaunchDetailsCB = function() {
+    debugger;
+        if (apz.fdsumm.fdsummary.sParams.Navigation) {
+            var lParams = {};
+            lParams.headerText = "FIXED DEPOSIT SUMMARY";
+            
+            apz.fdsumm.fdsummary.Navigation(lParams);
+        
+    }
+    apz.fdsumm.fdsummary.fnRenderStage1();
+}
+apz.fdsumm.fdsummary.fnRenderStage2 = function() {
+    debugger;
+    apz.hide("fdsumm__FDSummary__Stage1");
+    apz.show("fdsumm__FDSummary__Stage2");
+};
+apz.fdsumm.fdsummary.fnGotoStage2 = function() {
+    apz.fdsumm.fdsummary.fnRenderStage2();
+};
+
+
+
+
+apz.fdsumm.fdsummary.fnShare = function(pthis) {
+    debugger;
+    var RowNo = $(pthis).attr('rowno');
+    var accountNumber = apz.data.scrdata.fdsumm__FDSummary_Res.depositSummary.depositDtls[RowNo].accountNo;
+    var maturityAmount = apz.data.scrdata.fdsumm__FDSummary_Res.depositSummary.depositDtls[RowNo].maturityAmount;
+    var param = {
+            "decimalSep": ".",
+            "value": maturityAmount,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    
+var accountNum = accountNumber.replace(/\d(?=\d{4})/g, "*");
+    var text = "Account Number : " + accountNum +"\n" + "Maturity Amount : " + "Rs." + apz.formatNumber(param);
+         
+         
+    var json = {};
+    json.id = "NATIVE";
+    json.textToShare = text;
+    json.callBack = apz.fdsumm.fdsummary.fnShareCallBack;
+    json.action = "text";
+    apz.ns.nativeShare(json);
+}
+apz.fdsumm.fdsummary.fnShareCallBack = function() {
+    debugger;
+    
+}

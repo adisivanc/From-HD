@@ -1,0 +1,12 @@
+apz.Rates.foreignExchange = {};
+apz.app.onLoad_foreignExchange = function() {
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    newdate = day + "/" + month + "/" + year;
+    apz.setElmValue("Rates__foreignExchange__el_inp_6", newdate);
+    $("#Rates__foreignexchange__ct_tbl_1_add_btn").addClass("sno");
+    $("#Rates__foreignexchange__ct_tbl_1_rem_btn").addClass("sno");
+    apz.data.loadJsonData("forexchange", "Rates");
+}

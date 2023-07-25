@@ -1,0 +1,295 @@
+apz.dbtlpg.enrolldbtlpg = {};
+apz.app.onLoad_EnrollDBTLPG = function(params) {
+    debugger;
+    apz.dbtlpg.enrolldbtlpg.fnInitialise(params);
+};
+apz.app.onShown_EnrollDBTLPG = function(params)
+{
+    debugger;
+        $("#dbtlpg__DBTLPG__i__DBTDtls__mobileNo").attr("type", "tel");
+
+}
+apz.dbtlpg.enrolldbtlpg.fnInitialise = function(params) {
+    debugger;
+    apz.data.loadJsonData("AccountDetails","dbtlpg");
+    apz.dbtlpg.enrolldbtlpg.sParams = apz.data.scrdata.dbtlpg__AccountDetails_Res;
+    if (params.Navigation) {
+        apz.dbtlpg.enrolldbtlpg.fnSetNavigation(params)
+    }
+    apz.dbtlpg.enrolldbtlpg.fnGoToStage1();
+    apz.dbtlpg.enrolldbtlpg.fnPopulateDropdown();
+};
+apz.dbtlpg.enrolldbtlpg.fnSetNavigation = function(params) {
+    debugger;
+    apz.dbtlpg.enrolldbtlpg.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "LPG ID updation for DBTL";
+    }
+    lParams.backPressed = apz.dbtlpg.enrolldbtlpg.fnBack;
+    apz.dbtlpg.enrolldbtlpg.Navigation(lParams);
+};
+apz.dbtlpg.enrolldbtlpg.fnCheckForExistingDBTL = function() {
+    debugger;
+    apz.dbtlpg.enrolldbtlpg.sAction = "QueryDBTL";
+    var lParams = {
+        "ifaceName": "DBTLPGQuery_Query",
+        "req": {
+            "tbDbtpDbtDet": {
+                "customerId": apz.dbtlpg.enrolldbtlpg.sParams.customerID,
+                "fromAccountNo": apz.getElmValue("dbtlpg__DBTLPG__i__DBTDtls__fromAccountNo")
+            }
+        },
+        "callBack": apz.dbtlpg.enrolldbtlpg.fnCallServerCallBack
+    };
+    apz.dbtlpg.enrolldbtlpg.fnBeforeCallServer(lParams);
+};
+apz.dbtlpg.enrolldbtlpg.fnPopulateDropdown = function() {
+    debugger;
+    var lAccounts = apz.dbtlpg.enrolldbtlpg.sParams.accounts;
+    var lObj = [];
+    var lOption = {
+        "val": "",
+        "desc": "Please Select"
+    };
+    lObj.push(lOption);
+    for (i = 0; i < lAccounts.length; i++) {
+        lOption = {
+            "val": lAccounts[i].accountNo,
+            "desc": lAccounts[i].accountType + " - " + lAccounts[i].accountNo
+        };
+        lObj.push(lOption);
+    }
+    apz.populateDropdown(document.getElementById("dbtlpg__DBTLPG__i__DBTDtls__fromAccountNo"), lObj);
+};
+apz.dbtlpg.enrolldbtlpg.fnGoToStage1 = function() {
+    debugger;
+    apz.dbtlpg.enrolldbtlpg.fnSetValueStage1();
+    apz.dbtlpg.enrolldbtlpg.fnRenderStage1();
+};
+apz.dbtlpg.enrolldbtlpg.fnSetValueStage1 = function() {
+    debugger;
+    //apz.setElmValue("dbtlpg__DBTLPG__i__DBTDtls__customerId", apz.dbtlpg.enrolldbtlpg.sParams.data.customerID);
+    apz.setElmValue("dbtlpg__DBTLPG__i__DBTDtls__customerId", apz.dbtlpg.enrolldbtlpg.sParams.customerID);
+};
+apz.dbtlpg.enrolldbtlpg.fnRenderStage1 = function() {
+    apz.show("dbtlpg__EnrollDBTLPG__Stage1");
+    apz.hide("dbtlpg__EnrollDBTLPG__Stage2");
+    apz.hide("dbtlpg__EnrollDBTLPG__Stage3");
+};
+apz.dbtlpg.enrolldbtlpg.fnContinueStage1 = function() {
+    debugger
+    var lValid = apz.dbtlpg.enrolldbtlpg.fnValidateStage1();
+    if (lValid) {
+        apz.data.buildData("DBTLPG", "dbtlpg");
+        apz.dbtlpg.enrolldbtlpg.fnGoToStage2();
+    }
+};
+apz.dbtlpg.enrolldbtlpg.fnGoToStage2 = function() {
+    debugger;
+    apz.dbtlpg.enrolldbtlpg.fnSetValueStage2();
+    apz.dbtlpg.enrolldbtlpg.fnRenderStage2();
+};
+apz.dbtlpg.enrolldbtlpg.fnSetValueStage2 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.dbtlpg__DBTLPG_Req.DBTDtls;
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage2SavingsAcc", lDetails.fromAccountNo);
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage2Oilcompanyname", lDetails.oilCompanyName);
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage2Emailid", lDetails.emailId);
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage2Oilcompanycode", lDetails.oilCompanyCode);
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage2Ifsccode", lDetails.ifscCode);
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage2LPGId", lDetails.lpgid);
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage2Mobileno", lDetails.mobileNo);
+};
+apz.dbtlpg.enrolldbtlpg.fnRenderStage2 = function() {
+    apz.hide("dbtlpg__EnrollDBTLPG__Stage1");
+    apz.show("dbtlpg__EnrollDBTLPG__Stage2");
+    apz.hide("dbtlpg__EnrollDBTLPG__Stage3");
+};
+apz.dbtlpg.enrolldbtlpg.fnEditStage2 = function() {
+    apz.dbtlpg.enrolldbtlpg.fnRenderStage1();
+};
+apz.dbtlpg.enrolldbtlpg.fnConfirmStage2 = function() {
+    debugger;
+     apz.dbtlpg.enrolldbtlpg.sAction = "Confirm";
+    var lParams = {
+        "ifaceName": "DBTLPG",
+        "req": {
+            "DBTDtls": apz.data.scrdata.dbtlpg__DBTLPG_Req.DBTDtls,
+            "action": "Confirm"
+        },
+        "callBack": apz.dbtlpg.enrolldbtlpg.fnCallServerCallBack
+    };
+    apz.dbtlpg.enrolldbtlpg.fnBeforeCallServer(lParams);
+};
+apz.dbtlpg.enrolldbtlpg.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": "N",
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": params.callBack
+    };
+    if(params.ifaceName == "DBTLPG")
+    {
+     jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("dbtlpg")+"/DBTLPG.json"));
+       apz.data.scrdata.dbtlpg__DBTLPG_Res = {};
+                       apz.data.scrdata.dbtlpg__DBTLPG_Res = jsondata;
+                   apz.dbtlpg.enrolldbtlpg.fnCallServerCallBack(jsondata);
+    }
+    else if(params.ifaceName == "DBTLPGQuery")
+    {
+     jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("dbtlpg")+"/DBTLPGQuery.json"));
+       apz.data.scrdata.dbtlpg__DBTLPGQuery_Res = {};
+                       apz.data.scrdata.dbtlpg__DBTLPGQuery_Res = jsondata;
+                   apz.dbtlpg.enrolldbtlpg.fnCallServerCallBack(jsondata);
+    }
+  //  apz.server.callServer(lServerParams);
+};
+apz.dbtlpg.enrolldbtlpg.fnCallServerCallBack = function(params) {
+    debugger;
+   // if (!params.errors) {
+        if (apz.dbtlpg.enrolldbtlpg.sAction == "QueryDBTL") {
+            if (apz.getElmValue("dbtlpg__DBTLPG__i__DBTDtls__fromAccountNo") == apz.data.scrdata.dbtlpg__DBTLPGQuery_Res.tbDbtpDbtDet.fromAccountNo) {
+             //   apz.data.scrdata.dbtlpg__DBTLPGQuery_Res.tbDbtpDbtDet = params.res.dbtlpg__DBTLPGQuery_Res.tbDbtpDbtDet;
+                apz.data.scrdata.dbtlpg__DBTLPG_Req = {};
+                apz.data.scrdata.dbtlpg__DBTLPG_Req.DBTDtls = apz.data.scrdata.dbtlpg__DBTLPGQuery_Res.tbDbtpDbtDet;
+                apz.data.loadData("DBTLPG", "dbtlpg");
+                $(".querysucdis").find("input").attr("disabled", true);
+                $(".querysucdis").find("input").removeAttr("enabled");
+                $(".querysuchide").addClass("sno");
+                $(".querysucshow").removeClass("sno");
+            } else {
+                apz.data.scrdata.dbtlpg__DBTLPG_Req.DBTDtls = {};
+                apz.data.scrdata.dbtlpg__DBTLPG_Req.DBTDtls.fromAccountNo = apz.getElmValue("dbtlpg__DBTLPG__i__DBTDtls__fromAccountNo");
+                apz.data.loadData("DBTLPG", "dbtlpg");
+                $(".querysucdis").find("input").removeAttr("disabled");
+                $(".querysucdis").find("input").attr("enabled", true);
+                $(".querysuchide").removeClass("sno");
+                $(".querysucshow").addClass("sno");
+            }
+        } else {
+            if (apz.data.scrdata.dbtlpg__DBTLPG_Res.DBTDtls.respCd == "app") {
+                apz.dbtlpg.enrolldbtlpg.sParams.RefNum = apz.data.scrdata.dbtlpg__DBTLPG_Res.DBTDtls.txnRefNo;
+                apz.dbtlpg.enrolldbtlpg.fnRenderOtpScreen();
+                var lLaunchParams = {
+                    "appId": "otpeng",
+                    "scr": "ProcessOTP",
+                    "div": "dbtlpg__EnrollDBTLPG__launcher",
+                    "userObj": {
+                        "action": "SetRefNo",
+                        "data": {
+                            "OTPRefNo": apz.data.scrdata.dbtlpg__DBTLPG_Res.DBTDtls.data.OTPRefNo
+                        },
+                        "control": {
+                            "appId": "otpeng",
+                            "callBack": apz.dbtlpg.enrolldbtlpg.fnOtpCB,
+                            "destroyDiv": "dbtlpg__EnrollDBTLPG__launcher"
+                        }
+                    }
+                };
+                apz.launchApp(lLaunchParams);
+            }
+        }
+    //}
+};
+apz.dbtlpg.enrolldbtlpg.fnUnsubscribe = function() {
+    var lMsg = {
+        "code": "CONF_UNSUBS01",
+        "callBack": apz.dbtlpg.enrolldbtlpg.fnUnsubscribeCB
+    }
+    apz.dispMsg(lMsg);
+}
+apz.dbtlpg.enrolldbtlpg.fnUnsubscribeCB = function(params) {
+    debugger;
+    if (params.choice) {
+        var lMsg = {
+            "code": "SUCC_UNSUBS01"
+        }
+        apz.dispMsg(lMsg);
+    }
+}
+apz.dbtlpg.enrolldbtlpg.fnRenderOtpScreen = function() {
+    debugger;
+    apz.hide("dbtlpg__EnrollDBTLPG__Stage1");
+    apz.hide("dbtlpg__EnrollDBTLPG__Stage2");
+    apz.hide("dbtlpg__EnrollDBTLPG__Stage3");
+    apz.show("dbtlpg__EnrollDBTLPG__launcher");
+};
+apz.dbtlpg.enrolldbtlpg.fnOtpCB = function() {
+    debugger;
+    apz.dbtlpg.enrolldbtlpg.fnGoToStage3();
+};
+apz.dbtlpg.enrolldbtlpg.fnGoToStage3 = function() {
+    debugger;
+    apz.dbtlpg.enrolldbtlpg.fnSetValueStage3();
+    apz.dbtlpg.enrolldbtlpg.fnRenderStage3();
+};
+apz.dbtlpg.enrolldbtlpg.fnSetValueStage3 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.dbtlpg__DBTLPG_Req.DBTDtls;
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage3SavingsAcc", lDetails.fromAccountNo);
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage3Oilcompanyname", lDetails.oilCompanyName);
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage3Emailid", lDetails.emailId);
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage3Oilcompanycode", lDetails.oilCompanyCode);
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage3Ifsccode", lDetails.ifscCode);
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage3LPGId", lDetails.lpgid);
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__Stage3Mobileno", lDetails.mobileNo);
+    var lRefNo = "Your Reference no is " +"APZBK00120987";// apz.dbtlpg.enrolldbtlpg.sParams.RefNum;
+    apz.setElmValue("dbtlpg__EnrollDBTLPG__RefNo",lRefNo );
+};
+apz.dbtlpg.enrolldbtlpg.fnRenderStage3 = function() {
+    apz.hide("dbtlpg__EnrollDBTLPG__Stage1");
+    apz.hide("dbtlpg__EnrollDBTLPG__Stage2");
+    apz.show("dbtlpg__EnrollDBTLPG__Stage3");
+};
+apz.dbtlpg.enrolldbtlpg.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("dbtlpg__EnrollDBTLPG__Stage1Form");
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "VAL_MAND"
+        }
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.dbtlpg.enrolldbtlpg.fnValidatePhone = function(pobj) {
+    debugger;
+    var lError = apz.val.validateInputAct(document.getElementById("dbtlpg__DBTLPG__i__DBTDtls__mobileNo"), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            "code": 'VAL-PHONE',
+            "callBack": apz.dbtlpg.enrolldbtlpg.fnValidatePhoneCB
+        };
+        apz.dispMsg(lErrorParams);
+    }
+};
+apz.dbtlpg.enrolldbtlpg.fnValidatePhoneCB = function() {
+    debugger;
+    apz.setElmValue("dbtlpg__DBTLPG__i__DBTDtls__mobileNo", null);
+}
+apz.dbtlpg.enrolldbtlpg.fnValidateEmail = function(pobj) {
+    debugger;
+    var lError = apz.val.validateInputAct(document.getElementById("dbtlpg__DBTLPG__i__DBTDtls__emailId"), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            "code": 'VAL-EMAIL',
+            "callBack": apz.dbtlpg.enrolldbtlpg.fnValidateEmailCB
+        };
+        apz.dispMsg(lErrorParams);
+    }
+};
+apz.dbtlpg.enrolldbtlpg.fnValidateEmailCB = function() {
+    debugger;
+    apz.setElmValue("dbtlpg__DBTLPG__i__DBTDtls__emailId", null);
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+}

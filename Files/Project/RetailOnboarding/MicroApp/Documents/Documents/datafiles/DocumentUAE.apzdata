@@ -1,0 +1,42 @@
+{
+    "PhotoSignature": [
+        {
+            "checked": "Yes",
+            "documentName": "Upload your photo"
+        },
+        {
+            "checked": "Yes",
+            "documentName": "Upload your signature"
+        }
+    ],
+    "AddressDocuments": [
+        {
+            "checked": "No",
+            "documentName": "Driving License"
+        },
+        {
+            "checked": "No",
+            "documentName": "Electricity Bill"
+        }
+    ],
+    "OtherDocuments": [
+        {
+            "checked": "No",
+            "documentName": "Latest Salary Slip"
+        },
+        {
+            "checked": "No",
+            "documentName": "Employer's Certificate"
+        }
+    ],
+    "IdentityDocuments": [
+        {
+            "checked": "No",
+            "documentName": "Passport"
+        },
+        {
+            "checked": "No",
+            "documentName": "National ID"
+        }
+    ]
+}

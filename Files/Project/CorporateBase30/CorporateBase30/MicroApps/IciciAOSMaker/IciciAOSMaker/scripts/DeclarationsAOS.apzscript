@@ -1,0 +1,259 @@
+apz.app.icaosm.DeclarationsAOS = {};
+apz.app.icaosm.DeclarationsAOS.sCache = {};
+apz.app.icaosm.DeclarationsAOS.sAction = "";
+apz.app.icaosm.DeclarationsAOS.sFlag = false;
+apz.app.onLoad_DeclarationsAOS = function(params) {
+    debugger;
+    apz.app.icaosm.DeclarationsAOS.fnClearData();
+    apz.app.icaosm.DeclarationsAOS.sCache = params;
+    apz.app.manageCrub(7);
+    var UserID = apz.retrieve("CurrentUser");
+    $("#icaosm__DeclarationsAOS__ct_frm_2").addClass("shownone");
+    if (UserID == "User2") {
+        $("#icaosm__DeclarationsAOS__ct_frm_2").removeClass("shownone");
+    }
+    if (apz.data.scrdata.icaosm__DeclarationsAOS_Res != undefined) {
+        apz.data.loadData("DeclarationsAOS", "icaosm");
+    } else {
+        if ($("#icaosm__Home__el_inp_2").text() == "000024554AA2212") {
+            var lpath = apz.getDataFilesPath();
+            var lData = apz.getFile(lpath + "/DeclarationsAOS.json")
+            lData = JSON.parse(lData);
+            apz.data.buildData("DeclarationsAOS", "icaosm");
+            apz.data.scrdata.icaosm__DeclarationsAOS_Res.details = lData.details;
+            apz.data.loadData("DeclarationsAOS", "icaosm");
+        }
+    }
+    apz.app.icaosm.DeclarationsAOS.fnQueryData();
+};
+apz.app.icaosm.DeclarationsAOS.fnClearData = function() {
+    apz.data.clearMRMV("icaosm__DeclarationsAOS__ct_frm_1");
+};
+apz.app.icaosm.DeclarationsAOS.fnQueryData = function() {
+    apz.app.icaosm.DeclarationsAOS.sAction = "query";
+    var req = {};
+    req.tbDeclarationDetails = {
+        "companyid": apz.icaosm.Home.sCompanyID
+    };
+    var lParams = {
+        "ifaceName": "DeclarationsAOS_Query",
+        "paintResp": "Y",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.DeclarationsAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.DeclarationsAOS.fnBeforCallServer = function(params) {
+    var lReq = {
+        "ifaceName": params.ifaceName,
+        "paintResp": params.paintResp,
+        "buildReq": params.buildReq,
+        "req": params.lReq,
+        "appId": params.appId,
+        "async": false,
+        "callBack": apz.app.icaosm.DeclarationsAOS.callServerCB,
+        "callBackObj": ""
+    };
+    apz.server.callServer(lReq);
+};
+apz.app.icaosm.DeclarationsAOS.callServerCB = function(params) {
+    debugger;
+    if (apz.app.icaosm.DeclarationsAOS.sAction == "query") {
+        apz.app.icaosm.DeclarationsAOS.fnQueryDataCB(params);
+    } else if (apz.app.icaosm.DeclarationsAOS.sAction == "modifySave" || apz.app.icaosm.DeclarationsAOS.sAction == "newSave") {
+        apz.app.icaosm.DeclarationsAOS.fnModifySaveDeclarationsAOSCB(params);
+    } else if (apz.app.icaosm.DeclarationsAOS.sAction == "modifyNext" || apz.app.icaosm.DeclarationsAOS.sAction == "newNext") {
+        apz.app.icaosm.DeclarationsAOS.fnModifyNextDeclarationsAOSCB(params);
+    }
+};
+apz.app.icaosm.DeclarationsAOS.fnQueryDataCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.DeclarationsAOS.sFlag = true;
+    } else {
+        apz.app.icaosm.DeclarationsAOS.sFlag = false;
+    }
+};
+apz.app.onShown_DeclarationsAOS = function(params) {
+    if (params.action == "submitted") {
+        $("#icaosm__DeclarationsAOS__o__details__agree").prop("checked", true);
+    }
+}
+apz.app.icaosm.DeclarationsAOS.fnSave = function() {
+    debugger;
+    if (apz.app.icaosm.DeclarationsAOS.sFlag) {
+        apz.app.icaosm.DeclarationsAOS.sAction = "modifySave";
+    } else {
+        apz.app.icaosm.DeclarationsAOS.sAction = "newSave";
+    }
+    apz.app.icaosm.DeclarationsAOS.fnModifySaveDeclarationsAOS();
+    /*
+    if(apz.app.icaosm.DeclarationsAOS.sCache.action=="submitted"){
+        apz.launchSubScreen({
+            "scr": "Home",
+            "div": "icaosm__LandingHeader__scrlaunchingdiv",
+             "userObj":{
+                 "percentage":"",
+                 "val":"Declarations",
+                  "action":apz.app.icaosm.DeclarationsAOS.sCache.action,
+                "accNum":apz.app.icaosm.DeclarationsAOS.sCache.accNum,
+                "appNo": apz.app.icaosm.DeclarationsAOS.sCache.appNo
+             }
+        }); 
+    }else{
+    var lTotCount = 0;
+    var lFilled = 0,lRadio = 0;
+    $("#scr__icaosm__DeclarationsAOS__main input[type='CHECKBOX']").each(function() {
+        if($("#"+this.id+":Checked").length){
+            lFilled++;
+        }
+      lRadio++;   
+    });
+    lTotCount = (lRadio/2)+lTotCount;
+    percentage = (lFilled / lTotCount);
+    apz.data.scrdata.icaosm__Home_Req.Home[6].progress =percentage;
+    apz.data.buildData("DeclarationsAOS","icaosm");
+    apz.launchSubScreen({
+            "scr": "Home",
+            "div": "icaosm__LandingHeader__scrlaunchingdiv",
+             "userObj":{
+                 "percentage":percentage,
+                 "val":"Declarations",
+                  "action":apz.app.icaosm.DeclarationsAOS.sCache.action,
+                "accNum":apz.app.icaosm.DeclarationsAOS.sCache.accNum,
+                "appNo": apz.app.icaosm.DeclarationsAOS.sCache.appNo
+             }
+        });
+    }
+    */
+};
+apz.app.icaosm.DeclarationsAOS.fnModifySaveDeclarationsAOS = function() {
+    apz.data.buildData("DeclarationsAOS", "icaosm");
+    var req = {};
+    req.tbDeclarationDetails = apz.data.scrdata.icaosm__DeclarationsAOS_Req.tbDeclarationDetails;
+    req.tbDeclarationDetails.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.DeclarationsAOS.sAction == "modifySave") {
+        lParams.ifaceName = "DeclarationsAOS_Modify";
+    } else if (apz.app.icaosm.DeclarationsAOS.sAction == "newSave") {
+        lParams.ifaceName = "DeclarationsAOS_New";
+    }
+    apz.app.icaosm.DeclarationsAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.DeclarationsAOS.fnModifySaveDeclarationsAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.DeclarationsAOS.sFlag = false;
+        if (apz.app.icaosm.DeclarationsAOS.sCache.action == "submitted") {
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": "",
+                    "val": "Declarations",
+                    "action": apz.app.icaosm.DeclarationsAOS.sCache.action,
+                    "accNum": apz.app.icaosm.DeclarationsAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.DeclarationsAOS.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        } else {
+            var lTotCount = 0;
+            var lFilled = 0,
+                lRadio = 0;
+            $("#scr__icaosm__DeclarationsAOS__main input[type='CHECKBOX']").each(function() {
+                if ($("#" + this.id + ":Checked").length) {
+                    lFilled++;
+                }
+                lRadio++;
+            });
+            lTotCount = (lRadio / 2) + lTotCount;
+            percentage = (lFilled / lTotCount);
+            apz.data.scrdata.icaosm__Home_Req.Home[6].progress = percentage;
+            apz.data.buildData("DeclarationsAOS", "icaosm");
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": percentage,
+                    "val": "Declarations",
+                    "action": apz.app.icaosm.DeclarationsAOS.sCache.action,
+                    "accNum": apz.app.icaosm.DeclarationsAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.DeclarationsAOS.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        }
+    } else {
+        lmsg = {
+            "message": "Declaration failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.DeclarationsAOS.fnModifyNextDeclarationsAOS = function() {
+    if (apz.app.icaosm.DeclarationsAOS.sFlag) {
+        apz.app.icaosm.DeclarationsAOS.sAction = "modifyNext";
+    } else {
+        apz.app.icaosm.DeclarationsAOS.sAction = "newNext";
+    }
+    apz.data.buildData("DeclarationsAOS", "icaosm");
+    var req = {};
+    req.tbDeclarationDetails = apz.data.scrdata.icaosm__DeclarationsAOS_Req.tbDeclarationDetails;
+    req.tbDeclarationDetails.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.DeclarationsAOS.sAction == "modifyNext") {
+        lParams.ifaceName = "DeclarationsAOS_Modify";
+    } else if (apz.app.icaosm.DeclarationsAOS.sAction == "newNext") {
+        lParams.ifaceName = "DeclarationsAOS_New";
+    }
+    apz.app.icaosm.DeclarationsAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.DeclarationsAOS.fnModifyNextDeclarationsAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.DeclarationsAOS.sFlag = false;
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__DeclarationsAOS__main input[type='CHECKBOX']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[6].progress = percentage;
+        apz.data.buildData("DeclarationsAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "AuthorisationAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            //"animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.DeclarationsAOS.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum,
+                "companyID": apz.icaosm.Home.sCompanyID
+            }
+        });
+    } else {
+        lmsg = {
+            "message": "Declaration failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};

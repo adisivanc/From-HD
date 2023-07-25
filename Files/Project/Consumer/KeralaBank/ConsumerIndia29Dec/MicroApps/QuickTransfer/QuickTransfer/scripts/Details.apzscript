@@ -1,0 +1,66 @@
+apz.quickt = {};
+apz.quickt.Details = {};
+apz.app.onLoad_Details = function() {
+   // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "QUICK TRANSFER")
+}
+apz.app.onShown_Details = function()
+{
+    $("#quickt__Details__benefAccNum").attr("type","tel");
+        $("#quickt__Details__el_inp_5").attr("type","tel");
+
+
+
+}
+apz.quickt.Details.dispMsg = function(pResp, type) {
+    var params = {};
+    params.message = pResp;
+    params.type = type;
+    params.callBack = apz.app.displayMessageCallBack;
+    apz.dispMsg(params);
+}
+apz.quickt.Details.onSelectMenu = function() {
+    var drpdwnValue = apz.getElmValue("quickt__Details__el_dpd_1");
+    apz.setElmValue("quickt__Details__el_inp_2", drpdwnValue);
+}
+apz.quickt.Details.onSubmit = function() {
+    debugger;
+    var drpdwnValue = apz.getElmValue("quickt__Details__el_dpd_1");
+    var accountNumber = apz.getElmValue("quickt__Details__el_dpd_1");
+    var beneficiaryName = apz.getElmValue("quickt__Details__el_inp_3");
+    var beneficiaryAccount = apz.getElmValue("quickt__Details__benefAccNum");
+    var beneficiaryIFS = apz.getElmValue("quickt__Details__el_inp_6");
+    var amount = apz.getElmValue("quickt__Details__el_inp_7");
+    var confirmBenAcc = apz.getElmValue("quickt__Details__el_inp_5")
+    apz.quickt.details = {
+        "accountNumber": accountNumber,
+        "beneficiaryName": beneficiaryName,
+        "beneficiaryAccount": beneficiaryAccount,
+        "beneficiaryIFS": beneficiaryIFS,
+        "amount": amount
+    }
+    if (drpdwnValue == "Select") {
+        apz.quickt.Details.dispMsg("Please select an account", "E");
+    } else if (beneficiaryName == "") {
+        apz.quickt.Details.dispMsg("Please enter the Beneficiary Name", "E");
+    } else if (beneficiaryAccount == "") {
+        apz.quickt.Details.dispMsg("Please enter the Beneficiary Account Number", "E");
+    } else if (confirmBenAcc == "") {
+        apz.quickt.Details.dispMsg("Please confirm the Beneficiary Account Number", "E");
+    } else if (beneficiaryIFS == "") {
+        apz.quickt.Details.dispMsg("Please enter the Beneficiary IFS Code", "E");
+    } else if (amount == "") {
+        apz.quickt.Details.dispMsg("Please enter the Amount", "E");
+    } else if (beneficiaryAccount != confirmBenAcc) {
+        apz.quickt.Details.dispMsg("The Beneficiary Account Number doesnt match", "E");
+    } else {
+        var lObj = {
+            "scr": "ConfirmDetails",
+            "appId": "quickt",
+            "div": "quickt__Launcher__launcher",
+            "userObj": {
+                "details": apz.quickt.details
+            }
+        }
+        apz.launchSubScreen(lObj)
+    }
+}

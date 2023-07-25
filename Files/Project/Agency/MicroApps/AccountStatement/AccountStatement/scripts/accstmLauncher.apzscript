@@ -1,0 +1,9 @@
+apz.accstm.checkParams = function(params) {
+    debugger;
+    params.userObj = {
+        "data": {
+            "customerID": "000004712",
+            "accountNo": "732510006721"
+        }
+    };
+};

@@ -1,0 +1,128 @@
+gaugePaint = function(gVal, gDiv, gGaugeId) {
+    requirejs([apz.getInfraPath() + "/fusioncharts/fusioncharts.js"], function() {
+        examplemethod(gVal, gDiv, gGaugeId);
+    });
+}
+examplemethod = function(pVal, pDiv, pGaugeId) {
+    var pointer = pVal;
+    var cpuGauge = new FusionCharts({
+        type: 'hlineargauge',
+        renderAt: pDiv,
+        id: pGaugeId,
+        width: '600',
+        height: '100',
+        dataFormat: 'json',
+        containerBackgroundOpacity:0,
+        dataSource: {
+            "chart": {
+                "canvasbgAlpha": "0",
+                "bgAlpha": "0",
+                "theme": "fint",
+                "showBorder": "0",
+                "lowerLimit": "300",
+                "upperLimit": "850",
+                "numberSuffix": "",
+                "valueFontSize": "11",
+                "gaugeFillMix":"",
+                "valueFontBold": "0"
+            },
+            "colorRange": {
+                "color": [{
+                    "minValue": "300",
+                    "maxValue": "579",
+                    "label": "Very poor",
+                    "code":"#e44a00"
+                }, {
+                    "minValue": "580",
+                    "maxValue": "669",
+                    "label": "Fair",
+                    "code":"#f8bd19"
+                }, {
+                    "minValue": "670",
+                    "maxValue": "739",
+                    "label": "Good",
+                    "code":"#518F0A"
+                },{
+                    "minValue": "740",
+                    "maxValue": "799",
+                    "label": "Very good",
+                    "code":"#6baa01"
+                },{
+                    "minValue": "800",
+                    "maxValue": "850",
+                    "label": "Exceptional",
+                    "code":"#2BFFCE"
+                }]
+            },
+            "pointers": {
+                "pointer": [{
+                    "value": pointer
+                }]
+            }
+        }
+    }).render();
+}
+gaugePaint1 = function(gVal, gDiv, gGaugeId) {
+    requirejs([apz.getInfraPath() + "/fusioncharts/fusioncharts.js"], function() {
+        examplemethod1(gVal, gDiv, gGaugeId);
+    });
+}
+examplemethod1 = function(pVal, pDiv, pGaugeId) {
+    var pointer = pVal;
+    var cpuGauge = new FusionCharts({
+        type: 'hlineargauge',
+        renderAt: pDiv,
+        id: pGaugeId,
+        width: '600',
+        height: '100',
+        dataFormat: 'json',
+        containerBackgroundOpacity:0,
+        dataSource: {
+            "chart": {
+                "canvasbgAlpha": "0",
+                "bgAlpha": "0",
+                "theme": "fint",
+                "showBorder": "0",
+                "lowerLimit": "300",
+                "upperLimit": "850",
+                "numberSuffix": "",
+                "valueFontSize": "11",
+                "gaugeFillMix":"",
+                "valueFontBold": "0"
+            },
+            "colorRange": {
+                "color": [{
+                    "minValue": "300",
+                    "maxValue": "549",
+                    "label": "Very poor",
+                    "code":"#e44a00"
+                }, {
+                    "minValue": "550",
+                    "maxValue": "649",
+                    "label": "Fair",
+                    "code":"#f8bd19"
+                }, {
+                    "minValue": "650",
+                    "maxValue": "699",
+                    "label": "Good",
+                    "code":"#518F0A"
+                },{
+                    "minValue": "700",
+                    "maxValue": "749",
+                    "label": "Very good",
+                    "code":"#6baa01"
+                },{
+                    "minValue": "750",
+                    "maxValue": "850",
+                    "label": "Exceptional",
+                    "code":"#2BFFCE"
+                }]
+            },
+            "pointers": {
+                "pointer": [{
+                    "value": pointer
+                }]
+            }
+        }
+    }).render();
+}

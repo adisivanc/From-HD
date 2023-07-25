@@ -1,0 +1,21 @@
+{
+    "BillEnquiry": {
+        "TransactionId": "",
+        "ServiceType": "",
+        "TransactionCurrency": "",
+        "AmountPaid": "",
+        "AmountPaidCurrency": "",
+        "AccountCurrency": "",
+        "AmountDue": "",
+        "BillDate": "",
+        "OutstandingAmount": "",
+        "LastBilledAmount": "",
+        "LastPaidDate": "",
+        "Severance": "",
+        "PaymentAmount": "",
+        "DistributedAmount": "",
+        "ServiceName": "DU",
+        "ConsumerNumber": "9848474848",
+        "ConsumerPIN": ""
+    }
+}

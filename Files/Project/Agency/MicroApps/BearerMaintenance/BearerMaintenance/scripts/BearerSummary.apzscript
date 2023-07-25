@@ -1,0 +1,50 @@
+apz.beamnt.bearersummary = {};
+apz.beamnt.bearersummary.sCache = "";
+apz.app.onLoad_BearerSummary = function(params) {
+    debugger;
+    apz.beamnt.bearersummary.sCache = params;
+    $("#beamnt__BearerSummary__ct_tbl_1_add_btn").addClass("sno");
+    $("#beamnt__BearerSummary__ct_tbl_1_rem_btn").addClass("sno");
+    apz.show("beamnt__BearerSummary__bearerListDiv");
+    apz.beamnt.bearersummary.Sparams = params;
+    if (params.Navigation) {
+        apz.beamnt.bearersummary.fnSetNavigation(params);
+    }
+    var params = {
+        "ifaceName": "Bearer_Query",
+        "paintResp": "Y",
+        "req": {}
+    };
+    apz.beamnt.bearersummary.fnBeforeCallServer(params);
+}
+apz.beamnt.bearersummary.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.req,
+        "paintResp": params.paintResp,
+        "async": "true",
+        "callBack": apz.beamnt.bearersummary.fnCallServerCallBack,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.beamnt.bearersummary.fnCallServerCallBack = function(params) {
+    debugger;
+}
+apz.beamnt.bearersummary.fnAdd = function() {
+    debugger;
+    apz.hide("beamnt__BearerSummary__bearerListDiv");
+    var Params = {
+        "appId": "beamnt",
+        "scr": "BearerDetails",
+        "div": "beamnt__BearerSummary__newBearerDiv",
+        "userObj": {
+            "destroyDiv": apz.beamnt.bearersummary.sCache.destroyDiv,
+            "parentAppId": apz.beamnt.bearersummary.sCache.parentAppId,
+            "callBack": apz.beamnt.bearersummary.refreshBearerList
+        }
+    }
+    apz.launchSubScreen(Params);
+}

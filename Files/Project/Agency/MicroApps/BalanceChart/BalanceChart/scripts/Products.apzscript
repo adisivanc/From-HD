@@ -1,0 +1,164 @@
+apz.balanc.Products = {};
+apz.balanc.Products.sParams = {};
+apz.balanc.Products.pCount = 1;
+apz.balanc.Products.tCount = 1;
+apz.app.onLoad_Products = function(params) {
+    debugger;
+    apz.balanc.Products.sParams = params;
+};
+apz.app.onShown_Products = function(params) {
+    apz.data.loadJsonData("Products", "balanc");
+    apz.data.loadJsonData("TAT", "balanc");
+    apz.data.loadJsonData("MultiLevelPie", "balanc");
+    apz.balanc.Products.fnGetProductChart();
+};
+apz.balanc.Products.fnGetProductChart=function(){
+   apz.data.loadJsonData("Products", "balanc");
+}
+
+
+apz.balanc.Products.fnCancel = function() {
+    debugger;
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": "menuap__Menu__MainLaunchArea",
+            "parentAppId": "menuap",
+            "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+            "custImg": "menuap__Menu__custImg",
+            "custId": "menuap__Menu__custId_txtcnt"
+        }
+    }
+    apz.launchApp(lParams);
+}
+apz.app.updateChartBeforeRender = function(type, data, id, chart) {
+    debugger;
+    if (id == "balanc__Products__products") {
+        chart.addEventListener("dataPlotClick", apz.balanc.Products.productDrillDown);
+    } else if (id == "balanc__Products__tat") {
+        chart.addEventListener("dataPlotClick", apz.balanc.Products.tatDrillDown);
+    }
+    /*data.chart = {
+        "caption": "",
+        "subcaption": "",
+        "showPlotBorder": "1",
+        "piefillalpha": "60",
+        "pieborderthickness": "2",
+        "hoverfillcolor": "#CCCCCC",
+        "piebordercolor": "#FFFFFF",
+        "numberprefix": "$",
+        "plottooltext": "$label, $$value, $percentValue",
+        "theme": "fint"
+    }*/
+    else if (id == "balanc__Products__onboarding") {
+        data.category = [{
+            "label": "Total Onboarded",
+            "color": "#ffffff",
+            "value": "1797922",
+            "tooltext": "Total Onboarded, $value, $percentValue",
+            "category": [{
+                "label": "Accounts",
+                "color": "#f8bd19",
+                "value": "300000",
+                "tooltext": "Accounts, $value, $percentValue",
+                "category": [{
+                    "label": "Self",
+                    "color": "#f8bd19",
+                    "value": "90000",
+                    "tooltext": "Self, $value, $percentValue"
+                }, {
+                    "label": "Assisted",
+                    "color": "#f8bd19",
+                    "value": "210000",
+                    "tooltext": "Assisted, $value, $percentValue",
+                }]
+            }, {
+                "label": "Deposits",
+                "color": "#33ccff",
+                "value": "615382",
+                "tooltext": "Deposits, $value, $percentValue",
+                "category": [{
+                    "label": "Self",
+                    "color": "#33ccff",
+                    "tooltext": "Self, $value, $percentValue",
+                    "value": "498571"
+                }, {
+                    "label": "Assisted",
+                    "color": "#33ccff",
+                    "tooltext": "Assisted, $value, $percentValue",
+                    "value": "116811"
+                }]
+            }, {
+                "label": "Loans",
+                "color": "#ffcccc",
+                "value": "750000",
+                "tooltext": "Loans, $value, $percentValue",
+                "category": [{
+                    "label": "Self",
+                    "color": "#ffcccc",
+                    "value": "290000",
+                    "tooltext": "Self, $value, $percentValue"
+                }, {
+                    "label": "Assisted",
+                    "color": "#ffcccc",
+                    "tooltext": "Assisted, $value, $percentValue",
+                    "value": "200000"
+                }]
+            }, {
+                "label": "Cards",
+                "color": "#ccff66",
+                "value": "132540",
+                "tooltext": "Cards, $value, $percentValue",
+                "category": [{
+                    "label": "Self",
+                    "color": "#ccff66",
+                    "tooltext": "Self, $value, $percentValue",
+                    "value": "90000"
+                }, {
+                    "label": "Assisted",
+                    "color": "#ccff66",
+                    "tooltext": "Assisted, $value, $percentValue",
+                    "value": "42540"
+                }]
+            }]
+        }]
+    }
+};
+apz.balanc.Products.productDrillDown = function(ev, props) {
+    debugger;
+    ev.stopPropagation();
+    if (apz.balanc.Products.pCount == 1) {
+        var lParams = {
+            "appId": "balanc",
+            "scr": "SubProducts",
+            "div": "balanc__Launcher__launcher",
+            "userObj": {
+                "type": props.categoryLabel,
+                "kind": "product"
+            }
+        };
+        apz.launchApp(lParams);
+        apz.balanc.Products.pCount++
+    }
+};
+apz.balanc.Products.tatDrillDown = function(ev, props) {
+    debugger;
+    ev.stopPropagation();
+    if (apz.balanc.Products.tCount == 1) {
+        var lParams = {
+            "appId": "balanc",
+            "scr": "SubProducts",
+            "div": "balanc__Launcher__launcher",
+            "userObj": {
+                "type": props.datasetName,
+                "kind": "tat",
+            }
+        };
+        apz.launchApp(lParams);
+        apz.balanc.Products.tCount++
+    }
+}

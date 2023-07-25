@@ -1,0 +1,192 @@
+{
+    "flipbo__Transactions_Res": {
+        "details": [{
+            "Name" : "John Denver",
+            "AccountType" : "Savings",
+            "accountNumber" : "040009312263",
+            "contact" : "9876543204"
+            
+        }],
+        "Transact1": [{
+            "date": "09/04/2020",
+            "transactiondetail": "transfered to Thun",
+            "amount": 7446,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        }, {
+            "date": "12/04/2020",
+            "transactiondetail": "transfered to Ray",
+            "amount": 1438,
+            "currency": "MUR",
+            "creditdebit": "debit"
+        }, {
+            "date": "15/04/2020",
+            "transactiondetail": "transfered to Sam",
+            "amount": 9835,
+            "currency": "MUR",
+            "creditdebit": "debit"
+        }, {
+            "date": "18/04/2020",
+            "transactiondetail": "transfered to Nay",
+            "amount": 4532,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        }, {
+            "date": "21/04/2020",
+            "transactiondetail": "transfered to May",
+            "amount": 8734,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        },
+        {
+            "date": "25/04/2020",
+            "transactiondetail": "transfered to Bora",
+            "amount": 9635,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        },
+        {
+            "date": "30/04/2020",
+            "transactiondetail": "transfered to Thun",
+            "amount": 6540,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        }],
+        "Transact2": [{
+            "date": "18/04/2020",
+            "transactiondetail": "transfered to Ray",
+            "amount": 7446,
+            "currency": "MUR",
+            "creditdebit": "debit"
+        }, {
+            "date": "17/04/2020",
+            "transactiondetail": "transfered to Sam",
+            "amount": 2685,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        }, {
+            "date": "14/04/2020",
+            "transactiondetail": "transfered to Nay",
+            "amount": 5497,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        }, {
+            "date": "19/04/2020",
+            "transactiondetail": "transfered to May",
+            "amount": 3267,
+            "currency": "MUR",
+            "creditdebit": "debit"
+        }, {
+            "date": "26/04/2020",
+            "transactiondetail": "transfered to Bora",
+            "amount": 4890,
+            "currency": "MUR",
+            "creditdebit": "debit"
+        },
+        {
+            "date": "28/04/2020",
+            "transactiondetail": "transfered to Thun",
+            "amount": 7658,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        },{
+            "date": "30/04/2020",
+            "transactiondetail": "transfered to Tang",
+            "amount": 8000,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        }
+        ],
+        "Transact3": [{
+            "date": "09/04/2020",
+            "transactiondetail": "transfered to May",
+            "amount": 3265,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        }, {
+            "date": "03/04/2020",
+            "transactiondetail": "transfered to Tang",
+            "amount": 5703,
+            "currency": "MUR",
+            "creditdebit": "debit"
+        }, {
+            "date": "07/04/2020",
+            "transactiondetail": "transfered to Ray",
+            "amount": 3790,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        }, {
+            "date": "15/04/2020",
+            "transactiondetail": "transfered to Bora",
+            "amount": 6589,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        }, {
+            "date": "26/04/2020",
+            "transactiondetail": "transfered to Nay",
+            "amount": 7654,
+            "currency": "MUR",
+            "creditdebit": "debit"
+        },
+        {
+            "date": "28/04/2020",
+            "transactiondetail": "transfered to Sam",
+            "amount": 7000,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        },
+        {
+            "date": "29/04/2020",
+            "transactiondetail": "transfered to Tang",
+            "amount": 9000,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        }],
+        "Transact4": [{
+            "date": "14/04/2020",
+            "transactiondetail": "transfered to Thun",
+            "amount": 5432,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        }, {
+            "date": "26/04/2020",
+            "transactiondetail": "transfered to Nay",
+            "amount": 5489,
+            "currency": "MUR",
+            "creditdebit": "debit"
+        }, {
+            "date": "06/04/2020",
+            "transactiondetail": "transfered to Bora",
+            "amount": 7446,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        }, {
+            "date": "17/04/2020",
+            "transactiondetail": "transfered to Ray",
+            "amount": 7894,
+            "currency": "MUR",
+            "creditdebit": "debit"
+        },
+        {
+            "date": "17/04/2020",
+            "transactiondetail": "transfered to May",
+            "amount": 7894,
+            "currency": "MUR",
+            "creditdebit": "debit"
+        },
+        {
+            "date": "20/04/2020",
+            "transactiondetail": "transfered to Tang",
+            "amount": 7658,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        },
+        {
+            "date": "28/04/2020",
+            "transactiondetail": "transfered to Ray",
+            "amount": 7658,
+            "currency": "MUR",
+            "creditdebit": "credit"
+        }]
+    }
+}

@@ -1,0 +1,100 @@
+apz.issdeb = {};
+apz.issdeb.IssueDebit = {}
+apz.issdeb.IssueDebit.sCache = {};
+apz.issdeb.IssueDebit.sParams = {};
+apz.app.onLoad_IssueDebit = function(params) {
+    if(apz.isOnline){
+        apz.mockServer = false;
+    }else{
+        apz.mockServer = true;
+    }
+    apz.issdeb.IssueDebit.sCache = params;
+    apz.issdeb.IssueDebit.sParams = params;
+};
+apz.app.onShown_IssueDebit = function(params) {
+    // apz.data.loadJsonData("DebitCard","issdeb");
+    // $("#issdeb__IssueDebit__issueDebitCardForm input").each(function() {
+    //     $(this).attr("disabled", "disabled");
+    // })
+    apz.data.loadData("DebitCard", "issdeb");
+}
+apz.issdeb.IssueDebit.fnEditSubmit = function(param) {
+    debugger;
+    var text = param.innerText;
+    if (text == "Submit") {
+        var validated = apz.val.validateContainer("issdeb__IssueDebit__issueDebitCardForm");
+        if (validated) {
+            apz.data.buildData("DebitCard", "issdeb");
+            
+            var lParams = {
+            "appId": "issdeb",
+            "scr": "ApproveDebit",
+            "div": "cmrnav__Launcher__Launcher",
+            "type": "CF",
+            "userObj": {
+                "action":"fromIssue",
+                "data":[],
+                "destroyDiv": "cmrnav__Launcher__Launcher",
+                "parentAppId": "excust",
+                "callBack":apz.issdeb.IssueDebit.sParams.callBack
+            }
+        };
+        apz.launchApp(lParams);
+        }
+    } else {
+        // $("#issdeb__IssueDebit__editSubmit").html("Submit");
+        // $("#issdeb__IssueDebit__issueDebitCardForm input").each(function() {
+        //     $(this).removeAttr("disabled");
+        // })
+    }
+};
+apz.issdeb.IssueDebit.fnBackToList = function() {
+    debugger;
+    // apz.issdeb.IssueDebit.sParams.callBack();
+    apz.cmrnav.fnLaunchConsumerHome()
+};
+apz.issdeb.IssueDebit.fnProceed = function() {
+    debugger;
+    apz.issdeb.IssueDebit.fnRenderStage2();
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "issdeb__IssueDebit__Stage2",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.issdeb.IssueDebit.showSuccessMessage,
+                "destroyDiv": "issdeb__IssueDebit__Stage2"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.issdeb.IssueDebit.fnRenderStage2 = function() {
+    debugger;
+    apz.hide('issdeb__IssueDebit__Stage1');
+    apz.show('issdeb__IssueDebit__Stage2');
+};
+apz.issdeb.IssueDebit.showSuccessMessage = function() {
+    apz.dispMsg({
+        message: "Your request for issuing debit card has been submitted successfully!",
+        type: "A",
+        callBack: apz.issdeb.IssueDebit.sParams.callBack
+    });
+}
+/*apz.issdeb.IssueDebit.fnRadioCheque = function() {
+    debugger;
+    var lChequeNo = apz.getElmValue("nchqbk__ChequeBookRequest__ChequeBookNo");
+    if (lChequeNo == "1") {
+        apz.nchqbk.chequebookrequest.sChqLeaf = "10";
+    } else if (lChequeNo == "2") {
+        apz.nchqbk.chequebookrequest.sChqLeaf = "25";
+    } else if (lChequeNo == "3") {
+        apz.nchqbk.chequebookrequest.sChqLeaf = "50";
+    }
+    apz.nchqbk.chequebookrequest.fnShowDetails();
+}*/

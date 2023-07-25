@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"ViewPromotion","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"ViewPromotion","interfaces":[{"name":"PromotionsList","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

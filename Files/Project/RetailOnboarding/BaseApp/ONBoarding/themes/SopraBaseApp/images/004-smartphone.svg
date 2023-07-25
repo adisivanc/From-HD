@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500" viewBox="0 0 500 500">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_4" data-name="Rectangle 4" width="500" height="500"/>
+    </clipPath>
+  </defs>
+  <g id="_004-smartphone" data-name="004-smartphone" clip-path="url(#clip-path)">
+    <g id="_004-smartphone-2" data-name="004-smartphone" clip-path="url(#clip-path)">
+      <g id="_004-smartphone-3" data-name="004-smartphone" transform="translate(13.22 29)">
+        <path id="Path_64" data-name="Path 64" d="M324.745,441.235H147.934a34.252,34.252,0,0,1-34.154-34.154V34.154A34.252,34.252,0,0,1,147.934,0H324.752a34.252,34.252,0,0,1,34.154,34.154V407.081A34.262,34.262,0,0,1,324.745,441.235Z" fill="#272727"/>
+        <rect id="Rectangle_8" data-name="Rectangle 8" width="212.786" height="347.955" transform="translate(129.947 34.816)" fill="#fff"/>
+        <g id="Group_37" data-name="Group 37" transform="translate(200.869 13.933)">
+          <path id="Path_65" data-name="Path 65" d="M285.474,23.283H241.929a3.566,3.566,0,0,1-3.557-3.557h0a3.566,3.566,0,0,1,3.557-3.557h43.544a3.566,3.566,0,0,1,3.557,3.557h0a3.571,3.571,0,0,1-3.556,3.557Z" transform="translate(-218.089 -16.168)" fill="#ccc"/>
+          <circle id="Ellipse_8" data-name="Ellipse 8" cx="3.557" cy="3.557" r="3.557" transform="translate(0 0)" fill="#ccc"/>
+          <path id="Path_66" data-name="Path 66" d="M253.3,492.172a16.822,16.822,0,1,1,16.82-16.821A16.822,16.822,0,0,1,253.3,492.172Zm0-30.2a13.375,13.375,0,1,0,13.375,13.375A13.375,13.375,0,0,0,253.3,461.972Z" transform="translate(-217.827 -77.308)" fill="#ccc"/>
+        </g>
+        <rect id="Rectangle_9" data-name="Rectangle 9" width="34.471" height="34.471" transform="translate(145.121 74.686)" fill="#999"/>
+        <rect id="Rectangle_10" data-name="Rectangle 10" width="34.471" height="34.471" transform="translate(194.443 74.686)" fill="#d1d1d2"/>
+        <rect id="Rectangle_11" data-name="Rectangle 11" width="34.471" height="34.471" transform="translate(243.786 74.686)" fill="#999"/>
+        <rect id="Rectangle_12" data-name="Rectangle 12" width="34.471" height="34.471" transform="translate(293.08 74.686)"/>
+        <rect id="Rectangle_13" data-name="Rectangle 13" width="34.471" height="34.471" transform="translate(145.121 130.792)" fill="#d1d1d2"/>
+        <rect id="Rectangle_14" data-name="Rectangle 14" width="34.471" height="34.471" transform="translate(194.443 130.792)" fill="#999"/>
+        <rect id="Rectangle_15" data-name="Rectangle 15" width="34.471" height="34.471" transform="translate(243.786 130.792)"/>
+        <rect id="Rectangle_16" data-name="Rectangle 16" width="34.471" height="34.471" transform="translate(293.08 130.792)" fill="#999"/>
+        <rect id="Rectangle_17" data-name="Rectangle 17" width="34.471" height="34.471" transform="translate(145.121 186.904)"/>
+        <g id="Group_38" data-name="Group 38" transform="translate(194.443 186.904)">
+          <rect id="Rectangle_18" data-name="Rectangle 18" width="34.471" height="34.471" fill="#d1d1d2"/>
+          <rect id="Rectangle_19" data-name="Rectangle 19" width="34.471" height="34.471" transform="translate(49.342)" fill="#d1d1d2"/>
+        </g>
+        <g id="Group_39" data-name="Group 39" transform="translate(145.121 186.904)">
+          <rect id="Rectangle_20" data-name="Rectangle 20" width="34.471" height="34.471" transform="translate(147.958)" fill="#999"/>
+          <rect id="Rectangle_21" data-name="Rectangle 21" width="34.471" height="34.471" transform="translate(0 56.12)" fill="#999"/>
+          <rect id="Rectangle_22" data-name="Rectangle 22" width="34.471" height="34.471" transform="translate(49.322 56.12)" fill="#999"/>
+        </g>
+        <rect id="Rectangle_23" data-name="Rectangle 23" width="34.471" height="34.471" transform="translate(243.786 243.024)"/>
+        <g id="Group_40" data-name="Group 40" transform="translate(145.121 243.024)">
+          <rect id="Rectangle_24" data-name="Rectangle 24" width="34.471" height="34.471" transform="translate(147.958)" fill="#d1d1d2"/>
+          <rect id="Rectangle_25" data-name="Rectangle 25" width="34.471" height="34.471" transform="translate(0 56.051)" fill="#d1d1d2"/>
+        </g>
+        <rect id="Rectangle_26" data-name="Rectangle 26" width="34.471" height="34.471" transform="translate(194.443 299.075)"/>
+        <g id="Group_41" data-name="Group 41" transform="translate(243.786 299.075)">
+          <rect id="Rectangle_27" data-name="Rectangle 27" width="34.471" height="34.471" fill="#999"/>
+          <rect id="Rectangle_28" data-name="Rectangle 28" width="34.471" height="34.471" transform="translate(49.294)" fill="#999"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

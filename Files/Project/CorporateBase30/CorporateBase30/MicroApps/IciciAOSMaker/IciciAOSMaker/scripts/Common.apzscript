@@ -1,0 +1,300 @@
+apz.app.icaosm = {};
+apz.app.icaosm.Common = {};
+apz.app.icaosm.Common.sAddNewControl = "";
+apz.app.icaosm.Common.addControl = "";
+apz.app.icaosm.Common.addregisControl = "";
+apz.app.icaosm.Common.addmandateControl = "";
+apz.app.icaosm.Common.addUltimateControl = "";
+apz.app.icaosm.Common.Save = function() {}
+apz.app.icaosm.Common.Next = function(CurrScreen) {
+    var lCurrentScreen = CurrScreen.id.split("_")[2];
+    if (lCurrentScreen == "BusinessDetailsAOS") {
+        apz.app.icaosm.BusinessDetailsAOS.sAction = "modifyNext";
+        apz.app.icaosm.BusinessDetailsAOS.fnUpdateBusinessDetails();
+        /*
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__BusinessDetailsAOS__main input[type='text'],#scr__icaosm__BusinessDetailsAOS__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $("#scr__icaosm__BusinessDetailsAOS__main input[type='radio']").each(function() {
+            lRadio++;
+        });
+        lFilled = (lRadio / 2) + lFilled;
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[0].progress = percentage;
+        apz.data.buildData("CompanyInfo", "icaosm");
+        apz.launchSubScreen({
+            "scr": "AccountsServicesAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            //"animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum
+            }
+        });
+        */
+    } else if (lCurrentScreen == "TaxResidencyDetails") {
+        
+        
+         apz.app.icaosm.TaxResidencyDetails.fnModifyNextTaxResidencyDetails();
+         /*
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__TaxResidencyDetails__main input[type='text'],#scr__icaosm__TaxResidencyDetails__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $("#scr__icaosm__TaxResidencyDetails__main input[type='radio']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[5].progress = percentage;
+        apz.data.buildData("TaxResidencyDetailsAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "DeclarationsAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            // "animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.TaxResidencyDetails.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum
+            }
+        });
+        */
+    } else if (lCurrentScreen == "AuthorisationAOS") {
+         apz.app.icaosm.AuthorisationAOS.fnModifyNextAuthorisationAOS();
+         
+         /*
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__AuthorisationAOS__main input[type='radio']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 3) + lTotCount;
+        lRadio = 0;
+        $("#scr__icaosm__AuthorisationAOS__main input[type='CHECKBOX']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lTotCount++;
+        });
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[7].progress = percentage;
+        apz.data.buildData("AuthorisationAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "MandatesAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            //"animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.AuthorisationAOS.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum
+            }
+        });
+        */
+    } else if (lCurrentScreen == "AccountsServicesAOS") {
+            apz.app.icaosm.AccountsServicesAOS.fnModifyNextAccService();
+        
+        
+        /*
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__AccountsServicesAOS__main input[type='text'],#scr__icaosm__AccountsServicesAOS__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $("#scr__icaosm__AccountsServicesAOS__main input[type='radio']").each(function() {
+            lRadio++;
+        });
+        lFilled = (lRadio / 2) + lFilled;
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[1].progress = percentage;
+        apz.data.buildData("AccountsServicesAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "AuthorisedSignatoryAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            // "animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.AccountsServicesAOS.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum
+            }
+        });
+        */
+        
+    } else if (lCurrentScreen == "AuthorisedSignatoryAOS") {
+        apz.app.icaosm.AuthorisedSignatoryAOS.fnModifyNextAuthorisedSignatoryAOS();
+        /*
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $(".form input[type='text'],.form select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $(".form input[type='radio']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[2].progress = percentage;
+        apz.data.buildData("CustomerInfo", "icaosm");
+        apz.launchSubScreen({
+            "scr": "UltimateBeneficialOwnersAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            //"animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.AuthorisedSignatoryAOS.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum
+            }
+        });
+        */
+    } else if (lCurrentScreen == "DeclarationsAOS") {
+        apz.app.icaosm.DeclarationsAOS.fnModifyNextDeclarationsAOS();
+        
+        /*
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__DeclarationsAOS__main input[type='CHECKBOX']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[6].progress = percentage;
+        apz.data.buildData("DeclarationsAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "AuthorisationAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            //"animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.DeclarationsAOS.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum
+            }
+        });
+        */
+    } else if (lCurrentScreen == "ChannelRegistrationAOS") {
+        
+         apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextChannelRegistrationAOS();
+        
+        /*
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__ChannelRegistrationAOS__main input[type='text'],#scr__icaosm__ChannelRegistrationAOS__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $("#scr__icaosm__ChannelRegistrationAOS__main input[type='radio']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 3) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[4].progress = percentage;
+        apz.data.buildData("ChannelRegistrationAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "TaxResidencyDetails",
+            "div": "icaosm__Home__homelaunchingdiv",
+            // "animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.ChannelRegistrationAOS.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum
+            }
+        });
+        */
+    } else if (lCurrentScreen == "UltimateBeneficialOwnersAOS") {
+        
+         apz.app.icaosm.UltimateBeneficialOwnersAOS.fnModifyNextUltimateBeneficialOwnersAOS();
+        /*
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__UltimateBeneficialOwnersAOS__main input[type='text'],#scr__icaosm__UltimateBeneficialOwnersAOS__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $("#scr__icaosm__UltimateBeneficialOwnersAOS__main input[type='radio']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[3].progress = percentage;
+        apz.data.buildData("UltimateBeneficialOwnersAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "ChannelRegistrationAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            //"animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.UltimateBeneficialOwnersAOS.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum
+            }
+        });
+        */
+        
+    } else if (lCurrentScreen == "MandatesAOS") {
+        //Submit Function will come;
+        /*apz.launchSubScreen({
+        "scr": "AuthorisedSignatoryAOS",
+        "div": "icaosm__Home__homelaunchingdiv",
+        "animation": 40
+    });*/
+    }
+}
+apz.app.icaosm.Common.fnDashboard = function() {
+    apz.app.icaosm.Common.sAddNewControl = "";
+    apz.app.icaosm.Common.addControl = "";
+    apz.app.icaosm.Common.addregisControl = "";
+    apz.app.icaosm.Common.addUltimateControl = "";
+    apz.app.icaosm.Common.addmandateControl = "";
+    for (i = 0; i < apz.data.scrdata.icaosm__Home_Req.Home.length; i++) {
+        apz.data.scrdata.icaosm__Home_Req.Home[i].progress = 0;
+    }
+    apz.launchSubScreen({
+        "scr": "LandingPageChecker",
+        "div": "icaosm__LandingHeader__scrlaunchingdiv"
+    });
+}

@@ -1,0 +1,11 @@
+{
+    "corsum__ProductServices_Res": {
+        "products": [{
+            "productName": "CASA",
+            "productServices":"Mobile Banking, Money Transfer, Bulk Transfer, Payroll payment"
+        }, {
+            "productName": "Lending",
+            "productServices":"Mobile Banking, Money Transfer, Bulk Transfer, Payroll payment"
+        }]
+    }
+}

@@ -1,0 +1,209 @@
+apz.cbdtax.taxtransaction = {};
+apz.cbdtax.taxtransaction.sParams = {};
+apz.app.onLoad_TaxTransaction = function(params) {
+    debugger;
+    apz.cbdtax.taxtransaction.sParams = apz.copyJSONObject(params);
+    if (params.Navigation) {
+        apz.cbdtax.taxtransaction.fnSetNavigation(params);
+    }
+    apz.cbdtax.taxtransaction.fnInitialise();
+};
+
+apz.cbdtax.taxtransaction.fnInitialise = function() {
+    apz.cbdtax.taxtransaction.fnGotoStage1();
+};
+apz.cbdtax.taxtransaction.fnSetNavigation = function(params) {
+    debugger;
+    apz.cbdtax.taxtransaction.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.headerText = "TAX TRANSACTION";
+    apz.cbdtax.taxtransaction.Navigation(lParams);
+}
+apz.cbdtax.taxtransaction.fnGotoStage1 = function() {
+    debugger;
+   // apz.cbdtax.taxtransaction.fnSetDataInStage1();
+    apz.cbdtax.taxtransaction.fnRenderStage1();
+};
+apz.cbdtax.taxtransaction.fnRenderStage1 = function() {
+    apz.show("cbdtax__TaxTransaction__Stage1");
+    apz.hide("cbdtax__TaxTransaction__Stage2");
+    apz.hide("cbdtax__TaxTransaction__Stage3");
+    apz.hide("cbdtax__TaxTransaction__Stage4");
+};
+apz.cbdtax.taxtransaction.fnContinueStage1 = function(params) {
+    debugger;
+    apz.cbdtax.taxtransaction.sAction = 'Continue';
+   apz.data.buildData('TaxTransaction', 'cbdtax');
+    var lProceed = apz.cbdtax.taxtransaction.fnValidateStage1();
+    if (lProceed.lStatus) {
+        var lRec = apz.data.scrdata.cbdtax__Transaction_Req.CBDTDtls;
+    apz.data.scrdata.cbdtax__Transaction_Req.CBDTDtls = lRec;
+        apz.cbdtax.taxtransaction.fnGotoStage2();
+    } else {
+        var param = {
+            'code': lProceed.ErrCode
+        };
+        apz.dispMsg(param);
+    }
+};
+apz.cbdtax.taxtransaction.fnValidateStage1 = function(params) {
+    var lResp = {
+        "ErrCode": "APZ-CNT-099"
+    };
+  //  var lRec =apz.data.scrdata.cbdtax__TaxTransaction_Req.CBDTDtls;
+lResp.lStatus = apz.val.validateContainer('cbdtax__TaxTransaction__ct_frm_Stage1');
+var lCBDTDtls = apz.data.scrdata.cbdtax__Transaction_Req.CBDTDtls;
+return lResp;
+};
+apz.cbdtax.taxtransaction.fnGotoStage2 = function(params) {
+    apz.cbdtax.taxtransaction.fnSetDataInStage2();
+    apz.cbdtax.taxtransaction.fnRenderStage2();
+};
+apz.cbdtax.taxtransaction.fnSetDataInStage2 = function(params) {
+    debugger;
+    var lCBDTDtls = apz.data.scrdata.cbdtax__Transaction_Req.CBDTDtls;
+     apz.setElmValue('cbdtax__TaxTransaction__Stage2_Name', $("#cbdtax__Transaction__i__CBDTDtls__customerName").val());
+     apz.setElmValue('cbdtax__TaxTransaction__Stage2_basic', $("#cbdtax__Transaction__i__CBDTDtls__basicTaxAmount").val());
+     apz.setElmValue('cbdtax__TaxTransaction__Stage2_surcharge', $("#cbdtax__Transaction__i__CBDTDtls__surcharge").val());
+     apz.setElmValue('cbdtax__TaxTransaction__Stage2_fee', $("#cbdtax__Transaction__i__CBDTDtls__feeUnderSec24e").val());
+     apz.setElmValue('cbdtax__TaxTransaction__Stage2_interest', $("#cbdtax__Transaction__i__CBDTDtls__interestAmt").val());
+      apz.setElmValue('cbdtax__TaxTransaction__Stage2_cess', $("#cbdtax__Transaction__i__CBDTDtls__educationCess").val());
+     apz.setElmValue('cbdtax__TaxTransaction__Stage2_penalty', $("#cbdtax__Transaction__i__CBDTDtls__penaltyAmt").val());
+     apz.setElmValue('cbdtax__TaxTransaction__Stage2_others', $("#cbdtax__Transaction__i__CBDTDtls__others").val());
+     apz.setElmValue('cbdtax__TaxTransaction__Stage2_tax', $("#cbdtax__Transaction__i__CBDTDtls__totalTaxAmount").val());
+     apz.setElmValue('cbdtax__TaxTransaction__Stage2_Pan',4566946864);  
+     apz.setElmValue('cbdtax__TaxTransaction__Stage2_taxapp',"Income tax(other than companies)"); 
+      apz.setElmValue('cbdtax__TaxTransaction__Stage2_pay',"Tax on Regular Assesment(400)"); 
+    apz.cbdtax.taxtransaction.sParams.SNo =Math.floor(1000000 + Math.random() * 9000000);
+    apz.setElmValue('cbdtax__TaxTransaction__Stage2_Chellan',apz.cbdtax.taxtransaction.sParams.SNo);  
+     var params = {
+        "fromFormat": "M/dd/yyyy",
+        "toFormat": "dd-MMM-yyyy"
+    };
+    params.val = new Date().toString("yyyy");
+    var ltoday = apz.formatDate(params);
+    apz.setElmValue('cbdtax__TaxTransaction__Stage2_year',ltoday);
+    
+     };   
+apz.cbdtax.taxtransaction.fnRenderStage2 = function() {
+   apz.show("cbdtax__TaxTransaction__Stage2");
+    apz.hide("cbdtax__TaxTransaction__Stage1");
+    apz.hide("cbdtax__TaxTransaction__Stage3");
+    apz.hide("cbdtax__TaxTransaction__Stage4");
+};
+apz.cbdtax.taxtransaction.fnBack = function(params) {
+    //apz.cbdtax.taxtransactio.sAction = 'Edit';
+    apz.cbdtax.taxtransaction.fnRenderStage1();
+};
+
+
+apz.cbdtax.taxtransaction.fnConfirmStage2 = function() {
+    apz.cbdtax.taxtransaction.sParams.sAction = "confirm";
+    var lReq = {
+        "action": "Confirm",
+        "CBDTDtls": apz.data.scrdata.cbdtax__Transaction_Req.CBDTDtls
+    };
+    var lServerParams = {
+        "ifaceName": "Transaction",
+        "buildReq": "N",
+        "paintResp": "Y",
+        "req": lReq,
+        
+        
+    };
+    apz.cbdtax.taxtransaction.fnBeforeCallServer(lServerParams);
+};
+apz.cbdtax.taxtransaction.fnGotoStage3 = function() {
+    apz.cbdtax.taxtransaction.fnRenderStage3();
+};
+apz.cbdtax.taxtransaction.fnRenderStage3 = function() {
+    apz.hide("cbdtax__TaxTransaction__Stage1");
+    apz.hide("cbdtax__TaxTransaction__Stage2");
+    apz.show("cbdtax__TaxTransaction__Stage3");
+    apz.hide("cbdtax__TaxTransaction__Stage4");
+};
+apz.cbdtax.taxtransaction.fnGotoStage4 = function(params) {
+    apz.resetCurrAppId("cbdtax");
+    apz.cbdtax.taxtransaction.fnSetDataInStage4(params);
+    apz.cbdtax.taxtransaction.fnRenderStage4();
+};
+apz.cbdtax.taxtransaction.fnRenderStage4 = function() {
+    apz.hide("cbdtax__TaxTransaction__Stage1");
+    apz.hide("cbdtax__TaxTransaction__Stage2");
+    apz.hide("cbdtax__TaxTransaction__Stage3");
+    apz.show("cbdtax__TaxTransaction__Stage4");
+};
+apz.cbdtax.taxtransaction.fnSetDataInStage4 = function(params) {
+    debugger;
+    var lCBDTDtls= apz.data.scrdata.cbdtax__Transaction_Req.CBDTDtls;
+    apz.setElmValue('cbdtax__TaxTransaction__Stage4_Name', lCBDTDtls.customerName);
+     apz.setElmValue('cbdtax__TaxTransaction__Stage4_basic', lCBDTDtls.basicTaxAmount);
+     apz.setElmValue('cbdtax__TaxTransaction__Stage4_surcharge', lCBDTDtls.surcharge);
+     apz.setElmValue('cbdtax__TaxTransaction__Stage4_fee',lCBDTDtls.feeUnderSec24e);
+     apz.setElmValue('cbdtax__TaxTransaction__Stage4_interest', lCBDTDtls.interestAmt);
+     apz.setElmValue('cbdtax__TaxTransaction__Stage4_cess', lCBDTDtls.educationCess);
+     apz.setElmValue('cbdtax__TaxTransaction__Stage4_penalty', lCBDTDtls.penaltyAmt);
+     apz.setElmValue('cbdtax__TaxTransaction__Stage4_others', lCBDTDtls.others);
+     apz.setElmValue('cbdtax__TaxTransaction__Stage4_tax', lCBDTDtls.totalTaxAmount);
+    apz.setElmValue('cbdtax__TaxTransaction__Stage4_Pan', cbdtax__TaxTransaction__Stage2_Pan.innerText);
+     apz.setElmValue('cbdtax__TaxTransaction__Stage4_taxapp',cbdtax__TaxTransaction__Stage2_taxapp.innerText); 
+      apz.setElmValue('cbdtax__TaxTransaction__Stage4_pay',cbdtax__TaxTransaction__Stage2_pay.innerText); 
+      apz.setElmValue('cbdtax__TaxTransaction__Stage4_Chellan',cbdtax__TaxTransaction__Stage2_Chellan.innerText);
+       apz.setElmValue('cbdtax__TaxTransaction__Stage4_year',cbdtax__TaxTransaction__Stage2_year.innerText);
+};
+apz.cbdtax.taxtransaction.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": params.buildReq,
+        "req": params.req,
+        "paintResp": "Y",
+        "callBack": apz.cbdtax.taxtransaction.fnCallServerCallBack,
+        "appId": "cbdtax",
+        "userObj":params.userObj
+    };
+      jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("cbdtax")+"/Transaction.json"));
+       apz.data.scrdata.cbdtax__Transaction_Res = {};
+                      apz.data.scrdata.cbdtax__Transaction_Res = jsondata;
+                      apz.data.loadData("Transaction", "cbdtax");
+        apz.cbdtax.taxtransaction.fnCallServerCallBack(jsondata);
+   // apz.server.callServer(lServerParams);
+};
+apz.cbdtax.taxtransaction.fnCallServerCallBack = function(params) {
+    debugger;
+    // if (params.errors) {
+    //     var param = {
+    //         'code': params.errors[0].errorCode
+    //     };
+    //     apz.dispMsg(param);
+    // } else {
+        if (apz.cbdtax.taxtransaction.sParams.sAction == 'confirm') {
+            apz.cbdtax.taxtransaction.fnGotoStage3();
+            var lLaunchParams = {
+                "appId": "otpeng",
+                "scr": "ProcessOTP",
+                "div": "cbdtax__TaxTransaction__Stage3_col",
+                "userObj": {
+                    "action": "SetRefNo",
+                    "data": {
+                        "OTPRefNo":  apz.data.scrdata.cbdtax__Transaction_Res.CBDTDtls.data.OTPRefNo
+                    },
+                    "control": {
+                        "appId": "otpeng",
+                        "callBack": apz.cbdtax.taxtransaction.fnGotoStage4,
+                        "destroyDiv": "cbdtax__TaxTransaction__Stage3_col"
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        }
+}
+
+ 
+    
+    
+    
+    
+    
+    
+    

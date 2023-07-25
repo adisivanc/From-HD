@@ -1,0 +1,103 @@
+apz.sumary.Summary = {};
+apz.sumary.Summary.sCache = {};
+apz.sumary.Summary.sData = {};
+apz.app.onLoad_Summary = function(params) {
+    apz.sumary.Summary.sCache = params;
+    $(".pgn-ctr").addClass("sno");
+    $("#sumary__Summary__application_list_tbody").css({"cursor":"pointer"});
+};
+apz.app.onShown_Summary = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "NewLeadDetails_Query",
+        "buildReq": "Y",
+        "appId": "sumary",
+        "req": "",
+        "paintResp": "Y",
+        "async": "true",
+        "callBack": "apz.sumary.Summary.fncallback",
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.sumary.Summary.fncallback = function(pResp) {
+    debugger;
+}
+apz.sumary.Summary.fnSearchLead = function() {
+    debugger;
+    apz.data.scrdata.sumary__ApplicationSummary_Req = {};
+    apz.data.scrdata.sumary__ApplicationSummary_Req.tbLeadDetails = [];
+    var lSearchValue = apz.getElmValue("sumary__Summary__search_application_inp");
+    if (lSearchValue == "") {
+        apz.data.scrdata.sumary__ApplicationSummary_Req.tbLeadDetails = apz.sumary.Summary.sCache;
+        apz.data.loadData("ApplicationSummary", "sumary");
+    } else {
+        for (i = 0; i < apz.sumary.Summary.sCache.length; i++) {
+            if (apz.sumary.Summary.sCache[i].referenceNo.toString().startsWith(lSearchValue.toUpperCase())) {
+                var object = {};
+                object.leadName = apz.sumary.Summary.sCache[i].leadName;
+                object.leadImage = apz.sumary.Summary.sCache[i].leadImage;
+                object.createdDate = apz.sumary.Summary.sCache[i].createdDate;
+                object.status = apz.sumary.Summary.sCache[i].status;
+                object.leadMobile = apz.sumary.Summary.sCache[i].leadMobile;
+                object.referenceNo = apz.sumary.Summary.sCache[i].referenceNo;
+                apz.data.scrdata.sumary__ApplicationSummary_Req.tbLeadDetails.push(object);
+            }
+        }
+        apz.data.loadData("ApplicationSummary", "sumary");
+    }
+};
+apz.sumary.Summary.fnRowClicked = function(pObj) {
+    debugger;
+    var rowno = $(pObj).attr('rowno');
+    var requestStr = {};
+    requestStr.tbAcopCustomerInfo = {}
+    requestStr.tbAcopCustomerInfo.referenceNo = $('#sumary__NewLeadDetails__i__tbAcopCustomerInfo__referenceNo_' + rowno).text();
+    var lServerParams = {
+        "ifaceName": "QueryLeadDetails_Query",
+        "buildReq": "N",
+        "appId": "sumary",
+        "req": requestStr,
+        "paintResp": "Y",
+        "async": "true",
+        "callBack": apz.sumary.Summary.callBackFunc,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+}
+
+apz.sumary.Summary.callBackFunc = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        var lParams = {
+            "appId": "cracop",
+            "scr": "SelectedProducts",
+            "animation": 12,
+            "div": apz.sumary.Summary.sCache.destroyDiv,
+            "type": "CF",
+            "userObj": {
+                "action": "showapplication",
+                "destroyDiv": apz.sumary.Summary.sCache.destroyDiv,
+                "data": pResp.res.sumary__QueryLeadDetails_Res.tbAcopCustomerInfo,
+                "parentId": apz.sumary.Summary.sCache.parentAppId,
+                "callBack": "",
+            }
+        };
+        apz.launchApp(lParams);
+    }
+}
+apz.sumary.Summary.fnOnclickCancel = function() {
+    var lObj = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": apz.sumary.Summary.sCache.destroyDiv,
+        "animation": 21,
+        "userObj": {
+            "action": "",
+            "data": {},
+            "destroyDiv": apz.sumary.Summary.sCache.destroyDiv,
+            "parentId": apz.sumary.Summary.sCache.parentAppId,
+        }
+    };
+    apz.launchApp(lObj);
+};

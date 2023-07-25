@@ -1,0 +1,279 @@
+{
+    "appzillonDashBoardResponse": {
+        "sessions": [
+            {
+                "os": "WEB-10",
+                "count": 10
+            },
+            {
+                "os": "ANDROID-2",
+                "count": 2
+            },
+            {
+                "os": "IOS-5",
+                "count": 5
+            }
+        ],
+        "totalSessions": 17,
+        "totalInstalls": 180,
+        "locationDetails": [
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "India",
+                "admin_area_lvl_1": "Karnataka",
+                "admin_area_lvl_2": "Bangalore Urban",
+                "formattedAddress": "52, 100 Feet Rd, Santhosapuram, Koramangala 2nd Block, Koramangala, Bengaluru, Karnataka 560034, India",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "12.9252776",
+                "sublocality": "Koramangala",
+                "longitude": "77.6194216"
+            },
+            {
+                "country": "Malaysia",
+                "admin_area_lvl_1": "Kuala Lumpur",
+                "admin_area_lvl_2": "Kuala Lumpur Urban",
+                "formattedAddress": "76, Jalan Kampung Attap, Kampung Attap, 50460 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "3.137065",
+                "sublocality": "Kampung Attap",
+                "longitude": "101.6967645"
+            },
+            {
+                "country": "Malaysia",
+                "admin_area_lvl_1": "Kuala Lumpur",
+                "admin_area_lvl_2": "Kuala Lumpur Urban",
+                "formattedAddress": "76, Jalan Kampung Attap, Kampung Attap, 50460 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "3.137065",
+                "sublocality": "Kampung Attap",
+                "longitude": "101.6967645"
+            },
+            {
+                "country": "Malaysia",
+                "admin_area_lvl_1": "Kuala Lumpur",
+                "admin_area_lvl_2": "Kuala Lumpur Urban",
+                "formattedAddress": "76, Jalan Kampung Attap, Kampung Attap, 50460 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "3.137065",
+                "sublocality": "Kampung Attap",
+                "longitude": "101.6967645"
+            },
+            {
+                "country": "Malaysia",
+                "admin_area_lvl_1": "Kuala Lumpur",
+                "admin_area_lvl_2": "Kuala Lumpur Urban",
+                "formattedAddress": "76, Jalan Kampung Attap, Kampung Attap, 50460 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "3.137065",
+                "sublocality": "Kampung Attap",
+                "longitude": "101.6967645"
+            },
+            {
+                "country": "Malaysia",
+                "admin_area_lvl_1": "Kuala Lumpur",
+                "admin_area_lvl_2": "Kuala Lumpur Urban",
+                "formattedAddress": "76, Jalan Kampung Attap, Kampung Attap, 50460 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "3.137065",
+                "sublocality": "Kampung Attap",
+                "longitude": "101.6967645"
+            },
+            {
+                "country": "Malaysia",
+                "admin_area_lvl_1": "Kuala Lumpur",
+                "admin_area_lvl_2": "Kuala Lumpur Urban",
+                "formattedAddress": "76, Jalan Kampung Attap, Kampung Attap, 50460 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "3.137065",
+                "sublocality": "Kampung Attap",
+                "longitude": "101.6967645"
+            },
+            {
+                "country": "Malaysia",
+                "admin_area_lvl_1": "Kuala Lumpur",
+                "admin_area_lvl_2": "Kuala Lumpur Urban",
+                "formattedAddress": "76, Jalan Kampung Attap, Kampung Attap, 50460 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",
+                "origination": "0:0:0:0:0:0:0:1",
+                "latitude": "3.137065",
+                "sublocality": "Kampung Attap",
+                "longitude": "101.6967645"
+            }
+        ],
+        "inActiveUsers": 100,
+        "activeUsers": 220,
+        "users": 320,
+        "installs": [
+            {
+                "count": 120,
+                "os": "ANDROID"
+            },
+            {
+                "count": 50,
+                "os": "IOS"
+            },
+            {
+                "count": 10,
+                "os": "WINDOWS"
+            }
+        ]
+    }
+}

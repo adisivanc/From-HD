@@ -1,0 +1,319 @@
+apz.nchqbk = {};
+apz.nchqbk.ApproveCheckBook = {}
+apz.nchqbk.ApproveCheckBook.sCache = {};
+apz.nchqbk.ApproveCheckBook.sParams = {};
+apz.app.onLoad_ApproveCheckBook = function(params) {
+    debugger;
+    apz.nchqbk.ApproveCheckBook.sCache = params;
+    apz.nchqbk.ApproveCheckBook.sParams = params;
+};
+apz.app.onShown_ApproveCheckBook = function(params) {
+    debugger;
+    if (params.action == "fromIssue") {
+        $("#nchqbk__ApproveCheckBook__approveCancel").html("Back");
+        $("#nchqbk__ApproveCheckBook__approveApprove").html("Confirm");
+        apz.data.loadData("ChequeBookRequest", "nchqbk");
+    } else if (params.action == "fromStatus") {
+        if (apz.mockServer) {
+            apz.data.scrdata.nchqbk__ChequeBookRequest_Req = params.data.srcdata;
+        } else {
+            apz.data.scrdata.nchqbk__ChequeBookRequest_Req = JSON.parse(params.data.srcdata);
+        }
+        apz.refNo = params.data.refno;
+        apz.data.loadData("ChequeBookRequest", "nchqbk");
+    } else {
+        if (apz.mockServer) {
+            apz.data.scrdata.nchqbk__ChequeBookRequest_Req = params.data.srcdata;
+        } else {
+            apz.data.scrdata.nchqbk__ChequeBookRequest_Req = JSON.parse(params.data.srcdata);
+        }
+        apz.refNo = params.data.workflow_ref_no;
+        apz.data.loadData("ChequeBookRequest", "nchqbk");
+        var initDate = apz.formatDate({
+            val: new Date().toDateString(),
+            fromFormat: "ddd MMM dd yyyy",
+            toFormat: "yyyy-MM-dd"
+        });
+        var makerdate = new Date().toISOString().slice(0, 19).replace('T', ' ')
+        apz.nchqbk.ApproveCheckBook.sCache.data.makerdate = makerdate;
+        apz.nchqbk.ApproveCheckBook.sCache.data.customerid = "1234567";
+        apz.nchqbk.ApproveCheckBook.sCache.data.initdate = initDate;
+    }
+    //  apz.data.buildData("ChequeBookRequest", "nchqbk");
+    // if (params.data.length > 0) {
+    //     apz.data.scrdata.nchqbk__ChequeBookRequest_Req.accounts = params.data;
+    //     apz.data.loadData("ChequeBookRequest", "nchqbk");
+    // }
+    $("#nchqbk__ApproveCheckBook__approveCheckBookForm input").each(function() {
+        $(this).attr("disabled", "disabled");
+    })
+}
+apz.nchqbk.ApproveCheckBook.fnSubmit = function(param) {
+    debugger;
+    var text = param.innerText;
+    if (text == "Approve") {
+        if (apz.mockServer) {
+            apz.nchqbk.ApproveCheckBook.showSuccessMessage("The request has been approved successfully!");
+        } else {
+            apz.nchqbk.ApproveCheckBook.fnDeleteRecord();
+        }
+    } else {
+        apz.nchqbk.ApproveCheckBook.fnStartWorkflow();
+        //  apz.nchqbk.ApproveCheckBook.fnProceed();
+    }
+};
+apz.nchqbk.ApproveCheckBook.fnBackToList = function(param) {
+    debugger;
+    var text = param.innerText;
+    if (text == "Cancel") {
+        // apz.nchqbk.ApproveCheckBook.sParams.callBack(); //Working
+        
+        var theme = $("link").eq(0).attr("href")
+        //"appzillon/styles/themes/ConsUK/css/ConsUK.css"
+        if (apz.appContext == "agency") {
+            debugger;
+            var lParams = {
+                "appId": "landpg",
+                "scr": "LandingPage",
+                "div": "menuap__Menu__MainLaunchArea",
+                "type": "CF",
+                "animation": 21,
+                "userObj": {
+                    "destroyDiv": "menuap__Menu__MainLaunchArea",
+                    "parentAppId": "menuap",
+                    "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+                    "custImg": "menuap__Menu__custImg",
+                    "custId": "menuap__Menu__custId_txtcnt"
+                }
+            }
+            apz.launchApp(lParams);
+        } else {
+            apz.cmrnav.fnLaunchConsumerHome();
+        }
+    } else {
+        apz.data.buildData("ChequeBookRequest", "nchqbk");
+        var lLaunchParams = {
+            "appId": "nchqbk",
+            "scr": "ChequeBookRequest",
+            "div": "cmrnav__Launcher__Launcher",
+            "type": "CF",
+            "userObj": {
+                "action": "fromApprove",
+                "data": [],
+                "destroyDiv": "cmrnav__Launcher__Launcher",
+                "parentAppId": "excust",
+                "callBack": apz.nchqbk.ApproveCheckBook.sParams.callBack
+            }
+        }
+        apz.launchSubScreen(lLaunchParams);
+    }
+};
+apz.nchqbk.ApproveCheckBook.fnProceed = function() {
+    debugger;
+    apz.nchqbk.ApproveCheckBook.fnRenderStage2();
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "nchqbk__ApproveCheckBook__Stage2",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.nchqbk.ApproveCheckBook.showSuccessMessage,
+                "destroyDiv": "nchqbk__ApproveCheckBook__Stage2"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.nchqbk.ApproveCheckBook.fnRenderStage2 = function() {
+    debugger;
+    apz.hide('nchqbk__ApproveCheckBook__Stage1');
+    apz.show('nchqbk__ApproveCheckBook__Stage2');
+};
+apz.nchqbk.ApproveCheckBook.showSuccessMessage = function(msg) {
+    debugger;
+    var theme = $("link").eq(0).attr("href")
+    //"appzillon/styles/themes/ConsUK/css/ConsUK.css"
+    
+        if (apz.appContext == "agency") {
+        apz.dispMsg({
+            message: msg, //"Your request for issuing debit card has been submitted successfully!",
+            type: "S",
+            callBack: apz.nchqbk.ApproveCheckBook.sParams.callBack
+        });
+    } else {
+        apz.dispMsg({
+            message: msg,
+            type: "S",
+            callBack: apz.cmrnav.fnLaunchConsumerHome
+        });
+    }
+}
+apz.nchqbk.ApproveCheckBook.fnStartWorkflow = function() {
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "StartWorkFlow",
+        "buildReq": "N",
+        "appId": "nchqbk",
+        "req": {
+            "appId": "acdp01",
+            "workFlowId": "",
+            "userId": "CorpUser"
+        },
+        "paintResp": "N",
+        "callBack": apz.nchqbk.ApproveCheckBook.fnStartWorkflowCB
+    }
+    apz.server.callServer(lServerParams);
+};
+apz.nchqbk.ApproveCheckBook.fnStartWorkflowCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        if (pResp.res.nchqbk__StartWorkFlow_Res) {
+            apz.nchqbk.ApproveCheckBook.sCache.refNo = pResp.res.nchqbk__StartWorkFlow_Res.instanceId;
+            apz.refNo = apz.nchqbk.ApproveCheckBook.sCache.refNo;
+            apz.nchqbk.ApproveCheckBook.fnAddUser(apz.nchqbk.ApproveCheckBook.sCache.refNo);
+        }
+    }
+}
+apz.nchqbk.ApproveCheckBook.fnAddUser = function(refno) {
+    debugger;
+    apz.startLoader();
+    var d = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    var lServerParams = {
+        "ifaceName": "CustomerServiceRequest_New",
+        "buildReq": "N",
+        "appId": "nchqbk",
+        "req": {
+            "tbDbmiCustomerServicerequest": {
+                refno: refno,
+                makerdate: d,
+                category: "Service Request",
+                subcategory: "Cheque Book Request",
+                status: "Pending",
+                customerid: apz.data.scrdata.cmrnav__CustmerDetails_Res.customerId,
+                maker: "RM001",
+                initdate: d,
+                srcdata: JSON.stringify(apz.data.scrdata.nchqbk__ChequeBookRequest_Req)
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.nchqbk.ApproveCheckBook.fnAddUserCB
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.nchqbk.ApproveCheckBook.fnAddUserCB = function(pResp) {
+    if (pResp.status) {
+        apz.nchqbk.ApproveCheckBook.fnCallNextStateWorkFlow(apz.nchqbk.ApproveCheckBook.fnRMCB);
+        apz.nchqbk.ApproveCheckBook.showSuccessMessage("The request has been initiated");
+    }
+}
+apz.nchqbk.ApproveCheckBook.fnRMCB = function(pResp) {
+    debugger;
+}
+apz.nchqbk.ApproveCheckBook.fnCallNextStateWorkFlow = function(cb) {
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "nchqbk",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "SUBMIT"
+        },
+        "paintResp": "N",
+        "callBack": cb
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.nchqbk.ApproveCheckBook.fnNexttWorkflowCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        apz.nchqbk.ApproveCheckBook.showSuccessMessage("The request has been approved successfully!");
+    }
+}
+apz.nchqbk.ApproveCheckBook.fnDeleteRecord = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "CustomerServiceRequest_Delete",
+        "buildReq": "N",
+        "appId": "nchqbk",
+        "req": {
+            "tbDbmiCustomerServicerequest": {
+                refno: apz.refNo,
+                makerdate: apz.formatDate({
+                    val: apz.nchqbk.ApproveCheckBook.sCache.data.makerdate,
+                    fromFormat: "dd/MM/yyyy hh:mm:ss",
+                    toFormat: "yyyy-MM-dd hh:mm:ss"
+                }),
+                category: apz.nchqbk.ApproveCheckBook.sCache.data.category,
+                subcategory: apz.nchqbk.ApproveCheckBook.sCache.data.subcategory,
+                status: "Resolved",
+                customerid: apz.nchqbk.ApproveCheckBook.sCache.data.customerid,
+                maker: "RM001",
+                checker: "RM001",
+                checkerdate: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                initdate: apz.formatDate({
+                    val: apz.nchqbk.ApproveCheckBook.sCache.data.initdate,
+                    fromFormat: "dd/MM/yyyy",
+                    toFormat: "yyyy-MM-dd"
+                }),
+                srcdata: JSON.stringify(apz.data.scrdata.nchqbk__ChequeBookRequest_Req)
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.nchqbk.ApproveCheckBook.fnDeleteCB
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.nchqbk.ApproveCheckBook.fnDeleteCB = function(pResp) {
+    debugger
+    if (pResp.status) {
+        apz.nchqbk.ApproveCheckBook.fnupdateStatus();
+    }
+}
+apz.nchqbk.ApproveCheckBook.fnupdateStatus = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "CustomerServiceRequest_New",
+        "buildReq": "N",
+        "appId": "nchqbk",
+        "req": {
+            "tbDbmiCustomerServicerequest": {
+                refno: apz.refNo,
+                makerdate: apz.formatDate({
+                    val: apz.nchqbk.ApproveCheckBook.sCache.data.makerdate,
+                    fromFormat: "dd/MM/yyyy hh:mm:ss",
+                    toFormat: "yyyy-MM-dd hh:mm:ss"
+                }),
+                category: apz.nchqbk.ApproveCheckBook.sCache.data.category,
+                subcategory: apz.nchqbk.ApproveCheckBook.sCache.data.subcategory,
+                status: "Resolved",
+                customerid: apz.nchqbk.ApproveCheckBook.sCache.data.customerid,
+                maker: "RM001",
+                checker: "RM001",
+                checkerdate: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                initdate: apz.formatDate({
+                    val: apz.nchqbk.ApproveCheckBook.sCache.data.initdate,
+                    fromFormat: "dd/MM/yyyy",
+                    toFormat: "yyyy-MM-dd"
+                }),
+                srcdata: JSON.stringify(apz.data.scrdata.nchqbk__ChequeBookRequest_Req)
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.nchqbk.ApproveCheckBook.fnupdateStatusCB
+    };
+    apz.server.callServer(lServerParams);
+}
+apz.nchqbk.ApproveCheckBook.fnupdateStatusCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        apz.nchqbk.ApproveCheckBook.showSuccessMessage("The request has been approved successfully!");
+    }
+}

@@ -1,0 +1,402 @@
+apz.crddtl.cardoperation = {};
+apz.app.onLoad_CardOperations = function(params) {
+    debugger;
+    if (params.Navigation) {
+        apz.crddtl.cardoperation.fnSetNavigation(params);
+    }
+    apz.crddtl.cardoperation.fnInitialise(params);
+};
+apz.crddtl.cardoperation.fnInitialise = function(params) {
+    debugger;
+    apz.crddtl.cardoperation.sParams = params;
+    //apz.crddtl.cardoperation.fnCheckStatusDC();
+    apz.crddtl.cardoperation.fnGoToStage1();
+};
+apz.crddtl.cardoperation.fnSetNavigation = function(params) {
+    debugger;
+    apz.crddtl.cardoperation.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.headerText = apz.crddtl.cardoperation.sParams.operation + " " + apz.crddtl.cardoperation.sParams.action;
+    apz.crddtl.cardoperation.Navigation(lParams);
+};
+apz.crddtl.cardoperation.fnGoToStage1 = function() {
+    debugger;
+    apz.crddtl.cardoperation.fnSetValuesStage1();
+    apz.crddtl.cardoperation.fnRenderStage1();
+};
+apz.crddtl.cardoperation.fnSetValuesStage1 = function() {
+    debugger;
+    apz.setElmValue("crddtl__CardOperations__Stage1CardType", apz.crddtl.cardoperation.sParams.action, +"Card");
+    apz.setElmValue("crddtl__CardOperations__Stage1CardNo", apz.crddtl.cardoperation.sParams.data.cardNumber);
+    var lObj = {
+        "decimalSep": apz.decimalSep,
+        "thousandSep": apz.thousandSep,
+        "value": apz.crddtl.cardoperation.sParams.data.amount,
+        "mask": "LAKH",
+        "decimalPoints": 2
+    };
+    var lAmount = apz.formatNumber(lObj);
+    apz.setElmValue("crddtl__CardOperations__Stage1AvlAmt", lAmount);
+    apz.setElmValue("crddtl__CardOperations__Stage1NameOnCard", apz.crddtl.cardoperation.sParams.data.nameOnCard);
+    var lObj = {
+        "decimalSep": apz.decimalSep,
+        "thousandSep": apz.thousandSep,
+        "value": apz.crddtl.cardoperation.sParams.data.unbilledAmount,
+        "mask": "LAKH",
+        "decimalPoints": 2
+    };
+    var lUnbilledAmout = apz.formatNumber(lObj);
+    apz.setElmValue("crddtl__CardOperations__Stage1UnbilledAmt", lUnbilledAmout);
+    var lObj = {
+        "decimalSep": apz.decimalSep,
+        "thousandSep": apz.thousandSep,
+        "value": apz.crddtl.cardoperation.sParams.data.unbilledAmount,
+        "mask": "LAKH",
+        "decimalPoints": 2
+    };
+    var lAvlLmtAmt = apz.formatNumber(lObj);
+    apz.setElmValue("crddtl__CardOperations__Stage1AvlLmtAmt", lAvlLmtAmt);
+    apz.setElmValue("crddtl__CardOperations__Stage1AccountNo", apz.crddtl.cardoperation.sParams.data.accountNo);
+    if (apz.crddtl.cardoperation.sParams.action == "Credit Card") {
+        $(".AvlAmount").addClass("sno");
+        $(".CreditCard").removeClass("sno");
+    } else {
+        $(".AvlAmount").removeClass("sno");
+        $(".CreditCard").addClass("sno");
+    }
+    apz.setElmValue("crddtl__CardOperation__i__CardDtls__cardNumber", apz.crddtl.cardoperation.sParams.data.cardNumber);
+    apz.setElmValue("crddtl__CardOperation__i__CardDtls__action", apz.crddtl.cardoperation.sParams.operation, +"Card");
+    apz.setElmValue("crddtl__CardOperation__i__CardDtls__cardType", apz.crddtl.cardoperation.sParams.action);
+    apz.setElmValue("crddtl__CardOperation__i__CardDtls__customerId", apz.crddtl.cardoperation.sParams.data.customerId);
+    apz.setElmValue("crddtl__CardOperation__i__CardDtls__accountNumber", apz.crddtl.cardoperation.sParams.data.accountNo);
+    //apz.setElmValue("crddtl__CardOperations__Stage1AvlLmtAmt", lAvlLmtAmt);
+};
+apz.crddtl.cardoperation.fnRenderStage1 = function() {
+    debugger;
+    apz.crddtl.cardoperation.fnRenderStage1()
+};
+apz.crddtl.cardoperation.fnRenderStages = function(pStage) {
+    debugger;
+    for (i = 1; i < 3; i++) {
+        if (i == pStage) {
+            apz.show("crddtl__CardOperations__Stage" + i);
+        } else {
+            apz.hide("crddtl__CardOperations__Stage" + i);
+        }
+    }
+};
+apz.crddtl.cardoperation.fnRenderStage1 = function() {
+    debugger;
+    apz.crddtl.cardoperation.fnRenderStages(1);
+    if (apz.crddtl.cardoperation.sParams.operation == "Block / Unb") {
+        apz.show("crddtl__CardOperations__Stage1BlockForm");
+        apz.hide("crddtl__CardOperations__Stage1SetPINForm");
+        apz.hide("crddtl__CardOperations__Stage1Renew");
+    }
+    if (apz.crddtl.cardoperation.sParams.operation == "Set") {
+        apz.hide("crddtl__CardOperations__Stage1BlockForm");
+        apz.show("crddtl__CardOperations__Stage1SetPINForm");
+        apz.hide("crddtl__CardOperations__Stage1Renew");
+    }
+    if (apz.crddtl.cardoperation.sParams.operation == "Replace") {
+        apz.hide("crddtl__CardOperations__Stage1BlockForm");
+        apz.hide("crddtl__CardOperations__Stage1SetPINForm");
+        apz.show("crddtl__CardOperations__Stage1Renew");
+    }
+    if (apz.crddtl.cardoperation.sParams.operation == "Renew") {
+        $("#crddtl__CardOperations__Stage1NewDebitForm").find("h4").text("Renew Debit Card");
+        apz.hide("crddtl__CardOperations__Stage1BlockForm");
+        apz.hide("crddtl__CardOperations__Stage1SetPINForm");
+        apz.show("crddtl__CardOperations__Stage1Renew");
+    }
+};
+apz.crddtl.cardoperation.fnRemoveValue = function(pthis) {
+    if (pthis.value != "") {
+        if (pthis.id.split("_")[4].slice(0, -1) == "Stage1PIN") {
+            var lCurrentStage = parseInt(pthis.id.split("_")[4].slice(9));
+            $("#crddtl__CardOperations__Stage1PIN" + lCurrentStage).val('');
+        }
+        if (pthis.id.split("_")[4].slice(0, -1) == "Stage1ReEnterPIN") {
+            var lCurrentStage = parseInt(pthis.id.split("_")[4].slice(16));
+            $("#crddtl__CardOperations__Stage1ReEnterPIN" + lCurrentStage).val('');
+        }
+    }
+};
+apz.crddtl.cardoperation.fnSetPinStages = function(pthis) {
+    debugger;
+    if (apz.isNull(apz.val.validateNumberObj(pthis)) === false) {
+        $("#" + pthis.id).val("");
+    }
+    if ((pthis.value != '') && (apz.getElmValue(pthis.id) != '')) {
+        var lCurrentStage = parseInt(pthis.id.split("_")[4].slice(9));
+        var lSetstage = lCurrentStage + 1;
+        $("#crddtl__CardOperations__Stage1PIN" + lSetstage).val('');
+        $("#crddtl__CardOperations__Stage1PIN" + lSetstage).focus();
+    }
+    if (pthis.id.split("_")[4].slice(-1) == 4) {
+        var lValue = apz.getElmValue("crddtl__CardOperations__Stage1PIN4");
+        lValue = lValue.slice(-1);
+        apz.setElmValue("crddtl__CardOperations__Stage1PIN4", lValue);
+    }
+};
+apz.crddtl.cardoperation.fnReEnterSetPinStages = function(pthis) {
+    debugger;
+    if (apz.isNull(apz.val.validateNumberObj(pthis)) === false) {
+        $("#" + pthis.id).val("");
+    }
+    if (pthis.value != '') {
+        var lCurrentStage = parseInt(pthis.id.split("_")[4].slice(16));
+        var lSetstage = lCurrentStage + 1;
+        $("#crddtl__CardOperations__Stage1ReEnterPIN" + lSetstage).val('');
+        $("#crddtl__CardOperations__Stage1ReEnterPIN" + lSetstage).focus();
+    }
+    if (pthis.id.split("_")[4].slice(-1) == 4) {
+        var lValue = apz.getElmValue("crddtl__CardOperations__Stage1ReEnterPIN4");
+        lValue = lValue.slice(-1);
+        apz.setElmValue("crddtl__CardOperations__Stage1ReEnterPIN4", lValue);
+    }
+};
+apz.crddtl.cardoperation.fnDestroy = function(params) {
+    debugger;
+    var lDestroy = apz.crddtl.cardoperation.sParams.destroyDiv;
+    $('#' + lDestroy).children().remove();
+    apz.crddtl.cardoperation.sParams.control.callBack(params);
+};
+apz.crddtl.cardoperation.fnBack = function() {
+    debugger;
+    apz.crddtl.cardoperation.fnDestroy();
+    //apz.crddtl.cardoperation.sParams.callBack();
+}
+apz.crddtl.cardoperation.fnValidatePin = function(pthis) {
+    debugger;
+    var lNewPinValue = '';
+    var lReEnterPinValue = '';
+    for (i = 1; i < 5; i++) {
+        var lValue = apz.getElmValue("crddtl__CardOperations__Stage1PIN" + i);
+        lNewPinValue = lNewPinValue.concat(lValue);
+        var lValue = apz.getElmValue("crddtl__CardOperations__Stage1ReEnterPIN" + i);
+        lReEnterPinValue = lReEnterPinValue.concat(lValue);
+    }
+    /* for (i = 1; i < 5; i++) {
+        var lValue = apz.getElmValue("crddtl__CardOperations__Stage1ReEnterPIN" + i);
+        lReEnterPinValue = lReEnterPinValue.concat(lValue);
+    }*/
+    if (parseInt(lNewPinValue) != parseInt(lReEnterPinValue)) {
+        var lMsg = {
+            "code": "ERR_PIN"
+        };
+        apz.dispMsg(lMsg);
+        for (i = 1; i < 5; i++) {
+            $("#crddtl__CardOperations__Stage1ReEnterPIN" + i).val('');
+            $("#crddtl__CardOperations__Stage1PIN" + i).val('');
+        }
+    }
+};
+apz.crddtl.cardoperation.fnOnChangeBlock = function() {
+    debugger;
+    apz.setElmValue("crddtl__CardOperation__i__CardDtls__reason", apz.getElmValue("crddtl__CardOperations__Stage1Reason"));
+};
+apz.crddtl.cardoperation.fnOnChangeReason = function(pthis) {
+    debugger;
+    apz.setElmValue("crddtl__CardOperation__i__CardDtls__reason", $(pthis).val());
+};
+apz.crddtl.cardoperation.fnOnChangeProductType = function(pthis) {
+    debugger;
+    apz.setElmValue("crddtl__CardOperation__i__CardDtls__cardProduct", $(pthis).val());
+};
+apz.crddtl.cardoperation.fnConfirmStage1 = function() {
+    debugger;
+    var lValid = apz.crddtl.cardoperation.fnVaidateStage1();
+    if (lValid) {
+        apz.crddtl.cardoperation.sAction = 'Confirm';
+        apz.data.buildData("CardOperation", "crddtl");
+        apz.crddtl.cardoperation.fnInsertData();
+    }
+};
+apz.crddtl.cardoperation.fnVaidateStage1 = function() {
+    debugger;
+    var lValid = false;
+    if (apz.crddtl.cardoperation.sParams.operation == "Block / Unb") {
+        if ((!apz.isNull(apz.getElmValue("crddtl__CardOperation__i__CardDtls__cardType"))) && (!apz.isNull(apz.getElmValue(
+            "crddtl__CardOperation__i__CardDtls__reason")))) {
+            lValid = true;
+        } else {
+            var lMsg = {
+                "code": "ERR_BLOCK"
+            }
+            apz.dispMsg(lMsg);
+        }
+    } else if (apz.crddtl.cardoperation.sParams.operation == "Replace") {
+        if (!apz.isNull(apz.getElmValue("crddtl__CardOperation__i__CardDtls__cardProduct")) && (!apz.isNull(apz.getElmValue(
+            "crddtl__CardOperation__i__CardDtls__reason")))) {
+            lValid = true;
+        } else {
+            var lMsg = {
+                "code": "ERR_REPLACE"
+            }
+            apz.dispMsg(lMsg);
+        }
+    } else if (apz.crddtl.cardoperation.sParams.operation == "Set") {
+        var lNewPinValue = '';
+        var lReEnterPinValue = '';
+        for (i = 1; i < 5; i++) {
+            var lValue = apz.getElmValue("crddtl__CardOperations__Stage1PIN" + i);
+            lNewPinValue = lNewPinValue.concat(lValue);
+            var lValue = apz.getElmValue("crddtl__CardOperations__Stage1ReEnterPIN" + i);
+            lReEnterPinValue = lReEnterPinValue.concat(lValue);
+        }
+        if (lNewPinValue == lReEnterPinValue) {
+            lValid = true;
+        } else {
+            var lMsg = {
+                "code": "ERR_PIN"
+            }
+            apz.dispMsg(lMsg);
+        }
+    }
+    if (apz.crddtl.cardoperation.sParams.operation == "Renew") {
+        if (!apz.isNull(apz.getElmValue("crddtl__CardOperation__i__CardDtls__cardType"))) {
+            lValid = true;
+        } else {
+            var lMsg = {
+                "code": "ERR_RENEW"
+            }
+            apz.dispMsg(lMsg);
+        }
+    }
+    return lValid;
+};
+apz.crddtl.cardoperation.fnInsertData = function() {
+    debugger;
+    var lReq = {
+        "cardNumber": apz.data.scrdata.crddtl__CardOperation_Req.CardDtls.cardNumber,
+        "accountNumber": apz.data.scrdata.crddtl__CardOperation_Req.CardDtls.accountNumber,
+        "reason": apz.data.scrdata.crddtl__CardOperation_Req.CardDtls.reason,
+        "customerId": apz.crddtl.cardoperation.sParams.data.customerId, //CustomerId
+        "action": apz.data.scrdata.crddtl__CardOperation_Req.CardDtls.action,
+        "cardProduct": apz.data.scrdata.crddtl__CardOperation_Req.CardDtls.cardProduct,
+        "cardType": apz.data.scrdata.crddtl__CardOperation_Req.CardDtls.cardType,
+        "authenticationType": apz.data.scrdata.crddtl__CardOperation_Req.CardDtls.authenticationType
+    };
+    var lReq = {
+        "action": "confirm",
+        "CardDtls": lReq
+    };
+    var lServerParams = {
+        "ifaceName": "CardOperation",
+        "req": lReq,
+        "callBack": apz.crddtl.cardoperation.fnInsertCallBack
+    };
+    apz.crddtl.cardoperation.fnBeforeCallServer(lServerParams);
+};
+apz.crddtl.cardoperation.fnBeforeCallServer = function(params) {
+    debugger;
+    apz.data.loadJsonData(params.ifaceName, "crddtl");
+    apz.crddtl.cardoperation.fnInsertCallBack();
+};
+apz.crddtl.cardoperation.fnInsertCallBack = function(params) {
+    debugger;
+    //if (!params.errors) {
+   apz.crddtl.cardoperation.fnRenderStages('');
+    apz.crddtl.cardoperation.sParams.OtpRes = apz.data.scrdata.crddtl__CardOperation_Res.CardDtls;
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "crddtl__CardOperations__Launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.crddtl__CardOperation_Res.CardDtls.data.OTPRefNo
+                "OTPRefNo":"23423482987237"
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.crddtl.cardoperation.fnGotoStage2,
+                "destroyDiv": "crddtl__CardOperations__Launcher"
+            }
+        }
+    };
+       apz.launchApp(lLaunchParams);
+    /* } else {}*/
+};
+apz.crddtl.cardoperation.fnGotoStage2 = function() {
+    debugger;
+    apz.crddtl.cardoperation.fnSetValueStage2();
+    apz.crddtl.cardoperation.fnRenderStage2();
+    apz.crddtl.cardoperation.fnRenderStages(2);
+};
+apz.crddtl.cardoperation.fnSetValueStage2 = function() {
+    debugger;
+    apz.crddtl.cardoperation.fnSetDate();
+    apz.setElmValue("crddtl__CardOperations__Stage2FromAccNo", apz.data.scrdata.crddtl__CardOperation_Req.CardDtls.accountNumber);
+    var lRef = "Your Reference no is " + apz.crddtl.cardoperation.sParams.OtpRes.txnRefNo;
+    apz.setElmValue("crddtl__CardOperations__Stage2RefNo", lRef);
+    apz.setElmValue("crddtl__CardOperations__Stage2DebitcardNo", apz.data.scrdata.crddtl__CardOperation_Req.CardDtls.cardNumber);
+    if (apz.crddtl.cardoperation.sParams.operation == "Block" || apz.crddtl.cardoperation.sParams.operation == "Replace") {
+        apz.setElmValue("crddtl__CardOperations__Stage2Reason", apz.data.scrdata.crddtl__CardOperation_Req.CardDtls.reason);
+    }
+};
+apz.crddtl.cardoperation.fnSetDate = function() {
+    var lToday = new Date();
+    var dt = (lToday.getDate() < 10 ? '0' : '') + lToday.getDate();
+    var mn = ((lToday.getMonth() + 1) < 10 ? '0' : '') + (lToday.getMonth() + 1);
+    var date = lToday.getFullYear() + '' + mn + '' + dt;
+    var hours = lToday.getHours();
+    var minutes = lToday.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    date = apz.formatDate({
+        "val": date,
+        "fromFormat": "yyyyMMdd",
+        "toFormat": "dd MMM yyyy"
+    });
+    apz.setElmValue("crddtl__CardOperations__Stage2Date", date);
+    apz.setElmValue("crddtl__CardOperations__Stage2Time", strTime);
+};
+apz.crddtl.cardoperation.fnRenderStage2 = function() {
+    if (apz.crddtl.cardoperation.sParams.operation == "Block / Unb") {
+        apz.show("crddtl__CardOperations__Stage2BlockDebitRow");
+        apz.hide("crddtl__CardOperations__Stage2SetPINRow");
+        apz.hide("crddtl__CardOperations__Stage2ReplaceDebitRow");
+        apz.hide("crddtl__CardOperations__Stage2RenewDebitRow");
+        apz.show("crddtl__CardOperations__Stage2ReasonRow");
+        apz.show("crddtl__CardOperations__Stage2DebitCardNoRow");
+    } else if (apz.crddtl.cardoperation.sParams.operation == "Set") {
+        apz.hide("crddtl__CardOperations__Stage2BlockDebitRow");
+        apz.show("crddtl__CardOperations__Stage2SetPINRow");
+        apz.hide("crddtl__CardOperations__Stage2ReplaceDebitRow");
+        apz.hide("crddtl__CardOperations__Stage2RenewDebitRow");
+        apz.hide("crddtl__CardOperations__Stage2ReasonRow");
+        apz.show("crddtl__CardOperations__Stage2DebitCardNoRow");
+    } else if (apz.crddtl.cardoperation.sParams.operation == "Replace") {
+        apz.hide("crddtl__CardOperations__Stage2BlockDebitRow");
+        apz.hide("crddtl__CardOperations__Stage2SetPINRow");
+        apz.show("crddtl__CardOperations__Stage2ReplaceDebitRow");
+        apz.hide("crddtl__CardOperations__Stage2RenewDebitRow");
+        apz.show("crddtl__CardOperations__Stage2ReasonRow");
+        apz.show("crddtl__CardOperations__Stage2DebitCardNoRow");
+    } else if (apz.crddtl.cardoperation.sParams.operation == "Renew") {
+        apz.hide("crddtl__CardOperations__Stage2NewDebitRow");
+        apz.hide("crddtl__CardOperations__Stage2BlockDebitRow");
+        apz.hide("crddtl__CardOperations__Stage2SetPINRow");
+        apz.hide("crddtl__CardOperations__Stage2ReplaceDebitRow");
+        apz.show("crddtl__CardOperations__Stage2RenewDebitRow");
+        apz.hide("crddtl__CardOperations__Stage2ReasonRow");
+        apz.show("crddtl__CardOperations__Stage2DebitCardNoRow");
+    }
+};
+apz.crddtl.cardoperation.fnDone = function() {
+    apz.crddtl.cardoperation.fnDestroy();
+};
+
+apz.crddtl.cardoperation.fnDone1 = function() {
+    // apz.csmrbk.landingpage.fnHome();
+    apz.cmrnav.fnLaunchConsumerHome()
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};

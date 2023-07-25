@@ -1,0 +1,125 @@
+apz.excust = {};
+apz.excust.CustomerDashboard = {};
+apz.excust.CustomerDashboard.sCache = {};
+apz.app.onLoad_CustomerDashboard = function(params) {
+    apz.excust.CustomerDashboard.sCache = params;
+    apz.excust.CustomerDashboard.fnUpdateUI();
+};
+apz.app.onShown_CustomerDashboard = function(params) {
+    debugger;
+    apz.excust.CustomerDashboard.fnLaunchCustomerAccounts();
+}
+apz.excust.CustomerDashboard.fnUpdateUI = function() {
+    debugger;
+    $(".tabs-ctr").remove();
+    $("#excust__CustomerDashboard__moreList").hide();
+    $('#excust__CustomerDashboard__custDashboardTabs_ul:first-child').addClass("current");
+    apz.setHtml(apz.excust.CustomerDashboard.sCache.loggedCust, "Logged in Customer: " + apz.excust.CustomerDashboard.sCache.data.custName);
+    document.getElementById(apz.excust.CustomerDashboard.sCache.loggedCustImg).src = apz.excust.CustomerDashboard.sCache.data.custImage;
+    apz.setHtml(apz.excust.CustomerDashboard.sCache.loggedCustId, "Customer Id: " + apz.excust.CustomerDashboard.sCache.data.custId);
+    apz.setHtml("menuap__Menu__custBranch", "Customer Branch: " + apz.excust.CustomerDashboard.sCache.data.loggedCustBranch);
+    
+    apz.show("menuap__Menu__custBranch");
+    
+    apz.setElmValue("excust__CustomerDashboard__custName", apz.excust.CustomerDashboard.sCache.data.custName)
+    apz.setElmValue("excust__CustomerDashboard__custId", apz.excust.CustomerDashboard.sCache.data.custId);
+    apz.setElmValue("excust__CustomerDashboard__email", apz.excust.CustomerDashboard.sCache.data.custemail);
+    apz.setElmValue("excust__CustomerDashboard__dob", apz.excust.CustomerDashboard.sCache.data.custDOB);
+    apz.setElmValue("excust__CustomerDashboard__phn", apz.excust.CustomerDashboard.sCache.data.custphn);
+    apz.setElmValue("excust__CustomerDashboard__addr", apz.excust.CustomerDashboard.sCache.data.custAddr);
+    apz.setElmValue("excust__CustomerDashboard__branch", apz.excust.CustomerDashboard.sCache.data.loggedCustBranch);
+    document.getElementById("excust__CustomerDashboard__image").src = apz.excust.CustomerDashboard.sCache.data.custImage;
+}
+apz.excust.CustomerDashboard.fnLaunchTransactions = function() {
+  debugger;
+  var lParams = {
+        "appId": "fndftr",
+        "scr": "FundsTransfer",
+        "div": "excust__CustomerDashboard__fundtransferdiv",
+      
+        "userObj": {
+            "destroyDiv": "excust__CustomerDashboard__fundtransferdiv",
+            "parentAppId": "excust",
+            "action": "customerDashboard",
+            "userId":apz.excust.CustomerDashboard.sCache.data.custId,
+            "callBack": apz.excust.CustomerDashboard.fnLaunchCustomerAccounts
+        }
+    };
+    apz.launchApp(lParams);
+  apz.toggleModal({"targetId":"excust__CustomerDashboard__fundtransfermodal"});
+    
+};
+apz.excust.CustomerDashboard.fnLaunchCustomerServicing = function() {
+    $("#excust__CustomerDashboard__moreList").hide();
+    var lParams = {
+        "appId": "csrser",
+        "scr": "CustomerServicing",
+        "div": "excust__CustomerDashboard__CustomerLaunchArea",
+        "type": "CF",
+        "animation": 9,
+        "userObj": {
+            "destroyDiv": "excust__CustomerDashboard__CustomerLaunchArea",
+            "parentAppId": "excust",
+            "action": "customerDashboard",
+            "userId":apz.excust.CustomerDashboard.sCache.data.custId,
+            "callBack": apz.excust.CustomerDashboard.fnLaunchCustomerAccounts
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.excust.CustomerDashboard.fnLaunchCustomerAccounts = function() {
+    $(".current").removeClass("current");
+    var lParams = {
+        "appId": "accsum",
+        "scr": "AccountDetails",
+        "div": "excust__CustomerDashboard__CustomerLaunchArea",
+        "type": "CF",
+        "animation": 9,
+        "userObj": {
+            "destroyDiv": "excust__CustomerDashboard__CustomerLaunchArea",
+            "parentAppId": "excust",
+            "action": "Accounts",
+            "userId":apz.excust.CustomerDashboard.sCache.data.custId,
+            "callBack": apz.excust.CustomerDashboard.fnLaunchCustomerAccounts
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.excust.CustomerDashboard.fnLaunchCashTransactions = function() {
+    var lParams = {
+        "appId": "cashtr",
+        "scr": "CashTransactionsHome",
+        "div": "excust__CustomerDashboard__CustomerLaunchArea",
+        "type": "CF",
+        "animation": 9,
+        "userObj": {
+            "destroyDiv": "excust__CustomerDashboard__CustomerLaunchArea",
+            "parentAppId": "excust",
+            "action": "customerDashboard",
+            "userId":apz.excust.CustomerDashboard.sCache.data.custId,
+            "callBack": apz.excust.CustomerDashboard.fnLaunchCustomerAccounts,
+            "from": "dashboard"
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.excust.CustomerDashboard.fnLaunchCreditCardPayment = function() {
+    var lParams = {
+        "appId": "bllpay",
+        "scr": "BillPay",
+        "div": "excust__CustomerDashboard__CustomerLaunchArea",
+        "animation": 9,
+        "type": "CF",
+        "userObj": {
+            "action": "Txn",
+            "data": {
+                "customerId": "1"
+            },
+            "destroyDiv": "excust__CustomerDashboard__CustomerLaunchArea",
+            "parentAppId": "excust",
+            "userId":apz.excust.CustomerDashboard.sCache.data.custId,
+            "callBack": apz.excust.CustomerDashboard.fnLaunchCustomerAccounts
+        }
+    };
+    apz.launchApp(lParams);
+}

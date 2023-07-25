@@ -1,0 +1,20 @@
+{
+    "tbDbmiWorkflowRuleDetail":[
+        {
+            "corporateId": "000287",
+            "functionId": "OAFT",
+            "ruleSequence": "1",
+            "stageId": "VERIFY",
+            "ruleEquation": "Amount > 200000 && Date => Today",
+            "nextStage": "APPROVE"
+        },
+        {
+            "corporateId": "000287",
+            "functionId": "OAFT",
+            "ruleSequence": "VERIFY",
+            "stageId": "APPROVE",
+            "ruleEquation": "Amount > 200000 && Date => Today",
+            "nextStage": "SUBMIT"
+        }
+        ]
+}

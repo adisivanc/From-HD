@@ -1,0 +1,41 @@
+{
+    "collDtls":
+    [{
+		"customerId":"142648936",
+		"accountNo":"XXXXXXXXX2115",
+		"accountBrn":"One Wall Street,New York",
+		"accountCcy":"",
+		"cptyName":"James",
+		"cptyBankCode":"7083",
+		"cptyBankName":"JPMorgan Chase",
+		"cptyBankCity":"New York",
+		"cptyAccountNo":"XXXXXXXXX5348",
+		"trnCcy":"USD",
+		"trnAmt":"100",
+		"bookDate":"Jan-08-2018",
+		"activationDate":"May-15-2020",
+		"collectionStatus":"Initiated",
+		"chgAmount":"0.00",
+		"chgAmountCcy":"",
+		"chgBearer":"Our Account"
+	},
+	{
+	    "customerId":"146348989",
+		"accountNo":"XXXXXXXXX2118",
+		"accountBrn":"One Wall Street,New York",
+		"accountCcy":"",
+		"cptyName":"Sam",
+		"cptyBankCode":"7083",
+		"cptyBankName":"JPMorgan Chase",
+		"cptyBankCity":"New York",
+		"cptyAccountNo":"XXXXXXXXX9876",
+		"trnCcy":"USD",
+		"trnAmt":"200",
+		"bookDate":"Feb-03-2018",
+		"activationDate":"May-10-2020",
+		"collectionStatus":"Initiated",
+		"chgAmount":"0.00",
+		"chgAmountCcy":"",
+		"chgBearer":"Our Account"
+	}]
+}

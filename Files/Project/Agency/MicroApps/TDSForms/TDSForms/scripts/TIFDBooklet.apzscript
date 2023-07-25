@@ -1,0 +1,39 @@
+apz.tdsfrm.tifdBooklet = {};
+apz.app.onLoad_TIFDBooklet = function(params) {
+    debugger;
+};
+apz.app.onShown_TIFDBooklet = function(params) {
+    debugger;
+    apz.show("tdsfrm__DICertificateRequest__stage_one");
+    apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "TIFD BOOKLET REQUEST");
+};
+apz.tdsfrm.tifdBooklet.fnDownload = function(params) {
+    // apz.dispMsg({
+    //     message: "Deposit irnterest certificate sent to your registered mail id.",
+    //     type: "S",
+    //     callBack: apz.csmrbk.landingpage.fnInitialise
+    // });
+    apz.dispMsg({message : "The request for TIFD Booklet has been submitted",callBack:apz.csmrbk.landingpage.fnInitialise})
+}
+apz.tdsfrm.tifdBooklet.fnCancel = function(params) {
+    apz.csmrbk.landingpage.fnInitialise();
+}
+apz.tdsfrm.tifdBooklet.fnTifdChange = function(pThis){
+    
+    debugger;
+    if(pThis.checked){
+    apz.show("tdsfrm__TIFDBooklet__tifd_leaflets_ul");
+    }else{
+    apz.hide("tdsfrm__TIFDBooklet__tifd_leaflets_ul");
+    }
+}
+apz.tdsfrm.tifdBooklet.fnIdtChange = function(pThis){
+    
+    debugger;
+    if(pThis.checked){
+    apz.show("tdsfrm__TIFDBooklet__idt_leaflets_ul");
+    }else{
+    apz.hide("tdsfrm__TIFDBooklet__idt_leaflets_ul");
+    }
+    
+}

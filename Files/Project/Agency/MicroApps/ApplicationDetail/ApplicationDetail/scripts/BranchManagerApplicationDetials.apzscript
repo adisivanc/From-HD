@@ -1,0 +1,167 @@
+apz.appdtl.BranchManagerApplicationDetials = {};
+apz.appdtl.BranchManagerApplicationDetials.sParam = {}
+apz.app.onLoad_BranchManagerApplicationDetials = function(params) {
+    debugger;
+    apz.appdtl.BranchManagerApplicationDetials.sParam = params;
+    apz.appdtl.BranchManagerLauncher.sCache.refNo = params.refNo;
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo", params.refNo);
+    apz.setElmValue("appdtl__AppLauncher__application_number", params.refNo);
+    if (params.product == "Accounts") {
+        $(".loans").addClass("sno");
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_23_li").addClass("sno");
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_24_li").addClass("sno");
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_25_li").addClass("sno");
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_26_li").addClass("sno");
+    } else if (params.product == "Loans") {
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_21_li").addClass("sno");
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_22_li").addClass("sno");
+        $(".accounts").addClass("sno");
+        if (params.subproduct == "Home Loan") {} else if (params.subproduct ==
+            "Auto Loan") {} else {}
+    } else if (params.product == "Deposits") {
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_21_li").addClass("sno");
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_22_li").addClass("sno");
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_23_li").addClass("sno");
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_24_li").addClass("sno");
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_25_li").addClass("sno");
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_26_li").addClass("sno");
+        $(".accounts").addClass("sno");
+        $(".loans").addClass("sno");
+    } else if (params.product == "Cards") {
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_21_li").addClass("sno");
+        $("#appdtl__BranchManagerApplicationDetials__ps_pls_22_li").addClass("sno");
+        $(".accounts").addClass("sno");
+    }
+    apz.appdtl.BranchManagerApplicationDetials.fnFetchDetails();
+    apz.stopLoader();
+}
+apz.appdtl.BranchManagerApplicationDetials.fnFetchDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                "refNo": apz.appdtl.BranchManagerApplicationDetials.sParam.refNo
+            }
+        },
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.BranchManagerApplicationDetials.fnFetchDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.BranchManagerApplicationDetials.fnFetchDetailsCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        if (pResp.res) {
+            apz.appdtl.BranchManagerLauncher.sCache.mobileNo = pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.mobileNo;
+        }
+    }
+    apz.appdtl.BranchManagerApplicationDetials.fnFetchDocumentDetails();
+}
+apz.appdtl.BranchManagerApplicationDetials.fnFetchDocumentDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "DocumentDetail_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": {
+                "refNo": apz.appdtl.BranchManagerApplicationDetials.sParam.refNo
+            }
+        },
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.BranchManagerApplicationDetials.fnFetchDocumentDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.BranchManagerApplicationDetials.fnFetchDocumentDetailsCB = function(pResp) {
+    debugger;
+    apz.appdtl.BranchManagerApplicationDetials.fnFetchAccountDetails();
+};
+apz.appdtl.BranchManagerApplicationDetials.fnFetchAccountDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ProductAccountDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiAccountProduct": {
+                "refno": apz.appdtl.BranchManagerApplicationDetials.sParam.refNo
+            }
+        },
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.BranchManagerApplicationDetials.fnFetchAccountDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.BranchManagerApplicationDetials.fnFetchAccountDetailsCB = function(pResp) {
+    debugger;
+    apz.appdtl.BranchManagerApplicationDetials.fnFetchLoanDetials();
+}
+apz.appdtl.BranchManagerApplicationDetials.fnFetchLoanDetials = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ProductLoanDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiProductLoan": {
+                "refno": apz.appdtl.BranchManagerApplicationDetials.sParam.refNo
+            }
+        },
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.BranchManagerApplicationDetials.fnFetchLoanDetialsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.appdtl.BranchManagerApplicationDetials.fnFetchLoanDetialsCB = function(pResp) {
+    debugger;
+    if (pResp.status) {
+        if (pResp.res) {
+            apz.appdtl.BranchManagerLauncher.sCache.amount = pResp.res.appdtl__ProductLoanDetails_Req.tbDbmiProductLoan.amount;
+        }
+    }
+    switch (apz.appdtl.BranchManagerApplicationDetials.sParam.subproduct) {
+        case "Personal Line of Credit":
+            $("#appdtl__ProductLoanDetails__i__tbDbmiProductLoan__rate").val("10.24");
+            break;
+        case "Home Loan":
+            $("#appdtl__ProductLoanDetails__i__tbDbmiProductLoan__rate").val("4.125");
+            $('.mortagageLoanRow').removeClass('sno');
+            break;
+        case "Auto Loan":
+            $("#appdtl__ProductLoanDetails__i__tbDbmiProductLoan__rate").val("4.74");
+            $("#appdtl__BranchManagerApplicationDetials__rowvehicle").removeClass("sno");
+            $("#appdtl__BranchManagerApplicationDetials__rowmodel").removeClass("sno");
+            // $("#appdtl__Applyloan__rowmodelimg").removeClass("sno");
+            break;
+    }
+    apz.appdtl.BranchManagerApplicationDetials.fnFetchCustomerDetials();
+}
+apz.appdtl.BranchManagerApplicationDetials.fnFetchCustomerDetials = function() {
+    var lParams = {
+        "ifaceName": "CustomerDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                "refNo": apz.appdtl.BranchManagerApplicationDetials.sParam.refNo
+            }
+        },
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.BranchManagerApplicationDetials.fnFetchCustomerDetialsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.BranchManagerApplicationDetials.fnFetchCustomerDetialsCB = function(pResp) {
+    debugger;
+}
+apz.appdtl.BranchManagerApplicationDetials.fnViewPdf = function() {
+    debugger;
+    apz.toggleModal({
+        "targetId": "appdtl__BranchManagerApplicationDetials__pdfmodal"
+    });
+    $("object").attr("data", "apps/appdtl/staticfiles/CAM.pdf");
+};

@@ -1,0 +1,7 @@
+{
+    "generateOTPResponse": {
+        "RefNo": 11,
+        "otp": "378566"
+    },
+    "status": "failure"
+}

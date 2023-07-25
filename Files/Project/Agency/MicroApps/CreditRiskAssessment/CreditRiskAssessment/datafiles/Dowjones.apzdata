@@ -1,0 +1,13 @@
+{
+    "crsapp__Dowjones_Req": {
+        "amlHitlistDowjones": [{
+            "description": "",
+            "documentName": "PEP1.pdf",
+            "entityIndividualName": "John Doe",
+            "status": " ",
+            "systemId": "DowJones",
+            "systemName": "PEP",
+            "type": "I"
+        }]
+    }
+}

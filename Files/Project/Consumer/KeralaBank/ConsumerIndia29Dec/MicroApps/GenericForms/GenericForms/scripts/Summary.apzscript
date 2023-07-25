@@ -1,0 +1,153 @@
+apz.genfrm.summary = {};
+apz.genfrm.summary.sParams = {};
+apz.app.onLoad_Summary = function(params) {
+    debugger;
+    apz.genfrm.summary.sParams = params;
+    if (params.Navigation) {
+        apz.genfrm.summary.fnSetNavigation(params);
+    }
+    apz.genfrm.summary.fnGoToStage1();
+};
+apz.genfrm.summary.fnSetNavigation = function(params) {
+    debugger;
+    apz.genfrm.summary.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "GENERIC FORMS";
+    }
+    lParams.backPressed = apz.genfrm.summary.fnBack;
+    apz.genfrm.summary.Navigation(lParams);
+};
+apz.genfrm.summary.fnGoToStage1 = function() {
+    apz.hide("genfrm__Summary__summaryNavbar");
+    apz.hide("genfrm__Summary__summaryList");
+};
+apz.genfrm.summary.fnLaunchUpload = function() {
+    debugger;
+    var lObj = {
+        "scr": "FormUpload",
+        "div": "genfrm__Summary__Stage2",
+        "userObj": {
+            "action": "Summary",
+            "data": apz.genfrm.summary.sParams.data,
+            "callBack": apz.genfrm.summary.fnLaunchDetailsCB
+        }
+    };
+    if (apz.genfrm.summary.sParams.Navigation) {
+        lObj.userObj.Navigation = {
+            "setNavigation": apz.genfrm.summary.Navigation
+        }
+    }
+    apz.genfrm.summary.fnGotoStage2();
+    apz.launchSubScreen(lObj);
+};
+apz.genfrm.summary.fnLaunchDownload = function() {
+    debugger;
+    var lObj = {
+        "scr": "FormDownload",
+        "div": "genfrm__Summary__Stage2",
+        "userObj": {
+            "action": "Summary",
+            "callBack": apz.genfrm.summary.fnLaunchDetailsCB
+        }
+    };
+    if (apz.genfrm.summary.sParams.Navigation) {
+        lObj.userObj.Navigation = {
+            "setNavigation": apz.genfrm.summary.Navigation
+        }
+    }
+    apz.genfrm.summary.fnGotoStage2();
+    apz.launchSubScreen(lObj);
+};
+apz.genfrm.summary.fnSearchSummary = function() {
+    debugger;
+    var lDateStr = apz.getElmValue("genfrm__Summary__dateOfUpload");
+    if (apz.isNull(lDateStr)) {
+        lDateStr = "%";
+    } else {
+        lDateStr = "%" + lDateStr + "%";
+    }
+    var lDocTypeStr = apz.getElmValue("genfrm__Summary__documentUploaded");
+    if (apz.isNull(lDocTypeStr)) {
+        lDocTypeStr = "%";
+    } else {
+        lDocTypeStr = "%" + lDocTypeStr + "%";
+    }
+    var lDocName = apz.getElmValue("genfrm__Summary__nameOfDocument");
+    if (apz.isNull(lDocName)) {
+        lDocName = "%";
+    } else {
+        lDocName = "%" + lDocName + "%";
+    }
+    var lReq = {
+        "tbDbtpFrmUpload": {
+            "dateOfUpload": lDateStr,
+            "docUploaded": lDocTypeStr,
+            "docName": lDocName
+        }
+    };
+    var lServerParams = {
+        "ifaceName": "FormUploadSummary_Query",
+        "buildReq": "N",
+        "req": lReq,
+        "callBack": apz.genfrm.summary.getSummaryCB
+    };
+    apz.genfrm.summary.fnBeforeCallServer(lServerParams);
+};
+apz.genfrm.summary.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": params.buildReq,
+        "req": params.req,
+        "paintResp": "Y",
+        "callBack": params.callBack,
+        "appId": "genfrm",
+        "internal": false
+    };
+    jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("genfrm")+"/FormUploadSummary.json"));
+       apz.data.scrdata.genfrm__FormUploadSummary_Req = {};
+                       apz.data.scrdata.genfrm__FormUploadSummary_Req = jsondata;
+                      apz.data.loadData("FormUploadSummary", "cbdtax");
+     apz.genfrm.summary.getSummaryCB(jsondata);
+    //apz.server.callServer(lServerParams);
+};
+apz.genfrm.summary.fnLaunchDetailsCB = function() {
+    debugger;
+};
+apz.genfrm.summary.getSummaryCB = function(params) {
+    debugger;
+    // if (params.errors) {
+    //     var param = {
+    //         'code': params.errors[0].errorCode
+    //     };
+    //     apz.dispMsg(param);
+    //     apz.hide("genfrm__Summary__summaryNavbar");
+    //     apz.hide("genfrm__Summary__summaryList");
+    // } else {
+    //     if (apz.isNull(params.res)) {
+    //         var lMsg = {
+    //         "code": "ERR_NO_DATA"
+    //     };
+    //     apz.dispMsg(lMsg);
+    //     } else {
+    //         apz.show("genfrm__Summary__summaryNavbar");
+    //         apz.show("genfrm__Summary__summaryList");
+    //     }
+    // }
+};
+apz.genfrm.summary.fnGotoStage2 = function() {
+    apz.hide("genfrm__Summary__Stage1");
+    apz.show("genfrm__Summary__Stage2");
+};
+apz.genfrm.summary.fnDownloadForm = function(pthis) {
+    debugger;
+    var lRowIndex = $("#" + pthis.id).attr("rowno");
+    alert(lRowIndex);
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};

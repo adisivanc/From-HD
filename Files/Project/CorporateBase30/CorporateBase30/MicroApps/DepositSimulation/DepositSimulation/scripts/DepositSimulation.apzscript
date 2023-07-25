@@ -1,0 +1,92 @@
+apz.ACDS01.DepositSimulation = {};
+var graphObj = [];
+apz.app.onLoad_DepositSimulation = function() {
+    debugger;
+};
+apz.app.onShown_DepositSimulation = function() {
+    $("#ACDS01__DepositSimulation__DepAmtSlider").roundSlider({
+        radius: 45,
+        sliderType: "min-range",
+        width: 8,
+        min: 10000,
+        max: 1000000,
+        handleShape: "dot",
+        startAngle: 90,
+        endAngle: "+330",
+        value: 500000,
+        step: 10000,
+        handleSize: "+13",
+        change: function(args) {
+            apz.ACDS01.DepositSimulation.maturityAmountCalculate();
+        }
+    });
+    $("#ACDS01__DepositSimulation__TenorSlider").roundSlider({
+        sliderType: "min-range",
+        radius: 45,
+        width: 8,
+        min: 1,
+        max: 30,
+        startAngle: 90,
+        handleShape: "dot",
+        endAngle: "+330",
+        value: 15,
+        handleSize: "+13",
+        change: function(args) {
+            apz.ACDS01.DepositSimulation.maturityAmountCalculate();
+        }
+    });
+    $("#ACDS01__DepositSimulation__InterestRateSlider").roundSlider({
+        step: 0.25,
+        sliderType: "min-range",
+        radius: 45,
+        width: 8,
+        min: 1,
+        max: 20,
+        startAngle: 90,
+        handleShape: "dot",
+        endAngle: "+330",
+        value: 13,
+        handleSize: "+13",
+        change: function(args) {
+            apz.ACDS01.DepositSimulation.maturityAmountCalculate();
+        }
+    });
+    apz.ACDS01.DepositSimulation.maturityAmountCalculate();
+};
+apz.ACDS01.DepositSimulation.maturityAmountCalculate = function() {
+    debugger;
+    $("#ACDS01__DepositSimulation__finalamountweb_ul").removeClass("sno");
+    graphObj = [];
+    var lDepositAmount = ($("#ACDS01__DepositSimulation__DepAmtSlider").roundSlider("getValue")).toString();
+    var lTenor = $("#ACDS01__DepositSimulation__TenorSlider").roundSlider("getValue");
+    var lInterestRate = $("#ACDS01__DepositSimulation__InterestRateSlider").roundSlider("getValue") / 100;
+    debugger;
+    lInterestCompoundly = apz.getElmValue("ACDS01__DepositSimulation__interestcompoundly");
+    var x = Math.pow(1 + (lInterestRate / lInterestCompoundly), (lInterestCompoundly * lTenor));
+    var lAmount = lDepositAmount * x;
+    var lMaturityAmount = Math.round((lAmount * 100) / 100);
+    var lChartPrincipalAmount = {
+        "Type": "Total Interest",
+        "Amount": lMaturityAmount - lDepositAmount
+    };
+    graphObj.push(lChartPrincipalAmount);
+    var lChartInterestAmount = {
+        "Type": "Principal",
+        "Amount": lDepositAmount
+    };
+    graphObj.push(lChartInterestAmount);
+    apz.data.scrdata.ACDS01__DepositSimulation_Req = {};
+    apz.data.scrdata.ACDS01__DepositSimulation_Req.ChartDetails = graphObj;
+    apz.data.loadData("DepositSimulation");
+    var lparams = {"value":lMaturityAmount.toString(), "decimalSep":".","decimalPoints":"2", "displayAsLiteral":"N","mask":"MILLION"};
+    $("#ACDS01__DepositSimulation__finalamountweb_txtcnt").text("₹" + apz.formatNumber(lparams));
+};
+
+
+
+
+
+
+
+
+

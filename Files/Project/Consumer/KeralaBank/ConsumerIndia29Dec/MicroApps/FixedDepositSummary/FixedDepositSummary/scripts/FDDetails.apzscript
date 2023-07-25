@@ -1,0 +1,120 @@
+apz.fdsumm.fddetails = {};
+apz.app.onLoad_FDDetails = function(params) {
+    debugger;
+    apz.fdsumm.fddetails.sParams = params;
+    if (params.Navigation) {
+        apz.fdsumm.fddetails.fnSetNavigation(params);
+    }
+    if( apz.fdsumm.fddetails.sParams.data.currency == "$")
+    {
+        $("body").addClass("dollarCurrency");
+    }
+    apz.fdsumm.fddetails.fnInitialise(params);
+};
+apz.fdsumm.fddetails.fnSetNavigation = function(params) {
+    debugger;
+    apz.fdsumm.fddetails.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "FIXED DEPOSIT DETAILS";
+    }
+    lParams.backPressed = apz.fdsumm.fddetails.fnBack;
+    apz.fdsumm.fddetails.Navigation(lParams);
+};
+apz.fdsumm.fddetails.fnTdsCeritificate = function(params) {
+    debugger;
+    lLaunchParams = {};
+    lLaunchParams.appId = "tdsfrm";
+    lLaunchParams.scr = "Launcher",
+    lLaunchParams.div = "fdsumm__FDSummary__Stage2",
+    lLaunchParams.userObj = {
+        "type": "TDS"
+    }
+    apz.launchApp(lLaunchParams);
+}
+apz.fdsumm.fddetails.fnIntCeritificate = function(params) {
+    debugger;
+    apz.fdsumm.details = {
+       "accountNumber" : apz.data.scrdata.fdsumm__FDDetails_Req.depositDtls.accountNo
+    }
+    lLaunchParams = {};
+    lLaunchParams.appId = "tdsfrm";
+    lLaunchParams.scr = "Launcher",
+    lLaunchParams.div = "fdsumm__FDSummary__Stage2",
+    lLaunchParams.userObj = {
+        "type": "DI",
+        "accountNumber" : apz.fdsumm.details.accountNumber
+    }
+    apz.launchApp(lLaunchParams);
+}
+apz.fdsumm.fddetails.fnInitialise = function(params) {
+    debugger;
+    apz.fdsumm.fddetails.sParams = params;
+    apz.data.scrdata.fdsumm__FDDetails_Req = {};
+    apz.data.scrdata.fdsumm__FDDetails_Req.depositDtls = params.data;
+    apz.data.loadData("FDDetails", "fdsumm");
+};
+apz.fdsumm.fddetails.fnBack = function() {
+    debugger;
+            $("body").removeClass("dollarCurrency");
+
+    apz.fdsumm.fddetails.sParams.callBack();
+};
+apz.fdsumm.fddetails.fnPrint = function() {
+    debugger;
+    debugger;
+    var jsonFilePath = apz.getDataFilesPath("fdsumm") + "/FDCertificate.json";
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    var blob = apz.fdsumm.fddetails.b64toBlob(ljsondata.data.content, "application/pdf");
+    var blobUrl = URL.createObjectURL(blob);
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.fdsumm.fddetails.base64tofilecallBack;
+        json.base64 = ljsondata.data.content;
+        json.fileName = "FDSummary.pdf";
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    } else {
+        window.open(blobUrl);
+    }
+};
+apz.fdsumm.fddetails.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.fdsumm.fddetails.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.fdsumm.fddetails.openFileCallback = function(params) {
+    debugger;
+};
+apz.fdsumm.fddetails.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};

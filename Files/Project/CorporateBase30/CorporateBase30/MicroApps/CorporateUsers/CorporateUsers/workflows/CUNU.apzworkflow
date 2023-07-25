@@ -1,0 +1,1 @@
+{"typeclass":"WORKFLOW","name":"CUNU","type":"WORKFLOW","workflows":[{"stageid":"SUBMIT","stagedescription":"SUBMIT NEW USER","screen":"NewUser","sequence":"1"},{"stageid":"APPROVE","stagedescription":"APPROVE NEW USER","screen":"ViewUser","sequence":"2"}]}

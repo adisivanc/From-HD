@@ -1,0 +1,67 @@
+apz.app.onLoad_BillPaymentHistory = function(){
+    debugger;
+    $("#csmrbk__LandingPage__ScreenNmeLandingTxt").text("BILL PAYMENT HISTORY");
+    apz.data.loadJsonData("BillPaymentHistory","bphist");
+    
+$("#bphist__BillPaymentHistory__el_inp_2").change(function() {
+    debugger;
+    fromDate = apz.getElmValue("bphist__BillPaymentHistory__el_inp_1");
+    if (fromDate == "") {
+        apz.dispMsg({
+            "message": "please select from date"
+        });
+        apz.setElmValue("bphist__BillPaymentHistory__el_inp_2", "");
+    } else {
+        $("#bphist__BillPaymentHistory__el_btn_1").removeAttr("disabled").removeClass("disabled");
+    }
+});
+      
+}
+apz.bphist.fnFilterByDate = function(){
+    debugger
+    apz.data.loadJsonData("BillPaymentHistory","bphist");
+    fromDate = apz.getElmValue("bphist__BillPaymentHistory__el_inp_1");
+    toDate =  apz.getElmValue("bphist__BillPaymentHistory__el_inp_2");
+    
+    var fdate = apz.formatDate({"val":fromDate,"fromFormat":"dd-MMM-yyyy","toFormat":"yyyy-MM-dd"});
+    var tdate = apz.formatDate({"val":toDate,"fromFormat":"dd-MMM-yyyy","toFormat":"yyyy-MM-dd"});
+    var fMonth = parseInt(fdate.split("-")[1]);
+    var tMonth = parseInt(tdate.split("-")[1]);
+    
+    var tday = parseInt(tdate.split("-")[2]);
+    var months = [];
+    for(i = fMonth ;i<=tMonth ;i++){
+        months.push(i);
+    }
+    var data = apz.data.scrdata.bphist__BillPaymentHistory_Res;
+   
+    var result = data.filter(function(item){
+              imonth = parseInt(item.paymentDate.split("-")[1]);
+              if(months.indexOf(imonth)!=-1){
+                    if(tMonth == imonth){
+                         iday = parseInt(item.paymentDate.split("-")[2]);
+                         if(iday<=tday){
+                             return item;
+                         }
+                    }else{
+                        return item;
+                    }
+                  
+              } 
+    });
+    
+    if(result.length==0){
+        apz.dispMsg({"message":"No records found"});
+        $("#bphist__BillPaymentHistory__ct_tbl_1").addClass("sno");
+    }
+    else{
+        $("#bphist__BillPaymentHistory__ct_tbl_1").removeClass("sno");
+    }
+        apz.data.scrdata.bphist__BillPaymentHistory_Res = result;
+    apz.data.loadData("BillPaymentHistory","bphist");
+    
+    
+    
+};
+
+

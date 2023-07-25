@@ -1,0 +1,12 @@
+{
+    "BYDtls": {
+        "data": {
+            "OTPRefNo": 1857121212121
+        },
+        "txnRefNo": "15124783077982329",
+        "extMsg": "",
+        "respCd": "app",
+        "intMsgCd": "SUC-001",
+        "status": "success"
+    }
+}

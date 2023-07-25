@@ -1,0 +1,58 @@
+apz.cdtcrd.CreditCardDashboard = {};
+apz.app.onLoad_CreditCardDashboard = function(params) {
+
+    apz.data.loadJsonData("CreditCardDash", "cdtcrd");
+    Corousel = CorouselD.initialise();
+    Corousel.init("cdtcrd__CreditCardDashboard__");
+  
+    Corousel.setData(JSON.parse(JSON.stringify(apz.data.scrdata.cdtcrd__CCDetailsDash_Res.creditCardDtls)));
+  
+    setTimeout(function(){
+        $("#cdtcrd__CreditCardDashboard__ct_lst_1 > ul >li").addClass("sno");
+      $("#cdtcrd__CreditCardDashboard__ct_lst_1 > ul >li").eq(0).removeClass("sno");},300);
+    
+}
+
+apz.cdtcrd.CreditCardDashboard.fnForward = function(){
+    debugger;
+     index = Corousel.forward();
+     $("#cdtcrd__CreditCardDashboard__ct_lst_1 > ul >li").addClass("sno");
+    $("#cdtcrd__CreditCardDashboard__ct_lst_1 > ul >li").eq(index).removeClass("sno");
+};
+apz.cdtcrd.CreditCardDashboard.fnPrevious = function(){
+    debugger;
+     index = Corousel.previous();
+     $("#cdtcrd__CreditCardDashboard__ct_lst_1 > ul >li").addClass("sno");
+    $("#cdtcrd__CreditCardDashboard__ct_lst_1 > ul >li").eq(index).removeClass("sno");
+};
+apz.cdtcrd.CreditCardDashboard.fnPay = function(){
+    debugger;
+                    $("body").removeClass("landingtheme2");
+
+    index = Corousel.getIndex();
+    data     = apz.data.scrdata.cdtcrd__CCDetailsDash_Res.creditCardDtls[index];
+     var lLaunchParams = {
+        "appId": "bllpay",
+        "scr": "Launcher",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "from":"creditcard",
+            "data": {
+                "customerID": "9600565673",
+                "actionscr" : "CreditCard",
+                "details" : data
+            },
+            
+            "control": {
+                "exitApp": {
+                    "appId": "landin",
+                    "div": "landin__Landing__launcher",
+                    "callBack":   apz.landin.Landing.fnHome
+                }
+            },
+            
+            }
+    };
+    
+    apz.launchApp(lLaunchParams)
+}

@@ -1,0 +1,78 @@
+NotificationHandler = (function(){
+    return {
+        launchApp : function(rowno){
+            obj  = apz.data.scrdata.landin__Notifications_Res[rowno];
+            controlObj = LandingCommon.getPassingObj();
+            passingObj = {
+                "userObj":{
+                    ...controlObj,
+                    userId: LandingCommon.getLoggedInUser()
+                }
+            };
+            
+            if(obj.type !="NA"){
+                 switch(obj.type){
+                case "fundtransfer" :
+                    passingObj.appId = "fndftr";
+                    passingObj.scr = "FundsTransfer";
+                    passingObj.userObj.fromAccontCurrency =  "MUR";
+                    passingObj.userObj.transfer =  this.getTransferObj();
+                    passingObj.userObj.from = "favAndDash";
+                    break;
+                    
+                case "changepassword":
+                    passingObj.appId = "chgpwd";
+                    passingObj.scr = "ChangePassword";
+                    break;
+                case "billpayment" :
+                    passingObj.appId = "bllpay";
+                    passingObj.scr = "Launcher";
+                    passingObj.userObj.data = { actionscr : "BP"};
+                    passingObj.userObj.summary = this.getPaymentObj();
+                    passingObj.userObj.from =  "favAndDash";
+                    break;
+                case "feedback" : 
+                    passingObj.appId = "survey";
+                    passingObj.scr = "Survey";break;
+                default : break;
+            }
+            LandingCommon.launchMicroApp(passingObj.appId,passingObj.scr,passingObj.userObj,"ladnin__Landing__launcher");
+            }
+           
+        },
+        getTransferObj: function(){
+            return {
+            "amount": "200",
+            "moduleCode": "24356",
+            "toBenefNo": "acc No-21239383324",
+            "customerId": "000004712",
+            "nickname": "James",
+            "id": 1,
+            "fromAccountNo": "100009312263",
+            "beneficiaryId": "1232",
+            "creationTs": "2018-03-10",
+            "toAccountNo": "129562399110",
+            "beneficiaryImage":"a.png",
+            "ifsc" : "679475",
+            "bankName" : "National Bank of Kuwait",
+            "currency" : "USD"
+        };
+     },
+     getPaymentObj : function(){
+         return [{
+                "providerImg": "Airtel.png",
+                "providerName": "Airtel",
+                "status": "Autopay Scheduled",
+                "dueDate": "",
+                "subsriberId": "9600565673",
+                "billType": "Mobile",
+                "providerCategory": "Airtel",
+                "amount": "100.00",
+                "toCurrency" : "USD",
+                "fromCurrency" : "USD",
+                "amount1" : "$ 100.00"
+            }]
+     }
+    };
+})();
+ 

@@ -1,0 +1,29 @@
+{
+    "form16__TDSForm_Res": {
+        "accounts": [{
+            "accountNo": "001234545849",
+            "depositStartDate": "13 Jan 2019",
+            "tenure": "12 Months 5 Days",
+            "rateOfInterest": "10.76",
+            "principalAmount": "50,000"
+        },{
+            "accountNo": "001234590720",
+            "depositStartDate": "21 Mar 2019",
+            "tenure": "5 Months 5 Days",
+            "rateOfInterest": "11.10",
+            "principalAmount": "1,00,000"
+        },{
+            "accountNo": "001234590720",
+            "depositStartDate": "1 May 2019",
+            "tenure": "7 Months 19 Days",
+            "rateOfInterest": "10.00",
+            "principalAmount": "75,000"
+        },{
+            "accountNo": "558982498972",
+            "depositStartDate": "16 Aug 2019",
+            "tenure": "11 Months 6 Days",
+            "rateOfInterest": "8.76",
+            "principalAmount": "2,00,000"
+        }]
+    }
+}

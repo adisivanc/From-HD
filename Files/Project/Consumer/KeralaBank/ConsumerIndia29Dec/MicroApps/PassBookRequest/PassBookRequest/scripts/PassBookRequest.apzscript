@@ -1,0 +1,48 @@
+apz.passbk.PassBookRequest = {};
+apz.app.onLoad_PassBookRequest = function() {
+  // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "PASSBOOK REQUEST")
+}
+apz.passbk.PassBookRequest.dispMsg = function(pResp, type) {
+    var params = {};
+    params.message = pResp;
+    params.type = type;
+    params.callBack = apz.app.displayMessageCallBack;
+    apz.dispMsg(params);
+}
+apz.passbk.PassBookRequest.confirm=function() {
+    var account = apz.getElmValue("passbk__PassBookRequest__el_dpd_1");
+    if(account == "Please Select")
+    {
+        apz.passbk.PassBookRequest.dispMsg("Please select an account", "E")
+    }
+    else {
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.passbk.PassBookRequest.confirmCB,
+                "destroyDiv": "landin__Landing__launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+}
+apz.passbk.PassBookRequest.confirmCB = function() {
+    var lLaunchParams = {
+        "appId": "sucscr",
+        "scr": "SuccessScreen",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "text": "The passbook request has been placed successfully"
+        }
+    }
+    apz.launchApp(lLaunchParams);
+}

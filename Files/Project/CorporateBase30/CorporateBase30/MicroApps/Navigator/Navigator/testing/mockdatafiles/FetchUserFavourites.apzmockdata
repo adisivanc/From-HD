@@ -1,0 +1,23 @@
+[
+    {
+        "layout": "All",
+        "description": "Roles",
+        "screen_id": "RolesList",
+        "type": "MICROAPP",
+        "app_id": "acrl01"
+    },
+    {
+        "layout": "All",
+        "description": "My Tasks",
+        "screen_id": "TaskFlow",
+        "type": "MICROAPP",
+        "app_id": "actf01"
+    },
+    {
+        "layout": "All",
+        "description": "Users",
+        "screen_id": "UserList",
+        "type": "MICROAPP",
+        "app_id": "acus01"
+    }
+]

@@ -1,0 +1,318 @@
+apz.app.icaosm.AuthorisedSignatoryAOS = {};
+apz.app.icaosm.AuthorisedSignatoryAOS.sCache = {};
+apz.app.icaosm.AuthorisedSignatoryAOS.sAction = "";
+apz.app.icaosm.AuthorisedSignatoryAOS.sFlag = false;
+apz.app.onLoad_AuthorisedSignatoryAOS = function(params) {
+    debugger;
+    apz.app.icaosm.AuthorisedSignatoryAOS.fnClearData();
+    apz.app.icaosm.AuthorisedSignatoryAOS.sCache = params;
+    if (params.action == "submitted") {
+        $("#icaosm__AuthorisedSignatoryAOS__el_btn_3")[0].click();
+    }
+    apz.app.manageCrub(3);
+    var UserID = apz.retrieve("CurrentUser");
+    // $("#icaosm__AuthorisedSignatoryAOS__ct_frm_10").addClass("shownone");
+    if (UserID == "User2") {
+        //   $("#icaosm__AuthorisedSignatoryAOS__ct_frm_10").removeClass("shownone");
+    }
+    if (apz.data.scrdata.icaosm__CustomerInfo_Res != undefined) {
+        apz.data.loadData("CustomerInfo", "icaosm");
+    }
+    if (params.action == "New") {
+        if (apz.app.icaosm.Common.addControl == "") {
+            apz.data.scrdata.icaosm__CustomerInfo_Res = [];
+            apz.data.scrdata.icaosm__CustomerInfo_Res.details = {};
+            apz.data.loadData("CustomerInfo", "icaosm");
+        }
+    }
+    apz.app.icaosm.AuthorisedSignatoryAOS.fnQueryData();
+    apz.app.icaosm.AuthorisedSignatoryAOS.fnChangeCustomer();
+    apz.setElmValue("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__nationalId", apz.data.scrdata.icaosm__AuthorisedSignatoryAOS_Req
+        .tbAuthorizedSignatorieDetails.nationalId);
+    apz.setElmValue("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__customerId", apz.data.scrdata.icaosm__AuthorisedSignatoryAOS_Req
+        .tbAuthorizedSignatorieDetails.customerId);
+}
+apz.app.icaosm.AuthorisedSignatoryAOS.fnClearData = function() {
+    apz.data.clearMRMV("icaosm__AuthorisedSignatoryAOS__ct_frm_10");
+    apz.data.clearMRMV("icaosm__AuthorisedSignatoryAOS__ct_frm_1");
+    apz.data.clearMRMV("icaosm__AuthorisedSignatoryAOS__ct_frm_2");
+    apz.data.clearMRMV("icaosm__AuthorisedSignatoryAOS__ct_frm_5");
+    apz.data.clearMRMV("icaosm__AuthorisedSignatoryAOS__ct_frm_6");
+};
+apz.app.icaosm.AuthorisedSignatoryAOS.fnQueryData = function() {
+    apz.app.icaosm.AuthorisedSignatoryAOS.sAction = "query";
+    var req = {};
+    req.tbAuthorizedSignatorieDetails = {
+        "companyid": apz.icaosm.Home.sCompanyID
+    };
+    var lParams = {
+        "ifaceName": "AuthorisedSignatoryAOS_Query",
+        "paintResp": "Y",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.AuthorisedSignatoryAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.AuthorisedSignatoryAOS.fnBeforCallServer = function(params) {
+    var lReq = {
+        "ifaceName": params.ifaceName,
+        "paintResp": params.paintResp,
+        "buildReq": params.buildReq,
+        "req": params.lReq,
+        "appId": params.appId,
+        "async": false,
+        "callBack": apz.app.icaosm.AuthorisedSignatoryAOS.callServerCB,
+        "callBackObj": ""
+    };
+    apz.server.callServer(lReq);
+};
+apz.app.icaosm.AuthorisedSignatoryAOS.callServerCB = function(params) {
+    debugger;
+    if (apz.app.icaosm.AuthorisedSignatoryAOS.sAction == "query") {
+        apz.app.icaosm.AuthorisedSignatoryAOS.fnQueryDataCB(params);
+    } else if (apz.app.icaosm.AuthorisedSignatoryAOS.sAction == "modifySave" || apz.app.icaosm.AuthorisedSignatoryAOS.sAction == "newSave") {
+        apz.app.icaosm.AuthorisedSignatoryAOS.fnModifySaveAuthorisedSignatoryAOSCB(params);
+    } else if (apz.app.icaosm.AuthorisedSignatoryAOS.sAction == "modifyNext" || apz.app.icaosm.AuthorisedSignatoryAOS.sAction == "newNext") {
+        apz.app.icaosm.AuthorisedSignatoryAOS.fnModifyNextAuthorisedSignatoryAOSCB(params);
+    }
+};
+apz.app.icaosm.AuthorisedSignatoryAOS.fnQueryDataCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.setElmValue("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__nationalId", apz.data.scrdata.icaosm__AuthorisedSignatoryAOS_Req
+            .tbAuthorizedSignatorieDetails.nationalId);
+        apz.app.icaosm.AuthorisedSignatoryAOS.sFlag = true;
+    } else {
+        apz.app.icaosm.AuthorisedSignatoryAOS.sFlag = false;
+    }
+};
+apz.app.icaosm.AuthorisedSignatoryAOS.fnFetch = function() {
+    debugger;
+    var lIsCust = apz.getElmValue("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__existingRelationship");
+    var lpath = apz.getDataFilesPath();
+    var lData = apz.getFile(lpath + "/AuthorisedSignatoryAOS.json")
+    lData = JSON.parse(lData);
+    apz.data.buildData("AuthorisedSignatoryAOS", "icaosm");
+    var lCustID = apz.data.scrdata.icaosm__AuthorisedSignatoryAOS_Req.tbAuthorizedSignatorieDetails.customerId;
+    var lNationalID = apz.data.scrdata.icaosm__AuthorisedSignatoryAOS_Req.tbAuthorizedSignatorieDetails.nationalId;
+    apz.data.scrdata.icaosm__AuthorisedSignatoryAOS_Req.tbAuthorizedSignatorieDetails = lData.details;
+    apz.data.loadData("AuthorisedSignatoryAOS", "icaosm");
+    apz.setElmValue("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__existingRelationship", lIsCust);
+    $("#icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__customerId").val(lCustID);
+    $("#icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__nationalId").val(lNationalID);
+};
+apz.app.icaosm.AuthorisedSignatoryAOS.fnChangeCustomer = function() {
+    debugger;
+    var lIsCust = apz.getElmValue("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__existingRelationship");
+    if (lIsCust == "Y") {
+        apz.hide("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__nationalId_ul");
+        apz.show("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__customerId_ul");
+        apz.setElmValue("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__nationalId", "");
+        apz.setElmValue("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__customerId", "");
+    } else {
+        apz.hide("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__customerId_ul");
+        apz.show("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__nationalId_ul");
+        apz.setElmValue("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__nationalId", "");
+        apz.setElmValue("icaosm__AuthorisedSignatoryAOS__i__tbAuthorizedSignatorieDetails__customerId", "");
+    }
+}
+apz.app.icaosm.AuthorisedSignatoryAOS.fnSave = function() {
+    debugger;
+    if (apz.app.icaosm.AuthorisedSignatoryAOS.sFlag) {
+        apz.app.icaosm.AuthorisedSignatoryAOS.sAction = "modifySave";
+    } else {
+        apz.app.icaosm.AuthorisedSignatoryAOS.sAction = "newSave";
+    }
+    apz.app.icaosm.AuthorisedSignatoryAOS.fnModifySaveAuthorisedSignatoryAOS();
+    /*
+    if(apz.app.icaosm.AuthorisedSignatoryAOS.sCache.action=="submitted"){
+         apz.app.icaosm.Common.addControl="";
+         apz.launchSubScreen({
+            "scr": "Home",
+            "div": "icaosm__LandingHeader__scrlaunchingdiv",
+             "userObj":{
+                 "percentage":"",
+                 "val":"Personal Details of Authorized Signatorie(s)",
+                 "action":apz.app.icaosm.AuthorisedSignatoryAOS.sCache.action,
+            "accNum":apz.app.icaosm.AuthorisedSignatoryAOS.sCache.accNum,
+            "appNo":apz.app.icaosm.AuthorisedSignatoryAOS.sCache.appNo
+             }
+        });
+    }else{
+        apz.app.icaosm.Common.addControl="Saved"
+    var lTotCount = 0;
+    var lFilled = 0,lRadio = 0;
+    $(".form input[type='text'],.form select").each(function() {
+        lTotCount++;
+        if ($(this).val() != "" && $(this).val() != "Select") {
+            lFilled++;
+        }
+    });
+    $(".form input[type='radio']").each(function() {
+        if($("#"+this.id+":Checked").length){
+            lFilled++;
+        }
+      lRadio++;   
+    });
+    lTotCount = (lRadio/2)+lTotCount;
+    percentage = (lFilled / lTotCount);
+    apz.data.scrdata.icaosm__Home_Req.Home[2].progress =percentage;
+    apz.data.buildData("CustomerInfo","icaosm");
+    apz.launchSubScreen({
+            "scr": "Home",
+            "div": "icaosm__LandingHeader__scrlaunchingdiv",
+             "userObj":{
+                 "percentage":percentage,
+                 "val":"Personal Details of Authorized Signatorie(s)",
+                 "action":apz.app.icaosm.AuthorisedSignatoryAOS.sCache.action,
+            "accNum":apz.app.icaosm.AuthorisedSignatoryAOS.sCache.accNum,
+            "appNo":apz.app.icaosm.AuthorisedSignatoryAOS.sCache.appNo
+             }
+        });
+    }
+    */
+};
+apz.app.icaosm.AuthorisedSignatoryAOS.fnModifySaveAuthorisedSignatoryAOS = function() {
+    apz.data.buildData("AuthorisedSignatoryAOS", "icaosm");
+    var req = {};
+    req.tbAuthorizedSignatorieDetails = apz.data.scrdata.icaosm__AuthorisedSignatoryAOS_Req.tbAuthorizedSignatorieDetails;
+    req.tbAuthorizedSignatorieDetails.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.AuthorisedSignatoryAOS.sAction == "modifySave") {
+        lParams.ifaceName = "AuthorisedSignatoryAOS_Modify";
+    } else if (apz.app.icaosm.AuthorisedSignatoryAOS.sAction == "newSave") {
+        lParams.ifaceName = "AuthorisedSignatoryAOS_New";
+    }
+    apz.app.icaosm.AuthorisedSignatoryAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.AuthorisedSignatoryAOS.fnModifySaveAuthorisedSignatoryAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.AuthorisedSignatoryAOS.sFlag = false;
+        if (apz.app.icaosm.AuthorisedSignatoryAOS.sCache.action == "submitted") {
+            apz.app.icaosm.Common.addControl = "";
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": "",
+                    "val": "Personal Details of Authorized Signatorie(s)",
+                    "action": apz.app.icaosm.AuthorisedSignatoryAOS.sCache.action,
+                    "accNum": apz.app.icaosm.AuthorisedSignatoryAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.AuthorisedSignatoryAOS.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        } else {
+            apz.app.icaosm.Common.addControl = "Saved"
+            var lTotCount = 0;
+            var lFilled = 0,
+                lRadio = 0;
+            $(".form input[type='text'],.form select").each(function() {
+                lTotCount++;
+                if ($(this).val() != "" && $(this).val() != "Select") {
+                    lFilled++;
+                }
+            });
+            $(".form input[type='radio']").each(function() {
+                if ($("#" + this.id + ":Checked").length) {
+                    lFilled++;
+                }
+                lRadio++;
+            });
+            lTotCount = (lRadio / 2) + lTotCount;
+            percentage = (lFilled / lTotCount);
+            apz.data.scrdata.icaosm__Home_Req.Home[2].progress = percentage;
+            apz.data.buildData("CustomerInfo", "icaosm");
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": percentage,
+                    "val": "Personal Details of Authorized Signatorie(s)",
+                    "action": apz.app.icaosm.AuthorisedSignatoryAOS.sCache.action,
+                    "accNum": apz.app.icaosm.AuthorisedSignatoryAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.AuthorisedSignatoryAOS.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        }
+    } else {
+        lmsg = {
+            "message": "Authorized Signatorie details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.AuthorisedSignatoryAOS.fnModifyNextAuthorisedSignatoryAOS = function() {
+    if (apz.app.icaosm.AuthorisedSignatoryAOS.sFlag) {
+        apz.app.icaosm.AuthorisedSignatoryAOS.sAction = "modifyNext";
+    } else {
+        apz.app.icaosm.AuthorisedSignatoryAOS.sAction = "newNext";
+    }
+    apz.data.buildData("AuthorisedSignatoryAOS", "icaosm");
+    var req = {};
+    req.tbAuthorizedSignatorieDetails = apz.data.scrdata.icaosm__AuthorisedSignatoryAOS_Req.tbAuthorizedSignatorieDetails;
+    req.tbAuthorizedSignatorieDetails.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.AuthorisedSignatoryAOS.sAction == "modifyNext") {
+        lParams.ifaceName = "AuthorisedSignatoryAOS_Modify";
+    } else if (apz.app.icaosm.AuthorisedSignatoryAOS.sAction == "newNext") {
+        lParams.ifaceName = "AuthorisedSignatoryAOS_New";
+    }
+    apz.app.icaosm.AuthorisedSignatoryAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.AuthorisedSignatoryAOS.fnModifyNextAuthorisedSignatoryAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.AuthorisedSignatoryAOS.sFlag = false;
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $(".form input[type='text'],.form select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $(".form input[type='radio']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 2) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[2].progress = percentage;
+        apz.data.buildData("CustomerInfo", "icaosm");
+        apz.launchSubScreen({
+            "scr": "UltimateBeneficialOwnersAOS",
+            "div": "icaosm__Home__homelaunchingdiv",
+            //"animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.AuthorisedSignatoryAOS.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum,
+                "companyID": apz.icaosm.Home.sCompanyID
+            }
+        });
+    } else {
+        lmsg = {
+            "message": "Authorized Signatorie details failed to update",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};

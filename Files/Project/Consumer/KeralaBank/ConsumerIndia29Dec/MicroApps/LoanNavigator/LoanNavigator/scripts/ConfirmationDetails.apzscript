@@ -1,0 +1,86 @@
+//declaration
+apz.loanvg.ConfirmationDetails = {};
+apz.loanvg.ConfirmationDetails.sCache={};
+//onload confirmation details
+apz.app.onLoad_ConfirmationDetails= function(params) {
+    apz.loanvg.ConfirmationDetails.sCache=params;
+    $("#loanvg__ConfirmationDetails__progressStep_ext li").on("click", function() {
+        debugger;
+        apz.loanvg.ConfirmationDetails.fnProgressClick(this)
+    })
+    $("#loanvg__ConfirmationDetails__progressStep_ext > li:nth-child(3)")[0].className = "pgst-step pgs-100";
+}
+//onshown functon
+apz.app.onShown_ConfirmationDetails = function(params) {
+    $('#loanvg__ConfirmationDetails__name_txtcnt').html(params.confirmationDetails.name);
+    $('#loanvg__ConfirmationDetails__emailId_txtcnt').html(params.confirmationDetails.emailId);
+    $('#loanvg__ConfirmationDetails__firstHomeBuyer_txtcnt').html(params.confirmationDetails.firstHomeBuyer);
+    $('#loanvg__ConfirmationDetails__residencyStatus_txtcnt').html(params.confirmationDetails.residencyStatus);
+    $('#loanvg__ConfirmationDetails__propertyAddress_txtcnt').html(params.confirmationDetails.propertyAddress);
+    $('#loanvg__ConfirmationDetails__propertyType_txtcnt').html(params.confirmationDetails.propertyType);
+    $('#loanvg__ConfirmationDetails__attachProperty_txtcnt').html(params.confirmationDetails.attachProperty);
+    $('#loanvg__ConfirmationDetails__propertyUsage_txtcnt').html(params.confirmationDetails.usageProperty);
+    $('#loanvg__ConfirmationDetails__downPayment_txtcnt').html(params.confirmationDetails.downPayment);
+    $('#loanvg__ConfirmationDetails__purchasePrice_txtcnt').html(params.confirmationDetails.purchasePrice); 
+    $('#loanvg__ConfirmationDetails__purchaseTimeFrame_txtcnt').html(params.confirmationDetails.purchaseTimeFrame); 
+}
+//navigation page
+apz.loanvg.ConfirmationDetails.fnProgressClick=function(pThis){
+    debugger;
+   var div = apz.loanvg.Applyloan.sparams.control.exitApp.div;
+    if (pThis.textContent == "Loan Details") {
+        var lLaunchParams = {
+            "appId": "loanvg",
+            "scr": "Applyloan",
+            "div": div,
+            "userObj": {
+                "control": {
+                    "exitApp": {
+                        "appId": "",
+                        "backFunction": "",
+                        "div": "landin__Landing__Launcher",
+                        "callBack": ""
+                    }
+                }
+            }
+        };
+        apz.launchSubScreen(lLaunchParams);
+    }
+    if (pThis.textContent == "Personal Info") {
+        var lLaunchParams = {
+                "appId": "loanvg",
+                "scr": "Appluloanem",
+                "div": div,
+                "userObj":{
+                    "confirmationDetails":apz.loanvg.ConfirmationDetails.sCache.confirmationDetails
+                }
+            };
+            apz.launchSubScreen(lLaunchParams);
+    }
+    if (pThis.textContent == "confirmation Details") {
+        
+    } 
+}
+//back to loan application
+apz.loanvg.ConfirmationDetails.fnBackto=function(){
+    var div = apz.loanvg.Applyloan.sparams.control.exitApp.div;
+    var lLaunchParams = {
+                "appId": "loanvg",
+                "scr": "Appluloanem",
+                "div": div,
+                "userObj":{
+                    "confirmationDetails":apz.loanvg.ConfirmationDetails.sCache.confirmationDetails
+                }
+            };
+            apz.launchSubScreen(lLaunchParams);
+}
+//submit details
+apz.loanvg.ConfirmationDetails.fnSubmitDetails=function(){
+           var div = apz.loanvg.Applyloan.sparams.control.exitApp.div;
+            var lLaunchParams = {
+                "appId": "loanvg",
+                "scr": "SuccessScreen",
+                "div": div,
+            };
+            apz.launchSubScreen(lLaunchParams);
+}

@@ -1,0 +1,276 @@
+apz.srvreq.bookAppointment = {};
+apz.app.onLoad_BookAppointment = function(params) {
+    debugger;
+    apz.srvreq.bookAppointment.sParams = params;
+    apz.srvreq.bookAppointment.fnInitialize();
+    $("#srvreq__BookAppointment__hiddenele").attr("style","visibility:hidden");
+    $("#srvreq__BookAppointment__dayselcsl_div").css({"height":0,"min-height":"unset"});
+};
+apz.app.onShown_BookAppointment = function(params) {
+    debugger;
+
+    $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").click(function() {
+        debugger;
+        $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").each(function() {
+            if ($(this).css("pointer-events") != "none") {
+                $(this).css("color", "#00ffd0");
+            }
+        });
+        $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").css("background-color", "");
+        $(this).css("background-color", "#00ffd0");
+        $(this).css("color", "black");
+        apz.srvreq.bookAppointment.sParams.SelectedTime = $(this).text();
+    });
+            //apz.setElmValue("srvreq__BookAppointment__selBranch", "HSR Layout");
+
+};
+apz.srvreq.bookAppointment.fnInitialize = function() {
+    debugger;
+    apz.srvreq.bookAppointment.sParams.BookedSlotsToday = [];
+    apz.srvreq.bookAppointment.sParams.BookedSlotsTmrw = [];
+    apz.srvreq.bookAppointment.sParams.BookedSlotsDayAft = [];
+    var lBranch = apz.srvreq.bookAppointment.sParams.data.BranchDtls.branch;
+    apz.setElmValue("srvreq__BookAppointment__serviceType", apz.srvreq.bookAppointment.sParams.data.BranchDtls.serviceType);
+    var lSelectedIndex = "",
+        lIndex = "";
+    $("#srvreq__BookAppointment__ps_pls_7_pagination").hide();
+    $("#srvreq__BookAppointment__el_dpd_1").each(function() {
+        if ($(this).find("h5").text() == lBranch) {
+            lSelectedIndex = $(this).index() + 1;
+        }
+    });
+    /* setTimeout(function() {
+        debugger;
+        $("#srvreq__BookAppointment__ps_pls_7_pagination span:nth-child(" + lSelectedIndex + ")").trigger("click");
+    }, 300);*/
+    var params = {
+        "fromFormat": "M/dd/yyyy",
+        "toFormat": "dd-MMM-yyyy"
+    };
+   var arry = [];
+   
+    params.val = new Date().toString("M/dd/yyyy");
+    $("#srvreq__BookAppointment__today").text("Today " + apz.formatDate(params));
+    arry.push({ "val":"Today" +apz.formatDate(params) ,"desc":"Today "+ apz.formatDate(params)})
+    params.val = new Date().addDays(1).toString("M/dd/yyyy");
+    arry.push({ "val":"Tomorrow" + apz.formatDate(params),"desc":"Tomorrow "+ apz.formatDate(params)})
+    $("#srvreq__BookAppointment__tommorrow").text("Tomorrow " + apz.formatDate(params));
+    params.val = new Date().addDays(2).toString("M/dd/yyyy");
+    arry.push({ "val":apz.formatDate(params),"desc":apz.formatDate(params)})
+    $("#srvreq__BookAppointment__dayAftTmrw").text(apz.formatDate(params));
+    
+    apz.populateDropdown(document.getElementById("srvreq__BookAppointment__dateDropDown"),arry)
+    apz.srvreq.bookAppointment.sParams.BookedSlotsToday = ["10:00 am", "10:15 am", "11:30 am", "12:00pm", "12:30 pm", "3:30 pm", "4:30 pm"];
+    apz.srvreq.bookAppointment.sParams.BookedSlotsTmrw = ["10:15 am", "11:00 am", "11:30 am", "12:00 pm", "4:45 pm"];
+    apz.srvreq.bookAppointment.sParams.BookedSlotsDayAft = ["10:45 am", "11:30 am", "12:15 pm", "4:30 pm"];
+    $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").each(function() {
+        if (apz.srvreq.bookAppointment.sParams.BookedSlotsToday.indexOf($(this).text()) != -1) {
+            debugger;
+            $(this).css("color", "gray");
+            $(this).css("pointer-events", "none");
+        } else {
+            $(this).css("color", "#00ffd0");
+        }
+    });
+    $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").click(function() {
+        $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").css("background-color", "");
+        $(this).css("background-color", "#D4E906");
+        $(this).css("color", "black");
+        apz.srvreq.bookAppointment.SelectedTime = $(this).text();
+    });
+    apz.srvreq.bookAppointment.fnFormatToday();
+    $("#srvreq__BookAppointment__ct_frm_1 .icon-arrow-left").click(function() {
+        apz.srvreq.bookAppointment.fnBack();
+    })
+    if (apz.srvreq.bookAppointment.sParams.day != undefined) {
+        $("#srvreq__BookAppointment__dayselcsl_ul > li").each(function() {
+            if ($(this).find("p").text().indexOf(apz.srvreq.bookAppointment.sParams.day) != -1) {
+                debugger;
+                lIndex = $(this).index() + 1;
+            }
+        });
+        setTimeout(function() {
+            $("#srvreq__BookAppointment__ps_pls_14_pagination span:nth-child(" + lIndex + ")").trigger("click");
+            if (apz.srvreq.bookAppointment.sParams.time != undefined) {
+                $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").each(function() {
+                    if ($(this).text() == apz.srvreq.bookAppointment.sParams.time) {
+                        $(this).trigger("click");
+                    }
+                });
+            }
+        }, 300);
+    }
+    $(".swiper-button-next,.swiper-button-prev").click(function() {
+        apz.srvreq.bookAppointment.sParams.time = "";
+        $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").css("background-color", "");
+    })
+}
+apz.srvreq.bookAppointment.fnFormatToday = function() {
+    debugger;
+    var lTime = new Date();
+    lTime = lTime.toLocaleString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+    });
+    $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").each(function() {
+        var lCurrTime = new Date(Date.parse(lTime));
+        var lBtnTime = new Date(Date.parse($(this).text()));
+        if (lCurrTime - lBtnTime > 0) {
+            $(this).css("color", "gray");
+            $(this).css("pointer-events", "none");
+        }
+    });
+}
+apz.srvreq.bookAppointment.fnChangeData = function() {
+    debugger;
+    $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").css("background-color", "");
+    $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").each(function() {
+        $(this).css("color", "#00ffd0");
+        $(this).css("pointer-events", "");
+    });
+   // var lDay = $(".swiper-slide-active p").text();
+   var lDay = apz.getElmValue("srvreq__BookAppointment__dateDropDown");
+    if (lDay.indexOf("Today") != -1) {
+        $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").each(function() {
+            if (apz.srvreq.bookAppointment.sParams.BookedSlotsToday.indexOf($(this).text()) != -1) {
+                $(this).css("color", "gray");
+                $(this).css("pointer-events", "none");
+            }
+        });
+        apz.srvreq.bookAppointment.fnFormatToday();
+    } else if (lDay.indexOf("Tomorrow") != -1) {
+        $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").each(function() {
+            if (apz.srvreq.bookAppointment.sParams.BookedSlotsTmrw.indexOf($(this).text()) != -1) {
+                $(this).css("color", "gray");
+                $(this).css("pointer-events", "none");
+            }
+        });
+    } else {
+        $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").each(function() {
+            if (apz.srvreq.bookAppointment.sParams.BookedSlotsDayAft.indexOf($(this).text()) != -1) {
+                $(this).css("color", "gray");
+                $(this).css("pointer-events", "none");
+            }
+        });
+    }
+    if (apz.srvreq.bookAppointment.sParams.time != undefined) {
+        debugger;
+        $("#srvreq__BookAppointment__MorningTimeRow_row button,#srvreq__BookAppointment__AfternoonTimeRow_row button").each(function() {
+            if ($(this).text() == apz.srvreq.bookAppointment.sParams.time) {
+                $(this).trigger("click");
+            }
+        });
+    }
+}
+apz.srvreq.bookAppointment.fnContinue = function() {
+    debugger;
+    if (!apz.isNull(apz.srvreq.bookAppointment.sParams.SelectedTime)) {
+        var lBranch = $("#srvreq__BookAppointment__BranchCarosel_div .swiper-slide-active h5").text();
+        var lDay = $("#srvreq__BookAppointment__dayselcsl_div .swiper-slide-active p").text();
+        if (lDay.indexOf("Today") != -1 || lDay.indexOf("Tomorrow") != -1) {
+            lDay = lDay.replace("Today ", "").replace("Tomorrow ", "");
+        }
+        var lData = {};
+        lData = apz.srvreq.bookAppointment.sParams.data;
+        lData.BranchDtls.day = lDay;
+        lData.BranchDtls.time = apz.srvreq.bookAppointment.sParams.SelectedTime;
+        lData.BranchDtls.branch = apz.getElmValue("srvreq__BookAppointment__selBranch");
+        apz.srvreq.bookAppointment.fnRenderConfirmation();
+        var lParams = {
+            "scr": "Confirmation",
+            "div": "srvreq__SelectService__Stage3",
+            "type": "CF",
+            "userObj": {
+                "action": "from Book Appointment",
+                "destroyDiv": "srvreq__SelectService__Stage2",
+                "data": lData,
+                "callBack": apz.srvreq.bookAppointment.fnRenderBookAppointment
+            }
+        };
+        apz.launchSubScreen(lParams);
+    } else {
+        var params = {
+            "code": "ERR-TIME",
+        };
+        apz.dispMsg(params);
+    }
+};
+apz.srvreq.bookAppointment.fnRenderBookAppointment = function() {
+    debugger;
+   // apz.show("srvreq__SelectService__Stage2");
+    $("#srvreq__SelectService__Stage2").parent("span").removeClass("sno");
+   // apz.hide("srvreq__SelectService__Stage1");
+    $("#srvreq__SelectService__Stage1").parent("span").addClass("sno");
+   // apz.hide("srvreq__SelectService__Stage3");
+    $("#srvreq__SelectService__Stage3").parent("span").addClass("sno");
+};
+apz.srvreq.bookAppointment.fnRenderConfirmation = function() {
+    debugger;
+   // apz.hide("srvreq__SelectService__Stage2");
+    $("#srvreq__SelectService__Stage2").parent("span").addClass("sno");
+   // apz.hide("srvreq__SelectService__Stage1");
+    $("#srvreq__SelectService__Stage1").parent("span").addClass("sno");
+    //apz.show("srvreq__SelectService__Stage3");
+    $("#srvreq__SelectService__Stage3").parent("span").removeClass("sno");
+};
+apz.initCarousels = function() {
+    debugger;
+    $('.swiper-container').each(function() {
+        var loop = $(this).attr('data-loop') == "y" ? true : false;
+        var swiper = new Swiper('#' + this.id, {
+            pagination: '.swiper-pagination',
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            slidesPerView: 1,
+            paginationClickable: true,
+            spaceBetween: 30,
+            loop: loop,
+            autoplay: false,
+            autoHeight: false,
+            observer: true,
+            observeParents: true
+        });
+        swiper.on('slideChangeEnd', function() {
+            apz.srvreq.bookAppointment.fnChangeData();
+        });
+    });
+}
+apz.srvreq.bookAppointment.fnCancel = function() {
+    /* var lParams = {
+        "scr": "SelectService",
+        "div": "csmrbk__LandingPage__microappLauncherCol",
+        "type": "CF",
+        "userObj": {
+            "destroyDiv": "csmrbk__LandingPage__microappLauncherCol"
+        }
+    };
+    apz.launchSubScreen(lParams);*/
+    apz.show("srvreq__SelectService__sc_row_10");
+    apz.show("srvreq__SelectService__ct_nav_2");
+    apz.srvreq.bookAppointment.sParams.callBack();
+}
+apz.srvreq.bookAppointment.fnBack = function() {
+    /*  var lBranch = $("#srvreq__BookAppointment__BranchCarosel_div .swiper-slide-active h5").text();
+    var lParams = {
+        "scr": "SelectService",
+        "div": "csmrbk__LandingPage__microappLauncherCol",
+        "type": "CF",
+        "userObj": {
+            "destroyDiv": "csmrbk__LandingPage__microappLauncherCol",
+            "branch": lBranch
+        }
+    };
+    apz.launchSubScreen(lParams);*/
+    apz.srvreq.bookAppointment.sParams.callBack();
+}
+apz.srvreq.bookAppointment.fnDateChangeDrop = function(){
+    debugger;
+    var value = $("#srvreq__BookAppointment__dateDropDown_div li.is-selected:last").attr("value")
+    setTimeout(function(){
+        $("#srvreq__BookAppointment__ps_pls_27_pagination span:eq("+value+")").trigger("click");
+    },0);
+    apz.srvreq.bookAppointment.fnChangeData();
+    
+};
+

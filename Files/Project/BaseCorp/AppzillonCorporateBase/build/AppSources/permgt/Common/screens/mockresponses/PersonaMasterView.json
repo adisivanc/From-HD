@@ -1,0 +1,16 @@
+{
+    "tbAsmiPersonaMaster": [{
+        "createdBy": "bernard.wilkes",
+        "description": "System administrators",
+        "name": "Admin123"
+    }, {
+        "createdBy": "josh.ackerman",
+        "description": "Senior management",
+        "name": "CXO"
+    }, 
+    {
+        "createdBy": "bernard.wilkes",
+        "description": "Finance department",
+        "name": "Finance"
+    }]
+}

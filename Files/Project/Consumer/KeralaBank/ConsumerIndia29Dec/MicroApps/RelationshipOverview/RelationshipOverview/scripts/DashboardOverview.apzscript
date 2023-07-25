@@ -1,0 +1,126 @@
+
+apz.relovr.DashboardOverview = {};
+apz.app.onLoad_DashboardOverview = function() {
+    debugger;
+
+    apz.data.loadJsonData("OverviewDashboard", "relovr");
+        apz.data.loadJsonData("RelationshipCurrency", "relovr");
+$("#relovr__DashboardOverview__sc_row_3 > li>ul svg").on("mouseover",function(e){$("#relovr__DashboardOverview__sc_row_3 > li>ul svg").not(e.target).next("div").prev("svg").trigger("click");});
+};
+
+apz.relovr.DashboardOverview.fnD1launchMicroApp = function(type , ths) {
+    debugger;
+                    $("body").removeClass("landingtheme2");
+
+    rowNo = $(ths).attr("rowno");
+    switch (type) {
+        case "Savings":
+          
+            apz.launchApp({
+                appId: "accsum",
+                scr: "AccountDetails",
+                div: "landin__Landing__launcher",
+                userObj: {
+                    "data" : {
+                        
+                
+                    "from" : "OverViewSavings",
+                    "rowNo" : rowNo,
+                    "currency" : apz.data.scrdata.relovr__RelationshipOverviewCurr_Res.savingAccDtls[rowNo].currency
+                    },
+                    "type" : "Savings"
+            }
+            })
+            break;
+            
+        case "Current":
+
+            apz.launchApp({
+                appId: "accsum",
+                scr: "AccountDetails",
+                div: "landin__Landing__launcher",
+                userObj: {
+                    "data" : {
+                    "from" : "OverViewCurrent",
+                    "rowNo" : rowNo
+                    
+                    },
+                    "type" : "Current"
+            }
+            })
+            
+            break;
+    apz.csmrbk.landingpage.fnLaunch(lParams);
+        case "Loans":
+          apz.launchApp({
+                appId: "loansm",
+                scr: "LoanSummary",
+                div: "landin__Landing__launcher",
+                userObj: {
+             "data" :
+             {
+                 "customerID" : "0089"
+             },
+                    "from" : "OverViewLoans",
+                    "rowNo" : rowNo
+                    
+            }
+            })
+            break;
+        case "Deposits":
+            if(rowNo == 3)
+            {
+                apz.launchApp({
+                appId: "rdsmry",
+                scr: "RDSummary",
+                div: "landin__Landing__launcher",
+                userObj: {
+                    "data" : 
+                    {
+                        "SavingsAccount" : "100009312263",
+                        "currency" : apz.data.scrdata.relovr__RelationshipOverviewCurr_Res.fixedDepAccDtls[3].currency
+                    },
+        
+                    "from" : "OverViewRecurringDeposit",
+                    "rowNo" : rowNo
+                    
+            }
+            })
+            }
+            else
+            {
+             apz.launchApp({
+                appId: "fdsumm",
+                scr: "FDSummary",
+                div: "landin__Landing__launcher",
+                userObj: {
+         "data" : 
+         {
+          "currency" :    apz.data.scrdata.relovr__RelationshipOverviewCurr_Res.fixedDepAccDtls[rowNo].currency   
+         },
+                    "from" : "OverViewFixedDeposit",
+                    "rowNo" : rowNo
+                    
+            }
+            })
+            }
+            break;
+            case "Cards" :
+                
+            apz.launchApp({
+                appId: "cdtcrd",
+                scr: "CreditCardDetails",
+                div: "landin__Landing__launcher",
+                userObj: {
+        
+                    "from" : "OverViewCards",
+                    "rowNo" : rowNo
+                    
+            }
+            })
+            break;
+    }
+}
+
+
+

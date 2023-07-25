@@ -1,0 +1,14 @@
+apz.yojna.Summary = {};
+apz.app.onLoad_Summary = function() {
+    apz.data.loadJsonData("Details","yojna")
+}
+apz.yojna.Summary.goBack = function()
+{
+            var lObj = {
+            "scr": "ViewScreen",
+            "appId": "yojna",
+            "div": "yojna__Launcher__launcher"
+           
+        }
+        apz.launchSubScreen(lObj);
+    }

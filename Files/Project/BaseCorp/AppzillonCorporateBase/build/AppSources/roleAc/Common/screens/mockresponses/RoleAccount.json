@@ -1,0 +1,51 @@
+{
+    "tbDbmiCorpRoleAccount": [
+        {
+            "roleId": "Admin",
+            "accountType": "Savings",
+            "accountNo": "000288122232",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 112121,
+            "accountCurrency": "USD"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Savings",
+            "accountNo": "00028829921",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 211213,
+            "accountCurrency": "USD"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Current",
+            "accountNo": "2309322229834",
+            "entityId": "Entity1",
+            "accessRights": "Both",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 3102120,
+            "accountCurrency": "USD"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Current",
+            "accountNo": "28800323232",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 2112121,
+            "accountCurrency": "USD"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Current",
+            "accountNo": "28823232992",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 4512122,
+            "accountCurrency": "USD"
+        }
+    ],
+    "accountStatus": true
+}

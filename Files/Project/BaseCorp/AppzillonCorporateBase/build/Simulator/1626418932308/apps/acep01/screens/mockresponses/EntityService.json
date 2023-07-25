@@ -1,0 +1,59 @@
+{
+    "tbDbmiCorpEntityMaster": [
+        {
+            "makerTs": "2017-12-04",
+            "entityType": "Subsidiary",
+            "parentEntity": "ENTID01",
+            "description": "Citi Union",
+            "entityId": "ENTID03",
+            "corporateId": "000FTAC4321",
+            "legalName": "Corporate",
+            "entityName": "Entity3",
+            "registrationNumber": "REGN9523",
+            "taxId": "7342",
+            "customerId": "John Paul",
+            "versionNo": 3,
+            "checkerId": "321",
+            "checkerTs": "2017-12-04",
+            "countryOfRegistration": "Singapore",
+            "makerId": "003"
+        },
+        {
+            "makerTs": "2017-12-04",
+            "entityType": "Subsidiary",
+            "parentEntity": "ENTID02",
+            "description": "Citi Union",
+            "entityId": "ENTID04",
+            "corporateId": "000FTAC4321",
+            "legalName": "Corporate",
+            "entityName": "Entity4",
+            "registrationNumber": "REGN9523",
+            "taxId": "7342",
+            "customerId": "John Paul",
+            "versionNo": 3,
+            "checkerId": "321",
+            "checkerTs": "2017-12-04",
+            "countryOfRegistration": "Singapore",
+            "makerId": "003"
+        },
+        {
+            "makerTs": "2017-12-04",
+            "entityType": "Subsidiary",
+            "parentEntity": "ENTID02",
+            "description": "Citi Union",
+            "entityId": "ENTID05",
+            "corporateId": "000FTAC4321",
+            "legalName": "Corporate",
+            "entityName": "Entity5",
+            "registrationNumber": "REGN9523",
+            "taxId": "7342",
+            "customerId": "John Paul",
+            "versionNo": 3,
+            "checkerId": "321",
+            "checkerTs": "2017-12-04",
+            "countryOfRegistration": "Singapore",
+            "makerId": "003"
+        }
+    ],
+    "entityStatus" : true
+}

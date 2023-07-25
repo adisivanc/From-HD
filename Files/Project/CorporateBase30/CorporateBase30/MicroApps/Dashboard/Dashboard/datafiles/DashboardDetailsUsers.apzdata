@@ -1,0 +1,162 @@
+{
+    "appzillonDashBoardResponse": {
+        "activeInactiveUsers": [
+            {
+                "date": "01/01/2018",
+                "activeCount": 40,
+                "inActiveCount": 5
+            },
+            {
+                "date": "02/01/2018",
+                "activeCount": 80,
+                "inActiveCount": 1
+            },
+            {
+                "date": "03/01/2018",
+                "activeCount": 120,
+                "inActiveCount": 2
+            },
+            {
+                "date": "04/01/2018",
+                "activeCount": 50,
+                "inActiveCount": 0
+            },
+            {
+                "date": "05/01/2018",
+                "activeCount": 100,
+                "inActiveCount": 1
+            },
+            {
+                "date": "06/01/2018",
+                "activeCount": 70,
+                "inActiveCount": 4
+            },
+            {
+                "date": "07/01/2018",
+                "activeCount": 70,
+                "inActiveCount": 3
+            },
+            {
+                "date": "01/01/2018",
+                "activeCount": 60,
+                "inActiveCount": 5
+            },
+            {
+                "date": "09/01/2018",
+                "activeCount": 110,
+                "inActiveCount": 0
+            },
+            {
+                "date": "10/01/2018",
+                "activeCount": 30,
+                "inActiveCount": 7
+            },
+            {
+                "date": "11/01/2018",
+                "activeCount": 50,
+                "inActiveCount": 4
+            },
+            {
+                "date": "12/01/2018",
+                "activeCount": 140,
+                "inActiveCount": 2
+            },
+            {
+                "date": "13/01/2018",
+                "activeCount": 130,
+                "inActiveCount": 0
+            },
+            {
+                "date": "14/01/2018",
+                "activeCount": 60,
+                "inActiveCount": 5
+            },
+            {
+                "date": "15/01/2018",
+                "activeCount": 80,
+                "inActiveCount": 6
+            },
+            {
+                "date": "16/01/2018",
+                "activeCount": 40,
+                "inActiveCount": 5
+            },
+            {
+                "date": "17/01/2018",
+                "activeCount": 70,
+                "inActiveCount": 4
+            },
+            {
+                "date": "18/01/2018",
+                "activeCount": 60,
+                "inActiveCount": 4
+            },
+            {
+                "date": "19/01/2018",
+                "activeCount": 100,
+                "inActiveCount": 3
+            },
+            {
+                "date": "20/01/2018",
+                "activeCount": 30,
+                "inActiveCount": 6
+            },
+            {
+                "date": "21/01/2018",
+                "activeCount": 60,
+                "inActiveCount": 2
+            },
+            {
+                "date": "22/01/2018",
+                "activeCount": 50,
+                "inActiveCount": 5
+            },
+            {
+                "date": "23/01/2018",
+                "activeCount": 70,
+                "inActiveCount": 3
+            },
+            {
+                "date": "24/01/2018",
+                "activeCount": 80,
+                "inActiveCount": 4
+            },
+            {
+                "date": "25/01/2018",
+                "activeCount": 40,
+                "inActiveCount": 1
+            },
+            {
+                "date": "26/01/2018",
+                "activeCount": 70,
+                "inActiveCount": 6
+            },
+            {
+                "date": "27/01/2018",
+                "activeCount": 80,
+                "inActiveCount": 3
+            },
+            {
+                "date": "28/01/2018",
+                "activeCount": 70,
+                "inActiveCount": 0
+            },
+            {
+                "date": "29/01/2018",
+                "activeCount": 90,
+                "inActiveCount": 4
+            },
+            {
+                "date": "30/01/2018",
+                "activeCount": 40,
+                "inActiveCount": 1
+            },
+            {
+                "date": "31/01/2018",
+                "activeCount": 100,
+                "inActiveCount": 4
+            }
+        ],
+        "users": 320
+    }
+}

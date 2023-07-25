@@ -1,0 +1,75 @@
+{
+    "tbDbtmUtilityProviderDet": [{
+        "utilityId": ["1","0","4","5","6","7"],
+        "utilityProviderId": "01",
+        "utilityProviderImg": "Airtel.png",
+        "utilityProviderName": "Airtel"
+    }, {
+        "utilityProviderImg": "Aircel.png",
+        "utilityProviderId": "02",
+        "utilityId":["1","0","4","5","6","7"],
+        "utilityProviderName": "Aircel"
+    }, {
+        "utilityProviderImg": "BSNL.png",
+        "utilityProviderId": "03",
+        "utilityId": ["1","0","4","5","6","7"],
+        "utilityProviderName": "Bsnl"
+    }, {
+        "utilityProviderImg": "Docomo.png",
+        "utilityProviderId": "04",
+        "utilityId": ["1","0","4","5","6","7"],
+        "utilityProviderName": "Docomo"
+    }, {
+        "utilityProviderImg": "Idea.png",
+        "utilityProviderId": "05",
+        "utilityId": ["1","0","4","5","6","7"],
+        "utilityProviderName": "Idea"
+    }, {
+        "utilityProviderImg": "Jio.png",
+        "utilityProviderId": "06",
+        "utilityId": ["1","0","4","5","6","7"],
+        "utilityProviderName": "Jio"
+    }, {
+        "utilityProviderImg": "Mtnl.png",
+        "utilityProviderId": "07",
+        "utilityId": ["3","1"],
+        "utilityProviderName": "Mtnl"
+    }, {
+        "utilityProviderImg": "tata.png",
+        "utilityProviderId": "08",
+        "utilityId": ["3","1"],
+        "utilityProviderName": "Tata"
+    }, {
+        "utilityProviderImg": "Telenor.png",
+        "utilityProviderId": "09",
+        "utilityId":  ["3","1"],
+        "utilityProviderName": "Telenor"
+    }, {
+        "utilityProviderImg": "Vodofone.png",
+        "utilityProviderId": "10",
+        "utilityId": "1",
+        "utilityProviderName": "Vodafone"
+    }, {
+        "utilityProviderImg": "citi.png",
+        "utilityProviderId": "11",
+        "utilityId": "2",
+        "utilityProviderName": "Citi"
+    }, {
+        "utilityProviderImg": "american.png",
+        "utilityProviderId": "12",
+        "utilityId": "2",
+        "utilityProviderName": "American"
+    }, {
+        "utilityProviderImg": "standard.png",
+        "utilityProviderId": "13",
+        "utilityId": "2",
+        "utilityProviderName": "satndard"
+    },
+    {
+        "utilityProviderImg": "Vodofone.png",
+        "utilityProviderId": "14",
+        "utilityId": "3",
+        "utilityProviderName": "satndard"
+    }
+    ]
+   }

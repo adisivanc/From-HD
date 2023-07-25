@@ -1,0 +1,106 @@
+{
+    "spndas__CategoryDescription_Res": {
+        "category": [{
+            "name": "Bills and Utilities",
+            "description": [{
+                "value": "Tata Sky Recharge ID 76y554"
+            },{
+                "value": "BSNL broadband bill pay ID AR53427y"
+            },{
+                "value": "Airtel Postpaid bill 998XXXX213 txn C09867T"
+            },{
+                "value": "Recharge on Jio number 89786XXX43 Txn E32Yt1"
+            },{
+                "value": "BESCOM bill pay PHID 32x"
+            },{
+                "value": "Airtel Landline Eb002231M"
+            }]
+        },{
+            "name": "Food and Dining",
+            "description": [{
+                "value": "The Table G387643e"
+            },{
+                "value": "JW Marriott N234876q"
+            },{
+                "value": "The Peshwa Pavilion CF7564t"
+            },{
+                "value": "Hard Rock Cafe MN8676743z"
+            },{
+                "value": "Starbucks Pm009"
+            },{
+                "value": "Coffee Day Gt9806654"
+            }]
+        },{
+            "name": "Health and Fitness",
+            "description": [{
+                "value": "Cult.fit DC0006667"
+            },{
+                "value": "Fitness First Tf5554111"
+            },{
+                "value": "Anytime Fitness Ey766543"
+            },{
+                "value": "Gold’s Gym Phb66543"
+            },{
+                "value": "Fortis Healthcare Pl324NH"
+            },{
+                "value": "Apollo Hospital PL000111H"
+            }]
+        },{
+            "name": "Entertainment",
+            "description": [{
+                "value": "Sunburn  Oi00011T"
+            },{
+                "value": "Wonderla RE2134T"
+            },{
+                "value": "PVR Cinemas Yg111Tg"
+            },{
+                "value": "INOX Leisure Ni11002"
+            },{
+                "value": "EsselWorld Com001V"
+            }]
+        },{
+            "name": "Investments",
+            "description": [{
+                "value": "Deposit 0000111223n"
+            },{
+                "value": "Derivatives sell 777yrtf"
+            },{
+                "value": "Dividends & Cap Gains"
+            },{
+                "value": "Derivatives sell 777yrtf"
+            },{
+                "value": "Derivatives buy 777yrtf"
+            }]
+        },{
+            "name": "Auto and Transport",
+            "description": [{
+                "value": "IndiGo Id 32o9"
+            },{
+                "value": "AirAsia ID R87TTu"
+            },{
+                "value": "MakeMyTrip ID 00988"
+            },{
+                "value": "ClearTrip TN21m"
+            },{
+                "value": "Thomas Cook Txn ID P001"
+            },{
+                "value": "Expedia Mn321q"
+            }]
+        },{
+            "name": "Others",
+            "description": [{
+                "value": "ATM Withdrawal TRx52rrd"
+            },{
+                "value": "Cheque Deposit new112"
+            },{
+                "value": "Tuition fee TT1132T"
+            },{
+                "value": "Tata Sky Recharge ID 76y554"
+            },{
+                "value": "Hard Rock Cafe MN8676743"
+            },{
+                "value": "Starbucks"
+            }]
+        }]
+    }
+}

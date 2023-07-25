@@ -1,0 +1,12 @@
+{
+    "crdlmt__cardUsageLimit_Res":{
+        "Limit":{
+            "CardNo":"7349 XX7X XX8X 2345",
+            "PermissibleDailyLimit":"6000",
+            "CurrentDailyATMLimit":"10000",
+            "NewDailyATMLimit":"10000",
+            "CurrentMerchantOutletLimit":"5000",
+            "NewMerchantOutletLimit":"5000"
+        }
+    }
+}

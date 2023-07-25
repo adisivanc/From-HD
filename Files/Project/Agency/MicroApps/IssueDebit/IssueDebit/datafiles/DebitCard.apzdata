@@ -1,0 +1,11 @@
+{
+    "issdeb__DebitCard_Req": {
+        "CardDetails": {
+            "accountNo":"Savings - 100009312401",
+            "mailId":"amitkaan@gmail.com",
+            "nameOnCard":"Amit Kann",
+            "cardType":"Rupay"
+            
+        }
+    }
+}

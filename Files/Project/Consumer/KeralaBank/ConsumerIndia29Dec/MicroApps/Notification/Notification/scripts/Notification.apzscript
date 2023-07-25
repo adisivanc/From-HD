@@ -1,0 +1,5 @@
+apz.notifi.Notification = {};
+apz.app.onLoad_Notification = function() {
+    apz.data.loadJsonData("TypeDetails", "notifi");
+ //   apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "NOTIFICATIONS")
+}

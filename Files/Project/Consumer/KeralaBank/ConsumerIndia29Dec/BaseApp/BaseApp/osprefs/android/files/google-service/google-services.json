@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "328980512874",
+    "firebase_url": "https://containerapp-7d71e.firebaseio.com",
+    "project_id": "containerapp-7d71e",
+    "storage_bucket": "containerapp-7d71e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328980512874:android:dc9c6f1eb5bdc65f",
+        "android_client_info": {
+          "package_name": "com.iexceed.container"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328980512874-0e1okt40tqohof0he7g2up5tg5lq8i7u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVTOlu0P1EGwZs2lWd9-p5LlcoctrV6zo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,73 @@
+{
+    "getfxq__ExchangeRate_Res":[{
+    "CurrencyCode":"USD-JOD",
+    "BuyRate":"1.41144",
+    "SellRate":"1.41044"
+},{
+    "CurrencyCode":"EUR-USD",
+    "BuyRate":"1.14618",
+    "SellRate":"1.14558"
+},{
+    "CurrencyCode":"USD-JPY",
+    "BuyRate":"1.41144",
+        "SellRate":"1.41046"
+},{
+    "CurrencyCode":"GBP-USD",
+    "BuyRate":"1.41156",
+        "SellRate":"1.41156"
+},
+{
+    "CurrencyCode":"USD-GBP",
+    "BuyRate":"1.41044",
+        "SellRate":"1.41044"
+},{
+    "CurrencyCode":"JPY-USD",
+    "BuyRate":"1.41046",
+        "SellRate":"1.41144"
+},{
+    "CurrencyCode":"USD-EUR",
+    "BuyRate":"1.14558",
+        "SellRate":"1.14618"
+},{
+    "CurrencyCode":"JOD-USD",
+    "BuyRate":"1.41044",
+        "SellRate":"1.41144"
+},{
+    "CurrencyCode":"USD-CAD",
+    "BuyRate":"1.14558",
+        "SellRate":"1.14618"
+},{
+    "CurrencyCode":"USD-CHF",
+    "BuyRate":"1.14558",
+        "SellRate":"1.14618"
+},{
+    "CurrencyCode":"EUR-CHF",
+    "BuyRate":"1.41156",
+        "SellRate":"1.41044"
+},{
+    "CurrencyCode":"CHF-GBP",
+    "BuyRate":"1.41156",
+        "SellRate":"1.41044"
+},{
+    "CurrencyCode":"GBP-EUR",
+    "BuyRate":"1.26502",
+        "SellRate":"1.26498"
+},{
+    "CurrencyCode":"GBP-JPY",
+    "BuyRate":"1.08407",
+        "SellRate":"1.08404"
+},{
+    "CurrencyCode":"XAU-USD",
+    "BuyRate":"1.27661",
+        "SellRate":"1.28976"
+},{
+    "CurrencyCode":"JOD-CHF",
+    "BuyRate":"1.23412",
+        "SellRate":"1.21345"
+},{
+    "CurrencyCode":"GBP-JOD",
+    "BuyRate":"1.09877",
+        "SellRate":"1.09865"
+}]
+
+}

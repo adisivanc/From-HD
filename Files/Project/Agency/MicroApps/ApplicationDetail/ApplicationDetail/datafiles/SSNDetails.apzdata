@@ -1,0 +1,16 @@
+{
+    "gender": "M",
+    "city": "Princeton",
+    "mname": "S",
+    "title": "Mr.",
+    "lname": "Sivaprakasam",
+    "maritalStatus": "S",
+    "pin": "08540",
+    "addressLine1": "Room 67, 14 Tottenham Court Road",
+    "addressLine2": "14 Tottenham Court Road",
+    "addressLine3": "London",
+    "state": "England",
+    "fname": "Karthikeyan",
+    "nationality": "Indian",
+    "dob": "1971-10-03"
+}

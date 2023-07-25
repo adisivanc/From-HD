@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"LimitChange","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"LimitChange","interfaces":[{"name":"Limits","request":"Y","response":"Y","fault":"N"},{"name":"LimitDetails","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

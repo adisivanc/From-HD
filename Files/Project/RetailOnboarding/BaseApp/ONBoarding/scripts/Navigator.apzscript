@@ -1,0 +1,182 @@
+apz.apzonb.Navigator = {};
+apz.isWorkflowStarted = false;
+apz.refNo = "";
+apz.applicationDetails = {};
+apz.country = "IND";
+apz.dateFormat = "dd-MMM-yyyy";
+apz.activeNo = 0;
+apz.app.onLoad_Navigator = function(params) {
+    $("#apzonb__Navigator__el_txt_7").removeClass("active");
+    $("body").removeClass("landingby").addClass("indianCurrency");
+    apz.apzonb.Navigator.fnLunachHome();
+    $("#apzonb__Navigator__mobretrieverow").removeClass("sno");
+    $('head').append('<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">');
+}
+
+apz.apzonb.Navigator.fnRetrieveHistory = function() {
+    debugger;
+    apz.newApplication = false;
+    $("#apzonb__Navigator__sc_row_10_div").addClass("sno");
+    apz.startby = "common";
+    var params = {};
+    params.appId = "onbaut";
+    params.scr = "AuthLauncher";
+    params.div = "apzonb__Navigator__launchdiv";
+    params.userObj = {
+        "action": "retrieve"
+    };
+    apz.launchApp(params);
+}
+apz.apzonb.Navigator.SHowLoginModel = () => {
+    var lparams = {
+        "targetId": "apzonb__Navigator__loginPopup"
+    };
+    apz.toggleModal(lparams);
+}
+apz.apzonb.Navigator.LauchDaBoard = () => {
+    var lUsername = apz.getElmValue("apzonb__Navigator__inpUsername");
+    var type = "";
+    if (lUsername.toLowerCase() == "robertbridge") {
+        type = "user";
+    } else if (lUsername.toLowerCase() == "br001@sopra.com") {
+        type = "broker";
+    } else {
+        apz.dispMsg({
+            "message": "Please enter a valid user name"
+        });
+        return;
+    }
+    var params = {};
+    params.appId = "dashbh";
+    params.scr = "DaBoHeaScr";
+    params.userObj = {
+        "type": type,
+        "screen": apz.childScr
+    }
+    apz.launchApp(params);
+}
+apz.apzonb.Navigator.ShowProductsScr = () => {
+    apz.apzonb.Navigator.fnLunachHome();
+}
+apz.apzonb.Navigator.ShowHomePage = () => {
+    apz.apzonb.Navigator.fnLunachHome();
+}
+//function show relavent screen
+apz.apzonb.Navigator.fnShoewRelaventScreen = function(element) {}
+//function to save current screen flow
+apz.apzonb.Navigator.fnSaveFlow = function() {
+    apz.dispMsg({
+        "message": "You seem to be leaving the application midway. You can access your application with reference number " + apz.refNo,
+        "type": "C",
+        "callBack": apz.apzonb.Navigator.fnUpdateFlowNo
+    });
+}
+apz.apzonb.Navigator.fnUpdateFlowNo = function(rParams) {
+    if (rParams.choice) {
+        var lParams = {
+            "ifaceName": "ApplicationInfoDB_Modify",
+            "buildReq": "N",
+            "appId": "apzonb",
+            "paintResp": "Y",
+            "req": {
+                "tbDbmiCustomerMaster": apz.applicationDetails
+            },
+            "async": false,
+            "callBack": apz.apzonb.Navigator.fnLunachHome
+        };
+        lParams.req.tbDbmiCustomerMaster.workFlowIndex = apz.flowNo;
+        apz.server.callServer(lParams);
+    }
+}
+apz.apzonb.Navigator.fnLunachHome = function(sParams) {
+    debugger;
+    $("#apzonb__Navigator__el_img_1,#apzonb__Navigator__el_img_1_svg").attr("onclick", "apz.apzonb.Navigator.ShowHomePage();");
+    $(".MenuFixed").addClass("sno");
+    $("#apzonb__Navigator__el_btn_12").removeClass("sno");
+    $("#apzonb__Navigator__el_dpd_1_ext").removeAttr("disabled").attr("enabled", "enabled");
+    var params = {};
+    params.appId = "prdsel";
+    params.scr = "ProductLauncher";
+    params.div = "apzonb__Navigator__launchdiv";
+    params.userObj = {
+        "parentdiv": "apzonb__Navigator__launchdiv"
+    }
+    apz.launchApp(params);
+}
+//incase of reload or close browser that time storing workflow number
+window.onbeforeunload = function() {
+    if (apz.isWorkflowStarted) {
+        apz.apzonb.Navigator.fnSaveFlow();
+    };
+    return null;
+}
+apz.apzonb.Navigator.fnChangeCountry = function(element) {
+    apz.country = apz.getElmValue(element.id);
+    apz.setElmValue("apzonb__Navigator__el_img_2", "apps/styles/themes/SopraBaseApp/img/" + apz.country + ".png");
+    if (apz.country === "US") {
+        apz.dateFormat = "MM/dd/yyyy";
+        $("body").addClass("dollarCurrency").removeClass("indianCurrency poundCurrency bdCurrency uaeCurrency ugCurrency");
+    } else {
+        if (apz.country === "UK") {
+            $("body").addClass("poundCurrency").removeClass("indianCurrency dollarCurrency bdCurrency uaeCurrency ugCurrency");
+        } else if (apz.country === "IND") {
+            $("body").addClass("indianCurrency").removeClass("dollarCurrency poundCurrency bdCurrency uaeCurrency ugCurrency");
+        } else if (apz.country === "BD") {
+            $("body").addClass("bdCurrency").removeClass("dollarCurrency poundCurrency indianCurrency uaeCurrency ugCurrency");
+        } else if (apz.country === "UAE") {
+            $("body").addClass("uaeCurrency").removeClass("dollarCurrency poundCurrency indianCurrency bdCurrency ugCurrency");
+        } else if (apz.country === "UGA") {
+            $("body").addClass("ugCurrency").removeClass("dollarCurrency poundCurrency indianCurrency bdCurrency uaeCurrency");
+        }
+        apz.dateFormat = "dd-MMM-yyyy";
+    }
+    $("document").click();
+}
+$(document).on('focus', "#page-body input", function() {
+    $("body").addClass("hasb");
+}).on('blur', "#page-body input", function() {
+    $("body").removeClass("hasb");
+});
+apz.apzonb.Navigator.OnClick = function(params) {
+    debugger;
+    if (apz.deviceGroup == "Web") {
+        window.open(params);
+    } else {
+        var json = {
+            "URL": params
+        }
+        json.id = "LAUNCH_ID";
+        json.callBack = apz.apzonb.Navigator.OnClickCB;
+        apz.ns.launchWebview(json);
+    }
+};
+apz.apzonb.Navigator.OnClickCB = function(params) {
+    debugger;
+}
+apz.apzonb.Navigator.fnBookAppointment = function() {
+    debugger;
+    $("#apzonb__Navigator__sc_row_10_div").addClass("sno");
+    var params = {};
+    params.appId = "bkapt";
+    params.scr = "BookAppointment";
+    params.div = "apzonb__Navigator__launchdiv";
+    params.userObj = {
+        "from": "landing"
+    };
+    apz.launchApp(params);
+}
+apz.apzonb.Navigator.fnCompressImage = function(base64, callback) {
+    debugger;
+    var lParams = {
+        "ifaceName": "DocumentCompress",
+        "buildReq": "N",
+        "req": {
+            "Image": base64
+        },
+        "appId": "apzonb",
+        "paintResp": "N",
+        "async": false,
+        "callBack": callback
+    }
+    apz.server.callServer(lParams);
+}

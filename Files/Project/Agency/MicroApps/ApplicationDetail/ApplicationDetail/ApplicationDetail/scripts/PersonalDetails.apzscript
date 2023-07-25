@@ -1,0 +1,295 @@
+apz.appdtl.PersonalDetails = {};
+apz.appdtl.PersonalDetails.sParams = {};
+apz.appdtl.PersonalDetails.isMasked = true;
+apz.appdtl.currentFieldVal = "";
+apz.appdtl.PersonalDetails.saveIt = false;
+apz.app.onLoad_PersonalDetails = function(params) {
+    apz.appdtl.PersonalDetails.sParams = params;
+    apz.appdtl.PersonalDetails.manageHeaders();
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo", params.refNo);
+    apz.setElmValue("appdtl__AppLauncher__application_number", params.refNo);
+    apz.appdtl.PersonalDetails.fetchApplicationDetails();
+    if (apz.appdtl.sPersonalDetails) {
+        
+        apz.data.scrdata.appdtl__ApplicationOptionalInfo_Req = {};
+        apz.data.scrdata.appdtl__ApplicationOptionalInfo_Req.config = apz.appdtl.sPersonalDetails;
+        apz.data.loadData('ApplicationOptionalInfo', 'appdtl')
+    }
+    if (apz.deviceOs == "Android" || apz.deviceOs == "ANDROID") {
+        $("#appdtl__AppLauncher__myKadRow").removeClass("sno");
+    }
+    debugger;
+    if (apz.country == "IND") {
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__residentialStatus_ul").removeClass("sno");
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__typeOfResidence_ul").removeClass("sno");
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__yearsInCurrentResidence_ul").removeClass("sno");
+    }else{
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__residentialStatus_ul").addClass("sno");
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__typeOfResidence_ul").addClass("sno");
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__yearsInCurrentResidence_ul").addClass("sno");
+    }
+};
+// MYKAD - by Anand
+apz.appdtl.PersonalDetails.fnMyKAD = function() {
+    
+    var json = {};
+    json.id = "NATIVE";
+    json.action = "myKAD";
+    json.task = "FULL_DATA"; //BT_DISCONNECT : For Disconnecting Bluetooth ,FULL_DATA : to get full Data,VERIFY: for fingerprint verfication only, by default it is FULL_DATA
+    json.writeLogFile = "YES"; // YES, NO
+    json.dispLogLevel = "F"; // F : Full,I :  Intermediate, D :Disable 
+    json.callBack = apz.appdtl.PersonalDetails.fnMyKADCallback;
+    apz.ns.nativeServiceExt(json);
+}
+apz.appdtl.PersonalDetails.fnMyKADCallback = function(params) {
+    
+    if (params.successMessage) {
+        alert(JSON.stringify(params.data));
+        /*$("#MyKAD__myKAD__el_name").html(params.data.person.gpmcName);
+        $("#MyKAD__myKAD__el_address").html(params.data.address.line1 + ' ' + params.data.address.line2 + ' ' + params.data.address.line3 + ' ' +
+            params.data.address.city + ' ' + params.data.address.state + ' ' + params.data.address.postalCode);
+        $("#MyKAD__myKAD__el_gender").html(params.data.person.gender);
+        $("#MyKAD__myKAD__el_dob").html(params.data.person.dateOfBirth);
+        $('#MyKAD__myKAD__el_img_1').attr('src', 'data:image/png;base64,' + params.data.imageData);*/
+        var obj = params.data.person;
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                var val = obj[key];
+                console.log(key + ' ' + val);
+                // $('<p>').attr('for', obj[key]).html(key + ' : ' + val + "\n\n").appendTo('#MyKAD__myKAD__el_disp');
+            }
+        }
+    } else if (params.error) {
+        var lmsg = {
+            "message": params.error
+        }
+        apz.dispMsg(lmsg);
+    } else {
+        alert(JSON.stringify(params));
+    }
+}
+apz.app.onShown_PersonalDetails = function(params) {
+    apz.appdtl.PersonalDetails.saveIt = true;
+    apz.appdtl.currenctScreen = "personal_details";
+    //-----------------------------------------------------------------------------------------------------------------------------
+    $("#appdtl__PersonalDetails__personal_details_form input").each(function() {
+        $(this).change(function() {
+            if (apz.appdtl.PersonalDetails.saveIt) {
+                var val = apz.getElmValue(this.id);
+                if (val.length <= 0 && apz.appdtl.currentFieldVal.length > 0) { //empty on change
+                    apz.appdtl.personalFieldsCount = apz.appdtl.personalFieldsCount + 1;
+                    apz.appdtl.personalFieldPercentage = apz.appdtl.personalFieldPercentage - apz.appdtl.personalPercentageValue;
+                } else if (val.length > 0 && apz.appdtl.currentFieldVal.length <= 0) { //filled on change
+                    apz.appdtl.personalFieldsCount = apz.appdtl.personalFieldsCount - 1;
+                    apz.appdtl.personalFieldPercentage = apz.appdtl.personalFieldPercentage + apz.appdtl.personalPercentageValue;
+                }
+                apz.setElmValue("appdtl__AppLauncher__personal_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.personalFieldsCount);
+                $("#appdtl__AppLauncher__personal_slider").roundSlider("option", "value", apz.appdtl.personalFieldPercentage);
+            }
+        })
+        $(this).focus(function() {
+            apz.appdtl.currentFieldVal = apz.getElmValue(this.id);
+        })
+    });
+    //-----------------------------------------------------------------------------------------------------------------------------
+    $("#appdtl__PersonalDetails__additional_details_form input").each(function() {
+        $(this).change(function() {
+            if (apz.appdtl.PersonalDetails.saveIt) {
+                var val = apz.getElmValue(this.id);
+                if (val.length <= 0 && apz.appdtl.currentFieldVal.length > 0) { //empty on change
+                    apz.appdtl.personalFieldsCount = apz.appdtl.personalFieldsCount + 1;
+                    apz.appdtl.personalFieldPercentage = apz.appdtl.personalFieldPercentage - apz.appdtl.personalPercentageValue;
+                } else if (val.length > 0 && apz.appdtl.currentFieldVal.length <= 0) { //filled on change
+                    apz.appdtl.personalFieldsCount = apz.appdtl.personalFieldsCount - 1;
+                    apz.appdtl.personalFieldPercentage = apz.appdtl.personalFieldPercentage + apz.appdtl.personalPercentageValue;
+                }
+                apz.setElmValue("appdtl__AppLauncher__personal_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.personalFieldsCount);
+                $("#appdtl__AppLauncher__personal_slider").roundSlider("option", "value", apz.appdtl.personalFieldPercentage);
+            }
+        })
+        $(this).focus(function() {
+            apz.appdtl.currentFieldVal = apz.getElmValue(this.id);
+        })
+    });
+    //-----------------------------------------------------------------------------------------------------------------------------
+    $("#appdtl__PersonalDetails__contact_details_form input").each(function() {
+        $(this).change(function() {
+            
+            if (apz.appdtl.PersonalDetails.saveIt) {
+                var val = apz.getElmValue(this.id);
+                if (val.length <= 0 && apz.appdtl.currentFieldVal.length > 0) { //empty on change
+                    console.log("empty on change");
+                    apz.appdtl.personalFieldsCount = apz.appdtl.personalFieldsCount + 1;
+                    apz.appdtl.personalFieldPercentage = apz.appdtl.personalFieldPercentage - apz.appdtl.personalPercentageValue;
+                } else if (val.length > 0 && apz.appdtl.currentFieldVal.length <= 0) { //filled on change
+                    console.log("filled on change");
+                    apz.appdtl.personalFieldsCount = apz.appdtl.personalFieldsCount - 1;
+                    apz.appdtl.personalFieldPercentage = apz.appdtl.personalFieldPercentage + apz.appdtl.personalPercentageValue;
+                }
+                apz.setElmValue("appdtl__AppLauncher__personal_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.personalFieldsCount);
+                $("#appdtl__AppLauncher__personal_slider").roundSlider("option", "value", apz.appdtl.personalFieldPercentage);
+            }
+        })
+        $(this).focus(function() {
+            apz.appdtl.currentFieldVal = apz.getElmValue(this.id);
+            if (apz.appdtl.currentFieldVal == "Please select") {
+                apz.appdtl.currentFieldVal = "";
+            }
+        })
+    });
+    //-----------------------------------------------------------------------------------------------------------------------------
+    
+    if (apz.appdtl.personalManageFilled) {
+        apz.appdtl.PersonalDetails.manageFieldsFilled();
+        apz.setElmValue("appdtl__AppLauncher__personal_fields_to_fill_txtcnt", "Fields to fill : " + apz.appdtl.personalFieldsCount);
+        $("#appdtl__AppLauncher__personal_slider").roundSlider("option", "value", apz.appdtl.personalFieldPercentage);
+        apz.appdtl.personalManageFilled = false;
+    }
+}
+apz.appdtl.PersonalDetails.manageFieldsFilled = function() {
+    $("#appdtl__PersonalDetails__personal_details_form input").each(function() {
+        var val = apz.getElmValue(this.id);
+        if (val != "") {
+            apz.appdtl.personalFieldsCount = apz.appdtl.personalFieldsCount - 1;
+            apz.appdtl.personalFieldPercentage = apz.appdtl.personalFieldPercentage + apz.appdtl.personalPercentageValue;
+        }
+    });
+    //------------------------------------------
+    $("#appdtl__PersonalDetails__additional_details_form input").each(function() {
+        var val = apz.getElmValue(this.id);
+        // 
+        if (val != "") {
+            apz.appdtl.personalFieldsCount = apz.appdtl.personalFieldsCount - 1;
+            apz.appdtl.personalFieldPercentage = apz.appdtl.personalFieldPercentage + apz.appdtl.personalPercentageValue;
+        }
+    });
+    //-----------------------------------------
+    $("#appdtl__PersonalDetails__contact_details_form input").each(function() {
+        var val = apz.getElmValue(this.id);
+        if (val != "") {
+            apz.appdtl.personalFieldsCount = apz.appdtl.personalFieldsCount - 1;
+            apz.appdtl.personalFieldPercentage = apz.appdtl.personalFieldPercentage + apz.appdtl.personalPercentageValue;
+        }
+    });
+}
+apz.appdtl.PersonalDetails.fnOnChangeEmployment = function() {
+    
+    var status = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__profession")
+    if (status == "Retired" || status == "UnEmployed") {
+        $("#appdtl__PersonalDetails__retirementrow").removeClass("sno");
+        //  $("#appdtl__PersonalDetails__fullTimerow").addClass("sno");
+    } else {
+        $("#appdtl__PersonalDetails__retirementrow").addClass("sno");
+        //  $("#appdtl__AdditionalPersonalDetails__fullTimerow").removeClass("sno");
+    }
+}
+apz.appdtl.PersonalDetails.manageHeaders = function() {
+    $("#appdtl__AppLauncher__personal_div").addClass('active');
+    $("#appdtl__AppLauncher__employment_div").removeClass('active');
+}
+apz.appdtl.PersonalDetails.fetchApplicationDetails = function() {
+    
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.PersonalDetails.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.PersonalDetails.fetchApplicationDetailsCB = function(pResp) {
+    
+    var appId = apz.appdtl.AppLauncher.sCache.appId;
+    apz.country = pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.countryCode;
+    apz.mode = pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.mode;
+    /*if(apz.mode == "ASSISTED"){
+        apz.appdtl.AppLauncher.sCache.appId = "ONB";
+    }*/
+    apz.stopLoader();
+    // apz.appdtl.AppLauncher.sCache.subproduct = apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.subproduct
+}
+apz.appdtl.PersonalDetails.fnFetchSSNDetails = function() {
+    
+    apz.dispMsg({
+        "message": "Please enter the OTP sent to your registered mobile number to proceed",
+        "type": "P",
+        "callBack": apz.appdtl.PersonalDetails.fnFetchSSNDetailsCB
+    })
+}
+apz.appdtl.PersonalDetails.fnFetchSSNDetailsCB = function(pResp) {
+    if (pResp.choice) {
+        var lFetchedJSON = JSON.parse(apz.getFile(apz.getDataFilesPath() + "/SSNDetails.json"));
+        var scrData = apz.data.scrdata.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster;
+        scrData.nid = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid");
+        scrData.addressLine1 = lFetchedJSON.addressLine1;
+        scrData.addressLine2 = lFetchedJSON.addressLine2;
+        scrData.addressLine3 = lFetchedJSON.addressLine3;
+        scrData.dob = lFetchedJSON.dob;
+        scrData.fname = lFetchedJSON.fname;
+        scrData.gender = lFetchedJSON.gender;
+        scrData.lname = lFetchedJSON.lname;
+        scrData.maritalStatus = lFetchedJSON.maritalStatus;
+        scrData.mname = lFetchedJSON.mname;
+        scrData.nationality = lFetchedJSON.nationality;
+        scrData.pin = lFetchedJSON.pin;
+        scrData.state = lFetchedJSON.state;
+        scrData.title = lFetchedJSON.title;
+        apz.data.loadData("ApplicationInfoDB", "appdtl");
+    }
+}
+apz.appdtl.PersonalDetails.saveApplicationDetails = function() {
+    apz.appdtl.PersonalDetails.saveIt = false;
+    
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Modify",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "N",
+        "callBack": apz.appdtl.PersonalDetails.saveApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.PersonalDetails.saveApplicationDetailsCB = function(pResp) {
+    
+    if (!apz.isNull(pResp.res.appdtl__ApplicationInfoDB_Req)) {
+        apz.applicationDetails = jQuery.extend(true, {}, pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster);
+    } else {
+        apz.applicationDetails = jQuery.extend(true, {}, pResp.res.appdtl__ApplicationInfoDB_Res.tbDbmiCustomerMaster);
+    }
+}
+apz.appdtl.PersonalDetails.fnCancel = function() {
+    
+    apz.appdtl.PersonalDetails.saveApplicationDetails();
+    apz.appdtl.AppLauncher.onCancel();
+}
+apz.appdtl.PersonalDetails.nextScreen = function(pResp) {
+    apz.appdtl.PersonalDetails.saveIt = false;
+    apz.appdtl.PersonalDetails.saveApplicationDetails();
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "IdentityDetail",
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo")
+        }
+    };
+    apz.launchSubScreen(lParams);
+    
+}
+apz.appdtl.PersonalDetails.fnShowSecurityInfo = function() {
+    
+    var msg =
+        "The security of your information is very important to us.We need this information in order to verify your identity.This won't affect your credit score.";
+    $("#appdtl__PersonalDetails__securityInfo").text(msg);
+}
+apz.appdtl.PersonalDetails.fnToggleMaskedValue = function() {
+    
+    if (apz.appdtl.PersonalDetails.isMasked) {
+        apz.appdtl.PersonalDetails.isMasked = false;
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid").attr("type", "text");
+    } else {
+        $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__nid").attr("type", "password");
+        apz.appdtl.PersonalDetails.isMasked = true;
+    }
+}

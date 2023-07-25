@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"ViewRules","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"ViewRules","interfaces":[{"name":"RuleDetails","request":"Y","response":"Y","fault":"N"},{"name":"RuleDelete","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

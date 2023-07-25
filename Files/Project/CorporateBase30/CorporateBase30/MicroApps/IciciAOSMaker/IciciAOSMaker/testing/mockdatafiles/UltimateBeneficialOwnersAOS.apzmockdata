@@ -1,0 +1,26 @@
+{
+    "tbBenificialOwnersDetails": {
+        "companyid": "",
+        "ownerFirstName": "Darren",
+        "ownerMiddleName": "",
+        "ownerLastName": "Lansterman",
+        "ownerDob": "",
+        "ownerNationality": "Ireland",
+        "ownerCountryOfResidence": "England",
+        "ownerPlaceOfBirth": "Northern Ireland",
+        "ownerDateOfIncorporation": "",
+        "ownerCountryOfIncorporation": "",
+        "ownerAddress": "",
+        "ownerCountry": "",
+        "ownerCity": "London",
+        "ownerPostalCode": "WC1B 5HJ",
+        "ownerLengthOfTimeAtAddress": "20",
+        "ownerPosition": "Managing Director",
+        "ownerIdentificationType": "Passport",
+        "ownerIdentificationNo": "46656",
+        "ownerValidity": "",
+        "ownerTaxRefNo": "",
+        "ownerSocialSecurityNo": "6765455",
+        "ownerAuthDirector": "Y"
+    }
+}

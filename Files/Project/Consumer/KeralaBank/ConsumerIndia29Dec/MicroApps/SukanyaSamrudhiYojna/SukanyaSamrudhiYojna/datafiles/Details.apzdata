@@ -1,0 +1,13 @@
+{
+    "yojna__DetailsInterface_Res": {
+        "data": [{
+            "name": "Kanika Kaur",
+            "fathername": "Jaspreet Kaur",
+            "Date of Birth": "25-July-2011",
+            "aadhar" : "123456789012",
+            "account Number" : "100192837522",
+            "amount" : "2000"
+            
+        }]
+    }
+}

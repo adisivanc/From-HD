@@ -1,0 +1,89 @@
+apz.appsum.SuccessScreen = {};
+apz.appsum.SuccessScreen.sParams = {};
+apz.app.onLoad_SuccessScreen = function(params) {
+    debugger;
+    $("#appsum__Launcher__gr_col_1").removeClass("sno");
+    $("#apzonb__Navigator__el_btn_12").removeClass("sno").attr("onclick", "apz.appsum.SuccessScreen.fnBookAppointment();");
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    if (isMobile) {
+        $("#appsum__SuccessScreen__appointment_row").removeClass("sno");
+        $("#appsum__SuccessScreen__el_hpl_1").addClass("sno");
+    }
+    apz.appsum.SuccessScreen.sParams = params;
+    apz.appsum.SuccessScreen.fnSendSuccessMsg(params);
+    $(".MenuFixed,#apzonb__Navigator__el_progressstep_1_ext").addClass("sno");
+    if (apz.appsum.SuccessScreen.sParams.product == "Loans" || apz.appsum.SuccessScreen.sParams.product == "Cards") {
+        $("#appsum__SuccessScreen__sc_row_18,#appsum__SuccessScreen__el_txt_9").addClass("sno");
+        apz.setElmValue("appsum__SuccessScreen__el_txt_12", apz.lits.appsum[apz.language].LIT_CARD_LOAN_SUCC_MSG);
+    }
+};
+apz.appsum.SuccessScreen.fnSendSuccessMsg = function(params) {
+    debugger;
+    // $("#appsum__SuccessScreen__el_txt_6_txtcnt").text(params.message);
+    $("#appsum__SuccessScreen__el_txt_8_txtcnt").text(params.refNo);
+}
+apz.appsum.SuccessScreen.getReport = function() {
+    apz.startLoader();
+    var lRefNo = apz.appsum.SuccessScreen.sParams.refNo.substring(apz.appsum.SuccessScreen.sParams.refNo.lastIndexOf("CONSONB"), apz.appsum.SuccessScreen
+        .sParams.refNo.length);
+    setTimeout(function() {
+        apz.server.callServer({
+            "ifaceName": "Report",
+            "buildReq": "N",
+            "req": {
+                reportData: {
+                    params: {
+                        "REF_NO": lRefNo
+                    },
+                    reportDetails: {
+                        fileType: "PDF"
+                    }
+                }
+            },
+            "paintResp": "N",
+            "callBack": apz.appsum.SuccessScreen.getReportCB,
+            "appId": "appsum"
+        });
+    }, 100)
+};
+apz.appsum.SuccessScreen.getReportCB = function(pResp) {
+    debugger;
+    try {
+        apz.appsum.SuccessScreen.showPDF(pResp.res.appsum__Report_Res.file);
+    } catch (e) {};
+}
+apz.appsum.SuccessScreen.showPDF = function(pObj) {
+    apz.stopLoader();
+    var myBase64string = pObj;
+    if (navigator.userAgent.indexOf("Chrome") != -1) {
+        var uri = 'data:application/pdf;base64,';
+        var link = document.createElement("a");
+        link.download = "Onboarding Application.pdf";
+        link.href = uri + myBase64string;
+        link.click();
+    } else if (navigator.userAgent.indexOf("Firefox") != -1) {
+        window.open("data:application/pdf;base64," + myBase64string, "", "");
+    } else if ((navigator.userAgent.indexOf("MSIE") != -1) || ( !! document.documentMode == true)) //IF IE > 10
+    {
+        window.open("data:application/pdf;base64," + myBase64string, "", "");
+    }
+};
+apz.appsum.SuccessScreen.fnLaunchFunding = function() {
+    var params = {};
+    params.appId = "appsum";
+    params.scr = "Funding";
+    params.div = "navgtn__Navigator__launcher";
+    params.userObj = apz.appsum.SuccessScreen.sParams;
+    apz.launchSubScreen(params);
+}
+apz.appsum.SuccessScreen.fnBookAppointment = function() {
+    debugger;
+    $("#apzonb__Navigator__el_btn_12").attr("onclick", "apz.apzonb.Navigator.fnBookAppointment();");
+    apz.appsum.SuccessScreen.sParams.from = "success";
+    var params = {};
+    params.appId = "bkapt";
+    params.scr = "BookAppointment";
+    params.div = "navgtn__Navigator__launcher";
+    params.userObj = apz.appsum.SuccessScreen.sParams;
+    apz.launchApp(params);
+}

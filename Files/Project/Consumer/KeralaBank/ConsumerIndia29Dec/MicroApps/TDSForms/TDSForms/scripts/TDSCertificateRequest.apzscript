@@ -1,0 +1,29 @@
+apz.tdsfrm.tdscertificate = {};
+apz.app.onLoad_TDSCertificateRequest = function(params) {
+    debugger;
+      //LandingCommon.setHeading("TDS Certificate Request");
+};
+apz.app.onShown_TDSCertificateRequest = function(params) {
+    debugger;
+    apz.setElmValue("landin__Landing__heading", "TDS CERTIFICATE REQUEST");
+};
+apz.tdsfrm.tdscertificate.fnSubmit = function(params) {
+    
+    var val1 = apz.getElmValue("tdsfrm__TDSCertificateRequest__el_dpd_2");
+    var val2 = apz.getElmValue("tdsfrm__TDSCertificateRequest__el_dpd_1");
+    if (val1 && val2) {
+    apz.dispMsg({message:"TDS certificate sent to your registered mail id.",type:"S",callBack:apz.tdsfrm.tdscertificate.submitCallback});
+    } else {
+        apz.dispMsg({
+            message: "Please choose financial year and quarter!",
+            type: "S"
+        });
+    }
+}
+apz.tdsfrm.tdscertificate.fnCancel = function(params) {
+    apz.tdsfrm.tdscertificate.submitCallback()
+}
+apz.tdsfrm.tdscertificate.submitCallback = function() {
+   
+    apz.landin.Landing.fnMenuClickInside("Fixed Deposit Summary");
+}

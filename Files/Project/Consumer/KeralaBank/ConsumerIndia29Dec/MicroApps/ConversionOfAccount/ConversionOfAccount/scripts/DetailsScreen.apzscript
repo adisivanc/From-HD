@@ -1,0 +1,37 @@
+apz.convac.DetailsScreen = {};
+apz.app.onLoad_DetailsScreen = function() {
+    debugger;
+        apz.setElmValue("landin__Landing__heading", "CONVERSION OF SAVINGS BANK ACCOUNT TO NRO ACCOUNT")
+
+}
+
+apz.convac.DetailsScreen.submit = function() {
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "convac__Launcher__launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.convac.DetailsScreen.confirmCB,
+                "destroyDiv": "convac__Launcher__launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.convac.DetailsScreen.confirmCB = function() {
+    var lLaunchParams = {
+        "appId": "sucscr",
+        "scr": "SuccessScreen",
+        "div": "convac__Launcher__launcher",
+        "userObj": {
+            "text": "Your request for conversion of account has been submitted. We will get in touch with you shortly."
+        }
+    }
+    apz.launchApp(lLaunchParams);
+}

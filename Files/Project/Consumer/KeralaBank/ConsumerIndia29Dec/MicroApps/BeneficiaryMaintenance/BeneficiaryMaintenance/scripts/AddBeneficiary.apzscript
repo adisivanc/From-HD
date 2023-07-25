@@ -1,0 +1,668 @@
+apz.bnfmnt.addbeneficiary = {};
+apz.bnfmnt.addbeneficiary.sParams = {};
+apz.app.onShown_AddBeneficiary = function(params) {
+    debugger;
+    $("#bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryMobilenumber").attr("type", "tel");
+    $("#bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryAccountNo").attr("type", "tel");
+    $("#bnfmnt__AddBeneficiary__Reenter_Account_Stage_3").attr("type", "tel");
+    $("#bnfmnt__AddBeneficiary__AccNo").attr("type", "tel");
+    $("#bnfmnt__AddBeneficiary__MobileNo_Stage4").attr("type", "tel");
+        $("#bnfmnt__AddBeneficiary__AccountNo_Stage4").attr("type", "tel");
+        $("#bnfmnt__AddBeneficiary__Stage5_MobileNo").attr("type", "tel");
+                $("#bnfmnt__AddBeneficiary__Stage5_AccountNo").attr("type", "tel");
+apz.bnfmnt.addbeneficiary.fnLoadWithinBankBeneficary();
+
+    $("#bnfmnt__AddBeneficiary__radioToggle_option_1").click();
+    apz.bnfmnt.addbeneficiary.sParams = params;
+    //$("input:radio:first").prop("checked", true).trigger("click");
+    apz.bnfmnt.addbeneficiary.fnaddRowClicked();
+    //var params={};
+    //params.id="bnfmnt__AddBeneficiary__toggleBank";
+    //apz.bnfmnt.addbeneficiary.fntoggleClick(params);
+    apz.bnfmnt.addbeneficiary.fnIntialise(params);
+    if (/android|webos|iphone|ipad|ipod|blackberry|opera mini|Windows Phone|iemobile|WPDesktop|XBLWP7/i.test(navigator.userAgent.toLowerCase())) {
+        $("#bnfmnt__AddBeneficiary__sc_row_174").removeClass("sno");
+    }
+};
+apz.bnfmnt.addbeneficiary.fnLoadWithinBankBeneficary = function(){
+    debugger;
+    apz.data.scrdata.bnfmnt__Beneficiary_Req = {};
+        apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls = {};
+        apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls = [];
+        apz.data.loadData("Beneficiary","bnfmnt");
+  apz.bnfmnt.data   = JSON.parse(apz.getFile(apz.getDataFilesPath("bnfmnt") + "/WithinBankBenficiary.json"));
+}
+apz.bnfmnt.addbeneficiary.onBlurofMobilenumber = function(ths){
+    debugger;
+    mobnumber = $(ths).val();
+    filterBene = apz.bnfmnt.data.withinBank.filter(function(bene){
+         if(bene.beneficiaryMobilenumber == mobnumber){
+             return bene;
+         }
+    });
+    
+    if(filterBene.length){
+        apz.data.scrdata.bnfmnt__Beneficiary_Req = {};
+        apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls = {};
+        apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls = filterBene[0];
+        apz.data.loadData("Beneficiary","bnfmnt");
+    }
+    
+};
+apz.bnfmnt.addbeneficiary.onBlurofAccountnumber = function(ths){
+    debugger;
+    accnumber = $(ths).val();
+    filterBene = apz.bnfmnt.data.withinBank.filter(function(bene){
+         if(bene.beneficiaryAccountNo == accnumber){
+             return bene;
+         }
+    });
+    
+    if(filterBene.length){
+        apz.data.scrdata.bnfmnt__Beneficiary_Req = {};
+        apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls = {};
+        apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls = filterBene[0];
+        apz.data.loadData("Beneficiary","bnfmnt");
+    }
+    
+};
+apz.bnfmnt.addbeneficiary.fnMobileKeyup = function(el) {
+    var digits = el.value.match(/\d{1,10}/) || [""];
+    el.value = digits[0];
+}
+apz.bnfmnt.addbeneficiary.fnIntialise = function(params) {
+    debugger;
+    apz.bnfmnt.addbeneficiary.sParams = params;
+    if (params.Navigation) {
+        apz.bnfmnt.addbeneficiary.fnSetNavigation(params);
+    }
+    apz.bnfmnt.addbeneficiary.fnGoToStage1();
+};
+apz.bnfmnt.addbeneficiary.fnGoToStage1 = function() {
+    debugger;
+    apz.bnfmnt.addbeneficiary.fnSetValueStage1();
+    // apz.bnfmnt.addbeneficiary.fnRenderStage1();
+};
+apz.bnfmnt.addbeneficiary.fnSetNavigation = function(params) {
+    debugger;
+    apz.bnfmnt.addbeneficiary.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.headerText = "ADD BENEFICIARY";
+    apz.bnfmnt.addbeneficiary.Navigation(lParams);
+};
+apz.bnfmnt.addbeneficiary.fnSetValueStage1 = function() {
+    debugger;
+    apz.data.loadJsonData("StaticTypes", "bnfmnt");
+    var lBeneficarydata = apz.data.scrdata.bnfmnt__StaticTypes_Res.BeneficiaryType;
+    apz.data.scrdata.bnfmnt__StaticTypes_Res.BeneficiaryType = lBeneficarydata;
+    var lTransactiondata = apz.data.scrdata.bnfmnt__StaticTypes_Res.TransactionType;
+    apz.data.scrdata.bnfmnt__StaticTypes_Res.TransactionType = lTransactiondata;
+    apz.data.loadData("StaticTypes", "bnfmnt");
+    apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__createdBy", apz.bnfmnt.addbeneficiary.sParams.data.customerName);
+    apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__customerId", apz.bnfmnt.addbeneficiary.sParams.data.customerId);
+    apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__authenticationType", "OTP");
+};
+apz.bnfmnt.addbeneficiary.fnRenderStage1 = function() {
+    debugger;
+    apz.bnfmnt.addbeneficiary.fnRenderStages("1");
+};
+apz.bnfmnt.addbeneficiary.fnClearData = function() {
+    $("#bnfmnt__AddBeneficiary__Stage3Form input").val('');
+    apz.bnfmnt.addbeneficiary.sParams.TransactionType = null;
+};
+apz.bnfmnt.addbeneficiary.fnRenderStages = function(pStage) {
+    debugger;
+    for (i = 2; i < 7; i++) {
+        if (i == pStage) {
+            apz.show("bnfmnt__AddBeneficiary__Stage" + i);
+        } else {
+            apz.hide("bnfmnt__AddBeneficiary__Stage" + i);
+        }
+    }
+};
+apz.bnfmnt.addbeneficiary.fnRenderTxnStages = function(pStage, txn) {
+    debugger;
+    for (j = 1; j <= 5; j++) {
+        if (j == txn) {
+            $("#bnfmnt__AddBeneficiary__Stage" + pStage + "_Txn" + j).removeClass('sno');
+        } else {
+            $("#bnfmnt__AddBeneficiary__Stage" + pStage + "_Txn" + j).addClass('sno');
+        }
+    }
+};
+apz.bnfmnt.addbeneficiary.fntoggleClick = function(Pthis) {
+    debugger;
+    $("#bnfmnt__InternationalRemittance__Stage1").addClass("sno");
+    var optValue = Pthis.value;
+    if (optValue == "2") {
+        apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryMobilenumber", "");
+        apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryName", "");
+        apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryShortName", "");
+        apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryEmail", "");
+        apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryAccountNo", "");
+        apz.setElmValue("bnfmnt__AddBeneficiary__Reenter_Account_Stage_3", "");
+        apz.bnfmnt.addbeneficiary.sParams.beneficiaryType = "E";
+        apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryType", "E");
+        apz.bnfmnt.addbeneficiary.fnRenderStages("2");
+    } else {
+        apz.bnfmnt.addbeneficiary.sParams.beneficiaryType = "I";
+        apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryType", "I");
+        apz.show("bnfmnt__AddBeneficiary__Stage3_Name");
+        apz.bnfmnt.addbeneficiary.fnRenderStages("3");
+        apz.hide("bnfmnt__AddBeneficiary__Stage3_Txn1");
+        apz.show("bnfmnt__AddBeneficiary__Stage3_Txn3");
+        apz.show("bnfmnt__AddBeneficiary__Stage3_Txn2");
+        apz.hide("bnfmnt__AddBeneficiary__Stage3_Txn3Step1");
+        apz.hide("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryMmid_ul");
+        apz.hide("bnfmnt__AddBeneficiary__ReenterMMID_Stage_3_ul");
+        apz.hide("bnfmnt__AddBeneficiary__Stage3_Txn4");
+    }
+}
+apz.bnfmnt.addbeneficiary.fnaddRowClicked = function() {
+    apz.app.preRowClicked = function(containerId, rowNo) {
+        debugger;
+        if (containerId == "bnfmnt__AddBeneficiary__TransactionType") {
+            apz.bnfmnt.addbeneficiary.fnRenderStages("3");
+            apz.show("bnfmnt__AddBeneficiary__Stage3_Name");
+            apz.show("bnfmnt__AddBeneficiary__Stage3_Txn3Step1");
+            apz.show("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryMmid_ul");
+            apz.show("bnfmnt__AddBeneficiary__ReenterMMID_Stage_3_ul");
+            // if (rowNo == "0") {
+            //     apz.bnfmnt.addbeneficiary.fnRenderTxnStages("3", "1");
+            //     apz.bnfmnt.addbeneficiary.sParams.TransactionType = "Aadhaar";
+            //     apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__txnType", "Aadhar");
+            // } else
+            if (rowNo == "0") {
+                apz.bnfmnt.addbeneficiary.fnRenderStages("3");
+                apz.bnfmnt.addbeneficiary.fnRenderTxnStages("3", "2");
+                apz.bnfmnt.addbeneficiary.sParams.TransactionType = "MMID";
+                apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__txnType", "MMID");
+            } else if (rowNo == "1") {
+                apz.show("bnfmnt__AddBeneficiary__Stage3_Name");
+                apz.bnfmnt.addbeneficiary.fnRenderTxnStages("3", "3");
+                apz.bnfmnt.addbeneficiary.sParams.TransactionType = "IFSC";
+                apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__txnType", "IFSC");
+            } else if (rowNo == "2") {
+                apz.bnfmnt.addbeneficiary.fnRenderTxnStages("3", "4");
+                apz.bnfmnt.addbeneficiary.sParams.TransactionType = "VPA";
+                apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__txnType", "VPA");
+            }
+            // } else if (rowNo == "3") {
+            //     apz.bnfmnt.addbeneficiary.fnRenderTxnStages("3", "5");
+            //     apz.bnfmnt.addbeneficiary.sParams.TransactionType = "SWIFT";
+            //     apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__txnType", "SWIFT");
+            // }
+            else if (rowNo == "3") {
+                apz.hide("bnfmnt__AddBeneficiary__Stage3_Name");
+                apz.hide("bnfmnt__AddBeneficiary__Stage3_Txn3Step1");
+                apz.hide("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryMmid_ul");
+                apz.hide("bnfmnt__AddBeneficiary__ReenterMMID_Stage_3_ul");
+                apz.hide("bnfmnt__AddBeneficiary__Stage2");
+                apz.hide("bnfmnt__AddBeneficiary__Stage3");
+                apz.hide("bnfmnt__AddBeneficiary__Stage4");
+                apz.hide("bnfmnt__AddBeneficiary__Stage5");
+                apz.hide("bnfmnt__AddBeneficiary__Stage6");
+                apz.show("bnfmnt__AddBeneficiary__Stage7");
+                var lParams = {
+                    "appId": "bnfmnt",
+                    "scr": "InternationalRemittance",
+                    "div": "bnfmnt__AddBeneficiary__Stage7",
+                    "userObj": {
+                        "from": "AddBeneficiary"
+                    }
+                };
+                apz.launchSubScreen(lParams);
+            }
+        } else if (containerId == "bnfmnt__AddBeneficiary__ct_lst_5") {
+            apz.bnfmnt.addbeneficiary.fnSelectedRow(rowNo);
+        }
+    };
+};
+/*apz.bnfmnt.addbeneficiary.fnGoToStage1 = function() {
+    debugger;
+    apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryType", " ");
+    apz.bnfmnt.addbeneficiary.fnRenderStages("1");
+};*/
+apz.bnfmnt.addbeneficiary.fnGoToStage2 = function() {
+    debugger;
+    if (apz.bnfmnt.addbeneficiary.sParams.beneficiaryType == "E") {
+        apz.bnfmnt.addbeneficiary.fnClearData();
+        apz.bnfmnt.addbeneficiary.fnRenderStages("2");
+    } else if (apz.bnfmnt.addbeneficiary.sParams.beneficiaryType == "I") {
+        apz.bnfmnt.addbeneficiary.fnClearData();
+        apz.bnfmnt.addbeneficiary.fnRenderStages("1");
+    }
+};
+apz.bnfmnt.addbeneficiary.fnGoToStage3 = function() {
+    apz.bnfmnt.addbeneficiary.fnRenderStages("3");
+};
+apz.bnfmnt.addbeneficiary.fnGoToStage4 = function() {
+    debugger;
+    apz.hide("bnfmnt__AddBeneficiary__toggleBank");
+    apz.data.buildData("bnfmnt", "Beneficiary");
+    if (apz.bnfmnt.addbeneficiary.sParams.beneficiaryType == "E") {
+        var lvalid = apz.val.validateContainer("bnfmnt__AddBeneficiary__Stage3Form");
+        var lValidateAadhar = apz.bnfmnt.addbeneficiary.fnValidAadhaarNumber();
+        if (lvalid === true) {
+            if (lValidateAadhar === true) {
+                apz.bnfmnt.addbeneficiary.fnRenderStages("4");
+                apz.show("bnfmnt__AddBeneficiary__Stage3_AddBeneficiaryButtonRow");
+                apz.show("bnfmnt__AddBeneficiary__Stage3_Name");
+                apz.data.buildData("bnfmnt", "Beneficiary");
+                apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryStatus", "A");
+                if (apz.bnfmnt.addbeneficiary.sParams.TransactionType == "Aadhaar") {
+                    apz.bnfmnt.addbeneficiary.sParams.Scrdata = apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls;
+                    apz.bnfmnt.addbeneficiary.fnRenderTxnStages("4", "1");
+                    var lAadharValue = apz.getElmValue("bnfmnt__AddBeneficiary__Aadhaar1_Stage3") + apz.getElmValue(
+                        "bnfmnt__AddBeneficiary__Aadhaar2_Stage3") + apz.getElmValue("bnfmnt__AddBeneficiary__Aadhaar3_Stage3");
+                    apz.setElmValue("bnfmnt__AddBeneficiary__AadhaarNo_Stage4", lAadharValue);
+                    apz.setElmValue("bnfmnt__AddBeneficiary__Name_Stage4", apz.getElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryName"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__stage4_Nickname", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryShortName"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__EmailID_Stage_4", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryEmail"));
+                } else if (apz.bnfmnt.addbeneficiary.sParams.TransactionType == "MMID") {
+                    apz.bnfmnt.addbeneficiary.sParams.Scrdata = apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls;
+                    apz.bnfmnt.addbeneficiary.fnRenderTxnStages("4", "2");
+                    apz.setElmValue("bnfmnt__AddBeneficiary__MMID_Stage4", apz.getElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryMmid"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__MobileNo_Stage4", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryMobilenumber"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__Name_Stage4", apz.getElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryName"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__EmailID_Stage_4", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryEmail"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__stage4_Nickname", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryShortName"));
+                    apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryEmail", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryEmail"));
+                } else if (apz.bnfmnt.addbeneficiary.sParams.TransactionType == "IFSC") {
+                    apz.bnfmnt.addbeneficiary.sParams.Scrdata = apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls;
+                    apz.bnfmnt.addbeneficiary.fnRenderTxnStages("4", "3");
+                    apz.setElmValue("bnfmnt__AddBeneficiary__AccountNo_Stage4", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryAccountNo"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__Name_Stage4", apz.getElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryName"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__EmailID_Stage_4", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryEmail"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__stage4_Nickname", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryShortName"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__IfscNo_Stage4", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryIfsc"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__BankName_Stage4", apz.bnfmnt.addbeneficiary.sParams.IfscDetails[0].bankName);
+                } else if (apz.bnfmnt.addbeneficiary.sParams.TransactionType == "VPA") {
+                    apz.bnfmnt.addbeneficiary.sParams.Scrdata = apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls;
+                    apz.bnfmnt.addbeneficiary.fnRenderTxnStages("4", "4");
+                    apz.setElmValue("bnfmnt__AddBeneficiary__VPA_Stage4", apz.getElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryVpa"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__Name_Stage4", apz.getElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryName"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__EmailID_Stage_4", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryEmail"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__stage4_Nickname", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryShortName"));
+                } else if (apz.bnfmnt.addbeneficiary.sParams.TransactionType == "SWIFT") {
+                    apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls.beneficiaryAccountNo = apz.getElmValue("bnfmnt__AddBeneficiary__AccNo");
+                    apz.bnfmnt.addbeneficiary.sParams.Scrdata = apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls;
+                    apz.bnfmnt.addbeneficiary.fnRenderTxnStages("4", "5");
+                    apz.setElmValue("bnfmnt__AddBeneficiary__BIC_stage4", apz.getElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryBic"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__benAddr1_stage4", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryAddr1"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__benAddr2_stage4", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryAddr2"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__benAddr3_stage4", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryAddr3"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__benAddr4_stage4", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryAddr4"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__chargeWhom_stage4", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryChargewhom"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__Name_Stage4", apz.getElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryName"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__EmailID_Stage_4", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryEmail"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__stage4_Nickname", apz.getElmValue(
+                        "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryShortName"));
+                    apz.setElmValue("bnfmnt__AddBeneficiary__AccNo1_stage4", apz.getElmValue("bnfmnt__AddBeneficiary__AccNo"));
+                }
+            }
+        } else {
+            var msg = {
+                'code': 'VAL-MAN'
+            };
+          //  apz.dispMsg(msg);
+        }
+    } else {
+        var lvalid = apz.val.validateContainer("bnfmnt__AddBeneficiary__Stage3Form");
+        lvalid = true;
+        if (lvalid) {
+            apz.bnfmnt.addbeneficiary.sParams.Scrdata = apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls;
+            apz.bnfmnt.addbeneficiary.fnRenderStages("4");
+            apz.hide("bnfmnt__AddBeneficiary__Stage4_Txn1");
+            apz.show("bnfmnt__AddBeneficiary__Stage4_Txn3");
+            apz.show("bnfmnt__AddBeneficiary__Stage4_Txn2");
+            apz.hide("bnfmnt__AddBeneficiary__Stage4_Txn4");
+            apz.hide("bnfmnt__AddBeneficiary__Stage4_Txn5");
+            apz.hide("bnfmnt__AddBeneficiary__MMID_Stage4_ctrl_grp_div");
+            apz.hide("bnfmnt__AddBeneficiary__BankName_Stage4_ctrl_grp_div");
+            apz.hide("bnfmnt__AddBeneficiary__IfscNo_Stage4_ctrl_grp_div");
+            apz.setElmValue("bnfmnt__AddBeneficiary__AccountNo_Stage4", apz.getElmValue(
+                "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryAccountNo"));
+            apz.setElmValue("bnfmnt__AddBeneficiary__Name_Stage4", apz.getElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryName"));
+            apz.setElmValue("bnfmnt__AddBeneficiary__MobileNo_Stage4", apz.getElmValue(
+                "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryMobilenumber"));
+            apz.setElmValue("bnfmnt__AddBeneficiary__EmailID_Stage_4", apz.getElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryEmail"));
+            apz.setElmValue("bnfmnt__AddBeneficiary__stage4_Nickname", apz.getElmValue(
+                "bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryShortName"));
+        } else {
+            var msg = {
+                'code': 'VAL-MAN'
+            };
+           // apz.dispMsg(msg);
+        }
+    }
+};
+apz.bnfmnt.addbeneficiary.fnGoToStage5 = function(params) {
+    debugger;
+    apz.hide("bnfmnt__AddBeneficiary__toggleBank");
+    apz.bnfmnt.addbeneficiary.fnRenderStages("5");
+    var lRefNo = "Your Reference no is " + apz.bnfmnt.addbeneficiary.sParams.OtpDetails.BeneId;
+    apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_RefNo", lRefNo);
+    apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls.beneficiaryId = apz.bnfmnt.addbeneficiary.sParams.OtpDetails.BeneId;
+    if (apz.bnfmnt.addbeneficiary.sParams.beneficiaryType == "E") {
+        if (apz.bnfmnt.addbeneficiary.sParams.TransactionType == "Aadhaar") {
+            apz.bnfmnt.addbeneficiary.fnRenderTxnStages("5", "1");
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_AadharNo", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryAadharNo);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_Name", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryName);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_EmailId", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryEmail);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_Nickname", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryShortName);
+        } else if (apz.bnfmnt.addbeneficiary.sParams.TransactionType == "MMID") {
+            apz.bnfmnt.addbeneficiary.fnRenderTxnStages("5", "2");
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_MMID", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryMmid);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_MobileNo", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryMobilenumber);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_Name", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryName);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_EmailId", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryEmail);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_Nickname", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryShortName);
+        } else if (apz.bnfmnt.addbeneficiary.sParams.TransactionType == "IFSC") {
+            apz.hide("bnfmnt__AddBeneficiary__IfscRow");
+            apz.hide("bnfmnt__AddBeneficiary__Stage3_IfcsButtonRow");
+            apz.bnfmnt.addbeneficiary.fnRenderTxnStages("5", "3");
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_AccountNo", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryAccountNo);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_Name", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryName);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_EmailId", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryEmail);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_Nickname", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryShortName);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_BankName", apz.bnfmnt.addbeneficiary.sParams.IfscDetails[0].bankName);
+        } else if (apz.bnfmnt.addbeneficiary.sParams.TransactionType == "VPA") {
+            apz.bnfmnt.addbeneficiary.fnRenderTxnStages("5", "4");
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_VPA", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryVpa);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_Name", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryName);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_EmailId", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryEmail);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_Nickname", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryShortName);
+        } else if (apz.bnfmnt.addbeneficiary.sParams.TransactionType == "SWIFT") {
+            apz.bnfmnt.addbeneficiary.fnRenderTxnStages("5", "5");
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_BIC", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryBic);
+            apz.setElmValue("bnfmnt__AddBeneficiary__AccNo_stage5", apz.getElmValue("bnfmnt__AddBeneficiary__AccNo"));
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_BenAddr1", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryAddr1);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_BenAddr2", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryAddr2);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_BenAddr3", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryAddr3);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_BenAddr4", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryAddr4);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_chargeWhom", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryChargewhom);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_Name", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryName);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_EmailId", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryEmail);
+            apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_Nickname", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryShortName);
+        }
+    } else {
+        apz.show("bnfmnt__AddBeneficiary__Stage5_Txn2");
+        apz.hide("bnfmnt__AddBeneficiary__Stage5_Txn1");
+        apz.show("bnfmnt__AddBeneficiary__Stage5_Txn3");
+        apz.hide("bnfmnt__AddBeneficiary__Stage5_Txn2Step1");
+        apz.hide("bnfmnt__AddBeneficiary__Bank_Row_Stage5");
+        apz.hide("bnfmnt__AddBeneficiary__IFSC_Row_Stage5");
+        apz.hide("bnfmnt__AddBeneficiary__Stage5_Txn4");
+        apz.hide("bnfmnt__AddBeneficiary__Stage5_Txn5");
+        apz.hide("bnfmnt__AddBeneficiary__Bank_Row_Stage5_row");
+        apz.hide("bnfmnt__AddBeneficiary__Stage3_Txn3Step1_Stage5_row");
+        apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_Name", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryName);
+        apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_MobileNo", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryMobilenumber);
+        apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_AccountNo", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryAccountNo);
+        apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_EmailId", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryEmail);
+        apz.setElmValue("bnfmnt__AddBeneficiary__Stage5_Nickname", apz.bnfmnt.addbeneficiary.sParams.Scrdata.beneficiaryShortName);
+    }
+};
+apz.bnfmnt.addbeneficiary.fnSearchIFSC = function() {
+    debugger;
+    // apz.hide("bnfmnt__AddBeneficiary__Stage3_AddBeneficiaryButtonRow");
+    // apz.show("bnfmnt__AddBeneficiary__IfscRowDiv");
+    // apz.hide("bnfmnt__AddBeneficiary__Stage3");
+    // var lParams = {
+    //     "appId": "ifscsh",
+    //     "scr": "IfscSearch",
+    //     "div": "bnfmnt__AddBeneficiary__IfscRowDiv",
+    //     "type": "CF",
+    //     "userObj": {
+    //         //"data": $.extend(true, {}, lObj),
+    //         "control": {
+    //             "callBack": apz.bnfmnt.addbeneficiary.fnSearchIFSCCallBack,
+    //             "destroyDiv": "bnfmnt__AddBeneficiary__IfscRowDiv"
+    //         }
+    //     }
+    // };
+    // apz.launchApp(lParams);
+    apz.data.loadJsonData("IFSCDetails", "bnfmnt");
+    apz.toggleModal({
+        "targetId": "bnfmnt__AddBeneficiary__pu_mdl_1"
+    });
+};
+apz.bnfmnt.addbeneficiary.fnSelectedRow = function(rowno) {
+    debugger;
+    var data = apz.data.scrdata.bnfmnt__IFSCDetails_Res[rowno];
+    apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryIfsc", data.ifscCode);
+    apz.toggleModal({
+        "targetId": "bnfmnt__AddBeneficiary__pu_mdl_1"
+    });
+};
+apz.bnfmnt.addbeneficiary.fnSearchIFSCCallBack = function(params) {
+    debugger;
+    // apz.show("bnfmnt__AddBeneficiary__Stage3");
+    // apz.hide("bnfmnt__AddBeneficiary__IfscRowDiv");
+    // apz.hide("bnfmnt__AddBeneficiary__Stage3_IfcsButtonRow");
+    // apz.show("bnfmnt__AddBeneficiary__Stage3_AddBeneficiaryButtonRow");
+    if (!apz.isNull(params)) {
+        apz.bnfmnt.addbeneficiary.sParams.IfscDetails = params;
+        apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryIfsc", params[0].ifsc);
+    }
+};
+/*apz.bnfmnt.addbeneficiary.fnCancelIfsc = function() {
+    apz.hide("bnfmnt__AddBeneficiary__IfscRow");
+    apz.hide("bnfmnt__AddBeneficiary__Stage3_IfcsButtonRow");
+    apz.show("bnfmnt__AddBeneficiary__Stage3_AddBeneficiaryButtonRow");
+    apz.show("bnfmnt__AddBeneficiary__Stage3_Txn3Step2");
+    apz.show("bnfmnt__AddBeneficiary__Stage3_Name");
+}*/
+apz.bnfmnt.addbeneficiary.fnConfirmStage2 = function() {
+    debugger;
+    apz.hide("bnfmnt__AddBeneficiary__toggleBank");
+    var lReq = {
+        "ifaceName": "Beneficiary",
+        "req": {
+            "action": "Add",
+            "beneficiaryDtls": apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls
+        }
+    };
+    apz.bnfmnt.addbeneficiary.fnBeforeCallServer(lReq);
+};
+apz.bnfmnt.addbeneficiary.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": "N",
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": apz.bnfmnt.addbeneficiary.fnCallServerCallBack
+    };
+   // apz.server.callServer(lServerParams);
+         jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("bnfmnt")+"/Beneficiary.json"));
+         apz.bnfmnt.addbeneficiary.fnCallServerCallBack(jsondata);
+
+};
+apz.bnfmnt.addbeneficiary.fnCallServerCallBack = function(params) {
+    debugger;
+        apz.bnfmnt.addbeneficiary.sParams.OtpDetails = params.beneficiaryDtls;
+        apz.bnfmnt.addbeneficiary.fnLaunchOtpScreen();
+    
+       // apz.dispMsg(msg);
+    
+};
+apz.bnfmnt.addbeneficiary.fnLaunchOtpScreen = function(params) {
+    apz.hide("bnfmnt__AddBeneficiary__NavigationStage");
+    apz.hide("bnfmnt__AddBeneficiary__Stage4");
+    apz.show("bnfmnt__AddBeneficiary__Stage6");
+    var lObj = {};
+    lObj.OTPRefNo = apz.bnfmnt.addbeneficiary.sParams.OtpDetails.data.OTPRefNo;
+    var lParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "bnfmnt__AddBeneficiary__Stage6",
+        "type": "CF",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": $.extend(true, {}, lObj),
+            "control": {
+                "callBack": apz.bnfmnt.addbeneficiary.fnOTPCallBack,
+                "destroyDiv": "bnfmnt__AddBeneficiary__Stage6"
+            }
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.bnfmnt.addbeneficiary.fnOTPCallBack = function(params) {
+    debugger;
+    apz.hide("bnfmnt__AddBeneficiary__Stage6");
+    // apz.show("bnfmnt__AddBeneficiary__Stage4");
+    apz.currAppId = "bnfmnt";
+    apz.bnfmnt.addbeneficiary.fnGoToStage5(params);
+};
+apz.bnfmnt.addbeneficiary.fnSendMoney = function() {
+    debugger;
+    if (apz.bnfmnt.addbeneficiary.sParams.control) {
+        if (apz.bnfmnt.addbeneficiary.sParams.control.callBack) {
+            var lCb = apz.bnfmnt.addbeneficiary.sParams.control.callBack;
+            var lDestroy = apz.bnfmnt.addbeneficiary.sParams.control.destroyDiv;
+            apz.closeSubScreen({
+                "appId": "bnfmnt"
+            });
+            $('#' + lDestroy).children().remove();
+            // apz.data.buildData("Beneficiary","bnfmnt");
+            lCb(apz.data.scrdata.bnfmnt__Beneficiary_Req.beneficiaryDtls);
+        }
+        //{"customerId":"000004712","control":{"destroydiv":"fndftr__FundsTransfer__proceedWithNew","callBack":""}}
+    }
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+};
+apz.bnfmnt.addbeneficiary.fnAadhaarNumberPattern = function(lAadhaar) {
+    apz.dbcommon.fnAadhaarNumberPattern();
+};
+apz.bnfmnt.addbeneficiary.fnValidAadhaarNumber = function() {
+    debugger;
+    if (apz.bnfmnt.addbeneficiary.sParams.TransactionType == "Aadhaar") {
+        var lAadhaar = apz.getElmValue('bnfmnt__AddBeneficiary__Aadhaar1_Stage3') + apz.getElmValue('bnfmnt__AddBeneficiary__Aadhaar2_Stage3') + apz.getElmValue(
+            'bnfmnt__AddBeneficiary__Aadhaar3_Stage3');
+        var lReenterAadhaar = apz.getElmValue('bnfmnt__AddBeneficiary__ReenterAadhaar1_Stage3') + apz.getElmValue(
+            'bnfmnt__AddBeneficiary__ReenterAadhaar2_Stage3') + apz.getElmValue('bnfmnt__AddBeneficiary__ReenterAadhaar3_Stage3');
+        if (lAadhaar.length == 12) {
+            var lAadhaarPattern = apz.dbcommon.fnAadhaarNumberPattern(lAadhaar);
+            if (lAadhaar == lReenterAadhaar && lAadhaarPattern == true) {
+                apz.show("bnfmnt__AddBeneficiary__Aadhaar_Success_msg_ul");
+                apz.hide("bnfmnt__AddBeneficiary__Aadhaar_Error_Msg_ul");
+                apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryAadharNo", lAadhaar);
+                return true;
+            } else {
+                apz.show("bnfmnt__AddBeneficiary__Aadhaar_Error_Msg_ul");
+                apz.hide("bnfmnt__AddBeneficiary__Aadhaar_Success_msg_ul");
+                apz.bnfmnt.addbeneficiary.fnValidAadhaarNumberMismatch();
+                return false;
+            }
+        } else {
+            apz.show("bnfmnt__AddBeneficiary__Aadhaar_Error_Msg_ul");
+            apz.hide("bnfmnt__AddBeneficiary__Aadhaar_Success_msg_ul");
+            apz.bnfmnt.addbeneficiary.fnValidAadhaarNumberMismatch();
+            return false;
+        }
+    } else {
+        return true;
+    }
+};
+apz.bnfmnt.addbeneficiary.fnValidAadhaarNumberMismatch = function() {
+    debugger;
+    $(".Aadhar input").val('');
+};
+apz.bnfmnt.addbeneficiary.fnValidConfirmAccountNumber = function() {
+    debugger;
+    var laccountNum = apz.getElmValue('bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryAccountNo');
+    var lconfAccountNum = apz.getElmValue('bnfmnt__AddBeneficiary__Reenter_Account_Stage_3');
+    var lObj = {
+        "AccountNo": laccountNum,
+        "ConfirmAccNo": lconfAccountNum
+    };
+    var lValid = apz.dbcommon.fnValidConfirmAccountNumber(lObj);
+    if (!lValid) {
+        apz.setElmValue('bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryAccountNo', null);
+        apz.setElmValue('bnfmnt__AddBeneficiary__Reenter_Account_Stage_3', null);
+    }
+};
+apz.bnfmnt.addbeneficiary.fnValidSameMMID = function() {
+    debugger;
+    var lMMID = apz.getElmValue('bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryMmid_ul');
+    var lconfMMID = apz.getElmValue('bnfmnt__AddBeneficiary__ReenterMMID_Stage_3_ul');
+    var lObj = {
+        "MMID": lMMID,
+        "ConfirmMMID": lconfMMID
+    };
+    var lValid = apz.dbcommon.fnValidSameMMID(lObj);
+    if (!lValid) {
+        apz.setElmValue('bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryMmid_ul', null);
+        apz.setElmValue('bnfmnt__AddBeneficiary__ReenterMMID_Stage_3_ul', null);
+    }
+};
+apz.bnfmnt.addbeneficiary.fnValidateMobile = function(obj) {
+    apz.dbcommon.fnValidateMobile(obj);
+};
+apz.bnfmnt.addbeneficiary.fnValidateMMID = function(obj) {
+    apz.dbcommon.fnValidateMMID(obj);
+};
+apz.bnfmnt.addbeneficiary.fnValidateAccountNumber = function(obj) {
+    apz.dbcommon.fnValidateAccountNumber(obj);
+};
+apz.bnfmnt.addbeneficiary.fnValidateEmail = function(obj) {
+    apz.dbcommon.fnValidateEmail(obj);
+};
+apz.bnfmnt.addbeneficiary.fnDone = function() {
+    apz.landin.Landing.fnHome();
+}
+/*manohar changes ,integrating contact details*/
+apz.bnfmnt.fngetContactlist = function() {
+    debugger;
+    if (/android|webos|iphone|ipad|ipod|blackberry|opera mini|Windows Phone|iemobile|WPDesktop|XBLWP7/i.test(navigator.userAgent.toLowerCase())) {
+        let json = {};
+        json.id = "SEARCHCONTACT_ID";
+        json.callBack = apz.bnfmnt.fngetContactlistCB;
+        apz.ns.fetchContact(json);
+    }
+}
+apz.bnfmnt.fngetContactlistCB = function(pResp) {
+    debugger;
+    apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryMobilenumber", pResp.phoneno[0].toString().replace(" ", ""));
+    apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryName", pResp.name)
+    if (pResp.email.length > 0) {
+        apz.setElmValue("bnfmnt__Beneficiary__i__beneficiaryDtls__beneficiaryEmail", pResp.email[0]);
+    }
+}
+apz.bnfmnt.fnCancel = function(params) {
+    debugger;
+    if (apz.bnfmnt.addbeneficiary.sParams.from == "StandingInstruction") {
+        apz.bnfmnt.submitCallback();
+    } else {
+      apz.landin.Landing.fnHome();
+    }
+}
+apz.bnfmnt.submitCallback = function() {
+    debugger;
+    lParams = {};
+ apz.landin.Landing.fnMenuClickInside("Standing Instruction");
+}

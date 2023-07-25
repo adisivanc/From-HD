@@ -1,0 +1,81 @@
+apz.lnsmlr.landingAssets = {};
+apz.lnsmlr.landingAssets.sParams = {};
+apz.app.onLoad_LandingAssets = function(params){
+    debugger;
+    apz.lnsmlr.landingAssets.fnInitialise(params);
+};
+apz.lnsmlr.landingAssets.fnInitialise = function(params){
+    debugger;
+    apz.lnsmlr.landingAssets.sParams = params;
+    apz.lnsmlr.landingAssets.fnSetValueStage1();
+    apz.lnsmlr.landingAssets.fnLaunchMiniStatement();
+};
+apz.lnsmlr.landingAssets.fnSetValueStage1 = function(){
+    debugger;
+    apz.setElmValue("lnsmlr__LandingAssets__AccountType",apz.lnsmlr.landingAssets.sParams.data.accountType);
+    apz.setElmValue("lnsmlr__LandingAssets__AccNumber",apz.lnsmlr.landingAssets.sParams.data.accountNo);
+    apz.setElmValue("lnsmlr__LandingAssets__Balance",apz.lnsmlr.landingAssets.fnFormatNumber(apz.lnsmlr.landingAssets.sParams.data.accountBal));
+};
+apz.lnsmlr.landingAssets.fnLaunchMiniStatement = function(){
+    debugger;
+      
+    var ldata = {
+        "customerDetail":{
+            "customerID":"1"
+        },
+        "accountDetail":[{
+             "accountNo": "753410000076",
+            "accountType": "Savings Account"
+        }]
+    }
+      var lParams = {
+            "appId" : "accstm",
+            "scr" :"MiniStatement",
+            "div":"lnsmlr__LandingAssets__sc_col_7",
+            "userObj" :ldata
+            };
+            apz.launchApp(lParams);
+}
+apz.lnsmlr.landingAssets.fnLaunchApps = function(pthis){
+    debugger;
+    if(pthis.value == "Transfer"){
+        var lParams = {
+            "appId" : "",
+            "scr" :"",
+            "div":"",
+            "userObj" : {
+                "data":"",
+                "action":"",
+                "callBack":"",
+                "destroyDiv":""
+            }
+            };
+            apz.launchApp(lParams);
+    }
+     else if(pthis.value == "Book Deposits"){
+        var lParams = {
+            "appId" : "",
+            "scr" :"",
+            "div":"",
+            "userObj" : {
+                "data":"",
+                "action":"",
+                "callBack":"",
+                "destroyDiv":""
+            }
+            };
+            apz.launchApp(lParams);
+    }
+};
+
+apz.lnsmlr.landingAssets.fnFormatNumber = function(pvalue) {
+    debugger;
+    var lObj = {
+        "value": pvalue,
+        "decimalSep": '.',
+        "displayAsLiteral": 'N',
+        "mask": "LAKH"
+    };
+    var lFormatedValue = apz.formatNumber(lObj);
+    return lFormatedValue;
+};

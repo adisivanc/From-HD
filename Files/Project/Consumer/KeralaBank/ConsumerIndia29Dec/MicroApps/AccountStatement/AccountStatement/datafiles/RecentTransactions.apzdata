@@ -1,0 +1,113 @@
+{
+    "accstm__RecentTransactions_Res": {
+        "widgRecentTransac": [{
+            "date": "20/06/2020",
+            "amount": "2034.00",
+            "desc": "Debit Card no.2324 XXXX XXXX XX34 amount of plaza rent credited",
+            "description" : "Bills",
+            "icon": "dwnred.png",
+            "details": {
+                "accountNo": "100009312263",
+                "accountBrnName": "Clarendon Centre",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "APZ00000619",
+                "accountOpnDt": "12/08/2001",
+                "accountType": "Savings Account",
+                "accountStat": "Open",
+                "actCustRel": "Single",
+                "accountPrdct": "1233",
+                "accountBal": "50,000",
+                "minBal": "00.00",
+                "accountCcy": "USD",
+                "linkedMobno": "9686736454",
+                "linkedCardno": "2324 XXXX XXXX XX34",
+                "address": "Clarendon Centre",
+                "status": "Active",
+                "LienAmount": "00.00",
+                "from": "recentTransactions"
+            }
+        }, {
+            "date": "22/06/2020",
+            "amount": " 23329.00",
+            "desc": "Credit Card no.7349 XX7X X8XX 2345 was used to make a purchase at Total",
+            "icon": "upgreen.png",
+                        "description" : "Gas",
+
+            "details": {
+                "accountNo": "100009312401",
+                "accountBrnName": "Clarendon Centre",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "APZ00000619",
+                "accountOpnDt": "12/08/2001",
+                "accountType": "Savings Account",
+                "accountStat": "Open",
+                "actCustRel": "Single",
+                "accountPrdct": "1233",
+                "accountBal": "45,000",
+                "minBal": "00.00",
+                "accountCcy": "USD",
+                "linkedMobno": "9686736454",
+                "linkedCardno": "2324 XXXX XXXX XX45",
+                "address": "Clarendon Centre",
+                "status": "Active",
+                "LienAmount": "00.00",
+                "from": "recentTransactions"
+            }
+        }, {
+            "date": "25/06/2020",
+            "amount": "1454.00",
+            "desc": "Debit Card no.2324 XXXX XXXX XX92 amount of plaza rent credited",
+            "icon": "dwnred.png",
+                        "description" : "Shopping",
+
+            "details": {
+                "accountNo": "100009312274",
+                "accountBrnName": "Clarendon Centre",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "APZ00000619",
+                "accountOpnDt": "12/08/2001",
+                "accountType": "Current Account",
+                "accountStat": "Open",
+                "actCustRel": "Single",
+                "accountPrdct": "1233",
+                "accountBal": "40,000",
+                "minBal": "00.00",
+                "accountCcy": "USD",
+                "linkedMobno": "9686736454",
+                "linkedCardno": "2324 XXXX XXXX XX92",
+                "address": "Clarendon Centre",
+                "status": "Active",
+                "LienAmount": "00.00",
+                "from": "recentTransactions"
+            }
+        }, {
+            "date": "26/06/2020",
+            "amount": "79554.00",
+            "desc": "Credit Card no.6493 XX3X X2XX 1143 was used to make a purchase at Total",
+            "icon": "upgreen.png",
+                        "description" : "Movie",
+
+            "details": {
+                "accountNo": "100009312401",
+                "accountBrnName": "Clarendon Centre",
+                "accountBrnCd": "619",
+                "accountBrnIFSC": "APZ00000619",
+                "accountOpnDt": "12/08/2001",
+                "accountType": "Savings Account",
+                "accountStat": "Open",
+                "actCustRel": "Single",
+                "accountPrdct": "1233",
+                "accountBal": "45,000",
+                "minBal": "00.00",
+                "accountCcy": "USD",
+                "linkedMobno": "9686736454",
+                "linkedCardno": "2324 XXXX XXXX XX45",
+                "address": "Clarendon Centre",
+                "status": "Active",
+                "LienAmount": "00.00",
+                "from": "recentTransactions"
+            }
+        
+        }]
+    }
+}

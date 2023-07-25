@@ -1,0 +1,31 @@
+apz.fndftr.TransferLauncher = {};
+
+apz.app.onShown_TransferLauncher = function(params) {
+    debugger;
+    apz.fndftr.TransferLauncher.sCache = params;
+    apz.fndftr.TransferLauncher.sCache.transferDetails = apz.fndftr.tranfers.toAccountDetails;
+     let fromAcc = apz.fndftr.tranfers.fromAccountDetails;
+     let toAcc =  apz.fndftr.tranfers.toAccountDetails;
+     let fromName  = fromAcc["HolderName"];
+     let toName  = toAcc["HolderName"];
+     toName =toName[0].toUpperCase() + toName.substring(1,toName.length);
+ 
+     apz.setElmValue("fndftr__TransferLauncher__fromAccImg",fromName[0].toUpperCase());
+     apz.setElmValue("fndftr__TransferLauncher__toAccImg",toName[0].toUpperCase());
+     apz.setElmValue("fndftr__TransferLauncher__fromName",fromName);
+     apz.setElmValue("fndftr__TransferLauncher__toName",toName);
+       apz.setElmValue("fndftr__TransferLauncher__fromAccNo",fromAcc["accountNo"]);
+     apz.setElmValue("fndftr__TransferLauncher__toAccNo",toAcc["accountNo"]);
+     
+        apz.launchSubScreen({
+        appId: "fndftr",
+        scr: "Transfer",
+        div: "fndftr__TransferLauncher__ps_pls_3",
+        userObj: {
+            ...apz.fndftr.TransferLauncher.sCache,
+            parentdiv:"fndftr__TransferLauncher__ps_pls_3"
+        }
+    });
+    
+    
+}

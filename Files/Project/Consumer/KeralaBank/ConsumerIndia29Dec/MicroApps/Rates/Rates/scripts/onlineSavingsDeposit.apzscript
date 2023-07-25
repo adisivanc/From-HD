@@ -1,0 +1,4 @@
+
+apz.app.onLoad_onlineSavingsDeposit=function() {
+    apz.data.loadJsonData("onlineSavings","Rates");
+}

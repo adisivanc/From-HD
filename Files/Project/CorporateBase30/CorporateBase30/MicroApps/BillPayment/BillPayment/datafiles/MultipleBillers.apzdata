@@ -1,0 +1,13 @@
+{
+    "bilpay__MultipleBillers_Res": {
+        "Billers": {
+            "data": {
+                
+            },
+            "extMsg": "",
+            "respCd": "",
+            "intMsgCd": "",
+            "status": "success"
+        }
+    }
+}

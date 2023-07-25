@@ -1,0 +1,101 @@
+apz.ACLD01.Loans = {};
+apz.app.onLoad_Loans = function() {
+    debugger;
+    apz.ACLD01.Loans.getDetails();
+};
+apz.app.onShown_Loans = function() {
+    debugger;
+    $(".adr-ctr").addClass("sno");
+    var lWindowWidth = $(window).width();
+    $(document).mousemove(function(event) {
+        if (event.pageX > lWindowWidth - 30) {
+            debugger;
+            if (!$("#ACLD01__Loans__sideloandetails").hasClass('apz-nav-open')) {
+                apz.app.openSidebar("ACLD01__Loans__sideloandetails");
+                setTimeout(function() {
+                    apz.app.closeSidebar("ACLD01__Loans__sideloandetails");
+                }, 5000);
+            }
+        }
+    });
+};
+apz.ACLD01.Loans.getDetails = function() {
+    debugger;
+    var lServerParams = {
+        "ifaceName": "Loans_Query",
+        "buildReq": "N",
+        "req": "",
+        "paintResp": "Y",
+        "async": "",
+        "callBack": apz.ACLD01.Loans.callServerCallBack,
+        "callBackObj": "",
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.ACLD01.Loans.callServerCallBack = function(params) {
+    debugger;
+    $("#ACLD01__Loans__LoanAccount").text($("#ACLD01__Loans__i__LoansDetails__accountName_0").text());
+    $("#ACLD01__Loans__LoanAccValue").text($("#ACLD01__Loans__i__LoansDetails__accountNumber_0").text());
+    $("#ACLD01__Loans__LoansBal").text($("#ACLD01__Loans__i__LoansDetails__currency_0").text());
+};
+apz.ACLD01.Loans.searchKeyPress = function(event) {
+    if (event.which == 13) {
+        apz.ACLD01.Loans.search();
+    }
+};
+apz.ACLD01.Loans.search = function() {
+    debugger;
+    var id = $("#ACLD01__Loans__Searchinput").val();
+    apz.app.searchRecords("ACLD01__Loans__LoansDetails", id);
+};
+apz.app.preRowClicked = function(containerId, rowNo) {
+    debugger;
+    if (containerId == "ACLD01__Loans__LoansDetails") {
+        var lrowID = containerId + "_row_" + rowNo;
+        // $("#" + lrowID).addClass("acc-active");
+          $("#ACLD01__Loans__LoanAccount").text($("#ACLD01__Loans__i__LoansDetails__accountName_" + rowNo).text());
+        $("#ACLD01__Loans__LoanAccValue").text($("#ACLD01__Loans__i__LoansDetails__accountNumber_" + rowNo).text());
+        $("#ACLD01__Loans__LoansBal").text($("#ACLD01__Loans__i__LoansDetails__currency_" + rowNo).text());
+    }
+};
+ apz.app.searchRecords = function(pcontainer, psearchcontent) {
+     debugger;
+  var llen = $('#ACLD01__Loans__LoansDetails > ul > li').length;
+  var lstr = document.getElementById('ACLD01__Loans__Searchinput').value.trim().toUpperCase();
+  for(var i=0; i < llen; i++) {
+  if(document.getElementById('ACLD01__Loans__i__LoansDetails__accountName_'+ i + '_txtcnt').innerHTML.trim().startsWith(lstr)) {
+    $('#ACLD01__Loans__LoansDetails_row_' + i).removeClass('sno');
+  } else {
+    $('#ACLD01__Loans__LoansDetails_row_' + i).addClass('sno');  
+  }
+  }
+ };
+apz.ACLD01.Loans.calcPaymentDetails = function(){
+    var lArmotScheduleJSON = [];
+    var lEmi = apz.getElmValue("aclo01__LoanDetails__o__tbDbmiCorpLoanDetails__installmentAmount");
+    var lMonthlyROI = apz.getElmValue("aclo01__LoanDetails__o__tbDbmiCorpLoanDetails__interestRate");
+    var lPrincipal = apz.getElmValue("aclo01__LoanDetails__o__tbDbmiCorpLoanDetails__loanAmount");
+    var lStartDate = apz.getElmValue("aclo01__LoanDetails__o__tbDbmiCorpLoanDetails__lastPaymentDate");
+    var lEndDate = apz.getElmValue("aclo01__LoanDetails__o__tbDbmiCorpLoanDetails__accountOpeningDate");
+    var lMonthlyTenure = 24;
+    apz.ACLD01.Loans.calcAmortizationSchedule(lEmi, lPrincipal, lMonthlyROI, lMonthlyTenure, 1, lArmotScheduleJSON);
+    apz.data.scrdata.ACLD01__LoanSimulation_Req = {};
+    apz.data.scrdata.ACLD01__LoanSimulation_Req.LoanGraph = graphObj;
+    apz.data.scrdata.ACLD01__LoanSimulation_Req.EMI = lArmotScheduleJSON;
+    apz.data.loadData("LoanSimulation");
+}
+apz.ACLD01.Loans.calcAmortizationSchedule = function(pEmi, pPrincipal, pROI, pTenure, pCurrPeriod, pArmotScheduleJSON) {
+    if (pCurrPeriod <= pTenure) {
+        var lMonthInterest = Math.round((pPrincipal * pROI * 100) / 100);
+        var lMonthPrincipal = Math.round(((pEmi - lMonthInterest) * 100) / 100);
+        var lBalance = Math.round(((pPrincipal - lMonthPrincipal) * 100) / 100);
+        var lCurrAmort = {};
+        lCurrAmort.Interest = lMonthInterest;
+        lCurrAmort.Principal = lMonthPrincipal;
+        lCurrAmort.Balance = lBalance;
+        lCurrAmort.Period = pCurrPeriod;
+        pArmotScheduleJSON.push(lCurrAmort);
+        pCurrPeriod = pCurrPeriod + 1;
+        apz.ACLS01.LoanSimulation.calcAmortizationSchedule(pEmi, lBalance, pROI, pTenure, pCurrPeriod, pArmotScheduleJSON);
+    }
+};

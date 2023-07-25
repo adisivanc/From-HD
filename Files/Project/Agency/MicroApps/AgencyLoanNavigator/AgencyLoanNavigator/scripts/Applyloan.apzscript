@@ -1,0 +1,370 @@
+apz.agloan.Applyloan = {};
+apz.agloan.Applyloan.sParams = {};
+apz.agloan.currentFieldVal = "";
+apz.agloan.Applyloan.saveIt = false;
+apz.agloan.Applyloan.isCreditCheckDisabled = false;
+apz.agloan.Applyloan.navAction = "";
+apz.app.onLoad_Applyloan = function(params) {
+    apz.agloan.Applyloan.manageHeaders();
+    debugger;
+    // apz.dateFormat = "MM/dd/yyyy";
+    apz.agloan.Applyloan.sparams = params;
+    $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__refno").val(apz.agloan.Applyloan.sparams.refNo);
+    if (params.product === "Cards") {
+        $("#agloan__Applyloan__sc_row_4,#agloan__Applyloan__el_icn_1,#agloan__Applyloan__sc_row_83").addClass("sno");
+        $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__loantype_grp_lbl").html("Card Type");
+        apz.setElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__loantype", apz.agloan.Applyloan.sparams.subproduct);
+        if (apz.country === "IND") {
+            apz.agloan.Applyloan.isCreditCheckDisabled = false;
+        }
+    } else {
+        if (apz.country === "IND") {
+            var arrayName = params.subproduct.replace(/ /g, '');
+            var loanPurpose = JSON.parse(apz.getFile(apz.getDataFilesPath("agloan") + "/" + arrayName + "Purpose.json"));
+            apz.populateDropdown($("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__loanPurpose")[0], loanPurpose);
+            if (params.subproduct === "Home Loan") {
+                var propertyType = [{
+                    "val": "",
+                    "desc": "Please Select"
+                }, {
+                    "val": "Free Hold",
+                    "desc": "Free Hold"
+                }, {
+                    "val": "Lease Hold",
+                    "desc": "Lease Hold"
+                }]
+                apz.populateDropdown($("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__homepropertytype")[0], propertyType);
+            }
+        } else {
+            var propertyType = [{
+                "val": "",
+                "desc": "Please Select"
+            }, {
+                "val": "Single Family",
+                "desc": "Single Family"
+            }]
+            apz.populateDropdown($("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__homepropertytype")[0], propertyType);
+        }
+    }
+    apz.agloan.Applyloan.fnPopulateLoanTypeFields();
+    if (apz.country === "IND") {
+        $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__term_grp_lbl").html(apz.lits.agloan[apz.language].LIT_TENOR_YEARS);
+        $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__term").attr("placeholder", apz.lits.agloan[apz.language].LIT_TENOR_YEARS);
+        $("#agloan__Applyloan__sc_row_60,#agloan__Applyloan__sc_row_58").removeClass("sno");
+        $("#agloan__Applyloan__sc_row_73,#agloan__Applyloan__sc_row_83").addClass("sno");
+        if (params.subproduct === "Home Loan" || params.subproduct === "Property Purchase Loan" || params.subproduct === "Home Loan Top Up" || params
+            .subproduct === "Loan Against Property") {
+            apz.setElmValue("agloan__Applyloan__loanTypeDropdown", apz.agloan.Applyloan.sparams.subproduct)
+            $("#agloan__Applyloan__loanTypeDropdown_ul").removeClass("sno");
+            $(
+                "#agloan__Applyloan__sc_col_25,#agloan__Applyloan__sc_row_16,#agloan__ProductLoanDetails__i__tbDbmiProductLoan__loantype_ul,#agloan__Applyloan__sc_row_11,#agloan__Applyloan__sc_row_14,#agloan__Applyloan__sc_row_15"
+            ).addClass("sno");
+        } else if (params.subproduct === "Auto Loan") {
+            $("#agloan__Applyloan__rowmodelimg").addClass("sno");
+        }
+        $("#agloan__Applyloan__sc_col_101").removeClass("sno");
+    } else {
+        $("#agloan__Applyloan__sc_col_101").addClass("sno");
+    }
+};
+apz.app.onShown_Applyloan = function(params) {
+    apz.appdtl.currenctScreen = "applyloan";
+    apz.agloan.Applyloan.saveIt = true;
+    debugger;
+    $("#agloan__Applyloan__loan_details_div input").each(function() {
+        $(this).change(function() {
+            var type = $(this).attr("type");
+            if (apz.agloan.Applyloan.saveIt && type != "radio") {
+                var val = apz.getElmValue(this.id);
+                if (val.length <= 0 && apz.agloan.currentFieldVal.length > 0) { //empty on change
+                    apz.appdtl.productFieldsCount = apz.appdtl.productFieldsCount + 1;
+                    apz.appdtl.productFieldPercentage = apz.appdtl.productFieldPercentage - apz.appdtl.productPercentageValue;
+                } else if (val.length > 0 && apz.agloan.currentFieldVal.length <= 0) { //filled on change
+                    apz.appdtl.productFieldsCount = apz.appdtl.productFieldsCount - 1;
+                    apz.appdtl.productFieldPercentage = apz.appdtl.productFieldPercentage + apz.appdtl.productPercentageValue;
+                }
+                apz.setElmValue("appdtl__AppLauncher__product_fields_to_fill_txtcnt", "" + apz.appdtl.productFieldsCount);
+                $("#appdtl__AppLauncher__prod_slider").roundSlider("option", "value", apz.appdtl.productFieldPercentage);
+            }
+        })
+        $(this).focus(function() {
+            apz.agloan.currentFieldVal = apz.getElmValue(this.id);
+        })
+    });
+    debugger;
+    if (apz.appdtl.productLoanManageFilled) {
+        apz.agloan.Applyloan.manageFieldsFilled();
+        apz.setElmValue("appdtl__AppLauncher__product_fields_to_fill_txtcnt", "" + apz.appdtl.productFieldsCount);
+        $("#appdtl__AppLauncher__prod_slider").roundSlider("option", "value", apz.appdtl.productFieldPercentage);
+        apz.appdtl.productLoanManageFilled = false;
+    }
+}
+apz.agloan.Applyloan.fnGetLoanType = function(element) {
+    var loanType = apz.getElmValue(element.id);
+    if (loanType !== "") {
+        apz.setElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__loantype", loanType)
+    }
+}
+apz.agloan.Applyloan.manageFieldsFilled = function() {
+    debugger;
+    $("#agloan__Applyloan__loan_details_div input").each(function() {
+        var val = apz.getElmValue(this.id);
+        debugger;
+        var isParent8Hidden = $("#" + this.id).parent().parent().parent().parent().parent().parent().parent().parent().hasClass("sno");
+        var isParent7Hidden = $("#" + this.id).parent().parent().parent().parent().parent().parent().parent().hasClass("sno");
+        var isParent6Hidden = $("#" + this.id).parent().parent().parent().parent().parent().parent().hasClass("sno");
+        var isParent5Hidden = $("#" + this.id).parent().parent().parent().parent().parent().hasClass("sno");
+        var isParent4Hidden = $("#" + this.id).parent().parent().parent().parent().hasClass("sno");
+        var isParent3Hidden = $("#" + this.id).parent().parent().parent().hasClass("sno");
+        var isParent2Hidden = $("#" + this.id).parent().parent().hasClass("sno");
+        var isParent1Hidden = $("#" + this.id).parent().hasClass("sno");
+        var isHidden = $("#" + this.id).hasClass("sno");
+        var type = $(this).attr("type");
+        if (type != "radio" && val != "" && type != "CHECKBOX" && !isHidden && !isParent1Hidden && !isParent2Hidden && !isParent3Hidden && !
+            isParent4Hidden && !isParent5Hidden && !isParent6Hidden && !isParent7Hidden && !isParent8Hidden) {
+            apz.appdtl.productFieldsCount = apz.appdtl.productFieldsCount - 1;
+            apz.appdtl.productFieldPercentage = apz.appdtl.productFieldPercentage + apz.appdtl.productPercentageValue;
+        }
+    });
+}
+apz.agloan.Applyloan.manageHeaders = function() {
+    $("#appdtl__AppLauncher__product_div").addClass('active');
+    $("#appdtl__AppLauncher__document_div").removeClass('active');
+}
+apz.agloan.Applyloan.fnPopulateLoanTypeFields = function() {
+    debugger;
+    $(".mortagageLoanRow").addClass("sno");
+    switch (apz.agloan.Applyloan.sparams.subproduct) {
+        case "Personal Line of Credit":
+            $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__rate").val("10.24");
+            break;
+        case "Home Loan":
+            debugger;
+            $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__rate").val("4.125");
+            $('.mortagageLoanRow').removeClass("sno");
+            $("#agloan__Applyloan__homeLoanR1").removeClass("sno");
+            $("#agloan__Applyloan__homeLoanR2").removeClass("sno");
+            $("#agloan__Applyloan__homeLoanR3").removeClass("sno");
+            break;
+        case "Auto Loan":
+            $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__rate").val("4.74");
+            $("#agloan__Applyloan__rowvehicle").removeClass("sno");
+            $("#agloan__Applyloan__rowmodel").removeClass("sno");
+            $("#agloan__Applyloan__rowmodelimg").removeClass("sno");
+            break;
+    }
+    apz.agloan.Applyloan.fetchApplicationDetails();
+}
+apz.agloan.Applyloan.fetchApplicationDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ProductLoanDetails_Query",
+        "buildReq": "Y",
+        "appId": "agloan",
+        "paintResp": "Y",
+        "callBack": apz.agloan.Applyloan.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.agloan.Applyloan.fetchApplicationDetailsCB = function(params) {
+    debugger;
+    $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__refno").val(apz.agloan.Applyloan.sparams.refNo);
+    if (apz.agloan.Applyloan.sparams.amount) {
+        $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__amount").val(apz.agloan.Applyloan.sparams.amount);
+    }
+    if (apz.agloan.Applyloan.sparams.tenor) {
+        $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__term").val(apz.agloan.Applyloan.sparams.tenor);
+    }
+    if (params.status && params.errors === undefined) {
+        if (params.res.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.loantype !== "") {
+            if (apz.mockServer) {
+                apz.agloan.Applyloan.sparams.subproduct = apz.appdtl.AppLauncher.sCache.subproduct;
+            } else {
+                apz.agloan.Applyloan.sparams.subproduct = params.res.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.loantype;
+            }
+        }
+        if (params.res.agloan__ProductLoanDetails_Req.tbDbmiProductLoan.loanConsent === "Yes") {
+            apz.agloan.Applyloan.isCreditCheckDisabled = true;
+        }
+    }
+    $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__loantype").val(apz.agloan.Applyloan.sparams.subproduct);
+}
+apz.agloan.Applyloan.fnCreditScore = function(params) {
+    debugger;
+    /*id = params.id;
+    value = params.value;*/
+    var creditScore = parseInt(params.value)
+    if (creditScore > 900) {
+        apz.dispMsg({
+            message: "Credit score cannot be more than 900.",
+            type: "A"
+        })
+        apz.setElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__creditscore", 0)
+    }
+}
+apz.agloan.Applyloan.fnLoanPurposeChange = function(params) {
+    debugger;
+    var status = apz.getElmValue("agloan__Applyloan__el_dpd_5")
+    if (status == "Others") {
+        $("#agloan__Applyloan__otherLoanPurpose").addClass("sno");
+    } else {
+        $("#agloan__Applyloan__otherLoanPurpose").addClass("sno");
+    }
+}
+apz.agloan.Applyloan.saveApplicationDetails = function() {
+    debugger;
+    apz.startLoader();
+    apz.agloan.Applyloan.loanScrdata = JSON.parse(JSON.stringify(apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan));
+    var lParams = {
+        "ifaceName": "ProductLoanDetails_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiProductLoan": {
+                "refno": apz.agloan.Applyloan.sparams.refNo
+            }
+        },
+        "appId": "agloan",
+        "paintResp": "N",
+        "callBack": apz.agloan.Applyloan.saveApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.agloan.Applyloan.saveApplicationDetailsCB = function(pResp) {
+    debugger;
+    var lParams = {
+        "ifaceName": "ProductLoanDetails_New",
+        "buildReq": "Y",
+        "appId": "agloan",
+        "paintResp": "Y",
+        "callBack": apz.agloan.Applyloan.saveAfterDeletCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.agloan.Applyloan.saveAfterDeletCB = function(params) {
+    debugger;
+    apz.stopLoader()
+    apz.data.buildData("ProductLoanDetails", "agloan");
+    apz.data.scrdata.agloan__ProductLoanDetails_Req.tbDbmiProductLoan = apz.agloan.Applyloan.loanScrdata;
+    var action = apz.agloan.Applyloan.navAction;
+    if (action && action != "") {
+        if (action == "next") {
+            apz.agloan.Applyloan.navAction = ""
+            apz.agloan.Applyloan.saveAndGoNext();
+        } else if (action == "back") {
+            apz.agloan.Applyloan.navAction = ""
+            apz.agloan.Applyloan.saveAndGoBack();
+        }
+    }
+}
+apz.agloan.Applyloan.saveAndGoBack = function() {
+    debugger;
+    var scr = "DocumentSelection"
+    if (apz.appdtl.AppLauncher.sCache.appId == "Agency") {
+        scr = "DocumentSelection"
+    }
+    var lParams = {
+        "appId": "appdtl",
+        "scr": scr,
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.agloan.Applyloan.sparams.refNo,
+            "product": apz.agloan.Applyloan.sparams.product,
+            "subproduct": apz.agloan.Applyloan.sparams.subproduct,
+            "appId": apz.agloan.Applyloan.sparams.appId
+        }
+    };
+    apz.launchApp(lParams);
+}
+apz.agloan.Applyloan.saveAndGoNext = function() {
+    debugger;
+    var lParams = {
+        "appId": "agloan",
+        "scr": "Appluloanem",
+        "div": "appdtl__ProductLauncher__productlauncher",
+        "userObj": {
+            "refNo": apz.agloan.Applyloan.sparams.refNo,
+            "subproduct": apz.agloan.Applyloan.sparams.subproduct,
+            "product": apz.agloan.Applyloan.sparams.product,
+            "loanScrdata": apz.agloan.Applyloan.loanScrdata
+        }
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.agloan.Applyloan.gotoNext = function() {
+    debugger;
+    apz.agloan.Applyloan.saveIt = false;
+    apz.agloan.Applyloan.navAction = "next"
+    apz.agloan.Applyloan.saveApplicationDetails();
+    // apz.agloan.Applyloan.saveAndGoNext();
+}
+apz.agloan.Applyloan.fnBack = function() {
+    apz.agloan.Applyloan.saveIt = false;
+    apz.agloan.Applyloan.navAction = "back"
+    apz.agloan.Applyloan.saveApplicationDetails();
+    // var lParams = {
+    //     "appId": "appdtl",
+    //     "scr": "DocumentDetails",
+    //     "div": "appdtl__AppLauncher__screenLauncher",
+    //     "userObj": {
+    //         "refNo": apz.agloan.Applyloan.sparams.refNo,
+    //         "product": apz.agloan.Applyloan.sparams.product,
+    //         "subproduct": apz.agloan.Applyloan.sparams.subproduct,
+    //         "appId": "ONB"
+    //     }
+    // };
+    // apz.launchApp(lParams);
+}
+apz.agloan.Applyloan.fnGetLoanType = function(element) {
+    var loanType = apz.getElmValue(element.id);
+    if (loanType !== "") {
+        apz.setElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__loantype", loanType)
+    }
+}
+apz.agloan.Applyloan.fnGetLoanConsent = function(el) {
+    if (apz.getElmValue(el.id) === "Yes") {
+        apz.agloan.Applyloan.isCreditCheckDisabled = true;
+    } else {
+        apz.agloan.Applyloan.isCreditCheckDisabled = false;
+    }
+}
+apz.agloan.Applyloan.fnGetLoanPurpose = function(element) {
+    if (apz.getElmValue(element.id) === "Others") {
+        $("#agloan__Applyloan__sc_col_102").removeClass("sno");
+    } else {
+        $("#agloan__Applyloan__sc_col_102").addClass("sno");
+    }
+}
+apz.agloan.Applyloan.fngetCreditScore = function() {
+    debugger;
+    if (apz.country == "IND") {
+        if (apz.agloan.Applyloan.isCreditCheckDisabled) {
+            apz.toggleModal({
+                targetId: "agloan__Applyloan__creditscoremodal"
+            });
+            gaugePaint("680", 'agloan__Applyloan__creditscroreguage_gauge', 'agloan__Applyloan__g_123');
+        } else {
+            apz.dispMsg({
+                message: "Please agree the terms above. "
+            })
+        }
+    } else {
+        apz.toggleModal({
+            targetId: "agloan__Applyloan__creditscoremodal"
+        });
+        gaugePaint("680", 'agloan__Applyloan__creditscroreguage_gauge', 'agloan__Applyloan__g_123');
+    }
+}
+apz.agloan.Applyloan.fnCreditScoreSubmit = function(id) {
+    debugger;
+    apz.toggleModal({
+        targetId: id
+    });
+    // $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__creditscore").val("680");
+    apz.setElmValue("agloan__ProductLoanDetails__i__tbDbmiProductLoan__creditscore_txtcnt", "680")
+    $("#agloan__ProductLoanDetails__i__tbDbmiProductLoan__creditscore").val("680");
+}
+apz.agloan.Applyloan.fnRestrictCharacter = function(el) {
+    debugger;
+    var digits = el.value.match(/\d{1,20}/) || [""];
+    el.value = digits[0];
+}

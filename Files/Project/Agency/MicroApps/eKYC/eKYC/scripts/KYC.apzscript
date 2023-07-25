@@ -1,0 +1,120 @@
+apz.ekycdt={
+    KYC : {}
+}
+apz.app.onLoad_KYC = function(params) {
+    debugger;
+};
+apz.ekycdt.KYC.fnVerifyPassport = function() {
+    debugger;
+    var passportno = $("#ekycdt__KYC__passportno").val();
+    if (passportno == "") {
+        apz.dispMsg({
+            "message": "Please enter Passport number",
+            "type": "E"
+        });
+    } else {
+        apz.startLoader();
+        setTimeout(function() {
+            apz.stopLoader();
+            apz.setElmValue("ekycdt__KYC__passportstatus", "Verified");
+            $("#ekycdt__KYC__passportstatus").css("color", "green");
+        }, 1000)
+    }
+};
+apz.ekycdt.KYC.fnVerifyNationalID = function() {
+    debugger;
+    var idno = $("#ekycdt__KYC__idno").val();
+    if (idno == "") {
+        apz.dispMsg({
+            "message": "Please enter NationalID number",
+            "type": "E"
+        });
+    } else {
+        apz.startLoader();
+        setTimeout(function() {
+            apz.stopLoader();
+            apz.setElmValue("ekycdt__KYC__nationalidstatus", "Verified");
+            $("#ekycdt__KYC__nationalidstatus").css("color", "green");
+        }, 1000)
+    }
+};
+apz.ekycdt.KYC.fnRequestOTP = function() {
+    debugger;
+    var mobno = $("#ekycdt__KYC__mobno").val();
+    if (mobno == "" || mobno.length != 10) {
+        apz.dispMsg({
+            "message": "Please enter 10 digit mobile number",
+            "type": "E"
+        });
+    } 
+    else if (apz.mockServer == true){
+        $("#ekycdt__KYC__optclm").removeClass("sno");
+        $("#ekycdt__KYC__verifyrow").removeClass("sno");
+        $("#ekycdt__KYC__otpbtn_txtcnt").text("Regenerate OTP");
+    }
+    else {
+        
+        apz.ekycdt.KYC.OTPCode = Math.floor(100000 + Math.random() * 900000);
+        var lmessage = " Your OTP is " + apz.ekycdt.KYC.OTPCode + " , Use This OTP for Registeration.";
+       
+        var lServerParams = {
+            "ifaceName": "sms",
+            "buildReq": "N",
+            "appId": "ACOP01",
+            "req": {
+                "config": {
+                    user: "Iexceed",
+                    apikey: "XOTNwz3OffqcodOubdhl",
+                    mobile: lmobileNo,
+                    message: lmessage,
+                    senderid: "APZBNK",
+                    type: "txt"
+                }
+            },
+            "paintResp": "N",
+            "callBack": apz.ekycdt.KYC.sendMessageCB
+        };
+        debugger;
+        apz.server.callServer(lServerParams);
+        
+        //before
+        // $("#ekycdt__KYC__optclm").removeClass("sno");
+        // $("#ekycdt__KYC__verifyrow").removeClass("sno");
+        // $("#ekycdt__KYC__otpbtn_txtcnt").text("Regenerate OTP");
+        
+        
+    }
+    
+};
+
+apz.ekycdt.KYC.sendMessageCB = function(data){
+    if (!data.res || (data.res && +data.res.ekycdt__sms_Res.response)) {
+        // apz.dispMsg({message:"OTP sent successfully",type:"S"});
+        $("#ekycdt__KYC__optclm").removeClass("sno");
+        $("#ekycdt__KYC__verifyrow").removeClass("sno");
+        $("#ekycdt__KYC__otpbtn_txtcnt").text("Regenerate OTP");
+        } else {
+        apz.dispMsg({
+            message: data.res.ACOP01__sms_Res.response
+        });
+    }
+}
+
+
+
+apz.ekycdt.KYC.fnVerifyOTP = function() {
+    var otp = $("#ekycdt__KYC__otp").val();
+    if (otp == ""  ) {
+        apz.dispMsg({
+            "message": "Please enter valid OTP",
+            "type": "E"
+        });
+    } else if(otp == "654321"|| otp==  apz.ekycdt.KYC.OTPCode){
+        apz.startLoader();
+        setTimeout(function() {
+            apz.stopLoader();
+            apz.setElmValue("ekycdt__KYC__mobilestatus", "Verified");
+            $("#ekycdt__KYC__mobilestatus").css("color", "green");
+        }, 1000)
+    }
+};

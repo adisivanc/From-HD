@@ -1,0 +1,58 @@
+apz.yojna.PersonalDetails = {};
+apz.app.onLoad_PersonalDetails = function() {}
+apz.yojna.PersonalDetails.dispMsg = function(pResp, type) {
+    var params = {};
+    params.message = pResp;
+    params.type = type;
+    params.callBack = apz.app.displayMessageCallBack;
+    apz.dispMsg(params);
+}
+apz.yojna.PersonalDetails.continue = function() {
+    debugger;
+    var year = new Date().getFullYear();
+    var birth = apz.getElmValue("yojna__PersonalDetails__el_inp_3");
+    var birthDate = birth.split("-");
+    var birthYear = birthDate[2];
+    var age = year - birthYear;
+    var name = apz.getElmValue("yojna__PersonalDetails__el_inp_1");
+    var fathername = apz.getElmValue("yojna__PersonalDetails__el_inp_2");
+    var DateOfBirth = apz.getElmValue("yojna__PersonalDetails__el_inp_3");
+    var aadhar = apz.getElmValue("yojna__PersonalDetails__el_inp_7");
+    //  apz.yojna.personaldetails = {
+    //     "name": name,
+    //     "fathername": fathername,
+    //     "DateOfBirth" : DateOfBirth
+       
+    // }
+    if (name == "") {
+        apz.yojna.PersonalDetails.dispMsg("Please enter the name of the account holder", "E");
+    } else if (fathername == "") {
+        apz.yojna.PersonalDetails.dispMsg("Please enter the parent name", "E");
+    } 
+     else if (aadhar == "") {
+        apz.yojna.PersonalDetails.dispMsg("Please enter the aadhar card number", "E");
+    } else if (age >= 10) {
+        apz.yojna.PersonalDetails.dispMsg("The age of the account holder should be less than 10 years", "E");
+    } else {
+        var lObj = {
+            "scr": "InitialDetails",
+            "appId": "yojna",
+            "div": "yojna__Launcher__launcher",
+            // "userObj":
+            // {
+            //   "personaldetails": apz.yojna.personaldetails
+            // }
+        }
+        apz.launchSubScreen(lObj);
+    }
+}
+apz.yojna.PersonalDetails.goBack = function()
+{
+            var lObj = {
+            "scr": "ViewScreen",
+            "appId": "yojna",
+            "div": "yojna__Launcher__launcher"
+           
+        }
+        apz.launchSubScreen(lObj);
+    }

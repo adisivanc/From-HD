@@ -1,0 +1,31 @@
+{
+    "tbDbmiCorpFileTemplate": {
+        "templateType": "INVOICE",
+        "templateId" :"1",
+        "templateName": "Microsoft",
+        "extension": "excel"
+    },
+    "MappingTable": [
+        {
+            "dbcolumn": "col1",
+            "datalength": "4",
+            "datatype": "Text",
+            "fieldname": "Name",
+            "sourcefield": "Name"
+        },
+        {
+            "dbcolumn": "col2",
+            "datalength": "6",
+            "datatype": "Text",
+            "fieldname": "Country",
+            "sourcefield": "Country"
+        },
+        {
+            "dbcolumn": "col3",
+            "datalength": "3",
+            "datatype": "Text",
+            "fieldname": "Currency",
+            "sourcefield": "Currency"
+        }
+    ]
+}

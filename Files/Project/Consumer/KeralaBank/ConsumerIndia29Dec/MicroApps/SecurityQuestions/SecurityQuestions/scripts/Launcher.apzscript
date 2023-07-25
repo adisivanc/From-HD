@@ -1,0 +1,14 @@
+apz.secque.launcher = {};
+apz.secque.launcher.sParams = {};
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+    apz.secque.launcher.sParams = params;
+    var lparams = {};
+    lparams.appId = "secque";
+    lparams.scr = "Questions";
+    lparams.div = "secque__Launcher__launcher";
+    apz.launchSubScreen(lparams);
+}
+apz.app.onShown_Launcher = function(){
+    debugger;
+}

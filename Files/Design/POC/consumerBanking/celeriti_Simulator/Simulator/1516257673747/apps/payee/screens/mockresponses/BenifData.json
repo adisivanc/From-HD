@@ -1,0 +1,21 @@
+{
+    "benTable":[
+        {
+            "accNo":"35000",
+            "routingNo":"123456",
+            "accType":"RSV",
+            "name":"Henry Porter"
+        },
+        {
+            "accNo":"35001",
+            "routingNo":"123456",
+            "accType":"RSV",
+            "name":"John Edwards"
+        },
+        {
+            "accNo":"20301",
+            "routingNo":"123456",
+            "accType":"DDA",
+            "name":"Micheal Jones"
+        }]
+}

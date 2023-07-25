@@ -1,0 +1,97 @@
+Options +FollowSymLinks
+RewriteEngine On
+RewriteBase /
+
+RewriteRule ^index.html$ /index.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^our-campus$ /yt_grade_school.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-curriculum$ /curriculum.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-contact$ /contact.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-free-human-being$ /free_human_being.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-fundamentals$ /yt_fundamentals.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^meet-our-akkas$ /teacher.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-rhythm$ /yt_rhythm.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^methodology$ /yt_methodology.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-practices$ /yt_practices.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-belief$ /belief.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^press$ /press.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-video$ /videos.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^FAQs$ /faq.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^join-us$ /joinus.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^newsletter/yt-indian-rollers$ /newsletter/indian_rollers.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^newsletter/yt-drongos$ /newsletter/drongos.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-philosophy$ /philosophy.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-garden-campus$ /garden_campus.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-garden-campus-teachers$ /garden_teachers.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-garden-campus-program$ /garden_program.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-garden-campus-rhythm$ /garden_rhythm.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-admission$ /admission.php?%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^blog-so-this-is-christmas$ /blog-details.php?BlogId=1%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-upcoming-events$ /funstop.php?Type=events%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-gallery$ /funstop.php?Type=gallery%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-adayatyt-registration$ /funstop.php?Type=reg&EventId=1%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-aarambham-registration$ /funstop.php?Type=reg&EventId=2%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-christmas-registration$ /funstop.php?Type=reg&EventId=3%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-cookout-registration$ /funstop.php?Type=reg&EventId=4%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-dramanoahandtheflood-registration$ /funstop.php?Type=reg&EventId=5%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-dressupday-registration$ /funstop.php?Type=reg&EventId=6%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-festivals-registration$ /funstop.php?Type=reg&EventId=7%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-friendsonourfarm-registration$ /funstop.php?Type=reg&EventId=8%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-harvestfestival-registration$ /funstop.php?Type=reg&EventId=9%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-intheclassroom-registration$ /funstop.php?Type=reg&EventId=10%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-ipmt-registration$ /funstop.php?Type=reg&EventId=11%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-kidsfest-registration$ /funstop.php?Type=reg&EventId=12%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-kitefestival-registration$ /funstop.php?Type=reg&EventId=13%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-marathon-registration$ /funstop.php?Type=reg&EventId=14%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-picnictotopslip-registration$ /funstop.php?Type=reg&EventId=15%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-selkietales-registration$ /funstop.php?Type=reg&EventId=16%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-registration-thankyou$ /funstop.php?Type=reg&RegStatus=success%{QUERY_STRING} [QSA,L]
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/(.+)/css/(.*)$ /css/$2 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/(.+)/secure/images/(.*)$ /secure/images/$2 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/(.+)/images/(.*)$ /images/$2 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/(.+)/js/(.*)$ /js/$2 [QSA,L]

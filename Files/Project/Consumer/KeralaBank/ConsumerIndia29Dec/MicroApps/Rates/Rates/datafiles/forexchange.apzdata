@@ -1,0 +1,65 @@
+{
+    "Rates__ForExchange_Res": {
+        "foriegnexchange": [{
+            "Foreign Currencies": "United State Dollar",
+            "Cash Buying Rate": "70.44",
+            "Transfer Buying Rate": "71.77",
+            "Cash Selling Rate": "76.21"
+        }, {
+            "Foreign Currencies": "Great British Pound",
+            "Cash Buying Rate": "90.83",
+            "Transfer Buying Rate": "92.44",
+            "Cash Selling Rate": "97.70"
+        }, {
+            "Foreign Currencies": "HongKong Dollar",
+            "Cash Buying Rate": "8.33",
+            "Transfer Buying Rate": "8.96",
+            "Cash Selling Rate": "10.33"
+        }, {
+            "Foreign Currencies": "Swiss Franc",
+            "Cash Buying Rate": "74.57",
+            "Transfer Buying Rate": "78.29",
+            "Cash Selling Rate": "82.26"
+        }, {
+            "Foreign Currencies": "Yen",
+            "Cash Buying Rate": "65.53",
+            "Transfer Buying Rate": "67.83",
+            "Cash Selling Rate": "71.17"
+        }, {
+            "Foreign Currencies": "Australian Dollar",
+            "Cash Buying Rate": "49.33",
+            "Transfer Buying Rate": "50.70",
+            "Cash Selling Rate": "53.78"
+        }, {
+            "Foreign Currencies": "Canadian Dollar",
+            "Cash Buying Rate": "51.56",
+            "Transfer Buying Rate": "54.14",
+            "Cash Selling Rate": "53.78"
+        }, {
+            "Foreign Currencies": "Singapore Dollar",
+            "Cash Buying Rate": "50.67",
+            "Transfer Buying Rate": "52.64",
+            "Cash Selling Rate": "56.54"
+        }, {
+            "Foreign Currencies": "Euro",
+            "Cash Buying Rate": "82.45",
+            "Transfer Buying Rate": "92.44",
+            "Cash Selling Rate": "88.69"
+        }, {
+            "Foreign Currencies": "NewZealand Dollar",
+            "Cash Buying Rate": "-",
+            "Transfer Buying Rate": "47.24",
+            "Cash Selling Rate": "-"
+        }, {
+            "Foreign Currencies": "Thailand Baht",
+            "Cash Buying Rate": "2.14",
+            "Transfer Buying Rate": "2.22",
+            "Cash Selling Rate": "2.64"
+        }, {
+            "Foreign Currencies": "China Yuan Renmimbi",
+            "Cash Buying Rate": "-",
+            "Transfer Buying Rate": "10.35",
+            "Cash Selling Rate": "-"
+        }]
+    }
+}

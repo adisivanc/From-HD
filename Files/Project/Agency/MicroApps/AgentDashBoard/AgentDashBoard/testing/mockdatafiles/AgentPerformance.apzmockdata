@@ -1,0 +1,1046 @@
+{
+    "performance": {
+        "operationsSummary": [
+            {
+                "type": "Financial Transactions",
+                "count": 1187,
+                "operationsDetails": [
+                    {
+                        "date": "01/Oct",
+                        "count": 129
+                    },
+                    {
+                        "date": "02/Oct",
+                        "count": 118
+                    },
+                    {
+                        "date": "03/Oct",
+                        "count": 104
+                    },
+                    {
+                        "date": "04/Oct",
+                        "count": 95
+                    },
+                    {
+                        "date": "05/Oct",
+                        "count": 84
+                    },
+                    {
+                        "date": "06/Oct",
+                        "count": 48
+                    },
+                    {
+                        "date": "07/Oct",
+                        "count": 34
+                    },
+                    {
+                        "date": "08/Oct",
+                        "count": 16
+                    },
+                    {
+                        "date": "09/Oct",
+                        "count": 11
+                    },
+                    {
+                        "date": "10/Oct",
+                        "count": 9
+                    },
+                    {
+                        "date": "11/Oct",
+                        "count": 9
+                    },
+                    {
+                        "date": "12/Oct",
+                        "count": 8
+                    },
+                    {
+                        "date": "13/Oct",
+                        "count": 5
+                    },
+                    {
+                        "date": "14/Oct",
+                        "count": 8
+                    },
+                    {
+                        "date": "15/Oct",
+                        "count": 4
+                    },
+                    {
+                        "date": "16/Oct",
+                        "count": 6
+                    },
+                    {
+                        "date": "17/Oct",
+                        "count": 5
+                    },
+                    {
+                        "date": "18/Oct",
+                        "count": 8
+                    },
+                    {
+                        "date": "19/Oct",
+                        "count": 9
+                    },
+                    {
+                        "date": "20/Oct",
+                        "count": 10
+                    },
+                    {
+                        "date": "21/Oct",
+                        "count": 11
+                    },
+                    {
+                        "date": "22/Oct",
+                        "count": 18
+                    },
+                    {
+                        "date": "23/Oct",
+                        "count": 21
+                    },
+                    {
+                        "date": "24/Oct",
+                        "count": 28
+                    },
+                    {
+                        "date": "25/Oct",
+                        "count": 35
+                    },
+                    {
+                        "date": "26/Oct",
+                        "count": 47
+                    },
+                    {
+                        "date": "27/Oct",
+                        "count": 56
+                    },
+                    {
+                        "date": "28/Oct",
+                        "count": 59
+                    },
+                    {
+                        "date": "29/Oct",
+                        "count": 61
+                    },
+                    {
+                        "date": "30/Oct",
+                        "count": 63
+                    },
+                    {
+                        "date": "31/Oct",
+                        "count": 68
+                    }
+                ]
+            },
+            {
+                "type": "Service Requests",
+                "count": 463,
+                "operationsDetails": [
+                    {
+                        "date": "01/Oct",
+                        "count": 12
+                    },
+                    {
+                        "date": "02/Oct",
+                        "count": 15
+                    },
+                    {
+                        "date": "03/Oct",
+                        "count": 18
+                    },
+                    {
+                        "date": "04/Oct",
+                        "count": 8
+                    },
+                    {
+                        "date": "05/Oct",
+                        "count": 21
+                    },
+                    {
+                        "date": "06/Oct",
+                        "count": 19
+                    },
+                    {
+                        "date": "07/Oct",
+                        "count": 28
+                    },
+                    {
+                        "date": "08/Oct",
+                        "count": 14
+                    },
+                    {
+                        "date": "09/Oct",
+                        "count": 8
+                    },
+                    {
+                        "date": "10/Oct",
+                        "count": 11
+                    },
+                    {
+                        "date": "11/Oct",
+                        "count": 14
+                    },
+                    {
+                        "date": "12/Oct",
+                        "count": 10
+                    },
+                    {
+                        "date": "13/Oct",
+                        "count": 8
+                    },
+                    {
+                        "date": "14/Oct",
+                        "count": 11
+                    },
+                    {
+                        "date": "15/Oct",
+                        "count": 14
+                    },
+                    {
+                        "date": "16/Oct",
+                        "count": 9
+                    },
+                    {
+                        "date": "17/Oct",
+                        "count": 12
+                    },
+                    {
+                        "date": "18/Oct",
+                        "count": 15
+                    },
+                    {
+                        "date": "19/Oct",
+                        "count": 19
+                    },
+                    {
+                        "date": "20/Oct",
+                        "count": 14
+                    },
+                    {
+                        "date": "21/Oct",
+                        "count": 16
+                    },
+                    {
+                        "date": "22/Oct",
+                        "count": 8
+                    },
+                    {
+                        "date": "23/Oct",
+                        "count": 12
+                    },
+                    {
+                        "date": "24/Oct",
+                        "count": 18
+                    },
+                    {
+                        "date": "25/Oct",
+                        "count": 8
+                    },
+                    {
+                        "date": "26/Oct",
+                        "count": 19
+                    },
+                    {
+                        "date": "27/Oct",
+                        "count": 28
+                    },
+                    {
+                        "date": "28/Oct",
+                        "count": 15
+                    },
+                    {
+                        "date": "29/Oct",
+                        "count": 18
+                    },
+                    {
+                        "date": "30/Oct",
+                        "count": 19
+                    },
+                    {
+                        "date": "31/Oct",
+                        "count": 22
+                    }
+                ]
+            },
+            {
+                "type": "Originations",
+                "count": 219,
+                "operationsDetails": [
+                    {
+                        "date": "01/Oct",
+                        "count": 5
+                    },
+                    {
+                        "date": "02/Oct",
+                        "count": 9
+                    },
+                    {
+                        "date": "03/Oct",
+                        "count": 11
+                    },
+                    {
+                        "date": "04/Oct",
+                        "count": 7
+                    },
+                    {
+                        "date": "05/Oct",
+                        "count": 11
+                    },
+                    {
+                        "date": "06/Oct",
+                        "count": 14
+                    },
+                    {
+                        "date": "07/Oct",
+                        "count": 9
+                    },
+                    {
+                        "date": "08/Oct",
+                        "count": 8
+                    },
+                    {
+                        "date": "09/Oct",
+                        "count": 10
+                    },
+                    {
+                        "date": "10/Oct",
+                        "count": 12
+                    },
+                    {
+                        "date": "11/Oct",
+                        "count": 4
+                    },
+                    {
+                        "date": "12/Oct",
+                        "count": 5
+                    },
+                    {
+                        "date": "13/Oct",
+                        "count": 7
+                    },
+                    {
+                        "date": "14/Oct",
+                        "count": 2
+                    },
+                    {
+                        "date": "15/Oct",
+                        "count": 9
+                    },
+                    {
+                        "date": "16/Oct",
+                        "count": 6
+                    },
+                    {
+                        "date": "17/Oct",
+                        "count": 3
+                    },
+                    {
+                        "date": "18/Oct",
+                        "count": 8
+                    },
+                    {
+                        "date": "19/Oct",
+                        "count": 2
+                    },
+                    {
+                        "date": "20/Oct",
+                        "count": 5
+                    },
+                    {
+                        "date": "21/Oct",
+                        "count": 6
+                    },
+                    {
+                        "date": "22/Oct",
+                        "count": 8
+                    },
+                    {
+                        "date": "23/Oct",
+                        "count": 7
+                    },
+                    {
+                        "date": "24/Oct",
+                        "count": 4
+                    },
+                    {
+                        "date": "25/Oct",
+                        "count": 8
+                    },
+                    {
+                        "date": "26/Oct",
+                        "count": 5
+                    },
+                    {
+                        "date": "27/Oct",
+                        "count": 4
+                    },
+                    {
+                        "date": "28/Oct",
+                        "count": 6
+                    },
+                    {
+                        "date": "29/Oct",
+                        "count": 7
+                    },
+                    {
+                        "date": "30/Oct",
+                        "count": 8
+                    },
+                    {
+                        "date": "31/Oct",
+                        "count": 9
+                    }
+                ]
+            }
+        ],
+        "financialSummary": [
+            {
+                "type": "Deposits",
+                "val": 285234,
+                "count": 120,
+                "financialDetails": [
+                    {
+                        "date": "01/Oct",
+                        "val": 10000,
+                        "count": 1
+                    },
+                    {
+                        "date": "02/Oct",
+                        "count": 12,
+                        "val": 4381
+                    },
+                    {
+                        "date": "03/Oct",
+                        "count": 4,
+                        "val": 3833
+                    },
+                    {
+                        "date": "04/Oct",
+                        "count": 5,
+                        "val": 2811
+                    },
+                    {
+                        "date": "05/Oct",
+                        "count": 7,
+                        "val": 2224
+                    },
+                    {
+                        "date": "06/Oct",
+                        "count": 3,
+                        "val": 1210
+                    },
+                    {
+                        "date": "07/Oct",
+                        "count": 2,
+                        "val": 8000
+                    },
+                    {
+                        "date": "08/Oct",
+                        "count": 10,
+                        "val": 4800
+                    },
+                    {
+                        "date": "09/Oct",
+                        "count": 12,
+                        "val": 3
+                    },
+                    {
+                        "date": "10/Oct",
+                        "count": 1,
+                        "val": 2000
+                    },
+                    {
+                        "date": "11/Oct",
+                        "count": 2,
+                        "val": 1221
+                    },
+                    {
+                        "date": "12/Oct",
+                        "count": 1,
+                        "val": 1300
+                    },
+                    {
+                        "date": "13/Oct",
+                        "count": 2,
+                        "val": 4331
+                    },
+                    {
+                        "date": "14/Oct",
+                        "count": 1,
+                        "val": 3000
+                    },
+                    {
+                        "date": "15/Oct",
+                        "count": 3,
+                        "val": 2000
+                    },
+                    {
+                        "date": "16/Oct",
+                        "count": 3,
+                        "val": 5000
+                    },
+                    {
+                        "date": "17/Oct",
+                        "count": 20,
+                        "val": 20000
+                    },
+                    {
+                        "date": "18/Oct",
+                        "count": 1,
+                        "val": 400
+                    },
+                    {
+                        "date": "19/Oct",
+                        "count": 1,
+                        "val": 5000
+                    },
+                    {
+                        "date": "20/Oct",
+                        "count": 10,
+                        "val": 8000
+                    },
+                    {
+                        "date": "21/Oct",
+                        "count": 30,
+                        "val": 12300
+                    },
+                    {
+                        "date": "22/Oct",
+                        "count": 2,
+                        "val": 500
+                    },
+                    {
+                        "date": "23/Oct",
+                        "count": 7,
+                        "val": 5000
+                    },
+                    {
+                        "date": "24/Oct",
+                        "count": 1,
+                        "val": 1600
+                    },
+                    {
+                        "date": "25/Oct",
+                        "count": 18,
+                        "val": 8000
+                    },
+                    {
+                        "date": "26/Oct",
+                        "count": 13,
+                        "val": 5000
+                    },
+                    {
+                        "date": "27/Oct",
+                        "count": 3,
+                        "val": 6000
+                    },
+                    {
+                        "date": "28/Oct",
+                        "count": 5,
+                        "val": 1000
+                    },
+                    {
+                        "date": "29/Oct",
+                        "count": 4,
+                        "val": 1640
+                    },
+                    {
+                        "date": "30/Oct",
+                        "count": 8,
+                        "val": 3400
+                    },
+                    {
+                        "date": "31/Oct",
+                        "count": 5,
+                        "val": 4000
+                    }
+                ]
+            },
+            {
+                "type": "Withdrawals",
+                "val": 453450,
+                "count": 180,
+                "financialDetails": [
+                    {
+                        "date": "01/Oct",
+                        "count": 1,
+                        "val": 4800
+                    },
+                    {
+                        "date": "02/Oct",
+                        "count": 10,
+                        "val": 3488
+                    },
+                    {
+                        "date": "03/Oct",
+                        "count": 12,
+                        "val": 2800
+                    },
+                    {
+                        "date": "04/Oct",
+                        "count": 13,
+                        "val": 2800
+                    },
+                    {
+                        "date": "05/Oct",
+                        "count": 12,
+                        "val": 1210
+                    },
+                    {
+                        "date": "06/Oct",
+                        "count": 12,
+                        "val": 1500
+                    },
+                    {
+                        "date": "07/Oct",
+                        "count": 1,
+                        "val": 500
+                    },
+                    {
+                        "date": "08/Oct",
+                        "count": 9,
+                        "val": 5000
+                    },
+                    {
+                        "date": "09/Oct",
+                        "count": 13,
+                        "val": 4900
+                    },
+                    {
+                        "date": "10/Oct",
+                        "count": 12,
+                        "val": 500
+                    },
+                    {
+                        "date": "11/Oct",
+                        "count": 12,
+                        "val": 2000
+                    },
+                    {
+                        "date": "12/Oct",
+                        "count": 8,
+                        "val": 1000
+                    },
+                    {
+                        "date": "13/Oct",
+                        "count": 9,
+                        "val": 1667
+                    },
+                    {
+                        "date": "14/Oct",
+                        "count": 8,
+                        "val": 27888
+                    },
+                    {
+                        "date": "15/Oct",
+                        "count": 7,
+                        "val": 387
+                    },
+                    {
+                        "date": "16/Oct",
+                        "count": 7,
+                        "val": 2888
+                    },
+                    {
+                        "date": "17/Oct",
+                        "count": 17,
+                        "val": 1987
+                    },
+                    {
+                        "date": "18/Oct",
+                        "count": 10,
+                        "val": 4989
+                    },
+                    {
+                        "date": "19/Oct",
+                        "count": 2,
+                        "val": 3656
+                    },
+                    {
+                        "date": "20/Oct",
+                        "count": 12,
+                        "val": 4988
+                    },
+                    {
+                        "date": "21/Oct",
+                        "count": 8,
+                        "val": 5555
+                    },
+                    {
+                        "date": "22/Oct",
+                        "count": 5,
+                        "val": 8878
+                    },
+                    {
+                        "date": "23/Oct",
+                        "count": 9,
+                        "val": 1100
+                    },
+                    {
+                        "date": "24/Oct",
+                        "count": 4,
+                        "val": 1508
+                    },
+                    {
+                        "date": "25/Oct",
+                        "count": 9,
+                        "val": 1880
+                    },
+                    {
+                        "date": "26/Oct",
+                        "count": 5,
+                        "val": 2509
+                    },
+                    {
+                        "date": "27/Oct",
+                        "count": 3,
+                        "val": 2809
+                    },
+                    {
+                        "date": "28/Oct",
+                        "count": 9,
+                        "val": 3200
+                    },
+                    {
+                        "date": "29/Oct",
+                        "count": 6,
+                        "val": 3409
+                    },
+                    {
+                        "date": "30/Oct",
+                        "count": 3,
+                        "val": 3587
+                    },
+                    {
+                        "date": "31/Oct",
+                        "count": 6,
+                        "val": 3888
+                    }
+                ]
+            },
+            {
+                "type": "Transfers",
+                "val": 154254,
+                "count": 525,
+                "financialDetails": [
+                    {
+                        "date": "01/Oct",
+                        "count": 12,
+                        "val": 1400
+                    },
+                    {
+                        "date": "02/Oct",
+                        "count": 12,
+                        "val": 2200
+                    },
+                    {
+                        "date": "03/Oct",
+                        "count": 17,
+                        "val": 1800
+                    },
+                    {
+                        "date": "04/Oct",
+                        "count": 12,
+                        "val": 2190
+                    },
+                    {
+                        "date": "05/Oct",
+                        "count": 1,
+                        "val": 1539
+                    },
+                    {
+                        "date": "06/Oct",
+                        "count": 19,
+                        "val": 1100
+                    },
+                    {
+                        "date": "07/Oct",
+                        "count": 12,
+                        "val": 1019
+                    },
+                    {
+                        "date": "08/Oct",
+                        "count": 10,
+                        "val": 400
+                    },
+                    {
+                        "date": "09/Oct",
+                        "count": 17,
+                        "val": 3100
+                    },
+                    {
+                        "date": "10/Oct",
+                        "count": 1,
+                        "val": 1090
+                    },
+                    {
+                        "date": "11/Oct",
+                        "count": 9,
+                        "val": 3780
+                    },
+                    {
+                        "date": "12/Oct",
+                        "count": 8,
+                        "val": 2080
+                    },
+                    {
+                        "date": "13/Oct",
+                        "count": 9,
+                        "val": 2880
+                    },
+                    {
+                        "date": "14/Oct",
+                        "count": 10,
+                        "val": 1090
+                    },
+                    {
+                        "date": "15/Oct",
+                        "count": 12,
+                        "val": 2100
+                    },
+                    {
+                        "date": "16/Oct",
+                        "count": 1,
+                        "val": 3678
+                    },
+                    {
+                        "date": "17/Oct",
+                        "count": 13,
+                        "val": 2908
+                    },
+                    {
+                        "date": "18/Oct",
+                        "count": 23,
+                        "val": 4880
+                    },
+                    {
+                        "date": "19/Oct",
+                        "count": 1,
+                        "val": 2670
+                    },
+                    {
+                        "date": "20/Oct",
+                        "count": 3,
+                        "val": 1548
+                    },
+                    {
+                        "date": "21/Oct",
+                        "count": 4,
+                        "val": 3890
+                    },
+                    {
+                        "date": "22/Oct",
+                        "count": 5,
+                        "val": 5780
+                    },
+                    {
+                        "date": "23/Oct",
+                        "count": 6,
+                        "val": 3000
+                    },
+                    {
+                        "date": "24/Oct",
+                        "count": 7,
+                        "val": 1550
+                    },
+                    {
+                        "date": "25/Oct",
+                        "count": 8,
+                        "val": 1560
+                    },
+                    {
+                        "date": "26/Oct",
+                        "count": 2,
+                        "val": 3980
+                    },
+                    {
+                        "date": "27/Oct",
+                        "count": 10,
+                        "val": 4000
+                    },
+                    {
+                        "date": "28/Oct",
+                        "count": 11,
+                        "val": 2899
+                    },
+                    {
+                        "date": "29/Oct",
+                        "count": 12,
+                        "val": 1340
+                    },
+                    {
+                        "date": "30/Oct",
+                        "count": 13,
+                        "val": 4900
+                    },
+                    {
+                        "date": "31/Oct",
+                        "count": 14,
+                        "val": 1765
+                    }
+                ]
+            },
+            {
+                "type": "Payments",
+                "val": 295560,
+                "count": 120,
+                "financialDetails": [
+                    {
+                        "date": "01/Oct",
+                        "count": 1,
+                        "val": 1000
+                    },
+                    {
+                        "date": "02/Oct",
+                        "count": 2,
+                        "val": 1920
+                    },
+                    {
+                        "date": "03/Oct",
+                        "count": 3,
+                        "val": 2077
+                    },
+                    {
+                        "date": "04/Oct",
+                        "count": 4,
+                        "val": 1890
+                    },
+                    {
+                        "date": "05/Oct",
+                        "count": 5,
+                        "val": 2300
+                    },
+                    {
+                        "date": "06/Oct",
+                        "count": 6,
+                        "val": 1050
+                    },
+                    {
+                        "date": "07/Oct",
+                        "count": 7,
+                        "val": 1177
+                    },
+                    {
+                        "date": "08/Oct",
+                        "count": 8,
+                        "val": 3000
+                    },
+                    {
+                        "date": "09/Oct",
+                        "count": 8,
+                        "val": 2670
+                    },
+                    {
+                        "date": "10/Oct",
+                        "count": 9,
+                        "val": 1009
+                    },
+                    {
+                        "date": "11/Oct",
+                        "count": 10,
+                        "val": 1110
+                    },
+                    {
+                        "date": "12/Oct",
+                        "count": 11,
+                        "val": 3110
+                    },
+                    {
+                        "date": "13/Oct",
+                        "count": 12,
+                        "val": 4560
+                    },
+                    {
+                        "date": "14/Oct",
+                        "count": 13,
+                        "val": 2550
+                    },
+                    {
+                        "date": "15/Oct",
+                        "count": 14,
+                        "val": 5600
+                    },
+                    {
+                        "date": "16/Oct",
+                        "count": 15,
+                        "val": 2560
+                    },
+                    {
+                        "date": "17/Oct",
+                        "count": 16,
+                        "val": 1500
+                    },
+                    {
+                        "date": "18/Oct",
+                        "count": 17,
+                        "val": 3450
+                    },
+                    {
+                        "date": "19/Oct",
+                        "count": 18,
+                        "val": 1545
+                    },
+                    {
+                        "date": "20/Oct",
+                        "count": 19,
+                        "val": 4679
+                    },
+                    {
+                        "date": "21/Oct",
+                        "count": 20,
+                        "val": 3678
+                    },
+                    {
+                        "date": "22/Oct",
+                        "count": 1,
+                        "val": 5900
+                    },
+                    {
+                        "date": "23/Oct",
+                        "count": 2,
+                        "val": 3800
+                    },
+                    {
+                        "date": "24/Oct",
+                        "count": 3,
+                        "val": 6560
+                    },
+                    {
+                        "date": "25/Oct",
+                        "count": 4,
+                        "val": 8808
+                    },
+                    {
+                        "date": "26/Oct",
+                        "count": 5,
+                        "val": 1170
+                    },
+                    {
+                        "date": "27/Oct",
+                        "count": 5,
+                        "val": 1640
+                    },
+                    {
+                        "date": "28/Oct",
+                        "count": 6,
+                        "val": 1960
+                    },
+                    {
+                        "date": "29/Oct",
+                        "count": 7,
+                        "val": 1679
+                    },
+                    {
+                        "date": "30/Oct",
+                        "count": 8,
+                        "val": 1809
+                    },
+                    {
+                        "date": "31/Oct",
+                        "count": 9,
+                        "val": 1080
+                    }
+                ]
+            }
+        ]
+    }
+}

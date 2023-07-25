@@ -1,0 +1,7 @@
+apz.kycrsk.Risk = {}
+apz.app.onLoad_Risk = function(params) {
+    debugger;
+}
+apz.app.onShown_Risk = function(params) {
+    debugger;
+}

@@ -1,0 +1,22 @@
+apz.balanc.launcher = {};
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+    apz.hide("balanc__Launcher__quarterly_chart");
+    apz.show("balanc__Launcher__monthly_chart");
+    apz.data.loadJsonData("QuarterlyBalance", "balanc");
+    apz.data.loadJsonData("MonthlyBalance", "balanc");
+};
+apz.app.onShown_Launcher = function(){
+    debugger;
+}
+apz.balanc.launcher.fnToggle = function(pThis) {
+    debugger;
+    var val = apz.getElmValue("balanc__Launcher__toggle");
+    if (val == "on") {
+        apz.show("balanc__Launcher__monthly_chart");
+        apz.hide("balanc__Launcher__quarterly_chart");
+    } else {
+        apz.show("balanc__Launcher__quarterly_chart");
+        apz.hide("balanc__Launcher__monthly_chart");
+    }
+}

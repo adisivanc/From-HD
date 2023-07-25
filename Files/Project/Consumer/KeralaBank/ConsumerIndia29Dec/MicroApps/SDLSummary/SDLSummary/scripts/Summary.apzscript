@@ -1,0 +1,92 @@
+apz.sdlsum.summary = {};
+apz.sdlsum.summary.sParams = {};
+apz.sdlsum.summary.sAction = {};
+apz.sdlsum.summary.sParams.data = {};
+apz.app.onLoad_Summary = function(params) {
+    debugger;
+    apz.sdlsum.summary.fnInitialise(params);
+};
+apz.sdlsum.summary.fnInitialise = function(params) {
+    debugger;
+    apz.sdlsum.summary.sParams = params;
+    if (params.Navigation) {
+        apz.sdlsum.summary.fnSetNavigation(params);
+    }
+    apz.data.loadJsonData("SDLSummary","sdlsum");
+    apz.sdlsum.summary.sParams.data =apz.data.scrdata.sdlsum__SDLSummary_Res;
+    apz.sdlsum.summary.fnGoToStage1();
+};
+apz.sdlsum.summary.fnSetNavigation = function(params) {
+    apz.sdlsum.summary.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "LOCKER SUMMARY";
+    }
+    apz.sdlsum.summary.Navigation(lParams);
+};
+apz.sdlsum.summary.fnGoToStage1 = function() {
+    apz.sdlsum.summary.fnGetLockerSummary();
+};
+apz.sdlsum.summary.fnGetLockerSummary = function() {
+debugger;
+    apz.data.loadJsonData("LockerSummary","sdlsum");
+};
+
+apz.sdlsum.summary.addLocker = function() {
+    debugger;
+    $("#sdlsum__Summary__Stage1").addClass('sno');
+    $("#sdlsum__Summary__Stage2").removeClass('sno');
+    var lLaunchParams = {
+                "appId": "reqsdl",
+                "scr": "LockerForm",
+                "div": "sdlsum__Summary__Stage2",
+                "userObj": {
+                    "action": "Add",
+                    "back" : apz.sdlsum.summary.fnBack,
+                    "data": apz.sdlsum.summary.sParams.data,
+                    "control": {
+                        "appId": "reqsdl",
+                        "callBack": apz.sdlsum.summary.fnAddLockerCB,
+                        "destroyDiv": "sdlsum__Summary__Stage2"
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+};
+apz.sdlsum.summary.payRent = function(pObj){
+    debugger;
+    $("#sdlsum__Summary__Stage1").addClass('sno');
+    $("#sdlsum__Summary__Stage2").removeClass('sno');
+    var lLaunchParams = {
+                "appId": "sdlrnt",
+                "scr": "PayRent",
+                "div": "sdlsum__Summary__Stage2",
+                "userObj": {
+                    "action": "",
+                    "back" : apz.sdlsum.summary.fnBack,
+                    "data": apz.sdlsum.summary.sParams.data,
+                    "control": {
+                        "appId": "sdlrnt",
+                        "callBack": apz.sdlsum.summary.fnPayRentCB,
+                        "destroyDiv": "sdlsum__Summary__Stage2"
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+    
+};
+apz.sdlsum.summary.fnBack = function(){
+  $("#sdlsum__Summary__Stage1").removeClass('sno');
+  $("#sdlsum__Summary__Stage2").addClass('sno');  
+}
+apz.sdlsum.summary.fnPayRentCB = function(){
+    debugger;
+    // apz.sdlsum.summary.fnBack();
+};
+apz.sdlsum.summary.fnAddLockerCB = function(){
+    debugger;
+    //  apz.sdlsum.summary.fnBack();
+};
+

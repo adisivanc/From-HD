@@ -1,0 +1,86 @@
+{
+    "balanc__QuarterlyBalance_Res": {
+        "datasets": [
+        {
+            "Months": "Accounts",
+            "Amount": "28",
+            "Account": "New"
+        }, {
+            "Months": "Accounts",
+            "Amount": "8",
+            "Account": "Existing"
+        }, {
+            "Months": "Accounts",
+            "Amount": "30",
+            "Account": "Approved"
+        }, {
+            "Months": "Accounts",
+            "Amount": "20",
+            "Account": "Pending"
+        }, {
+            "Months": "Accounts",
+            "Amount": "10",
+            "Account": "Rejected"
+        },{
+            "Months": "Loans",
+            "Amount": "11",
+            "Account": "New"
+        }, {
+            "Months": "Loans",
+            "Amount": "27",
+            "Account": "Existing"
+        }, {
+            "Months": "Loans",
+            "Amount": "25",
+            "Account": "Approved"
+        }, {
+            "Months": "Loans",
+            "Amount": "22",
+            "Account": "Pending"
+        }, {
+            "Months": "Loans",
+            "Amount": "3",
+            "Account": "Rejected"
+        },{
+            "Months": "Cards",
+            "Amount": "13",
+            "Account": "New"
+        }, {
+            "Months": "Cards",
+            "Amount": "23",
+            "Account": "Existing"
+        }, {
+            "Months": "Cards",
+            "Amount": "12",
+            "Account": "Approved"
+        }, {
+            "Months": "Cards",
+            "Amount": "19",
+            "Account": "Pending"
+        }, {
+            "Months": "Cards",
+            "Amount": "13",
+            "Account": "Rejected"
+        },{
+            "Months": "Deposits",
+            "Amount": "26",
+            "Account": "New"
+        }, {
+            "Months": "Deposits",
+            "Amount": "5",
+            "Account": "Existing"
+        }, {
+            "Months": "Deposits",
+            "Amount": "13",
+            "Account": "Approved"
+        }, {
+            "Months": "Deposits",
+            "Amount": "19",
+            "Account": "Pending"
+        }, {
+            "Months": "Deposits",
+            "Amount": "24",
+            "Account": "Rejected"
+        }]
+    }
+}

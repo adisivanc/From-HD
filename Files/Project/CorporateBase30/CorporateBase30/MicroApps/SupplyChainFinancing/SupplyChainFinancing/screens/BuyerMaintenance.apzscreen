@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"BuyerMaintenance","type":"SCREEN","childs":[],"screendescription":"New Screen","scrcustomize":"N","screentype":"MAIN","displayname":"BuyerMaintenance","interfaces":[{"name":"PartyMaintenance","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"All","landscapelo":"All"}]}

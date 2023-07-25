@@ -1,0 +1,48 @@
+apz.quickt.ConfirmDetails = {};
+apz.quickt.ConfirmDetails.sparams = {};
+apz.app.onLoad_ConfirmDetails = function(params) {
+    debugger;
+    apz.setElmValue("quickt__ConfirmDetails__accNo", apz.quickt.details.accountNumber);
+    apz.setElmValue("quickt__ConfirmDetails__benName", apz.quickt.details.beneficiaryName);
+    apz.setElmValue("quickt__ConfirmDetails__benAcc", apz.quickt.details.beneficiaryAccount);
+    apz.setElmValue("quickt__ConfirmDetails__benIFS", apz.quickt.details.beneficiaryIFS);
+    apz.setElmValue("quickt__ConfirmDetails__amount", apz.quickt.details.amount);
+   
+}
+apz.quickt.ConfirmDetails.cancel = function() {
+    var params = {};
+    params.div = "quickt__Launcher__launcher";
+    params.scr = 'Details';
+    params.animation = 2;
+    apz.launchSubScreen(params);
+}
+apz.quickt.ConfirmDetails.confirm = function() {
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "quickt__Launcher__launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.bookfd__BookFixedDeposit_Res.depositDtls.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.quickt.ConfirmDetails.confirmCB,
+                "destroyDiv": "quickt__Launcher__launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.quickt.ConfirmDetails.confirmCB = function() {
+    var lLaunchParams = {
+        "appId": "sucscr",
+        "scr": "SuccessScreen",
+        "div": "quickt__Launcher__launcher",
+        "userObj": {
+            "text": "Transaction successfull"
+        }
+    }
+    apz.launchApp(lLaunchParams);
+}

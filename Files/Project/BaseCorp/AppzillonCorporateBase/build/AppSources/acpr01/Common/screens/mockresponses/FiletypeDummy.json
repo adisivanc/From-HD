@@ -1,0 +1,12 @@
+{
+    "Filetypes": [
+        {
+            "filetype": "Salary",
+            "extension": ["xls,xlsx"]
+        },
+        {
+            "filetype": "Bulk Transfer",
+            "extension": ["xls,xlsx"]
+        }
+    ]
+}

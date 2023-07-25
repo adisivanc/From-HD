@@ -1,0 +1,55 @@
+apz.change.changeBranch = {};
+apz.change.changeBranch.sParams = {};
+apz.app.onShown_ChangeBranch = function(params) {
+    debugger;
+    // apz.setElmValue("csmrbk__LandingPage__ScreenNmeLandingTxt", "CHANGE HOME BRANCH REQUEST");
+};
+apz.change.changeBranch.fnSearchIFSC = function() {
+    apz.data.loadJsonData("IFSCDetails", "change");
+    apz.toggleModal({
+        "targetId": "change__ChangeBranch__pu_mdl_1"
+    });
+}
+apz.change.changeBranch.fnSelectBranch = function(pThis) {
+    debugger;
+    // var rowno = $(pThis).parents('li').attr('rowno');
+    var rowno = $(pThis).attr("rowno");
+    var data = apz.data.scrdata.change__IFSCDetails_Res[rowno];
+    apz.setElmValue("change__ChangeBranch__el_ipb_1", data.ifscCode);
+    apz.setElmValue("change__ChangeBranch__el_inp_1", data.bankName);
+    apz.setElmValue("change__ChangeBranch__el_inp_2", data.address);
+    apz.toggleModal({
+        "targetId": "change__ChangeBranch__pu_mdl_1"
+    });
+}
+apz.change.changeBranch.fnCancel = function(params) {
+    apz.landin.Landing.fnHome();
+}
+apz.change.changeBranch.fnSubmit = function(params) {
+    var ifsc = apz.isNull(apz.getElmValue("change__ChangeBranch__el_ipb_1"));
+    var bank = apz.isNull(apz.getElmValue("change__ChangeBranch__el_inp_1"));
+    var addr = apz.isNull(apz.getElmValue("change__ChangeBranch__el_inp_2"));
+    if (!ifsc && !bank && !addr) {
+        apz.dispMsg({
+            message: "Your request has been submitted successfully!",
+            type: "S",
+            callBack: apz.landin.Landing.fnHome
+        });
+    } else {
+        apz.dispMsg({
+            message: "Please fill all the mandatory fields",
+            type: "E"
+        });
+    }
+}
+apz.change.changeBranch.fnSelectAccount = function() {
+    debugger;
+    var branch = apz.getElmValue("change__ChangeBranch__account");
+    if (branch == "100009312263") {
+        apz.setElmValue("change__ChangeBranch__el_inp_4", "85 Broad St, New York, NY 10004, United States")
+    } else if (branch == "100009312401") {
+        apz.setElmValue("change__ChangeBranch__el_inp_4", "110 Washington Pl, New York, NY 10014, United States")
+    } else {
+        apz.setElmValue("change__ChangeBranch__el_inp_4", "150 Broadway, New York, NY 10038, United States")
+    }
+}

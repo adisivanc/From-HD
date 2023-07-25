@@ -1,0 +1,27 @@
+apz.docdtl.Launcher = {};
+apz.docdtl.type = "";
+apz.docdtl.ugandaDetails ={};
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+    apz.docdtl.Launcher.sCache = params;
+    apz.docdtl.Launcher.fnLaunchIDpreview();
+}
+apz.docdtl.Launcher.fnLaunchIDpreview = function() {
+    debugger;
+    var lparams = {};
+    lparams.appId = "docdtl";
+    lparams.scr = "IdentityPreview";
+    lparams.div = "docdtl__Launcher__launcher";
+    lparams.userObj = {
+        "fileType" : apz.docdtl.Launcher.sCache.fileType
+    }
+    apz.launchApp(lparams);
+} 
+apz.docdtl.Launcher.fnBackToApplication = function() {
+    var lparams = {};
+    lparams.appId = "navgtn";
+    lparams.scr = "Navigator";
+    lparams.div = "apzonb__Navigator__launchdiv";
+    lparams.userObj = apz.docdtl.Launcher.sCache;
+    apz.launchApp(lparams);
+}

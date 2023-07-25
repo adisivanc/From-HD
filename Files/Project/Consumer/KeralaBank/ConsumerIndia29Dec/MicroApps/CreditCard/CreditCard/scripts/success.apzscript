@@ -1,0 +1,8 @@
+apz.cdtcrd.success={};
+apz.cdtcrd.success.done=function() {
+   apz.launchSubScreen({
+       appID : "cdtcrd",
+         scr:"CreditCardDetails",
+         div : "cdtcrd__launchScreen__ps_pls_1"
+     })
+}

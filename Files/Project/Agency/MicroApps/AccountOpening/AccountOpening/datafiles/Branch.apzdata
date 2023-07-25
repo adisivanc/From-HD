@@ -1,0 +1,96 @@
+{
+    "ACOP01__BranchList_Req": {
+        
+            "branch1": [
+                {
+                    "address1": "POSTBOXNO.57",
+                    "address2": "LIGHTHOUSEHILLROAD",
+                    "address3": "HAMPANKATTA",
+                    "branchCode": "100",
+                    "branchName": "HAMPANKATTAMANGALORE",
+                    "branchShort": "HKT-MLR",
+                    "city": "MANGALORE",
+                    "country": "INDIA",
+                    "email": "br.0100@syndicatebank.co.in",
+                    "pin": "575001",
+                    "regionCode": "101",
+                    "state": "KARNATAKA"
+                },
+                {
+                    "address1": "15-8-428",
+                    "address2": "KADRIROAD",
+                    "address3": "",
+                    "branchCode": "105",
+                    "branchName": "KADRI,MANGALORE",
+                    "branchShort": "KADRI-MNGLR",
+                    "city": "MANGALORE",
+                    "country": "INDIA",
+                    "email": "br.0105@syndicatebank.co.in",
+                    "pin": "575003",
+                    "regionCode": "101",
+                    "state": "KARNATAKA"
+                }
+            ],
+            "branch2": [
+                {
+                    "address1": "15-8-428",
+                    "address2": "KADRIROAD",
+                    "address3": "",
+                    "branchCode": "105",
+                    "branchName": "KADRI,MANGALORE",
+                    "branchShort": "KADRI-MNGLR",
+                    "city": "MANGALORE",
+                    "country": "INDIA",
+                    "email": "br.0105@syndicatebank.co.in",
+                    "pin": "575003",
+                    "regionCode": "101",
+                    "state": "KARNATAKA"
+                },
+                {
+                    "address1": "POSTBOXNO.57",
+                    "address2": "LIGHTHOUSEHILLROAD",
+                    "address3": "HAMPANKATTA",
+                    "branchCode": "100",
+                    "branchName": "HAMPANKATTAMANGALORE",
+                    "branchShort": "HKT-MLR",
+                    "city": "MANGALORE",
+                    "country": "INDIA",
+                    "email": "br.0100@syndicatebank.co.in",
+                    "pin": "575001",
+                    "regionCode": "101",
+                    "state": "KARNATAKA"
+                }
+            ],
+            "branch3": [
+                {
+                    "address1": "POSTBOXNO.57",
+                    "address2": "LIGHTHOUSEHILLROAD",
+                    "address3": "HAMPANKATTA",
+                    "branchCode": "100",
+                    "branchName": "HAMPANKATTAMANGALORE",
+                    "branchShort": "HKT-MLR",
+                    "city": "MANGALORE",
+                    "country": "INDIA",
+                    "email": "br.0100@syndicatebank.co.in",
+                    "pin": "575001",
+                    "regionCode": "101",
+                    "state": "KARNATAKA"
+                },
+                {
+                    "address1": "15-8-428",
+                    "address2": "KADRIROAD",
+                    "address3": "",
+                    "branchCode": "105",
+                    "branchName": "KADRI,MANGALORE",
+                    "branchShort": "KADRI-MNGLR",
+                    "city": "MANGALORE",
+                    "country": "INDIA",
+                    "email": "br.0105@syndicatebank.co.in",
+                    "pin": "575003",
+                    "regionCode": "101",
+                    "state": "KARNATAKA"
+                }
+            ]
+        }
+    
+}

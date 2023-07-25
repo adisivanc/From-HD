@@ -1,0 +1,11 @@
+{
+    "tbAsmiPersonaFunction": [{
+        "design": "D1",
+        "functionId": "Account",
+        "personaName": "Admin"
+    }, {
+        "design": "D1",
+        "functionId": "Dashboard",
+        "personaName": "Admin"
+    }]
+}

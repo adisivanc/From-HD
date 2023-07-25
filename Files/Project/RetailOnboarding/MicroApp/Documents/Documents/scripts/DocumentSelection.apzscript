@@ -1,0 +1,188 @@
+apz.docmnt.DocumentSelection = {};
+apz.docmnt.DocumentSelection.documents = [];
+apz.app.onLoad_DocumentSelection = function(params) {
+    debugger;
+    $("#navigation_" + apz.flowNo).removeClass("sno");
+    $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+        $(this).removeClass("active");
+    })
+    $("#navigation_"+apz.flowNo+",#navgtn__MobileNavigation__ct_lst_2_row_"+apz.flowNo).addClass("active");
+    setTimeout(function() {
+        apz.docmnt.DocumentSelection.fnGetDocumentsCB();
+    }, 10)
+};
+apz.docmnt.DocumentSelection.fnGetDocuments = function() {
+    debugger;
+    apz.startLoader();
+    setTimeout(function() {
+        var lParams = {
+            "ifaceName": "DocumentDetails_Query",
+            "buildReq": "N",
+            "req": {
+                "tbDbmiCustomerDocuments": {
+                    "refNo": apz.refNo
+                }
+            },
+            "appId": "docmnt",
+            "paintResp": "N",
+            "async": false,
+            "callBack": apz.docmnt.DocumentSelection.fnGetDocumentsCB
+        }
+        apz.server.callServer(lParams);
+    }, 10)
+}
+apz.docmnt.DocumentSelection.fnGetDocumentsCB = function(params) {
+    debugger;
+    apz.docmnt.DocumentSelection.documents = apz.documentArray;
+    apz.documentArray = [];
+    /*if (params.status && params.errors === undefined) {
+        apz.docmnt.DocumentSelection.documents = params.res.docmnt__DocumentDetails_Res.tbDbmiCustomerDocuments;
+    }*/
+    apz.docmnt.DocumentSelection.documents = apz.docmnt.DocumentSelection.documents.concat(apz.idDocArray);
+    apz.idDocArray = [];
+    var documentList;
+    if (apz.country === "IND") {
+        documentList = JSON.parse(apz.getFile(apz.getDataFilesPath("docmnt") + "/DocumentIND.json"));
+    } else if (apz.country === "UAE") {
+        documentList = JSON.parse(apz.getFile(apz.getDataFilesPath("docmnt") + "/DocumentUAE.json"));
+    } else {
+        documentList = JSON.parse(apz.getFile(apz.getDataFilesPath("docmnt") + "/Document.json"));
+    }
+    if (apz.docmnt.DocumentSelection.documents.length > 0) {
+        var documents = apz.docmnt.DocumentSelection.documents;
+        for (var i = 0, len = documents.length; i < len; i++) {
+            var index = documentList[documents[i].docType].findIndex(obj => obj.documentName === documents[i].docName);
+            documentList[documents[i].docType][index].checked = "Yes";
+        }
+    }
+    apz.data.scrdata.docmnt__DocumentsTypes_Res = documentList;
+    apz.data.loadData("DocumentsTypes", "docmnt");
+    apz.docmnt.DocumentSelection.fnAddSelectedClass(documentList.IdentityDocuments, "ct_lst_1");
+    apz.docmnt.DocumentSelection.fnAddSelectedClass(documentList.AddressDocuments, "ct_lst_2");
+    apz.docmnt.DocumentSelection.fnAddSelectedClass(documentList.OtherDocuments, "ct_lst_3");
+    apz.docmnt.DocumentSelection.fnAddSelectedClass(documentList.PhotoSignature, "ct_lst_4");
+    //if (apz.checkExistingCustomer == "y") {
+    if (apz.kycType == "norekyc") {
+        $("#docmnt__DocumentSelection__ct_lst_1 li").css("pointer-events", "none");
+        $("#docmnt__DocumentSelection__ct_lst_1 input").attr("disabled", true);
+        $("#docmnt__DocumentSelection__ct_lst_2 li").css("pointer-events", "none");
+        $("#docmnt__DocumentSelection__ct_lst_2 input").attr("disabled", true);
+        apz.stopLoader();
+    }
+};
+apz.docmnt.DocumentSelection.fnAddSelectedClass = function(docuArray, elName) {
+    debugger;
+    for (var i = 0, len = docuArray.length; i < len; i++) {
+        if (docuArray[i].checked === "Yes") {
+            var listId = "docmnt__DocumentSelection__" + elName + "_row_" + i;
+            $("#" + listId).addClass("selected");
+        }
+    }
+}
+apz.docmnt.DocumentSelection.fnSelectDocument = function(element) {
+    debugger;
+    var checkboxId = $(element).find("input").attr("id");
+    if (apz.getElmValue(checkboxId) === "No") {
+        apz.setElmValue(checkboxId, "Yes");
+        $(element).addClass("selected");
+    } else {
+        apz.setElmValue(checkboxId, "No");
+        $(element).removeClass("selected");
+    }
+}
+apz.docmnt.DocumentSelection.saveApplicationDetails = function() {
+    debugger;
+    var documentTypes = apz.data.buildData("DocumentsTypes", "docmnt").docmnt__DocumentsTypes_Res;
+    var IdentityDocuments = apz.docmnt.DocumentSelection.documents.filter(item => item.docType === "IdentityDocuments");
+    var OtherDocuments = apz.docmnt.DocumentSelection.documents.filter(item => item.docType === "OtherDocuments");
+    var AddressDocuments = apz.docmnt.DocumentSelection.documents.filter(item => item.docType === "AddressDocuments");
+    var PhotoSignature = apz.docmnt.DocumentSelection.documents.filter(item => item.docType === "PhotoSignature");
+    apz.docmnt.DocumentSelection.fnUpdateDocumentList(documentTypes.IdentityDocuments, IdentityDocuments, "IdentityDocuments");
+    apz.docmnt.DocumentSelection.fnUpdateDocumentList(documentTypes.OtherDocuments, OtherDocuments, "OtherDocuments");
+    apz.docmnt.DocumentSelection.fnUpdateDocumentList(documentTypes.AddressDocuments, AddressDocuments, "AddressDocuments");
+    apz.docmnt.DocumentSelection.fnUpdateDocumentList(documentTypes.PhotoSignature, PhotoSignature, "PhotoSignature");
+    //apz.docmnt.DocumentSelection.deletedata();
+    apz.docmnt.DocumentSelection.insertDocumentCB();
+};
+apz.docmnt.DocumentSelection.fnUpdateDocumentList = function(docuTypeArray, DocumentArrray, docuType) {
+    debugger;
+    for (var i = 0, len = docuTypeArray.length; i < len; i++) {
+        if (docuTypeArray[i].checked === "Yes") {
+            var obj = DocumentArrray.find(data => data.docName === docuTypeArray[i].documentName)
+            if (obj) {
+                apz.documentArray.push(obj);
+                if (obj.docName === "Passport" || obj.docName === "National ID" || obj.docName === "PAN Card" || obj.docName === "Driving License" ||
+                    obj.docName === "Resident ID Card" || obj.docName === "Voter's ID") {
+                    var docuBack = DocumentArrray.find(data => data.docName === docuTypeArray[i].documentName && data.fileName === "Back");
+                    if (docuBack) {
+                        apz.documentArray.push(docuBack);
+                    }
+                }
+            } else {
+                if (docuTypeArray[i].documentName === "Passport" || docuTypeArray[i].documentName === "National ID" || docuTypeArray[i].documentName ===
+                    "PAN Card" || docuTypeArray[i].documentName === "Driving License" || docuTypeArray[i].documentName === "Resident ID Card" ||
+                    docuTypeArray[i].documentName === "Voter's ID") {
+                    apz.documentArray.push(apz.docmnt.DocumentSelection.fnCreateDocuObject(docuType, docuTypeArray[i].documentName, "Front"));
+                    apz.documentArray.push(apz.docmnt.DocumentSelection.fnCreateDocuObject(docuType, docuTypeArray[i].documentName, "Back"));
+                } else {
+                    apz.documentArray.push(apz.docmnt.DocumentSelection.fnCreateDocuObject(docuType, docuTypeArray[i].documentName, ""));
+                }
+            }
+        }
+    }
+}
+apz.docmnt.DocumentSelection.fnCreateDocuObject = function(docTyppe, docName, fileName) {
+    debugger;
+    var docObj = {
+        "refNo": apz.refNo,
+        "docType": docTyppe,
+        "docData": "",
+        "fileName": fileName,
+        "docName": docName
+    }
+    return docObj;
+}
+apz.docmnt.DocumentSelection.deletedata = function() {
+    var lParams = {
+        "ifaceName": "DocumentDetails_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": {
+                "refNo": apz.refNo
+            }
+        },
+        "appId": "docmnt",
+        "paintResp": "N",
+        "callBack": apz.docmnt.DocumentSelection.deletedataCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.docmnt.DocumentSelection.deletedataCB = function(pResp) {
+    apz.docmnt.DocumentSelection.insertDocument();
+}
+apz.docmnt.DocumentSelection.insertDocument = function() {
+    debugger
+    apz.documentArray.forEach(function(doc, i) {
+        if (doc.seqNo) {
+            delete doc.seqNo;
+        }
+        if (!doc.docId) {
+            doc.docId = +new Date() + i
+        }
+    });
+    var lParams = {
+        "ifaceName": "DocumentDetails_New",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": apz.documentArray
+        },
+        "appId": "docmnt",
+        "paintResp": "N",
+        "callBack": apz.docmnt.DocumentSelection.insertDocumentCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.docmnt.DocumentSelection.insertDocumentCB = function(pResp) {
+    debugger;
+    apz.navgtn.Navigator.fnLaunchApp();
+}

@@ -1,0 +1,171 @@
+apz.favour.FavouriteSummary = {};
+apz.favour.FavouriteSummary.sCache = {};
+apz.favour.FavouriteSummary.listContainerId = "favour__FavouriteSummary__transfer_list";
+apz.app.onShown_FavouriteSummary = function(params) {
+    apz.favour.FavouriteSummary.sCache = params;
+    if(apz.kidAccountFlag == "true")
+
+{    apz.data.loadJsonData("FavouriteTransfer", "favour");
+}
+else
+{
+       apz.data.loadJsonData("FavouriteTransfer", "favour");
+                       apz.data.scrdata.favour__FavouriteTransfer_Res.summary.pop();
+apz.data.loadData("FavouriteTransfer", "favour")
+
+}
+    apz.data.loadJsonData("FavouritePayment", "favour");
+    apz.data.loadJsonData("FavouriteChequeBook", "favour");
+    if (params.from && params.from === "BillPay") {
+        apz.setElmValue("favour__FavouriteSummary__el_dpd_5", "Payments");
+        $("#favour__FavouriteSummary__el_dpd_5").trigger("change");
+    } else {
+        apz.setElmValue("favour__FavouriteSummary__el_txt_22", "Transfers");
+    }
+    $("#landin__Landing__heading").html("FAVOURITES");
+}
+//get financial favouritis
+apz.favour.FavouriteSummary.fnGetFavouritiesType = function(element) {
+    var favouritesType = $(element).val();
+    apz.setElmValue("favour__FavouriteSummary__el_txt_22", favouritesType);
+    if (favouritesType == "Payments") {
+        $("#favour__FavouriteSummary__payment_list").removeClass("sno");
+        $("#favour__FavouriteSummary__transfer_list").addClass("sno");
+        $("#favour__FavouriteSummary__request_list").addClass("sno");
+        apz.favour.FavouriteSummary.listContainerId = "favour__FavouriteSummary__payment_list";
+        var paymentList = apz.data.scrdata.favour__FavouritePayment_Res.summary;
+        for (var i = 0, len = paymentList.length; len < i; i++) {
+            if (paymentList[i].billType == "Mobile") {
+                $("#favour__FavouriteSummary__mobileNo_label").removeClass("sno");
+                $("#favour__FavouriteSummary__customerId__label").addClass("sno");
+            }
+        }
+    } else if (favouritesType == "Transfers") {
+        $("#favour__FavouriteSummary__transfer_list").removeClass("sno");
+        $("#favour__FavouriteSummary__request_list").addClass("sno");
+        $("#favour__FavouriteSummary__payment_list").addClass("sno");
+        apz.favour.FavouriteSummary.listContainerId = "favour__FavouriteSummary__transfer_list";
+    } else if (favouritesType == "Cheque Book Request") {
+        $("#favour__FavouriteSummary__transfer_list").addClass("sno");
+        $("#favour__FavouriteSummary__payment_list").addClass("sno");
+        $("#favour__FavouriteSummary__request_list").removeClass("sno");
+        apz.favour.FavouriteSummary.listContainerId = "favour__FavouriteSummary__request_list";
+    }
+}
+apz.favour.FavouriteSummary.fnOnRequest = function(ths) {
+    debugger;
+    var lLaunchParams = {};
+    var rowno = parseInt($(ths).attr("rowno"));
+    var selectedRequest = apz.data.scrdata.favour__FavouriteChequeBook_Res.summary[rowno];
+    lLaunchParams.appId = "nchqbk";
+    lLaunchParams.scr = "ChequeBookRequest";
+    lLaunchParams.div = "landin__Landing__launcher";
+    lLaunchParams.userObj = {
+                      "userId" : apz.favour.FavouriteSummary.sCache.userId,
+
+        "from" : "favourites",
+        "data": {
+            "accountno": selectedRequest.account_no,
+            "leaves": selectedRequest.no_of_leaves
+        },
+        "customerID": "1234",
+         control: {
+                    exitApp: {
+                        "div": "landin__Landing__launcher"
+                    }
+                }
+    };
+    apz.launchApp(lLaunchParams);
+}
+apz.favour.FavouriteSummary.fnOnChangeType = function() {
+    debugger;
+    var type = apz.getElmValue("favour__FavouriteSummary__el_dpd_4");
+    var lOptions = [];
+    var financial = ["Transfers", "Payments"];
+    var nonfinancial = ["Cheque Book Request"];
+    var lObj = {
+        "val": "",
+        "desc": "Select"
+    }
+    lOptions.push(lObj);
+    if (type == "Non Financial") {
+        nonfinancial.forEach(function(item) {
+            let lObj = {
+                "val": item,
+                "desc": item
+            };
+            lOptions.push(lObj);
+        });
+    } else {
+        financial.forEach(function(item) {
+            let lObj = {
+                "val": item,
+                "desc": item
+            }
+            lOptions.push(lObj);
+        });
+    }
+    apz.populateDropdown(document.getElementById('favour__FavouriteSummary__el_dpd_5'), lOptions);
+}
+//launch payment screen
+apz.favour.FavouriteSummary.fnLaunchPaymentScreen = function(element) {
+    var rowNo = $(element).attr("rowno");
+    var paymentArr = []
+    paymentArr.push(apz.data.scrdata.favour__FavouritePayment_Res.summary[rowNo]);
+    LandingCommon.setHeading("BILL PAYMENT");
+    apz.launchApp({
+        appId: "bllpay",
+        div: "landin__Landing__launcher",
+        scr: "Launcher",
+        userObj: {
+              userId : apz.favour.FavouriteSummary.sCache.userId,
+            data: {
+                "actionscr": "BP"
+              
+            },
+            summary: paymentArr,
+            from: "favourites",
+            control: {
+                exitApp: {
+                    "div": "landin__Landing__launcher"
+                }
+            }
+        }
+    })
+}
+//launch transfer screen
+apz.favour.FavouriteSummary.fnLaunchTransferScreen = function(element) {
+    debugger;
+    var rowNo = $(element).attr("rowno");
+    var paymentObj = apz.data.scrdata.favour__FavouriteTransfer_Res.summary[rowNo];
+    //$("#csmrbk__LandingPage__ScreenNmeLandingTxt_txtcnt").text("SEND MONEY");
+      LandingCommon.setHeading("SEND MONEY");
+        apz.launchApp({
+            appId: "fndftr",
+            div: "landin__Landing__launcher",
+            scr: "FundsTransfer",
+            userObj: {
+                fromAccontCurrency: "USD",
+                transfer: paymentObj,
+                from: "favourites",
+                userId :  apz.favour.FavouriteSummary.sCache.userId,
+                control: {
+                    exitApp: {
+                        "div": "landin__Landing__launcher"
+                    }
+                }
+            }
+      
+})
+}
+//delete favourite
+apz.favour.FavouriteSummary.fnDeleteFavorurite = function(element, ifaceName) {
+    var rowNo = $(element).attr("rowno")
+    apz.data.scrdata['favour__' + ifaceName + '_Res'].summary.splice(rowNo, 1);
+    apz.data.loadData(ifaceName, "favour");
+}
+//search from favourites list
+apz.favour.FavouriteSummary.fnSearchFromFavouriteList = function() {
+    var searchValue = $("#favour__FavouriteSummary__el_ipb_1").val();
+    apz.searchRecords(apz.favour.FavouriteSummary.listContainerId, searchValue);
+}

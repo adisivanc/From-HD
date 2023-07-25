@@ -1,0 +1,12 @@
+{
+    "CardDtls": {
+        "data": {
+            "OTPRefNo": 1857
+        },
+        "txnRefNo": "1512478307798232923",
+        "extMsg": "",
+        "respCd": "destroy",
+        "intMsgCd": "SUC-001",
+        "status": "success"
+    }
+}

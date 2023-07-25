@@ -1,0 +1,95 @@
+apz.logreg.login = {};
+apz.logreg.login.sAction = "";
+apz.logreg.login.sUserId = "";
+apz.app.onLoad_Login = function() {
+    apz.logreg.launcher.sAction = "login";
+}
+apz.logreg.login.fnLogin = function() {
+    debugger;
+    var userId = apz.getElmValue("logreg__Login__UserName");
+    var password = apz.getElmValue("logreg__Login__Password");
+    if (apz.isNull(userId) || apz.isNull(password)) {
+        var params = {
+            'code': 'APZ-LOG-ERR'
+        };
+        apz.dispMsg(params);
+    } else {
+        apz.startLoader();
+        var req = {};
+        req.userId = userId;
+        req.pwd = password;
+        req.scrsAccessType = 'A';
+        req.ifacesAccessType = 'A';
+        req.controlsAccessType = 'A';
+        req.callBack = apz.logreg.login.fnLoginCB;
+        apz.server.login(req);
+    }
+};
+apz.logreg.login.fnSignUp = function() {
+    var params = {};
+    params.appId = "logreg";
+    params.scr = "Registration";
+    params.userObj = {};
+    params.layout = "All";
+    params.div = "logreg__Launcher__launch";
+    apz.launchSubScreen(params);
+};
+apz.logreg.login.fnLoginCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    if (params.status) {
+        var status = params.resFull.appzillonHeader.status;
+        if (status) {
+            var prespobj = params.res.loginResponse;
+            if (prespobj.status) {
+                apz.logreg.login.sUserId = params.req.loginRequest.userId;
+                apz.logreg.launcher.sAction = "";
+                //launch microapp here
+            } else {
+                var msg = {
+                    'code': 'APZ-LOG-PASS-ERR'
+                };
+                apz.dispMsg(msg);
+            }
+        } else if (!status) {
+            if (params.resFull.hasOwnProperty('appzillonErrors')) {
+                var perrorCode = params.resFull.appzillonErrors;
+                if (perrorCode[0].errorCode === 'APZ-DM-031') {
+                    msg = {
+                        'code': 'APZ-LOG-PASS-EXP',
+                        'callBack': apz.logreg.login.fnChangePassword
+                    };
+                } else if (perrorCode[0].errorCode === 'APZ-SMS-EX-003') {
+                    msg = {
+                        'code': 'APZ-SMS-EX-003',
+                    };
+                } else if (perrorCode[0].errorCode === 'APZ-DM-053') {
+                    msg = {
+                        'message': 'User is pending for authorization. Please contact Administrator',
+                    };
+                } else {
+                    msg = {
+                        'code': perrorCode[0].errorCode
+                    };
+                }
+                apz.dispMsg(msg);
+            }
+        }
+    } else {
+        msg = {
+            'code': 'APZ-SVR-ERR'
+        };
+        apz.dispMsg(msg);
+    }
+};
+apz.logreg.login.fnChangePassword = function() {
+    var params = {};
+    params.appId = "logreg";
+    params.scr = "ChangePassword";
+    params.userObj = {
+        "userID": apz.getElmValue("logreg__Login__UserName")
+    };
+    params.layout = "All";
+    params.div = "logreg__Launcher__launch";
+    apz.launchSubScreen(params);
+};

@@ -1,0 +1,24 @@
+{
+    "cardDetails": [{
+        "cardNumber": "12223123532",
+        "nameOnCard": "John Doe",
+        "accountNo": "722813105055",
+        "amount": "129700",
+        "unbilledAmount": "97782",
+        "avlLimitAmount": "82191"
+    }, {
+        "cardNumber": "902223123121",
+        "nameOnCard": "John Doe",
+        "accountNo": "722813105011",
+        "amount": "167200",
+        "unbilledAmount": "89041",
+        "avlLimitAmount": "23234"
+    }, {
+        "cardNumber": "657190921221",
+        "nameOnCard": "John Doe",
+        "accountNo": "732815105055",
+        "amount": "889110",
+        "unbilledAmount": "12332",
+        "avlLimitAmount": "987883"
+    }]
+}

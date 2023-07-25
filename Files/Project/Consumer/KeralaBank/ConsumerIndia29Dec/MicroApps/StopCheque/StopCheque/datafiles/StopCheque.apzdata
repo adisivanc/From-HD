@@ -1,0 +1,14 @@
+{
+    "stpchq__StopCheque_Res": {
+        "chequeDtls": {
+            "data": {
+                "OTPRefNo": 1833
+            },
+            "txnRefNo": "admin1513920553046937755",
+            "extMsg": "",
+            "respCd": "app",
+            "intMsgCd": "",
+            "status": "success"
+        }
+    }
+}

@@ -1,0 +1,113 @@
+{
+    "tbDbmiCorporateAddress": [{
+        "corporateId": "000FTAC4321",
+        "addressSequence": "",
+        "addressType": "HO",
+        "address1": "4765 Commercial Drive",
+        "address2": "New Hartford",
+        "address3": "New york ",
+        "city": "New york",
+        "zipCode": "10950",
+        "country": "USA",
+        "makerId": "user001",
+        "makerTs": "2017-12-11 10:10:10"
+    },{
+        "corporateId": "000FTAC4321",
+        "addressSequence": "",
+        "addressType": "Business",
+        "address1": "288 Larkin",
+        "address2": "Monroe",
+        "address3": "New york",
+        "city": "New york",
+        "zipCode": "12701",
+        "country": "USA",
+        "makerId": "user001",
+        "makerTs": "2017-12-11 10:10:10"
+    }],
+    "tbDbmiCorporateContact": [{
+        "corporateId": "000FTAC4321",
+        "contactSequence": "",
+        "contactDesignation": "CEO",
+        "contactName": "Robert",
+        "contactMobile": "+44 7700 900738",
+        "contactEmail": "Robert@gmail.com",
+        "makerId": "user001",
+        "makerDateStamp": "2017-12-11 10:10:10"
+    },
+    {
+        "corporateId": "000FTAC4321",
+        "contactSequence": "",
+        "contactDesignation": "CFO",
+        "contactName": "Joseph Jain",
+        "contactMobile": "+44 7700 900738",
+        "contactEmail": "Joseph.jain@gmail.com",
+        "makerId": "user001",
+        "makerDateStamp": "2017-12-11 10:10:10"
+    }],
+    "tbDbmiCorporateMaster": {
+        "corporateId": "000FTAC4321",
+        "corporateName": "I-Exceed Technology Solutions",
+        "customerId": "Cust001",
+        "corporateType": "Private Limited",
+        "description": "Citi Groups",
+        "industry": "Software Company",
+        "establishedYear": "21-Nov-1999",
+        "headQuarters": "USA",
+        "netRevenue": "100000000",
+        "currency": "USD",
+        "employeeCount": "40,000",
+        "website": "www.citigroups.com",
+        "legalName": "CITI",
+        "registrationNumber": "00239823",
+        "taxId": "APG2398327",
+        "countryOfRegistration": "USA",
+        "stockIndex": "iexceedtech",
+        "makerId":"user001",
+        "makerTs":"2017-12-11 10:10:10"
+    },
+    "tbDbmiCorporateDirectors": [{
+        "corporateId": "000FTAC4321",
+        "directorSequence": "",
+        "designation": "CEO",
+        "name": "Robert",
+        "mobile": "+44 7700 900738",
+        "email": "robert@gmail.com",
+        "landline": "",
+        "socialMediaProfile": ""
+    },{
+        "corporateId": "000FTAC4321",
+        "directorSequence": "",
+        "designation": "CFO",
+        "name": "John Joe",
+        "mobile": "+91 876543327",
+        "email": "john.joe@gmail.com",
+        "landline": "",
+        "socialMediaProfile": ""
+    }],
+    "tbDbmiCorpFileMaster": [
+        {
+            "id": "1",
+            "type": "salary",
+            "extension": "xlsx",
+            "corporateId": "000FTAC4321"
+        },
+        {
+        "id":"1",
+        "type":"salary",
+        "extension":"xls",
+        "corporateId":"000FTAC4321"
+    },
+    {
+        "id":"1",
+        "type":"Bulk Transfer",
+        "extension":"xlsx",
+        "corporateId":"000FTAC4321"
+    },
+    {
+        "id":"1",
+        "type":"Bulk Transfer",
+        "extension":"xls",
+        "corporateId":"000FTAC4321"
+    }
+    ]
+}

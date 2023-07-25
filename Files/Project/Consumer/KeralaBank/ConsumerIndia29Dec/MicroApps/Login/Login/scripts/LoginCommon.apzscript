@@ -1,0 +1,71 @@
+LoginCommon =(function(){
+    userId = "";
+    isMpin = false;
+    isFingurePrint = false;
+    return {
+         setUserId : function(name){
+             userId = name;
+              apz.setElmValue("login__Login__username",name);
+         },
+         enableFingerPrint : function(){
+             isFingurePrint = true;
+         },
+         isFingerPrint: function(){
+             return isFingurePrint;
+         },
+         getUserId : function(){
+             return apz.getElmValue("login__Login__username");
+         },
+         isMpin : function(){return isMpin;},
+         openSection2 : function(){
+             $("#login__Login__section1").addClass("sno");
+            $("#login__Login__section2").removeClass("sno");
+         },
+         openSection1:function(){
+              $("#login__Login__section1").removeClass("sno");
+            $("#login__Login__section2").addClass("sno");
+         },
+         showMpin : function(){
+             isMpin = true;
+            this.openSection2();
+            $("#login__Login__loginbtn").addClass("sno");
+             this.showMpinContainer();
+         },
+         removeActiveClassOfli : function(id){
+             $("#"+id+" > li").removeClass("active");
+         },
+         showMpinContainer : function(){
+             $("#login__Login__name_txtcnt").text(LoginCommon.getUserId());
+             $("#login__Login__passwordrow").addClass("sno");
+             $("#login__Login__mpinrow").removeClass("sno");
+             this.removeActiveClassOfli("baseap__Launcher__sc_row_2");
+             $("#baseap__Launcher__sc_row_2 > li").eq(0).addClass("active");
+             mpinEle = $("#login__Login__mpin");
+             mpinEle.attr("inputmode","numeric");
+             mpinEle.val("");
+             mpinEle.attr("maxlength","4");
+             mpinEle.focus();
+         },
+         showPasswordContainer : function(){
+             debugger;
+             isMpin = false;
+             this.openSection2();
+            $("#login__Login__loginbtn").removeClass("sno");
+                $("#login__Login__passwordrow").removeClass("sno");
+             $("#login__Login__mpinrow").addClass("sno");
+               $("#login__Login__name_txtcnt").text(LoginCommon.getUserId());
+                this.removeActiveClassOfli("baseap__Launcher__sc_row_2");
+             $("#baseap__Launcher__sc_row_2 > li").eq(1).addClass("active");  
+            password = $("#login__Login__password");
+             password.attr("type","password");
+             password.val("");
+             password.attr("maxlength","8");
+                           password.focus();
+
+            
+         },
+         signIn: function(cb){
+                apz.common.login("123456","123456",cb)
+         }
+    };
+})();

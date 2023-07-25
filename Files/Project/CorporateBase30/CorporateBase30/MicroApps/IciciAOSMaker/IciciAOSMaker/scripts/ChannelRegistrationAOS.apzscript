@@ -1,0 +1,499 @@
+apz.app.icaosm.ChannelRegistrationAOS = {};
+apz.app.icaosm.ChannelRegistrationAOS.sCache = {};
+apz.app.icaosm.ChannelRegistrationAOS.sAction = "";
+apz.app.icaosm.ChannelRegistrationAOS.sUserFlag = false;
+apz.app.icaosm.ChannelRegistrationAOS.sDebitFlag = false;
+apz.app.icaosm.ChannelRegistrationAOS.sHomeFlag = false;
+apz.app.onLoad_ChannelRegistrationAOS = function(params) {
+    apz.app.icaosm.ChannelRegistrationAOS.fnClearData();
+    apz.app.icaosm.ChannelRegistrationAOS.sCache = params;
+    apz.app.manageCrub(5);
+    var UserID = apz.retrieve("CurrentUser");
+    $("#icaosm__ChannelRegistrationAOS__ct_frm_9").addClass("shownone");
+    if (UserID == "User2") {
+        $("#icaosm__ChannelRegistrationAOS__ct_frm_9").removeClass("shownone");
+    }
+    //  $("#icaosm__ChannelRegistrationAOS__ct_tbl_1ul_ttl,#icaosm__ChannelRegistrationAOS__ct_tbl_3ul_ttl").hide();
+    if (params.action == "submitted") {
+        var lpath = apz.getDataFilesPath();
+        var lData = apz.getFile(lpath + "/ChannelRegistrationAOS.json")
+        lData = JSON.parse(lData);
+        apz.data.buildData("ChannelRegistrationAOS", "icaosm");
+        apz.data.scrdata.icaosm__ChannelRegistrationAOS_Res.details = lData.details;
+        apz.data.loadData("ChannelRegistrationAOS", "icaosm");
+    } else if (params.New) {
+        if (apz.app.icaosm.Common.addregisControl == "") {
+            apz.data.scrdata.icaosm__ChannelRegistrationAOS_Res = [];
+            apz.data.scrdata.icaosm__ChannelRegistrationAOS_Res.details = {};
+            apz.data.loadData("ChannelRegistrationAOS", "icaosm");
+        }
+    }
+    apz.app.icaosm.ChannelRegistrationAOS.fnQueryDebitCardDetails();
+    apz.app.icaosm.ChannelRegistrationAOS.fnQueryCIB();
+    apz.app.icaosm.ChannelRegistrationAOS.fnQueryHomeRegistration();
+}
+apz.app.icaosm.ChannelRegistrationAOS.fnClearData = function() {
+    apz.data.clearMRMV("icaosm__ChannelRegistrationAOS__ct_tbl_1");
+    apz.data.clearMRMV("icaosm__ChannelRegistrationAOS__ct_frm_6");
+    apz.data.clearMRMV("icaosm__ChannelRegistrationAOS__ct_tbl_3");
+    apz.data.clearMRMV("icaosm__ChannelRegistrationAOS__ct_frm_8");
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnQueryDebitCardDetails = function() {
+    apz.app.icaosm.ChannelRegistrationAOS.sAction = "queryDebit";
+    var req = {};
+    req.tbDebitCardDetails = {
+        "companyid": apz.icaosm.Home.sCompanyID
+    };
+    var lParams = {
+        "ifaceName": "DebitCardDetails_Query",
+        "paintResp": "Y",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.ChannelRegistrationAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnQueryCIB = function() {
+    apz.app.icaosm.ChannelRegistrationAOS.sAction = "queryUser";
+    var req = {};
+    req.tbCibUserDetails = {
+        "companyid": apz.icaosm.Home.sCompanyID
+    };
+    var lParams = {
+        "ifaceName": "CIBUserDetails_Query",
+        "paintResp": "Y",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.ChannelRegistrationAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnQueryHomeRegistration = function() {
+    apz.app.icaosm.ChannelRegistrationAOS.sAction = "queryRegistration";
+    var req = {};
+    req.tbHomeRegistration = {
+        "companyid": apz.icaosm.Home.sCompanyID
+    };
+    var lParams = {
+        "ifaceName": "ChannelRegistrationAOS_Query",
+        "paintResp": "Y",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    apz.app.icaosm.ChannelRegistrationAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnBeforCallServer = function(params) {
+    var lReq = {
+        "ifaceName": params.ifaceName,
+        "paintResp": params.paintResp,
+        "buildReq": params.buildReq,
+        "req": params.lReq,
+        "appId": params.appId,
+        "async": false,
+        "callBack": apz.app.icaosm.ChannelRegistrationAOS.callServerCB,
+        "callBackObj": ""
+    };
+    apz.server.callServer(lReq);
+};
+apz.app.icaosm.ChannelRegistrationAOS.callServerCB = function(params) {
+    debugger;
+    if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "queryDebit") {
+        apz.app.icaosm.ChannelRegistrationAOS.fnQueryDebitCardDetailsCB(params);
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "queryUser") {
+        apz.app.icaosm.ChannelRegistrationAOS.fnQueryUserCB(params);
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "queryRegistration") {
+        apz.app.icaosm.ChannelRegistrationAOS.fnQueryHomeRegistrationCB(params);
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "modifySave" || apz.app.icaosm.ChannelRegistrationAOS.sAction == "newSave") {
+        apz.app.icaosm.ChannelRegistrationAOS.fnModifySaveChannelRegistrationAOSCB(params);
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "modifyNext" || apz.app.icaosm.ChannelRegistrationAOS.sAction == "newNext") {
+        apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextChannelRegistrationAOSCB(params);
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "modifyUserSave" || apz.app.icaosm.ChannelRegistrationAOS.sAction == "newUserSave") {
+        apz.app.icaosm.ChannelRegistrationAOS.fnModifySaveUserAOSCB(params);
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "modifyDebitSave" || apz.app.icaosm.ChannelRegistrationAOS.sAction == "newDebitSave") {
+        apz.app.icaosm.ChannelRegistrationAOS.fnModifySaveDebitCardCB(params);
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "modifyUserNext" || apz.app.icaosm.ChannelRegistrationAOS.sAction == "newUserNext") {
+        apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextUserAOSCB(params);
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "modifyDebitNext" || apz.app.icaosm.ChannelRegistrationAOS.sAction == "newDebitNext") {
+        apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextDebitCardCB(params);
+    }
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnQueryDebitCardDetailsCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.ChannelRegistrationAOS.sDebitFlag = true;
+    } else {
+        apz.app.icaosm.ChannelRegistrationAOS.sDebitFlag = false;
+    }
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnQueryUserCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.ChannelRegistrationAOS.sUserFlag = true;
+    } else {
+        apz.app.icaosm.ChannelRegistrationAOS.sUserFlag = false;
+    }
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnQueryHomeRegistrationCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.ChannelRegistrationAOS.sHomeFlag = true;
+    } else {
+        apz.app.icaosm.ChannelRegistrationAOS.sHomeFlag = false;
+    }
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnSave = function() {
+    debugger;
+    if (apz.app.icaosm.ChannelRegistrationAOS.sUserFlag) {
+        apz.app.icaosm.ChannelRegistrationAOS.sAction = "modifyUserSave";
+    } else {
+        apz.app.icaosm.ChannelRegistrationAOS.sAction = "newUserSave";
+    }
+    apz.app.icaosm.ChannelRegistrationAOS.fnModifySaveUserAOS();
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnModifySaveUserAOS = function() {
+    apz.data.buildData("CIBUserDetails", "icaosm");
+    var req = {};
+    if (apz.data.scrdata.icaosm__CIBUserDetails_Req != undefined) {
+        if (apz.data.scrdata.icaosm__CIBUserDetails_Req.tbCibUserDetails != undefined) {
+            if (apz.data.scrdata.icaosm__CIBUserDetails_Req.tbCibUserDetails.length > 0) {
+                req.tbCibUserDetails = apz.data.scrdata.icaosm__CIBUserDetails_Req.tbCibUserDetails;
+                for (var i = 0; i < req.tbCibUserDetails.length; i++) {
+                    req.tbCibUserDetails[i].companyid = apz.icaosm.Home.sCompanyID;
+                }
+            } else {
+                req.tbCibUserDetails = [];
+            }
+        } else {
+            req.tbCibUserDetails = [];
+        }
+    } else {
+        req.tbCibUserDetails = [];
+    }
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "modifyUserSave") {
+        lParams.ifaceName = "CIBUserDetails_Modify";
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "newUserSave") {
+        lParams.ifaceName = "CIBUserDetails_New";
+    }
+    apz.app.icaosm.ChannelRegistrationAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnModifySaveUserAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.ChannelRegistrationAOS.sUserFlag = false;
+        apz.app.icaosm.ChannelRegistrationAOS.fnModifySaveDebitCard();
+    } else {
+        lmsg = {
+            "message": "Channel Registration failed",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnModifySaveDebitCard = function() {
+    if (apz.app.icaosm.ChannelRegistrationAOS.sDebitFlag) {
+        apz.app.icaosm.ChannelRegistrationAOS.sAction = "modifyDebitSave";
+    } else {
+        apz.app.icaosm.ChannelRegistrationAOS.sAction = "newDebitSave";
+    }
+    apz.data.buildData("DebitCardDetails", "icaosm");
+    var req = {};
+    if (apz.data.scrdata.icaosm__DebitCardDetails_Req != undefined) {
+        if (apz.data.scrdata.icaosm__DebitCardDetails_Req.tbDebitCardDetails != undefined) {
+            if (apz.data.scrdata.icaosm__DebitCardDetails_Req.tbDebitCardDetails.length > 0) {
+                req.tbDebitCardDetails = apz.data.scrdata.icaosm__DebitCardDetails_Req.tbDebitCardDetails;
+                for (var i = 0; i < req.tbDebitCardDetails.length; i++) {
+                    req.tbDebitCardDetails[i].companyid = apz.icaosm.Home.sCompanyID;
+                }
+            } else {
+                req.tbDebitCardDetails = [];
+            }
+        } else {
+            req.tbDebitCardDetails = [];
+        }
+    } else {
+        req.tbDebitCardDetails = [];
+    }
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "modifyDebitSave") {
+        lParams.ifaceName = "DebitCardDetails_Modify";
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "newDebitSave") {
+        lParams.ifaceName = "DebitCardDetails_New";
+    }
+    apz.app.icaosm.ChannelRegistrationAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnModifySaveDebitCardCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.ChannelRegistrationAOS.sDebitFlag = false;
+        apz.app.icaosm.ChannelRegistrationAOS.fnModifySaveHomeRegistration();
+    } else {
+        lmsg = {
+            "message": "Channel Registration failed",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnModifySaveHomeRegistration = function() {
+    if (apz.app.icaosm.ChannelRegistrationAOS.sHomeFlag) {
+        apz.app.icaosm.ChannelRegistrationAOS.sAction = "modifySave";
+    } else {
+        apz.app.icaosm.ChannelRegistrationAOS.sAction = "newSave";
+    }
+    apz.data.buildData("ChannelRegistrationAOS", "icaosm");
+    var req = {};
+    req.tbHomeRegistration = apz.data.scrdata.icaosm__ChannelRegistrationAOS_Req.tbHomeRegistration;
+    req.tbHomeRegistration.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "modifySave") {
+        lParams.ifaceName = "ChannelRegistrationAOS_Modify";
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "newSave") {
+        lParams.ifaceName = "ChannelRegistrationAOS_New";
+    }
+    apz.app.icaosm.ChannelRegistrationAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnModifySaveChannelRegistrationAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.ChannelRegistrationAOS.sHomeFlag = false;
+        if (apz.app.icaosm.ChannelRegistrationAOS.sCache.action == "submitted") {
+            apz.app.icaosm.Common.addregisControl = "";
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": "",
+                    "val": "Channel Registration",
+                    "action": apz.app.icaosm.ChannelRegistrationAOS.sCache.action,
+                    "accNum": apz.app.icaosm.ChannelRegistrationAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.ChannelRegistrationAOS.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        } else {
+            apz.app.icaosm.Common.addregisControl = "Saved";
+            var lTotCount = 0;
+            var lFilled = 0,
+                lRadio = 0;
+            $("#scr__icaosm__ChannelRegistrationAOS__main input[type='text'],#scr__icaosm__ChannelRegistrationAOS__main select").each(function() {
+                lTotCount++;
+                if ($(this).val() != "" && $(this).val() != "Select") {
+                    lFilled++;
+                }
+            });
+            $("#scr__icaosm__ChannelRegistrationAOS__main input[type='radio']").each(function() {
+                if ($("#" + this.id + ":Checked").length) {
+                    lFilled++;
+                }
+                lRadio++;
+            });
+            lTotCount = (lRadio / 3) + lTotCount;
+            percentage = (lFilled / lTotCount);
+            apz.data.scrdata.icaosm__Home_Req.Home[4].progress = percentage;
+            apz.data.buildData("ChannelRegistrationAOS", "icaosm");
+            apz.launchSubScreen({
+                "scr": "Home",
+                "div": "Regist__RegisterPage__launchrow1",
+                "userObj": {
+                    "percentage": percentage,
+                    "val": "Channel Registration",
+                    "action": apz.app.icaosm.ChannelRegistrationAOS.sCache.action,
+                    "accNum": apz.app.icaosm.ChannelRegistrationAOS.sCache.accNum,
+                    "appNo": apz.app.icaosm.ChannelRegistrationAOS.sCache.appNo,
+                    "companyID": apz.icaosm.Home.sCompanyID
+                }
+            });
+        }
+    } else {
+        lmsg = {
+            "message": "Channel Registration failed",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextChannelRegistrationAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.ChannelRegistrationAOS.sHomeFlag = false;
+        var lTotCount = 0;
+        var lFilled = 0,
+            lRadio = 0;
+        $("#scr__icaosm__ChannelRegistrationAOS__main input[type='text'],#scr__icaosm__ChannelRegistrationAOS__main select").each(function() {
+            lTotCount++;
+            if ($(this).val() != "" && $(this).val() != "Select") {
+                lFilled++;
+            }
+        });
+        $("#scr__icaosm__ChannelRegistrationAOS__main input[type='radio']").each(function() {
+            if ($("#" + this.id + ":Checked").length) {
+                lFilled++;
+            }
+            lRadio++;
+        });
+        lTotCount = (lRadio / 3) + lTotCount;
+        percentage = (lFilled / lTotCount);
+        apz.data.scrdata.icaosm__Home_Req.Home[4].progress = percentage;
+        apz.data.buildData("ChannelRegistrationAOS", "icaosm");
+        apz.launchSubScreen({
+            "scr": "TaxResidencyDetails",
+            "div": "icaosm__Home__homelaunchingdiv",
+            // "animation": 40
+            "userObj": {
+                "action": apz.app.icaosm.ChannelRegistrationAOS.sCache.action,
+                "appNo": apz.icaosm.Home.Cache.appNo,
+                "accNum": apz.icaosm.Home.Cache.accNum,
+                "companyID": apz.icaosm.Home.sCompanyID
+            }
+        });
+    } else {
+        lmsg = {
+            "message": "Channel Registration failed",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextChannelRegistrationAOS = function() {
+    if (apz.app.icaosm.ChannelRegistrationAOS.sUserFlag) {
+        apz.app.icaosm.ChannelRegistrationAOS.sAction = "modifyUserNext";
+    } else {
+        apz.app.icaosm.ChannelRegistrationAOS.sAction = "newUserNext";
+    }
+    apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextUserAOS();
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextUserAOS = function() {
+    apz.data.buildData("CIBUserDetails", "icaosm");
+    var req = {};
+    if (apz.data.scrdata.icaosm__CIBUserDetails_Req != undefined) {
+        if (apz.data.scrdata.icaosm__CIBUserDetails_Req.tbCibUserDetails != undefined) {
+            if (apz.data.scrdata.icaosm__CIBUserDetails_Req.tbCibUserDetails.length > 0) {
+                req.tbCibUserDetails = apz.data.scrdata.icaosm__CIBUserDetails_Req.tbCibUserDetails;
+                for (var i = 0; i < req.tbCibUserDetails.length; i++) {
+                    req.tbCibUserDetails[i].companyid = apz.icaosm.Home.sCompanyID;
+                }
+            } else {
+                req.tbCibUserDetails = [];
+            }
+        } else {
+            req.tbCibUserDetails = [];
+        }
+    } else {
+        req.tbCibUserDetails = [];
+    }
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "modifyUserNext") {
+        lParams.ifaceName = "CIBUserDetails_Modify";
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "newUserNext") {
+        lParams.ifaceName = "CIBUserDetails_New";
+    }
+    apz.app.icaosm.ChannelRegistrationAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextUserAOSCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.ChannelRegistrationAOS.sUserFlag = false;
+        apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextDebitCard();
+    } else {
+        lmsg = {
+            "message": "Channel Registration failed",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextDebitCard = function() {
+    if (apz.app.icaosm.ChannelRegistrationAOS.sDebitFlag) {
+        apz.app.icaosm.ChannelRegistrationAOS.sAction = "modifyDebitNext";
+    } else {
+        apz.app.icaosm.ChannelRegistrationAOS.sAction = "newDebitNext";
+    }
+    apz.data.buildData("DebitCardDetails", "icaosm");
+    var req = {};
+    if (apz.data.scrdata.icaosm__DebitCardDetails_Req != undefined) {
+        if (apz.data.scrdata.icaosm__DebitCardDetails_Req.tbDebitCardDetails != undefined) {
+            if (apz.data.scrdata.icaosm__DebitCardDetails_Req.tbDebitCardDetails.length > 0) {
+                req.tbDebitCardDetails = apz.data.scrdata.icaosm__DebitCardDetails_Req.tbDebitCardDetails;
+                for (var i = 0; i < req.tbDebitCardDetails.length; i++) {
+                    req.tbDebitCardDetails[i].companyid = apz.icaosm.Home.sCompanyID;
+                }
+            } else {
+                req.tbDebitCardDetails = [];
+            }
+        } else {
+            req.tbDebitCardDetails = [];
+        }
+    } else {
+        req.tbDebitCardDetails = [];
+    }
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "modifyDebitNext") {
+        lParams.ifaceName = "DebitCardDetails_Modify";
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "newDebitNext") {
+        lParams.ifaceName = "DebitCardDetails_New";
+    }
+    apz.app.icaosm.ChannelRegistrationAOS.fnBeforCallServer(lParams);
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextDebitCardCB = function(params) {
+    debugger;
+    if (params.status === true && params.resFull.appzillonHeader.status === true) {
+        apz.app.icaosm.ChannelRegistrationAOS.sDebitFlag = false;
+        apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextChannelRegistration();
+    } else {
+        lmsg = {
+            "message": "Channel Registration failed",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+};
+apz.app.icaosm.ChannelRegistrationAOS.fnModifyNextChannelRegistration = function() {
+    if (apz.app.icaosm.ChannelRegistrationAOS.sHomeFlag) {
+        apz.app.icaosm.ChannelRegistrationAOS.sAction = "modifyNext";
+    } else {
+        apz.app.icaosm.ChannelRegistrationAOS.sAction = "newNext";
+    }
+    apz.data.buildData("ChannelRegistrationAOS", "icaosm");
+    var req = {};
+    req.tbHomeRegistration = apz.data.scrdata.icaosm__ChannelRegistrationAOS_Req.tbHomeRegistration;
+    req.tbHomeRegistration.companyid = apz.icaosm.Home.sCompanyID;
+    var lParams = {
+        "paintResp": "N",
+        "appId": "icaosm",
+        "buildReq": "N",
+        "lReq": req
+    };
+    if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "modifyNext") {
+        lParams.ifaceName = "ChannelRegistrationAOS_Modify";
+    } else if (apz.app.icaosm.ChannelRegistrationAOS.sAction == "newNext") {
+        lParams.ifaceName = "ChannelRegistrationAOS_New";
+    }
+    apz.app.icaosm.ChannelRegistrationAOS.fnBeforCallServer(lParams);
+};

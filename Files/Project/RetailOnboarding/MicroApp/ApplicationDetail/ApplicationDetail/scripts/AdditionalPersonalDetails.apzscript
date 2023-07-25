@@ -1,0 +1,239 @@
+apz.appdtl.AdditionalPersonalDetails = {};
+apz.app.onLoad_AdditionalPersonalDetails = function(params) {
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo", params.refNo);
+    if(apz.country === "IND" || apz.country === "UAE" || apz.country === "UGA" || apz.country === "BD"){
+        var typeOfId = JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/"+apz.country +"typeofID.json"));
+        apz.populateDropdown($("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__typeOfID")[0],typeOfId)
+    }
+    apz.appdtl.AdditionalPersonalDetails.fetchApplicationDetails(params);
+    $("#navigation_"+apz.flowNo).removeClass("sno");
+        $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+            $(this).removeClass("active");
+        })
+        $("#navigation_"+apz.flowNo+",#navgtn__MobileNavigation__ct_lst_2_row_"+apz.flowNo).addClass("active");
+    $("#appdtl__Launcher__sc_row_2").removeClass("sno");
+    if(apz.country==="US"){
+        $("#appdtl__AdditionalPersonalDetails__sc_col_3,#appdtl__AdditionalPersonalDetails__sc_row_7").addClass("sno");
+    }
+    else{
+        $("#appdtl__AdditionalPersonalDetails__sc_col_3,#appdtl__AdditionalPersonalDetails__sc_row_7").removeClass("sno");
+    }
+    if(apz.country==="IND"){
+        $("#appdtl__AdditionalPersonalDetails__sc_col_18").removeClass("sno");
+    }
+    
+    var  sourceOfIncome= JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/OccupationList.json"));
+    apz.data.scrdata.appdtl__OccupationList_Res ={
+        ListItem : sourceOfIncome
+    }
+    apz.data.loadData("OccupationList","appdtl");
+    
+     var  EducationList= JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/EducationList.json"));
+    apz.data.scrdata.appdtl__EducationList_Res ={
+        ListItem : EducationList
+    }
+    apz.data.loadData("EducationList","appdtl");
+    
+    var  EmploymentList= JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/EmploymentList.json"));
+    apz.data.scrdata.appdtl__EmploymentList_Res ={
+        ListItem : EmploymentList
+    }
+    apz.data.loadData("EmploymentList","appdtl");
+    
+    var  SourceList= JSON.parse(apz.getFile(apz.getDataFilesPath("appdtl") + "/SourceList.json"));
+    apz.data.scrdata.appdtl__SourceList_Res ={
+        ListItem : SourceList
+    }
+    apz.data.loadData("SourceList","appdtl");
+};
+apz.appdtl.AdditionalPersonalDetails.fetchApplicationDetails = function(params) {
+    debugger;
+    apz.startLoader();
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.AdditionalPersonalDetails.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.AdditionalPersonalDetails.fetchApplicationDetailsCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    $("#appdtl__AdditionalPersonalDetails__inpOccupation").val(pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.occupation);
+    $("#appdtl__AdditionalPersonalDetails__inpeducation").val(pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.education);
+    $("#appdtl__AdditionalPersonalDetails__inpEmployment").val(pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.profession);
+    
+     var getMaritalStatus = pResp.res.appdtl__ApplicationInfoDB_Req.tbDbmiCustomerMaster.maritalStatus;
+            if(getMaritalStatus == "S"){
+                $("#appdtl__AdditionalPersonalDetails__btnSingle").addClass("current");
+            }
+            else if(getMaritalStatus == "M"){
+                $("#appdtl__AdditionalPersonalDetails__btnMarried").addClass("current");
+            }
+            else if(getMaritalStatus == "O"){
+                 $("#appdtl__AdditionalPersonalDetails__btnOthers").addClass("current");
+            }
+}
+apz.appdtl.AdditionalPersonalDetails.saveApplicationDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Modify",
+        "buildReq": "Y",
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.AdditionalPersonalDetails.saveApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.AdditionalPersonalDetails.saveApplicationDetailsCB = function(pResp) {
+    debugger;
+    apz.applicationDetails = jQuery.extend(true, {}, pResp.req.tbDbmiCustomerMaster);
+    apz.navgtn.Navigator.fnLaunchApp();
+}
+apz.appdtl.AdditionalPersonalDetails.fnOnChangeEmployment = function(){
+    debugger;
+    var status = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__profession");
+    if(status!==""){
+        if(status == "Retired" || status == "UnEmployed"){
+            $("#appdtl__AdditionalPersonalDetails__retirementrow").removeClass("sno");
+             $("#appdtl__AdditionalPersonalDetails__fullTimerow").addClass("sno");
+            
+        }else{
+                $("#appdtl__AdditionalPersonalDetails__retirementrow").addClass("sno");
+             $("#appdtl__AdditionalPersonalDetails__fullTimerow").removeClass("sno");
+        }
+    }
+}
+
+
+apz.appdtl.AdditionalPersonalDetails.fnSelectMaritalStatus = function(pthis, pval) {
+    debugger;
+    // $("#appdtl__AdditionalPersonalDetails__btnSingle").removeClass("current");
+    // $("#appdtl__AdditionalPersonalDetails__btnMarried").removeClass("current");
+    // $("#appdtl__AdditionalPersonalDetails__btnOthers").removeClass("current");
+    $("#appdtl__AdditionalPersonalDetails__sc_row_10 :button").removeClass("current");
+    $("#" + pthis.id).addClass("current");
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__maritalStatus", pval);
+}
+
+apz.appdtl.AdditionalPersonalDetails.fnOpenOccupationModal = function(ptype) {
+    debugger;
+    if (ptype == "open") {
+        $("#appdtl__AdditionalPersonalDetails__occupationModal").removeClass("sno");
+        $("#appdtl__AdditionalPersonalDetails__ct_lst_1 li").removeClass("current");
+        var occupationName = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__occupation");
+        //var occupationName = $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__occupation").val();
+        var lLength = apz.data.scrdata.appdtl__OccupationList_Res.ListItem.length;
+        for (var i = 0; i < lLength; i++) {
+            var occupationListName = apz.getElmValue("appdtl__OccupationList__o__ListItem__OccupationType_" + i);
+            if (occupationName == occupationListName) {
+                $("#appdtl__AdditionalPersonalDetails__ct_lst_1_row_" + i).addClass("current");
+                break;
+            }
+        }
+    }
+    if (ptype == "close") {
+        $("#appdtl__AdditionalPersonalDetails__occupationModal").addClass("sno");
+    }
+}
+
+apz.appdtl.AdditionalPersonalDetails.fnSelectOccupation = function(pthis) {
+   var lrowno = $(pthis).attr("rowno");
+    var occupation = apz.getElmValue("appdtl__OccupationList__o__ListItem__OccupationType_"+lrowno);
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__occupation",occupation);
+    $("#appdtl__AdditionalPersonalDetails__inpOccupation").val(occupation);
+     $("#appdtl__AdditionalPersonalDetails__occupationModal").addClass("sno");
+}
+
+
+apz.appdtl.AdditionalPersonalDetails.fnOpenEducationModal = function(ptype) {
+    debugger;
+    if (ptype == "open") {
+        $("#appdtl__AdditionalPersonalDetails__educationModal").removeClass("sno");
+        $("#appdtl__AdditionalPersonalDetails__ct_lst_2 li").removeClass("current");
+        var educationName = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__education");
+        //var occupationName = $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__occupation").val();
+        var lLength = apz.data.scrdata.appdtl__EducationList_Res.ListItem.length;
+        for (var i = 0; i < lLength; i++) {
+            var educationListName = apz.getElmValue("appdtl__EducationList__o__ListItem__EducationType_" + i);
+            if (educationName == educationListName) {
+                $("#appdtl__AdditionalPersonalDetails__ct_lst_2_row_" + i).addClass("current");
+                break;
+            }
+        }
+    }
+    if (ptype == "close") {
+        $("#appdtl__AdditionalPersonalDetails__educationModal").addClass("sno");
+    }
+}
+apz.appdtl.AdditionalPersonalDetails.fnSelectEducation = function(pthis) {
+    var lrowno = $(pthis).attr("rowno");
+    var education = apz.getElmValue("appdtl__EducationList__o__ListItem__EducationType_" + lrowno);
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__education", education);
+    $("#appdtl__AdditionalPersonalDetails__inpeducation").val(education);
+    $("#appdtl__AdditionalPersonalDetails__educationModal").addClass("sno");
+}
+
+
+apz.appdtl.AdditionalPersonalDetails.fnOpenEmploymentModal = function(ptype) {
+    debugger;
+    if (ptype == "open") {
+        $("#appdtl__AdditionalPersonalDetails__employmentModal").removeClass("sno");
+        $("#appdtl__AdditionalPersonalDetails__ct_lst_3 li").removeClass("current");
+        var emplymentName = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__profession");
+        //var occupationName = $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__occupation").val();
+        var lLength = apz.data.scrdata.appdtl__EmploymentList_Res.ListItem.length;
+        for (var i = 0; i < lLength; i++) {
+            var employmentListName = apz.getElmValue("appdtl__EmploymentList__o__ListItem__EmploymentType_" + i);
+            if (emplymentName == employmentListName) {
+                $("#appdtl__AdditionalPersonalDetails__ct_lst_3_row_" + i).addClass("current");
+                break;
+            }
+        }
+    }
+    if (ptype == "close") {
+        $("#appdtl__AdditionalPersonalDetails__employmentModal").addClass("sno");
+    }
+}
+apz.appdtl.AdditionalPersonalDetails.fnSelectEmployment = function(pthis) {
+    var lrowno = $(pthis).attr("rowno");
+    var emplyment = apz.getElmValue("appdtl__EmploymentList__o__ListItem__EmploymentType_" + lrowno);
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__profession", emplyment);
+    $("#appdtl__AdditionalPersonalDetails__inpEmployment").val(emplyment);
+    $("#appdtl__AdditionalPersonalDetails__employmentModal").addClass("sno");
+}
+
+
+
+
+
+
+apz.appdtl.AdditionalPersonalDetails.fnOpenSourcetModal = function(ptype) {
+    debugger;
+    if (ptype == "open") {
+        $("#appdtl__AdditionalPersonalDetails__sourceModal").removeClass("sno");
+        $("#appdtl__AdditionalPersonalDetails__ct_lst_4 li").removeClass("current");
+        var sourceName = apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__srcFund");
+        //var occupationName = $("#appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__occupation").val();
+        var lLength = apz.data.scrdata.appdtl__SourceList_Res.ListItem.length;
+        for (var i = 0; i < lLength; i++) {
+            var sourceListName = apz.getElmValue("appdtl__SourceList__o__ListItem__SourceType_" + i);
+            if (sourceName == sourceListName) {
+                $("#appdtl__AdditionalPersonalDetails__ct_lst_4_row_" + i).addClass("current");
+                break;
+            }
+        }
+    }
+    if (ptype == "close") {
+        $("#appdtl__AdditionalPersonalDetails__sourceModal").addClass("sno");
+    }
+}
+apz.appdtl.AdditionalPersonalDetails.fnSelectSource = function(pthis) {
+    var lrowno = $(pthis).attr("rowno");
+    var source = apz.getElmValue("appdtl__SourceList__o__ListItem__SourceType_" + lrowno);
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__srcFund", source);
+    $("#appdtl__AdditionalPersonalDetails__inpSource").val(source);
+    $("#appdtl__AdditionalPersonalDetails__sourceModal").addClass("sno");
+}

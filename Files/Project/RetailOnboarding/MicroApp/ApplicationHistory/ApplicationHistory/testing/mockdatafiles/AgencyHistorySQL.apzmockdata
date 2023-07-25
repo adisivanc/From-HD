@@ -1,0 +1,16 @@
+[{
+    "STATUS": "IN-PROGRESS",
+    "WORKFLOW_REF_NO": "CONSONB3021573586085",
+    "START_TS": "2019-02-15 10:37:41.943",
+    "product":"Accounts",
+    "subproduct":"Savings Account",
+    "STAGE_ID":"SUBMITTED"
+    
+},{
+    "STATUS": "IN-PROGRESS",
+    "WORKFLOW_REF_NO": "CONSONB3021573586085",
+    "START_TS": "2019-07-12 10:37:41.922",
+    "product":"Accounts",
+    "subproduct":"Salary Account",
+    "STAGE_ID":"INPUT"
+}]

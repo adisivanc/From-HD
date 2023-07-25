@@ -1,0 +1,230 @@
+apz.crddtl.ForexCard = {};
+apz.crddtl.ForexCard.sParams = {};
+apz.app.onShown_ForexCard = function(params) {
+    debugger;
+    apz.crddtl.ForexCard.sParams = params;
+    // apz.crddtl.ForexCard.fnInitialise(params);
+    apz.show("crddtl__ForexCard__Stage1");
+};
+apz.crddtl.ForexCard.fnContinueStage1 = function(params) {
+    debugger;
+    var lValid = apz.crddtl.ForexCard.fnValidateStage1();
+    if (lValid) {
+        apz.data.buildData("NewCardRequest", "crddtl");
+        var lImage = $("#crddtl__NewCardRequest__i__cardReqDtl__custImageBase64").attr("src");
+        if (lImage == "") {
+            apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl.custImageBase64 = "";
+        }
+        apz.crddtl.ForexCard.fnGoToStage2();
+    }
+};
+apz.crddtl.ForexCard.fnDescInfo = function(){
+    apz.toggleModal({
+        "targetId": "crddtl__ForexCard__descModel"
+    });
+}
+apz.crddtl.ForexCard.fnNameonCard = function(params) {
+    debugger;
+    apz.setElmValue("crddtl__ForexCard__CustomerName", apz.getElmValue("crddtl__NewCardRequest__i__cardReqDtl__nameOnCard"));
+};
+apz.crddtl.ForexCard.fnGoToStage2 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl;
+    apz.setElmValue("crddtl__ForexCard__Stage3CardType", lDetails.cardType);
+    apz.setElmValue("crddtl__ForexCard__Stage3NameOnCard", lDetails.nameOnCard);
+    apz.setElmValue("crddtl__ForexCard__Stage3Amount", lDetails.amount);
+    apz.setElmValue("crddtl__ForexCard__Stage3Validity", lDetails.validity);
+    apz.setElmValue("crddtl__ForexCard__Stage3Currency", lDetails.accountCcy);
+    
+    apz.setElmValue("crddtl__ForexCard__Stage3PassportNumber", lDetails.passportNumber);
+    apz.setElmValue("crddtl__ForexCard__Stage3PassportExpiryDate", lDetails.passportExpiryDate);
+    apz.setElmValue("crddtl__ForexCard__Stage3PlaceOfIssue", lDetails.placeOfIssue);
+    apz.hide("crddtl__ForexCard__Stage1");
+    apz.show("crddtl__ForexCard__Stage2");
+};
+apz.crddtl.ForexCard.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer('crddtl__ForexCard__Stage2Form');
+    if (lValid) {
+        return true;
+    } else {
+        var lMsg = {
+            "code": "ERR_MANDATORY"
+        }
+        apz.dispMsg(lMsg);
+        return false;
+    }
+};
+apz.crddtl.ForexCard.fnBack = function() {
+    var lParams = {
+        "appId": "crddtl",
+        "scr": "NewCardRequest",
+        "div": "crddtl__ManageCards__Stage2",
+        "userObj": {
+            "data": {
+                "customerID": apz.crddtl.managecards.sParams.data.customerID,
+                "accountCcy": "INR"
+            },
+            "callBack": apz.crddtl.managecards.fnBack
+        }
+    };
+    apz.launchSubScreen(lParams);
+};
+apz.crddtl.ForexCard.fnBackStage1 = function() {
+    apz.crddtl.ForexCard.sParams.callBack();
+};
+apz.crddtl.ForexCard.fnRenderStage3 = function() {
+    debugger;
+    apz.hide("crddtl__ManageCards__Stage1");
+    apz.hide("crddtl__ManageCards__CardDtlsList");
+    apz.show("crddtl__ManageCards__Stage2");
+};
+apz.crddtl.ForexCard.fnCapturePhoto = function(pthis) {
+    debugger;
+    var lValid = apz.crddtl.ForexCard.fnFileSizeCheck('crddtl__ForexCard__CustomerPhotoBrowse');
+    if (lValid) {
+        var fileObj = pthis.files[0];
+        var apzFileReader = new FileReader();
+        apzFileReader.onload = function() {
+            debugger;
+            var binaryStr = apzFileReader.result;
+            var base64Str = btoa(binaryStr);
+            apz.setElmValue("crddtl__ForexCard__TempImg", base64Str);
+            apz.startLoader();
+            setTimeout(function() {
+                apz.crddtl.ForexCard.fnGetImage(base64Str)
+            }, 1000);
+        }
+        apzFileReader.readAsBinaryString(fileObj);
+    }
+};
+apz.crddtl.ForexCard.fnGetImage = function(base64Str) {
+    debugger;
+    var lImg = document.querySelector("#crddtl__ForexCard__TempImg");
+    var lHeight = lImg.naturalHeight;
+    var lWidth = lImg.naturalWidth;
+    apz.stopLoader();
+    if (lHeight <= 230 && lWidth <= 230) {
+        apz.setElmValue("crddtl__ForexCard__i__cardReqDtl__custImageBase64", base64Str);
+        apz.setElmValue("crddtl__ForexCard__BackgroundImge", base64Str);
+        document.getElementById("crddtl__ForexCard__BackgroundImge").style.backgroundImage = "url('data:image/png;base64," + base64Str + "')";
+        apz.show("crddtl__ForexCard__i__cardReqDtl__custImageBase64_ul");
+        apz.show("crddtl__ForexCard__i__cardReqDtl__custImageBase64");
+    } else {
+        alert("Height and width");
+        apz.crddtl.ForexCard.fnRemoveImage();
+    }
+}
+apz.crddtl.ForexCard.fnRemoveImage = function() {
+    debugger;
+    $("#crddtl__NewCardRequest__i__cardReqDtl__custImageBase64").attr("src", "")
+    apz.hide("crddtl__NewCardRequest__i__cardReqDtl__custImageBase64_ul");
+}
+apz.crddtl.ForexCard.fnFileSizeCheck = function(puploadid) {
+    debugger;
+    var lreturn = true;
+    var lidenObj = $('#' + puploadid).prop("files");
+    var lsize = lidenObj[0].size;
+    var ltype = lidenObj[0].type;
+    if (lsize > 200000) {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_200'
+        };
+        apz.dispMsg(msg);
+    } else if (lsize > 200000) {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_200'
+        };
+        apz.dispMsg(msg);
+    } else if (ltype == "application/pdf" || ltype == "image/jpeg" || ltype == "image/png") {} else {
+        lreturn = false;
+        var msg = {
+            "code": 'SUBMIT_ERR_FORMAT'
+        };
+        apz.dispMsg(msg);
+    }
+    return lreturn;
+};
+apz.crddtl.ForexCard.fnConfirmStage2 = function() {
+    debugger;
+    var lReq = {
+        "action": "Confirm",
+        "cardReqDtl": apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl
+    };
+    var lServerParams = {
+        "ifaceName": "NewCardRequest",
+        "req": lReq,
+        "callBack": apz.crddtl.ForexCard.fnInsertCallBack
+    };
+    apz.crddtl.ForexCard.fnBeforeCallServer(lServerParams);
+};
+apz.crddtl.ForexCard.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": "N",
+        "req": params.req,
+        "paintResp": "N",
+        "callBack": params.callBack
+    };
+ //   apz.server.callServer(lServerParams);
+                jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("crddtl")+"/NewCardRequest.json"));
+
+  apz.crddtl.ForexCard.fnInsertCallBack(jsondata);
+};
+apz.crddtl.ForexCard.fnInsertCallBack = function(params) {
+    debugger;
+    apz.data.loadJsonData("NewCardRequest", "crddtl");
+    apz.crddtl.ForexCard.sParams.OtpRes = params.crddtl__NewCardRequest_Res.cardReqDtl;
+    apz.crddtl.ForexCard.fnRenderOTP();
+    var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "crddtl__ForexCard__Launcher",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.crddtl__ForexCard_Res.cardReqDtl.data.OTPRefNo
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.crddtl.ForexCard.fnGotoStage4,
+                "destroyDiv": "crddtl__ForexCard__Launcher"
+            }
+        }
+    };
+    apz.launchApp(lLaunchParams);
+};
+apz.crddtl.ForexCard.fnRenderOTP = function() {
+    debugger;
+    apz.hide("crddtl__ForexCard__Stage1");
+    apz.hide("crddtl__ForexCard__Stage2");
+    apz.show("crddtl__ForexCard__Launcher");
+    apz.hide("crddtl__ForexCard__Stage3");
+};
+apz.crddtl.ForexCard.fnGotoStage4 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl;
+    apz.setElmValue("crddtl__ForexCard__Stage4CardType", lDetails.cardType);
+    apz.setElmValue("crddtl__ForexCard__Stage4NameOnCard", lDetails.nameOnCard);
+    apz.setElmValue("crddtl__ForexCard__Stage4Amount", lDetails.amount);
+    apz.setElmValue("crddtl__ForexCard__Stage4Validity", lDetails.validity);
+    apz.setElmValue("crddtl__ForexCard__Stage4Currency", lDetails.accountCcy);
+    
+    apz.setElmValue("crddtl__ForexCard__Stage4PassportNumber", lDetails.passportNumber);
+    apz.setElmValue("crddtl__ForexCard__Stage4PassportExpiryDate", lDetails.passportExpiryDate);
+    apz.setElmValue("crddtl__ForexCard__Stage4PlaceOfIssue", lDetails.placeOfIssue);
+    apz.hide("crddtl__ForexCard__Stage1");
+    apz.hide("crddtl__ForexCard__Stage2");
+    apz.hide("crddtl__ForexCard__Launcher");
+    apz.show("crddtl__ForexCard__Stage3");
+};
+apz.crddtl.ForexCard.fnEditStage2 = function() {
+    debugger;
+    apz.data.scrdata.crddtl__NewCardRequest_Req.cardReqDtl = "";
+    debugger;
+    apz.show("crddtl__ForexCard__Stage1");
+    apz.hide("crddtl__ForexCard__Stage2");
+};

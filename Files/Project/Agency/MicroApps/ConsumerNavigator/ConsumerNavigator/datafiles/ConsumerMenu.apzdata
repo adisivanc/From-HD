@@ -1,0 +1,306 @@
+{
+    "cmrnav__ConsumerMenus_Res": {
+        "ParentMenu": [{
+            "name": "Home"
+        },{
+            "name": "Accounts",
+            "ChildMenu": [{
+                "name": "Accounts Summary",
+                "appId": "accsum",
+                "scr": "AccountDetails",
+                "userObj":{}
+            },{  "name": "Sweep Setup",
+                "appId": "sweep",
+                "scr": "Launcher",
+                "userObj":{}
+                
+            }]
+        }, {
+            "name": "Deposits",
+            "ChildMenu": [{
+                "name": "Fixed Deposit",
+                "SubChildMenu": [ {
+                    "name": "FD Summary",
+                    "appId": "fdsumm",
+                    "scr": "FDSummary",
+                    "userObj":{}
+                }, {
+                    "name": "Book FD",
+                    "appId": "bookfd",
+                    "scr": "BookFixedDeposit",
+                    "userObj": {
+                        "data": {
+                            "customerID": "000004712",
+                            "selectAcc": ""
+                        }
+                    }
+                },{
+                    "name": "Liquidation of FD",
+                    "appId": "liqdfd",
+                    "scr": "LiquidateFD",
+                    "userObj": {
+                        "data": {
+                            "customerID": "000004712",
+                            "accountNo": ["100009312263", "100009312401", "732510006721", "100009312274", "753410000895"]
+                        }
+                    }
+                }, {
+                    "name": "Overdraft on FD",
+                    "appId": "ovdrfd",
+                    "scr": "OverdraftFD",
+                    "userObj": {
+                        "data": {
+                            "customerID": "000004712"
+                        }
+                    }
+                }]
+            }, {
+                "name": "Recurring Deposit",
+                "SubChildMenu": [{
+                    "name": "RD Summary",
+                    "appId": "rdsmry",
+                    "scr": "RDSummary",
+                    "userObj": {
+                        "data": {
+                            "customerID": "000004712"
+                        }
+                    }
+                }, {
+                    "name": "Book RD",
+                    "appId": "bookrd",
+                    "scr": "BookRecurringDeposit",
+                    "userObj": {
+                        "data": {
+                            "customerID": "000004712"
+                        }
+                    }
+                }, {
+                    "name": "Liquidation of RD",
+                    "appId": "liqdrd",
+                    "scr": "LiquidateRD",
+                    "userObj": {
+                        "data": {
+                            "customerID": "000004712"
+                        }
+                    }
+                }]
+            }]
+        }, {
+            "name": "Loans",
+            "ChildMenu": [{
+                "name": "Loan Summary",
+                "appId": "loansm",
+                "scr": "LoanSummary",
+                "userObj": {
+                    "data": {
+                        "customerID": "1"
+                    }
+                }
+            }, {
+                "name": "Loan Statement",
+                "appId": "loanst",
+                "scr": "LoanStatement",
+                "userObj": {
+                    "data": {
+                        "selectedAccount": "100009312263"
+                    }
+                }
+            }, {
+                "name": "Loan Payment",
+                "appId": "lnpymt",
+                "scr": "LoanPayment",
+                "userObj": {
+                    "data": {
+                        "customerID": "1",
+                        "accounts": [{
+                            "accountNo": "100009312263",
+                            "accountType": "Savings",
+                            "accountBalance": "10,00,996"
+                        }, {
+                            "accountNo": "100009312401",
+                            "accountType": "Savings",
+                            "accountBalance": "1,88,373"
+                        }, {
+                            "accountNo": "732510006721",
+                            "accountType": "Savings",
+                            "accountBalance": "2,84,748"
+                        }]
+                    }
+                }
+            }, {
+                "name": "Apply Loan",
+                "appId": "loanvg",
+                "scr": "Applyloan",
+                "userObj": {
+                    "control": {
+                        "exitApp": {
+                            "appId": "cmrnav",
+                            "div": "cmrnav__Launcher__Launcher"
+                        }
+                    }
+                }
+            }, {
+                "name": "Collateral Summary",
+                "appId": "assets",
+                "scr": "AssetSummary",
+                "userObj":{}
+            }]
+        }, {
+            "name": "Cards",
+            "ChildMenu": [{
+                "name": "Credit Card Summary",
+                "appId": "cdtcrd",
+                "scr": "launchScreen",
+                "userObj":{}
+            }, {
+                "name": "Manage Cards",
+                "appId": "crddtl",
+                "scr": "ManageCards",
+                "userObj": {
+                    "data": {
+                        "selectedAccount": "100009312263"
+                    }
+                }
+            }]
+        }, {
+            "name": "Transfers",
+            "ChildMenu": [{
+                "name": "Send Money",
+                "appId": "fndftr",
+                "scr": "FundsTransfer",
+                "userObj":{}
+            }, {
+                "name": "Fund Transfer Summary",
+                "appId": "ftsmry",
+                "scr": "FTSummary",
+                "userObj": {
+                    "data": {
+                        "customerID": "00001"
+                    }
+                }
+            }, {
+                "name": "Standing Instructions",
+                "appId": "stnint",
+                "scr": "STAccountDetails",
+                "userObj": {
+                    "customerDetail": {
+                        "customerID": "000004712"
+                    }
+                }
+            }, {
+                "name": "Direct Debit Mandates",
+                "appId": "ddinst",
+                "scr": "EcsLauncher",
+                "userObj": {
+                    "data": {
+                        "customerID": "00001"
+                    }
+                }
+            }, {
+                "name": "Quick Transfer",
+                "appId": "quickt",
+                "scr": "Launcher",
+                "userObj": {
+                    "data": {
+                        "customerID": "00001"
+                    }
+                }
+            }, {
+                "name": "Beneficiary Maintenance",
+                "SubChildMenu": [{
+                    "name": "Add Beneficiary",
+                    "appId": "bnfmnt",
+                    "scr": "AddBeneficiary",
+                    "userObj": {
+                        "data": {
+                            "customerID": "000004712",
+                            "customerName": "JackSparrow"
+                        }
+                    }
+                }, {
+                    "name": "Beneficiary Summary",
+                    "appId": "bnfsum",
+                    "scr": "BeneficiarySummary",
+                      "userObj": {
+                        "data": {
+                            "customerID": "000004712",
+                            "customerName": "JackSparrow"
+                        }
+                    }
+                }]
+            }]
+        }, {
+            "name": "Payments",
+            "ChildMenu": [{
+                "name": "Bill Payment",
+                "appId": "bllpay",
+                "scr": "Launcher",
+                "userObj": {
+                    "data": {
+                        "accounts": [{
+                            "accountNo": "100009312263",
+                            "accountType": "Savings",
+                            "accountBalance": "10,00,996"
+                        }, {
+                            "accountNo": "100009312401",
+                            "accountType": "Savings",
+                            "accountBalance": "1,88,373"
+                        }, {
+                            "accountNo": "732510006721",
+                            "accountType": "Savings",
+                            "accountBalance": "2,84,748"
+                        }],
+                        "customerID": "1",
+                        "actionscr": "BP"
+                    }
+                }
+            }, {
+                "name": "Bill Payment History",
+                "appId": "bphist",
+                "scr": "BillPaymentHistory",
+                "userObj": {
+                    "data": {
+                        "selectedAccount": "100009312263"
+                    }
+                }
+            },{
+                "name": "One Time Bill Pay",
+                "appId": "bllpay",
+                "scr": "Launcher",
+                "userObj": {
+                    "data": {
+                        "customerID": "1",
+                        "selectedAccount": "100009312263",
+                        "actionscr" :"OTBL"
+                    }
+                }
+            },{
+                "name": "Manage Biller",
+                "appId": "bilpay",
+                "scr": "MultipleBillPay",
+                "userObj": {
+                    "data": {
+                        "customerID": "1",
+                        "selectedAccount": "100009312263"
+                    }
+                }
+            }]
+        }, {
+            "name": "Transactions",
+            "ChildMenu": [{
+                "name": "Deposit/Withdraw Cash",
+                "appId": "cashtr",
+                "scr": "CashTransactionsHome",
+                "userObj":{
+                    "destroyDiv": "cmrnav__Launcher__Launcher",
+                    "parentAppId": "excust",
+                    "action": "customerDashboard",
+                    "from": "dashboard"
+                }
+            } 
+            ]
+        },{
+            "name": "Service Requests"
+        }]
+    }
+}

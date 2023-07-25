@@ -1,0 +1,58 @@
+apz.crdles.CardlessCash={};
+apz.app.onLoad_CardlessCash = function(params) {
+    debugger;
+   // apz.crdles.CardlessCash.fnSetNavigation(params);
+    
+};
+apz.app.onShown_CardlessCash = function()
+{
+    $("#crdles__CardlessCash__el_inp_2").attr("type","tel");
+
+
+}
+apz.crdles.CardlessCash.fnSetNavigation = function(params) {
+    debugger;
+    apz.crdles.CardlessCash.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "CARDLESS CASH";
+    }
+    
+    apz.crdles.CardlessCash.Navigation(lParams);
+};
+
+apz.crdles.CardlessCash.fnSubmit = function() {
+    debugger;
+    $("#crdles__CardlessCash__mainScreen").addClass("sno");
+        $("#crdles__CardlessCash__otp").removeClass("sno");
+
+     var lLaunchParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "crdles__CardlessCash__otp",
+        "userObj": {
+            "action": "SetRefNo",
+            "data": {
+                //"OTPRefNo": params.res.crddtl__CardOperation_Res.CardDtls.data.OTPRefNo
+                "OTPRefNo":"23423482987237"
+            },
+            "control": {
+                "appId": "otpeng",
+                "callBack": apz.crdles.CardlessCash.fnSubmitCallBack,
+                "destroyDiv": "crdles__CardlessCash__otp"
+            }
+        }
+    };
+       apz.launchApp(lLaunchParams);
+}
+apz.crdles.CardlessCash.fnSubmitCallBack = function() {
+
+    var lLaunchParams = {
+        "appId": "crdles",
+        "scr": "SuccessScreen",
+        "div": "landin__Landing__launcher"
+    };
+    apz.launchSubScreen(lLaunchParams);
+}

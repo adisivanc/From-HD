@@ -1,0 +1,62 @@
+{
+    
+        "ListItem": [
+            {   "corporateId":"000FTAC4321",
+            "accountName": "CAPITAL LOAN",
+            "accountNo": "0238473298",
+            "amount": 25000,
+            "currency": "USD",
+            "loanName":""
+        },
+        {   "corporateId":"000FTAC4321",
+            "accountName": "PROJECT FINANCE",
+            "accountNo": "0125473298",
+            "amount": 50000,
+            "currency": "USD",
+            "loanName":""
+        },
+        {   "corporateId":"000FTAC4321",
+            "accountName": "PRODUCT FINANCE",
+            "accountNo": "0984573918",
+            "amount": 100000,
+            "currency": "USD",
+            "loanName":""
+        },
+        {   "corporateId":"000FTAC4321",
+            "accountName": "BUSINESS LOANS",
+            "accountNo": "0984473918",
+            "amount": 50000,
+            "currency": "USD",
+            "loanName":""
+        },
+         {   "corporateId":"000FTAC4321",
+            "accountName": "CAPITAL LOAN",
+            "accountNo": "1838473298",
+            "amount": 5000000,
+            "currency": "USD",
+            "loanName":""
+        },
+        {   "corporateId":"000FTAC4321",
+            "accountName": "PROJECT FINANCE",
+            "accountNo": "8931873298",
+            "amount": 89000000,
+            "currency": "USD",
+            "loanName":""
+        },
+        {   "corporateId":"000FTAC4321",
+            "accountName": "PRODUCT FINANCE",
+            "accountNo": "8361573918",
+            "amount": 459870000,
+            "currency": "USD",
+            "loanName":""
+        },
+        {   "corporateId":"000FTAC4321",
+            "accountName": "BUSINESS LOANS",
+            "accountNo": "8742473918",
+            "amount": 145987000,
+            "currency": "USD",
+            "loanName":""
+        }
+        ]
+    
+}

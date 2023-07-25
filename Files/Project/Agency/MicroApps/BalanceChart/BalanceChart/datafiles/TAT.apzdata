@@ -1,0 +1,69 @@
+{
+    "balanc__MonthlyBalance_Res": {
+        "datasets": [{
+            "Months": "January",
+            "Amount": "1",
+            "Account": "Accounts"
+        }, {
+            "Months": "January",
+            "Amount": "2",
+            "Account": "Loans"
+        }, {
+            "Months": "January",
+            "Amount": "0.5",
+            "Account": "Cards"
+        }, {
+            "Months": "January",
+            "Amount": "4",
+            "Account": "Deposits"
+        }, {
+            "Months": "February",
+            "Amount": "2,5",
+            "Account": "Accounts"
+        }, {
+            "Months": "February",
+            "Amount": "3.5",
+            "Account": "Loans"
+        }, {
+            "Months": "February",
+            "Amount": "4",
+            "Account": "Cards"
+        }, {
+            "Months": "February",
+            "Amount": "3.5",
+            "Account": "Deposits"
+        },{
+            "Months": "March",
+            "Amount": "2.5",
+            "Account": "Accounts"
+        }, {
+            "Months": "March",
+            "Amount": "4.5",
+            "Account": "Loans"
+        }, {
+            "Months": "March",
+            "Amount": "2",
+            "Account": "Cards"
+        }, {
+            "Months": "March",
+            "Amount": "5",
+            "Account": "Deposits"
+        },{
+            "Months": "April",
+            "Amount": "1",
+            "Account": "Accounts"
+        }, {
+            "Months": "April",
+            "Amount": "0.5",
+            "Account": "Loans"
+        }, {
+            "Months": "April",
+            "Amount": "4",
+            "Account": "Cards"
+        }, {
+            "Months": "April",
+            "Amount": "2",
+            "Account": "Deposits"
+        }]
+    }
+}

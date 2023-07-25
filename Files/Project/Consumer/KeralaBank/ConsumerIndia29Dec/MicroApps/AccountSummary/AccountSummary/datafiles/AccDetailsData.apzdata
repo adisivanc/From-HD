@@ -1,0 +1,27 @@
+{
+    "accsum__AccDetails_Req": {
+        "accSummary": {
+            "accountNumber": "3220101001988",
+            "txnRefNo": "",
+            "accountId": "",
+            "accountBranchName": "",
+            "accountBranchCode": "",
+            "accountIfsc": "7083",
+            "accountOpenDate": "24Apr 2015",
+            "accountType": "Savings Account",
+            "accountStatus": "",
+            "customerRelation": "",
+            "accountProduct": "",
+            "authenticationType": "",
+            "authenticationTarget": "",
+            "customField1": "",
+            "customField2": "",
+            "customField3": "",
+            "customField4": "",
+            "customField5": "",
+            "availableBalance": "71178",
+            "linkedMobno": "9686736353",
+            "linkedCardno": "2324 XXXX XXXX XX34"
+        }
+    }
+}

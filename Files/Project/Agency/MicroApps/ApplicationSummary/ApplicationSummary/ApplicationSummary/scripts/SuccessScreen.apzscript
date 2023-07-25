@@ -1,0 +1,61 @@
+apz.appsum.SuccessScreen = {};
+apz.appsum.SuccessScreen.sParams = {};
+apz.app.onLoad_SuccessScreen = function(params) {
+    debugger;
+    apz.appsum.SuccessScreen.sParams = params;
+    apz.hide("appdtl__AppLauncher__top_header");
+    apz.hide("appdtl__AppLauncher__navigator");
+    apz.appsum.SuccessScreen.fnSendSuccessMsg(params);
+};
+apz.appsum.SuccessScreen.fnSendSuccessMsg = function(params) {
+  debugger;
+
+    $("#appsum__SuccessScreen__el_txt_6_txtcnt").text(params.message);
+    $("#appsum__SuccessScreen__el_txt_8_txtcnt").text(params.refNo);
+};
+
+apz.appsum.SuccessScreen.getReport = function() {
+    apz.startLoader();
+    setTimeout(function(){
+        apz.server.callServer({
+        "ifaceName": "Report",
+        "buildReq": "N",
+        "req": {
+            reportData: {
+                params: {
+                    "REF_NO": apz.appsum.SuccessScreen.sParams.refNo
+                },
+                reportDetails: {
+                    fileType: "PDF"
+                }
+            }
+        },
+        "paintResp": "N",
+        "callBack": apz.appsum.SuccessScreen.getReportCB,
+        "appId": "appsum"
+    });
+    },100)
+    
+};
+apz.appsum.SuccessScreen.getReportCB = function(pResp) {
+    debugger;
+    try {
+        apz.appsum.SuccessScreen.showPDF(pResp.res.appsum__Report_Res.file);
+    } catch (e) {};
+}
+apz.appsum.SuccessScreen.showPDF = function(pObj) {
+    apz.stopLoader();
+    var myBase64string = pObj;
+    if (navigator.userAgent.indexOf("Chrome") != -1) {
+        var uri = 'data:application/pdf;base64,';
+        var link = document.createElement("a");
+        link.download = "Onboarding Application.pdf";
+        link.href = uri + myBase64string;
+        link.click();
+    } else if (navigator.userAgent.indexOf("Firefox") != -1) {
+        window.open("data:application/pdf;base64," + myBase64string, "", "");
+    } else if ((navigator.userAgent.indexOf("MSIE") != -1) || ( !! document.documentMode == true)) //IF IE > 10
+    {
+        window.open("data:application/pdf;base64," + myBase64string, "", "");
+    }
+};

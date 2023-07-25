@@ -1,0 +1,18 @@
+apz.blspli = {};
+apz.blspli.LauncherSplit = {};
+apz.blspli.LauncherSplit.sparams = {};
+apz.app.onLoad_LauncherSplit = function(params) {
+    debugger;
+    apz.blspli.LauncherSplit.sparams = params;
+    var lparams = {};
+    lparams.appId = "blspli";
+    lparams.scr = "BillSplit";
+    lparams.div = "blspli__LauncherSplit__launcher";
+    lparams.userObj = {
+        ...params,
+        "amount": apz.blspli.LauncherSplit.sparams.amount,
+        "serviceProvider": apz.blspli.LauncherSplit.sparams.serviceProvider,
+        "data" : apz.blspli.LauncherSplit.sparams.callBackData
+    }
+    apz.launchSubScreen(lparams);
+}

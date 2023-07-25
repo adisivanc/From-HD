@@ -1,0 +1,215 @@
+apz.fundin.FundingOptions = {}
+apz.fundin.FundingOptions.rowNo = 0;
+apz.fundin.FundingOptions.id = "";
+apz.app.onLoad_FundingOptions = function(params) {
+    debugger;
+    apz.fundin.FundingOptions.sCache = params;
+    // $("#navigation_" + apz.flowNo).removeClass("sno");
+    // $("#apzonb__Navigator__el_progressstep_1_ext li").each(function() {
+    //     $(this).removeClass("active");
+    // })
+    $("#navgtn__Navigator__el_btn_3").attr("onclick", "apz.fundin.FundingOptions.fnSubmit('debit');");
+    $("#navgtn__MobileNavigation__ct_lst_2_row_" + apz.flowNo).addClass("active");
+    if(apz.country !== "IND"){
+        $("#fundin__FundingOptions__upiTab_li,#fundin__FundingOptions__upiTab_ul").addClass("sno");
+    }
+    apz.fundin.FundingOptions.fnFundingOptions("gateway");
+}
+apz.app.onShown_FundingOptions = function(params) {
+    debugger;
+    $("#fundin__FundingOptions__chequeTable_add_btn").trigger("click");
+    apz.data.loadJsonData("ChequeFunding", "fundin");
+}
+apz.fundin.FundingOptions.fnPageunderconstruction = function() {
+    apz.monumt.Navigator.ShowHomePage();
+}
+apz.fundin.FundingOptions.fnFinancialDocumentUpload = function(param) {
+    debugger;
+    var id = $(param).attr("id");
+    var rowNo = $(param).attr('rowno');
+    apz.fundin.FundingOptions.rowNo = rowNo;
+    apz.fundin.FundingOptions.id = id;
+    if (apz.deviceType === "ANDROID") {
+        apz.fundin.FundingOptions.fnCallFileBrowser("fundin__FundingOptions__document_upload");
+        apz.fundin.FundingOptions.fileUploadId = "fundin__FundingOptions__document_upload";
+    } else {
+        $("#fundin__FundingOptions__document_upload").trigger("click");
+    }
+}
+apz.fundin.FundingOptions.fnCallFileBrowser = function(id) {
+    var json = {
+        "filter": "",
+        "fileCategory": "EXTERNAL",
+        "location": "EXTERNAL",
+        "openFile": "N"
+    };
+    json.id = id;
+    json.callBack = apz.fundin.FundingOptions.fnGetSession;
+    apz.ns.fileBrowser(json);
+}
+apz.fundin.FundingOptions.fnGetSession = function(jsonObj) {
+    apz.fundin.FundingOptions.androidFilePath = jsonObj.filePath;
+    apz.server.login({
+        "userId": "admin",
+        "pwd": "admin",
+        "callBack": apz.fundin.FundingOptions.fnGetSessionCB
+    })
+}
+apz.fundin.FundingOptions.fnGetSessionCB = function(params) {
+    if (params.errors == undefined && params.status) {
+        var path = apz.fundin.FundingOptions.androidFilePath;
+        var lfilePath = path.split("/")
+        apz.fundin.FundingOptions.androidfileName = lfilePath.pop();
+        var json = {
+            "filePath": lfilePath.join("/"),
+            "sessionReq": "Y"
+        };
+        json.fileName = apz.fundin.FundingOptions.androidfileName;
+        json.base64 = "Y";
+        json.id = "DOWNLOADFILE_ID";
+        json.callBack = apz.fundin.FundingOptions.fnGetBase64
+        apz.ns.downloadFile(json);
+    }
+}
+apz.fundin.FundingOptions.fnGetBase64 = function(params) {
+    if (params.base64) {
+        // $("#appdtl__DocumentDetails__profillePic").attr("src", "data:image;base64," + params.base64); //set image into container
+        var lfileName = apz.fundin.FundingOptions.androidfileName;
+        apz.setElmValue(apz.fundin.FundingOptions.id, lfileName);
+        // apz.fundin.FundingOptions.fnShowFileProgress(lfileName, "data:image;base64," + params.base64);
+    }
+}
+apz.fundin.FundingOptions.fnFundingOptions = function(param) {
+    debugger;
+    $("#fundin__FundingOptions__gr_row_5").find("p").removeClass("current");
+    switch (param) {
+        case "gateway":
+            $("#fundin__FundingOptions__gatewayRow").removeClass("sno");
+            $("#fundin__FundingOptions__noneRow").addClass("sno");
+            $("#navgtn__Navigator__el_btn_3").attr("onclick", "apz.fundin.FundingOptions.fnSubmit('debit');");
+            $("#fundin__FundingOptions__chequeRow").addClass("sno");
+            $("#fundin__FundingOptions__el_txt_7").addClass("current");
+            $("#fundin__FundingOptions__netBankingTab_li").click();
+            break;
+        default:
+            $("#fundin__FundingOptions__noneRow").removeClass("sno")
+            $("#navgtn__Navigator__el_btn_3").removeClass("sno").attr("onclick", "apz.fundin.FundingOptions.fnSubmit('none');");
+            $("#fundin__FundingOptions__chequeRow").addClass("sno")
+            $("#fundin__FundingOptions__gatewayRow").addClass("sno")
+            $("#fundin__FundingOptions__el_txt_8").addClass("current")
+            break;
+    }
+}
+apz.fundin.FundingOptions.fnClickDebitTab = function() {
+    debugger;
+    $("#navgtn__Navigator__el_btn_3").removeClass("sno").attr("onclick", "apz.fundin.FundingOptions.fnSubmit('debit');");
+}
+apz.fundin.FundingOptions.fnClickNetbankingtab = function() {
+    debugger;
+    $("#navgtn__Navigator__el_btn_3").addClass("sno");
+}
+apz.fundin.FundingOptions.fnRestrictNumeric = function(el) {
+    debugger;
+    var digits = el.value.match(/^[0-9]+$/) || [""];
+    el.value = digits[0];
+    el.value = el.value.substring(0, 16);
+}
+apz.fundin.FundingOptions.fnSubmit = function(param, app) {
+    debugger;
+    var type = "S",
+        message = "";
+    apz.applicationDetails.isFunding = "Y";
+    switch (param) {
+        case "cheque":
+            var agreement = $('#fundin__FundingOptions__chequeAgreement').is(':checked')
+            if (agreement == true) {
+                message = "Your cheque detals has been submitted successfully."
+            } else {
+                message = "Please confirm that all the information provided above is correct."
+                type = "E"
+            }
+            break;
+        case "netbanking":
+            apz.applicationDetails.fundingMode = "Debit Card";
+            message = "Now you will be redirected to the " + app + " Internet banking website."
+            break;
+        case "debit":
+            apz.applicationDetails.fundingMode = "Internet Banking";
+            message = "Your payment has been processed successfully."
+            break;
+        case "wallet":
+            apz.applicationDetails.fundingMode = "Wallet";
+            message = "Now you will be redirected to " + app + " app."
+            break;
+        case "none":
+            var agreement = $('#fundin__FundingOptions__noneAgreement').is(':checked')
+            if (agreement == true) {
+                apz.applicationDetails.isFunding = "N";
+                apz.applicationDetails.fundingMode = "";
+                message = "The application has been processed for a non funding approval."
+            } else {
+                message = "Please confirm the terms and conditions."
+                type = "E"
+            }
+            break;
+        default:
+            break;
+    }
+    if (type === "S") {
+        apz.flowNo++;
+        apz.dispMsg({
+            message: message,
+            type: type,
+            callBack: apz.fundin.FundingOptions.fnSaveFundingDetails
+        });
+    } else {
+        apz.dispMsg({
+            message: message,
+            type: type
+        });
+    }
+}
+apz.fundin.FundingOptions.fnSaveFundingDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Modify",
+        "buildReq": "N",
+        "appId": "fundin",
+        "paintResp": "N",
+        "req": {
+            "tbDbmiCustomerMaster": apz.applicationDetails
+        },
+        "async": false,
+        "callBack": apz.fundin.FundingOptions.saveApplicationDetails
+    };
+    apz.server.callServer(lParams);
+}
+apz.fundin.FundingOptions.saveApplicationDetails = function() {
+    debugger;
+    $("#navgtn__Navigator__el_btn_3").attr("onclick", "apz.navgtn.Navigator.nextScreen();");
+    apz.navgtn.Navigator.fnLaunchApp();
+}
+apz.fundin.FundingOptions.fnBrowseToUpload = function(pthis, event) {
+    debugger;
+    var fieArray = (pthis.files.length > 0) ? pthis.files : apz.fundin.FundingOptions.fileList;
+    for (var i = 0, len = fieArray.length; i < len; i++) {
+        let fileObj = fieArray[i];
+        if (fileObj.size <= 2097152) {
+            let apzFileReader = new FileReader();
+            apzFileReader.onload = function() {
+                debugger;
+                let binaryStr = apzFileReader.result;
+                // fileObj.name
+                apz.setElmValue(apz.fundin.FundingOptions.id, fileObj.name);
+                /*apz.fundin.FundingOptions.fnShowFileProgress(fileObj.name, binaryStr);
+                $("#" + pthis.id).val("");*/
+            }
+            apzFileReader.readAsDataURL(fileObj);
+        } else {
+            apz.dispMsg({
+                appId: "fundin",
+                message: "Please select the size below 2MB,If you were uploaded that file would skipped."
+            })
+        }
+    }
+};

@@ -1,0 +1,141 @@
+apz.bnfmnt.InternationalRemittance = {};
+apz.bnfmnt.benName = {};
+apz.bnfmnt.benBank = {};
+apz.bnfmnt.benAdd = {};
+apz.bnfmnt.benbankAdd = {};
+apz.bnfmnt.benNum = {};
+apz.bnfmnt.benAcc = {};
+apz.bnfmnt.benCountry = {};
+apz.bnfmnt.benCurrency = {};
+apz.bnfmnt.benSwift = {};
+apz.bnfmnt.benABA = {};
+apz.bnfmnt.benIBAN = {};
+apz.bnfmnt.InternationalRemittance.sParams = {};
+
+apz.app.onLoad_InternationalRemittance = function(params) {
+    $("#bnfmnt__InternationalRemittance__Stage1").removeClass("sno");
+    apz.bnfmnt.InternationalRemittance.sParams = params;
+}
+apz.app.onShown_InternationalRemittance  = function()
+{
+        $("#bnfmnt__InternationalRemittance__el_inp_5").attr("type", "tel");
+                $("#bnfmnt__InternationalRemittance__el_inp_6").attr("type", "tel");
+
+
+}
+apz.bnfmnt.InternationalRemittance.addBeneficiary = function()
+{
+    debugger;
+    apz.hide("bnfmnt__InternationalRemittance__Stage1");
+        apz.show("bnfmnt__InternationalRemittance__Stage2");
+        apz.hide("bnfmnt__InternationalRemittance__Stage3");
+ benName = apz.getElmValue("bnfmnt__InternationalRemittance__el_inp_1");
+ benBank = apz.getElmValue("bnfmnt__InternationalRemittance__el_inp_2");
+ benAdd = apz.getElmValue("bnfmnt__InternationalRemittance__el_inp_3");
+ benbankAdd = apz.getElmValue("bnfmnt__InternationalRemittance__el_inp_4");
+ benNum = apz.getElmValue("bnfmnt__InternationalRemittance__el_inp_5");
+ benAcc = apz.getElmValue("bnfmnt__InternationalRemittance__el_inp_6");
+ benCountry = apz.getElmValue("bnfmnt__InternationalRemittance__el_dpd_1");
+ benCurrency = apz.getElmValue("bnfmnt__InternationalRemittance__el_dpd_2");
+ benSwift = apz.getElmValue("bnfmnt__InternationalRemittance__el_inp_7");
+ benABA = apz.getElmValue("bnfmnt__InternationalRemittance__el_inp_8");
+ benIBAN = apz.getElmValue("bnfmnt__InternationalRemittance__el_inp_9");
+apz.setElmValue("bnfmnt__InternationalRemittance__benName",benName);
+apz.setElmValue("bnfmnt__InternationalRemittance__benBank",benBank);
+apz.setElmValue("bnfmnt__InternationalRemittance__benAdd",benAdd);
+apz.setElmValue("bnfmnt__InternationalRemittance__benBankAdd",benbankAdd);
+apz.setElmValue("bnfmnt__InternationalRemittance__benNum",benNum);
+apz.setElmValue("bnfmnt__InternationalRemittance__benacc",benAcc);
+apz.setElmValue("bnfmnt__InternationalRemittance__benCountry",benCountry);
+apz.setElmValue("bnfmnt__InternationalRemittance__benCurr",benCurrency);
+apz.setElmValue("bnfmnt__InternationalRemittance__benswift",benSwift);
+apz.setElmValue("bnfmnt__InternationalRemittance__benABA",benABA);
+apz.setElmValue("bnfmnt__InternationalRemittance__benIBAN",benIBAN);
+
+}
+apz.bnfmnt.InternationalRemittance.fnEdit = function()
+{
+      apz.hide("bnfmnt__InternationalRemittance__Stage2");
+        apz.show("bnfmnt__InternationalRemittance__Stage1");
+        apz.hide("bnfmnt__InternationalRemittance__Stage3");
+}
+
+apz.bnfmnt.InternationalRemittance.fnSuccess = function()
+{
+    debugger;
+     apz.hide("bnfmnt__InternationalRemittance__Stage2");
+        apz.show("bnfmnt__InternationalRemittance__Stage3");
+        apz.hide("bnfmnt__InternationalRemittance__Stage1");
+    apz.setElmValue("bnfmnt__InternationalRemittance__el_inp_36",benName);
+apz.setElmValue("bnfmnt__InternationalRemittance__el_inp_42",benBank);
+apz.setElmValue("bnfmnt__InternationalRemittance__el_inp_37",benAdd);
+apz.setElmValue("bnfmnt__InternationalRemittance__el_inp_43",benbankAdd);
+apz.setElmValue("bnfmnt__InternationalRemittance__el_inp_38",benNum);
+apz.setElmValue("bnfmnt__InternationalRemittance__el_inp_44",benAcc);
+apz.setElmValue("bnfmnt__InternationalRemittance__el_inp_39",benCountry);
+apz.setElmValue("bnfmnt__InternationalRemittance__el_inp_40",benCurrency);
+apz.setElmValue("bnfmnt__InternationalRemittance__el_inp_45",benSwift);
+apz.setElmValue("bnfmnt__InternationalRemittance__el_inp_46",benABA);
+apz.setElmValue("bnfmnt__InternationalRemittance__el_inp_41",benIBAN);
+}
+
+
+
+
+
+
+
+
+
+
+
+apz.bnfmnt.InternationalRemittance.fnLaunchOtpScreen = function() {
+    debugger;
+      apz.hide("bnfmnt__InternationalRemittance__Stage2");
+        apz.hide("bnfmnt__InternationalRemittance__Stage3");
+        apz.hide("bnfmnt__InternationalRemittance__Stage1");
+                apz.hide("bnfmnt__InternationalRemittance__OTP");
+                apz.hide("bnfmnt__AddBeneficiary__toggleBank")
+
+   // var lObj = {};
+   // lObj.OTPRefNo = apz.bnfmnt.addbeneficiary.sParams.OtpDetails.data.OTPRefNo;
+    var lParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "bnfmnt__InternationalRemittance__OTP",
+        "userObj": {
+            "control": {
+                "callBack": apz.bnfmnt.InternationalRemittance.fnOTPCallBack,
+                "destroyDiv": "bnfmnt__InternationalRemittance__OTP"
+            }
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.bnfmnt.InternationalRemittance.fnOTPCallBack = function(params) {
+    debugger;
+    apz.hide("bnfmnt__InternationalRemittance__OTP");
+    // apz.show("bnfmnt__AddBeneficiary__Stage4");
+    apz.currAppId = "bnfmnt";
+    apz.bnfmnt.InternationalRemittance.fnSuccess();
+};
+
+
+apz.bnfmnt.InternationalRemittance.fnCancel = function(params) {
+    debugger;
+    if(  apz.bnfmnt.InternationalRemittance.sParams.from == "AddBeneficiary")
+    {
+            apz.csmrbk.landingpage.fnInitialise();
+
+    }
+    else
+    {
+    apz.bnfmnt.InternationalRemittance.submitCallback();
+    }
+}
+apz.bnfmnt.InternationalRemittance.submitCallback = function() {
+    debugger;
+    lParams = {};
+    lParams.textContent = "Standing Instruction";
+    apz.csmrbk.landingpage.fnLaunch(lParams);
+}

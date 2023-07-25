@@ -1,0 +1,188 @@
+apz.cdtcrd.CreditCardPay = {};
+apz.cdtcrd.paymentAmount = {};
+apz.cdtcrd.settlementAccount = {};
+apz.cdtcrd.remarks = {};
+apz.cdtcrd.creditLimit = {};
+apz.cdtcrd.outBal = {};
+apz.cdtcrd.cashLimit = {};
+apz.cdtcrd.lastBilledAmount = {};
+apz.cdtcrd.rowNo = {};
+apz.cdtcrd.creditcarddetails = {};
+ apz.cdtcrd.creditcarddetails.sParams = {};
+apz.app.onLoad_CreditCardPay = function(params) {
+    // alert("Loaded");
+    debugger;
+    apz.cdtcrd.creditcarddetails.sParams = params;
+       apz.setElmValue("landin__Landing__heading", "CREDIT CARD PAYMENT");
+
+    rowNo = params.rowNo;
+    apz.setElmValue("cdtcrd__CreditCardPay__cardName", apz.cdtcrd.creditcarddetails.sParams.cardDetails[rowNo].cardName);
+    apz.setElmValue("cdtcrd__CreditCardPay__cardNumber", apz.cdtcrd.creditcarddetails.sParams.cardDetails[rowNo].cardNumber);
+    creditLimit =  apz.cdtcrd.creditcarddetails.sParams.cardDetails[rowNo].creditLimit;
+    var param = {
+            "decimalSep": ".",
+            "value": creditLimit,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    apz.setElmValue("cdtcrd__CreditCardPay__creditLimit",apz.formatNumber(param));
+    outBal = apz.cdtcrd.creditcarddetails.sParams.cardDetails[rowNo].balance;
+     var param = {
+            "decimalSep": ".",
+            "value": outBal,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    apz.setElmValue("cdtcrd__CreditCardPay__outBal", apz.formatNumber(param));
+    cashLimit = apz.cdtcrd.creditcarddetails.sParams.cardDetails[rowNo].cashLimit;
+     var param = {
+            "decimalSep": ".",
+            "value": cashLimit,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    apz.setElmValue("cdtcrd__CreditCardPay__cashLimit", apz.formatNumber(param));
+    lastBilledAmount = apz.cdtcrd.creditcarddetails.sParams.cardDetails[rowNo].lastBilledAmount;
+    var param = {
+            "decimalSep": ".",
+            "value": lastBilledAmount,
+            "mask": "MILLION",
+            "decimalPoints":"2",
+            "displayAsLiteral": "N"
+        };
+    apz.setElmValue("cdtcrd__CreditCardPay__lastBilledAmount",apz.formatNumber(param));
+    apz.setElmValue("cdtcrd__CreditCardPay__paymentDueDate", apz.cdtcrd.creditcarddetails.sParams.cardDetails[rowNo].paymentDueDate);
+}
+apz.cdtcrd.CreditCardPay.back = function() {
+    if(  apz.cdtcrd.creditcarddetails.sParams.from == "DashboardCreditCard")
+    {
+        // apz.launchApp({
+        //     "scr": "Home",
+        //     "div": "csmrbk__LandingPage__microappLauncherCol",
+        //     "appId": "csmrbk",
+        //     "userObj": {
+        //         "loginData" :
+        //         {
+        //             "userId" : "John"
+                   
+                    
+        //         },
+        //         "data": {
+        //             "userId": {
+        //                 "userId": "John"
+        //             }
+        //         },
+        //         "control": {
+        //             "exitApp": {
+        //                 "appId": "",
+        //                 "div": "csmrbk__LandingPage__microappLauncherCol",
+        //                 "callBack": ""
+        //             }
+        //         }
+        //         //apz.csmrbk.landingpage.fnInitialise();
+        //     }
+        // });
+        apz.landin.Landing.fnHome();
+    }
+    else
+    {
+    apz.launchSubScreen({
+        appId: "cdtcrd",
+        scr: "CreditCardDetails",
+        div: "landin__Landing__launcher"
+    })
+    }
+}
+apz.cdtcrd.CreditCardPay.fnContinue = function() {
+    debugger;
+    $("#cdtcrd__CreditCardPay__Stage1").addClass("sno");
+    apz.setElmValue("cdtcrd__CreditCardPay__el_inp_12", apz.cdtcrd.creditcarddetails.sParams.cardDetails[rowNo].cardName);
+    apz.setElmValue("cdtcrd__CreditCardPay__el_inp_13", apz.cdtcrd.creditcarddetails.sParams.cardDetails[rowNo].cardNumber);
+    creditLimit = apz.getElmValue("cdtcrd__CreditCardPay__creditLimit")
+    apz.setElmValue("cdtcrd__CreditCardPay__el_inp_14", creditLimit);
+    outBal = apz.getElmValue("cdtcrd__CreditCardPay__outBal")
+    apz.setElmValue("cdtcrd__CreditCardPay__el_inp_15", outBal);
+    cashLimit = apz.getElmValue("cdtcrd__CreditCardPay__cashLimit")
+    apz.setElmValue("cdtcrd__CreditCardPay__el_inp_16", cashLimit);
+    lastBilledAmount = apz.getElmValue("cdtcrd__CreditCardPay__lastBilledAmount");
+    apz.setElmValue("cdtcrd__CreditCardPay__el_inp_17", lastBilledAmount);
+    apz.setElmValue("cdtcrd__CreditCardPay__el_inp_18", apz.cdtcrd.creditcarddetails.sParams.cardDetails[rowNo].paymentDueDate);
+    paymentAmount = apz.getElmValue("cdtcrd__CreditCardPay__el_inp_10");
+    settlementAccount = apz.getElmValue("cdtcrd__CreditCardPay__el_dpd_1");
+    remarks = apz.getElmValue("cdtcrd__CreditCardPay__el_inp_11");
+    apz.setElmValue("cdtcrd__CreditCardPay__el_inp_19", paymentAmount);
+    apz.setElmValue("cdtcrd__CreditCardPay__el_dpd_2", settlementAccount);
+    apz.setElmValue("cdtcrd__CreditCardPay__el_inp_20", remarks);
+        $("#cdtcrd__CreditCardPay__Stage2").removeClass("sno");
+        
+}
+
+
+
+apz.cdtcrd.CreditCardPay.fnEdit = function() {
+     $("#cdtcrd__CreditCardPay__Stage2").addClass("sno");
+    $("#cdtcrd__CreditCardPay__Stage1").removeClass("sno");
+    
+}
+
+
+
+apz.cdtcrd.CreditCardPay.fnConfirm = function() {
+    
+        $("#cdtcrd__CreditCardPay__Stage3").removeClass("sno");
+
+        apz.setElmValue("cdtcrd__CreditCardPay__el_inp_21", apz.cdtcrd.creditcarddetails.sParams.cardDetails[rowNo].cardName);
+            apz.setElmValue("cdtcrd__CreditCardPay__el_inp_27", apz.cdtcrd.creditcarddetails.sParams.cardDetails[rowNo].cardNumber);
+            
+    apz.setElmValue("cdtcrd__CreditCardPay__el_inp_22", creditLimit);
+        apz.setElmValue("cdtcrd__CreditCardPay__el_inp_28", outBal);
+            apz.setElmValue("cdtcrd__CreditCardPay__el_inp_23", cashLimit);
+                apz.setElmValue("cdtcrd__CreditCardPay__el_inp_29", lastBilledAmount);
+                    apz.setElmValue("cdtcrd__CreditCardPay__el_inp_24", apz.cdtcrd.creditcarddetails.sParams.cardDetails[rowNo].paymentDueDate);
+
+    apz.setElmValue("cdtcrd__CreditCardPay__el_inp_30", settlementAccount);
+    apz.setElmValue("cdtcrd__CreditCardPay__el_inp_31", paymentAmount);
+        apz.setElmValue("cdtcrd__CreditCardPay__el_txa_1", remarks);
+
+
+
+
+
+
+}
+
+
+apz.cdtcrd.CreditCardPay.fnLaunchOtpScreen = function() {
+    debugger;
+ $("#cdtcrd__CreditCardPay__Stage1").addClass("sno");  
+  $("#cdtcrd__CreditCardPay__Stage2").addClass("sno");   
+
+
+
+   // var lObj = {};
+   // lObj.OTPRefNo = apz.bnfmnt.addbeneficiary.sParams.OtpDetails.data.OTPRefNo;
+    var lParams = {
+        "appId": "otpeng",
+        "scr": "ProcessOTP",
+        "div": "cdtcrd__CreditCardPay__OTP",
+        "userObj": {
+            "control": {
+                "callBack": apz.cdtcrd.CreditCardPay.fnOTPCallBack,
+                "destroyDiv": "cdtcrd__CreditCardPay__OTP"
+            }
+        }
+    };
+    apz.launchApp(lParams);
+};
+apz.cdtcrd.CreditCardPay.fnOTPCallBack = function(params) {
+    debugger;
+    apz.hide("cdtcrd__CreditCardPay__OTP");
+    // apz.show("bnfmnt__AddBeneficiary__Stage4");
+    apz.currAppId = "cdtcrd";
+    apz.cdtcrd.CreditCardPay.fnConfirm();
+};
+
+

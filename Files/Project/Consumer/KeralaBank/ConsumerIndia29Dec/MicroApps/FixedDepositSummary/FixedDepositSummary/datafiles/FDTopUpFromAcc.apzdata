@@ -1,0 +1,17 @@
+{
+    "fdsumm__FDTopUpFromAcc_Res": {
+        "accounts": [{
+            "accountNo": "100009312285",
+            "accountType": "Savings",
+            "accountBalance": "50000"
+        }, {
+            "accountNo": "100009312456",
+            "accountType": "Savings",
+            "accountBalance": "60000"
+        }, {
+            "accountNo": "100009312985",
+            "accountType": "Savings",
+            "accountBalance": "65000"
+        }]
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "cuacpf__custaccportfolio_Req":{
+    "tbDbtmCusacPrtfolioMaint": [{
+        "customerId": "001",
+        "accountNo": "100009312263",
+        "accountBrn": "",
+        "accountCcy": "",
+        "primaryAcc": "Y",
+        "accNickName": "Saving10001",
+        "includeInPortfolio": "Y"
+    }, {
+        "customerId": "002",
+        "accountNo": "100009312401",
+        "accountBrn": "",
+        "accountCcy": "",
+        "primaryAcc": "N",
+        "accNickName": "Deposit10002",
+        "includeInPortfolio": "Y"
+    }, {
+        "customerId": "003",
+        "accountNo": "100009312274",
+        "accountBrn": "",
+        "accountCcy": "",
+        "primaryAcc": "N",
+        "accNickName": "Card10003",
+        "includeInPortfolio": "N"
+    }]
+}
+}

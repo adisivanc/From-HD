@@ -1,0 +1,30 @@
+{
+    "aclo01__LoansSummary_Res": {
+        "LoansList": [
+            {
+                "accountName": "CAPITAL LOAN",
+                "accountNumber": "0238473298",
+                "amount": 876987000,
+                "currency": "INR"
+            },
+            {
+                "accountName": "PROJECT FINANCE",
+                "accountNumber": "0125473298",
+                "amount": 566087000,
+                "currency": "INR"
+            },
+            {
+                "accountName": "PRODUCT FINANCE",
+                "accountNumber": "0984573918",
+                "amount": 4598700000,
+                "currency": "INR"
+            },
+            {
+                "accountName": "BUSINESS LOANS",
+                "accountNumber": "0984473918",
+                "amount": 145987000,
+                "currency": "INR"
+            }
+        ]
+    }
+}

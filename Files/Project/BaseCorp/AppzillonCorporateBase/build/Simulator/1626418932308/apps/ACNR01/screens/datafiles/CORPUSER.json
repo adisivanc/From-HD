@@ -1,0 +1,340 @@
+{
+    "ACNR01__MenuList_Req": {
+        "vwMenu": [{
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Home",
+            "displayOrder": "1",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "",
+            "roleId": "CorpUser",
+            "screenId": ""
+        }, {
+            "appId": "ACDB01",
+            "corporateId": "000FTAC4321",
+            "description": "My Dashboard",
+            "displayOrder": "1",
+            "groupName": "Home",
+            "icon": "icon-cm-dashboard_new",
+            "roleId": "CorpUser",
+            "screenId": "Dashboard"
+        }, {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Admin",
+            "displayOrder": "2",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "",
+            "roleId": "CorpUser",
+            "screenId": ""
+        }, {
+            "appId": "actf01",
+            "corporateId": "000FTAC4321",
+            "description": "My Tasks",
+            "displayOrder": "2",
+            "groupName": "Admin",
+            "icon": "icon-cm-mytask",
+            "roleId": "CorpUser",
+            "screenId": "TaskFlow"
+        }, {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Accounts",
+            "displayOrder": "8",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "",
+            "roleId": "CorpUser",
+            "screenId": ""
+        }, {
+            "appId": "accdtl",
+            "corporateId": "000FTAC4321",
+            "description": "Business Accounts",
+            "displayOrder": "8",
+            "groupName": "Accounts",
+            "icon": "icon-cm-account_details",
+            "roleId": "CorpUser",
+            "screenId": "AccountSummary"
+        }, {
+            "appId": "acdp01",
+            "corporateId": "000FTAC4321",
+            "description": "Term Deposits",
+            "displayOrder": "10",
+            "groupName": "Accounts",
+            "icon": "icon-cm-deposits",
+            "roleId": "CorpUser",
+            "screenId": "DepositLauncher"
+        }, {
+            "appId": "card01",
+            "corporateId": "000FTAC4321",
+            "description": "Corporate Cards",
+            "displayOrder": "15",
+            "groupName": "Accounts",
+            "icon": "icon-cm-cards",
+            "roleId": "CorpUser",
+            "screenId": "Cards"
+        }, {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Credit Portfolio",
+            "displayOrder": "13",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "",
+            "roleId": "CorpUser",
+            "screenId": ""
+        }, {
+            "appId": "aclo01",
+            "corporateId": "000FTAC4321",
+            "description": "Loan",
+            "displayOrder": "18",
+            "groupName": "Credit Portfolio",
+            "icon": "icon-cm-cashmanagement",
+            "roleId": "CorpUser",
+            "screenId": "LoansSummary"
+        }, {
+            "appId": "ficl01",
+            "corporateId": "000FTAC4321",
+            "description": "Commitment",
+            "displayOrder": "31",
+            "groupName": "Credit Portfolio",
+            "icon": "icon-file-alt",
+            "roleId": "CorpUser",
+            "screenId": "CommitmentList"
+        }, {
+            "appId": "ficl01",
+            "corporateId": "000FTAC4321",
+            "description": "Credit Line",
+            "displayOrder": "30",
+            "groupName": "Credit Portfolio",
+            "icon": "icon-file-alt",
+            "roleId": "CorpUser",
+            "screenId": "CreditLineList"
+        }, {
+            "appId": "ficl01",
+            "corporateId": "000FTAC4321",
+            "description": "Collaterals",
+            "displayOrder": "29",
+            "groupName": "Credit Portfolio",
+            "icon": "icon-file-alt",
+            "roleId": "CorpUser",
+            "screenId": "CollateralList"
+        }, {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Trade Finance",
+            "displayOrder": "32",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "",
+            "roleId": "CorpUser",
+            "screenId": ""
+        }, {
+            "appId": "lecr01",
+            "corporateId": "000FTAC4321",
+            "description": "TradeFinance",
+            "displayOrder": "32",
+            "groupName": "Trade Finance",
+            "icon": "icon-cm-tradefinance",
+            "roleId": "CorpUser",
+            "screenId": "LCSummary"
+        },{
+            "appId": "acsf01",
+            "corporateId": "000FTAC4321",
+            "description": "Buyers",
+            "displayOrder": "32",
+            "groupName": "Trade Finance",
+            "icon": "icon-cm-tradefinance",
+            "roleId": "CorpUser",
+            "screenId": "BuyerSummary"
+        },{
+            "appId": "acsf01",
+            "corporateId": "000FTAC4321",
+            "description": "Sellers",
+            "displayOrder": "32",
+            "groupName": "Trade Finance",
+            "icon": "icon-cm-tradefinance",
+            "roleId": "CorpUser",
+            "screenId": "SellerSummary"
+        },{
+            "appId": "acsf01",
+            "corporateId": "000FTAC4321",
+            "description": "Invoices",
+            "displayOrder": "32",
+            "groupName": "Trade Finance",
+            "icon": "icon-cm-tradefinance",
+            "roleId": "CorpUser",
+            "screenId": "InvoiceSummary"
+        },{
+            "appId": "acsf01",
+            "corporateId": "000FTAC4321",
+            "description": "Templates",
+            "displayOrder": "32",
+            "groupName": "Trade Finance",
+            "icon": "icon-cm-tradefinance",
+            "roleId": "CorpUser",
+            "screenId": "SCFTemplateSummary"
+        }, {
+            "appId": "ficl01",
+            "corporateId": "000FTAC4321",
+            "description": "Credit Limits",
+            "displayOrder": "28",
+            "groupName": "Facilities",
+            "icon": "icon-file-alt",
+            "roleId": "CorpUser",
+            "screenId": "CreditLimitsList"
+        }, {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Cash Management",
+            "displayOrder": "33",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "",
+            "roleId": "CorpUser",
+            "screenId": ""
+        }, {
+            "appId": "acnp01",
+            "corporateId": "000FTAC4321",
+            "description": "Notional Pooling",
+            "displayOrder": "33",
+            "groupName": "Cash Management",
+            "icon": "icon-cm-dashboard_new",
+            "roleId": "CorpUser",
+            "screenId": "NotionalPooling"
+        }, {
+            "appId": "acft01",
+            "corporateId": "000FTAC4321",
+            "description": "Transfer Funds",
+            "displayOrder": "12",
+            "groupIcon": "icon-cm-transfers",
+            "groupName": "Cash Management",
+            "icon": "icon-cm-transfers",
+            "roleId": "CorpUser",
+            "screenId": "Transfers"
+        },{
+            "appId": "bulktr",
+            "corporateId": "000FTAC4321",
+            "description": "BulkTransfer",
+            "displayOrder": "19",
+            "groupName": "Cash Management",
+            "icon": "icon-cm-tradefinance",
+            "roleId": "CorpUser",
+            "screenId": "BulkTransfers"
+        },{
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Remote Check Deposit",
+            "displayOrder": "39",
+            "groupName": "Cash Management",
+            "icon": "icon-cm-dashboard_new",
+            "roleId": "CorpUser",
+            "screenId": ""
+        }, {
+            "appId": "benf01",
+            "corporateId": "000FTAC4321",
+            "description": "Manage Beneficiary",
+            "displayOrder": "13",
+            "groupIcon": "icon-cm-transfers",
+            "groupName": "Cash Management",
+            "icon": "icon-cm-beneficiary",
+            "roleId": "CorpUser",
+            "screenId": "Beneficiary"
+        }, {
+            "appId": "acsi01",
+            "corporateId": "000FTAC4321",
+            "description": "Standing Instructions",
+            "displayOrder": "14",
+            "groupIcon": "icon-cm-transfers",
+            "groupName": "Cash Management",
+            "icon": "icon-cm-standinginst",
+            "roleId": "CorpUser",
+            "screenId": "StandingInstructions"
+        }, {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Services",
+            "displayOrder": "38",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "",
+            "roleId": "CorpUser",
+            "screenId": ""
+        }, {
+            "appId": "nchqbk",
+            "corporateId": "000FTAC4321",
+            "description": "Checkbook Request",
+            "displayOrder": "39",
+            "groupName": "Services",
+            "icon": "icon-cm-dashboard_new",
+            "roleId": "CorpUser",
+            "screenId": "ChequeBookRequest"
+        }, {
+            "appId": "nchqbk",
+            "corporateId": "000FTAC4321",
+            "description": "Positive Pay",
+            "displayOrder": "39",
+            "groupName": "Services",
+            "icon": "icon-cm-dashboard_new",
+            "roleId": "CorpUser",
+            "screenId": "PositivePay"
+        }, {
+            "appId": "nchqbk",
+            "corporateId": "000FTAC4321",
+            "description": "Stop Pay",
+            "displayOrder": "39",
+            "groupName": "Services",
+            "icon": "icon-cm-dashboard_new",
+            "roleId": "CorpUser",
+            "screenId": "StopPay"
+        }, {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Book Appointment",
+            "displayOrder": "39",
+            "groupName": "Services",
+            "icon": "icon-cm-dashboard_new",
+            "roleId": "CorpUser",
+            "screenId": ""
+        }, {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Statement Request",
+            "displayOrder": "39",
+            "groupName": "Services",
+            "icon": "icon-cm-dashboard_new",
+            "roleId": "CorpUser",
+            "screenId": ""
+        }, {
+            "appId": "",
+            "corporateId": "000FTAC4321",
+            "description": "Personal",
+            "displayOrder": "34",
+            "groupIcon": "",
+            "groupName": "",
+            "icon": "",
+            "roleId": "CorpUser",
+            "screenId": ""
+        }, {
+            "appId": "messag",
+            "corporateId": "000FTAC4321",
+            "description": "Inbox",
+            "displayOrder": "35",
+            "groupName": "Personal",
+            "icon": "icon-cm-dashboard_new",
+            "roleId": "CorpUser",
+            "screenId": "Messages"
+        }, {
+            "appId": "promtn",
+            "corporateId": "000FTAC4321",
+            "description": "My Promotions",
+            "displayOrder": "37",
+            "groupName": "Personal",
+            "icon": "icon-cm-dashboard_new",
+            "roleId": "CorpUser",
+            "screenId": "ViewPromotion"
+        }]
+    }
+}

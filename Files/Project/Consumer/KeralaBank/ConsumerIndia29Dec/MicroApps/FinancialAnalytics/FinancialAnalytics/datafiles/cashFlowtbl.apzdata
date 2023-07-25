@@ -1,0 +1,28 @@
+{
+        "cashflow": [
+            {
+                "Type": "Salary Credit",
+                "Date": "10/01/2018",
+                "Amount": "12000",
+                "Category":"Income"
+            },
+            {
+                "Type": "Home Loan Payment",
+                "Date": "10/08/2018",
+                "Amount": "3000",
+                "Category":"Expense"
+            },
+             {
+                "Type": "Auto Loan Payment",
+                "Date": "10/11/2018",
+                "Amount": "1000",
+                "Category":"Expense"
+            },
+             {
+                "Type": "ETF Investment",
+                "Date": "10/14/2018",
+                "Amount": "300",
+                "Category":"Investment"
+            }
+        ]
+    }

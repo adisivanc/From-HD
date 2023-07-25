@@ -1,0 +1,41 @@
+apz.accstm.recentTransaction = {};
+apz.app.onLoad_recentTransaction = function(params) {
+    debugger;
+    apz.data.loadJsonData("RecentTransactions", "accstm");
+     
+}
+//show transcation
+apz.accstm.recentTransaction.fnShowRecentTransaction = function(ths) {
+    debugger;
+    $("body").removeClass("landingtheme2");
+    var rowno = $(ths).attr("rowno");
+    var transactionData = apz.data.scrdata.accstm__RecentTransactions_Res.widgRecentTransac[rowno].details;
+   
+    apz.launchApp({
+        "appId": "accstm",
+        "scr": "Navigator",
+        "div": "landin__Landing__launcher",
+        "userObj": {
+            "data": transactionData,
+            "callBack": apz.accstm.recentTransaction.fnShowRecentTransactionCB,
+            "action": "Mini"
+        }
+    })
+}
+//back to dashbard
+apz.accstm.recentTransaction.fnShowRecentTransactionCB = function() {
+    apz.launchApp({
+        "scr": "Dashboard",
+        "div": "landin__Landing__launcher",
+        "appId": "accstm",
+        "userObj": {
+            "control": {
+                "exitApp": {
+                    "appId": "",
+                    "div": "landin__Landing__launcher",
+                    "callBack": ""
+                }
+            }
+        }
+    });
+}

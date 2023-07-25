@@ -1,0 +1,244 @@
+apz.ovdrfd.overdraftfd = {};
+apz.app.onLoad_OverdraftFD = function(params) {
+    debugger;
+    apz.ovdrfd.overdraftfd.sParams = params;
+    if (params.Navigation) {
+        apz.ovdrfd.overdraftfd.fnSetNavigation(params);
+    }
+    apz.ovdrfd.overdraftfd.fnInitialise();
+};
+apz.ovdrfd.overdraftfd.fnInitialise = function() {
+    //apz.setElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__customerId", apz.ovdrfd.overdraftfd.sParams.data.customerID);
+    apz.setElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__authenticationType", "OTP");
+    apz.ovdrfd.overdraftfd.fnGotoStage1();
+};
+apz.ovdrfd.overdraftfd.fnSetNavigation = function(params) {
+    debugger;
+    apz.ovdrfd.overdraftfd.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    lParams.headerText = "OVERDRAFT ON FIXED DEPOSIT";
+    apz.ovdrfd.overdraftfd.Navigation(lParams);
+};
+apz.ovdrfd.overdraftfd.fnGotoStage1 = function() {
+    apz.ovdrfd.overdraftfd.fnSetDataInStage1();
+    apz.ovdrfd.overdraftfd.fnRenderStage1();
+};
+apz.ovdrfd.overdraftfd.fnSetDataInStage1 = function() {
+    debugger;
+    apz.data.loadJsonData("SavDepAccDetails","ovdrfd");
+    apz.ovdrfd.overdraftfd.sParams.data.SavingsAccount = apz.data.scrdata.ovdrfd__SavDepAccDetails_Res.SavingsAccount;
+    apz.ovdrfd.overdraftfd.sParams.data.DepositAccount = apz.data.scrdata.ovdrfd__SavDepAccDetails_Res.DepositAccount;
+    var lSavAccs = apz.ovdrfd.overdraftfd.sParams.data.SavingsAccount;
+    var lfdAccs = apz.ovdrfd.overdraftfd.sParams.data.DepositAccount;
+    var lDropObj = [{
+        "val": "",
+        "desc": "Select Account"
+    }];
+    var lDropObjFd = [{
+        "val": "",
+        "desc": "Select Account"
+    }];
+    for (var i = 0; i < lSavAccs.length; i++) {
+        var lObj = {
+            "val": lSavAccs[i].accountNo,
+            "desc": lSavAccs[i].accountNo
+        };
+        lDropObj.push(lObj);
+    }
+    apz.populateDropdown(document.getElementById("ovdrfd__OverdraftFD__i__ODonFDDtls__accountNo"), lDropObj);
+    for (var i = 0; i < lfdAccs.length; i++) {
+        var lObj = {
+            "val": lfdAccs[i].accountNo,
+            "desc": lfdAccs[i].accountNo
+        };
+        lDropObjFd.push(lObj);
+    }
+    apz.populateDropdown(document.getElementById("ovdrfd__OverdraftFD__i__ODonFDDtls__tdAccountNo"), lDropObjFd);
+};
+apz.ovdrfd.overdraftfd.fnRenderStage1 = function() {
+    apz.show('ovdrfd__OverdraftFD__stage1');
+    apz.hide('ovdrfd__OverdraftFD__stage2');
+    apz.hide('ovdrfd__OverdraftFD__stage3');
+    apz.hide('ovdrfd__OverdraftFD__stage4');
+};
+apz.ovdrfd.overdraftfd.fnCancelStage1 = function() {
+    $("input[type=text]").val("");
+    apz.ovdrfd.overdraftfd.fnSetDataInStage1();
+};
+apz.ovdrfd.overdraftfd.fnContinueStage1 = function(params) {
+    debugger;
+    var lProceed = apz.ovdrfd.overdraftfd.fnValidateStage1();
+    if (lProceed.lStatus) {
+        apz.ovdrfd.overdraftfd.fnGotoStage2();
+    } else {
+        var param = {
+            'code': lProceed.ErrCode
+        };
+        apz.dispMsg(param);
+    }
+};
+apz.ovdrfd.overdraftfd.fnValidateStage1 = function(params) {
+    var lResp = {
+        "ErrCode": "APZ-CNT-099"
+    };
+    lResp.lStatus = apz.val.validateContainer("ovdrfd__OverdraftFD__ct_frm_stage1");
+    if (lResp.lStatus && apz.getElmValue("ovdrfd__OverdraftFD__terms") !== "y") {
+        lResp.lStatus = false;
+        lResp.ErrCode = "ERR_AGREE_TERMS";
+        return lResp;
+    }
+    return lResp;
+};
+apz.ovdrfd.overdraftfd.onChangeAcc = function() {
+    debugger;
+    var lAcc = apz.getElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__accountNo");
+    var lSavAccs = apz.ovdrfd.overdraftfd.sParams.data.SavingsAccount;
+    for (var i = 0; i < lSavAccs.length; i++) {
+        if (lAcc == lSavAccs[i].accountNo) {
+            apz.setElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__accountBrn", lSavAccs[i].accountBrnCd);
+            apz.setElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__accountCcy", "INR");
+        }
+    }
+};
+apz.ovdrfd.overdraftfd.onChangeFDAcc = function() {
+    debugger;
+    var lAcc = apz.getElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__tdAccountNo");
+    var lfdAccs = apz.ovdrfd.overdraftfd.sParams.data.DepositAccount;
+    for (var i = 0; i < lfdAccs.length; i++) {
+        if (lAcc == lfdAccs[i].accountNo) {
+            apz.setElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__tdAccountBrn", lfdAccs[i].accountBrnCd);
+            apz.setElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__tdAccountCcy", "INR");
+        }
+    }
+};
+apz.ovdrfd.overdraftfd.fnGotoStage2 = function(params) {
+    apz.ovdrfd.overdraftfd.fnSetDataInStage2();
+    apz.ovdrfd.overdraftfd.fnRenderStage2();
+};
+apz.ovdrfd.overdraftfd.fnSetDataInStage2 = function(params) {
+    debugger;
+    apz.setElmValue('ovdrfd__OverdraftFD__stage2_AccNo', apz.getElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__accountNo"));
+    apz.setElmValue('ovdrfd__OverdraftFD__stage2_FDAccNo', apz.getElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__tdAccountNo"));
+    apz.setElmValue('ovdrfd__OverdraftFD__stage2_odPer', apz.getElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__odPerc"));
+};
+apz.ovdrfd.overdraftfd.fnRenderStage2 = function() {
+    apz.hide('ovdrfd__OverdraftFD__stage1');
+    apz.show('ovdrfd__OverdraftFD__stage2');
+    apz.hide('ovdrfd__OverdraftFD__stage3');
+    apz.hide('ovdrfd__OverdraftFD__stage4');
+};
+apz.ovdrfd.overdraftfd.fnEdit = function(params) {
+    apz.ovdrfd.overdraftfd.fnRenderStage1();
+};
+apz.ovdrfd.overdraftfd.fnConfirmStage2 = function() {
+    apz.data.buildData("OverdraftFD", "ovdrfd")
+    var lReq = {
+        "action": "Confirm",
+        "ODonFDDtls": apz.data.scrdata.ovdrfd__OverdraftFD_Req.ODonFDDtls
+    };
+    var lServerParams = {
+        "ifaceName": "OverdraftFD",
+        "buildReq": "N",
+        "paintResp": "N",
+        "req": lReq
+    };
+    //apz.ovdrfd.overdraftfd.fnBeforeCallServer(lServerParams);
+    apz.data.loadJsonData("OverdraftFD","ovdrfd");
+    /*apz.ovdrfd.overdraftfd.fnGotoStage3();
+        var lLaunchParams = {
+            "appId": "otpeng",
+            "scr": "ProcessOTP",
+            "div": "ovdrfd__OverdraftFD__stage3_col",
+            "userObj": {
+                "action": "SetRefNo",
+                "data": {
+                    "OTPRefNo": apz.data.scrdata.ovdrfd__OverdraftFD_Res.ODonFDDtls.data.OTPRefNo
+                },
+                "control": {
+                    "appId": "otpeng",
+                    "callBack": apz.ovdrfd.overdraftfd.fnGotoStage4,
+                    "destroyDiv": "ovdrfd__OverdraftFD__stage3_col"
+                }
+            }
+        };
+        apz.launchApp(lLaunchParams);*/
+        apz.ovdrfd.overdraftfd.fnGotoStage4();
+};
+apz.ovdrfd.overdraftfd.fnGotoStage3 = function() {
+    apz.ovdrfd.overdraftfd.fnRenderStage3();
+};
+apz.ovdrfd.overdraftfd.fnRenderStage3 = function() {
+    apz.hide('ovdrfd__OverdraftFD__stage1');
+    apz.hide('ovdrfd__OverdraftFD__stage2');
+    apz.show('ovdrfd__OverdraftFD__stage3');
+    apz.hide('ovdrfd__OverdraftFD__stage4');
+};
+apz.ovdrfd.overdraftfd.fnGotoStage4 = function(params) {
+    apz.resetCurrAppId("ovdrfd");
+    apz.ovdrfd.overdraftfd.fnSetDataInStage4(params);
+    apz.ovdrfd.overdraftfd.fnRenderStage4();
+};
+apz.ovdrfd.overdraftfd.fnRenderStage4 = function() {
+    apz.hide('ovdrfd__OverdraftFD__stage1');
+    apz.hide('ovdrfd__OverdraftFD__stage2');
+    apz.hide('ovdrfd__OverdraftFD__stage3');
+    apz.show('ovdrfd__OverdraftFD__stage4');
+};
+apz.ovdrfd.overdraftfd.fnSetDataInStage4 = function(params) {
+    debugger;
+    /*if (params.ODonFDDtls.status !== "success") {
+        apz.setElmValue('ovdrfd__OverdraftFD__ackFinalStatus', "Request for Overdraft for Fixed Deposit could not be initiated");
+        $("#ovdrfd__OverdraftFD__ackFinalStatus").addClass("err");
+    }*/
+    apz.setElmValue('ovdrfd__OverdraftFD__stage4_AccNo', apz.getElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__accountNo"));
+    apz.setElmValue('ovdrfd__OverdraftFD__stage4_FDAccNo', apz.getElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__tdAccountNo"));
+    apz.setElmValue('ovdrfd__OverdraftFD__stage4_odPer', apz.getElmValue("ovdrfd__OverdraftFD__i__ODonFDDtls__odPerc"));
+    //var lResponse = "Your reference number is " + params.depositDtls.txnRefNo;
+    //apz.setElmValue('ovdrfd__OverdraftFD__txnRefNo', lResponse);
+};
+apz.ovdrfd.overdraftfd.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "buildReq": params.buildReq,
+        "req": params.req,
+        "paintResp": params.paintResp,
+        "callBack": apz.ovdrfd.overdraftfd.fnCallServerCallBack,
+        "appId": "ovdrfd",
+        "internal": false
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.ovdrfd.overdraftfd.fnCallServerCallBack = function(params) {
+    debugger;
+    if (params.errors) {
+        var param = {
+            'code': params.errors[0].errorCode
+        };
+        apz.dispMsg(param);
+    } else {
+        apz.ovdrfd.overdraftfd.fnGotoStage3();
+        var lLaunchParams = {
+            "appId": "otpeng",
+            "scr": "ProcessOTP",
+            "div": "ovdrfd__OverdraftFD__stage3_col",
+            "userObj": {
+                "action": "SetRefNo",
+                "data": {
+                    "OTPRefNo": params.res.ovdrfd__OverdraftFD_Res.ODonFDDtls.data.OTPRefNo
+                },
+                "control": {
+                    "appId": "otpeng",
+                    "callBack": apz.ovdrfd.overdraftfd.fnGotoStage4,
+                    "destroyDiv": "ovdrfd__OverdraftFD__stage3_col"
+                }
+            }
+        };
+        apz.launchApp(lLaunchParams);
+    }
+};
+apz.ovdrfd.overdraftfd.fnDone = function() {
+    if (!apz.isNull(apz.ovdrfd.overdraftfd.sParams.control)) {
+        apz.ovdrfd.overdraftfd.sParams.control.exitApp.callBack();
+    }
+}

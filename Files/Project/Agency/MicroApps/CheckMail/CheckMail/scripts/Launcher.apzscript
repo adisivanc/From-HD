@@ -1,0 +1,24 @@
+apz.checkm.Launcher = {};
+apz.checkm.Launcher.sParams = {};
+apz.app.onLoad_Launcher = function(params) {
+    debugger;
+    apz.checkm.Launcher.sParams = params;
+};
+apz.app.onShown_Launcher = function(params) {
+    debugger;
+    apz.checkm.Launcher.fnLaunchSubScreens("Deposit");
+};
+apz.checkm.Launcher.fnLaunchSubScreens = function(scr) {
+    var lParams = {
+        "appId": "checkm",
+        "scr": scr,
+        "div": "checkm__Launcher__launcher",
+        "userObj": {
+            "appId":apz.checkm.Launcher.sParams.appId,
+            "refNo": apz.checkm.Launcher.sParams.refNo,
+            "product": apz.checkm.Launcher.sParams.product,
+            "subproduct": apz.checkm.Launcher.sParams.subproduct,
+        }
+    };
+    apz.launchSubScreen(lParams);
+}

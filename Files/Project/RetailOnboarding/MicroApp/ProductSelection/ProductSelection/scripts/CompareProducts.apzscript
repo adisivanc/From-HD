@@ -1,0 +1,137 @@
+apz.prdsel.CompareProducts = {};
+apz.prdsel.CompareProducts.sparams = {};
+apz.app.onLoad_CompareProducts = function(params) {
+    debugger;
+    apz.prdsel.CompareProducts.sparams = params;
+    $("#prdsel__CompareProducts__thirdbtn").addClass("sno");
+    apz.prdsel.CompareProducts.fnIntialise(params);
+   
+}
+apz.prdsel.CompareProducts.fnIntialise = function(params) {
+    debugger;
+    $("#prdsel__CompareProducts__btn1").on("click",function(event){
+        apz.prdsel.CompareProducts.fnAplly(params.selectedproducts[0]);
+                
+    });
+     $("#prdsel__CompareProducts__btn2").on("click",function(event){
+        apz.prdsel.CompareProducts.fnAplly(params.selectedproducts[1]);
+                
+    });
+    
+    if(params.selectedproducts.length == 3){
+        $("#prdsel__CompareProducts__btn3").on("click",function(event){
+        apz.prdsel.CompareProducts.fnAplly(params.selectedproducts[2]);
+                
+    });
+    }
+    let selectedproducts = params.selectedproducts.map(function(item) {
+        return item.split(" ").join("").toLowerCase();
+    });
+    let result=[];
+    if(apz.prdsel.CompareProducts.sparams.product == "Accounts"){
+         apz.data.loadJsonData("AccountsComparisionTemp", "prdsel");
+    result = apz.data.scrdata.prdsel__AccountsComparisionTemp_Res;
+    }else if(apz.prdsel.CompareProducts.sparams.product=="Cards"){
+         apz.data.loadJsonData("CardsComparisionTemp", "prdsel");
+    result = apz.data.scrdata.prdsel__CardsComparisionTemp_Res;
+    }else{
+         apz.data.loadJsonData("DepositComparisionTemp", "prdsel");
+         result = apz.data.scrdata.prdsel__DepositComparisionTemp_Res;
+    }
+   
+    let selectedvalues = [];
+    selectedproducts.forEach(function(item) {
+        selectedvalues.push(result[item]);
+    });
+    let combinevalues = [];
+    if (selectedvalues.length == 2) {
+        let a1 = selectedvalues[0];
+        let a2 = selectedvalues[1];
+        for (var i = 0; i < a1.length; i++) {
+            var obj = {};
+            obj.feature = a1[i].feature;
+            obj.A1 = a1[i].A1;
+            obj.A2 = a2[i].A1;
+            combinevalues.push(obj);
+        }
+        combinevalues.unshift({
+            "feature": "Comparision Criteria",
+            "A1": params.selectedproducts[0],
+            "A2": params.selectedproducts[1]
+        })
+    } else if (selectedvalues.length == 3) {
+        let a1 = selectedvalues[0];
+        let a2 = selectedvalues[1];
+        let a3 = selectedvalues[2];
+        for (var i = 0; i < a1.length; i++) {
+            var obj = {};
+            obj.feature = a1[i].feature;
+            obj.A1 = a1[i].A1;
+            obj.A2 = a2[i].A1;
+            obj.A3 = a3[i].A1;
+            combinevalues.push(obj);
+        }
+        combinevalues.unshift({
+            "feature": "Comparision Criteria",
+            "A1": params.selectedproducts[0],
+            "A2": params.selectedproducts[1],
+            "A3": params.selectedproducts[2]
+        })
+        $("#prdsel__CompareProducts__thirdbtn").removeClass("sno");
+    }
+    apz.data.buildData("AccountsComparision", "prdsel");
+    apz.data.scrdata.prdsel__AccountsComparision_Res = combinevalues;
+    apz.data.loadData("AccountsComparision", "prdsel");
+    
+     if(apz.deviceGroup == "Mobile"){
+        $("#prdsel__CompareProducts__sc_row_4_row").hide();
+        $("#prdsel__CompareProducts__sc_col_4_li").on("click",function(event){
+             apz.prdsel.CompareProducts.fnAplly(params.selectedproducts[0]);
+        })
+         $("#prdsel__CompareProducts__sc_col_6_li").on("click",function(event){
+             apz.prdsel.CompareProducts.fnAplly(params.selectedproducts[1]);
+        })
+        
+    }else{
+         if (selectedvalues.length == 2) {
+            $("#prdsel__CompareProducts__ct_lst_1 ul>li>span>span>span:last-child").addClass("sno");
+            $("#prdsel__CompareProducts__ct_lst_2 ul>li>span>span>span:last-child").addClass("sno");
+        }
+    }
+       
+};
+ apz.prdsel.CompareProducts.fnAplly = function(sp){
+     debugger;
+    if(apz.prdsel.CompareProducts.sparams.product==="Accounts"){
+        var params = {};
+        params.appId = "onbaut";
+        params.scr = "AuthLauncher";
+        params.div = "apzonb__Navigator__launchdiv";
+        params.userObj = {"parentdiv":"apzonb__Navigator__launchdiv","subproduct":sp,"product": apz.prdsel.CompareProducts.sparams.product,"action":"new"};
+        apz.launchApp(params);
+    }
+    else if(apz.prdsel.CompareProducts.sparams.product ==="Cards"){
+        apz.prdsel.CompareProducts.fnLaunchScreen(sp,"CardEligibility");
+    }
+    else{
+       apz.prdsel.CompareProducts.fnLaunchScreen(sp,"Deposit"); 
+    }
+ }
+ apz.prdsel.CompareProducts.fnLaunchScreen= function(ths,scrName) {
+    debugger;
+    var params = {};
+    params.appId = "prdsel";
+    params.scr = scrName;
+    params.div = "prdsel__ProductLauncher__productlauncher";
+    params.userObj = {
+        "parentdiv": "prdsel__ProductLauncher__productlauncher",
+        "subproduct": ths,
+        "product": apz.prdsel.SubProducts.sparams.product,
+        "action": "new"
+    };
+    apz.launchSubScreen(params);
+}
+apz.prdsel.CompareProducts.fnBack = function(){
+    debugger;
+   apz.prdsel.ProductLauncher.fnNavigate("SubProducts",{"product": apz.prdsel.CompareProducts.sparams.product});
+}

@@ -1,0 +1,54 @@
+{
+    "survey__FeedBackChart_Res": {
+        "datasets": [{
+            "Months": "How would you rate ease of access and the usefulness of our digital channels",
+            "Amount": "75",
+            "Type": "Excellent"
+        },{
+            "Months": "How would you rate ease of access and the usefulness of our digital channels",
+            "Amount": "118",
+            "Type": "Good"
+        },{
+            "Months": "How would you rate ease of access and the usefulness of our digital channels",
+            "Amount": "38",
+            "Type": "Average"
+        },{
+            "Months": "How would you rate ease of access and the usefulness of our digital channels",
+            "Amount": "19",
+            "Type": "Poor"
+        },
+        {
+            "Months": "How satisfied are you with the number of services offered on our digital banking platform",
+            "Amount": "128",
+            "Type": "Excellent"
+        },{
+            "Months": "How satisfied are you with the number of services offered on our digital banking platform",
+            "Amount": "83",
+            "Type": "Good"
+        },{
+            "Months": "How satisfied are you with the number of services offered on our digital banking platform",
+            "Amount": "35",
+            "Type": "Average"
+        },{
+            "Months": "How satisfied are you with the number of services offered on our digital banking platform",
+            "Amount": "4",
+            "Type": "Poor"
+        },{
+            "Months": "How responsive have we been to your Monthss about our products and services",
+            "Amount": "63",
+            "Type": "Excellent"
+        },{
+            "Months": "How responsive have we been to your Monthss about our products and services",
+            "Amount": "148",
+            "Type": "Good"
+        },{
+            "Months": "How responsive have we been to your Monthss about our products and services",
+            "Amount": "28",
+            "Type": "Average"
+        },{
+            "Months": "How responsive have we been to your Monthss about our products and services",
+            "Amount": "11",
+            "Type": "Poor"
+        }]
+    }
+}

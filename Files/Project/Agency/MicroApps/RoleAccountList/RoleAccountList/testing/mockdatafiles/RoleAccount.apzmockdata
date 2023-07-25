@@ -1,0 +1,88 @@
+{
+    "tbDbmiCorpRoleAccount": [
+        {
+            "roleId": "Admin",
+            "accountType": "Savings",
+            "accountNo": "000288122232",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 2112121,
+            "accountCurrency": "USD"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Savings",
+            "accountNo": "00028829921",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 2112121,
+            "accountCurrency": "USD"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Savings",
+            "accountNo": "01112882332",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 2112121,
+            "accountCurrency": "INR"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Savings",
+            "accountNo": "0678823232332",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 2112121,
+            "accountCurrency": "USD"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Savings",
+            "accountNo": "08778222332",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 2112121,
+            "accountCurrency": "USD"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Current",
+            "accountNo": "2309322229834",
+            "entityId": "Entity1",
+            "accessRights": "Both",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 2112121,
+            "accountCurrency": "USD"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Current",
+            "accountNo": "28800323232",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 2112121,
+            "accountCurrency": "INR"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Current",
+            "accountNo": "28823232992",
+            "entityId": "Entity1",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 2112121,
+            "accountCurrency": "USD"
+        },
+        {
+            "roleId": "Admin",
+            "accountType": "Current",
+            "accountNo": "0002882332322",
+            "entityId": "Entity2",
+            "accessRights": "Both",
+            "corporateId": "000FTAC4321",
+            "availableBalance": 2112121,
+            "accountCurrency": "INR"
+        }
+    ],
+    "accountStatus": true
+}

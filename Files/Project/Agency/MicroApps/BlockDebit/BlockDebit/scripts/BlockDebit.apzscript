@@ -1,0 +1,19 @@
+apz.blcdeb = {};
+apz.blcdeb.BlockDebit = {};
+apz.blcdeb.BlockDebit.sCache = {};
+apz.app.onLoad_BlockDebit = function(params) {
+    apz.blcdeb.BlockDebit.sCache = params;
+};
+apz.blcdeb.BlockDebit.fnSubmit = function() {
+    var lParams = {
+        "message": 'Request to block your debit card has been successfully submitted',
+        "callBack": apz.blcdeb.BlockDebit.fnBackToList,
+        "type": "S"
+    };
+    apz.dispMsg(lParams);
+};
+
+apz.blcdeb.BlockDebit.fnBackToList = function() {
+    debugger;
+    apz.blcdeb.BlockDebit.sCache.callBack();
+};

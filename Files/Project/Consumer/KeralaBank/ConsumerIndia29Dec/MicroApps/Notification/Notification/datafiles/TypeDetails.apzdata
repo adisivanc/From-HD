@@ -1,0 +1,14 @@
+{
+    "notifi__TypeInterface_Res": {
+        "data": [{
+        
+            "message": "Your password will expire soon. Click here to reset"
+        }, {
+        
+            "message": "Your airtel postpaid bill payment is due on 22/09/2020. Click here to pay"
+        }, {
+        
+            "message": "Your statement is dispatched to your billing address on 25/08/2020. "
+        }]
+    }
+}

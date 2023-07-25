@@ -1,0 +1,10 @@
+@charset "utf-8";
+/* CSS Document */
+
+.video_container { position: relative; width:100%; height:900px; background: url(../index.files/html5video/Sequence_01_31.jpg) no-repeat center center; }
+.txtbox { width:93%; }
+.msgbox { width:93%; }
+
+.about_quote { height:420px; overflow:hidden; }
+
+.gallerytbl .txtbox { width:85%; }

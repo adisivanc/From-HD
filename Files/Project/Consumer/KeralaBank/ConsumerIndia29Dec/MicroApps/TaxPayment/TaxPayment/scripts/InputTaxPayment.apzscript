@@ -1,0 +1,377 @@
+apz.taxpay.inputtaxpayment = {};
+apz.app.onLoad_InputTaxPayment = function(params) {
+    debugger;
+    apz.taxpay.inputtaxpayment.fnInitialise(params);
+};
+apz.app.onShown_InputTaxPayment = function()
+{
+    debugger;
+            $("#taxpay__TaxPayment__i__TaxPaymentDtls__mobileNo").attr("type", "tel");
+
+}
+apz.taxpay.inputtaxpayment.fnInitialise = function(params) {
+    debugger;
+    apz.data.loadJsonData("CustDetails","taxpay");
+    
+    apz.taxpay.inputtaxpayment.sParams = apz.data.scrdata.taxpay__CustDetails_Res;
+    if (params.Navigation) {
+        apz.taxpay.inputtaxpayment.fnSetNavigation(params)
+    }
+    apz.taxpay.inputtaxpayment.fnGoToStage1();
+};
+apz.taxpay.inputtaxpayment.fnSetNavigation = function(params) {
+    debugger;
+    apz.taxpay.inputtaxpayment.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "TAX PAYMENT DETAIL";
+    }
+    lParams.backPressed = apz.taxpay.inputtaxpayment.fnBack;
+    apz.taxpay.inputtaxpayment.Navigation(lParams);
+};
+apz.taxpay.inputtaxpayment.fnGoToStage1 = function() {
+    debugger;
+    apz.taxpay.inputtaxpayment.fnSetValueStage1();
+    apz.taxpay.inputtaxpayment.fnPopulateDropdown();
+    apz.taxpay.inputtaxpayment.fnRenderStage1();
+};
+apz.taxpay.inputtaxpayment.fnSetValueStage1 = function() {
+    debugger;
+    // apz.setElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__customerId", apz.taxpay.inputtaxpayment.sParams.data.customerID);
+    // apz.setElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__emailId", apz.taxpay.inputtaxpayment.sParams.data.emailId);
+    // apz.setElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__mobileNo", apz.taxpay.inputtaxpayment.sParams.data.mobileNo);
+    // apz.setElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__customerName", apz.taxpay.inputtaxpayment.sParams.data.customerName);
+    // apz.setElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__address", apz.taxpay.inputtaxpayment.sParams.data.address);
+    // apz.setElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__challanGenDate", apz.taxpay.inputtaxpayment.fnCurrentDate());
+    // apz.setElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__challanExpiryDate", apz.taxpay.inputtaxpayment.fnCurrentDate());
+    // apz.setElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__taxPaymentDate", apz.taxpay.inputtaxpayment.fnCurrentDate());
+};
+apz.taxpay.inputtaxpayment.fnCurrentDate = function() {
+    debugger;
+    var lCurrentDate = new Date();
+    var dd = lCurrentDate.getDate();
+    var mm = lCurrentDate.getMonth();
+    var yyyy = lCurrentDate.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    var lMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var lToday = dd + '-' + lMonths[mm] + '-' + yyyy;
+    return lToday;
+};
+apz.taxpay.inputtaxpayment.fnPopulateDropdown = function() {
+    debugger;
+    var lAccounts = apz.taxpay.inputtaxpayment.sParams.data.accounts;
+    var lObj = [];
+    var lOption;
+    for (i = 0; i < lAccounts.length; i++) {
+        if (i === 0) {
+            lOption = {
+                "val": "",
+                "desc": "Please Select"
+            };
+        } else {
+            lOption = {
+                "val": lAccounts[i].accountNo,
+                "desc": lAccounts[i].accountType + " - " + lAccounts[i].accountNo
+            };
+        }
+        lObj.push(lOption);
+    }
+    apz.populateDropdown(document.getElementById("taxpay__TaxPayment__i__TaxPaymentDtls__fromAccount"), lObj);
+};
+apz.taxpay.inputtaxpayment.fnRenderStage1 = function() {
+    apz.show("taxpay__InputTaxPayment__Stage1");
+    apz.hide("taxpay__InputTaxPayment__Stage2");
+    apz.hide("taxpay__InputTaxPayment__Stage3");
+};
+apz.taxpay.inputtaxpayment.fnContinueStage1 = function() {
+    debugger
+    var lValid = apz.taxpay.inputtaxpayment.fnValidateStage1();
+    lValid = true;
+    if (lValid) {
+        apz.data.buildData("TaxPayment", "taxpay");
+        apz.taxpay.inputtaxpayment.fnGoToStage2();
+    }
+};
+apz.taxpay.inputtaxpayment.fnGoToStage2 = function() {
+    debugger;
+    apz.taxpay.inputtaxpayment.fnSetValueStage2();
+    apz.taxpay.inputtaxpayment.fnRenderStage2();
+};
+apz.taxpay.inputtaxpayment.fnSetValueStage2 = function() {
+    debugger;
+    var lDetails = apz.data.scrdata.taxpay__TaxPayment_Req.TaxPaymentDtls;
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2typeOfTax", lDetails.typeOfTax);
+    //apz.setElmValue("taxpay__InputTaxPayment__Stage2customerId", lDetails.customerId);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2emailId", apz.getElmValue("taxpay__InputTaxPayment__email"));
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2mobileNo",  apz.getElmValue("taxpay__InputTaxPayment__mobile"));
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2customerName",  apz.getElmValue("taxpay__InputTaxPayment__customerName"));
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2address",  apz.getElmValue("taxpay__InputTaxPayment__address"));
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2fromAccount", lDetails.fromAccount);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2taxAmount", lDetails.taxAmount);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2taxInterest", lDetails.taxInterest);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2taxPenalty", lDetails.taxPenalty);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2taxFee", lDetails.taxFee);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2taxOther", lDetails.taxOther);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2taxTotalAmount", lDetails.taxTotalAmount);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2challanGenDate", lDetails.challanGenDate);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2challanExpiryDate", lDetails.challanExpiryDate);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage2taxPaymentDate", lDetails.taxPaymentDate);
+    //apz.setElmValue("taxpay__InputTaxPayment__Stage2taxPaymentStatus", lDetails.taxPaymentStatus);
+    //apz.setElmValue("taxpay__InputTaxPayment__Stage2aadhaarNo", lDetails.aadhaarNo);
+    //apz.setElmValue("taxpay__InputTaxPayment__Stage2authenticationType", lDetails.authenticationType);
+    if (lDetails.taxInterest != '') {
+        apz.show("taxpay__InputTaxPayment__Stage2taxInterest_ctrl_grp_div");
+    } else {
+        apz.hide("taxpay__InputTaxPayment__Stage2taxInterest_ctrl_grp_div");
+    }
+    if (lDetails.taxPenalty != '') {
+        apz.show("taxpay__InputTaxPayment__Stage2taxPenalty_ctrl_grp_div");
+    } else {
+        apz.hide("taxpay__InputTaxPayment__Stage2taxPenalty_ctrl_grp_div");
+    }
+    if (lDetails.taxFee != '') {
+        apz.show("taxpay__InputTaxPayment__Stage2taxFee_ctrl_grp_div");
+    } else {
+        apz.hide("taxpay__InputTaxPayment__Stage2taxFee_ctrl_grp_div");
+    }
+    if (lDetails.taxOther != '') {
+        apz.show("taxpay__InputTaxPayment__Stage2taxOther_ctrl_grp_div");
+    } else {
+        apz.hide("taxpay__InputTaxPayment__Stage2taxOther_ctrl_grp_div");
+    }
+    if (lDetails.taxTotalAmount != '') {
+        apz.show("taxpay__InputTaxPayment__Stage2taxTotalAmount_ctrl_grp_div");
+    } else {
+        apz.hide("taxpay__InputTaxPayment__Stage2taxTotalAmount_ctrl_grp_div");
+    }
+};
+apz.taxpay.inputtaxpayment.fnRenderStage2 = function() {
+    apz.hide("taxpay__InputTaxPayment__Stage1");
+    apz.show("taxpay__InputTaxPayment__Stage2");
+    apz.hide("taxpay__InputTaxPayment__Stage3");
+};
+apz.taxpay.inputtaxpayment.fnEditStage2 = function() {
+    apz.taxpay.inputtaxpayment.fnRenderStage1();
+};
+apz.taxpay.inputtaxpayment.fnConfirmStage2 = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "TaxPayment",
+        "req": {
+            "TaxPaymentDtls": apz.data.scrdata.taxpay__TaxPayment_Req.TaxPaymentDtls,
+            "action": "Confirm"
+        },
+        "callBack": apz.taxpay.inputtaxpayment.fnCallServerCallBack
+    };
+    apz.taxpay.inputtaxpayment.fnBeforeCallServer(lParams);
+};
+apz.taxpay.inputtaxpayment.fnBeforeCallServer = function(params) {
+    debugger;
+    var lServerParams = {
+        "ifaceName": params.ifaceName,
+        "paintResp": "N",
+        "buildReq": "N",
+        "req": params.req,
+        "callBack": params.callBack
+    };
+     jsondata = JSON.parse(apz.getFile(apz.getDataFilesPath("taxpay")+"/TaxPayment.json"));
+       apz.data.scrdata.taxpay__TaxPayment_Res = {};
+                        apz.data.scrdata.taxpay__TaxPayment_Res= jsondata;
+                  apz.taxpay.inputtaxpayment.fnCallServerCallBack(jsondata);
+   // apz.server.callServer(lServerParams);
+};
+apz.taxpay.inputtaxpayment.fnCallServerCallBack = function(params) {
+    debugger;
+  //  if (!params.errors) {
+        if (apz.data.scrdata.taxpay__TaxPayment_Res.TaxPaymentDtls.respCd == "app") {
+            apz.taxpay.inputtaxpayment.sParams.RefNum =apz.data.scrdata.taxpay__TaxPayment_Res.TaxPaymentDtls.txnRefNo;
+            apz.taxpay.inputtaxpayment.fnRenderOtpScreen();
+            var lLaunchParams = {
+                "appId": "otpeng",
+                "scr": "ProcessOTP",
+                "div": "taxpay__InputTaxPayment__launcher",
+                "userObj": {
+                    "action": "SetRefNo",
+                    "data": {
+                        "OTPRefNo": apz.data.scrdata.taxpay__TaxPayment_Res.TaxPaymentDtls.data.OTPRefNo
+                    },
+                    "control": {
+                        "appId": "otpeng",
+                        "callBack": apz.taxpay.inputtaxpayment.fnOtpCB,
+                        "destroyDiv": "taxpay__InputTaxPayment__launcher"
+                    }
+                }
+            };
+            apz.launchApp(lLaunchParams);
+        }
+    //}
+};
+apz.taxpay.inputtaxpayment.fnRenderOtpScreen = function() {
+    debugger;
+    apz.hide("taxpay__InputTaxPayment__Stage1");
+    apz.hide("taxpay__InputTaxPayment__Stage2");
+    apz.hide("taxpay__InputTaxPayment__Stage3");
+    apz.show("taxpay__InputTaxPayment__launcher");
+};
+apz.taxpay.inputtaxpayment.fnOtpCB = function() {
+    debugger;
+    apz.taxpay.inputtaxpayment.fnGoToStage3();
+};
+apz.taxpay.inputtaxpayment.fnGoToStage3 = function() {
+    debugger;
+    apz.taxpay.inputtaxpayment.fnSetValueStage3();
+    apz.taxpay.inputtaxpayment.fnRenderStage3();
+};
+apz.taxpay.inputtaxpayment.fnSetValueStage3 = function() {
+    debugger;
+    lDetails = apz.data.scrdata.taxpay__TaxPayment_Req.TaxPaymentDtls;
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3typeOfTax", lDetails.typeOfTax);
+    //apz.setElmValue("taxpay__InputTaxPayment__Stage3customerId", lDetails.customerId);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3emailId", apz.getElmValue("taxpay__InputTaxPayment__email"));
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3mobileNo", apz.getElmValue("taxpay__InputTaxPayment__mobile"));
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3customerName", apz.getElmValue("taxpay__InputTaxPayment__customerName"));
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3address", apz.getElmValue("taxpay__InputTaxPayment__address"));
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3fromAccount", lDetails.fromAccount);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3taxAmount", lDetails.taxAmount);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3taxInterest", lDetails.taxInterest);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3taxPenalty", lDetails.taxPenalty);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3taxFee", lDetails.taxFee);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3taxOther", lDetails.taxOther);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3taxTotalAmount", lDetails.taxTotalAmount);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3challanGenDate", lDetails.challanGenDate);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3challanExpiryDate", lDetails.challanExpiryDate);
+    apz.setElmValue("taxpay__InputTaxPayment__Stage3taxPaymentDate", lDetails.taxPaymentDate);
+    //apz.setElmValue("taxpay__InputTaxPayment__Stage3taxPaymentStatus", lDetails.taxPaymentStatus);
+    //apz.setElmValue("taxpay__InputTaxPayment__Stage3aadhaarNo", lDetails.aadhaarNo);
+    //apz.setElmValue("taxpay__InputTaxPayment__Stage3authenticationType", lDetails.authenticationType);
+    if (lDetails.taxInterest != '') {
+        apz.show("taxpay__InputTaxPayment__Stage3taxInterest_ctrl_grp_div");
+    } else {
+        apz.hide("taxpay__InputTaxPayment__Stage3taxInterest_ctrl_grp_div");
+    }
+    if (lDetails.taxPenalty != '') {
+        apz.show("taxpay__InputTaxPayment__Stage3taxPenalty_ctrl_grp_div");
+    } else {
+        apz.hide("taxpay__InputTaxPayment__Stage3taxPenalty_ctrl_grp_div");
+    }
+    if (lDetails.taxFee != '') {
+        apz.show("taxpay__InputTaxPayment__Stage3taxFee_ctrl_grp_div");
+    } else {
+        apz.hide("taxpay__InputTaxPayment__Stage3taxFee_ctrl_grp_div");
+    }
+    if (lDetails.taxOther != '') {
+        apz.show("taxpay__InputTaxPayment__Stage3taxOther_ctrl_grp_div");
+    } else {
+        apz.hide("taxpay__InputTaxPayment__Stage3taxOther_ctrl_grp_div");
+    }
+    if (lDetails.taxTotalAmount != '') {
+        apz.show("taxpay__InputTaxPayment__Stage3taxTotalAmount_ctrl_grp_div");
+    } else {
+        apz.hide("taxpay__InputTaxPayment__Stage3taxTotalAmount_ctrl_grp_div");
+    }
+    var lRefNo = "Your Reference no is " + apz.taxpay.inputtaxpayment.sParams.RefNum;
+    apz.setElmValue("taxpay__InputTaxPayment__RefNo", lRefNo);
+};
+apz.taxpay.inputtaxpayment.fnRenderStage3 = function() {
+    apz.hide("taxpay__InputTaxPayment__Stage1");
+    apz.hide("taxpay__InputTaxPayment__Stage2");
+    apz.show("taxpay__InputTaxPayment__Stage3");
+};
+apz.taxpay.inputtaxpayment.fnCalculateTotalAmount = function() {
+    var ltaxAmount = apz.getElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__taxAmount");
+    var ltaxInterest = apz.getElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__taxInterest");
+    var ltaxPenalty = apz.getElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__taxPenalty");
+    var ltaxFee = apz.getElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__taxFee");
+    var ltaxOther = apz.getElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__taxOther");
+    if (ltaxAmount == "") {
+        ltaxAmount = 0;
+    } else {
+        ltaxAmount = parseFloat(ltaxAmount);
+    }
+    if (ltaxInterest == "") {
+        ltaxInterest = 0;
+    } else {
+        ltaxInterest = parseFloat(ltaxInterest);
+    }
+    if (ltaxPenalty == "") {
+        ltaxPenalty = 0;
+    } else {
+        ltaxPenalty = parseFloat(ltaxPenalty);
+    }
+    if (ltaxFee == "") {
+        ltaxFee = 0;
+    } else {
+        ltaxFee = parseFloat(ltaxFee);
+    }
+    if (ltaxOther == "") {
+        ltaxOther = 0;
+    } else {
+        ltaxOther = parseFloat(ltaxOther);
+    }
+    ltotalTaxAmount = ltaxAmount + ltaxInterest + ltaxPenalty + ltaxFee + ltaxOther;
+    apz.setElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__taxTotalAmount", ltotalTaxAmount);
+};
+apz.taxpay.inputtaxpayment.fnValidateStage1 = function() {
+    debugger;
+    var lValid = apz.val.validateContainer("taxpay__InputTaxPayment__Stage1Form");
+    if (lValid) {
+        var ltotaltaxAmount = apz.getElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__taxTotalAmount");
+        if (ltotaltaxAmount == "") {
+            ltotaltaxAmount = 0;
+        } else {
+            ltotaltaxAmount = parseFloat(ltotaltaxAmount);
+        }
+        if (ltotaltaxAmount <= 0) {
+            var lMsg = {
+                "code": "TAX_003"
+            };
+            apz.dispMsg(lMsg);
+            return false;
+        }
+    } else {
+        var lMsg = {
+            "code": "ERR_MAND"
+        };
+     //   apz.dispMsg(lMsg);
+        return false;
+    }
+    return lValid;
+};
+apz.taxpay.inputtaxpayment.fnValidatePhone = function(pobj) {
+    debugger;
+    var lError = apz.val.validateInputAct(document.getElementById("taxpay__TaxPayment__i__TaxPaymentDtls__mobileNo"), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            "code": 'VAL-PHONE',
+            "callBack": apz.taxpay.inputtaxpayment.fnValidatePhoneCB
+        };
+        apz.dispMsg(lErrorParams);
+    }
+};
+apz.taxpay.inputtaxpayment.fnValidatePhoneCB = function() {
+    debugger;
+    apz.setElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__mobileNo", null);
+}
+apz.taxpay.inputtaxpayment.fnValidateEmail = function(pobj) {
+    debugger;
+    var lError = apz.val.validateInputAct(document.getElementById("taxpay__TaxPayment__i__TaxPaymentDtls__emailId"), false);
+    if (lError == "APZ-CNT-128") {
+        var lErrorParams = {
+            "code": 'VAL-EMAIL',
+            "callBack": apz.taxpay.inputtaxpayment.fnValidateEmailCB
+        };
+        apz.dispMsg(lErrorParams);
+    }
+};
+apz.taxpay.inputtaxpayment.fnValidateEmailCB = function() {
+    debugger;
+    apz.setElmValue("taxpay__TaxPayment__i__TaxPaymentDtls__emailId", null);
+};
+apz.app.postGetHeader = function(header) {
+    header.sessionId = 'gjdgasghgasfgafgas';
+    return header;
+}

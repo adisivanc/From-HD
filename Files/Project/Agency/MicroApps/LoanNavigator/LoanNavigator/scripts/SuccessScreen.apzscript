@@ -1,0 +1,28 @@
+apz.loanvg.SuccessScreen = {};
+apz.app.onLoad_SuccessScreen = function(params) {
+    debugger;
+};
+apz.loanvg.SuccessScreen.fndone = function() {
+        var theme = $("link").eq(0).attr("href");
+        // if (theme == "appzillon/styles/themes/ConsUK/css/ConsUK.css") {
+            var div = apz.loanvg.Applyloan.sparams.control.exitApp.div;
+        // } else {
+        //     var div = "scr__appdtl__ProductLauncher__main";
+        // }
+    var lLaunchParams = {
+        "appId": "loanvg",
+        "scr": "Applyloan",
+        "div": div,
+        "userObj": {
+                "control": {
+                    "exitApp": {
+                        "appId": "",
+                        "backFunction": "",
+                        "div": "cmrnav__Launcher__Launcher",
+                        "callBack": ""
+                    }
+                }
+            }
+    };
+    apz.launchSubScreen(lLaunchParams);
+}

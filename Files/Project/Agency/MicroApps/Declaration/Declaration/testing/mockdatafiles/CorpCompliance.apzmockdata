@@ -1,0 +1,16 @@
+{
+    "tbComiCorpCompliance":{
+        "appNo" :"CORPONB629175",
+        "isIncorporated" :"Yes",
+        "isFinancialInstititution":"Yes",
+        "isTrust" :"Yes",
+        "hasUsAddressUsPhoneAccOpening":"Yes",
+        "hasProvidedUsMailingAddress" :"Yes",
+        "hasFundTrnsferingUsAccount":"Yes",
+        "hasProvidedFaxEmail" :"Yes",
+        "hasPowerOfAttorney" :"Yes",
+        "doesAuthorisedSignatories" :"No",
+        "tin" :"9982323",
+        "fatcaStatus" :""
+    }
+}

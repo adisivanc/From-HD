@@ -1,0 +1,5 @@
+{
+    "GetExtratedTextResponse": {
+        "GetExtratedTextResult": "{\"gender\": \"M\",\"lname\": \"Mashar Velapurath\",\"fname\": \"Zamrad Kariaputhiya Purayil\",\"nationality\": \"India\",\"dob\": \"1988-02-28\",\"passportExpiryDate\":\"2020-05-14\",\"passportNo\":\"784-1988-8394758-6\"}"
+    }
+}

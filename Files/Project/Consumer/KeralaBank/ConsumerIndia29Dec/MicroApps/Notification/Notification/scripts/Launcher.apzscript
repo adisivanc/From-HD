@@ -1,0 +1,11 @@
+apz.notifi.Launcher={};
+apz.app.onLoad_Launcher = function() {
+    var params = {};
+    params.div = 'notifi__Launcher__launcher';
+    params.scr = 'Notification';
+    params.appId = "notifi";
+    apz.launchSubScreen(params);
+}
+apz.app.onShown_Launcher = function(){
+    debugger;
+}

@@ -1,0 +1,24 @@
+{
+    "loginResponse": {
+        "userDet": {
+            "OTPRequired": "N",
+            "lastLogin": "",
+            "profilePic": "",
+            "name": "admin",
+            "extId": "",
+            "id": "admin",
+            "userPrefs": {
+                "dateFormat": "dd-MMM-yyyy",
+                "numberMask": "MILLION",
+                "language": "en",
+                "dateTimeFormat": "dd-MMM-yyyy  hh:mm:ss",
+                "longitude": "77.6196951",
+                "lattitude": "12.9255616",
+                "theme": "ConsumerBank",
+                "decimalSep": ".",
+                "otaReqd": "N"
+            }
+        },
+        "status": true
+    }
+}

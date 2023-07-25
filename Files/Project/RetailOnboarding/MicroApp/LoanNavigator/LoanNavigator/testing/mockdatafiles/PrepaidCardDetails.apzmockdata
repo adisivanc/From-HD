@@ -1,0 +1,19 @@
+{
+    "tbDbmiPrepaidcardDetails": {
+        "refno": "CONSONB15620078031852",
+        "styleofcard": "",
+        "amount": "30000",
+        "recipientofcard": "Self",
+        "beneficiaryname": "",
+        "emailid": "",
+        "mobilenumber": "8904131879",
+        "purpose": "",
+        "relationshipwithpurchaser": "",
+        "addressline1": "",
+        "addressline2": "",
+        "city": "Muscut",
+        "country": "UAE",
+        "code": "010008"
+        
+    }
+}

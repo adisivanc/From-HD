@@ -1,0 +1,30 @@
+apz.bmyjna.checkParams = function(params) {
+    debugger;
+    params.userObj = {
+        "data": {
+            "customerID": "2",
+            "typeOfBima" : "PMJJBY",
+            //"typeOfBima" : "PMSBY",
+            "SavingsAccount": [{
+                "accountNo": "100009312263",
+                "accountType": "Savings",
+                "accountBalance": "50,000",
+                "Branch": "Jaya Nagar",
+                "BranchCd": "612"
+            }, {
+                "accountNo": "100009312401",
+                "accountType": "Savings",
+                "accountBalance": "25,000",
+                "Branch": "JP Nagar",
+                "BranchCd": "613"
+            }, {
+                "accountNo": "732510006721",
+                "accountType": "Savings",
+                "accountBalance": "40,000",
+                "Branch": "Electronic City",
+                "BranchCd": "610"
+            } 
+            ]
+        }
+    };
+};

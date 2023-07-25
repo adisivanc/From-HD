@@ -1,0 +1,334 @@
+apz.ledonb.leadcapture = {};
+apz.ledonb.leadcapture.sCache = {};
+apz.app.onLoad_LeadCapture = function(params) {
+    debugger;
+    apz.ledonb.leadcapture.sCache = params;
+    apz.data.loadJsonData("ProductDetails", "ledonb");
+    $("#ledonb__LeadCapture__checkEligibilityAccordion_div").addClass("sno");
+    $("#ledonb__LeadCapture__appointmentTxt_li").html(
+        '<p id="ledonb__LeadCapture__appointmentTxt" class="ett-para pri fs14"><span id="ledonb__LeadCapture__appointmentTxt_txtcnt">I want to fix an appointment on  </span><span class="txtColor" id="ledonb__LeadCapture__appointmentTxt_Date">Date</span><span id="ledonb__LeadCapture__appointmentTxt_txtcnt2"> at </span><span class="txtColor" id="ledonb__LeadCapture__appointmentTxt_Time">Time</span></p>'
+    );
+    $('#ledonb__LeadCapture__dateInput').mobiscroll().date({
+        onClose: function(event, inst) {
+            debugger;
+            $("#ledonb__LeadCapture__appointmentTxt_Date").text(event.valueText);
+        }
+    });
+    $('#ledonb__LeadCapture__timeInput').mobiscroll().time({
+        onClose: function(event, inst) {
+            debugger;
+            $("#ledonb__LeadCapture__appointmentTxt_Time").text(event.valueText);
+        }
+    });
+    $("#ledonb__LeadCapture__appointmentTxt_Date").click(function() {
+        $("#ledonb__LeadCapture__dateInput").trigger("click");
+    });
+    $("#ledonb__LeadCapture__appointmentTxt_Time").click(function() {
+        $("#ledonb__LeadCapture__timeInput").trigger("click");
+    });
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+    today = dd + '-' + mm + '-' + yyyy;
+    apz.setElmValue("ledonb__NewLeadDetails__i__tbAcopCustomerInfo__submittedDate", today);
+    apz.setElmValue("ledonb__NewLeadDetails__i__tbAcopCustomerInfo__referenceNo", $.now().toString().substr(5));
+    apz.setElmValue("ledonb__NewLeadDetails__i__tbAcopCustomerInfo__submitStatus", "Pending");
+};
+apz.ledonb.leadcapture.fnFixAppointment = function() {
+    apz.show("ledonb__LeadCapture__fixAppForm");
+};
+apz.ledonb.leadcapture.fnFixAppointmentCancel = function() {
+    debugger;
+    apz.hide("ledonb__LeadCapture__fixAppForm");
+}
+apz.ledonb.leadcapture.populateProductDetails = function() {
+    debugger;
+    for (var i in apz.data.scrdata.ProductDetails) {
+        if ($("#ledonb__LeadCapture__productCategory").val() == apz.data.scrdata.ProductDetails[i].Category) {
+            apz.populateDropdown(document.getElementById("ledonb__LeadCapture__productType"), apz.data.scrdata.ProductDetails[i].Type);
+        }
+    }
+    if ($("#ledonb__LeadCapture__productCategory").val() == "Home Loan" || $("#ledonb__LeadCapture__productCategory").val() == "Vehicle Loan") {
+        apz.show("ledonb__LeadCapture__checkEligibilityAccordion_div");
+    } else {
+        apz.hide("ledonb__LeadCapture__checkEligibilityAccordion_div");
+    }
+};
+apz.ledonb.leadcapture.fnscanBarcode = function() {
+    debugger;
+    var ljson = {};
+    ljson.id = "BARCODE_ID";
+    ljson.callBack = apz.ledonb.leadcapture.fnscanBarcodeCallback;
+    ljson.callBackObj = this;
+    apz.ns.scanBarcode(ljson);
+};
+apz.ledonb.leadcapture.fnscanBarcodeCallback = function(ljson) {
+    if (ljson.status) {
+        apz.ledonb.leadcapture.fnprocesResponse(ljson.text);
+        var lbarValue = JSON.parse(ljson.text);
+    }
+};
+apz.ledonb.leadcapture.fnprocesResponse = function(ljson) {
+    debugger;
+    var lxmlData = ljson;
+    var lxmlDoc = $.parseXML(lxmlData);
+    var $lxml = $(lxmlDoc);
+    var $ltxtELem = $lxml.find("PrintLetterBarcodeData");
+    var lcusjson = {};
+    lcusjson.CustomerDetails = {};
+    lcusjson.CustomerDetails.customerId = $ltxtELem.attr("uid");
+    lcusjson.CustomerDetails.customerName = $ltxtELem.attr("name");
+    lcusjson.CustomerDetails.sex = $ltxtELem.attr("gender").trim();
+    lcusjson.CustomerDetails.dob = $ltxtELem.attr("dob");
+    lcusjson.CustomerDetails.yob = $ltxtELem.attr("yob");
+    lcusjson.CustomerDetails.house = $ltxtELem.attr("house");
+    lcusjson.CustomerDetails.lm = $ltxtELem.attr("street");
+    lcusjson.CustomerDetails.po = $ltxtELem.attr("po");
+    lcusjson.CustomerDetails.state = $ltxtELem.attr("state");
+    lcusjson.CustomerDetails.pc = $ltxtELem.attr("pc");
+    apz.ledonb.leadcapture.fnupdateUI(lcusjson);
+};
+apz.ledonb.leadcapture.fnupdateUI = function(lcusjson) {
+    debugger;
+    apz.setElmValue("ledonb__LeadCapture__Fname", lcusjson.CustomerDetails.customerName);
+    apz.setElmValue("ledonb__LeadCapture__id", lcusjson.CustomerDetails.customerId);
+    apz.setElmValue("ledonb__LeadCapture__num", lcusjson.CustomerDetails.customerId);
+    apz.setElmValue("ledonb__LeadCapture__addr", lcusjson.CustomerDetails.house + "," + lcusjson.CustomerDetails.lm + "," + lcusjson.CustomerDetails.po +
+        "," + lcusjson.CustomerDetails.state + "-" + lcusjson.CustomerDetails.pc);
+    if (lcusjson.CustomerDetails.dob === "" || lcusjson.CustomerDetails.dob === undefined) {
+        apz.setElmValue("ledonb__LeadCapture__dob", lcusjson.CustomerDetails.yob);
+    } else {
+        apz.setElmValue("ledonb__LeadCapture__dob", lcusjson.CustomerDetails.dob);
+    }
+    if (lcusjson.CustomerDetails.sex === "" || lcusjson.CustomerDetails.sex === undefined) {} else {
+        if (lcusjson.CustomerDetails.sex == "M" || lcusjson.CustomerDetails.sex == "MALE" || lcusjson.CustomerDetails.sex == "Male") {
+            var lradiobtnM = document.getElementById("ledonb__LeadCapture__gender_option_M");
+            lradiobtnM.checked = true;
+        } else {
+            var lradiobtnF = document.getElementById("ledonb__LeadCapture__gender_option_F");
+            lradiobtnF.checked = true;
+        }
+    }
+};
+apz.ledonb.leadcapture.fnSchedule = function() {
+    apz.ledonb.leadcapture.sLeadReferenceNo = $.now().toString().substr(5);
+    // var lParam = {
+    //     "action": "Add",
+    //     "ifaceName": "LeadDetails_New",
+    //     "lReq": {
+    var obj = {
+        "referenceNo": parseInt(apz.ledonb.leadcapture.sLeadReferenceNo),
+        "leadName": apz.getElmValue("ledonb__LeadCapture__Fname") + " " + apz.getElmValue("ledonb__LeadCapture__Mname") + " " + apz.getElmValue(
+            "ledonb__LeadCapture__Lname"),
+        "leadDob": apz.getElmValue("ledonb__LeadCapture__dob"),
+        "leadEmailId": apz.getElmValue("ledonb__LeadCapture__email"),
+        "leadMobile": apz.getElmValue("ledonb__LeadCapture__mobile"),
+        "leadAddr": apz.getElmValue("ledonb__LeadCapture__addr"),
+        "leadImage": apz.ledonb.leadcapture.sProfileImg,
+        "productCategory": apz.getElmValue("ledonb__LeadCapture__productCategory"),
+        "productType": apz.getElmValue("ledonb__LeadCapture__productType"),
+        "firstName": apz.getElmValue("ledonb__LeadCapture__Fname"),
+        "middleName": apz.getElmValue("ledonb__LeadCapture__Mname"),
+        "lastName": apz.getElmValue("ledonb__LeadCapture__Lname"),
+        "gender": apz.getElmValue("ledonb__LeadCapture__gender"),
+        "status": "Pending",
+        "createdDate": new Date().toString("dd/MM/yyyy")
+    };
+    apz.ledonb.leadcapture.sCache.leadDetails.tbLeadDetails.push(obj);
+    var lmsg = {
+        "code": "APZ-LEAD-SCH",
+        "callBack": apz.ledonb.leadcapture.fnLaunchScr
+    };
+    apz.dispMsg(lmsg);
+    //     }
+    // };
+    // apz.ledonb.leadcapture.fnBeforeCallServer(lParam);
+};
+apz.ledonb.leadcapture.fnSubmit = function() {
+    apz.ledonb.leadcapture.sLeadReferenceNo = $.now().toString().substr(5);
+    if (apz.val.validateContainer("ledonb__LeadCapture__ct_frm_1")) {
+       
+        var lServerParams = {
+            "ifaceName": "NewLeadDetails_New",
+            "buildReq": "Y",
+            "appId": "ledonb",
+            "req": "",
+            "paintResp": "N",
+            "async": "true",
+            "callBack": apz.ledonb.leadcapture.fnLaunchScr,
+            "callBackObj": "",
+        };
+        apz.server.callServer(lServerParams);
+    } else {
+        var lmsg = {
+            "message": "Please enter the mandatory fields",
+            "callBack": "",
+            "type": "E"
+        };
+        apz.dispMsg(lmsg);
+    }
+   
+};
+apz.ledonb.leadcapture.fnSubmitModalCallback = function(params) {
+    debugger;
+    if (params.choice == true) {
+        apz.ledonb.leadcapture.sLeadReferenceNo = $.now().toString().substr(5);
+        var temp = {
+            "referenceNo": parseInt(apz.ledonb.leadcapture.sLeadReferenceNo),
+            "leadName": apz.getElmValue("ledonb__LeadCapture__Fname") + " " + apz.getElmValue("ledonb__LeadCapture__Mname") + " " + apz.getElmValue(
+                "ledonb__LeadCapture__Lname"),
+            "leadDob": apz.getElmValue("ledonb__LeadCapture__dob"),
+            "leadEmailId": apz.getElmValue("ledonb__LeadCapture__email"),
+            "leadMobile": apz.getElmValue("ledonb__LeadCapture__mobile"),
+            "leadAddr": apz.getElmValue("ledonb__LeadCapture__addr"),
+            "leadImage": apz.ledonb.leadcapture.sProfileImg,
+            "productCategory": apz.getElmValue("ledonb__LeadCapture__productCategory"),
+            "productType": apz.getElmValue("ledonb__LeadCapture__productType"),
+            "firstName": apz.getElmValue("ledonb__LeadCapture__Fname"),
+            "middleName": apz.getElmValue("ledonb__LeadCapture__Mname"),
+            "lastName": apz.getElmValue("ledonb__LeadCapture__Lname"),
+            "gender": apz.getElmValue("ledonb__LeadCapture__gender"),
+            "status": "Completed",
+            "createdDate": new Date().toString("dd/MM/yyyy")
+        };
+        apz.ledonb.leadcapture.sCache.leadDetails.tbLeadDetails.push(temp);
+        var lmsg = {
+            "code": "APZ-LEAD-CRE",
+            "callBack": apz.ledonb.leadcapture.fnLaunchScr
+        };
+        apz.dispMsg(lmsg);
+    } else {}
+}
+
+apz.ledonb.leadcapture.fnLaunchSucc = function() {
+    var lObj = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": apz.ledonb.leadcapture.sCache.destroyDiv,
+        "animation": 21,
+        "userObj": {
+            "action": "",
+            "data": {},
+            "destroyDiv": apz.ledonb.leadcapture.sCache.destroyDiv,
+            "parentId": apz.ledonb.leadcapture.sCache.parentAppId,
+            "leadDetails": apz.ledonb.leadcapture.sCache.leadDetails
+        }
+    };
+    apz.launchApp(lObj);
+}
+apz.ledonb.leadcapture.fnLaunchScr = function() {
+    debugger;
+    var lObj = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": apz.ledonb.leadcapture.sCache.destroyDiv,
+        "animation": 21,
+        "userObj": {
+            "action": "",
+            "data": {},
+            "destroyDiv": apz.ledonb.leadcapture.sCache.destroyDiv,
+            "parentId": apz.ledonb.leadcapture.sCache.parentAppId,
+            "leadDetails": apz.ledonb.leadcapture.sCache.leadDetails
+        }
+    };
+    apz.launchApp(lObj);
+};
+apz.ledonb.leadcapture.fnCheckEligibiityCriteria = function() {
+    debugger;
+    apz.currAppId = "ledonb";
+    var fieldIncome = apz.getElmValue(apz.currAppId + "__LeadCapture__amount");
+    var lIncome = fieldIncome.split(".")[0].replace(/,/g, '');
+    lIncomeFinal = parseInt(lIncome);
+    if (!apz.isNull(lIncomeFinal)) {
+        var lAmount;
+        lAmount = lIncomeFinal * 0.8;
+        lAmount = Math.round(lAmount * 100) / 100;
+        lObj = {
+            "value": lAmount,
+            "decimalSep": ".",
+            "displayAsLiteral": "N",
+            "mask": "LAKH",
+            "decimalPoints": "2"
+        }
+        latestAmount = apz.formatNumber(lObj);
+        apz.ledonb.leadcapture.sEligibleLoanAmount = latestAmount;
+        setTimeout(apz.ledonb.leadcapture.fnSetEligibiityAmount, 1000);
+    }
+};
+apz.ledonb.leadcapture.fnSetEligibiityAmount = function() {
+    debugger;
+    $("#" + apz.currAppId + "__LeadCapture__LoanEligibiityModalVal_ul").removeClass("sno");
+    $("#" + apz.currAppId + "__LeadCapture__LoanEligibiityModalLable_ul").removeClass("sno");
+    apz.setElmValue(apz.currAppId + "__LeadCapture__LoanEligibiityModalVal", "₹ " + apz.ledonb.leadcapture.sEligibleLoanAmount);
+};
+apz.ledonb.leadcapture.fnCancelMsg = function() {
+    var lmsg = {
+        "code": "APZ-LEAD-ERR",
+        "callBack": apz.ledonb.leadcapture.fnCancel
+    }
+    apz.dispMsg(lmsg);
+}
+apz.ledonb.leadcapture.fnCancel = function(params) {
+    if (params.choice == true) {
+        var lObj = {
+            "appId": "landpg",
+            "scr": "LandingPage",
+            "div": apz.ledonb.leadcapture.sCache.destroyDiv,
+            "animation": 21,
+            "userObj": {
+                "action": "",
+                "data": {},
+                "destroyDiv": apz.ledonb.leadcapture.sCache.destroyDiv,
+                "parentId": apz.ledonb.leadcapture.sCache.parentAppId
+                }
+        };
+        apz.launchApp(lObj);
+    } else {}
+}
+
+apz.ledonb.leadcapture.fnValidate = function() {
+    var lParams = {
+        "appId": "pfauth",
+        "scr": "Authentication",
+        "div": "ledonb__LeadCapture__authlaunchArea",
+        "type": "CF",
+        "userObj": {
+            "action": "",
+            "data": {},
+            "destroyDiv": apz.ledonb.leadcapture.sCache.destroyDiv,
+            "parentAppId": apz.ledonb.leadcapture.sCache.parentAppId
+        }
+    };
+    apz.launchApp(lParams);
+}
+apz.ledonb.leadcapture.fnCamera = function(params) {
+    debugger;
+    var lJsonObj = {};
+    lJsonObj.action = "base64_Save";
+    lJsonObj.fileName = "customerpic";
+    lJsonObj.id = "CAMERA_ID";
+    lJsonObj.targetWidth = "200";
+    lJsonObj.targetHeight = "200";
+    lJsonObj.encodingType = "JPG";
+    lJsonObj.openNativeCamera = "Y";
+    lJsonObj.sourceType = "Camera";
+    lJsonObj.callBack = apz.ledonb.leadcapture.fnCameraCB;
+    apz.ns.openCamera(lJsonObj);
+};
+apz.ledonb.leadcapture.fnCameraCB = function(params) {
+    debugger;
+    if (params.status) {
+        apz.ledonb.leadcapture.sProfileImg = "data:image/jpg;base64," + params.encodedImage;
+        document.getElementById("ledonb__LeadCapture__profileimg").src = apz.ledonb.leadcapture.sProfileImg;
+    } else {
+        var lErrors = params.errorCode;
+        alert(lErrors);
+    }
+};

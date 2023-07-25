@@ -1,0 +1,480 @@
+apz.stnint.STAmount = {};
+apz.stnint.STAmount.sfrequency = "D";
+apz.stnint.STAmount.sOtpResData = {};
+apz.stnint.STAmount.sHome = function() {};
+apz.stnint.STAmount.sAuthentication;
+apz.stnint.STAmount.fnSetHeader = "";
+apz.stnint.STAmount.sAuthenFromServer = "";
+apz.app.onLoad_STAmount = function(pParams) {
+    debugger;
+    apz.stnint.STAmount.stData = pParams.userObj;
+    apz.stnint.STAmount.st360Data = pParams.custom360;
+    apz.stnint.STAmount.sHome = pParams.home;
+    apz.stnint.STAmount.sAuthentication = pParams.authentication;
+    apz.stnint.STAmount.fnLoadData();
+    
+
+};
+apz.app.onShown_STAmount = function() {
+    debugger;
+    apz.hide("stnint__STAmount__setInst_btn");
+};
+apz.stnint.STAmount.fnLoadData = function() {
+    debugger;
+    apz.hide("stnint__STAmount__stage2");
+    apz.hide("stnint__STAmount__stage3");
+    apz.hide("stnint__STAmount__stage4");
+    apz.hide("stnint__STAmount__prnt_btn");
+    apz.show("stnint__STAmount__cont_btn");
+    apz.hide("stnint__STAmount__confirm_btn");
+    apz.hide("stnint__STAmount__gotoHome_btn");
+    apz.setElmValue("stnint__STAmount__accNumber", apz.stnint.STAmount.stData.FROM_ACCOUNT_NO);
+    apz.setElmValue("stnint__STAmount__debitAcntType", apz.stnint.STAmount.stData.selectedAccountType);
+    if (!apz.isNull(apz.stnint.STAmount.stData.BENEFICIARY_ACCOUNT_NO)) {
+        apz.setElmValue("stnint__STAmount__banAccNo", "  " + apz.stnint.STAmount.stData.BENEFICIARY_ACCOUNT_NO);
+        // if (apz.isNull(apz.stnint.STAmount.stData.BENEFICIARY_IFSC)) {
+        //     //apz.setElmValue("stnint__STAmount__bankIFSC", apz.stnint.STAmount.stData.BENEFICIARY_IFSC);
+        // } else {
+        //     apz.hide("stnint__STAmount__bankIFSC");
+        // }
+        // if (!apz.isNull(apz.stnint.STAmount.stData.BENEFICIARY_BANK_NAME)) {
+        //     apz.setElmValue("stnint__STAmount__banBankAdd", apz.stnint.STAmount.stData.BENEFICIARY_BANK_NAME + "  " + apz.stnint.STAmount.stData.BENEFICIARY_BANK_ADDRESS);
+        // } else {
+        //     apz.hide("stnint__STAmount__banBankAdd");
+        // }
+    } else if (apz.stnint.STAmount.stData.BENEFICIARY_VPA) {
+        apz.hide("stnint__STAmount__bankIFSC");
+        apz.hide("stnint__STAmount__sc_row_37_row");
+        $("#stnint__STAmount__intAccNo").text("VPA");
+        apz.setElmValue("stnint__STAmount__banAccNo", " " + apz.stnint.STAmount.stData.BENEFICIARY_VPA);
+    } else if (apz.stnint.STAmount.stData.BENEFICIARY_MOBILENUMBER && apz.stnint.STAmount.stData.BENEFICIARY_MMID) {
+        $("#stnint__STAmount__intAccNo").text("Mobile Number");
+        apz.setElmValue("stnint__STAmount__banAccNo", " " + apz.stnint.STAmount.stData.BENEFICIARY_MOBILENUMBER);
+        apz.setElmValue("stnint__STAmount__banBankAdd", apz.stnint.STAmount.stData.BENEFICIARY_MMID);
+        apz.hide("stnint__STAmount__sc_row_37_row");
+    } else if (apz.stnint.STAmount.stData.BENEFICIARY_AADHAR_NO) {
+        apz.hide("stnint__STAmount__bankIFSC");
+        apz.hide("stnint__STAmount__sc_row_37_row");
+        $("#stnint__STAmount__intAccNo").text(" " + "Aadhar Number");
+        apz.setElmValue("stnint__STAmount__banAccNo", " " + apz.stnint.STAmount.stData.BENEFICIARY_AADHAR_NO);
+    }
+    var accVal = apz.stnint.STAmount.fnFormatNumber(apz.stnint.STAmount.stData.accountBal);
+    apz.setElmValue("stnint__STAmount__avlBal", accVal);
+   apz.setElmValue("stnint__STAmount__banName", apz.stnint.STAmount.stData.BENEFICIARY_NAME);
+               apz.setElmValue("stnint__STAmount__banBankAdd", apz.stnint.STAmount.stData.BENEFICIARY_BANK_NAME );
+
+};
+apz.stnint.STAmount.fnContinue = function() {
+    if (apz.getElmValue('stnint__StandingInstruction__i__StandingInstructionReq__TRANSFER_AMOUNT') === "") {
+        var msg = {};
+        $("#stnint__StandingInstruction__i__StandingInstructionReq__TRANSFER_AMOUNT").addClass("err");
+        msg.code = "ENTER_AMOUNT";
+        apz.dispMsg(msg);
+        apz.hide("stnint__STAmount__stage2");
+        apz.hide("stnint__STAmount__stage3");
+        apz.hide("stnint__STAmount__stage4");
+        apz.hide("stnint__STAmount__prnt_btn");
+        apz.show("stnint__STAmount__cont_btn");
+        apz.hide("stnint__STAmount__confirm_btn");
+        apz.hide("stnint__STAmount__gotoHome_btn");
+    } else {
+        apz.stnint.STAmount.sAmt = apz.getElmValue("stnint__StandingInstruction__i__StandingInstructionReq__TRANSFER_AMOUNT");
+        apz.stnint.STAmount.sRemrks = apz.getElmValue("stnint__StandingInstruction__i__StandingInstructionReq__REMARKS");
+        apz.show("stnint__STAmount__stage2");
+        apz.hide("stnint__STAmount__stage1");
+        apz.hide("stnint__STAmount__stage3");
+        apz.hide("stnint__STAmount__stage4");
+        apz.show("stnint__STAmount__setInst_btn");
+        apz.hide("stnint__STAmount__prnt_btn");
+        apz.hide("stnint__STAmount__cont_btn");
+        apz.hide("stnint__STAmount__confirm_btn");
+        apz.hide("stnint__STAmount__gotoHome_btn");
+    }
+};
+apz.stnint.STAmount.fnCancel = function() {
+    if ($("#stnint__STAmount__stage1").is(":visible")) {
+        apz.show("stnint__STAmount__gr_row_2");
+        apz.show("stnint__STAccountDetails__stage2");
+        apz.hide("stnint__STAccountDetails__launchingPad_row");
+    } else if ($("#stnint__STAmount__stage2").is(":visible")) {
+        apz.hide("stnint__STAmount__stage2");
+        apz.show("stnint__STAmount__stage1");
+         apz.show("stnint__STAmount__gr_row_2");
+        apz.hide("stnint__STAmount__setInst_btn");
+        apz.show("stnint__STAmount__cont_btn");
+    } else if ($("#stnint__STAmount__stage3").is(":visible")) {
+        apz.hide("stnint__STAmount__stage3");
+        apz.show("stnint__STAmount__gr_row_2");
+        apz.show("stnint__STAmount__stage2");
+        apz.show("stnint__STAmount__setInst_btn");
+        apz.hide("stnint__STAmount__confirm_btn");
+    }
+};
+apz.stnint.STAmount.fnSetInstruction = function() {
+    debugger;
+    var msg;
+    if (apz.getElmValue('stnint__StandingInstruction__i__StandingInstructionReq__SI_END_DATE') === "") {
+        msg = {};
+        $("#stnint__StandingInstruction__i__StandingInstructionReq__SI_END_DATE").addClass("err");
+        msg.code = "ENTER_TO_DATE";
+        apz.dispMsg(msg);
+    } else {
+        apz.setElmValue("stnint__STAmount__amount", apz.stnint.STAmount.sAmt);
+        apz.setElmValue("stnint__STAmount__confFromAcc", apz.getElmValue("stnint__STAmount__accNumber"));
+        apz.setElmValue("stnint__STAmount__confBalance", apz.getElmValue("stnint__STAmount__avlBal"));
+        apz.setElmValue("stnint__STAmount__BaneficiaryName", apz.getElmValue("stnint__STAmount__banName"));
+        apz.setElmValue("stnint__STAmount__selaccType", apz.stnint.STAmount.stData.selectedAccountType);
+        if (!apz.isNull(apz.stnint.STAmount.stData.BENEFICIARY_ACCOUNT_NO)) {
+            apz.setElmValue("stnint__StandingInstruction__i__StandingInstructionReq__BENEFICIARY_ACCOUNT_NO", apz.getElmValue(
+                "stnint__STAmount__banAccNo"));
+            if (!apz.isNull(apz.stnint.STAmount.stData.BENEFICIARY_IFSC)) {
+                apz.setElmValue("stnint__STAmount__ConfBenIFSC", apz.stnint.STAmount.stData.BENEFICIARY_IFSC);
+            } else {
+                apz.hide("stnint__STAmount__ConfBenIFSC");
+            }
+            // if (!apz.isNull(apz.stnint.STAmount.stData.BENEFICIARY_BANK_NAME)) {
+            //     // apz.show("stnint__STAmount__sc_row_45_row");
+            //     apz.setElmValue("stnint__STAmount__confBankAdr", apz.stnint.STAmount.stData.BENEFICIARY_BANK_NAME + "  " + apz.stnint.STAmount.stData.BENEFICIARY_BANK_ADDRESS);
+            // } else {
+            //     //apz.hide("stnint__STAmount__sc_row_45_row");
+            // }
+        } else if (apz.stnint.STAmount.stData.BENEFICIARY_VPA) {
+            $("#stnint__STAmount__confBenAccDesc").text("VPA");
+            apz.setElmValue("stnint__StandingInstruction__i__StandingInstructionReq__BENEFICIARY_ACCOUNT_NO", " " + apz.stnint.STAmount.stData.BENEFICIARY_VPA);
+            //  apz.hide("stnint__STAmount__sc_row_45_row");
+        } else if (apz.stnint.STAmount.stData.BENEFICIARY_MOBILENUMBER && apz.stnint.STAmount.stData.BENEFICIARY_MMID) {
+             $("#stnint__STAmount__confBenAccDesc").text("Mobile Number");
+            apz.setElmValue("stnint__StandingInstruction__i__StandingInstructionReq__BENEFICIARY_ACCOUNT_NO", " " + apz.stnint.STAmount.stData.BENEFICIARY_MOBILENUMBER);
+            apz.setElmValue("stnint__STAmount__ConfBenIFSC", apz.stnint.STAmount.stData.BENEFICIARY_MMID);
+            // apz.hide("stnint__STAmount__sc_row_45_row");
+        } else if (apz.stnint.STAmount.stData.BENEFICIARY_AADHAR_NO) {
+             $("#stnint__STAmount__confBenAccDesc").text( " " + "Aadhar Number");
+            apz.setElmValue("stnint__StandingInstruction__i__StandingInstructionReq__BENEFICIARY_ACCOUNT_NO", " " + apz.stnint.STAmount.stData.BENEFICIARY_AADHAR_NO);
+            // apz.hide("stnint__STAmount__sc_row_45_row");
+        }
+        if (apz.stnint.STAmount.sRemrks === "") {
+            apz.hide("stnint__STAmount__confBenAccDesc");
+            apz.hide("stnint__STAmount__sc_row_remark_row");
+        } else {
+            apz.show("stnint__STAmount__sc_row_remark_row");
+            apz.setElmValue("stnint__STAmount__confBenRemark", apz.stnint.STAmount.sRemrks);
+        }
+        apz.setElmValue("stnint__STAmount__confDate", apz.getElmValue("stnint__StandingInstruction__i__StandingInstructionReq__SI_START_DATE") + " " +
+            "To" + " " + apz.getElmValue("stnint__StandingInstruction__i__StandingInstructionReq__SI_END_DATE"));
+        apz.hide("stnint__STAmount__stage2");
+         apz.hide("stnint__STAmount__gr_row_2");
+        apz.hide("stnint__STAmount__stage1");
+        apz.show("stnint__STAmount__stage3");
+        apz.hide("stnint__STAmount__stage4");
+        apz.hide("stnint__STAmount__setInst_btn");
+        apz.hide("stnint__STAmount__prnt_btn");
+        apz.hide("stnint__STAmount__cont_btn");
+        apz.show("stnint__STAmount__confirm_btn");
+        apz.hide("stnint__STAmount__gotoHome_btn");
+       
+    }
+};
+apz.stnint.STAmount.fnConfirm = function() {
+    debugger;
+    var lReq = {}; //apz.data.scrdata.stnint__StandingInstruction_Req;
+    lReq.StandingInstructionReq = apz.stnint.STAmount.stData;
+
+   apz.hide("stnint__STAmount__stage3");
+    apz.hide("stnint__STAmount__buttons");
+    apz.hide("stnint__STAmount__stage3");
+    apz.hide("stnint__STAmount__buttons");
+   
+        var auth = {};
+        auth.authenticationType = "OTP";
+        apz.stnint.STAmount.fnAuthenticationNavigationpage(auth);
+};
+
+apz.stnint.STAmount.fnAuthenticationNavigationpage = function(pParam) {
+    debugger;
+    var lReq = {};
+    lReq.StandingInstructionReq = apz.stnint.STAmount.stData
+    
+var lObj = {
+            "value": apz.stnint.STAmount.sAmt,
+            "decimalSep": '.',
+            "displayAsLiteral": 'N'
+        };
+
+    lReq.StandingInstructionReq.ACTION = "C";
+    lReq.ACTION="C";
+    var startDate = apz.getElmValue("stnint__StandingInstruction__i__StandingInstructionReq__SI_START_DATE");
+    var endDate =apz.getElmValue("stnint__StandingInstruction__i__StandingInstructionReq__SI_END_DATE");
+    lReq.StandingInstructionReq.SI_START_DATE = startDate;
+    lReq.StandingInstructionReq.SI_END_DATE = endDate;
+    lReq.StandingInstructionReq.TRANSFER_AMOUNT = apz.unFormatNumber(lObj);
+    lReq.StandingInstructionReq.AUTHENTICATION_TYPE = pParam.authenticationType;
+    lReq.StandingInstructionReq.FREQUENCY = apz.stnint.STAmount.sfrequency;
+    lReq.StandingInstructionReq.CUSTOMER_ID = apz.stnint.STAmount.stData.CUSTOMER_ID;
+    lReq.StandingInstructionReq.TOTAL_NO_PAYMENTS = apz.getElmValue("stnint__STAmount__noOfPay");
+    apz.stnint.STAmount.sAuthenFromServer = pParam.authenticationType;
+    if (pParam.authenticationType == "BIOMETRIC") {
+        lReq.StandingInstructionReq.txnType = "BioAuth";
+        lReq.StandingInstructionReq.aadhaarNo = apz.stnint.STAmount.st360Data.customerDetail.customerAadhaar.toString();
+        lReq.StandingInstructionReq.extData = pParam.authData;
+    }
+    apz.currAppId = "stnint"
+    /*var lServerParams = {
+        "ifaceName": "StandingInstruction",
+        "paintResp": "N",
+        "buildReq": "N",
+        "req": lReq,
+        "callBack": apz.stnint.STAmount.fnAuthenticationNavigationpageCallBack,
+        "headerCallback": apz.stnint.STAmount.fnSetHeader
+    };
+    apz.startLoader();
+    apz.server.callServer(lServerParams);
+    */
+    apz.data.loadJsonData("StandingInstruction","stnint");
+    apz.stnint.STAmount.fnAuthenticationNavigationpageCallBack(apz.data.scrdata.stnint__StandingInstruction_Res);
+};
+apz.stnint.STAmount.fnAuthenticationNavigationpageCallBack = function(pParam) {
+    apz.stopLoader();
+    /*if (pParam.res.stnint__StandingInstruction_Res.siTxnDtls.status === true) {
+        
+    } else {
+        var lMsg = {
+            "code": pParam.res.stnint__StandingInstruction_Res.siTxnDtls.extMsg,
+            "callBack": apz.stnint.STAmount.fnDone
+        };
+        apz.dispMsg(lMsg);
+    }*/
+    debugger;
+    
+    if (apz.stnint.STAmount.sAuthenFromServer == "BIOMETRIC") {
+            apz.stnint.STAmount.fnAuthenticationFinalNavigation(pParam.res.stnint__StandingInstruction_Res);
+        } else {
+            apz.stnint.STAmount.sOtpResData = pParam.siTxnDtls.data;
+            apz.hide("stnint__STAmount__stage3");
+            apz.hide("stnint__STAmount__buttons");
+            var lObj = {};
+            lObj.scrAction = 'SetRefNo';
+            var lParams = {
+                "appId": "otpeng",
+                "scr": "ProcessOTP",
+                "div": "stnint__STAmount__lauchingPad",
+                "type": "CF",
+                "callBack": apz.stnint.STAmount.fnAuthenticationFinalNavigation,
+                "userObj": {
+                    "action": "SetRefNo",
+                    "data": $.extend(true, {}, apz.stnint.STAmount.sOtpResData),
+                    "control": {
+                        "callBack": apz.stnint.STAmount.fnAuthenticationFinalNavigation,
+                        "destroyDiv": "stnint__STAmount__lauchingPad"
+                    },
+                    "headerCallback": apz.stnint.STAmount.fnSetHeader,
+                    "lauthMethod": "BIOD",
+                    "authentication": "OTP",
+                    "home": apz.stnint.STAmount.sHome,
+                }
+            };
+            apz.launchApp(lParams);
+        }
+    
+}
+apz.stnint.STAmount.fnAuthenticationFinalNavigation = function(pParam) {
+    apz.stopLoader();
+    debugger;
+    if (pParam.siTxnDtls.status === true && pParam.siTxnDtls.respCd == "destroy") {
+        apz.hide("stnint__STAmount__stage3");
+        apz.show("stnint__STAmount__stage4");
+        apz.hide("stnint__STAmount__buttons");
+        apz.hide("stnint__STAmount__stage2");
+        apz.hide("stnint__STAmount__stage1");
+        apz.hide("stnint__STAmount__cancel_btn");
+        apz.hide("stnint__STAmount__setInst_btn");
+        apz.show("stnint__STAmount__prnt_btn");
+        apz.hide("stnint__STAmount__cont_btn");
+        apz.hide("stnint__STAmount__confirm_btn");
+        apz.show("stnint__STAmount__gotoHome_btn");
+        apz.hide("stnint__STAmount__gr_row_1");
+        apz.show("stnint__STAmount__buttons");
+        var lRefNo = "Your Reference no is " + pParam.siTxnDtls.trnRefNo;
+        apz.setElmValue("stnint__STAmount__ack_refNo", lRefNo);
+        apz.setElmValue("stnint__STAmount__ackSend_amt", apz.stnint.STAmount.sAmt);
+        apz.setElmValue("stnint__STAmount__ackFromAcc", apz.getElmValue("stnint__STAmount__confFromAcc"));
+        apz.setElmValue("stnint__STAmount__ack_sendTo", apz.getElmValue("stnint__STAmount__BaneficiaryName") + " - " + apz.getElmValue(
+            "stnint__STAmount__banAccNo"));
+        apz.setElmValue("stnint__STAmount__ackDateRange", apz.getElmValue("stnint__STAmount__confDate"));
+        apz.setElmValue("stnint__STAmount__ack_remarks", apz.getElmValue("stnint__STAmount__confBenRemark"));
+        var today = new Date();
+        var dt = (today.getDate() < 10 ? '0' : '') + today.getDate();
+        var mn = ((today.getMonth() + 1) < 10 ? '0' : '') + (today.getMonth() + 1);
+        var date = today.getFullYear() + '' + mn + '' + dt;
+        var hours = today.getHours();
+        var minutes = today.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        date = apz.formatDate({
+            "val": date,
+            "fromFormat": "yyyyMMdd",
+            "toFormat": "dd MMM yyyy"
+        });
+        apz.setElmValue("stnint__STAmount__ack_date", " " + date + " " + strTime);
+    } else {
+        msg = {
+            'code': 'ERR_SI',
+            'message': pParam.errors[0].errorMessage
+        };
+        apz.dispMsg(msg);
+    }
+};
+apz.stnint.STAmount.fnDone = function() {
+apz.landin.Landing.fnHome();
+};
+apz.stnint.STAmount.fnFromDateChange = function() {
+    $("#stnint__StandingInstruction__i__StandingInstructionReq__SI_START_DATE").text(apz.getElmValue("stnint__STAmount__fromDate"));
+    apz.stnint.STAmount.fnCalender1();
+    apz.setElmValue("stnint__StandingInstruction__i__StandingInstructionReq__SI_END_DATE", "");
+    $("#stnint__STAmount__StandingInstruction__i__StandingInstructionReq__SI_END_DATE").text("");
+};
+
+function GetDate(str) {
+    var arr = str.split("-");
+    var months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+    var month = months.indexOf(arr[1].toLowerCase());
+    month = month + 1;
+    var ldate = arr[0] + "-" + month + "-" + arr[2];
+    return ldate;
+}
+
+function compareDate(start, end) {
+    if (start.length > 0 && end.length > 0) {
+        var stDate = start;
+        var enDate = end;
+        var compDate = enDate - stDate;
+        if (compDate >= 0) return true;
+        else {
+            return false;
+        }
+    } else {
+        return true;
+    }
+}
+apz.stnint.STAmount.fnCalender = function(pParam) {
+    var d = new Date(),
+        month = '' + (d.getMonth()),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    months = months[month];
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    var maxDate = [day, months, year].join('-');
+    var params = {};
+    params.id = pParam;
+    params.dataType = "DATE";
+    params.lookAndFeel = "APPZILLON";
+    params.parentDisplay = "CENTER";
+    params.style = "ANDROID-HOLO";
+    params.parentPreset = "CALENDAR";
+    params.parentMinDate = maxDate;
+    params.parentMaxDate = "";
+    // params.parentMaxDate = lobj.minDate;
+    params.closeOnSel = "Y";
+    params.multiSel = "N";
+    params.parentStartYear = "";
+    params.parentEndYear = "";
+    params.parentRangePick = "N";
+    params.secInputId = "";
+    params.parentMultiInput = "N";
+    params.dateType = "GENERIC";
+    apz.initDates(params);
+};
+apz.stnint.STAmount.fnCalender1 = function() {
+    var d = new Date(),
+        month = '' + (d.getMonth()),
+        day = '' + d.getDate(),
+        year = d.getFullYear() + 20;
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    months = months[month];
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    var maxDate1 = [day, months, year].join('-');
+    var maxDate = apz.getElmValue("stnint__STAmount__fromDate");
+    var params = {};
+    params.id = "stnint__STAmount__toDate";
+    params.dataType = "DATE";
+    params.lookAndFeel = "APPZILLON";
+    params.parentDisplay = "CENTER";
+    params.style = "ANDROID-HOLO";
+    params.parentPreset = "CALENDAR";
+    params.parentMinDate = maxDate;
+    params.parentMaxDate = maxDate1;
+    // params.parentMaxDate = lobj.minDate;
+    params.closeOnSel = "Y";
+    params.multiSel = "N";
+    params.parentStartYear = "";
+    params.parentEndYear = "";
+    params.parentRangePick = "N";
+    params.secInputId = "";
+    params.parentMultiInput = "N";
+    params.dateType = "GENERIC";
+    apz.initDates(params);
+};
+apz.stnint.STAmount.valMob = function(pthis, pevent) {
+    var l_valpthis = $(pthis).val();
+    if (apz.isNull(apz.val.validateNumberObj(pthis)) === false) {
+        $("#" + pthis.id).val("");
+    }
+};
+apz.stnint.STAmount.fnFormatNumber = function(balance) {
+    var lParams = {};
+    lParams.value = balance;
+    lParams.decimalSep = ".";
+    lParams.decimalPoints = "2";
+    lParams.displayAsLiteral = "N";
+    lParams.mask = "LAKH";
+    return apz.formatNumber(lParams);
+};
+apz.stnint.STAmount.fnCalculateTimes = function() {
+    var lTimes = 120;
+    var lFrequency = apz.getElmValue("stnint__STAmount__freq");
+    apz.stnint.STAmount.sfrequency = lFrequency;
+    var lNum = lTimes / lFrequency;
+    var lfrmarr = [];
+    var lObj = {
+        "val": "Please Select",
+        "desc": "Please Select"
+    };
+    lfrmarr.push(lObj);
+    for (var i = 1; i <= lNum; i++) {
+        var lfrmacc = {
+            "val": i,
+            "desc": i
+        };
+        lfrmarr.push(lfrmacc);
+    }
+    apz.populateDropdown(document.getElementById("stnint__STAmount__noOfPay"), lfrmarr);
+};
+apz.stnint.STAmount.fnCalculateEndDate = function() {
+    debugger;
+    var lStartDate = apz.getElmValue("stnint__StandingInstruction__i__StandingInstructionReq__SI_START_DATE");
+    var initial = (lStartDate).split(/\//).reverse().join('/');
+    var lFrequency = apz.getElmValue("stnint__STAmount__freq");
+    var lTimes = apz.getElmValue("stnint__STAmount__noOfPay");
+    if (!apz.isNull(lStartDate) && !apz.isNull(lFrequency) && !apz.isNull(lTimes)) {
+    //    var date = Date.parseExact(encodeURIComponent(lStartDate), "dd-MMM-yyyy");
+        var date = new Date(initial)
+        var lNum = lFrequency * (lTimes);
+        var lMon = date.getMonth() + lNum;
+        var lEnddate = date.setMonth(lMon);
+        apz.setElmValue("stnint__StandingInstruction__i__StandingInstructionReq__SI_END_DATE", new Date(lEnddate).toString("dd/MM/yyyy"));
+        /*var nxtdate = Date.parseExact(encodeURIComponent(lStartDate), "dd-MMM-yyyy");
+        nxtdate.setMonth(lFrequency);
+        apz.setElmValue("acsi01__OwnAccount__i__Details__nextExecutionDate", nxtdate.toString("dd-MMM-yyyy"));*/
+    }
+};
+
+
+
+
+
+

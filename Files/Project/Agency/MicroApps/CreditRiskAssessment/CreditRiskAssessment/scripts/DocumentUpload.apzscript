@@ -1,0 +1,767 @@
+apz.crsapp.DocumentUpload = {};
+apz.crsapp.DocumentUpload.documents = [];
+apz.crsapp.docName = "";
+apz.crsapp.arrayName = "";
+apz.crsapp.elementId = "";
+apz.crsapp.rowIndex = "";
+apz.crsapp.androidOption = "";
+apz.crsapp.DocumentUpload.doc = "";
+apz.app.onLoad_DocumentUpload = function(params) {
+    debugger;
+    apz.crsapp.DocumentUpload.refNo = params.refNo;
+    apz.crsapp.DocumentUpload.manageHeaders();
+};
+apz.app.onShown_DocumentUpload = function(params) {
+    debugger;
+    apz.crsapp.DocumentUpload.fnGetDocuments();
+    if (apz.menuap.Menu.userId == "LA004" || apz.menuap.Menu.userId == "SLA004") {
+        $("#crsapp__DocumentUpload__gr_row_10").addClass("sno");
+        $("#crsapp__DocumentUpload__el_btn_6").addClass("sno");
+        $("#crsapp__DocumentUpload__el_btn_7").addClass("sno");
+        $("#crsapp__RiskAssessment__el_btn_1").addClass("sno");
+    }
+    apz.setElmValue("crsapp__DocumentUpload__el_dpd_1", "Full Appraisal");
+    apz.setElmValue("crsapp__DocumentUpload__el_txt_11", "APZ-11890");
+    apz.setElmValue("crsapp__DocumentUpload__el_txt_12", "XYZ Appraisal LLC");
+    var twoDaysBefore = apz.common.fnGetDate("minus", 2)
+    var todayDate = apz.common.fnGetDate("minus", 0)
+    apz.setElmValue("crsapp__DocumentUpload__el_inp_7", twoDaysBefore);
+    apz.setElmValue("crsapp__DocumentUpload__el_inp_8", todayDate);
+    $("#crsapp__DocumentUpload__ct_tbl_1_li_search").addClass("sno");
+    $("#crsapp__DocumentUpload__dti_hnt").addClass("sno");
+}
+apz.crsapp.DocumentUpload.fnGetLoanDetails = function() {
+    debugger;
+    apz.startLoader();
+    var lParams = {
+        "ifaceName": "ExitingLoanDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiExitLoanDetails": {
+                "refno": apz.crsapp.ProgressStep.sCache.refNo
+            }
+        },
+        "appId": "crsapp",
+        "paintResp": "N",
+        "callBack": apz.crsapp.DocumentUpload.fnGetLoanDetailsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.crsapp.DocumentUpload.fnGetLoanDetailsCB = function(params) {
+    debugger;
+    apz.stopLoader();
+    apz.data.scrdata.crsapp__ExitingLoanDetails_Req = {
+        tbDbmiExitLoanDetails: []
+    }
+    if (params.status && params.errors === undefined) {
+        apz.data.scrdata.crsapp__ExitingLoanDetails_Req.tbDbmiExitLoanDetails = params.res.crsapp__ExitingLoanDetails_Req.tbDbmiExitLoanDetails;
+        apz.data.loadData("ExitingLoanDetails", "crsapp");
+        var totalSanctionedAmount = 0; //numerator (top)
+        var records = apz.data.scrdata.crsapp__ExitingLoanDetails_Req.tbDbmiExitLoanDetails;
+        records.forEach(index => {
+            console.log(index.sanctionedAmount);
+            totalSanctionedAmount = totalSanctionedAmount + index.sanctionedAmount;
+        })
+        var incomeRange = apz.data.scrdata.crsapp__ApplicationInfoDB_Req.tbDbmiCustomerMaster.incomeRange;
+        var dti = Math.round((totalSanctionedAmount / incomeRange) * 100)
+        if (dti > 40) {
+            if (dti > 100) {
+                $("#crsapp__DocumentUpload__dti_hnt").removeClass("sno");
+            }
+            apz.setElmValue("crsapp__DocumentUpload__mof", "80%");
+        } else {
+            apz.setElmValue("crsapp__DocumentUpload__mof", "100%");
+        }
+        apz.setElmValue("crsapp__DocumentUpload__dti", dti + "%");
+        
+    totalSanctionedAmount = apz.crsapp.DocumentUpload.fnConvertMillion(totalSanctionedAmount)
+        apz.setElmValue("crsapp__DocumentUpload__totalDebtAmount", totalSanctionedAmount);
+    }
+    apz.crsapp.DocumentUpload.fetchApplicationDetails();
+}
+apz.crsapp.DocumentUpload.fetchApplicationDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ProductLoanDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiProductLoan": {
+                "refno": apz.crsapp.ProgressStep.sCache.refNo
+            }
+        },
+        "appId": "crsapp",
+        "paintResp": "N",
+        "callBack": apz.crsapp.DocumentUpload.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.crsapp.DocumentUpload.fetchApplicationDetailsCB = function(params) {
+    debugger;
+    var loanAmt = params.res.crsapp__ProductLoanDetails_Req.tbDbmiProductLoan.amount
+    var eligibleLoanAmount = params.res.crsapp__ProductLoanDetails_Req.tbDbmiProductLoan.eligibleLoanAmount;
+    var propertySalesPrice = loanAmt + (loanAmt * 0.2);
+    var appraisedValue = loanAmt + (loanAmt * 0.2);
+    loanAmount = apz.crsapp.DocumentUpload.fnConvertMillion(loanAmt)
+    propertySalesPrice = apz.crsapp.DocumentUpload.fnConvertMillion(propertySalesPrice)
+    appraisedValue = apz.crsapp.DocumentUpload.fnConvertMillion(appraisedValue)
+    
+    apz.setElmValue("crsapp__DocumentUpload__loanAmountRequested", loanAmount);
+    apz.setElmValue("crsapp__DocumentUpload__propertySalesPrice", propertySalesPrice);
+    apz.setElmValue("crsapp__DocumentUpload__appraisedValue", appraisedValue);
+    apz.setElmValue("crsapp__ProductLoanDetails__i__tbDbmiProductLoan__eligibleLoanAmount", eligibleLoanAmount);
+    apz.crsapp.DocumentUpload.fnFetchExpensesDetails();
+}
+
+apz.crsapp.DocumentUpload.fnFetchExpensesDetails = function() {
+    debugger;
+    var lParams = {
+        "ifaceName": "ExpensesDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiProductLoan": {
+                "refno": apz.crsapp.ProgressStep.sCache.refNo
+            }
+        },
+        "appId": "crsapp",
+        "paintResp": "Y",
+        "callBack": apz.crsapp.DocumentUpload.fetchExpensesDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.crsapp.DocumentUpload.fetchExpensesDetailsCB = function(params) {
+    debugger;
+}
+apz.crsapp.DocumentUpload.fnConvertMillion = function(value){
+    debugger;
+    var param = {
+        "decimalSep": ".",
+        "value": value,
+        "mask": "MILLION",
+        "decimalPoints": "2",
+        "displayAsLiteral": "N"
+    };
+    return apz.formatNumber(param)
+}
+apz.crsapp.DocumentUpload.fnGetCustomerDetails = function() {
+    debugger;
+    apz.startLoader();
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                "refNo": apz.crsapp.ProgressStep.sCache.refNo
+            }
+        },
+        "appId": "crsapp",
+        "paintResp": "N",
+        "callBack": apz.crsapp.DocumentUpload.fnGetCustomerDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.crsapp.DocumentUpload.fnGetCustomerDetailsCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    console.log(pResp);
+    apz.data.buildData("ApplicationInfoDB", "crsapp")
+    var record = pResp.res.crsapp__ApplicationInfoDB_Req.tbDbmiCustomerMaster;
+    var incomeRange = apz.crsapp.DocumentUpload.fnConvertMillion(record.incomeRange)
+    apz.setElmValue("crsapp__DocumentUpload__totalAnnualIncome",incomeRange);
+    apz.crsapp.DocumentUpload.fnGetLoanDetails();
+}
+apz.crsapp.DocumentUpload.fnPrevious = function(params) {
+    debugger;
+    $("#crsapp__ProgressStep__el_progressstep_1_ext li:nth-child(3)").trigger("click");
+    //$("#crsapp__ProgressStep__pepBadge").trigger("click")
+};
+apz.crsapp.DocumentUpload.fnReject = function(params) {
+    debugger;
+    //Reject
+};
+apz.crsapp.DocumentUpload.fnRejectApplicationConfirmation = function() {
+    debugger;
+    var verified = apz.getElmValue("crsapp__DocumentUpload__verify");
+    if (verified == "n") {
+        apz.dispMsg({
+            "message": "Please check the verify documents and then proceed!",
+            'type': "E",
+        });
+    } else {
+        if (apz.isNull(apz.getElmValue("crsapp__DocumentUpload__common_remarks"))) {
+            apz.dispMsg({
+                "message": "Please add comments in remarks section about rejection."
+            });
+        } else {
+            apz.dispMsg({
+                "message": "Please confirm if you want to reject this application?",
+                "type": "C",
+                "callBack": apz.crsapp.DocumentUpload.fnRejectCB
+            });
+        }
+    }
+}
+apz.crsapp.DocumentUpload.fnRejectCB = function(params) {
+    debugger;
+    if (params.choice) {
+        apz.crsapp.DocumentUpload.fnRejectApplication()
+    }
+}
+apz.crsapp.DocumentUpload.fnRejectApplication = function() {
+    debugger;
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "NextWFStage",
+        "buildReq": "N",
+        "appId": "crsapp",
+        "req": {
+            "appId": "acdp01",
+            "instanceId": apz.crsapp.ProgressStep.sCache.refNo,
+            "userId": "CorpUser",
+            "screenData": "",
+            "action": "REJECT",
+            "remarks": apz.getElmValue("crsapp__DocumentUpload__common_remarks")
+        },
+        "paintResp": "N",
+        "callBack": apz.crsapp.DocumentUpload.fnRejectWFStageCB
+    }
+    apz.server.callServer(lServerParams);
+}
+apz.crsapp.DocumentUpload.fnRejectWFStageCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    if (pResp.status) {
+        var param = {
+            'message': "The application has been rejected successfully.",
+            'type': "S",
+            "callBack": apz.crsapp.DocumentUpload.fnGoHome
+        };
+        apz.startLoader();
+        setTimeout(function() {
+            apz.stopLoader();
+            apz.dispMsg(param)
+        }, 3000);
+    }
+}
+apz.crsapp.DocumentUpload.fnCallNextStateWorkFlow = function() {
+    debugger;
+    var verified = apz.getElmValue("crsapp__DocumentUpload__verify");
+    if (verified == "n") {
+        apz.dispMsg({
+            "message": "Please check the verify documents and then proceed!",
+            'type': "E",
+        });
+    } else {
+        apz.startLoader();
+        var interfaceName = "";
+        if (apz.menuap.Menu.userRole == "SCR") {
+            interfaceName = "NextWFStageSME"
+        } else {
+            interfaceName = "NextWFStage"
+        }
+        var lServerParams = {
+            "ifaceName": interfaceName,
+            "buildReq": "N",
+            "appId": "crsapp",
+            "req": {
+                "appId": "acdp01",
+                "instanceId": apz.crsapp.ProgressStep.sCache.refNo,
+                "userId": "CorpUser",
+                "screenData": "",
+                "action": "SUBMIT"
+            },
+            "paintResp": "N",
+            "callBack": apz.crsapp.DocumentUpload.fnNexttWorkflowCB
+        }
+        apz.server.callServer(lServerParams);
+    }
+}
+apz.crsapp.DocumentUpload.fnNexttWorkflowCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    if (pResp.status) {
+        var param = {
+            'message': "The application has been approved successfully.",
+            'type': "S",
+            "callBack": apz.crsapp.DocumentUpload.fnGoHome
+        };
+        apz.startLoader();
+        setTimeout(function() {
+            apz.stopLoader();
+            apz.dispMsg(param)
+        }, 3000);
+    }
+}
+apz.crsapp.DocumentUpload.fnGoHome = function(param) {
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": "menuap__Menu__MainLaunchArea",
+            "parentAppId": "menuap",
+            "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+            "custImg": "menuap__Menu__custImg",
+            "custId": "menuap__Menu__custId_txtcnt"
+        }
+    }
+    apz.launchApp(lParams);
+}
+apz.crsapp.DocumentUpload.manageHeaders = function() {
+    $("#crsapp__AppLauncher__document_div").addClass('active');
+    $("#crsapp__AppLauncher__product_div").removeClass('active');
+    $("#crsapp__AppLauncher__employment_div").removeClass('active');
+}
+apz.crsapp.DocumentUpload.fnGetDocuments = function() {
+    debugger;
+    apz.startLoader();
+    var lParams = {
+        "ifaceName": "DocumentDetails_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": {
+                "refNo": apz.crsapp.ProgressStep.sCache.refNo,
+            }
+        },
+        "appId": "crsapp",
+        "paintResp": "N",
+        "async": false,
+        "callBack": apz.crsapp.DocumentUpload.fnGetDocumentsCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.crsapp.DocumentUpload.fnGetDocumentsCB = function(params) {
+    debugger;
+    var IdentityDocuments = [],
+        AddressDocuments = [],
+        OtherDocuments = [],
+        PhotoSignature = [];
+    if (params.status && params.errors === undefined) {
+        var filePath = apz.getDataFilesPath("crsapp") + "/HomeLoanDocuments.json";
+        var content = apz.getFile(filePath);
+        var jsonData = JSON.parse(content);
+        var homeLoanDocuments = jsonData.data;
+        apz.crsapp.DocumentUpload.documents = params.res.crsapp__DocumentDetails_Res.tbDbmiCustomerDocuments;
+        // apz.crsapp.DocumentUpload.documents = apz.documentArray;
+        // apz.crsapp.DocumentUpload.documents = apz.data.scrdata.crsapp__DocumentDetails_Res.tbDbmiCustomerDocuments;
+        apz.documentArray = [];
+        IdentityDocuments = apz.crsapp.DocumentUpload.documents.filter(item => (item.docType === "IdentityDocuments" && item.docName !== "Passport"));
+        AddressDocuments = apz.crsapp.DocumentUpload.documents.filter(item => item.docType === "AddressDocuments");
+        OtherDocuments = apz.crsapp.DocumentUpload.documents.filter(item => (item.docType === "OtherDocuments" || (item.docType ===
+            "IdentityDocuments" && item.docName === "Passport")));
+        PhotoSignature = apz.crsapp.DocumentUpload.documents.filter(item => item.docType === "PhotoSignature");
+        homeLoanDocuments.forEach(index => {
+            if (index.docType == "IdentityDocuments") {
+                IdentityDocuments.push(index)
+            } else if (index.docType == "AddressDocuments") {
+                AddressDocuments.push(index)
+            } else if (index.docType == "OtherDocuments") {
+                OtherDocuments.push(index)
+            }
+        })
+    }
+    apz.data.scrdata.crsapp__UpdateDocuments_Res = {
+        "IdentityDocuments": IdentityDocuments,
+        "AddressDocuments": AddressDocuments,
+        "OtherDocuments": OtherDocuments,
+        "PhotoSignature": PhotoSignature
+    };
+    apz.data.loadData("UpdateDocuments", "crsapp");
+    apz.crsapp.DocumentUpload.fnShowImage(IdentityDocuments, "IdentityDocuments", "2");
+    apz.crsapp.DocumentUpload.fnShowImage(AddressDocuments, "AddressDocuments", "3");
+    apz.crsapp.DocumentUpload.fnShowImage(OtherDocuments, "OtherDocuments", "4");
+    apz.crsapp.DocumentUpload.fnShowImage(PhotoSignature, "PhotoSignature", "5");
+    apz.stopLoader();
+    apz.crsapp.DocumentUpload.fnGetCustomerDetails();
+}
+apz.crsapp.DocumentUpload.fnClickOrgImage = function(element) {
+    debugger;
+    $(element).prev().click();
+}
+apz.crsapp.DocumentUpload.fnShowImage = function(docuArray, docuType, rowNo) {
+    debugger;
+    if (docuArray.length > 0) {
+        for (var i = 0, len = docuArray.length; i < len; i++) {
+            if (docuArray[i].docData !== "") {
+                var listId = "crsapp__DocumentUpload__" + docuType + "_lst_row_" + i;
+                $("#" + listId).find(".imageRow").removeClass("sno");
+                $("#" + listId).find(".uploadIcon").addClass("sno");
+            }
+        }
+    } else {
+        $("#crsapp__DocumentUpload__gr_col_" + rowNo).addClass("sno");
+    }
+}
+apz.crsapp.DocumentUpload.fnUploadDetails = function(element, arrayName, processType) {
+    debugger;
+    var rowno = $(element).attr("rowno");
+    apz.crsapp.rowIndex = rowno;
+    apz.crsapp.arrayName = arrayName;
+    apz.crsapp.docName = apz.data.scrdata.crsapp__UpdateDocuments_Res[arrayName][rowno].docName;
+    apz.crsapp.elementId = "crsapp__UpdateDocuments__o__" + arrayName + "__docData_" + rowno;
+    if (processType === "Upload") {
+        if (apz.deviceOs !== "WEB" && apz.deviceOs !== "SIMULATOR" && apz.crsapp.docName === "Upload your signature") {
+            apz.crsapp.DocumentUpload.fnGetSession();
+        } else {
+            apz.crsapp.DocumentUpload.fnUploadFile();
+        }
+    } else {
+        $("#crsapp__DocumentUpload__docName").html(apz.crsapp.docName)
+        var Image = apz.getElmValue(apz.crsapp.elementId);
+        apz.setElmValue("crsapp__DocumentUpload__docImage", Image);
+        $("#crsapp__DocumentUpload__gr_row_8").removeClass("sno");
+    }
+}
+apz.crsapp.DocumentUpload.fnProceedDoc = function() {
+    $("#crsapp__DocumentUpload__gr_row_8").addClass("sno");
+}
+apz.crsapp.DocumentUpload.fnRetake = function() {
+    $("#crsapp__DocumentUpload__gr_row_8").addClass("sno");
+    if (apz.deviceOs !== "WEB" && apz.deviceOs !== "SIMULATOR" && apz.crsapp.docName === "Upload your signature") {
+        apz.crsapp.DocumentUpload.fnGetSession();
+    } else {
+        apz.crsapp.DocumentUpload.fnUploadFile();
+    }
+}
+apz.crsapp.DocumentUpload.fnUploadFile = function() {
+    debugger;
+    if (apz.deviceOs !== "WEB" && apz.deviceOs !== "SIMULATOR") {
+        apz.toggleModal({
+            "targetId": "crsapp__DocumentUpload__pu_mdl_2"
+        })
+    } else {
+        $("#crsapp__DocumentUpload__el_fil_1").trigger("click");
+    }
+};
+apz.crsapp.DocumentUpload.fnGetFile = function(pthis) {
+    debugger;
+    let fileObj = pthis.files[0];
+    let apzFileReader = new FileReader();
+    apzFileReader.onload = function() {
+        debugger;
+        let encodedImage = apzFileReader.result.split(",").pop();
+        apz.crsapp.DocumentUpload.fnGetBase64({
+            "status": true,
+            "encodedImage": encodedImage
+        })
+        $("#" + pthis.id).val("");
+    }
+    apzFileReader.readAsDataURL(fileObj);
+};
+apz.crsapp.DocumentUpload.fnAndroidUpload = function(uploadOption) {
+    $("#crsapp__DocumentUpload__pu_mdl_2_close").click();
+    apz.crsapp.androidOption = uploadOption;
+    apz.crsapp.DocumentUpload.fnGetSession();
+}
+apz.crsapp.DocumentUpload.fnGetSession = function() {
+    var callback;
+    if (apz.crsapp.docName === "Upload your signature") {
+        callback = apz.crsapp.DocumentUpload.fnOpenSignturePad;
+    } else {
+        callback = apz.crsapp.DocumentUpload.fnOpenCamera;
+    }
+    apz.server.login({
+        "appId": "crsapp",
+        "userId": "admin",
+        "pwd": "admin",
+        "callBack": callback
+    })
+}
+apz.crsapp.DocumentUpload.fnOpenCamera = function(params) {
+    var jsonobj = {
+        "zoomLevel": "20",
+        "targetWidth": "200",
+        "targetHeight": "200",
+        "crop": "N", //Y or N
+        "flash": "N",
+        "action": "base64", // save,base64
+        "fileName": "Identity_Image",
+        "quality": "50",
+        "encodingType": "JPG",
+        "sourceType": apz.crsapp.androidOption // photo
+    };
+    jsonobj.id = "CAMERA_ID";
+    jsonobj.callBack = apz.crsapp.DocumentUpload.fnGetBase64;
+    apz.ns.openCamera(jsonobj);
+}
+apz.crsapp.DocumentUpload.fnOpenSignturePad = function() {
+    var params = {};
+    params.id = "SIGNATUREPAD_ID";
+    params.callBack = apz.crsapp.DocumentUpload.fnGetBase64;
+    apz.ns.signaturePad(params);
+}
+apz.crsapp.DocumentUpload.fnGetBase64 = function(data) {
+    debugger;
+    if (data.status) {
+        if (apz.mockServer || apz.crsapp.docName === "Upload your signature") {
+            apz.crsapp.DocumentUpload.fnGetBase64CB({
+                "status": true,
+                "errors": undefined,
+                "res": {
+                    "crsapp__DocumentCompress_Res": {
+                        "compressedimage": data.encodedImage
+                    }
+                }
+            })
+        } else {
+            apz.startLoader();
+            $("#apzloader").addClass("fileSize");
+            setTimeout(function() {
+                var lParams = {
+                    "ifaceName": "DocumentCompress",
+                    "buildReq": "N",
+                    "req": {
+                        "Image": data.encodedImage
+                    },
+                    "appId": "crsapp",
+                    "paintResp": "N",
+                    "async": false,
+                    "callBack": apz.crsapp.DocumentUpload.fnGetBase64CB
+                }
+                apz.server.callServer(lParams);
+            }, 10)
+        }
+    }
+}
+apz.crsapp.DocumentUpload.fnGetBase64CB = function(params) {
+    $("#apzloader").removeClass("fileSize");
+    apz.stopLoader();
+    if (params.status && params.errors === undefined) {
+        var listId = "crsapp__DocumentUpload__" + apz.crsapp.arrayName + "_lst_row_" + apz.crsapp.rowIndex;
+        $("#" + listId).find(".imageRow").removeClass("sno");
+        $("#" + listId).find(".uploadIcon").addClass("sno");
+        apz.setElmValue(apz.crsapp.elementId, params.res.crsapp__DocumentCompress_Res.compressedimage);
+    }
+}
+apz.crsapp.DocumentUpload.fnOpenSelfieCapture = function() {
+    debugger;
+    var jsonobj = {};
+    jsonobj.id = "CALLLOGS";
+    jsonobj.type = "base64";
+    jsonobj.fileName = "FILE_PATH"; //mandatory if type is "file"
+    jsonobj.encodingType = "PNG"; // default is JPEG encoding
+    jsonobj.quality = 100; //default is 100
+    jsonobj.blinkEyeDetection = "Y";
+    jsonobj.blinkInstruction = "Blink your eyes slowly.";
+    jsonobj.pageTitle = "Capture A Selfie ";
+    jsonobj.faceInstruction1 = "Position your face inside the oval frame.";
+    jsonobj.faceInstruction2 = "Your face is too far. Please move closer.";
+    jsonobj.faceInstruction3 = "Your face is too close. Please move further away.";
+    jsonobj.scanStatus = "Capturing...";
+    jsonobj.fontColor = "#000000";
+    jsonobj.overlayColor = "#FFFFFF";
+    jsonobj.holdTimeInstruction = "Hold steady";
+    jsonobj.instructionPosition = "1";
+    jsonobj.holdTimeForCapture = "4";
+    jsonobj.nativePreviewScreen = "Y";
+    jsonobj.callBack = apz.crsapp.DocumentUpload.fnOpenSelfieCaptureCB;
+    apz.ns.selfieCapture(jsonobj);
+}
+apz.crsapp.DocumentUpload.fnOpenSelfieCaptureCB = function(params) {
+    debugger;
+    if (params.status) {
+        apz.crsapp.DocumentUpload.fnGetBase64({
+            status: true,
+            encodedImage: params.outputFile.data
+        });
+    }
+}
+apz.crsapp.DocumentUpload.saveApplicationDetails = function() {
+    debugger;
+    var documents = apz.data.buildData("UpdateDocuments", "crsapp").crsapp__UpdateDocuments_Res;
+    apz.crsapp.DocumentUpload.fnUpdateDocumentList(documents.IdentityDocuments);
+    apz.crsapp.DocumentUpload.fnUpdateDocumentList(documents.AddressDocuments);
+    apz.crsapp.DocumentUpload.fnUpdateDocumentList(documents.OtherDocuments);
+    apz.crsapp.DocumentUpload.fnUpdateDocumentList(documents.PhotoSignature);
+    apz.documentArray = documents.IdentityDocuments.concat(documents.AddressDocuments).concat(documents.OtherDocuments).concat(documents.PhotoSignature);
+    apz.crsapp.DocumentUpload.deletedata();
+};
+apz.crsapp.DocumentUpload.fnUpdateDocumentList = function(DocumentArrray) {
+    debugger;
+    DocumentArrray.forEach(function(doc, i) {
+        if (doc.seqNo) {
+            delete doc.seqNo;
+        }
+        if (!doc.docId) {
+            doc.docId = +new Date() + i
+        }
+        if (doc.docData.length < 200) {
+            doc.docData = "";
+        }
+    });
+}
+apz.crsapp.DocumentUpload.deletedata = function() {
+    var lParams = {
+        "ifaceName": "DocumentDetails_Delete",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": {
+                "refNo": apz.crsapp.DocumentUpload.refNo
+            }
+        },
+        "appId": "crsapp",
+        "paintResp": "N",
+        "callBack": apz.crsapp.DocumentUpload.deletedataCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.crsapp.DocumentUpload.deletedataCB = function(pResp) {
+    apz.crsapp.DocumentUpload.insertDocument();
+}
+apz.crsapp.DocumentUpload.insertDocument = function() {
+    debugger
+    var lParams = {
+        "ifaceName": "DocumentDetails_New",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerDocuments": apz.documentArray
+        },
+        "appId": "crsapp",
+        "paintResp": "N",
+        "callBack": apz.crsapp.DocumentUpload.insertDocumentCB
+    }
+    apz.server.callServer(lParams);
+}
+apz.crsapp.DocumentUpload.insertDocumentCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    var action = apz.crsapp.DocumentUpload.navAction;
+    if (action && action != "") {
+        if (action == "next") {
+            apz.crsapp.DocumentUpload.navAction = "";
+            apz.crsapp.DocumentUpload.fnSaveAndGoNextScreen();
+        } else if (action == "back") {
+            apz.crsapp.DocumentUpload.navAction = "";
+            apz.crsapp.DocumentUpload.fnSaveAndGoBackScreen();
+        } else if (action == "cancel") {
+            apz.crsapp.DocumentUpload.navAction = "";
+            apz.crsapp.AppLauncher.onCancel();
+        }
+    }
+}
+apz.crsapp.DocumentUpload.nextScreen = function() {
+    debugger;
+    apz.crsapp.DocumentUpload.navAction = "next";
+    apz.crsapp.DocumentUpload.saveApplicationDetails();
+}
+apz.crsapp.DocumentUpload.fnSaveAndGoNextScreen = function() {
+    debugger;
+    apz.crsapp.AppLauncher.sCache.screen = "product";
+    var params = {};
+    params.appId = "crsapp";
+    params.scr = "ProductLauncher";
+    params.div = "crsapp__AppLauncher__screenLauncher";
+    params.userObj = {
+        "refNo": apz.crsapp.DocumentUpload.refNo,
+        "subproduct": apz.crsapp.AppLauncher.sCache.subproduct,
+        "product": apz.crsapp.AppLauncher.sCache.product,
+        "appId": apz.crsapp.AppLauncher.sCache.appId,
+        "screen": "product"
+    };
+    apz.launchSubScreen(params);
+}
+apz.crsapp.DocumentUpload.preScreen = function() {
+    debugger;
+    apz.crsapp.DocumentUpload.navAction = "back";
+    apz.crsapp.DocumentUpload.saveApplicationDetails();
+}
+apz.crsapp.DocumentUpload.fnSaveAndGoBackScreen = function() {
+    debugger;
+    var lParams = {
+        "appId": "crsapp",
+        "scr": "DocumentSelection",
+        "div": "crsapp__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.crsapp.DocumentUpload.refNo,
+            "div": "crsapp__AppLauncher__screenLauncher"
+        }
+    };
+    apz.launchSubScreen(lParams);
+}
+apz.crsapp.DocumentUpload.fnCancel = function(params) {
+    debugger;
+    apz.crsapp.DocumentUpload.navAction = "cancel";
+    apz.crsapp.DocumentUpload.saveApplicationDetails();
+    // apz.crsapp.AppLauncher.onCancel();
+}
+//-------------------------
+apz.crsapp.DocumentUpload.fnAppraisalReport = function(param, fileType, doc) {
+    debugger;
+    apz.crsapp.DocumentUpload.doc = doc;
+    if (doc == "appraisal") {
+        var jsonFilePath = apz.getDataFilesPath("crsapp") + "/AppraisalReport.json";
+    } else {
+        var jsonFilePath = apz.getDataFilesPath("crsapp") + "/AmortizationReport.json";
+    }
+    var jsonFileContent = apz.getFile(jsonFilePath);
+    var ljsondata = JSON.parse(jsonFileContent);
+    for (var i = 0; i < ljsondata.data.length; i++) {
+        var mimetype = ljsondata.data[i].mimeType;
+        var lMimeType = mimetype.slice(-3);
+        if (fileType == lMimeType.toLowerCase()) {
+            apz.crsapp.DocumentUpload.ReportdwnldMethod(ljsondata.data[i]);
+        }
+    }
+}
+apz.crsapp.DocumentUpload.ReportdwnldMethod = function(lbodyobj) {
+    debugger;
+    var blob;
+    var fileType = "";
+    if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+        blob = apz.crsapp.DocumentUpload.b64toBlob(lbodyobj.content, "application/pdf");
+        fileType = ".pdf";
+    }
+    var blobUrl = URL.createObjectURL(blob);
+    if (apz.deviceOs === "iOS" || apz.deviceOs === "ANDROID") {
+        var json = {};
+        json.id = "BASE64TOFILE";
+        json.callBack = apz.crsapp.DocumentUpload.base64tofilecallBack;
+        json.base64 = lbodyobj.content;
+        json.fileName = "Appraisal" + fileType;
+        json.filePath = "docs";
+        apz.ns.base64ToFile(json);
+    } else {
+        window.open(blobUrl);
+    }
+    if (apz.crsapp.DocumentUpload.doc == "appraisal") {
+        $("#crsapp__DocumentUpload__appraisal_success_ul").removeClass("sno");
+    } else {
+        $("#crsapp__DocumentUpload__amortization_success_ul").removeClass("sno");
+    }
+};
+apz.crsapp.DocumentUpload.base64tofilecallBack = function(json) {
+    if (json.status) {
+        var json = {
+            "filePath": json.filePath
+        };
+        json.id = "OPENFILE_ID";
+        json.callBack = apz.crsapp.DocumentUpload.openFileCallback;
+        apz.ns.openFile(json);
+    } else {
+        alert(json.errorCode);
+    }
+};
+apz.crsapp.DocumentUpload.openFileCallback = function(params) {
+    debugger;
+};
+apz.crsapp.DocumentUpload.b64toBlob = function(b64Data, contentType, sliceSize) {
+    debugger;
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+        type: contentType
+    });
+    return blob;
+};

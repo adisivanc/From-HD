@@ -1,0 +1,107 @@
+apz.reqmon.peoplePay = {};
+apz.app.onLoad_peoplePay = function(params) {
+    debugger;
+    apz.dateFormat = "MM/dd/yyyy";
+    console.log(params);
+    apz.reqmon.peoplePay.sparams = params;
+    if (params.Navigation) {
+        apz.reqmon.peoplePay.fnSetNavigation(params);
+    }
+};
+apz.reqmon.peoplePay.fnSetNavigation = function(params) {
+    debugger;
+    apz.reqmon.peoplePay.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "Request For Money";
+    }
+    lParams.backPressed = apz.reqmon.peoplePay.fnBack;
+    apz.reqmon.peoplePay.Navigation(lParams);
+};
+apz.reqmon.peoplePay.fnSearch = function() {
+    debugger;
+    apz.setElmValue("reqmon__searchPeople__o__searchDetails__Name", "");
+    apz.setElmValue("reqmon__searchPeople__o__searchDetails__mob", "");
+    apz.setElmValue("reqmon__searchPeople__o__searchDetails__Email", "");
+    if (apz.reqmon.peoplePay.ismobile()) {
+        let json = {};
+        json.id = "SEARCHCONTACT_ID";
+        json.callBack = apz.reqmon.peoplePay.fetchContactCallback;
+        apz.ns.fetchContact(json);
+    } else {
+        var val = apz.getElmValue("reqmon__peoplePay__inpsearch");
+        if (val.length >= 2) {
+            debugger;
+            var lServerParams = {
+                "ifaceName": "searchPeople",
+                "buildReq": "Y",
+                "paintResp": "Y",
+                "req": val,
+                "callBack": apz.reqmon.peoplePay.searchPeopleCB
+            };
+            apz.server.callServer(lServerParams);
+        }
+    }
+}
+apz.reqmon.peoplePay.fetchContactCallback = function(json) {
+    $("#scr__reqmon__peoplePay__main input").each(function() {
+        $(this).val("");
+    });
+    apz.setElmValue("reqmon__searchPeople__o__searchDetails__Name", json.name);
+    apz.setElmValue("reqmon__searchPeople__o__searchDetails__mob", json.phoneno[0]);
+    if (json.email.length > 0) {
+        apz.setElmValue("reqmon__searchPeople__o__searchDetails__Email", json.email[0]);
+    }
+}
+apz.reqmon.peoplePay.ismobile = function() {
+    if (/android|webos|iphone|ipad|ipod|blackberry|opera mini|Windows Phone|iemobile|WPDesktop|XBLWP7/i.test(navigator.userAgent.toLowerCase())) {
+        return true;
+    } else return false;
+}
+apz.reqmon.peoplePay.searchPeopleCB = function(pResp) {
+    debugger;
+    var result = pResp.reqmon__searchPeople_Res.searchDetails;
+}
+apz.reqmon.peoplePay.gotoOTP = function() {
+    debugger;
+    
+       apz.dispMsg({"message":"Your Request has been sent successfully" , "type":"I" , "callBack" :apz.csmrbk.landingpage.fnInitialise});
+    // apz.reqmon.peoplePay.name = apz.getElmValue("reqmon__searchPeople__o__searchDetails__Name");
+    // apz.reqmon.peoplePay.email = apz.getElmValue("reqmon__searchPeople__o__searchDetails__Email");
+    // apz.reqmon.peoplePay.amount = apz.getElmValue("reqmon__peoplePay__inpAmount");
+    // apz.reqmon.peoplePay.payfrom = apz.getElmValue("reqmon__peoplePay__ddlpayfrom");
+    // apz.reqmon.peoplePay.sendon = apz.getElmValue("reqmon__peoplePay__inpsendon");
+    // apz.reqmon.peoplePay.howtopay = apz.getElmValue("reqmon__peoplePay__ddlhowtopay");
+    // apz.reqmon.peoplePay.freq = apz.getElmValue("reqmon__peoplePay__inpfreq");
+    // var div = apz.reqmon.peoplePay.sparams.control.exitApp.div;
+    // var lLaunchParams = {
+    //     "appId": "otpeng",
+    //     "scr": "ProcessOTP",
+    //     "div": div,
+    //     "userObj": {
+    //         "action": "SetRefNo",
+    //         "data": {
+    //             "mobNo": apz.reqmon.peoplePay.sparams.mobNo,
+    //             "emailId": apz.reqmon.peoplePay.sparams.emailId
+    //         },
+    //         "control": {
+    //             "appId": "otpeng",
+    //             "callBack": apz.reqmon.peoplePay.gotoOTPCB,
+    //             "destroyDiv": div
+    //         }
+    //     }
+    // };
+    // apz.launchApp(lLaunchParams);
+}
+apz.reqmon.peoplePay.gotoOTPCB = function() {
+    debugger;
+    var div = apz.reqmon.peoplePay.sparams.control.exitApp.div;
+    var lLaunchParams = {
+        "appId": "reqmon",
+        "scr": "SuccessScreen",
+        "div": div
+    };
+    apz.launchSubScreen(lLaunchParams);
+}

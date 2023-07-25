@@ -1,0 +1,133 @@
+apz.accstm.AccountsExpand = {};
+apz.accstm.AccountsExpand.sparams = {};
+apz.app.onLoad_AccountsExpand = function(params)
+{
+    debugger;
+    apz.accstm.AccountsExpand.sparams = params;
+     apz.data.scrdata.accstm__AccountsInterface_Res = {};
+     apz.data.scrdata.accstm__AccountsInterface_Res.AccountDetails = params.data;
+         //apz.data.buildData("AccountsInterface");
+
+    apz.data.loadData("AccountsInterface", "accstm");
+        apz.data.loadJsonData("MiniStatement", "accstm");
+
+    var userObj = {
+          userId:LandingCommon.getLoggedInUser()
+      };
+      apz.launchApp({
+          "appId":"ernspn",
+          "scr":"EarnAndSpend",
+          "userObj":userObj,
+          "div":"accstm__AccountsExpand__earnAndSpend"
+      });
+      
+      
+    
+}
+
+
+apz.accstm.AccountsExpand.fnBack = function()
+{
+    debugger;
+    apz.accstm.AccountsExpand.sparams.callback();
+}
+
+ apz.accstm.AccountsExpand.fnDownload = function(fileType) {
+        debugger;
+        apz.accstm.AccountsExpand.getDocument(fileType);
+       
+    };
+   
+    apz.accstm.AccountsExpand.getDocument = function(fileType) {
+        debugger;
+        var jsonFilePath = apz.getDataFilesPath("accstm") + "/TrasactionHistory.json";
+        var jsonFileContent = apz.getFile(jsonFilePath);
+        var ljsondata = JSON.parse(jsonFileContent);
+        for (var i = 0; i < ljsondata.data.length; i++) {
+            var mimetype = ljsondata.data[i].mimeType;
+            var lMimeType = mimetype.slice(-3);
+            if (fileType == lMimeType.toLowerCase()) {
+                apz.accstm.AccountsExpand.getDocumentCB(ljsondata.data[i]);
+            }
+        }
+    };
+   
+    apz.accstm.AccountsExpand.getDocumentCB = function(pbody) {
+        debugger;
+        apz.accstm.AccountsExpand.ReportdwnldMethod(pbody);
+    };
+    apz.accstm.AccountsExpand.ReportdwnldMethod = function(lbodyobj) {
+        debugger;
+        var blob;
+        var fileType = "";
+        if (lbodyobj.mimeType == "application/ondemand extension-field=PDF") {
+            blob = apz.accstm.AccountsExpand.b64toBlob(lbodyobj.content, "application/pdf");
+            fileType = ".pdf";
+        } else if (lbodyobj.mimeType == "application/ondemand extension-field=DOCX") {
+            blob = apz.accstm.AccountsExpand.b64toBlob(lbodyobj.content, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+            fileType = ".docx";
+        } else if (lbodyobj.mimeType == "application/ondemand extension-field=tiff") {
+            blob = apz.accstm.AccountsExpand.b64toBlob(lbodyobj.content, "image/tiff");
+            fileType = ".tiff";
+        } else if (lbodyobj.mimeType == "application/ondemand extension-field=msg") {
+            blob = apz.accstm.AccountsExpand.b64toBlob(lbodyobj.content, "application/vnd.ms-outlook");
+            fileType = ".msg";
+        } else if (lbodyobj.mimeType == "application/ondemand extension-field=doc") {
+            blob = apz.accstm.AccountsExpand.b64toBlob(lbodyobj.content, "application/msword");
+            fileType = ".docx";
+        } else if (lbodyobj.mimeType == "application/ondemand extension-field=xls") {
+            blob = apz.accstm.AccountsExpand.b64toBlob(lbodyobj.content, "application/xls");
+            fileType = ".xlsx";
+        } else if (lbodyobj.mimeType == "application/ondemand extension-field=txt") {
+            blob = apz.accstm.AccountsExpand.b64toBlob(lbodyobj.content, "application/txt");
+            fileType = ".txt";
+        }
+        var blobUrl = URL.createObjectURL(blob);
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+            var json = {};
+            json.id = "BASE64TOFILE";
+            json.callBack = apz.accstm.AccountsExpand.base64tofilecallBack;
+            json.base64 = lbodyobj.content;
+            json.fileName = "AccountStatement" + fileType;
+            json.filePath = "docs";
+            apz.ns.base64ToFile(json);
+        } else {
+            window.open(blobUrl);
+        }
+    };
+    apz.accstm.AccountsExpand.base64tofilecallBack = function(json) {
+        if (json.status) {
+            var json = {
+                "filePath": json.filePath
+            };
+            json.id = "OPENFILE_ID";
+            json.callBack = apz.accstm.AccountsExpand.openFileCallback;
+            apz.ns.openFile(json);
+        } else {
+            alert(json.errorCode);
+        }
+    };
+    apz.accstm.AccountsExpand.openFileCallback = function(params) {
+        debugger;
+    };
+    apz.accstm.AccountsExpand.b64toBlob = function(b64Data, contentType, sliceSize) {
+        debugger;
+        contentType = contentType || '';
+        sliceSize = sliceSize || 512;
+        var byteCharacters = atob(b64Data);
+        var byteArrays = [];
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+            var byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+        var blob = new Blob(byteArrays, {
+            type: contentType
+        });
+        return blob;
+    };

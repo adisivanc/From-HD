@@ -1,0 +1,204 @@
+{
+    "Rates__savDep_Res": {
+        "savDep": [{
+            "Term": "Demand",
+            "Interest paid upfront": "-",
+            "Interest paid monthly": "-",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "0.30"
+        }, {
+            "Term": "1 week",
+            "Interest paid upfront": "-",
+            "Interest paid monthly": "-",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "1.00"
+        }, {
+            "Term": "2 weeks",
+            "Interest paid upfront": "-",
+            "Interest paid monthly": "-",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "1.00"
+        }, {
+            "Term": "3 weeks",
+            "Interest paid upfront": "-",
+            "Interest paid monthly": "-",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "1.00"
+        }, {
+            "Term": "1 month",
+            "Interest paid upfront": "4.40",
+            "Interest paid monthly": "-",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "4.60"
+        }, {
+            "Term": "2 months",
+            "Interest paid upfront": "4.50",
+            "Interest paid monthly": "4.60",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "4.80"
+        }, {
+            "Term": "3 months",
+            "Interest paid upfront": "4.80",
+            "Interest paid monthly": "4.90",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "5.00"
+        }, {
+            "Term": "4 months",
+            "Interest paid upfront": "4.80",
+            "Interest paid monthly": "4.90",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "5.00"
+        }, {
+            "Term": "5 months",
+            "Interest paid upfront": "4.80",
+            "Interest paid monthly": "4.90",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "5.00"
+        }, 
+        {
+            "Term": "6 months",
+            "Interest paid upfront": "5.20",
+            "Interest paid monthly": "5.40",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "5.50",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "5.60"
+        }, {
+            "Term": "7 months",
+            "Interest paid upfront": "5.30",
+            "Interest paid monthly": "5.50",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "5.70"
+        }, {
+            "Term": "8 months",
+            "Interest paid upfront": "5.30",
+            "Interest paid monthly": "5.50",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "5.70"
+        }, {
+            "Term": "9 months",
+            "Interest paid upfront": "5.40",
+            "Interest paid monthly": "5.60",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "5.70",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "5.80"
+        }, {
+            "Term": "10 months",
+            "Interest paid upfront": "5.40",
+            "Interest paid monthly": "5.60",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "5.80"
+        }, {
+            "Term": "11 months",
+            "Interest paid upfront": "5.30",
+            "Interest paid monthly": "5.50",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "5.70"
+        }, {
+            "Term": "12 months",
+            "Interest paid upfront": "6.40",
+            "Interest paid monthly": "6.60",
+            "Interest paid every 2 months": "6.60",
+            "Interest paid quarterly": "6.65",
+            "Interest paid every 6 months": "6.70",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "6.80"
+        }, {
+            "Term": "13 months",
+            "Interest paid upfront": "6.40",
+            "Interest paid monthly": "6.60",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "-",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "8.00"
+        }, {
+            "Term": "15 months",
+            "Interest paid upfront": "6.40",
+            "Interest paid monthly": "7.50",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "7.50",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "8.00"
+        }, {
+            "Term": "18 months",
+            "Interest paid upfront": "6.40",
+            "Interest paid monthly": "7.50",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "7.50",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "-",
+            "Interest paid at term-end": "8.00"
+        }, {
+            "Term": "24 months",
+            "Interest paid upfront": "6.40",
+            "Interest paid monthly": "7.50",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "7.50",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "7.70",
+            "Interest paid at term-end": "8.00"
+        }, {
+            "Term": "36 months",
+            "Interest paid upfront": "6.40",
+            "Interest paid monthly": "7.50",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "7.50",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "7.70",
+            "Interest paid at term-end": "8.00"
+        }, {
+            "Term": "36 months",
+            "Interest paid upfront": "4.60",
+            "Interest paid monthly": "4.70",
+            "Interest paid every 2 months": "-",
+            "Interest paid quarterly": "5.00",
+            "Interest paid every 6 months": "-",
+            "Interest paid annually": "5.10",
+            "Interest paid at term-end": "6.00"
+        }]
+    }
+}

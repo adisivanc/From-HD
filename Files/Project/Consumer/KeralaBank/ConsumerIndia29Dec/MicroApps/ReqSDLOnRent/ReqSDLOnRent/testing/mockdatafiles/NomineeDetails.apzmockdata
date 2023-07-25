@@ -1,0 +1,31 @@
+{
+    "nomineeDtls": {
+        "data": {
+            "nomineeData": [{
+                "nomineeId": "276543223456",
+                "nomineeName": "John",
+                "nomineeAddress": "Bangalore",
+                "nomineeRelation": "Brother",
+                "nomineeDob": "20-Feb-1990",
+                "nomineePhno": "9575849373",
+                "nomineeEmlid": "john88@gmail.com",
+                "guardianName": "Jane Shaw",
+                "guardianAddress": "Mysore",
+                "percOfNomination": "40",
+                "accountNo": "5432xxxxx575"
+            }, {
+                "nomineeId": "6543234567",
+                "nomineeName": "Jason Micheal",
+                "nomineeAddress": "Pune",
+                "nomineeRelation": "Brother",
+                "nomineeDob": "20-Feb-1990",
+                "nomineePhno": "9562736585",
+                "nomineeEmlid": "jason00@gmail.com",
+                "guardianName": "Kate Micheal",
+                "guardianAddress": "Mumbai",
+                "percOfNomination": "20",
+                "accountNo": "5432xxxxx988"
+            }]
+        }
+    }
+}

@@ -1,0 +1,423 @@
+{
+    "tbDbmiWorkflowDetail": [{
+        "screenId": "OwnAccount",
+        "instanceId": "FTOA17913941105154053",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "2019-11-05 15:40:53",
+        "stageSeqNo": 1,
+        "workflowId": "FTOA",
+        "screenData": "{\"acft01__OwnAccount_Req\":{\"Details\":{\"fromaccount\":\"28800323232\",\"balance\":\"USD 10000\",\"currency\":\"USD\",\"toaccount\":\"2309322229834\",\"accountName\":\"Checking\",\"toAccountCurrency\":\"USD\",\"amount\":2000.00,\"conversionAmt\":\"2000.00\",\"transferType\":\"FTOA\",\"type\":\"Transfer Now\",\",transactionDate\":\"05-Nov-2019\",\"remarks\":\"\"}}}"
+    }, {
+        "screenId": "OwnAccountApprove",
+        "instanceId": "FTOA32625421119120618",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "2019-11-05 15:40:53",
+        "stageSeqNo": 3,
+        "workflowId": "FTOA",
+        "screenData": "{\"acft01__OwnAccount_Req\":{\"Details\":{\"fromaccount\":\"28800323232\",\"balance\":\"USD 20000\",\"currency\":\"USD\",\"toaccount\":\"000288122232\",\"accountName\":\"Savings\",\"toAccountCurrency\":\"USD\",\"amount\":2000.00,\"conversionAmt\":\"2000.00\",\"transferType\":\"FTOA\",\"type\":\"Transfer Now\",\",transactionDate\":\"19-Nov-2019\",\"remarks\":\"\"}}}"
+    }, {
+        "screenId": "OwnAccountVerify",
+        "instanceId": "FTOA44045371118102757",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "2019-11-05 15:40:53",
+        "stageSeqNo": 2,
+        "workflowId": "FTOA",
+        "screenData": "{\"acft01__OwnAccount_Req\":{\"Details\":{\"fromaccount\":\"7356329872139\",\"balance\":\"USD 10000\",\"currency\":\"USD\",\"toaccount\":\"8274239482711\",\"accountName\":\"Checking\",\"toAccountCurrency\":\"USD\",\"amount\":2000.00,\"conversionAmt\":\"2000.00\",\"transferType\":\"FTOA\",\"type\":\"Transfer Now\",\",transactionDate\":\"05-Nov-2019\",\"remarks\":\"\"}}}"
+    }, {
+        "screenId": "",
+        "instanceId": "FTOA27096801119101722",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "2019-11-05 15:40:53",
+        "stageSeqNo": 4,
+        "workflowId": "FTOA",
+        "screenData": "{\"acft01__OwnAccount_Req\":{\"Details\":{\"fromaccount\":\"7356329872139\",\"balance\":\"USD 10000\",\"currency\":\"USD\",\"toaccount\":\"8274239482711\",\"accountName\":\"Checking\",\"toAccountCurrency\":\"USD\",\"amount\":2000.00,\"conversionAmt\":\"2000.00\",\"transferType\":\"FTOA\",\"type\":\"Transfer Now\",\",transactionDate\":\"05-Nov-2019\",\"remarks\":\"\"}}}"
+    }, {
+        "screenId": "OtherBankDOM",
+        "instanceId": "FTDOM94740111206114124",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "2019-11-05 15:40:53",
+        "stageSeqNo": 1,
+        "workflowId": "FTDOM",
+        "screenData": "{\"acft01__OtherBankDom_Req\":{\"Domestic\":{\"fromAccount\":\"000288122232\",\"balance\":\"USD 10000\",\"transferType\":\"FTDM\",\"toAccount\":\"150100159160987\",\"currency\":\"USD\",\"amount\":\"12000.00\",\"type\":\"Transfer Now\",\"transactionDate\":\"06-Dec-2019\",\"remarks\":\"\",\"ifscCode\":\"AE07 0331 2345 6789 0123 456\",\",bankName\":\"Mashreq\",\"beneficiaryName\":\"Robertson & Associates\"}}}"
+    }, {
+        "screenId": "OtherBankDOMNetRes",
+        "instanceId": "FTDOM94740111206114126",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "2019-11-05 15:40:53",
+        "stageSeqNo": 2,
+        "workflowId": "FTDOM",
+        "screenData": "{\"acft01__OtherBankDom_Req\":{\"Domestic\":{\"fromAccount\":\"000288122232\",\"balance\":\"USD 10000\",\"transferType\":\"FTDM\",\"toAccount\":\"150100159160987\",\"currency\":\"USD\",\"amount\":\"12000.00\",\"type\":\"Transfer Now\",\"transactionDate\":\"06-Dec-2019\",\"remarks\":\"\",\"ifscCode\":\"AE07 0331 2345 6789 0123 456\",\",bankName\":\"Mashreq\",\"beneficiaryName\":\"Robertson & Associates\"}}}"
+    }, {
+        "screenId": "OtherBankDOMVerify",
+        "instanceId": "FTDOM64997861206114058",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "2019-11-05 15:40:53",
+        "stageSeqNo": 3,
+        "workflowId": "FTDOM",
+        "screenData": "{\"acft01__OtherBankDom_Req\":{\"Domestic\":{\"fromAccount\":\"000288122232\",\"balance\":\"USD 10000\",\"transferType\":\"FTDM\",\"toAccount\":\"150100159160987\",\"currency\":\"USD\",\"amount\":\"12000.00\",\"type\":\"Transfer Now\",\"transactionDate\":\"06-Dec-2019\",\"remarks\":\"\",\"ifscCode\":\"AE07 0331 2345 6789 0123 456\",\",bankName\":\"Mashreq\",\"beneficiaryName\":\"Robertson & Associates\"}}}"
+    }, {
+        "screenId": "OtherBankDOMAML",
+        "instanceId": "FTDOM6499786120611404",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "2019-11-05 15:40:53",
+        "stageSeqNo": 4,
+        "workflowId": "FTDOM",
+        "screenData": "{\"acft01__OtherBankDom_Req\":{\"Domestic\":{\"fromAccount\":\"000288122232\",\"balance\":\"USD 10000\",\"transferType\":\"FTDM\",\"toAccount\":\"150100159160987\",\"currency\":\"USD\",\"amount\":\"12000.00\",\"type\":\"Transfer Now\",\"transactionDate\":\"06-Dec-2019\",\"remarks\":\"\",\"ifscCode\":\"AE07 0331 2345 6789 0123 456\",\",bankName\":\"Mashreq\",\"beneficiaryName\":\"Robertson & Associates\"}}}"
+    }, {
+        "screenId": "OtherBankDOMApprove",
+        "instanceId": "FTDOM6499786120611504",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "2019-11-05 15:40:53",
+        "stageSeqNo": 5,
+        "workflowId": "FTDOM",
+        "screenData": "{\"acft01__OtherBankDom_Req\":{\"Domestic\":{\"fromAccount\":\"000288122232\",\"balance\":\"USD 10000\",\"transferType\":\"FTDM\",\"toAccount\":\"150100159160987\",\"currency\":\"USD\",\"amount\":\"12000.00\",\"type\":\"Transfer Now\",\"transactionDate\":\"06-Dec-2019\",\"remarks\":\"\",\"ifscCode\":\"AE07 0331 2345 6789 0123 456\",\",bankName\":\"Mashreq\",\"beneficiaryName\":\"Robertson & Associates\"}}}"
+    }, {
+        "screenId": "",
+        "instanceId": "FTDOM6499786120611535",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "2019-11-05 15:40:53",
+        "stageSeqNo": 6,
+        "workflowId": "FTDOM",
+        "screenData": "{\"acft01__OtherBankDom_Req\":{\"Domestic\":{\"fromAccount\":\"000288122232\",\"balance\":\"USD 10000\",\"transferType\":\"FTDM\",\"toAccount\":\"150100159160987\",\"currency\":\"USD\",\"amount\":\"12000.00\",\"type\":\"Transfer Now\",\"transactionDate\":\"06-Dec-2019\",\"remarks\":\"\",\"ifscCode\":\"AE07 0331 2345 6789 0123 456\",\",bankName\":\"Mashreq\",\"beneficiaryName\":\"Robertson & Associates\"}}}"
+    }, {
+        "screenId": "WithinBank",
+        "instanceId": "FTWB60761221113131449",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "05/01/2020 15:40:53",
+        "stageSeqNo": 1,
+        "workflowId": "FTWB",
+        "screenData": "{\"acft01__WithinBankDetails_Req\":{\"Details\":{\"fromAccount\":\"000288122232\",\"toAccount\":\"150100159160987\",\"accountBranch\":\"\",\"transferType\":\"FTWB\",\"currency\":\"USD\",\"amount\":\"12000.00\",\"beneficiaryName\":\"\",\"type\":\"Transfer Now\",\"transactionDate\":\"13-Nov-2019\",\"remarks\":\"\"}}}"
+    }, {
+        "screenId": "WithinBankVerify",
+        "instanceId": "FTWB60761221113131500",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "05/01/2020 15:40:53",
+        "stageSeqNo": 2,
+        "workflowId": "FTWB",
+        "screenData": "{\"acft01__WithinBankDetails_Req\":{\"Details\":{\"fromAccount\":\"000288122232\",\"toAccount\":\"150100159160987\",\"accountBranch\":\"\",\"transferType\":\"FTWB\",\"currency\":\"USD\",\"amount\":\"12000.00\",\"beneficiaryName\":\"\",\"type\":\"Transfer Now\",\"transactionDate\":\"13-Nov-2019\",\"remarks\":\"\"}}}"
+    }, {
+        "screenId": "WithinBankApprove",
+        "instanceId": "FTWB60761221113131437",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "05/01/2020 15:40:53",
+        "stageSeqNo": 3,
+        "workflowId": "FTWB",
+        "screenData": "{\"acft01__WithinBankDetails_Req\":{\"Details\":{\"fromAccount\":\"000288122232\",\"toAccount\":\"150100159160987\",\"accountBranch\":\"\",\"transferType\":\"FTWB\",\"currency\":\"USD\",\"amount\":\"12000.00\",\"beneficiaryName\":\"\",\"type\":\"Transfer Now\",\"transactionDate\":\"13-Nov-2019\",\"remarks\":\"\"}}}"
+    }, {
+        "screenId": "",
+        "instanceId": "FTWB60761221113131367",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "05/01/2020 15:40:53",
+        "stageSeqNo": 4,
+        "workflowId": "FTWB",
+        "screenData": "{\"acft01__WithinBankDetails_Req\":{\"Details\":{\"fromAccount\":\"000288122232\",\"toAccount\":\"150100159160987\",\"accountBranch\":\"\",\"transferType\":\"FTWB\",\"currency\":\"USD\",\"amount\":\"12000.00\",\"beneficiaryName\":\"\",\"type\":\"Transfer Now\",\"transactionDate\":\"13-Nov-2019\",\"remarks\":\"\"}}}"
+    }, {
+        "screenId": "OtherBankINT",
+        "instanceId": "FTINT46121131206115118",
+        "actorId": "robert.langford",
+        "appId": "intb01",
+        "action": "",
+        "startTs": "05/01/2020 15:40:53",
+        "stageSeqNo": 1,
+        "workflowId": "FTINT",
+        "screenData": "{\"intb01__OtherBankInt_Req\":{\"International\":{\"fromaccount\":\"000288122232\",\"balance\":\"USD 20000\",\"transferType\":\"FTINT\",\"toAccount\":\"150100159160987\",\"amountCurrency\":\"USD\",\"amount\":\"12000.00\",\"type\":\"Transfer Now\",\"transactionDate\":\"06-Dec-2019\",\"beneficaryName\":\"Albertson Heavy Machinery\",\"remarks\":\"\",\"benAddress\":\"1309 Detroit Industrial area CA 34109\",\"benCountry\":\"USA\",\"swiftCode\":\"LBRTGE22\",\"bankName\":\"Liberty bank detroit\",\"interSwiftCode\":\"\",\"interBankName\":\"LBRTGE\"}}}"
+    }, {
+        "screenId": "OtherBankINTVerify",
+        "instanceId": "FTINT46121131206114058",
+        "actorId": "robert.langford",
+        "appId": "intb01",
+        "action": "",
+        "startTs": "05/01/2020 15:40:53",
+        "stageSeqNo": 2,
+        "workflowId": "FTINT",
+        "screenData": "{\"intb01__OtherBankInt_Req\":{\"International\":{\"fromaccount\":\"000288122232\",\"balance\":\"USD 20000\",\"transferType\":\"FTINT\",\"toAccount\":\"150100159160987\",\"amountCurrency\":\"USD\",\"amount\":\"12000.00\",\"type\":\"Transfer Now\",\"transactionDate\":\"06-Dec-2019\",\"beneficaryName\":\"Albertson Heavy Machinery\",\"remarks\":\"\",\"benAddress\":\"1309 Detroit Industrial area CA 34109\",\"benCountry\":\"USA\",\"swiftCode\":\"LBRTGE22\",\"bankName\":\"Liberty bank detroit\",\"interSwiftCode\":\"\",\"interBankName\":\"LBRTGE\"}}}"
+    }, {
+        "screenId": "OtherBankINTApprove",
+        "instanceId": "FTINT46121131206114099",
+        "actorId": "robert.langford",
+        "appId": "intb01",
+        "action": "",
+        "startTs": "05/01/2020 15:40:53",
+        "stageSeqNo": 3,
+        "workflowId": "FTINT",
+        "screenData": "{\"intb01__OtherBankInt_Req\":{\"International\":{\"fromaccount\":\"000288122232\",\"balance\":\"USD 20000\",\"transferType\":\"FTINT\",\"toAccount\":\"150100159160987\",\"amountCurrency\":\"USD\",\"amount\":\"12000.00\",\"type\":\"Transfer Now\",\"transactionDate\":\"06-Dec-2019\",\"beneficaryName\":\"Albertson Heavy Machinery\",\"remarks\":\"\",\"benAddress\":\"1309 Detroit Industrial area CA 34109\",\"benCountry\":\"USA\",\"swiftCode\":\"LBRTGE22\",\"bankName\":\"Liberty bank detroit\",\"interSwiftCode\":\"\",\"interBankName\":\"LBRTGE\"}}}"
+    }, {
+        "screenId": "",
+        "instanceId": "FTINT46121131206176852",
+        "actorId": "robert.langford",
+        "appId": "intb01",
+        "action": "",
+        "startTs": "05/01/2020 15:40:53",
+        "stageSeqNo": 4,
+        "workflowId": "FTINT",
+        "screenData": "{\"intb01__OtherBankInt_Req\":{\"International\":{\"fromaccount\":\"000288122232\",\"balance\":\"USD 20000\",\"transferType\":\"FTINT\",\"toAccount\":\"150100159160987\",\"amountCurrency\":\"USD\",\"amount\":\"12000.00\",\"type\":\"Transfer Now\",\"transactionDate\":\"06-Dec-2019\",\"beneficaryName\":\"Albertson Heavy Machinery\",\"remarks\":\"\",\"benAddress\":\"1309 Detroit Industrial area CA 34109\",\"benCountry\":\"USA\",\"swiftCode\":\"LBRTGE22\",\"bankName\":\"Liberty bank detroit\",\"interSwiftCode\":\"\",\"interBankName\":\"LBRTGE\"}}}"
+    }, {
+        "screenId": "NewOtherBank",
+        "instanceId": "BNOB61824431118130352",
+        "actorId": "robert.langford",
+        "appId": "benf01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 1,
+        "workflowId": "BNOB",
+        "screenData": "{\"benf01__BeneficaryDetails_Req\":{\"tbDbmiCorpRoleBeneficary\":{\"beneficaryName\":\"Khalid Paper Products\",\"nickName\":\"Khalid Paper\",\"benType\":\"Dealer\",\"beneficaryType\":\"Other\",\"emailId\":\"khalid.p@gmail.com\",\"corporateId\":\"000FTAC4321\",\"accountNumber\":\"7823410743768123\",\"accountType\":\"Please Select\",\"ifscCode\":\"AE0705521345987645600123\",\"bankName\":\"Emirates NBD\",\"benAddress\":\"1309 Detroit Industrial area CA 34109\"}}}"
+    }, {
+        "screenId": "OwnAccount",
+        "instanceId": "BNOB61824431118130604",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 1,
+        "workflowId": "FTOA",
+        "screenData": "{\"acft01__OwnAccount_Req\":{\"Details\":{\"fromaccount\":\"28800323232\",\"balance\":\"USD 10000\",\"currency\":\"USD\",\"toaccount\":\"2309322229834\",\"accountName\":\"Checking\",\"toAccountCurrency\":\"USD\",\"amount\":2000.00,\"conversionAmt\":\"2000.00\",\"transferType\":\"FTOA\",\"type\":\"Transfer Now\",\",transactionDate\":\"05-Nov-2019\",\"remarks\":\"\"}}}"
+    },{
+        "screenId": "OwnAccountVerify",
+        "instanceId": "BNOB61824431118130224",
+        "actorId": "robert.langford",
+        "appId": "acft01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 2,
+        "workflowId": "FTOA",
+        "screenData": "{\"acft01__OwnAccount_Req\":{\"Details\":{\"fromaccount\":\"7356329872139\",\"balance\":\"USD 10000\",\"currency\":\"USD\",\"toaccount\":\"8274239482711\",\"accountName\":\"Checking\",\"toAccountCurrency\":\"USD\",\"amount\":2000.00,\"conversionAmt\":\"2000.00\",\"transferType\":\"FTOA\",\"type\":\"Transfer Now\",\",transactionDate\":\"05-Nov-2019\",\"remarks\":\"\"}}}"
+    }, {
+        "screenId": "",
+        "instanceId": "BNOB61824431118130312",
+        "actorId": "robert.langford",
+        "appId": "benf01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 4,
+        "workflowId": "BNOB",
+        "screenData": "{\"benf01__BeneficaryDetails_Req\":{\"tbDbmiCorpRoleBeneficary\":{\"beneficaryName\":\"Khalid Paper Products\",\"nickName\":\"Khalid Paper\",\"benType\":\"Dealer\",\"beneficaryType\":\"Other\",\"emailId\":\"khalid.p@gmail.com\",\"corporateId\":\"000FTAC4321\",\"accountNumber\":\"7823410743768123\",\"accountType\":\"Please Select\",\"ifscCode\":\"AE0705521345987645600123\",\"bankName\":\"Emirates NBD\",\"benAddress\":\"1309 Detroit Industrial area CA 34109\"}}}"
+    }, {
+        "screenId": "NewOtherBankINT",
+        "instanceId": "BNIB61824431118130312",
+        "actorId": "robert.langford",
+        "appId": "bein01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 1,
+        "workflowId": "BNIB",
+        "screenData": "{\"bein01__BeneficaryDetails_Req\":{\"tbDbmiCorpRoleBeneficary\":{\"beneficaryName\":\"Khalid Paper Products\",\"nickName\":\"Khalid Paper\",\"benType\":\"Supplier\",\"benAddress\":\"New York\",\"emailId\":\"khalid.p@gmail.com\",\"phNum\":\"8904131879\",\"benCountry\":\"USA\",\"beneficaryType\":\"International\",\"accountNumber\":\"908763542819\",\"iban\":\"89465732987\",\"swiftCode\":\"45665445\",\"bankName\":\"Bank\",\"abaNumber\":\"123321345543\",\"chipUid\":\"\",\"bankAddress\":\"New York\",\"interSwiftCode\":\"62918364\",\"interBankName\":\"Bank\",\"interAbaNumber\":\"9057684984\",\"interChipUid\":\"\",\"interBankAddress\":\"New York\",\"corporateId\":\"000FTAC4321\"}}}"
+    }, {
+        "screenId": "VerifyOtherBankINT",
+        "instanceId": "BNIB61824431118130412",
+        "actorId": "robert.langford",
+        "appId": "bein01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 2,
+        "workflowId": "BNIB",
+        "screenData": "{\"bein01__BeneficaryDetails_Req\":{\"tbDbmiCorpRoleBeneficary\":{\"beneficaryName\":\"Khalid Paper Products\",\"nickName\":\"Khalid Paper\",\"benType\":\"Supplier\",\"benAddress\":\"New York\",\"emailId\":\"khalid.p@gmail.com\",\"phNum\":\"8904131879\",\"benCountry\":\"USA\",\"beneficaryType\":\"International\",\"accountNumber\":\"908763542819\",\"iban\":\"89465732987\",\"swiftCode\":\"45665445\",\"bankName\":\"Bank\",\"abaNumber\":\"123321345543\",\"chipUid\":\"\",\"bankAddress\":\"New York\",\"interSwiftCode\":\"62918364\",\"interBankName\":\"Bank\",\"interAbaNumber\":\"9057684984\",\"interChipUid\":\"\",\"interBankAddress\":\"New York\",\"corporateId\":\"000FTAC4321\"}}}"
+    }, {
+        "screenId": "ViewOtherBankINT",
+        "instanceId": "BNIB61824431118153846",
+        "actorId": "robert.langford",
+        "appId": "bein01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 3,
+        "workflowId": "BNIB",
+        "screenData": "{\"bein01__BeneficaryDetails_Req\":{\"tbDbmiCorpRoleBeneficary\":{\"beneficaryName\":\"Khalid Paper Products\",\"nickName\":\"Khalid Paper\",\"benType\":\"Supplier\",\"benAddress\":\"New York\",\"emailId\":\"khalid.p@gmail.com\",\"phNum\":\"8904131879\",\"benCountry\":\"USA\",\"beneficaryType\":\"International\",\"accountNumber\":\"908763542819\",\"iban\":\"89465732987\",\"swiftCode\":\"45665445\",\"bankName\":\"Bank\",\"abaNumber\":\"123321345543\",\"chipUid\":\"\",\"bankAddress\":\"New York\",\"interSwiftCode\":\"62918364\",\"interBankName\":\"Bank\",\"interAbaNumber\":\"9057684984\",\"interChipUid\":\"\",\"interBankAddress\":\"New York\",\"corporateId\":\"000FTAC4321\"}}}"
+    }, {
+        "screenId": "",
+        "instanceId": "BNIB61824431118154637",
+        "actorId": "robert.langford",
+        "appId": "bein01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 4,
+        "workflowId": "BNIB",
+        "screenData": "{\"bein01__BeneficaryDetails_Req\":{\"tbDbmiCorpRoleBeneficary\":{\"beneficaryName\":\"Khalid Paper Products\",\"nickName\":\"Khalid Paper\",\"benType\":\"Supplier\",\"benAddress\":\"New York\",\"emailId\":\"khalid.p@gmail.com\",\"phNum\":\"8904131879\",\"benCountry\":\"USA\",\"beneficaryType\":\"International\",\"accountNumber\":\"908763542819\",\"iban\":\"89465732987\",\"swiftCode\":\"45665445\",\"bankName\":\"Bank\",\"abaNumber\":\"123321345543\",\"chipUid\":\"\",\"bankAddress\":\"New York\",\"interSwiftCode\":\"62918364\",\"interBankName\":\"Bank\",\"interAbaNumber\":\"9057684984\",\"interChipUid\":\"\",\"interBankAddress\":\"New York\",\"corporateId\":\"000FTAC4321\"}}}"
+    }, {
+        "screenId": "OwnAccount",
+        "instanceId": "SIOA17818950117154159",
+        "actorId": "robert.langford",
+        "appId": "acsi01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 1,
+        "workflowId": "SIOA",
+        "screenData": "{\"acsi01__OwnAccount_Req\":{\"Details\":{\"fromaccount\":\"47585936513712\",\"toaccount\":\"5785936513734\",\"accountName\":\"Checking\",\"currency\":\"AED\",\"toAccCurrency\":\"AED\",\"amount\":\"3000.00\",\"transferType\":\"SIOA\",\"conversionAmt\":\"3000\",\"nextExecutionDate\":\"\",\"startDate\":\"18-Jan-2020\",\"frequency\":\"1\",\"noOfTimes\":\"2\",\"endDate\":\"\",\"remarks\":\"\"}}}"
+    }, {
+        "screenId": "OwnAccountVerify",
+        "instanceId": "SIOA17818950117154184",
+        "actorId": "robert.langford",
+        "appId": "acsi01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 2,
+        "workflowId": "SIOA",
+        "screenData": "{\"acsi01__OwnAccount_Req\":{\"Details\":{\"fromaccount\":\"47585936513712\",\"toaccount\":\"5785936513734\",\"accountName\":\"Checking\",\"currency\":\"AED\",\"toAccCurrency\":\"AED\",\"amount\":\"3000.00\",\"transferType\":\"SIOA\",\"conversionAmt\":\"3000\",\"nextExecutionDate\":\"\",\"startDate\":\"2020-01-18\",\"frequency\":\"1\",\"noOfTimes\":\"2\",\"endDate\":\"\",\"remarks\":\"\"}}}"
+    }, {
+        "screenId": "OwnAccountApprove",
+        "instanceId": "SIOA17818950117152901",
+        "actorId": "robert.langford",
+        "appId": "acsi01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 3,
+        "workflowId": "SIOA",
+        "screenData": "{\"acsi01__OwnAccount_Req\":{\"Details\":{\"fromaccount\":\"47585936513712\",\"toaccount\":\"5785936513734\",\"accountName\":\"Checking\",\"currency\":\"AED\",\"toAccCurrency\":\"AED\",\"amount\":\"3000.00\",\"transferType\":\"SIOA\",\"conversionAmt\":\"3000\",\"nextExecutionDate\":\"\",\"startDate\":\"2020-01-18\",\"frequency\":\"1\",\"noOfTimes\":\"2\",\"endDate\":\"\",\"remarks\":\"\"}}}"
+    }, {
+        "screenId": "",
+        "instanceId": "SIOA17818950117132541",
+        "actorId": "robert.langford",
+        "appId": "acsi01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 4,
+        "workflowId": "SIOA",
+        "screenData": "{\"acsi01__OwnAccount_Req\":{\"Details\":{\"fromaccount\":\"47585936513712\",\"toaccount\":\"5785936513734\",\"accountName\":\"Checking\",\"currency\":\"AED\",\"toAccCurrency\":\"AED\",\"amount\":\"3000.00\",\"transferType\":\"SIOA\",\"conversionAmt\":\"3000\",\"nextExecutionDate\":\"\",\"startDate\":\"2020-01-18\",\"frequency\":\"1\",\"noOfTimes\":\"2\",\"endDate\":\"\",\"remarks\":\"\"}}}"
+    }, {
+        "screenId": "WithinBank",
+        "instanceId": "BTWB11022721217164652",
+        "actorId": "robert.langford",
+        "appId": "bulktr",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 1,
+        "workflowId": "BTWB",
+        "screenData": "{\"bulktr__WithinBankDetails_Req\":{\"TxnMaster\":{\"Details\":[{\"fromAccount\":\"5785936513734\",\"type\":\"Domestic\",\"toAccount\":\"1221978769\",\"Beneficiary Name\":\"Robertson & Associates\",\"currency\":\"INR\",\"amount\":\"1000.00\",\"benificiaryName\":\"Robertson & Associates\",\"bankName\":\"\",\"ifscCode\":\"\",\"swiftCode\":\"\",\"beneficiaryType\":\"\",\"emailId\":\"\",\"accountType\":\"\",\"benAddr\":\"\",\"phNo\":\"\",\"benCountry\":\"\"},{\"fromAccount\":\"5785936513734\",\"type\":\"Domestic\",\"toAccount\":\"1221978769\",\"Beneficiary Name\":\"Robertson & Associates\",\"currency\":\"INR\",\"amount\":\"245\"}],\"appId\":\"acclt\",\"userId\":\"000FTAC4321\",\"customerId\":\"000FTAC4321\",\"txnType\":\"BTWB\",\"txnStatus\":\"U\",\"amount\":\"1245\"}}}"
+    }, {
+        "screenId": "WithinBankVerify",
+        "instanceId": "BTWB11022721217166512",
+        "actorId": "robert.langford",
+        "appId": "bulktr",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 2,
+        "workflowId": "BTWB",
+        "screenData": "{\"bulktr__WithinBankDetails_Req\":{\"TxnMaster\":{\"Details\":[{\"fromAccount\":\"5785936513734\",\"type\":\"Domestic\",\"toAccount\":\"1221978769\",\"Beneficiary Name\":\"Robertson & Associates\",\"currency\":\"INR\",\"amount\":\"1000.00\",\"benificiaryName\":\"Robertson & Associates\",\"bankName\":\"\",\"ifscCode\":\"\",\"swiftCode\":\"\",\"beneficiaryType\":\"\",\"emailId\":\"\",\"accountType\":\"\",\"benAddr\":\"\",\"phNo\":\"\",\"benCountry\":\"\"},{\"fromAccount\":\"5785936513734\",\"type\":\"Domestic\",\"toAccount\":\"1221978769\",\"Beneficiary Name\":\"Robertson & Associates\",\"currency\":\"INR\",\"amount\":\"245\"}],\"appId\":\"acclt\",\"userId\":\"000FTAC4321\",\"customerId\":\"000FTAC4321\",\"txnType\":\"BTWB\",\"txnStatus\":\"U\",\"amount\":\"1245\"}}}"
+    }, {
+        "screenId": "WithinBankApprove",
+        "instanceId": "BTWB11022721217142123",
+        "actorId": "robert.langford",
+        "appId": "bulktr",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 3,
+        "workflowId": "BTWB",
+        "screenData": "{\"bulktr__WithinBankDetails_Req\":{\"TxnMaster\":{\"Details\":[{\"fromAccount\":\"5785936513734\",\"type\":\"Domestic\",\"toAccount\":\"1221978769\",\"Beneficiary Name\":\"Robertson & Associates\",\"currency\":\"INR\",\"amount\":\"1000.00\",\"benificiaryName\":\"Robertson & Associates\",\"bankName\":\"\",\"ifscCode\":\"\",\"swiftCode\":\"\",\"beneficiaryType\":\"\",\"emailId\":\"\",\"accountType\":\"\",\"benAddr\":\"\",\"phNo\":\"\",\"benCountry\":\"\"},{\"fromAccount\":\"5785936513734\",\"type\":\"Domestic\",\"toAccount\":\"1221978769\",\"Beneficiary Name\":\"Robertson & Associates\",\"currency\":\"INR\",\"amount\":\"245\"}],\"appId\":\"acclt\",\"userId\":\"000FTAC4321\",\"customerId\":\"000FTAC4321\",\"txnType\":\"BTWB\",\"txnStatus\":\"U\",\"amount\":\"1245\"}}}"
+    }, {
+        "screenId": "",
+        "instanceId": "BTWB11022721217187457",
+        "actorId": "robert.langford",
+        "appId": "bulktr",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 4,
+        "workflowId": "BTWB",
+        "screenData": "{\"bulktr__WithinBankDetails_Req\":{\"TxnMaster\":{\"Details\":[{\"fromAccount\":\"5785936513734\",\"type\":\"Domestic\",\"toAccount\":\"1221978769\",\"Beneficiary Name\":\"Robertson & Associates\",\"currency\":\"INR\",\"amount\":\"1000.00\",\"benificiaryName\":\"Robertson & Associates\",\"bankName\":\"\",\"ifscCode\":\"\",\"swiftCode\":\"\",\"beneficiaryType\":\"\",\"emailId\":\"\",\"accountType\":\"\",\"benAddr\":\"\",\"phNo\":\"\",\"benCountry\":\"\"},{\"fromAccount\":\"5785936513734\",\"type\":\"Domestic\",\"toAccount\":\"1221978769\",\"Beneficiary Name\":\"Robertson & Associates\",\"currency\":\"INR\",\"amount\":\"245\"}],\"appId\":\"acclt\",\"userId\":\"000FTAC4321\",\"customerId\":\"000FTAC4321\",\"txnType\":\"BTWB\",\"txnStatus\":\"U\",\"amount\":\"1245\"}}}"
+    }, {
+        "screenId": "AddLC",
+        "instanceId": "ILOC17487991117173226",
+        "actorId": "robert.langford",
+        "appId": "lecr01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 1,
+        "workflowId": "ILOC",
+        "screenData": "{\"lecr01__LCDetails_Req\":{\"tbDbmiCorpLetterCreditDocuments\":[],\"tbDbmiCorpLetterCredit\":{\"customerId\":\"13\",\"dateOfApplication\":\"2019-11-17\",\"customerRefno\":\"345\",\"toleranceType\":\"\",\"toleranceAbove\":\"\",\"toleranceBelow\":\"\",\"currency\":\"INR\",\"amount\":\"456.00\",\"expiryDate\":\"2019-11-17\",\"placeOfExpiry\":\"fhjk\",\"transferrableCredit\":\"y\",\"templateAccessType\":\"Public\",\"transferrableBy\":\"\",\"referenceNumber\":\"1573992042034\",\"status\":\"Active\",\"userId\":\"mohammad.nawaz\",\"corporateId\":\"000FTAC4321\",\"operation\":\"Open\",\"effectiveDate\":\"2019-11-17\",\"lcType\":\"Back to Back\",\"relatedLcRefNo\":\"\",\"creditType\":\"Straight\",\"modeOfPayment\":\"Negotiation,Negotiation\",\"creditWith\":\"\",\"chargesBorneBy\":\"Beneficiary\",\"linkedCreditLine\":\"\",\"creditLineCurrency\":\"USD\",\"applicantName\":\"weqwe\",\"applicantAddress1\":\"assad\",\"applicantAddress2\":\"asasd\",\"applicantAddress3\":\"wqw\",\"applicantCountry\":\"qwqwe\",\"beneficiaryName\":\"qwe\",\"beneficiaryAddress1\":\"qdasd\",\"beneficiaryAddress2\":\"sd\",\"beneficiaryAddress3\":\"adqd\",\"beneficiaryCountry\":\"wqqw\",\"advisingBankSwift\":\"\",\"advisingBankName\":\"\",\"advisingBankAddress1\":\"\",\"advisingBankAddress2\":\"\",\"advisingBankAddress3\":\"\",\"advisingBankCountry\":\"\",\"reimbursingBankSwift\":\"\",\"reimbursingBankName\":\"\",\"reimbursingBankAddress1\":\"\",\"reimbursingBankAddress2\":\"\",\"reimbursingBankAddress3\":\"\",\"reimbursingBankCountry\":\"\",\"advisingThroughSwift\":\"\",\"advisingThroughName\":\"\",\"advisingThroughAddress1\":\"\",\"advisingThroughAddress2\":\"\",\"advisingThroughAddress3\":\"\",\"advisingThroughCountry\":\"\",\"confirmingBankSwift\":\"\",\"confirmingBankName\":\"\",\"confirmingBankAddress1\":\"\",\"confirmingBankAddress2\":\"\",\"confirmingBankAddress3\":\"\",\"confirmingBankCountry\":\"\",\"shippmentFrom\":\"\",\"shippmentTo\":\"\",\"portOfLoading\":\"\",\"portOfDischarge\":\"\",\"latestShipmentDate\":\"\",\"transshipment\":\"\",\"partialShipment\":\"\",\"goodsDescription\":\"\",\"periodOfPresentation\":\"\",\"instructionToBank\":\"\"}}}"
+    }, {
+        "screenId": "AddLCVerify",
+        "instanceId": "ILOC17487991117174322",
+        "actorId": "robert.langford",
+        "appId": "lecr01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 2,
+        "workflowId": "ILOC",
+        "screenData": "{\"lecr01__LCDetails_Req\":{\"tbDbmiCorpLetterCreditDocuments\":[],\"tbDbmiCorpLetterCredit\":{\"customerId\":\"13\",\"dateOfApplication\":\"2019-11-17\",\"customerRefno\":\"345\",\"toleranceType\":\"\",\"toleranceAbove\":\"\",\"toleranceBelow\":\"\",\"currency\":\"INR\",\"amount\":\"456.00\",\"expiryDate\":\"2019-11-17\",\"placeOfExpiry\":\"fhjk\",\"transferrableCredit\":\"y\",\"templateAccessType\":\"Public\",\"transferrableBy\":\"\",\"referenceNumber\":\"1573992042034\",\"status\":\"Active\",\"userId\":\"mohammad.nawaz\",\"corporateId\":\"000FTAC4321\",\"operation\":\"Open\",\"effectiveDate\":\"2019-11-17\",\"lcType\":\"Back to Back\",\"relatedLcRefNo\":\"\",\"creditType\":\"Straight\",\"modeOfPayment\":\"Negotiation,Negotiation\",\"creditWith\":\"\",\"chargesBorneBy\":\"Beneficiary\",\"linkedCreditLine\":\"\",\"creditLineCurrency\":\"USD\",\"applicantName\":\"weqwe\",\"applicantAddress1\":\"assad\",\"applicantAddress2\":\"asasd\",\"applicantAddress3\":\"wqw\",\"applicantCountry\":\"qwqwe\",\"beneficiaryName\":\"qwe\",\"beneficiaryAddress1\":\"qdasd\",\"beneficiaryAddress2\":\"sd\",\"beneficiaryAddress3\":\"adqd\",\"beneficiaryCountry\":\"wqqw\",\"advisingBankSwift\":\"\",\"advisingBankName\":\"\",\"advisingBankAddress1\":\"\",\"advisingBankAddress2\":\"\",\"advisingBankAddress3\":\"\",\"advisingBankCountry\":\"\",\"reimbursingBankSwift\":\"\",\"reimbursingBankName\":\"\",\"reimbursingBankAddress1\":\"\",\"reimbursingBankAddress2\":\"\",\"reimbursingBankAddress3\":\"\",\"reimbursingBankCountry\":\"\",\"advisingThroughSwift\":\"\",\"advisingThroughName\":\"\",\"advisingThroughAddress1\":\"\",\"advisingThroughAddress2\":\"\",\"advisingThroughAddress3\":\"\",\"advisingThroughCountry\":\"\",\"confirmingBankSwift\":\"\",\"confirmingBankName\":\"\",\"confirmingBankAddress1\":\"\",\"confirmingBankAddress2\":\"\",\"confirmingBankAddress3\":\"\",\"confirmingBankCountry\":\"\",\"shippmentFrom\":\"\",\"shippmentTo\":\"\",\"portOfLoading\":\"\",\"portOfDischarge\":\"\",\"latestShipmentDate\":\"\",\"transshipment\":\"\",\"partialShipment\":\"\",\"goodsDescription\":\"\",\"periodOfPresentation\":\"\",\"instructionToBank\":\"\"}}}"
+    }, {
+        "screenId": "AddLCApprove",
+        "instanceId": "ILOC17487991117154332",
+        "actorId": "robert.langford",
+        "appId": "lecr01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 3,
+        "workflowId": "ILOC",
+        "screenData": "{\"lecr01__LCDetails_Req\":{\"tbDbmiCorpLetterCreditDocuments\":[],\"tbDbmiCorpLetterCredit\":{\"customerId\":\"13\",\"dateOfApplication\":\"2019-11-17\",\"customerRefno\":\"345\",\"toleranceType\":\"\",\"toleranceAbove\":\"\",\"toleranceBelow\":\"\",\"currency\":\"INR\",\"amount\":\"456.00\",\"expiryDate\":\"2019-11-17\",\"placeOfExpiry\":\"fhjk\",\"transferrableCredit\":\"y\",\"templateAccessType\":\"Public\",\"transferrableBy\":\"\",\"referenceNumber\":\"1573992042034\",\"status\":\"Active\",\"userId\":\"mohammad.nawaz\",\"corporateId\":\"000FTAC4321\",\"operation\":\"Open\",\"effectiveDate\":\"2019-11-17\",\"lcType\":\"Back to Back\",\"relatedLcRefNo\":\"\",\"creditType\":\"Straight\",\"modeOfPayment\":\"Negotiation,Negotiation\",\"creditWith\":\"\",\"chargesBorneBy\":\"Beneficiary\",\"linkedCreditLine\":\"\",\"creditLineCurrency\":\"USD\",\"applicantName\":\"weqwe\",\"applicantAddress1\":\"assad\",\"applicantAddress2\":\"asasd\",\"applicantAddress3\":\"wqw\",\"applicantCountry\":\"qwqwe\",\"beneficiaryName\":\"qwe\",\"beneficiaryAddress1\":\"qdasd\",\"beneficiaryAddress2\":\"sd\",\"beneficiaryAddress3\":\"adqd\",\"beneficiaryCountry\":\"wqqw\",\"advisingBankSwift\":\"\",\"advisingBankName\":\"\",\"advisingBankAddress1\":\"\",\"advisingBankAddress2\":\"\",\"advisingBankAddress3\":\"\",\"advisingBankCountry\":\"\",\"reimbursingBankSwift\":\"\",\"reimbursingBankName\":\"\",\"reimbursingBankAddress1\":\"\",\"reimbursingBankAddress2\":\"\",\"reimbursingBankAddress3\":\"\",\"reimbursingBankCountry\":\"\",\"advisingThroughSwift\":\"\",\"advisingThroughName\":\"\",\"advisingThroughAddress1\":\"\",\"advisingThroughAddress2\":\"\",\"advisingThroughAddress3\":\"\",\"advisingThroughCountry\":\"\",\"confirmingBankSwift\":\"\",\"confirmingBankName\":\"\",\"confirmingBankAddress1\":\"\",\"confirmingBankAddress2\":\"\",\"confirmingBankAddress3\":\"\",\"confirmingBankCountry\":\"\",\"shippmentFrom\":\"\",\"shippmentTo\":\"\",\"portOfLoading\":\"\",\"portOfDischarge\":\"\",\"latestShipmentDate\":\"\",\"transshipment\":\"\",\"partialShipment\":\"\",\"goodsDescription\":\"\",\"periodOfPresentation\":\"\",\"instructionToBank\":\"\"}}}"
+    }, {
+        "screenId": "",
+        "instanceId": "ILOC17487991117176556",
+        "actorId": "robert.langford",
+        "appId": "lecr01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 4,
+        "workflowId": "ILOC",
+        "screenData": "{\"lecr01__LCDetails_Req\":{\"tbDbmiCorpLetterCreditDocuments\":[],\"tbDbmiCorpLetterCredit\":{\"customerId\":\"13\",\"dateOfApplication\":\"2019-11-17\",\"customerRefno\":\"345\",\"toleranceType\":\"\",\"toleranceAbove\":\"\",\"toleranceBelow\":\"\",\"currency\":\"INR\",\"amount\":\"456.00\",\"expiryDate\":\"2019-11-17\",\"placeOfExpiry\":\"fhjk\",\"transferrableCredit\":\"y\",\"templateAccessType\":\"Public\",\"transferrableBy\":\"\",\"referenceNumber\":\"1573992042034\",\"status\":\"Active\",\"userId\":\"mohammad.nawaz\",\"corporateId\":\"000FTAC4321\",\"operation\":\"Open\",\"effectiveDate\":\"2019-11-17\",\"lcType\":\"Back to Back\",\"relatedLcRefNo\":\"\",\"creditType\":\"Straight\",\"modeOfPayment\":\"Negotiation,Negotiation\",\"creditWith\":\"\",\"chargesBorneBy\":\"Beneficiary\",\"linkedCreditLine\":\"\",\"creditLineCurrency\":\"USD\",\"applicantName\":\"weqwe\",\"applicantAddress1\":\"assad\",\"applicantAddress2\":\"asasd\",\"applicantAddress3\":\"wqw\",\"applicantCountry\":\"qwqwe\",\"beneficiaryName\":\"qwe\",\"beneficiaryAddress1\":\"qdasd\",\"beneficiaryAddress2\":\"sd\",\"beneficiaryAddress3\":\"adqd\",\"beneficiaryCountry\":\"wqqw\",\"advisingBankSwift\":\"\",\"advisingBankName\":\"\",\"advisingBankAddress1\":\"\",\"advisingBankAddress2\":\"\",\"advisingBankAddress3\":\"\",\"advisingBankCountry\":\"\",\"reimbursingBankSwift\":\"\",\"reimbursingBankName\":\"\",\"reimbursingBankAddress1\":\"\",\"reimbursingBankAddress2\":\"\",\"reimbursingBankAddress3\":\"\",\"reimbursingBankCountry\":\"\",\"advisingThroughSwift\":\"\",\"advisingThroughName\":\"\",\"advisingThroughAddress1\":\"\",\"advisingThroughAddress2\":\"\",\"advisingThroughAddress3\":\"\",\"advisingThroughCountry\":\"\",\"confirmingBankSwift\":\"\",\"confirmingBankName\":\"\",\"confirmingBankAddress1\":\"\",\"confirmingBankAddress2\":\"\",\"confirmingBankAddress3\":\"\",\"confirmingBankCountry\":\"\",\"shippmentFrom\":\"\",\"shippmentTo\":\"\",\"portOfLoading\":\"\",\"portOfDischarge\":\"\",\"latestShipmentDate\":\"\",\"transshipment\":\"\",\"partialShipment\":\"\",\"goodsDescription\":\"\",\"periodOfPresentation\":\"\",\"instructionToBank\":\"\"}}}"
+    }, {
+        "screenId": "AddCreditLimit",
+        "instanceId": "CLAC93430461230113013",
+        "actorId": "robert.langford",
+        "appId": "ficl01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 1,
+        "workflowId": "CLAC",
+        "screenData": "{\"ficl01__AddCreditLimit_Req\":{\"tbDbmiCorpCreditLimitCollaterals\":[],\"tbDbmiCorpCreditLimit\":{\"userId\":\"robert.langford\",\"corporateId\":\"000FTAC4321\",\"parentLimit\":\"LIM001254321\",\"limitAmount\":\"3000.00\",\"limitCurrency\":\"INR\",\"limitType\":\"inventory\",\"startDate\":\"2019-12-30\",\"endDate\":\"2019-12-31\",\"remarks\":\"\",\"availableAmount\":\"\"}}}"
+    }, {
+        "screenId": "VerifyCreditLimit",
+        "instanceId": "CLAC93430461230156348",
+        "actorId": "robert.langford",
+        "appId": "ficl01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 2,
+        "workflowId": "CLAC",
+        "screenData": "{\"ficl01__AddCreditLimit_Req\":{\"tbDbmiCorpCreditLimitCollaterals\":[],\"tbDbmiCorpCreditLimit\":{\"userId\":\"robert.langford\",\"corporateId\":\"000FTAC4321\",\"parentLimit\":\"LIM001254321\",\"limitAmount\":\"3000.00\",\"limitCurrency\":\"INR\",\"limitType\":\"inventory\",\"startDate\":\"2019-12-30\",\"endDate\":\"2019-12-31\",\"remarks\":\"\",\"availableAmount\":\"\"}}}"
+    }, {
+        "screenId": "ApproveCreditLimit",
+        "instanceId": "CLAC93430461230154988",
+        "actorId": "robert.langford",
+        "appId": "ficl01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 3,
+        "workflowId": "CLAC",
+        "screenData": "{\"ficl01__AddCreditLimit_Req\":{\"tbDbmiCorpCreditLimitCollaterals\":[],\"tbDbmiCorpCreditLimit\":{\"userId\":\"robert.langford\",\"corporateId\":\"000FTAC4321\",\"parentLimit\":\"LIM001254321\",\"limitAmount\":\"3000.00\",\"limitCurrency\":\"INR\",\"limitType\":\"inventory\",\"startDate\":\"2019-12-30\",\"endDate\":\"2019-12-31\",\"remarks\":\"\",\"availableAmount\":\"\"}}}"
+    }, {
+        "screenId": "",
+        "instanceId": "CLAC93430461230154335",
+        "actorId": "robert.langford",
+        "appId": "ficl01",
+        "action": "",
+        "startTs": "12/01/2020 15:40:53.0",
+        "stageSeqNo": 4,
+        "workflowId": "CLAC",
+        "screenData": "{\"ficl01__AddCreditLimit_Req\":{\"tbDbmiCorpCreditLimitCollaterals\":[],\"tbDbmiCorpCreditLimit\":{\"userId\":\"robert.langford\",\"corporateId\":\"000FTAC4321\",\"parentLimit\":\"LIM001254321\",\"limitAmount\":\"3000.00\",\"limitCurrency\":\"INR\",\"limitType\":\"inventory\",\"startDate\":\"2019-12-30\",\"endDate\":\"2019-12-31\",\"remarks\":\"\",\"availableAmount\":\"\"}}}"
+    }]
+}

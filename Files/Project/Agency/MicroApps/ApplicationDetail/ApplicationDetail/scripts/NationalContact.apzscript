@@ -1,0 +1,61 @@
+apz.appdtl.NationalContact = {};
+apz.appdtl.NationalContact.sCache = {};
+apz.app.onLoad_NationalContact = function(params) {
+    apz.appdtl.NationalContact.sCache = params;
+    apz.setElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo", params.refNo);
+    apz.setElmValue("appdtl__AppLauncher__application_number", params.refNo);
+    apz.setElmValue("appdtl__AppLauncher__el_txt_17_txtcnt", "FIELD VERIFICATION");
+    apz.appdtl.NationalContact.fnLoadNationalJsonData();
+    apz.appdtl.NationalContact.fetchApplicationDetails(params);
+}
+apz.appdtl.NationalContact.fnLoadNationalJsonData = function() {
+    debugger;
+    apz.data.loadJsonData("NationalIdDetails", "appdtl")
+}
+apz.appdtl.NationalContact.fetchApplicationDetails = function(params) {
+    debugger;
+    /*apz.data.buildData("ApplicationInfoDB", "appdtl");
+    apz.data.scrdata.appdtl__ApplicationInfoDB_Req = {
+        tbDbmiCustomerMaster: {
+            refNo: params.refNo
+        }
+    }*/
+    var lParams = {
+        "ifaceName": "ApplicationInfoDB_Query",
+        "buildReq": "N",
+        "req": {
+            "tbDbmiCustomerMaster": {
+                "refNo": params.refNo
+            },
+        },
+        "appId": "appdtl",
+        "paintResp": "Y",
+        "callBack": apz.appdtl.NationalContact.fetchApplicationDetailsCB
+    }
+    apz.server.callServer(lParams);
+};
+apz.appdtl.NationalContact.fetchApplicationDetailsCB = function(pResp) {
+    debugger;
+}
+apz.appdtl.NationalContact.nextScreen = function(pResp) {
+    var scr = "FingerPrint";
+    apz.appdtl.NationalContact.launchScreen(scr);
+}
+apz.appdtl.NationalContact.preScreen = function(pResp) {
+    debugger;
+    var scr = "FldVerification";
+    apz.appdtl.NationalContact.launchScreen(scr);
+}
+apz.appdtl.NationalContact.fnCancel = function() {}
+apz.appdtl.NationalContact.launchScreen = function(pResp) {
+    debugger;
+    var lParams = {
+        "appId": "appdtl",
+        "scr": "" + pResp,
+        "div": "appdtl__AppLauncher__screenLauncher",
+        "userObj": {
+            "refNo": apz.getElmValue("appdtl__ApplicationInfoDB__i__tbDbmiCustomerMaster__refNo")
+        }
+    };
+    apz.launchSubScreen(lParams);
+}

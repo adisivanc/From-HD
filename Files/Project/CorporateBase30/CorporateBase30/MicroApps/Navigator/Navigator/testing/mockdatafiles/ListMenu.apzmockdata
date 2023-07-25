@@ -1,0 +1,60 @@
+{
+    "items": [
+        {
+            "name": "My Tasks",
+            "type": "MICROAPP",
+            "appId": "actf01",
+            "scr": "TaskFlow",
+            "layout": "All",
+            "icon": "icon-list"
+        },
+        {
+            "name": "My Dashboard",
+            "type": "MICROAPP",
+            "appId": "ACDB01",
+            "scr": "Dashboard",
+            "layout": "All",
+            "icon": "icon-user"
+        },
+        {
+            "name": "Users",
+            "type": "MICROAPP",
+            "appId": "acus01",
+            "scr": "UserList",
+            "layout": "All",
+            "icon": "icon-user"
+        },
+        {
+            "name": "Roles",
+            "type": "MICROAPP",
+            "appId": "acrl01",
+            "scr": "RolesList",
+            "layout": "All",
+            "icon": "icon-rand"
+        },
+        {
+            "name": "Rules",
+            "type": "MICROAPP",
+            "appId": "acru01",
+            "scr": "CorporateRules",
+            "layout": "All",
+            "icon": "icon-reorder"
+        },
+        {
+            "name": "Company Profile",
+            "type": "MICROAPP",
+            "appId": "acpr01",
+            "scr": "CorporateInfo",
+            "layout": "All",
+            "icon": "icon-home"
+        },
+        {
+            "name": "Company Structure",
+            "type": "MICROAPP",
+            "appId": "acep01",
+            "scr": "CorporateHierarchy",
+            "layout": "All",
+            "icon": "icon-home"
+        }
+    ]
+}

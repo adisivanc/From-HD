@@ -1,0 +1,118 @@
+apz.golstp.goalSummary = {};
+apz.golstp.goalSummary.sParams = {};
+apz.golstp.goalSummary.golimg = {
+    "Buy a new Luxury Car":"car",
+    "Foreign Trip":"trip",
+    "Buy a Home":"home",
+}
+apz.app.onLoad_GoalSummary = function(params) {
+    debugger;
+    if (params.Navigation) {
+        apz.golstp.goalSummary.fnSetNavigation(params);
+    }
+    apz.golstp.goalSummary.getGoals();
+};
+
+apz.golstp.goalSummary.fnSetNavigation = function(params) {
+    apz.golstp.goalSummary.Navigation = params.Navigation.setNavigation;
+    var lParams = {};
+    if (!apz.isNull(params.headerText)) {
+        lParams.headerText = params.headerText;
+    } else {
+        lParams.headerText = "GOAL SUMMARY";
+    }
+    apz.golstp.goalSummary.Navigation(lParams);
+};
+
+apz.golstp.goalSummary.getGoals = function() {
+    // var lServerParams = {
+    //     "ifaceName": "SetupGoal_Query",
+    //     "paintResp": "Y",
+    //     "req": {},
+    //     "appId": "golstp",
+    //     "callBack": apz.golstp.goalSummary.getGoalsCB
+    // };
+    // apz.server.callServer(lServerParams);
+    if(!apz.data.scrdata.golstp__SetupGoal_Req){
+        apz.data.loadJsonData("SetupGoal","golstp");    
+    }
+    else{
+         apz.data.loadData("SetupGoal","golstp"); 
+    }
+    
+       var summary = apz.data.scrdata.golstp__SetupGoal_Req.tbDbtpSetupGoal;
+    var lis=    $("#golstp__GoalSummary__ct_lst_1 > ul >li");
+        for(i=0;i<summary.length;i++){
+            clsname = apz.golstp.goalSummary.golimg[summary[i].goalDescription]
+            
+            if(summary[i].progress <= "0.5"){
+                $("#golstp__SetupGoal__i__tbDbtpSetupGoal__progress_"+i+"_div").addClass("ter");
+            }
+           if(clsname){
+             $(lis[i]).addClass(clsname)  
+           }else{
+               $(lis[i]).addClass("others");  
+           }
+             
+        }
+         
+    
+        apz.golstp.goalSummary.getGoalsCB();
+};
+
+apz.golstp.goalSummary.getGoalsCB = function(){
+    debugger;
+}
+
+apz.golstp.goalSummary.addGoal = function(){
+    $("#golstp__GoalSummary__GoalSummaryRow").addClass('sno');
+    $("#golstp__GoalSummary__LaunchGoalRow").removeClass('sno');
+    var params = {};
+    params.appId = "golstp";
+    params.scr = "AddGoal";
+    params.userObj = {
+        "action":"Add",
+        "navigation":apz.golstp.goalSummary.Navigation
+    };
+    params.div = "golstp__GoalSummary__LaunchGoalHere";
+    
+    apz.launchSubScreen(params);
+    
+};
+
+apz.golstp.goalSummary.editGoal = function(pObj){
+    debugger;
+    $("#golstp__GoalSummary__GoalSummaryRow").addClass('sno');
+    $("#golstp__GoalSummary__LaunchGoalRow").removeClass('sno');
+    var lRow = $(pObj).attr('rowno');
+    var lRecord = apz.data.scrdata.golstp__SetupGoal_Req.tbDbtpSetupGoal[lRow];
+    var params = {};
+    params.appId = "golstp";
+    params.scr = "SetupGoal";
+    params.userObj = {
+        "data":lRecord,
+        "action":"Edit",
+        "navigation":apz.golstp.goalSummary.Navigation
+    }
+    params.div = "golstp__GoalSummary__LaunchGoalHere";
+    apz.launchSubScreen(params);
+};
+
+apz.golstp.goalSummary.viewGoal = function(pObj){
+    debugger;
+    $("#golstp__GoalSummary__GoalSummaryRow").addClass('sno');
+    $("#golstp__GoalSummary__LaunchGoalRow").removeClass('sno');
+    var lRow = $(pObj).attr('rowno');
+    var lRecord = apz.data.scrdata.golstp__SetupGoal_Req.tbDbtpSetupGoal[lRow];
+    var params = {};
+    params.appId = "golstp";
+    params.scr = "SetupGoal";
+    params.userObj = {
+        "data":lRecord,
+        "action":"View",
+        "navigation":apz.golstp.goalSummary.Navigation
+    }
+    params.div = "golstp__GoalSummary__LaunchGoalHere";
+    apz.launchSubScreen(params);
+    
+};

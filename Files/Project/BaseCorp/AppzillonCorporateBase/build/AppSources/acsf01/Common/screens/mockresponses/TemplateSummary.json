@@ -1,0 +1,25 @@
+{
+    "tbDbmiCorpFileTemplate": [
+        {
+            "templateType": "Invoice",
+            "template": "{\"Name\":{\"dbcolumn\":\"col1\",\"datatype\":\"Text\",\"datalength\":\"4\",\"sourcefield\":\"Name\"},\"Country\":{\"dbcolumn\":\"col2\",\"datatype\":\"Text\",\"datalength\":\"6\",\"sourcefield\":\"Country\"}}",
+            "extension": "excel",
+            "templateName": "I-exceed",
+            "templateId": "1"
+        },
+        {
+            "templateType": "Invoice",
+            "template": "{\"Name\":{\"dbcolumn\":\"col1\",\"datatype\":\"Text\",\"datalength\":\"4\",\"sourcefield\":\"Name\"},\"Country\":{\"dbcolumn\":\"col2\",\"datatype\":\"Text\",\"datalength\":\"6\",\"sourcefield\":\"Country\"}}",
+            "extension": "excel",
+            "templateName": "Apple",
+            "templateId": "2"
+        },
+        {
+            "templateType": "Invoice",
+            "template": "{\"Name\":{\"dbcolumn\":\"col1\",\"datatype\":\"Text\",\"datalength\":\"4\",\"sourcefield\":\"Name\"},\"Country\":{\"dbcolumn\":\"col2\",\"datatype\":\"Text\",\"datalength\":\"6\",\"sourcefield\":\"Country\"}}",
+            "extension": "excel",
+            "templateName": "Mahindra",
+            "templateId": "3"
+        }
+    ]
+}

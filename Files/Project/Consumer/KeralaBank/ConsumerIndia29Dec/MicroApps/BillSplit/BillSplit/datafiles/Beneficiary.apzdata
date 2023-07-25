@@ -1,0 +1,15 @@
+{
+    "blspli__BeneficiarySelection_Res": {
+        "beneficiaryDetails": [{
+            
+            "beneficiaryName": "Girish Kumar"
+            
+        }, {
+                        "beneficiaryName": "Abhinav Kumar"
+
+        },  {
+                        "beneficiaryName": "Aarav Mishra"
+
+        }]
+    }
+}

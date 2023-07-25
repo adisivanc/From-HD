@@ -1,0 +1,14 @@
+[
+    {
+        "WORKFLOW_DESC": "OwnAccountFT",
+        "WORKFLOW_ID":"OAFT"
+    },
+    {
+        "WORKFLOW_DESC": "Batch Transfer",
+        "WORKFLOW_ID":"BAFT"
+    },
+    {
+        "WORKFLOW_DESC": "Role Modify",
+        "WORKFLOW_ID":"CPMA"
+    }
+]

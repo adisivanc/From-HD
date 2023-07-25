@@ -1,0 +1,21 @@
+apz.brbase = {};
+apz.brbase.BaseApp = {};
+apz.Login = {
+    "sUser": "CorpUser",
+    "sUserId": "CorpUser",
+    "sCorporateId": "000FTAC4321",
+    "sRoleId": "CorpUser"
+}
+apz.app.onLoad_BaseApp = function(params) {
+    $('head').append('<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />');
+    debugger;
+    apz.common.fnSwitchTheme("agency");
+    var userObj = {
+        "destroyDiv": "menuap__Menu__MainLaunchArea",
+        "parentAppId": "menuap",
+        "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+        "custImg": "menuap__Menu__custImg",
+        "custId": "menuap__Menu__custId_txtcnt"
+    }
+    apz.common.launchApp("ablogn", "Login", userObj);
+}

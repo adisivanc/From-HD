@@ -1,0 +1,4 @@
+apz.lnsmlr.checkParams = function(Params) {
+    debugger;
+    Params.userObj = {};
+};

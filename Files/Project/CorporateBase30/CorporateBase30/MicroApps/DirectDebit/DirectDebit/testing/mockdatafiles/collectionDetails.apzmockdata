@@ -1,0 +1,41 @@
+{
+    "collDtls":
+    [{
+		"customerId":"142648936",
+		"accountNo":"5432xxxxx115",
+		"accountBrn":"Chingunjav Street-30",
+		"accountCcy":"",
+		"cptyName":"Ashwini",
+		"cptyBankCode":"IDIB000B009",
+		"cptyBankName":"XacBank",
+		"cptyBankCity":"Sukhbaatar",
+		"cptyAccountNo":"1232xxxxx348",
+		"trnCcy":"INR",
+		"trnAmt":"1000",
+		"bookDate":"08-Jan-2018",
+		"activationDate":"15-May-2018",
+		"collectionStatus":"Initiated",
+		"chgAmount":"0.00",
+		"chgAmountCcy":"",
+		"chgBearer":"Our Account"
+	},
+	{
+	    "customerId":"146348989",
+		"accountNo":"5432xxxxx118",
+		"accountBrn":"Chingunjav Street-30",
+		"accountCcy":"",
+		"cptyName":"Ashwin",
+		"cptyBankCode":"IDIB000B009",
+		"cptyBankName":"XacBank",
+		"cptyBankCity":"Sukhbaatar",
+		"cptyAccountNo":"4325xxxxx876",
+		"trnCcy":"INR",
+		"trnAmt":"2000",
+		"bookDate":"03-Feb-2018",
+		"activationDate":"10-May-2018",
+		"collectionStatus":"Initiated",
+		"chgAmount":"0.00",
+		"chgAmountCcy":"",
+		"chgBearer":"Our Account"
+	}]
+}

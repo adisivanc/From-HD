@@ -1,0 +1,239 @@
+apz.servic.StatusScreen = {};
+apz.app.onLoad_StatusScreen = function(params) {
+    debugger;
+    apz.servic.StatusScreen.sParams = params;
+    apz.servic.StatusScreen.injectFilters();
+    // apz.data.loadJsonData("RequestDetails","servic");
+    apz.hide("servic__StatusScreen__service_request_tableul_ttl");
+    $("#servic__StatusScreen__service_request_table_tbody>tr").click(function(pThis) {
+        apz.servic.StatusScreen.fnOnSelect(pThis);
+    })
+    apz.servic.StatusScreen.fnfetchDetails();
+}
+apz.app.onShown_StatusScreen = function(params) {
+    if (params.filter) {
+        if (params.filter == "All") {
+            apz.searchRecords("servic__StatusScreen__service_request_table", "");
+            $("#servic__StatusScreen__all_records").addClass("active");
+        } else if (params.filter == "Pending") {
+            apz.searchRecords("servic__StatusScreen__service_request_table", "Pending");
+            $("#servic__StatusScreen__pending_records").addClass("active");
+        } else if (params.filter == "Rejected") {
+            apz.searchRecords("servic__StatusScreen__service_request_table", "Rejected");
+            $("#servic__StatusScreen__rejected_records").addClass("active");
+        } else if (params.filter == "Resolved") {
+            apz.searchRecords("servic__StatusScreen__service_request_table", "Resolved");
+            $("#servic__StatusScreen__approved_records").addClass("active");
+        }
+    }else{
+            $("#servic__StatusScreen__all_records").addClass("active");
+    }
+}
+apz.servic.StatusScreen.injectFilters = function() {
+    debugger;
+    apz.data.scrDataBackup = {};
+    $(".status_filter").on("click", function(pObj) {
+        debugger;
+        var type = $(this).text();
+        var id = $(this)[0].id;
+        if (type.indexOf("All") > -1) {
+            apz.searchRecords("servic__StatusScreen__service_request_table", "");
+        } else if (type.indexOf("Pending") > -1 || type.indexOf("in-progress") > -1) {
+            apz.searchRecords("servic__StatusScreen__service_request_table", "Pending");
+        } else if (type.indexOf("Rejected") > -1) {
+            apz.searchRecords("servic__StatusScreen__service_request_table", "Rejected");
+        } else if (type.indexOf("Approved") > -1 || type.indexOf("Resolved") > -1) {
+            apz.searchRecords("servic__StatusScreen__service_request_table", "Resolved");
+        } else {
+            debugger;
+        }
+        $("#servic__StatusScreen__all_records").removeClass("active");
+        $("#servic__StatusScreen__pending_records").removeClass("active");
+        $("#servic__StatusScreen__rejected_records").removeClass("active");
+        $("#servic__StatusScreen__approved_records").removeClass("active");
+        $("#" + id).addClass("active");
+    });
+};
+apz.servic.StatusScreen.fnfetchDetails = function() {
+    debugger;
+    apz.startLoader();
+    var lServerParams = {
+        "ifaceName": "CustomerServiceRequest_Query",
+        "buildReq": "Y",
+        "appId": "servic",
+        "paintResp": "Y",
+        "callBack": apz.servic.StatusScreen.fnfetchDetailsCB
+    };
+    apz.server.callServer(lServerParams);
+};
+apz.servic.StatusScreen.fnfetchDetailsCB = function(pResp) {
+    debugger;
+    apz.stopLoader();
+    if (pResp.status) {
+        debugger;
+        if (!pResp.errors) {
+            apz.data.buildData("CustomerServiceRequest", "servic");
+            var recsArray = apz.data.scrdata.servic__CustomerServiceRequest_Req.tbDbmiCustomerServicerequest;
+            var totalRecs = recsArray.length;
+            apz.setElmValue("servic__StatusScreen__all_records_count", totalRecs);
+            var approvedRecs = 0;
+            var rejectedRecs = 0;
+            var pendingRecs = 0;
+            for (var i = 0; i < totalRecs; i++) {
+                if (recsArray[i].status == "Resolved") {
+                    approvedRecs++;
+                } else if (recsArray[i].status == "Rejected") {
+                    rejectedRecs++;
+                } else if (recsArray[i].status == "Pending") {
+                    pendingRecs++;
+                } else {
+                    debugger;
+                }
+            }
+            debugger;
+            apz.setElmValue("servic__StatusScreen__rejected_records_count", rejectedRecs);
+            apz.setElmValue("servic__StatusScreen__approved_records_count", approvedRecs);
+            apz.setElmValue("servic__StatusScreen__pending_records_count", pendingRecs);
+        }
+    }
+}
+apz.servic.StatusScreen.fnCancel = function() {
+    debugger;
+    var lParams = {
+        "appId": "landpg",
+        "scr": "LandingPage",
+        "div": "menuap__Menu__MainLaunchArea",
+        "type": "CF",
+        "animation": 21,
+        "userObj": {
+            "destroyDiv": "menuap__Menu__MainLaunchArea",
+            "parentAppId": "menuap",
+            "loggedCust": "menuap__Menu__loggedinCust_txtcnt",
+            "custImg": "menuap__Menu__custImg",
+            "custId": "menuap__Menu__custId_txtcnt"
+        }
+    }
+    apz.launchApp(lParams);
+}
+apz.servic.StatusScreen.fnOnSelect = function(arg1) {
+    debugger;
+    var refNo = apz.getElmValue("servic__CustomerServiceRequest__i__tbDbmiCustomerServicerequest__refno_" + (arg1.currentTarget.rowIndex - 1) +
+        "_txtcnt");
+    var records = apz.data.scrdata.servic__CustomerServiceRequest_Req.tbDbmiCustomerServicerequest;
+    var selectedRow = [];
+    for (var i = 0; i < records.length; i++) {
+        debugger;
+        var record = records[i];
+        if (refNo == record.refno) {
+            debugger;
+            selectedRow = record;
+            break;
+        }
+    }
+    /*
+    var rowno = apz.scrMetaData.containersMap["servic__StatusScreen__service_request_table"].currRec;
+    let selectedRow = apz.data.scrdata.servic__CustomerServiceRequest_Req.tbDbmiCustomerServicerequest[rowno];
+    */
+    var userRole = apz.menuap.Menu.userRole;
+    if (selectedRow.subcategory == "Update Contact") {
+        if (selectedRow.status != "Resolved") {
+            if (userRole != "FLD") {
+                apz.dispMsg({
+                    "message": "This request is pending to be approved by Field Agent!",
+                    "type": "A"
+                });
+            } else {
+                var lParams = {
+                    "appId": "update",
+                    "scr": "UpdateContact",
+                    "div": "menuap__Menu__MainLaunchArea",
+                    "type": "CF",
+                    "userObj": {
+                        "action": "fromStatus",
+                        "data": selectedRow, //{refNo:selectedRow.refno,scrdata:selectedRow.srcdata},
+                        "destroyDiv": "menuap__Menu__MainLaunchArea",
+                        "parentAppId": "menuap",
+                        "custImg": "menuap__Menu__custImg",
+                        "custId": "menuap__Menu__custId_txtcnt",
+                        "callBack": apz.servic.StatusScreen.fnBack
+                    }
+                };
+                apz.launchApp(lParams);
+            }
+        } else {
+            apz.dispMsg({
+                "message": "This request has been already resolved!"
+            });
+        }
+    } else if (selectedRow.subcategory == "Debit Card Request") {
+        if (selectedRow.status != "Resolved") {
+            if (userRole != "RM") {
+                apz.dispMsg({
+                    "message": "This request could be approved only by the Regional Manager!",
+                    "type": "A"
+                });
+            } else {
+                var lParams = {
+                    "appId": "issdeb",
+                    "scr": "ApproveDebit",
+                    "div": "menuap__Menu__MainLaunchArea",
+                    "type": "CF",
+                    "userObj": {
+                        "action": "fromStatus",
+                        "data": selectedRow,
+                        "destroyDiv": "menuap__Menu__MainLaunchArea",
+                        "parentAppId": "menuap",
+                        "custImg": "menuap__Menu__custImg",
+                        "custId": "menuap__Menu__custId_txtcnt",
+                        "callBack": apz.servic.StatusScreen.fnBack
+                    }
+                };
+                apz.launchApp(lParams);
+            }
+        } else {
+            apz.dispMsg({
+                "message": "This request has been already resolved!"
+            });
+        }
+    } else if (selectedRow.subcategory == "Cheque Book Request") {
+        if (selectedRow.status != "Resolved") {
+            if (userRole != "RM") {
+                apz.dispMsg({
+                    "message": "This request could be approved only by the Regional Manager!",
+                    "type": "A"
+                });
+            } else {
+                var lParams = {
+                    "appId": "nchqbk",
+                    "scr": "ApproveCheckBook",
+                    "div": "menuap__Menu__MainLaunchArea",
+                    "type": "CF",
+                    "userObj": {
+                        "action": "fromStatus",
+                        "data": selectedRow,
+                        "destroyDiv": "menuap__Menu__MainLaunchArea",
+                        "parentAppId": "menuap",
+                        "custImg": "menuap__Menu__custImg",
+                        "custId": "menuap__Menu__custId_txtcnt",
+                        "callBack": apz.servic.StatusScreen.fnBack
+                    }
+                };
+                apz.launchApp(lParams);
+            }
+        } else {
+            apz.dispMsg({
+                "message": "This request has been already resolved!"
+            });
+        }
+    } else {
+        apz.dispMsg({
+            appId: "servic",
+            message: "Page under construction."
+        })
+    }
+}
+apz.servic.StatusScreen.fnBack = function() {
+    apz.menuap.Menu.fnMenuClick({
+        "textContent": "Service Request"
+    });
+}

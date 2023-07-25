@@ -1,0 +1,24 @@
+{
+    "tbDbmiCorpRoleBeneficary": [
+        {
+            "nickName": "hari",
+            "beneficaryName": "Hari Prasad",
+            "branchName": "Madiwala",
+            "bankName": "HDFC",
+            "beneficaryType": "other",
+            "accountNumber": "2938752937983",
+            "ifscCode": "93487530923",
+            "corporateId": "000FTAC4321"
+        },
+        {
+            "nickName": "kksdi",
+            "beneficaryName": "mskejo",
+            "branchName": "dkj",
+            "bankName": "jkk",
+            "beneficaryType": "other",
+            "accountNumber": "9034578390",
+            "ifscCode": "o389753234",
+            "corporateId": "000FTAC4321"
+        }
+    ]
+}
