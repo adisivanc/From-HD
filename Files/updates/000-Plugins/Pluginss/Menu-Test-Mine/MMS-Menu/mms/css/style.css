@@ -1,0 +1,288 @@
+@charset "utf-8";
+/* CSS Document */
+
+@font-face {
+    font-family: 'gill_sans_bqregular';
+    src: url('gillsansbq-regular-opentype-webfont.eot');
+    src: url('gillsansbq-regular-opentype-webfont.eot?#iefix') format('embedded-opentype'),
+         url('gillsansbq-regular-opentype-webfont.woff2') format('woff2'),
+         url('gillsansbq-regular-opentype-webfont.woff') format('woff'),
+         url('gillsansbq-regular-opentype-webfont.ttf') format('truetype'),
+         url('gillsansbq-regular-opentype-webfont.svg#gill_sans_bqregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'oswaldbold';
+    src: url('oswald-bold-webfont.eot');
+    src: url('oswald-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('oswald-bold-webfont.woff2') format('woff2'),
+         url('oswald-bold-webfont.woff') format('woff'),
+         url('oswald-bold-webfont.ttf') format('truetype'),
+         url('oswald-bold-webfont.svg#oswaldbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'oswaldlight';
+    src: url('oswald-light-webfont.eot');
+    src: url('oswald-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('oswald-light-webfont.woff2') format('woff2'),
+         url('oswald-light-webfont.woff') format('woff'),
+         url('oswald-light-webfont.ttf') format('truetype'),
+         url('oswald-light-webfont.svg#oswaldlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'oswaldbook';
+    src: url('oswald-regular-webfont.eot');
+    src: url('oswald-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('oswald-regular-webfont.woff2') format('woff2'),
+         url('oswald-regular-webfont.woff') format('woff'),
+         url('oswald-regular-webfont.ttf') format('truetype'),
+         url('oswald-regular-webfont.svg#oswaldbook') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'gill_sansbold';
+    src: url('mgillsans-bold-opentype-webfont.eot');
+    src: url('mgillsans-bold-opentype-webfont.eot?#iefix') format('embedded-opentype'),
+         url('mgillsans-bold-opentype-webfont.woff2') format('woff2'),
+         url('mgillsans-bold-opentype-webfont.woff') format('woff'),
+         url('mgillsans-bold-opentype-webfont.ttf') format('truetype'),
+         url('mgillsans-bold-opentype-webfont.svg#gill_sansbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'gill_sans_ceroman';
+    src: url('gillsansce-roman-opentype-webfont.eot');
+    src: url('gillsansce-roman-opentype-webfont.eot?#iefix') format('embedded-opentype'),
+         url('gillsansce-roman-opentype-webfont.woff2') format('woff2'),
+         url('gillsansce-roman-opentype-webfont.woff') format('woff'),
+         url('gillsansce-roman-opentype-webfont.ttf') format('truetype'),
+         url('gillsansce-roman-opentype-webfont.svg#gill_sans_ceroman') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+* html img,
+* html .png{
+position:relative;
+behavior: expression((this.runtimeStyle.behavior="none")&&(this.pngSet?this.pngSet=true:(this.nodeName == "IMG" && this.src.toLowerCase().indexOf('.png')>-1?(this.runtimeStyle.backgroundImage = "none",
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.src + "', sizingMethod='image')",
+this.src = "images/transparent.gif"):(this.origBg = this.origBg? this.origBg :this.currentStyle.backgroundImage.toString().replace('url("','').replace('")',''),
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.origBg + "', sizingMethod='crop')",
+this.runtimeStyle.backgroundImage = "none")),this.pngSet=true)
+);
+}
+
+html {
+    font-size: 100%; /* 1 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+    -ms-text-size-adjust: 100%; /* 2 */
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video { margin:0; padding:0; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; }
+a { text-decoration:none; border: 0; outline:none; }
+.boxerror { border:1px solid #F00; }
+h1, h2, h3, h4, h5, h6 { font-weight: normal; font-style:normal; }
+table { border-collapse:collapse; }
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
+.boldtxt { font-family: 'gill_sansbold'; }
+.errortxt { color:#F00; }
+
+
+body { margin:0 0 0 0; padding:0 0 0 0; font-family: 'gill_sans_bqregular'; background-color:#efefef; font-size:14px; color:#000; }
+
+
+/* Header */
+
+.header_outer { width:100%; margin: 0 auto; }
+.header_contant { max-width:1440px; width:95%; padding:0 2.5%; margin:0 auto; }
+
+.header_cnt_inner { width:100%; float:left; }
+
+.header_left { float:left; margin-top:0.5%; }
+.header_left a { text-decoration:none; color:#959394; }
+.header_right { float:right; margin-top:0.5%; }
+
+#header_top { background-color:#999999;height:7px; width:100%; float:left; max-width:1920px;}
+#header_bottom { background-color:#d2d3d4;height:1px; width:100%; float:left; max-width:1920px; }
+.header_btm_out { width:100%; float:left; clear:both; margin-top:1%; }
+
+#header_logo { max-width:1440px; margin:0 auto; width:100%; }
+.header_logo_inner { width:100%; float:left; }
+
+#mms_logo { width:100%; }
+
+#header_menu { color:#0396cb; font-size:24px; margin-top:1%; font-family: 'oswaldbook'; }
+#header_menu ul { list-style:none; }
+#header_menu ul li { display:inline; letter-spacing:0.2px; padding:0 13px 0 0; }
+#header_menu ul li a { cursor:pointer; color:#0396cb; }
+
+.header_btm_out img { width:100%; }
+
+
+
+
+
+/* page style */
+
+a,a:focus,a:active,a:hover,object,embed 
+{
+  outline: none;
+  text-decoration: none;
+}
+:-moz-any-link:focus {
+outline: none;
+}
+input::-moz-focus-inner {
+border: 0;
+}
+
+:focus { outline: 0; }
+
+body { background: #FFF; }
+
+.brand { width:100%; margin:0 auto; }
+
+
+.brand img { width:30%; margin-left:35%; }
+
+.navbar { border-bottom: 4px solid #888; }
+
+/* MEGA MENU STYLE
+********************************/ 
+
+.mega-menu {
+  padding: 10px 0px ! important;
+  width: 540px;
+  border-radius: 0;
+  margin-top: 0px;
+}
+
+.mega-menu li {
+  display: inline-block;
+  float: left;
+  font-size: 0.94rem;
+  padding: 3px 0px;
+}
+
+.mega-menu li.mega-menu-column {
+  margin-right: 20px;
+  width: 150px;
+}
+
+.mega-menu .nav-header {
+  padding: 0 !important;
+  margin-bottom: 10px;
+  display: inline-block;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+}
+
+.mega-menu img { padding-bottom: 10px; }
+
+/* Disable Toggle style
+********************************/  
+
+/* Dropdown Toggle on style */
+
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+.navbar .nav li.dropdown.active > .dropdown-toggle,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle {
+  background: inherit; /* Set to inherit when using mouse hover to open dropdown */
+  color: inherit;
+}
+
+/* Toggle off style */
+
+
+
+.navbar .nav li.dropdown.open.active > .dropdown-toggle,
+ .navbar .nav > li.dropdown > a:focus {
+  background: inherit;
+  color: inherit;
+}
+
+/* Toggle hover */
+
+.navbar .nav li.dropdown > .dropdown-toggle:hover,
+ .navbar .nav li.dropdown.open > .dropdown-toggle:hover { background-color: #DDDDDD; }
+
+/* Toggle caret*/
+
+.navbar .nav li.dropdown > .dropdown-toggle .caret { border-bottom-color:;
+ border-top-color:;
+}
+
+/* Toggle caret hover */
+
+.navbar .nav li.dropdown > a:hover .caret,
+ .navbar .nav li.dropdown > a:focus .caret {
+  border-bottom-color: #333;
+  border-top-color: #333;
+}
+
+/* Toggle caret active */
+
+.navbar .nav li.dropdown.open > .dropdown-toggle .caret,
+ .navbar .nav li.dropdown.active > .dropdown-toggle .caret,
+ .navbar .nav li.dropdown.open.active > .dropdown-toggle .caret {
+  border-bottom-color: #333;
+  border-top-color: #333;
+}
+
+/* Hover style
+********************************/ 
+
+.navbar .nav > li > a,
+.mega-menu a {
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+  /* -webkit-transform: translate3d(0, 0, 0); Webkit Hardware Acceleration*/ 
+  -webkit-backface-visibility: hidden; /* Safari Flicker Fix #2 */
+  -webkit-transform: translateZ(0);
+}
+
+
+
+
+
+

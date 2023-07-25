@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+		<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>jQuery Clove.js Plugin Demo</title>
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../lib/clove.js"></script>
+		<script type="text/javascript">
+
+			$(document).ready(function() {
+				$(".scroll").clove({
+					property: "background-position-y",
+					scrollOffscreen:false,
+					min: 350,
+					max: 2000
+				});
+				$(".scroll2").clove({
+					property: "background-position-y",
+					scrollOffscreen:false,
+					min: -100,
+					max: 1350
+				});
+				$(".square").clove({
+					property:"width",
+					min:0,
+					max:100,
+					scrollOffscreen: true,
+					offsetUnit: "%"
+				});
+			});
+
+		</script>
+		<style type="text/css">
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.panel {
+  width: 100%;
+  height: 400px;
+  background-image: url('images/landscape.jpg');
+  background-position: 50% 50%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.square {
+  width: 20%;
+  height: 20px;
+  background-color: #FF0000;
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+}
+
+.blank { height: 200px; }
+</style>
+		</head>
+		<body><h1>jQuery Clove.js Plugin Demo</h1><div class="jquery-script-ads" style="margin:20px auto"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2783044520727903";
+/* jQuery_demo */
+google_ad_slot = "2780937993";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+<p>Scroll down the page</p>
+<div class="panel"></div>
+<div class="panel scroll" style="background-image: url('images/landscape2.png')"></div>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget ligula ultrices, condimentum odio at, pellentesque sapien. Nam faucibus imperdiet metus, quis convallis arcu congue non. Aliquam nec convallis mauris. Curabitur in ultricies mi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris interdum ante at sodales dapibus. Maecenas mi elit, feugiat ac accumsan eget, iaculis at nisi. Nullam arcu urna, iaculis eu iaculis eget, tempus at magna. Duis ut odio eu diam volutpat ultrices quis eu libero. Praesent sagittis non diam id ultricies. Phasellus vel magna mattis, facilisis purus at, tempus sem. Sed id viverra lorem. Sed vehicula tellus odio, et volutpat lorem tempor non. Cras enim lectus, tincidunt eu odio id, porta rhoncus nibh. Fusce ut ex vitae nulla auctor interdum ut et ipsum. Praesent in pellentesque metus, eget aliquam neque.Cras ac sodales nulla. Quisque sit amet congue orci. Donec malesuada ipsum nec elit euismod, vel fermentum est vehicula. In condimentum, arcu vitae tincidunt sagittis, lacus nisi auctor nibh, sit amet blandit odio est vel turpis. Nulla facilisi. Vestibulum non tincidunt purus. Mauris molestie lobortis urna pretium convallis. Donec quis quam vel tortor interdum tristique a nec turpis. Cras et massa mauris.</p>
+<p>Curabitur eget tempus mi, eget volutpat turpis. Suspendisse ut mattis lacus, sit amet molestie tellus. Sed libero ex, pharetra et pretium eget, accumsan at arcu. In ultricies diam quis molestie porta. Sed viverra, nisi ut commodo ornare, tortor ex auctor est, id eleifend diam lacus et tortor. Proin et justo nisl. Fusce volutpat scelerisque arcu, ut sollicitudin est tempor vel.</p>
+
+<div class="panel" style="background-image: url('images/space.jpg')"></div>
+<div class="panel scroll2" style="background-image: url('images/landscape3.jpg')"></div>
+<p>Sed eget nibh nec sem egestas mattis vitae in libero. Vivamus sed finibus justo. Phasellus ac ipsum eget dui posuere faucibus. Phasellus et magna nec ligula dictum ullamcorper. Maecenas faucibus fermentum nisl a rutrum. Sed quis nibh et tellus varius sagittis. In hac habitasse platea dictumst. Vestibulum consequat, sem vel laoreet pharetra, ligula massa vehicula diam, ac malesuada lorem sapien ac justo. Vestibulum sed tellus eros. Mauris ultricies cursus iaculis. Etiam pellentesque id elit et malesuada. Sed eget pharetra diam, sit amet porttitor augue. Nunc varius, risus a tincidunt lobortis, nulla felis tincidunt magna, nec scelerisque augue dui in neque. Sed viverra at massa sit amet ullamcorper.</p>
+<p>Quisque egestas dolor sit amet faucibus vulputate. Mauris commodo blandit porttitor. Donec feugiat sapien est, vel venenatis velit ultrices sit amet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla sed lorem quam. Vivamus in vulputate felis. In eu libero porta, ultricies felis eget, efficitur magna. Nulla tincidunt euismod lorem, ac ornare nibh. In eget diam accumsan, cursus ex vitae, porttitor mauris. Ut sed gravida odio, quis feugiat nulla. Fusce at ipsum id nulla efficitur iaculis. Vivamus at metus magna. Donec blandit, nibh sit amet bibendum pulvinar, arcu turpis auctor lacus, sed dignissim libero libero elementum ex. Cras nibh orci, malesuada non imperdiet quis, rhoncus sodales ipsum. Etiam vitae euismod metus. Duis ut ipsum aliquet sapien auctor rutrum.</p>
+<div class="blank"> </div>
+<div class="blank"></div>
+<div class="blank"></div>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>

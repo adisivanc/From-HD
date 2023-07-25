@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Responsive Nav &middot; IE Support Using Respond.js</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <!--[if lte IE 8]><script src="respond.js"></script><![endif]-->
+    <script src="../../responsive-nav.js"></script>
+  </head>
+  <body>
+
+    <div id="nav">
+      <ul>
+        <li><a href="#" target="_blank">HOME</a></li>
+        <li><a href="#" target="_blank">ABOUT US</a></li>
+        <li><a href="#" target="_blank">SERVICE</a></li>
+        <li><a href="#" target="_blank">PORTFOLIO</a></li>
+        <li><a href="#" target="_blank">TECHNOLOGY</a></li>
+        <li><a href="#" target="_blank">CONTACT US</a></li>
+      </ul>
+    </div>
+
+    <button id="nav-toggle">Menu</button>
+
+    <script>
+      var navigation = responsiveNav("#nav", {
+        customToggle: "#nav-toggle"
+      });
+    </script>
+  </body>
+</html>

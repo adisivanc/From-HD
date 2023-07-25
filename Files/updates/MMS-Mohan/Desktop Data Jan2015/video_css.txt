@@ -1,0 +1,21 @@
+
+/*.yt_video { width:100%; height:115%; }
+.yt_video { position:absolute; bottom:0; min-width:100%; max-width:100%; min-height:100%; width:auto; height:auto; z-index:1; background:#191919; }
+.home_module { width:100%; height:100%; position: absolute; overflow:hidden; border:0px solid red; }
+
+
+.video_container{height:100%;margin-bottom:-104px;background-color:#2b2b2b}
+.ll_video{position:absolute;bottom:105px;min-width:100%;max-width:100%;min-height:100%;width:auto;height:auto;z-index:1;background:#191919}
+.js-video{height:0;padding-top:25px;padding-bottom:67.5%;margin-bottom:10px;position:relative;overflow:hidden}
+.js-video.widescreen{padding-bottom:57.25%}
+.js-video.vimeo{padding-top:0}
+
+@media only screen and (max-width: 1099px){.video_overlay
+
+h1{font-size:32px}.video_overlay h1
+span{margin:6.5% 0;font-size:2.3em;letter-spacing: .1em;display:block}.video_overlay
+h2{font-size:2.4em;line-height:40px;margin:15px
+0 35px 0}
+
+}*/
+

@@ -1,0 +1,129 @@
+
+/* ----------------------Schedule ----------------------------- */ 
+ 
+#schedule{
+	min-height:1750px;
+	background:url('../images/bg/BG-small-hex-1.png'),url('../images/bg/BG-small-hex-2.png'),url('../images/bg/BG-small-hex-3.png'),url('../images/bg/BG-small-hex-4.png'),url('../images/bg/BG-small-hex-5.png');
+	background-repeat: repeat, repeat, repeat, repeat, repeat;
+	background-position: top;
+	/*background-color:rgb(12,79,89);*/
+	background-color:rgba(63,165,172,0.55);
+		background-attachment: fixed,fixed,fixed,fixed,fixed;
+}
+#schedule h2{
+	padding-top:58px;
+	font-size:10em;
+	text-shadow:4px 4px 0 rgba(0,0,0,0.2);
+}
+.slide-pane .slide-pane-wrapper{
+	position:relative;
+	overflow:hidden;
+	width:100%;
+	height:100%;
+	padding:0;
+}
+.slide-pane .auto-cursor{
+	cursor:auto;
+}
+.slide-pane{
+	position:relative;
+	width:100%;
+	height:1750px;
+	margin: 0;
+	padding: 0;
+	overflow:hidden;
+}
+.slide-pane .spacer-mid{
+	display:block;
+	height:18px;
+	width:2px;
+	clear:both;
+	background:rgb(7,62,70);
+}
+.slide-pane .spacer-right{
+	position:absolute;
+	right:-60px;
+	top:135px;
+	display:block;
+	height:2px;
+	width:80px;
+	background:rgb(7,62,70);
+}
+.slide-pane .white{background-position:0 0;}
+.slide-pane .light-blue{background-position:-160px 0;}
+.slide-pane .dark-blue{background-position:-320px 0;}
+.slide-pane .orange{background-position:-480px 0;}
+.slide-pane .speach{background-position:0 -185px;}
+.slide-pane .keynote-white{background-position:-480px -185px;}
+.slide-pane .keynote-light-blue{background-position:-640px -185px;}
+.slide-pane .keynote-dark-blue{background-position:-800px -185px;}
+.slide-pane .keynote-orange{background-position:-960px -185px;}
+.slide-pane .jon-moss{background-position:0 -370px;}
+.slide-pane .evan-davis{background-position:-320px -370px;}
+.slide-pane .elliot-jay-stocks{background-position:-960px -370px;}
+.slide-pane .keir-whitaker{background-position:-1120px -185px;}
+.slide-pane .lunch{background-position:-160px -185px;}
+.slide-pane .simon-mottram{background-position:-160px -370px;}
+.slide-pane .roan-lavery{background-position:-640px -370px;}
+.slide-pane .horace-dediu{background-position:-800px -370px;}
+.slide-pane .refresh{background-position:-320px -185px;}
+.slide-pane .bobby-johnson{background-position:-480px -370px;}
+.slide-pane .fraser-speirs{background-position:-1120px -370px;}
+
+.slide-pane .scrollbar-holder{
+	position:absolute;
+	z-index:30;
+	left:0;
+	right:0;
+	bottom:5px;
+	height:4px;
+	overflow:hidden;
+	background:rgb(6,63,72);
+}
+.slide-pane .scrollbar{
+	position:absolute;
+	left:0;
+	height:4px;
+	bottom:0;
+	background:rgb(243,241,233); 
+}
+
+
+
+@media screen and (min-width: 800px) and (max-width: 959px) {
+
+#schedule{ min-height:1520px; }
+.slide-pane{ height:1520px; }
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 799px) {
+
+#schedule{ min-height:1520px; }
+.slide-pane{ height:1520px; }
+
+}
+
+@media screen and (min-width: 640px) and (max-width: 767px) {
+
+#schedule{ min-height:1680px; }
+.slide-pane{ height:1680px; }
+
+}
+
+@media screen and (min-width: 480px) and (max-width: 639px) {
+
+#schedule{ min-height:2045px; }
+.slide-pane{ height:2045px; }
+
+}
+
+@media screen and (min-width: 320px) and (max-width: 479px) {
+
+#schedule{ min-height:2625px; }
+.slide-pane{ height:2625px; }
+
+}
+
+
+

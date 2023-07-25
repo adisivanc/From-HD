@@ -1,0 +1,164 @@
+@charset "utf-8";
+/* CSS Document */
+
+@font-face {
+    font-family: 'gillsans_lightregular';
+    src: url('gillsans-light-webfont.eot');
+    src: url('gillsans-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('gillsans-light-webfont.woff2') format('woff2'),
+         url('gillsans-light-webfont.woff') format('woff'),
+         url('gillsans-light-webfont.ttf') format('truetype'),
+         url('gillsans-light-webfont.svg#gillsans_lightregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GillSansBoldRegular';
+    src: url('gillsans-bold.eot');
+    src: url('gillsans-bold.eot') format('embedded-opentype'),
+         url('gillsans-bold.woff2') format('woff2'),
+         url('gillsans-bold.woff') format('woff'),
+         url('gillsans-bold.ttf') format('truetype'),
+         url('gillsans-bold.svg#GillSansBoldRegular') format('svg');
+}
+
+@font-face {
+    font-family: 'gillsans_condensedbold';
+    src: url('gillsans-condensed-bold-webfont.eot');
+    src: url('gillsans-condensed-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('gillsans-condensed-bold-webfont.woff2') format('woff2'),
+         url('gillsans-condensed-bold-webfont.woff') format('woff'),
+         url('gillsans-condensed-bold-webfont.ttf') format('truetype'),
+         url('gillsans-condensed-bold-webfont.svg#gillsans_condensedbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'gill_sansregular';
+    src: url('gillsans-webfont.eot');
+    src: url('gillsans-webfont.eot?#iefix') format('embedded-opentype'),
+         url('gillsans-webfont.woff2') format('woff2'),
+         url('gillsans-webfont.woff') format('woff'),
+         url('gillsans-webfont.ttf') format('truetype'),
+         url('gillsans-webfont.svg#gill_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'gillsansmtpro-book';
+    src: url('gillsansmtpro-book.eot');
+    src: url('gillsansmtpro-book.eot?#iefix') format('embedded-opentype'),
+         url('gillsansmtpro-book.woff2') format('woff2'),
+         url('gillsansmtpro-book.woff') format('woff'),
+         url('gillsansmtpro-book.ttf') format('truetype'),
+         url('gillsansmtpro-book.svg#gill_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'gillsansmtpro-medium';
+    src: url('gillsansmtpro-medium.eot');
+    src: url('gillsansmtpro-medium.eot?#iefix') format('embedded-opentype'),
+         url('gillsansmtpro-medium.woff2') format('woff2'),
+         url('gillsansmtpro-medium.woff') format('woff'),
+         url('gillsansmtpro-medium.ttf') format('truetype'),
+         url('gillsansmtpro-medium.svg#gill_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+* html img,
+* html .png{
+position:relative;
+behavior: expression((this.runtimeStyle.behavior="none")&&(this.pngSet?this.pngSet=true:(this.nodeName == "IMG" && this.src.toLowerCase().indexOf('.png')>-1?(this.runtimeStyle.backgroundImage = "none",
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.src + "', sizingMethod='image')",
+this.src = "images/transparent.gif"):(this.origBg = this.origBg? this.origBg :this.currentStyle.backgroundImage.toString().replace('url("','').replace('")',''),
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.origBg + "', sizingMethod='crop')",
+this.runtimeStyle.backgroundImage = "none")),this.pngSet=true)
+);
+}
+
+html {
+    font-size: 100%; /* 1 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+    -ms-text-size-adjust: 100%; /* 2 */
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video { margin:0; padding:0; }
+
+h1, h2, h3, h4, h5, h6 { font-style:normal; font-weight:normal; }
+img { border: 0; -ms-interpolation-mode: bicubic; }
+a { text-decoration:none; }
+
+.txt_semibold { font-family: 'open_sanssemibold'; }
+.txt_bold { font-family: 'open_sansbold'; }
+
+.boxred { border:1px solid #F00; }
+
+
+/*  ---------  Defult  -----------  */
+.no-margin { margin:0; }
+.no-padding { padding:0; }
+.padding_left { padding-left:20px; }
+.margin_left20 { margin-left:20px; } 
+.margin_right20 { margin-right:20px; } 
+
+.font10 { font-size:10px; }
+.font12 { font-size:12px; }
+.font14 { font-size:14px; }
+.font16 { font-size:16px; }
+.font18 { font-size:18px; }
+
+
+/* ------------------- default ---------------- */
+
+body { margin:0 0 0 0; padding:0 0 0 0; font-family: 'gillsansmtpro-book'; background-color:#FFF; font-size:14px; color:#000; }
+
+
+.nav_menu { list-style:none; float:left; }
+.nav_menu li { float:left; border-bottom:1px solid #d5d5d5; }
+.menuitem { width:215px; float:left; padding:10px 0 12px 15px; color:#000000; cursor:pointer; }
+.menuitem img { margin:6px 0 0 0; float:left; border:0px solid red; } 
+.menuname { width:175px; float:right; font-size:18px; padding-right:5px; margin-right:5px; }
+.menuitem:hover, .menu_active { background-color:#47755e; color:#FFFFFF;  }
+ 
+
+/* ------------------- Dashboard ---------------- */
+
+.dash_header_left { width:280px; float:left; color:#919191; font-size:10px; }
+.dash_header_right { float:right; color:#919191; }
+
+.dash_header_left p { padding:10px 0 0 0; }
+.dash_header_left img { float:left; margin-right:7px }
+.dash_header_left span { color:#47755e; font-size:30px; }
+
+.dash_searchbox { width:220px; height:32px; margin-top:15px; border:1px solid #d6d6d6; padding:2px 35px 2px 10px; font-family: 'gillsansmtpro-book'; font-size:15px; color:#8c8989; }
+.dash_header_right div { float:left; }
+.dash_header_right img { margin:24px 0 0 -27px; }
+
+
+
+
+
+
+
+
+

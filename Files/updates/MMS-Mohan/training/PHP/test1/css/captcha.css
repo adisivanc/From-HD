@@ -1,0 +1,65 @@
+/* 
+Recaptcha Style Captcha 
+=======================
+ re-Captcha Style Captcha with php and jQuery 
+ 
+ Created By: Zeeshan Rasool 
+ URL : http://www.99Points.info 
+ 
+ Get JQuery, PHP, AJAX, Codeigniter and MYSQL Tutorials and Demos on Blog
+ */
+ 
+#captcha-wrap{
+	border:solid #cccccc 1px;
+	background:#e0e0e0;
+	text-align:left;
+	padding:3px;
+	margin-top:3px;
+	height:110px;
+	width:230px;
+}
+#captcha-wrap .captcha-box{
+	-webkit-border-radius: 7px;
+	background:#fff;
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+	text-align:center;
+	border:solid #fff 1px;
+}
+#captcha-wrap .text-box{
+	-webkit-border-radius: 7px;
+	background:#ffffff;
+	-moz-border-radius: 7px;
+	width:120px;
+	height:45px;
+	float:left;
+	margin:5px 5px 5px 0;
+	border-radius: 7px;
+	text-align:center;
+	border:solid #b2b2b2 1px;
+	padding-top:5px;
+}
+
+#captcha-wrap .text-box input{ width:100px;}
+#captcha-wrap .text-box label{
+	 color:#000000;
+	 font-family: helvetica,sans-serif;
+	 font-size:12px;	
+	 width:80px;
+	 padding-top:3px; 
+	 padding-bottom:3px; 
+	 
+}
+#captcha-wrap .captcha-action{
+	float:right; 
+	width:100px;
+	background:url(../images/captch_logo.jpg) center right no-repeat;
+	height:44px; margin-top:10px;
+}
+#captcha-wrap  img#captcha-refresh{
+	margin-top:9px;
+	border:solid #e0e0e0 1px;
+	margin-right:6px;
+	cursor:pointer;
+}
+

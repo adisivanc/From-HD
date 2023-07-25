@@ -1,0 +1,123 @@
+<?
+	//$Country_Arr = countries();
+	//$indiastate_Arr = IndiaStateArr();
+	
+	if($_POST['act'] == 'checkEmail')
+	{
+		ob_clean();
+		if($_POST['emailaddress']!='')
+		{
+			if(!(eregi('^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,4}(\.[a-zA-Z]{2,3})?(\.[a-zA-Z]{2,3})?$', $_POST['emailaddress'])))
+			{
+				echo "Please Enter Valid Email";
+			}
+			
+			$user_obj = new Users();
+			$user_obj->emailaddress = trim($_POST['emailaddress']);
+			//
+			$rs_data = $user_obj->CheckIfRegistered();
+			
+			if($rs_data->status == 1)
+			{
+				echo "already exist";
+				exit();
+			}
+			else
+			{
+				ob_clean();
+				echo "new member";
+			}
+		}
+		exit();
+	}
+	
+	
+?>
+
+<form id="regfrm" name="regfrm" method="post">
+<input type="hidden" id="act" name="act" value="Submii" />
+
+<table border="0">
+	<tr><td>Registration</td></tr>
+	<tr><td>Email Address</td>
+		<td><span><input type="text" id="emailaddress" name="emailaddress" onblur="checkmail(this.value)" /></span> <br />
+			<span id="emaildiv" style="color:#FF0000; float:left;"></span>
+		</td>
+	</tr>
+	<tr>
+		<td>Prefix <select id="prefix" name="prefix">
+						<option value="">- Pefix -</option>
+						<option value="Dr.">Dr.</option>
+						<option value="Prof.">Prof.</option>
+						<option value="Mr.">Mr.</option>
+						<option value="Mrs.">Mrs.</option>
+						<option value="Ms.">Ms.</option>
+						<option value="Mss.">Mss.</option>
+				   </select>
+			Name
+		</td>
+		<td><span><input type="text" id="firstname" name="firstname" value=""</span></span></td>
+	</tr>
+	<tr><td>Gender</td><td><input type="radio" id="gender1" name="gender" value="M" /> Male <input type="radio" id="gender2" name="gender" value="F" /> Female </td></tr>
+	<tr><td>Address</td><td><input type="text" id="address1" name="address1" value="" /></td></tr>
+	<tr><td>Country</td><td>
+							<select id="country" name="country">
+								<option value="">- Select Country -</option>
+								<option></option>
+							</select>
+					    </td>
+	</tr>
+	<tr><td>State</td><td>
+							<select id="state" name="state">
+								<option value="">- Select State -</option>
+								<option></option>
+							</select>
+					  </td>
+	</tr>
+	<tr><td>City</td><td>
+							<select id="city" name="city">
+								<option value="">- Select City -</option>
+								<option></option>
+							</select>
+					 </td>
+	</tr>
+	<tr><td>Postal Code</td><td><input type="text" id="postcode" name="postcode" onkeypress="return isNumberKey(event)" /></td></tr>
+	<tr><td>Mobile Number</td><td><input type="text" id="mobileno" name="mobileno" onkeypress="return isNumberKey(event)" /></td></tr>
+	<tr><td>Designation</td><td><input type="text" id="desgn" name="desgn" value="" /></td></tr>
+	<tr><td></td><td><input type="submit" value="Register" onclick="submit_reg()" /></td></tr>
+	
+</table>
+
+</form>
+
+<script type="text/javascript">
+
+function checkmail(email)
+{
+	alert("h");
+	var emailaddress = $('#emailaddress').val();
+	alert(emailaddress);
+	
+	ajax({
+			a:'registration',
+			b:'act=checkEmail&emailaddress='+emailaddress,
+			c:function(){},
+			d:function(data)
+			{
+				//alert(data);
+				if($.trim(data)=='already exist')
+				{
+					$('#emaildiv').show();
+					$('#emailaddress').val('');
+				}
+				else
+				{
+					$('#emaildiv').html('');
+					$('#emaildiv').hide();
+				}
+			}
+		}); 
+}
+
+
+</script>

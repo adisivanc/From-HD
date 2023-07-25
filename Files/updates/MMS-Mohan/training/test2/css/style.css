@@ -1,0 +1,42 @@
+@charset "utf-8";
+/* CSS Document */
+
+* html img,
+* html .png{
+position:relative;
+behavior: expression((this.runtimeStyle.behavior="none")&&(this.pngSet?this.pngSet=true:(this.nodeName == "IMG" && this.src.toLowerCase().indexOf('.png')>-1?(this.runtimeStyle.backgroundImage = "none",
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.src + "', sizingMethod='image')",
+this.src = "images/transparent.gif"):(this.origBg = this.origBg? this.origBg :this.currentStyle.backgroundImage.toString().replace('url("','').replace('")',''),
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.origBg + "', sizingMethod='crop')",
+this.runtimeStyle.backgroundImage = "none")),this.pngSet=true)
+);
+}
+
+body { margin:0 0 0 0; font-family:Arial; color:#000000;  background-color:#d8d8d8; background-image:url(../images/bg.jpg); background-repeat:no-repeat; background-size: cover; -webkit-background-size:cover;  -moz-background-size: cover; -o-background-size: cover; -ms-background-size: cover;    }
+
+img { border:none; }
+
+
+
+#container { width:960px; margin:0 auto;  }
+#header { width:960px; float:left;   }
+#logo { width:745px; float:left; padding-left:10px;  }
+#header_right { width:205px; float:left; }
+#menu { width:1032px; float:left; margin-left:-36px;  }
+#menumiddle { width:960px; background-image:url(../images/menu_bg.png); background-repeat:repeat-x; height:36px; float:left;   }
+#menumiddle a { color:#FFF; text-decoration:none; }
+
+#content { width:960px; float:left; background-color:#FFF;  margin-top:-46px; }
+#heading { width:960px; float:left; background-image:url(../images/faculty_header.jpg); background-repeat:no-repeat; height:152px;  }
+
+#faculty_content { width:960px; float:left; }
+#faculty_contentleft { width:559px; float:left; border:1px solid red; margin-left:23px; }
+#faculty_contentright { width:343px; float:left; margin-left:5px;  border:1px solid red; }
+#footer { width:960px; float:left; background-color:#83b123; }
+
+
+.font_18 { font-size:18px; }
+.font_72 { font-size:72px; }
+.font_bold { font-weight:bold; }
+
+.white { color:#FFF; }

@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<style type="text/css">
+
+#c_map { width:100%; height:500px; float:left; }
+</style>
+
+</head>
+
+<body style="padding:0; margin:0;">
+
+<div class="venue_map">
+	<div id="c_map"></div>
+</div>
+
+<script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyB5XTEauI4Gi-4tCFQduqv57mjC-A69ZIk&sensor=false" type="text/javascript">
+</script> 
+
+<script type="text/javascript">
+
+	function initialize() {
+		if (GBrowserIsCompatible()) {
+			var map = new GMap2(document.getElementById("c_map")/*,
+			
+ 			 { size: new GSize(1183,457) }*/ );
+			var bounds = new GLatLngBounds();
+			var venue_loc= new GLatLng(10.993728,76.996268); 
+ 	
+			map.setUIToDefault();
+			var venueIcon = new GIcon(G_DEFAULT_ICON);
+			venueIcon.image = 'marker_sprite.png';
+			venueIcon.iconSize = new GSize(57, 34);
+			venueIcon.shadow = '';
+			venueMarkerOptions = { icon:venueIcon };
+			var venueMarker = new GMarker(venue_loc, venueMarkerOptions);
+			GEvent.addListener(venueMarker, "click", function() {
+              venueMarker.openInfoWindowHtml(
+
+			  "<div style=\"font-size:12px; font-weight:bold; padding-top:5px;padding-bottom:8px;\"><div style=\"font-size:14px; font-weight:bold; color:#b80505; padding-bottom:5px; \">Renaissance Mumbai<br> Convention Centre Hotel</div> #2 & 3B, Near Chinmayanand Ashram, <br> Powai, Mumbai - 400 087<br> India.<br> Tel: 91-22-6692 7777</div>"
+			  
+			  );
+			});
+			
+		    map.addOverlay(venueMarker);
+			bounds.extend(venue_loc);
+			map.setCenter(venue_loc);
+			/*map.setZoom(map.getBoundsZoomLevel(bounds) - 10);*/
+			map.setZoom(15);
+
+		}
+		
+	}		
+	
+	initialize();
+	
+	
+function showDetail(selVal){
+	
+	$('.moreDetail').hide();
+	$('.mumbaiAttrsRM').show();
+	
+	$('#a'+selVal).hide();
+	$('#m'+selVal).show();
+	
+}
+
+
+function show_mumbai_attractions(){
+	$('.venuehide').hide();
+	$('.mumbai_attractions').show();	
+	$(window).scrollTop(0);
+}
+
+function show_venue(){
+	$('.venuehide').show();
+	$('.mumbai_attractions').hide();	
+	$(window).scrollTop(0);
+}
+
+
+</script>
+
+</body>
+</html>

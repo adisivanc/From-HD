@@ -1,0 +1,31 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+body{ background: #666 top left; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#000; }
+#container{ width:354px; height:390px; margin:100px auto; background: url(../images/widget.png) no-repeat; }
+
+.title{ width:344px; height:40px; line-height:40px; color:#000; font-size:28px; font-weight:bold; padding-left:10px; border:0px solid red; }
+#login{ 
+	width:272px; 
+	height:60px; 
+	line-height:60px; 
+	float:left; 
+	font-size:26px; 
+	font-weight:bold;
+	margin-top:50px; 
+	color:#FFF;
+	text-align:right;
+	padding-right: 80px;
+	border:0px solid red;
+}
+
+.txt_bold{ font-weight:bold;}
+.login_tbl{ float:left; font-size:16px; margin-top:30px;}
+.login_tbl tr td{ padding:10px 0 10px 40px;}
+.txtbox{ width:250px; height:25px; line-height:25px; font-size:16px; font-weight:bold; color:#888; background:#e7e7e7; border:1px groove #575656; border-radius:5px; }
+
+
+
+form .error,form .validation-failed{background:#fae1e1;border-color:#fc0202!important}form .error_message{color:#f27490;font-size:12px}form .select{border:3px solid #e6e7e8}form .select li{color:#acb1b4;background:#fff;font-size:12px;margin:0;padding:5px 10px;border-bottom:1px dotted #e6e7e8;overflow:hidden}form .select li:hover{color:#7b8084;background:#f4f5f7}form .select li.selected{color:#7b8084;background:#f4f5f7;font-weight:700}
+

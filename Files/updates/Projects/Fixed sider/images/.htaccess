@@ -1,0 +1,64 @@
+# For security reasons, Option followsymlinks cannot be overridden.
+#Options +FollowSymLinks
+Options +SymLinksIfOwnerMatch
+RewriteEngine On
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+RewriteBase /
+
+RewriteRule ^index.html$ index.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^our-campus$ yt_grade_school.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-curriculum$ curriculum.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^CONTACT$ contact.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-free-human-being$ free_human_being.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-fundamentals$ yt_fundamentals.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^meet-our-akkas$ teacher.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-rhythm$ yt_rhythm.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^methodology$ yt_methodology.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-practices$ yt_practices.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-belief$ belief.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^press$ press.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-video$ videos.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^join-us$ joinus.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yellow-train-website-launch$ newsletter/website_lanch.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-indian-rollers-termly-express$ newsletter/newsletter/indian_rollers.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^yt-drongos-termly-express$ newsletter/newsletter/drongos.php?%{QUERY_STRING} [QSA,L]
+RewriteRule ^FAQs$ faq.php?%{QUERY_STRING} [QSA,L]
+
+redirect /TEAM /index.html
+redirect /KINDERGARTEN-2 /index.html
+redirect /ABOUT /index.php#slide1
+
+
+RewriteRule ^yt-upcoming-events$ funstop.php?Type=events%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^PICTURE-GALLERY$ funstop.php?Type=gallery%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-christmasbazaar-registration$ funstop.php?Type=reg&EventId=2%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-kidsfestival-registration$ funstop.php?Type=reg&EventId=3%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-kitefestival-registration$ funstop.php?Type=reg&EventId=4%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-marathon-registration$ funstop.php?Type=reg&EventId=5%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-selkietales-registration$ funstop.php?Type=reg&EventId=6%{QUERY_STRING} [QSA,L]
+
+
+RewriteRule ^yt-event-registration-thankyou$ funstop.php?Type=reg&RegStatus=success%{QUERY_STRING} [QSA,L]
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)/css/(.*)$ css/$2 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)/secure/images/(.*)$ secure/images/$2 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)/images/(.*)$ images/$2 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)/js/(.*)$ js/$2 [QSA,L]

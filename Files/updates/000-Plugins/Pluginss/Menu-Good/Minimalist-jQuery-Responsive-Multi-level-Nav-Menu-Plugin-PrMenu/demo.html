@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>jQuery PrMenu Plugin Demo</title>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="jquery.prmenu.js"></script>
+<link type="text/css" rel="stylesheet" href="css/prmenu.css" />
+	<script>
+
+		$(document).ready(function(){
+			$('#top-menu').prmenu();
+		});
+
+	</script>
+	<style>
+
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		.content {
+			width: 90%;
+			max-width: 800px;
+			margin: 50px auto;
+		}
+
+	</style>
+
+</head>
+<body>
+
+<div id="container">
+
+	<ul id="top-menu">
+		<li><a href="#">Home</a></li>
+		<li><a href="#">Services</a> </li>
+		<li><a href="#">Shop</a></li>
+		<li><a href="#">Support</a></li>
+		<li><a href="#">FAQ</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Contact</a></li>
+	</ul>
+
+
+</div><!-- /container -->
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

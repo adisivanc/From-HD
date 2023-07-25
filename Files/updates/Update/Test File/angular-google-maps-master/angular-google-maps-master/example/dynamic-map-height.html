@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/example.css">
+    <link rel="stylesheet" href="css/dynamic-height.css">
+    <script src="js/dev_deps.js"></script>
+    <script src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+    
+    <script data-require="angular.js@1.2.x" src="js/angular.js" ></script>
+    <script src="js/lodash.underscore.js"></script>
+    <script src="js/angular-google-maps.js"></script>
+    <script src="js/dynamic-map-height.js"></script>
+    <title>Map</title>
+</head>
+
+<body>
+
+
+
+
+
+<div data-ng-controller="ctrl" class="middle">
+    <ui-gmap-google-map id="map"
+                        center="map.center"
+                        pan="map.pan"
+                        zoom="map.zoom"
+                        draggable="true"
+                        refresh="map.refresh"
+                        options="{ scrollwheel: false, streetViewControl: false }"
+                        events="map.events"
+                        bounds="map.bounds">
+
+
+        <ui-gmap-map-control template="clear.tpl.html" position="top-right" index="1" controller="mapWidgetCtrl"></ui-gmap-map-control>
+
+        <ui-gmap-free-draw-polygons polygons="map.polys" draw="map.draw" ></ui-gmap-free-draw-polygons>
+    </ui-gmap-google-map>
+    <ul>
+        <li ng-repeat="p in map.polys">{{p.getPath()}}</li>
+    </ul>
+</div>
+
+
+
+
+</body>
+
+</html>

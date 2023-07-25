@@ -1,0 +1,268 @@
+﻿
+
+/* General small screen Mobile 
+============================================================================================== */
+@media handheld, only screen and (max-width: 767px) {
+
+}
+
+/* Large desktop */
+@media (min-width: 1700px)  
+{
+    #gallery .dx-header .rect-border{width: 60%;}
+}
+
+@media (min-width: 1200px) and (max-width: 1500px) 
+{
+    .internal-store{padding:0 20%;}
+    
+}
+/* 1024 - tablet e desktop */
+@media (min-width: 1024px) and (max-width: 1200px) 
+{
+    nav ul          {padding:0 10px;}
+    nav a           {padding:0 10px; margin:0;letter-spacing:0.5px;}
+    nav ul.lang li a{padding:0 5px;}
+    
+    #gallery .sx-header .rect-border{width: 80%;}
+    #gallery .dx-header .rect-border{font-size:13px;width:90%;}
+    
+    
+     h1{font-size:30px;}
+    h2{font-size:22px;}
+    h4{font-size:13px;}
+    
+    #home-social > div .section-text{ height:95px;}
+    #home-newsletter .section-text h2{margin-bottom:0;}
+    #home-social > div .cont-link{height:50px;line-height:50px;}
+    .newsletter input[type="text"]{margin-top:5px;}
+     .internal-store{padding:0 20%;}
+}
+
+/* iPads */
+@media only screen and (max-device-width : 1024px) and (orientation : landscape)
+{
+ nav a           {padding:0 5px; margin:0;letter-spacing:normal;}
+ .text-store{border-top:none;}
+ .item-thumb:hover span{opacity:0;}
+ .internal-store{padding:0 20%;}
+
+}
+     
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 1023px) 
+{
+
+    h1{font-size:30px;}
+    h2{font-size:22px;}
+    h4{font-size:13px;}
+    
+    #header         {height:110px;}
+    #loadLogo{float:none; margin:0 auto;height:50px;}
+    #main{padding-top:110px;}
+    
+    nav             {width:100%; text-align:center;line-height:60px;}
+    nav ul          {padding:0px;display:inline-block;float:none;border:none;}
+    nav a           {padding:0px;}
+    nav ul.lang li a{padding:0 5px;}
+    
+
+    
+    #home-shop{width:30%}
+    #home-social{width:100%}
+    #home-general   {width:70%;}
+    #home-social > div{height:100%;width:50%; float:left;overflow:hidden;}
+    
+    #home-men,#home-women{height:330px;}
+    #home-shop,#home-general {height:300px;}
+    #home-social  {height:200px;}
+
+    
+    .rect-border{width:90%;}
+    .story-cont{width:60%;}
+    .internal-store{padding:0 10%;}
+    
+    
+    .header-section{height:auto;}
+    .sx-header{display:none;}
+    .dx-header{width:100%;position:relative;}
+    .dx-header .rect-border{height:auto; border:none; margin:0px;width:90%; padding:30px 0;}
+    .title-responsive{display:block;margin-bottom:20px;}
+    .title-responsive h2{margin-bottom:5px;}
+    
+    
+    #storia{}
+    
+    #collection-men,#collection-women,#collection-general-sx, #collection-general-dx { width: 100%;}
+    #lookbookWinter{width:55%;}
+    #lookbookSummer{width:45%;}
+    
+    .item img{display:block;}
+    .item-thumb:hover span{opacity:0;}
+    
+    #video-cont{display:none;}
+    
+    .territory-text{padding:0 50px;}
+
+    
+}   
+     
+/* Landscape phone to portrait tablet */
+@media (max-width: 768px)  
+{
+    h1{font-size:30px;}
+    h2{font-size:22px;}
+    h4{font-size:13px;}
+    
+  
+    
+    nav             {width:100%; text-align:center;line-height:60px;}
+    nav ul          {padding:0px;display:inline-block;float:none;border:none;}
+    nav a           {padding:0px;}
+    nav ul.lang li a{padding:0 5px;}
+
+    .rect-border{width:95%;}
+    .story-cont{width:60%;}
+    .internal-store{padding:0 15%;}
+    
+    .header-section{height:auto;}
+    .sx-header{display:none;}
+    .dx-header{width:100%;position:relative;}
+    .dx-header .rect-border{height:auto; border:none; margin:0px;width:100%; padding:30px 0;}
+    .title-responsive{display:block;margin-bottom:20px;}
+    .title-responsive h2{margin-bottom:5px;line-height:30px;}
+    .rect-text{padding:0 20px;}
+    
+    #collection-men,#collection-women,#collection-general-sx, #collection-general-dx { width: 100%;}
+    
+    #lookbookWinter{width:50%;}
+    #lookbookSummer{width:50%;}
+    #gallery-stores .item-internal{width:100%;}
+    
+    
+    .item img{display:none;}
+     #collection-men img,#collection-women img,#collection-general-sx img, #collection-general-dx img{ display:block;}
+
+    #home-women{background-image:url(/images/home/women.jpg);background-size:cover;background-repeat:no-repeat;}
+    #home-men{background-image:url(/images/home/men.jpg);background-size:cover;background-repeat:no-repeat;}
+    #home-general{background-image:url(/images/home/general.jpg);background-size:cover;background-repeat:no-repeat;}
+    
+    #home-men,#home-women{width:50%}
+    #home-shop{width:50%}
+    #home-social{width:100%}
+    #home-general   {width:50%;}
+    #home-social > div{height:100%;width:50%; float:left;overflow:hidden;}
+    
+    #home-men,#home-women{height:300px;}
+    #home-shop,#home-general {height:300px;}
+    #home-social  {height:250px;}
+    .item-thumb:hover span{opacity:0;}
+    
+    #video-cont{display:none;}
+    
+    footer{position:relative; height:auto;}
+    footer .sx, footer .dx{float:none;margin:0; text-align:center;}
+    footer .sx{ border-bottom:1px solid #000;}
+    footer .dx a{border-top:1px solid #333; border-bottom:1px solid #000;display:block;}
+    
+    .item-internal.slice .csi{width:100%;}
+    .cont-lookbook{position:relative;}
+    
+    .territory-text{padding:0 50px;}
+    .riga {width:100%; }
+    .riga .sx{width:100%;float:left;background:#fff;}
+    .riga .dx{width:100%;float:left;background:#fff;}
+
+.text-store{min-height:0;border-top:none;}
+}
+     
+@media (max-width: 760px) 
+{
+    /*sotto la dimensione del tablet portrait*/ 
+    .open-nav{display:block;}
+    /*
+    nav{position:fixed; height:100%; right:0; top:70px;width:30%;background:#362F32;display:none;}
+    nav ul {width:100%;padding:0;}
+    nav li{width:100%;line-height:40px;float:left; display:block;border-bottom:1px solid rgba(255, 255, 255, .1)}
+    nav a{padding:5px 0;}
+*/
+    nav{position:fixed; height:100%; right:-50%; top:70px;width:30%;background:#362F32;display:none;}
+    nav ul {width:100%;padding:0;display:block;}
+    nav li{width:100%;line-height:30px;float:left; display:block;border-bottom:1px solid rgba(255, 255, 255, .1)}
+    nav a{padding:5px 0;color:#777;}
+    nav a:hover:after, nav a.current:after{opacity:0;transform:translateY(0px);}
+    nav a.current:after{}
+    nav a:hover{color:#fff;}
+    nav a{margin:0;}
+    nav ul.lang li a{padding:2px 0}
+    .submenu{position:static; left:0; margin-left:0;width:100%;display:block;padding:0;}
+    .submenu li{background:#3D3538;border-bottom:none;}
+    .submenu li a{border-bottom:none; border-top:1px solid #444;padding:0;}
+    
+    #lookbookWinter{width:100%;height:50%}
+    #lookbookSummer{width:100%;height:50%}
+
+    
+}
+
+
+/* Landscape phones and down */
+@media (max-width: 480px)  
+{
+
+    .rect-border{width:90%;}
+
+    .open-nav{display:block;}
+    nav{position:fixed; height:100%; right:-50%; top:70px;width:50%;background:#362F32;display:none;}
+    nav ul {width:100%;padding:0;display:block;}
+    nav li{width:100%;line-height:30px;float:left; display:block;border-bottom:1px solid rgba(255, 255, 255, .1)}
+    nav a{padding:2px 0;}
+    nav a:hover:after, nav a.current:after{opacity:0;transform:translateY(0px);}
+    nav a.current:after{}
+    nav a{margin:0;}
+    nav ul.lang li a{padding:2px 0}
+
+    
+    
+    .cont-link{border:none;}
+    .section-text,.dark-text .section-text{border-top:none;}
+    .section-text{height:100px; padding:0;}
+    #home-general .section-text{height:130px;}
+
+    .item-thumb{width:100%;}
+    .item-thumb:hover span { opacity:0;}
+    
+    .space{display:none;}
+    #gallery-stores .item-internal{width:100%;}
+    .item-thumb:hover span{opacity:0;}
+
+    .block{position:static;}
+    .mask{width:190px; height:190px; overflow:hidden; border-radius:190px; -webkit-border-radius:190px;margin:0 auto;}
+    .mask img{width:100%;}
+
+    #home-men,#home-women{width:100%}
+    #home-shop,#home-general {width:100%}
+    #home-social  {width:100%}
+    #home-social  {height:500px;}
+    #home-social > div{height:50%;width:100%; float:left;overflow:hidden;}
+    
+    .contact-center{width:90%}
+    .cont-text.right-side{right:auto; left:30px;}
+    .cont-text{margin-top:-65px;}
+    
+    .cont-link{height:45px; line-height:45px;}
+    .header-overflow h3{float: none;font-size: 12px;line-height: 18px;padding-left: 40px;padding-right: 20px;padding-top: 17px;}    
+    .header-overflow a{left:0;}
+    
+    ul.list-link{padding-bottom:30px;min-height:0;}
+    ul.list-link li{background:none;}
+    ul.list-link li a,ul.list-link li a:hover{padding:10px 10px 10px 0;}
+    .text-store{min-height:0;border-top:none;}
+    .item-store{width:100%;position:relative;height:auto;}
+    
+    
+    .riga {width:100%; }
+    .riga .sx{width:100%;float:left;background:#fff;}
+    .riga .dx{width:100%;float:left;background:#fff;}
+    .territory-text{padding:0 20px;}
+}

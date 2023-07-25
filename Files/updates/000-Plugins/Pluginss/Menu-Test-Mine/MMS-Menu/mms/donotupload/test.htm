@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="css/stylesheet.css" rel="stylesheet" type="text/css">
+<link href="css/css.css" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script>
+		$(function() {
+			var pull 		= $('#pull');
+				menu 		= $('nav ul');
+				menuHeight	= menu.height();
+
+			$(pull).on('click', function(e) {
+				e.preventDefault();
+				menu.slideToggle();
+			});
+
+			$(window).resize(function(){
+        		var w = $(window).width();
+        		if(w > 320 && menu.is(':hidden')) {
+        			menu.removeAttr('style');
+        		}
+    		});
+		});
+	</script>
+
+<link href="css/normalize.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<nav class="clearfix">
+<ul class="clearfix" id="menu">
+<li><a href="index.html">HOME</a></li>
+<li><a href="aboutus.html">ABOUT US</a></li>
+<li><a href="services.html">SERVICE</a></li>
+<li><a href="#">PORTFOLIO</a><a href="#">TECHNOLOGY</a></li>
+<li><a href="#">METHODOLOGY</a><a href="contactus.html">CONTACT US</a></li>
+</ul>
+<a href="#" id="pull">Menu</a>
+</nav>
+
+
+
+</body>
+</html>

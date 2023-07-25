@@ -1,0 +1,1021 @@
+@charset "utf-8";
+/* CSS Document */
+
+@media screen and (min-width: 1024px) and (max-width: 1199px) {
+
+
+/* ----- Slide ----- */
+
+.slide_container h2 { font-size:65px; }
+.slide_container h3 { font-size:38px; }
+.slide_container h4 { font-size:30px; }
+
+.logo { padding:0 39px 0 30px; }
+.header_container { background:url(../images/header1_top.png) no-repeat center top; }
+.logo_mini { left:53px; }
+.logo_mini img { max-width:425px; min-height:47px; }
+
+.slideinfo_outer { padding:45px 0 0 0; }
+.info_descp div { font-size:21px; }
+
+
+.aboutbtn {  width:65.2%; left:34.8%; }
+
+
+/* ----- Venue ----- */
+
+.venue_container img { width:100%; float:left; }
+
+
+/* ----- Parallelx ----- */
+
+#innerslide5 .parallax_inner { height:1460px; }
+
+
+/* ----- Team ----- */
+
+.teamrow1 { list-style-type:none; margin:11px 0 0 105px; }
+.boxouter { width:78%; }
+.triangle { width:7%; }
+
+
+
+/* ----- Contact ----- */
+
+#c_map { height:525px; }
+
+
+
+/* ----- About Coimbatore ----- */
+
+.abtcbe_inner { width:96%; padding:10px 2%; }
+.abtcbe_inner > img { max-width:230px; }
+
+
+}
+
+
+
+@media screen and (min-width: 960px) and (max-width: 1023px) {
+
+
+
+.team h1, .venue h1, .contact h1, .speakers h1, .aboutpts h1 { font-size:52px; }
+
+
+/* ----- Slide ----- */
+
+.logo { padding:0 29px 0 20px; }
+.header_container { background:url(../images/header1_top.png) no-repeat center top; }
+.logo_mini { left:40px; }
+.logo_mini img { max-width:425px; min-height:47px; }
+
+.header_container { font-size:15px; }
+
+.slide_container h2 { font-size:60px; }
+.slide_container h3 { font-size:36px; padding-top:10px; }
+.slide_container h4 { font-size:28px; padding-top:15px; }
+
+.info_count { font-size:60px; padding-right:7px; }
+.info_descp { font-size:28px; }
+.info_descp div { font-size:21px; }
+
+
+.aboutbtn {  width:66%; left:34%; }
+
+
+
+/* ----- Venue ----- */
+
+.venue_container img { width:100%; float:left; }
+
+
+/* ----- Parallelx ----- */
+
+#innerslide5 .parallax_inner { height:1560px; }
+
+
+
+/* ----- Topics ----- */
+
+.topics h2 { font-size:30px; }
+.topics ul li {  padding:7px 0; width:50%; }
+
+
+
+/* ----- Team ----- */
+
+.teamrow1 { list-style-type:none; margin:10px 0 0 115px; }
+.teamrow1 li { width:50%; font-size:17px; }
+.teamrow1 li span { font-size:15px; }
+
+
+.boxouter { width:78%; }
+.hexagon_info { font-size:24px; left:59px; top:45px; }
+.hexagon_info1 { font-size:24px; left:59px; top:78px; }
+.hexagon_info2 { font-size:24px; left:59px; top:59px; }
+.triangle { width:7%; }
+
+
+
+/* ----- Contact ----- */
+
+#c_map { height:525px; }
+
+
+/* ----- About Coimbatore ----- */
+
+.cbeparag { min-height:172px; }
+.abtcbe_inner { width:96%; padding:10px 2%; }
+.abtcbe_inner > img { max-width:230px; }
+
+
+
+/* ----- Popup ----- */
+
+.spkrpopup_cntr { width:900px; }
+
+
+
+
+
+
+
+
+}
+
+
+
+@media screen and (min-width: 800px) and (max-width: 959px) {
+
+
+
+.team h1, .venue h1, .contact h1, .speakers h1, .aboutpts h1 { font-size:44px; }
+
+
+.logo_mobile { position:relative; z-index:2; margin-top:80px; left:150px; display:block; }
+
+/* ----- Menu ----- */
+
+
+.menu_outer { padding-top:10px; position:absolute; z-index:6; }
+.menubg { background:url(../images/menu_bg.png) repeat center center; font-weight:bold; height:55px; }
+.menu_content { max-width:1200px; width:100%; margin:5px auto 15px auto; }
+#logopart { display:none; }
+
+
+/* ----- Slide ----- */
+
+.logo { padding:0 29px 0 17px; }
+.header_container { background:#4f4f4f url(../images/headder1_top.png) no-repeat center top; }
+.logo_mini { float:left; position:relative; left:127px; display:none; top:100px; }
+
+
+.header_container { font-size:15px; position:relative; }
+
+.slide { position:relative; top:80px; z-index:1; }
+.slide_container h2 { font-size:48px; }
+.slide_container h3 { font-size:28px; padding-top:10px; }
+.slide_container h4 { font-size:23px; padding-top:27px; }
+
+.info_count { font-size:48px; padding-right:7px; }
+.info_descp { font-size:25px; }
+.info_descp div { font-size:17px; }
+
+.slide_inner {  height:625px; }
+
+
+
+/* ----- About ----- */
+
+.about_left { width:100%; padding:0 0 0 0; }
+.about_right { width:100%; }
+.solutionpts { width:98%; margin:0 1%; }
+.about_head { font-size:21px; }
+
+.aboutbtn { width:66.7%; top:-37px; left:33.3%; }
+.aboutbtn_in { font-size:30px; left:95px; top:3px; }
+
+
+/* ----- Venue ----- */
+
+
+.venue { padding:0px 0 25px 0;  }
+.venue_container img { width:100%; float:left; }
+
+.venue h1 { position:relative; top:0px; }
+
+
+
+/* ----- Parallelx ----- */
+
+#innerslide1 .parallax_inner { height:1410px; }
+
+#innerslide5 .parallax_inner { height:1795px; }
+
+#innerslide7 .parallax_inner { height:1485px; }
+
+
+/* ----- Topics ----- */
+
+.topics h2 { font-size:27px; }
+.topics ul li {  padding:7px 0; width:50%; }
+
+
+/* ----- Speakers ----- */
+
+.speakers h2 { font-size:27px; padding:10px 0 15px 0; }
+.speaker_container { padding:20px 0 30px 0; }
+.speaker_info { width:50%; padding:7px 0; }
+
+.speakers h1 { position:relative; top:0px; }
+
+
+
+/* ----- Team ----- */
+
+
+.team { padding:135px 0 30px 0; }
+
+.teamrow1 { list-style-type:none; margin:21px 0 0 135px; }
+.teamrow1 li { width:50%; font-size:15px; line-height:22px; }
+.teamrow1 li span { font-size:15px; display:none; }
+
+
+.founder_img { width:50%; float:left; text-align:right; }
+.founder_info { width:50%; float:left; }
+
+.chief_patron { width:80%; padding:65px 0 0 10%; margin:0 10% 0 0; }
+.chief_patron h3 { font-size:23px; }
+.chief_patron h4 { font-size:22px; }
+
+
+.boxouter { width:77%; }
+.hexagon_info { font-size:22px; left:64px; top:52px; }
+.hexagon_info1 { font-size:22px; left:64px; top:82px; }
+.hexagon_info2 { font-size:22px; left:66px; top:69px; }
+.triangle { width:8%; }
+
+
+
+/* ----- Contact ----- */
+
+#c_map { height:425px; }
+
+.contact_left { width:100%; padding:0 0 0 0; }
+.contact_right { width:100%; padding:0 0 0 0; }
+
+.secretariat_left { width:98%; padding:0 1% 0 1%; }
+.secretariat_right { width:98%; padding:0 1% 0 1%; }
+
+
+/* ----- Hide ----- */
+
+.welcometop, .welcome_bottom, .speakertop, .speaker_bottom, .venue_top, .contact_top { display:none; }
+
+
+
+/* ----- About Coimbatore ----- */
+
+.abtcbe_col { width:50%; float:left; }
+.cbeparag { min-height:110px; }
+.abtcbe_inner { width:96%; padding:10px 2%; }
+.abtcbe_inner > img { max-width:260px; }
+
+.aboutcbe h1 { font-size:45px; padding-bottom:2px; }
+.aboutcbe h2 { font-size:25px; padding-bottom:15px; }
+
+
+
+/* ----- Popup ----- */
+
+.spkrpopup_cntr { width:760px; }
+.popup_left img { width:100%; float:left; }
+
+
+
+}
+
+
+
+@media screen and (min-width: 768px) and (max-width: 799px) {
+
+
+.team h1, .venue h1, .contact h1, .speakers h1, .aboutpts h1 { font-size:44px; }
+
+.logo_mobile { position:relative; z-index:2; margin-top:70px; left:135px; display:block; }
+
+.content { width:97%; margin:0 auto; }
+
+/* ----- Menu ----- */
+
+.menu_outer { padding-top:10px; position:absolute; z-index:6; }
+.menubg { background:url(../images/menu_bg.png) repeat center center; font-weight:bold; height:55px; }
+.menu_content { max-width:1200px; width:100%; margin:5px auto 15px auto; }
+#logopart { display:none; }
+
+
+
+
+
+/* ----- Slide ----- */
+
+
+.slide { position:relative; top:80px; z-index:1; }
+
+.logo { padding:0 29px 0 17px; }
+.header_container { background:#4f4f4f url(../images/headder1_top.png) no-repeat center top; }
+
+.logo_mini { left:40px; }
+.logo_mini img { max-width:425px; min-height:47px; }
+
+.header_container { font-size:15px; position:relative; }
+
+.slide_container h2 { font-size:48px; }
+.slide_container h3 { font-size:28px; padding-top:10px; }
+.slide_container h4 { font-size:23px; padding-top:27px; }
+
+.info_count { font-size:48px; padding-right:7px; }
+.info_descp { font-size:25px; }
+.info_descp div { font-size:17px; }
+
+.slide_inner {  height:625px; }
+
+
+
+/* ----- About ----- */
+
+.about_left { width:100%; padding:0 0 0 0; }
+.about_right { width:100%; }
+.solutionpts { width:98%; margin:0 1%; }
+.about_head { font-size:21px; }
+
+.aboutbtn { width:66.7%; top:-37px; left:33.3%; }
+.aboutbtn_in { font-size:30px; left:95px; top:3px; }
+
+
+/* ----- Venue ----- */
+
+
+.venue { padding:0px 0 25px 0;  }
+.venue_container img { width:100%; float:left; }
+
+.venue h1 { position:relative; top:0px; }
+
+
+
+/* ----- Parallelx ----- */
+
+#innerslide1 .parallax_inner { height:1410px; }
+
+#innerslide5 .parallax_inner { height:1825px; }
+
+#innerslide7 .parallax_inner { height:1485px; }
+
+
+/* ----- Topics ----- */
+
+.topics h2 { font-size:27px; }
+.topics ul li {  padding:7px 0; width:50%; }
+
+
+/* ----- Speakers ----- */
+
+.speakers h2 { font-size:27px; padding:10px 0 15px 0; }
+.speaker_container { padding:20px 0 30px 0; }
+.speaker_info { width:50%; padding:7px 0; }
+
+.speakers h1 { position:relative; top:0px; }
+
+
+
+/* ----- Team ----- */
+
+
+.team { padding:135px 0 30px 0; }
+
+.teamrow1 { list-style-type:none; margin:17px 0 0 137px; }
+.teamrow1 li { width:50%; font-size:15px; line-height:22px; }
+.teamrow1 li span { font-size:15px; display:none; }
+
+
+.founder_img { width:50%; float:left; text-align:right; }
+.founder_info { width:50%; float:left; }
+
+.chief_patron { width:80%; padding:65px 0 0 10%; margin:0 10% 0 0; }
+.chief_patron h3 { font-size:23px; }
+.chief_patron h4 { font-size:22px; }
+
+
+.boxouter { width:77%; }
+.hexagon_info { font-size:22px; left:64px; top:52px; }
+.hexagon_info1 { font-size:22px; left:64px; top:82px; }
+.hexagon_info2 { font-size:22px; left:66px; top:69px; }
+.triangle { width:8%; }
+
+
+
+/* ----- Contact ----- */
+
+#c_map { height:425px; }
+
+.contact_left { width:100%; padding:0 0 0 0; }
+.contact_right { width:100%; padding:0 0 0 0; }
+
+.secretariat_left { width:98%; padding:0 1% 0 1%; }
+.secretariat_right { width:98%; padding:0 1% 0 1%; }
+
+
+/* ----- Hide ----- */
+
+.welcometop, .welcome_bottom, .speakertop, .speaker_bottom, .venue_top, .contact_top { display:none; }
+
+#logopart { display:none; }
+
+
+
+/* ----- About Coimbatore ----- */
+
+.abtcbe_col { width:50%; float:left; }
+.cbeparag { min-height:110px; }
+.abtcbe_inner { width:96%; padding:10px 2%; }
+.abtcbe_inner > img { max-width:260px; }
+
+.aboutcbe h1 { font-size:42px; padding-bottom:3px; }
+.aboutcbe h2 { font-size:23px; padding-bottom:15px; }
+
+
+
+/* ----- Popup ----- */
+
+.spkrpopup_cntr { width:700px; }
+.popup_left { width:29%; padding-left:1%; }
+.popup_left img { width:100%; float:left; }
+.popup_right { width:68%; }
+
+.popup_right h3 { font-size:20px; }
+.popup_right p { font-size:15px; padding:15px 0 0 0; }
+
+}
+
+
+
+
+@media screen and (min-width: 640px) and (max-width: 767px) {
+
+
+
+.team h1, .venue h1, .contact h1, .speakers h1, .aboutpts h1 { font-size:42px; }
+
+.logo_mobile { position:relative; z-index:2; margin-top:70px; left:45px; display:block; }
+.content { width:96%; margin:0 auto; }
+
+
+/* ----- Menu ----- */
+
+.menu_outer { padding-top:10px; position:absolute; z-index:6; }
+.menubg { background:url(../images/meenufull_bg.png) no-repeat center center; }
+.menu_content { max-width:1200px; width:100%; margin:5px auto 15px auto; }
+#logopart { display:none; }
+
+
+
+/* ----- Slide ----- */
+
+.slide { position:relative; top:80px; z-index:1; }
+.logo { padding:0 29px 0 17px; }
+.header_container { background:#4f4f4f url(../images/headder1_top.png) no-repeat center top; }
+.header_container { font-size:15px; position:relative; }
+
+.logo_mini { left:40px; }
+.logo_mini img { max-width:425px; min-height:47px; }
+
+.header_container { font-size:15px; }
+.slide_info { width:50%; float:left; }
+.infotbl3 { margin:10px 0 0 30%; }
+
+.slide_container h2 { font-size:36px; }
+.slide_container h3 { font-size:24px; padding-top:10px; }
+.slide_container h4 { font-size:20px; padding-top:27px; }
+
+.info_count { font-size:36px; padding-right:7px; }
+.info_descp { font-size:22px; }
+.info_descp div { font-size:16px; }
+
+.slide_inner {  height:625px; }
+
+
+
+/* ----- About ----- */
+
+.about_left { width:100%; padding:0 0 0 0; }
+.about_right { width:100%; }
+.solutionpts { width:98%; margin:0 1%; }
+.about_head { font-size:18px; }
+
+.aboutbtn { width:72.7%; top:-37px; left:27.3%; }
+.aboutbtn_in { font-size:30px; left:95px; top:3px; }
+
+
+/* ----- Venue ----- */
+
+
+.venue { padding:0px 0 25px 0;  }
+.venue_container img { width:100%; float:left; }
+
+.venue h1 { position:relative; top:0px; }
+.venue h2 { font-size:20px; }
+
+
+/* ----- Parallelx ----- */
+
+#innerslide1 .parallax_inner { height:1410px; }
+#innerslide5 .parallax_inner { height:2135px; }
+#innerslide7 .parallax_inner { height:1480px; }
+
+
+/* ----- Topics ----- */
+
+.topics h2 { font-size:21px; }
+.topics ul li {  padding:6px 0; width:100%; line-height:23px; }
+
+
+/* ----- Speakers ----- */
+
+.speakers h2 { font-size:22px; padding:10px 0 15px 0; }
+.speaker_container { padding:20px 0 30px 0; }
+.speaker_info { width:50%; padding:7px 0; }
+
+.speakers h1 { position:relative; top:0px; }
+
+
+
+/* ----- Team ----- */
+
+
+.team { padding:135px 0 30px 0; }
+
+.teamrow1 { list-style-type:none; margin:19px 0 10px 15px; float:left; }
+.teamrow1 li { width:50%; font-size:15px; line-height:22px; padding:7px 0; }
+.teamrow1 li span { font-size:15px; display:none; }
+
+
+.founder_img { width:50%; float:left; text-align:right; }
+.founder_info { width:50%; float:left; }
+
+.chief_patron { width:80%; padding:65px 0 0 10%; margin:0 10% 0 0; }
+.chief_patron h3 { font-size:23px; }
+.chief_patron h4 { font-size:22px; }
+
+
+.boxouter { width:99.5%; margin-left:0; background:#3fa5ac url(../images/box_linne.png) repeat-x; height:auto; border:2px solid #FFFFFF; }
+.hexagon_info { width:100%; float:left; position:relative; font-size:18px; left:0; top:0; padding:17px 0 10px 0; border-bottom:1px dashed #FFFFFF; }
+.hexagon_info1 { width:100%; float:left; position:relative; font-size:18px; left:0; top:0; padding:17px 0 10px 0; border-bottom:1px dashed #FFFFFF; }
+.hexagon_info2 { width:100%; float:left; position:relative; font-size:18px; left:0; top:0; padding:17px 0 10px 0; border-bottom:1px dashed #FFFFFF; }
+
+.hexagon_info br, .hexagon_info1 br, .hexagon_info2 br { display:none; }
+
+.triangle { display:none; }
+.hexagon { display:none; }
+
+
+
+
+
+/* ----- Contact ----- */
+
+#c_map { height:325px; }
+
+.contact_left { width:100%; padding:0 0 0 0; }
+.contact_right { width:100%; padding:0 0 0 0; }
+
+.secretariat_left { width:98%; padding:0 1% 0 1%; }
+.secretariat_right { width:98%; padding:0 1% 0 1%; }
+
+
+/* ----- Hide ----- */
+
+.welcometop, .welcome_bottom, .speakertop, .speaker_bottom, .venue_top, .contact_top { display:none; }
+
+#logopart { display:none; }
+
+
+/* ----- About Coimbatore ----- */
+
+.abtcbe_col { width:50%; float:left; }
+.cbeparag { min-height:130px; }
+.abtcbe_inner { width:96%; padding:10px 2%; }
+.abtcbe_inner > img { max-width:260px; }
+
+.aboutcbe h1 { font-size:36px; padding-bottom:3px; }
+.aboutcbe h2 { font-size:20px; padding-bottom:15px; }
+
+
+
+/* ----- Popup ----- */
+
+.spkrpopup_cntr { width:600px; }
+.popup_left { width:29%; padding-left:1%; }
+.popup_left img { width:100%; float:left; margin-top:20px; }
+.popup_right { width:68%; }
+
+.popup_right h3 { font-size:20px; }
+.popup_right p { font-size:15px; padding:15px 0 0 0; }
+
+
+}
+
+
+
+@media screen and (min-width: 480px) and (max-width: 639px) {
+
+
+.team h1, .venue h1, .contact h1, .speakers h1, .aboutpts h1 { font-size:36px; }
+
+.logo_mobile { position:relative; z-index:2; margin-top:85px; left:0px; display:block; }
+.logo_mobile  img { width:100%; float:left; }
+
+.content { max-width:1200px; width:95%; margin:0 auto; }
+
+
+/* ----- Welcome ----- */
+
+.welcome_footer div { font-size:16px; }
+.welcome_footer1 div { font-size:16px; }
+
+
+/* ----- Menu ----- */
+
+.menu_outer { padding-top:10px; position:absolute; z-index:6; top:115px; }
+.menubg { background:url(../images/meenufull_bg.png) no-repeat center center; }
+.menu_content { max-width:1200px; width:100%; margin:5px auto 15px auto; }
+#logopart { display:none; }
+
+.header_left { width:100%; float:left; text-align:center; }
+.header_right { width:100%; float:left; text-align:center; }
+
+
+/* ----- Slide ----- */
+
+.slide { position:relative; top:80px; z-index:1; }
+.slide_container { padding-top:0px; }
+.logo { padding:0 29px 0 17px; }
+.header_container { background:#4f4f4f url(../images/headder1_top.png) no-repeat center top; height:80px; }
+.header_container { font-size:14px; position:relative; }
+.logo_mini { left:40px; }
+.logo_mini img { max-width:425px; min-height:47px; }
+
+.header_container { font-size:15px; }
+.slide_info { width:50%; float:left; }
+.infotbl3 { margin:10px 0 0 30%; }
+
+.slide_container h2 { font-size:32px; }
+.slide_container h3 { font-size:22px; padding-top:10px; }
+.slide_container h4 { font-size:18px; padding-top:27px; }
+
+.info_count { font-size:32px; padding-right:7px; }
+.info_descp { font-size:20px; }
+.info_descp div { font-size:15px; }
+
+.slide_inner {  height:625px; }
+
+
+
+/* ----- About ----- */
+
+.about_left { width:100%; padding:0 0 0 0; }
+.about_right { width:100%; }
+.solutionpts { width:98%; margin:0 1%; }
+.about_head { font-size:18px; text-align:justify; }
+.about_head br { display:none; }
+
+.aboutbtn { width:82.7%; top:-37px; left:17.3%; }
+.aboutbtn_in { font-size:30px; left:95px; top:3px; }
+
+
+/* ----- Venue ----- */
+
+
+.venue { padding:0px 0 25px 0;  }
+.venue_container img { width:100%; float:left; }
+
+.venue h1 { position:relative; top:0px; }
+.venue h2 { font-size:17px; }
+
+
+/* ----- Parallelx ----- */
+
+#innerslide1 .parallax_inner { height:1410px; }
+#innerslide5 .parallax_inner { height:2460px; }
+#innerslide7 .parallax_inner { height:1990px; }
+
+
+/* ----- Topics ----- */
+
+.topics h2 { font-size:21px; }
+.topics ul li {  padding:6px 0; width:100%; line-height:23px; }
+
+
+/* ----- Speakers ----- */
+
+.speakers h2 { font-size:18px; padding:10px 0 15px 0; }
+.speaker_container { padding:20px 0 30px 0; }
+.speaker_info { width:100%; padding:7px 0; }
+
+.speakers h1 { position:relative; top:0px; }
+
+
+
+/* ----- Team ----- */
+
+
+.team { padding:135px 0 30px 0; }
+.team_info { width:100%; float:left; text-align:center; padding:7px 0; }
+
+.teamrow1 { list-style-type:none; margin:11px 0 0 20px; padding:10px 0; float:left; }
+.teamrow1 li { width:50%; font-size:14px; line-height:22px; }
+.teamrow1 li span { font-size:15px; display:none; }
+
+
+.founder_img { width:50%; float:left; text-align:right; }
+.founder_img img { width:100%; float:left; }
+.founder_info { width:50%; float:left; }
+
+.chief_patron { width:80%; padding:65px 0 0 10%; margin:0 10% 0 0; }
+.chief_patron h3 { font-size:20px; }
+.chief_patron h4 { font-size:17px; }
+.chief_patron p { font-size:15px; }
+
+.boxouter { width:99.5%; margin-left:0; background:#3fa5ac url(../images/box_linne.png) repeat-x; height:auto; border:2px solid #FFFFFF; }
+.hexagon_info { width:100%; float:left; position:relative; font-size:18px; left:0; top:0; padding:17px 0 10px 0; border-bottom:1px dashed #FFFFFF; }
+.hexagon_info1 { width:100%; float:left; position:relative; font-size:18px; left:0; top:0; padding:17px 0 10px 0; border-bottom:1px dashed #FFFFFF; }
+.hexagon_info2 { width:100%; float:left; position:relative; font-size:18px; left:0; top:0; padding:17px 0 10px 0; border-bottom:1px dashed #FFFFFF; }
+
+.hexagon_info br, .hexagon_info1 br, .hexagon_info2 br { display:none; }
+
+.triangle { display:none; }
+.hexagon { display:none; }
+
+
+/* ----- Contact ----- */
+
+#c_map { height:275px; }
+
+.contact_left { width:100%; padding:0 0 0 0; }
+.contact_right { width:100%; padding:0 0 0 0; }
+
+.secretariat_left { width:98%; padding:0 1% 0 1%; }
+.secretariat_right { width:98%; padding:0 1% 0 1%; }
+
+.textleft { width:100%; float:left; }
+.textright { width:100%; float:left; }
+
+
+.txtbox { width:95%; padding:7px 5px; margin-top:5px; border:1px solid #3fa5ac; outline:none; font-family: 'newsgoth_btroman'; font-size:18px; color:#777777; border-radius:4px; }
+.txtarea { width:95%; padding:9px 7px; margin-top:5px; height:130px;  border:1px solid #3fa5ac; outline:none; font-family: 'newsgoth_btroman'; font-size:18px; color:#777777; border-radius:4px; }
+.submitbtn { color:#FFFFFF; float:right; padding:10px 24px; border-radius:5px; cursor:pointer; }
+
+
+/* ----- Hide ----- */
+
+.welcometop, .welcome_bottom, .speakertop, .speaker_bottom, .venue_top, .contact_top { display:none; }
+
+#logopart { display:none; }
+
+
+/* ----- About Coimbatore ----- */
+
+.abtcbe_col { width:100%; float:left; }
+.abtcbe_inner { width:96%; padding:10px 2%; }
+.abtcbe_inner > img { max-width:260px; }
+.cbeparag { width:94%; padding:10px 3%; font-size:15px; }
+
+.aboutcbe h1 { font-size:28px; padding-bottom:3px; }
+.aboutcbe h2 { font-size:18px; padding-bottom:15px; }
+
+
+/* ----- Popup ----- */
+
+.spkrpopup_cntr { width:375px; }
+.popup_left { width:78%; padding:0 11%; }
+.popup_left img { width:100%; float:left; margin-top:30px; }
+.popup_right { width:98%; }
+
+.popup_right h3 { font-size:20px; }
+.popup_right p { font-size:15px; padding:15px 0 0 0; }
+
+
+/* ----- Footer ----- */
+
+.footer_left { width:100%; float:left; text-align:center; padding-bottom:10px; }
+.footer_right { width:100%; float:left; text-align:center; }
+
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 479px) {
+
+
+
+.team h1, .venue h1, .contact h1, .speakers h1, .aboutpts h1 { font-size:36px; }
+
+.logo_mobile { position:relative; z-index:2; margin-top:85px; left:0px; display:block; }
+.logo_mobile  img { width:100%; float:left; }
+
+.content { max-width:1200px; width:94%; margin:0 auto; }
+
+/* ----- Menu ----- */
+
+.menu_outer { padding-top:10px; position:absolute; z-index:6; top:115px; }
+.menubg { background:url(../images/meenufull_bg.png) no-repeat center center; }
+.menu_content { max-width:1200px; width:100%; margin:5px auto 15px auto; }
+#logopart { display:none; }
+
+.header_left { width:100%; float:left; text-align:center; }
+.header_right { width:100%; float:left; text-align:center; }
+
+
+
+/* ----- Slide ----- */
+
+.slide { position:relative; top:80px; z-index:1; }
+
+.slide_container { padding-top:0px; }
+.logo { padding:0 29px 0 17px; }
+.header_container { background:#4f4f4f url(../images/headder1_top.png) no-repeat center top; height:80px; }
+.header_container { font-size:14px; position:relative; }
+.logo_mini { left:40px; }
+.logo_mini img { max-width:425px; min-height:47px; }
+
+.header_container { font-size:15px; }
+.slide_info { width:100%; float:left; }
+.infotbl1 { margin:10px 0 0 20%; }
+.infotbl2 { margin:15px 0 0 20%; }
+.infotbl3 { margin:15px 0 0 20%; }
+
+.slide_container h2 { font-size:20px; }
+.slide_container h3 { font-size:20px; padding-top:10px; }
+.slide_container h4 { font-size:17px; padding-top:27px; }
+
+.info_count { font-size:32px; padding-right:7px; }
+.info_descp { font-size:20px; }
+.info_descp div { font-size:15px; }
+
+.slide_inner {  height:625px; }
+
+.slideinfo_outer { padding:25px 0 0 0; }
+
+
+/* ----- Welcome ----- */
+
+.welcome_footer div { font-size:16px; }
+.welcome_footer1 div { font-size:16px; }
+
+
+/* ----- About ----- */
+
+.about_left { width:100%; padding:0 0 0 0; }
+.about_right { width:100%; }
+.solutionpts { width:98%; margin:0 1%; }
+.about_head { font-size:18px; text-align:justify; }
+.about_head br { display:none; }
+
+.aboutbtn { width:97.7%; top:-37px; left:2.3%; }
+.aboutbtn_in { font-size:30px; left:95px; top:3px; }
+
+
+/* ----- Venue ----- */
+
+
+.venue { padding:0px 0 25px 0;  }
+.venue_container img { width:100%; float:left; }
+
+.venue h1 { position:relative; top:0px; }
+.venue h2 { font-size:16px; }
+
+
+/* ----- Parallelx ----- */
+
+#innerslide1 .parallax_inner { height:1410px; }
+#innerslide5 .parallax_inner { height:3300px; }
+#innerslide7 .parallax_inner { height:2550px; }
+
+
+/* ----- Topics ----- */
+
+.topics h2 { font-size:18px; }
+.topics ul li {  padding:6px 0; width:100%; line-height:23px; }
+
+
+/* ----- Speakers ----- */
+
+.speakers h2 { font-size:17px; padding:10px 0 15px 0; text-align:justify; }
+.speakers h2 br { display:none; }
+.speaker_container { padding:20px 0 30px 0; }
+.speaker_info { width:100%; padding:7px 0; }
+
+.speakers h1 { position:relative; top:0px; }
+
+
+
+/* ----- Team ----- */
+
+
+.team { padding:135px 0 30px 0; }
+.team_info { width:100%; float:left; text-align:center; padding:7px 0; }
+
+.teamrow1 { list-style-type:none; margin:11px 0 0 20px; padding:10px 0; float:left; }
+.teamrow1 li { width:100%; font-size:15px; line-height:22px; }
+.teamrow1 li span { font-size:15px; display:none; }
+
+
+.founder_img { width:100%; float:left; text-align:right; }
+.founder_img img { width:70%; float:left; padding-left:16%; }
+.founder_info { width:100%; float:left; }
+
+.chief_patron { width:80%; padding:15px 0 0 10%; margin:0 10% 0 0; }
+.chief_patron h3 { font-size:20px; }
+.chief_patron h4 { font-size:17px; }
+.chief_patron p { font-size:15px; }
+
+.boxouter { width:99.5%; margin-left:0; background:#3fa5ac url(../images/box_linne.png) repeat-x; height:auto; border:2px solid #FFFFFF; }
+.hexagon_info { width:100%; float:left; position:relative; font-size:18px; left:0; top:0; padding:17px 0 10px 0; border-bottom:1px dashed #FFFFFF; }
+.hexagon_info1 { width:100%; float:left; position:relative; font-size:18px; left:0; top:0; padding:17px 0 10px 0; border-bottom:1px dashed #FFFFFF; }
+.hexagon_info2 { width:100%; float:left; position:relative; font-size:18px; left:0; top:0; padding:17px 0 10px 0; border-bottom:1px dashed #FFFFFF; }
+
+.hexagon_info br, .hexagon_info1 br, .hexagon_info2 br { display:none; }
+
+.triangle { display:none; }
+.hexagon { display:none; }
+
+
+/* ----- Contact ----- */
+
+#c_map { height:225px; }
+
+.contact_left { width:100%; padding:0 0 0 0; }
+.contact_right { width:100%; padding:0 0 0 0; }
+
+.secretariat_left { width:98%; padding:0 1% 0 1%; }
+.secretariat_right { width:98%; padding:0 1% 0 1%; }
+
+.textleft { width:100%; float:left; }
+.textright { width:100%; float:left; }
+
+
+.txtbox { width:95%; padding:7px 5px; margin-top:5px; border:1px solid #3fa5ac; outline:none; font-family: 'newsgoth_btroman'; font-size:18px; color:#777777; border-radius:4px; }
+.txtarea { width:95%; padding:9px 7px; margin-top:5px; height:130px;  border:1px solid #3fa5ac; outline:none; font-family: 'newsgoth_btroman'; font-size:18px; color:#777777; border-radius:4px; }
+.submitbtn { color:#FFFFFF; float:right; padding:10px 24px; border-radius:5px; cursor:pointer; }
+
+
+/* ----- Hide ----- */
+
+.welcometop, .welcome_bottom, .speakertop, .speaker_bottom, .venue_top, .contact_top { display:none; }
+
+#logopart { display:none; }
+
+
+
+/* ----- About Coimbatore ----- */
+
+.abtcbe_col { width:100%; float:left; }
+.abtcbe_inner { width:96%; padding:10px 2%; border:1px solid #c8c8c8; margin:10px 0; }
+.abtcbe_inner > img { max-width:260px; }
+.cbeparag { width:94%; padding:10px 3%; font-size:14px; line-height:20px; }
+
+.aboutcbe h1 { font-size:24px; padding-bottom:3px; }
+.aboutcbe h2 { font-size:16px; padding-bottom:15px; }
+.abtcbe_inner h3 { font-size:16px; padding:10px 0 0 0; }
+
+
+/* ----- Popup ----- */
+
+.spkrpopup_cntr { width:285px; }
+.popup_left { width:72%; padding:0 14%; }
+.popup_left img { width:100%; float:left; margin-top:30px; }
+.popup_right { width:98%; }
+
+.popup_right h3 { font-size:20px; }
+.popup_right p { font-size:15px; padding:15px 0 0 0; }
+
+
+/* ----- Footer ----- */
+
+.footer_left { width:100%; float:left; text-align:center; padding-bottom:10px; }
+.footer_right { width:100%; float:left; text-align:center; }
+
+
+}
+
+
+@media screen and (min-width: 360px) and (max-width: 479px) {
+
+/* ----- Parallelx ----- */
+
+#innerslide5 .parallax_inner { height:3045px; }
+
+}
+
+
+
+

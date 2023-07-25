@@ -1,0 +1,234 @@
+<!DOCTYPE html5 PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Scrollable Website</title>
+
+<style type="text/css">
+
+
+
+body, html {
+	height: 100%;
+	min-height: 100%;
+	background-color: #000000;
+}
+body {
+	
+}
+.no-js {
+	padding-top: 106px;
+}
+h2 {
+	margin-top: 0;
+}
+.loading {
+	background: url('images/ico_loading.gif') no-repeat center center;
+}
+
+
+
+
+.bcg {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	height: 100%;
+	width: 100%;
+	display:block;
+	
+}
+
+.hsContainer {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+.hsContent {
+	max-width: 700px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+}
+	.hsContent h2  {
+		color: #fff8de;
+		background-color: rgba(0,0,0,0.5);
+		padding: 10px 5px;
+		font-size: 35px;
+		line-height: 38px;
+		margin-bottom: 12px;
+	}
+	.hsContent p {
+		width: 400px;
+		color: #b2b2b2;
+	}
+	.hsContent a {
+		color: #b2b2b2;
+		text-decoration: underline;
+	}
+
+/* Slide 1 */
+#slide-1 .bcg {background-image:url('images/back3.jpg');
+
+filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/logo.gif',sizingMethod='scale');
+-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/logo.gif',sizingMethod='scale')"; 
+
+}
+#slide-1 .hsContent {
+	bottom: 200px;
+	top: auto;
+}
+
+/* Slide 2 */
+#slide-2 .bcg {background-image:url('images/back1.jpg');  }
+#slide-2 .hsContent {
+	margin-left: -450px;
+	bottom: 200px;
+	top: auto;
+}
+
+/* Slide 3 */
+#slide-3 .bcg {background-image:url('images/back4.jpg'); background-attachment: fixed; }
+#slide-3 .hsContent {
+	margin-left: -239px;
+}
+	#slide-3 h2 {
+		color: #f2ead6;
+		background-color: rgba(0,0,0,0.6);
+	}
+
+/* Slide 4 */
+#slide-4 .bcg {background-image:url('images/back5.jpg'); height:100%; z-index:99; background-attachment:fixed; }
+#slide-4 .hsContent {
+	margin-left: -450px;
+}
+	#slide-4 h2 {
+		background: none;
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+
+#slide-41 .bcg {background-image:url('images/back5.jpg'); height:50%; z-index:99; background-attachment:scroll; }
+#slide-41 .hsContent {
+	margin-left: -450px;
+}
+	#slide-41 h2 {
+		background: none;
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+
+
+#slide-5 .bcg {background-image:url('images/back6.jpg')}
+#slide-5 .hsContent {
+	margin-left: -450px;
+}
+	#slide-5 h2 {
+		background: none;
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+
+
+
+
+</style>
+
+</head>
+<body style="padding:0; margin:0;" class="loading">
+
+
+<!--<div class="outer">
+	<div class="content1"></div>
+	<div class="content2"></div>
+	<div class="content3"></div>
+</div>
+
+
+<div class="outer1">
+	<div class="content4"></div>
+	<div class="content5"></div>
+</div>
+-->
+
+
+<section id="slide-1" class="homeSlide">
+    <div class="bcg">
+        <div class="hsContainer">
+            <div class="hsContent">
+                <h2>Simple parallax scrolling is...</h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="slide-2" class="homeSlide">
+    <div class="bcg">
+        <div class="hsContainer">
+            <div class="hsContent">
+                <h2>great for story telling websites.</h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="slide-3" class="homeSlide">
+    <div class="bcg">
+        <div class="hsContainer">
+            <div class="hsContent">
+                <h2>Now go and create your own story</h2>
+            </div>
+                </div>
+
+        </div>
+        
+    </div>
+</section>
+
+
+<section id="slide-5" class="homeSlide">
+    <div class="bcg">
+        <div class="hsContainer">
+            <div class="hsContent">
+                <h2>Now go and create your own story</h2>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+
+
+<script type="text/javascript">
+
+(function(){
+
+  var parallax = document.querySelectorAll(".parallax"),
+      speed = 0.5;
+
+  window.onscroll = function(){
+    [].slice.call(parallax).forEach(function(el,i){
+
+      var windowYOffset = window.pageYOffset,
+          elBackgrounPos = "50% " + (windowYOffset * speed) + "px";
+      
+      el.style.backgroundPosition = elBackgrounPos;
+
+    });
+  };
+
+})();
+
+</script>
+
+
+</body>
+</html>

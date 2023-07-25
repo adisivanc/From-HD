@@ -1,0 +1,185 @@
+@charset "utf-8";
+/* CSS Document */
+
+@font-face {
+    font-family: 'gillsans_lightregular';
+    src: url('gillsans-light-webfont.eot');
+    src: url('gillsans-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('gillsans-light-webfont.woff2') format('woff2'),
+         url('gillsans-light-webfont.woff') format('woff'),
+         url('gillsans-light-webfont.ttf') format('truetype'),
+         url('gillsans-light-webfont.svg#gillsans_lightregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GillSansBoldRegular';
+    src: url('gillsans-bold.eot');
+    src: url('gillsans-bold.eot') format('embedded-opentype'),
+         url('gillsans-bold.woff2') format('woff2'),
+         url('gillsans-bold.woff') format('woff'),
+         url('gillsans-bold.ttf') format('truetype'),
+         url('gillsans-bold.svg#GillSansBoldRegular') format('svg');
+}
+
+@font-face {
+    font-family: 'gillsans_condensedbold';
+    src: url('gillsans-condensed-bold-webfont.eot');
+    src: url('gillsans-condensed-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('gillsans-condensed-bold-webfont.woff2') format('woff2'),
+         url('gillsans-condensed-bold-webfont.woff') format('woff'),
+         url('gillsans-condensed-bold-webfont.ttf') format('truetype'),
+         url('gillsans-condensed-bold-webfont.svg#gillsans_condensedbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'gill_sansregular';
+    src: url('gillsans-webfont.eot');
+    src: url('gillsans-webfont.eot?#iefix') format('embedded-opentype'),
+         url('gillsans-webfont.woff2') format('woff2'),
+         url('gillsans-webfont.woff') format('woff'),
+         url('gillsans-webfont.ttf') format('truetype'),
+         url('gillsans-webfont.svg#gill_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'gillsansmtpro-book';
+    src: url('gillsansmtpro-book.eot');
+    src: url('gillsansmtpro-book.eot?#iefix') format('embedded-opentype'),
+         url('gillsansmtpro-book.woff2') format('woff2'),
+         url('gillsansmtpro-book.woff') format('woff'),
+         url('gillsansmtpro-book.ttf') format('truetype'),
+         url('gillsansmtpro-book.svg#gill_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'gillsansmtpro-medium';
+    src: url('gillsansmtpro-medium.eot');
+    src: url('gillsansmtpro-medium.eot?#iefix') format('embedded-opentype'),
+         url('gillsansmtpro-medium.woff2') format('woff2'),
+         url('gillsansmtpro-medium.woff') format('woff'),
+         url('gillsansmtpro-medium.ttf') format('truetype'),
+         url('gillsansmtpro-medium.svg#gill_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+* html img,
+* html .png{
+position:relative;
+behavior: expression((this.runtimeStyle.behavior="none")&&(this.pngSet?this.pngSet=true:(this.nodeName == "IMG" && this.src.toLowerCase().indexOf('.png')>-1?(this.runtimeStyle.backgroundImage = "none",
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.src + "', sizingMethod='image')",
+this.src = "images/transparent.gif"):(this.origBg = this.origBg? this.origBg :this.currentStyle.backgroundImage.toString().replace('url("','').replace('")',''),
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.origBg + "', sizingMethod='crop')",
+this.runtimeStyle.backgroundImage = "none")),this.pngSet=true)
+);
+}
+
+html {
+    font-size: 100%; /* 1 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+    -ms-text-size-adjust: 100%; /* 2 */
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video { margin:0; padding:0; }
+
+h1, h2, h3, h4, h5, h6 { font-style:normal; font-weight:normal; }
+img { border: 0; -ms-interpolation-mode: bicubic; }
+a { text-decoration:none; }
+
+.txt_semibold { font-family: 'open_sanssemibold'; }
+.txt_bold { font-family: 'open_sansbold'; }
+
+.boxred { border:1px solid #F00; }
+
+
+/*  ---------  Defult  -----------  */
+.no-margin { margin:0; }
+.no-padding { padding:0; }
+.padding_left { padding-left:20px; }
+.margin_left20 { margin-left:20px; } 
+.margin_right20 { margin-right:20px; } 
+
+.font10 { font-size:10px; }
+.font12 { font-size:12px; }
+.font14 { font-size:14px; }
+.font16 { font-size:16px; }
+.font18 { font-size:18px; }
+
+
+/* ------------------- default ---------------- */
+
+body { margin:0 0 0 0; padding:0 0 0 0; font-family: 'gillsansmtpro-book'; background-color:#FFF; font-size:14px; color:#000; }
+
+
+.nav_menu { list-style:none; float:left; }
+.nav_menu li { float:left; border-bottom:1px solid #d5d5d5; }
+.menuitem { width:215px; float:left; padding:10px 0 12px 15px; color:#000000; cursor:pointer; }
+.menuitem img { margin:6px 0 0 0; float:left; border:0px solid red; } 
+.menuname { width:175px; float:right; font-size:18px; padding-right:5px; margin-right:5px; }
+.menuitem:hover, .menu_active { background-color:#47755e; color:#FFFFFF;  }
+ 
+
+.submenu { width:230px; float:left; color:#000000; display:none; border:0px solid red; }
+.submenuitem { width:215px; float:left; background:#e4e2e2; padding:10px 0 12px 15px; color:#000000; cursor:pointer; border:0px solid red;   }
+.submenuitem img { margin:8px 0 0 6px; }
+
+.submenuitem:hover { background:#ffffff; }
+
+.nav_arrow { width:10px; height:5px; float:right; background-image: url(../image/menu_downarrow.png); background-repeat: no-repeat; margin-top:10px;  }
+
+.uparrow { background-image: url(../image/menu_uparrow.png); }
+.downarrow { background-image: url(../image/menu_downarrow.png); }
+
+
+#menu_dashboard { background:url(../image/dashborad_icon_small.png) no-repeat 15px 16px; }
+#menu_dashboard:hover, #menu_dashboard.active { background: #47755e url(../image/dashborad_icon_small_mo.png) no-repeat 15px 16px; color:#FFFFFF; }
+
+#menu_jobs { background:url(../image/jobs_icon.png) no-repeat 15px 15px; }
+#menu_jobs:hover, #menu_jobs.active { background: #47755e url(../image/jobs_icon_mo.png) no-repeat 15px 15px; color:#FFFFFF; }
+
+#menu_clients { background:url(../image/client_icon.png) no-repeat 13px 16px; }
+#menu_clients:hover, #menu_clients.active { background: #47755e url(../image/client_icon_mo.png) no-repeat 13px 16px; color:#FFFFFF; }
+
+#menu_tasks { background:url(../image/task_icon.png) no-repeat 15px 16px; }
+#menu_tasks:hover, #menu_tasks.active { background: #47755e url(../image/task_icon_mo.png) no-repeat 15px 16px; color:#FFFFFF; }
+
+#menu_resource { background:url(../image/resource_icon.png) no-repeat 15px 16px; }
+#menu_resource:hover, #menu_resource.active { background: #47755e url(../image/resource_icon_mo.png) no-repeat 15px 16px; color:#FFFFFF; }
+
+#menu_quotation { background:url(../image/quotation_icon.png) no-repeat 15px 16px; }
+#menu_quotation:hover, #menu_quotation.active { background: #47755e url(../image/quotation_icon_mo.png) no-repeat 15px 16px; color:#FFFFFF; }
+
+#menu_payment { background:url(../image/payment_icon.png) no-repeat 15px 16px; }
+#menu_payment:hover, #menu_payment.active { background: #47755e url(../image/payment_icon_mo.png) no-repeat 15px 16px; color:#FFFFFF; }
+
+#menu_calendar { background:url(../image/calendar_icon.png) no-repeat 15px 16px; }
+#menu_calendar:hover, #menu_calendar.active { background: #47755e url(../image/calendar_icon_mo.png) no-repeat 15px 16px; color:#FFFFFF; }
+
+#menu_settings { background:url(../image/settings_icon.png) no-repeat 15px 16px; }
+#menu_settings:hover, #menu_settings.active { background: #47755e url(../image/settings_icon_mo.png) no-repeat 15px 16px; color:#FFFFFF; }
+
+#menu_logout { background:url(../image/logout_icon.png) no-repeat 15px 16px; }
+#menu_logout:hover, #menu_logout.active { background: #47755e url(../image/logout_icon_mo.png) no-repeat 15px 16px; color:#FFFFFF; }
+

@@ -1,0 +1,14 @@
+
+
+  SLIDER:
+  =======
+
+  http://thedesignhill.com/jquery-image-and-content-sliders/
+
+  http://webtoolsdepot.com/30-best-jquery-image-and-content-slider-plugins/
+
+
+  Firework:
+  =========
+
+  http://www.thesoftwareguy.in/create-fireworks-with-javascript-using-fireworks-js/

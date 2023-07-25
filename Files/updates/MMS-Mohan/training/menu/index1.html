@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Menu</title>
+
+<style type="text/css">
+
+#container{ width:960px; margin:0 auto; padding-top:100px; }
+
+#topMenu{
+width:960px; 
+height:45px;
+float:left; 
+background: #c0c0c0;
+background: -webkit-gradient(linear, left top, left bottom, from(#999999), to(#000000)); /* for webkit browsers */
+background: -moz-linear-gradient(top,  #999999,  #000000); /* for firefox 3.6+ */ */
+-webkit-box-shadow: 2px 2px 9px rgba(27, 29, 29, 0.7);
+-moz-box-shadow: 2px 2px 9px rgba(27, 29, 29, 0.7);
+box-shadow: 2px 2px 9px rgba(27, 29, 29, 0.7);
+border-radius:7px;
+-moz-border-radius:5px;
+}
+
+ul, li{ margin:0; padding:0;}
+
+#main_menu{ list-style:none; font-family:Arial, Helvetica, sans-serif; font-size:14px;  font-weight:bold; position: relative; padding:0 30px;  }
+
+#main_menu li{ float:left; padding:0 40px; height:45px; line-height:45px; color:#FFFFFF; width:100px; } 
+
+#main_menu li:hover{ 
+color:#0FF; cursor: pointer;
+background: #f0f0f0;
+background: -webkit-gradient(linear, left top, left bottom, from(#a0a0a0), to(#333333)); /* for webkit browsers */
+background: -moz-linear-gradient(top,  #a0a0a0,  #333333); /* for firefox 3.6+ */ */
+background: -ms-linear-gradient(top,  #a0a0a0,  #333333); /* for firefox 3.6+ */ */
+}
+
+a{ color: #F90; font-family:Arial, Helvetica, sans-serif; font-size:14px;  font-weight:bold; text-decoration:none; width:160px; height:45px; padding-left:20px; line-height:45px; display:block; margin-left:-40px;   }
+
+#main_menu .sub_menu, .port{ list-style:none; margin:0; padding:0; text-align:left; position:absolute; top:45px; width:180px; margin-left:-40px; background:#666; 
+
+-webkit-box-shadow: 4px 4px 9px rgba(27, 29, 29, 0.7);
+-moz-box-shadow: 4px 4px 9px rgba(27, 29, 29, 0.7);
+box-shadow: 4px 4px 9px rgba(27, 29, 29, 0.7);
+-ms-box-shadow: 4px 4px 9px rgba(27, 29, 29, 0.7);
+
+border-bottom-left-radius:10px; border-bottom-right-radius:10px;
+
+
+}
+#main_menu .sub_menu li{ width:100px; text-align:left;}
+#main_menu .sub_menu li:hover{ background:#FC9; color:#EEE; 
+background: -webkit-gradient(linear, left top, left bottom, from(#F00), to(#000000)); /* for webkit browsers */
+background: -moz-linear-gradient(top,  #F00,  #000); /* for firefox 3.6+ */ */
+background: -ms-linear-gradient(top,  #F00,  #000);
+}
+
+#main_menu .sub_menu li.last-child:hover{
+border-bottom-left-radius:10px; border-bottom-right-radius:10px;}
+
+.sub_menu,  .port{ display:none;}
+#main_menu li:hover > .sub_menu { display: block;}
+#main_menu li:hover > .sub_menu li a:hover{ color:#EEE; }
+#main_menu li:hover > .sub_menu li:last-child:hover{ border-bottom-left-radius:10px; border-bottom-right-radius:10px;  }
+
+#main_menu li:hover > .port { display: block;}
+</style>
+
+</head>
+
+<body bgcolor="#CCCCCC">
+
+
+<div id="container">
+<div id="topMenu">
+
+<ul id="main_menu">
+    <li>Home</li>
+    <li>About Us
+    
+        <ul class="sub_menu">
+        	<li><a href="#">Sub Menu 1</a></li>
+        	<li><a href="#">Sub Menu 2</a></li>
+        	<li><a href="#">Sub Menu 3</a></li>
+        	<li><a href="#">Sub Menu 4</a></li>
+        	<li><a href="#">Sub Menu 5</a></li>
+        	<li><a href="#">Sub Menu 6</a></li>
+        </ul>
+    
+    </li>
+    <li>Services
+    	
+        <ul class="sub_menu">
+        	<li><a href="#">Sub Menu 1</a></li>
+        	<li><a href="#">Sub Menu 2</a></li>
+        	<li><a href="#">Sub Menu 3</a></li>
+        	<li><a href="#">Sub Menu 4</a></li>
+        	<li><a href="#">Sub Menu 5</a></li>
+        	<li><a href="#">Sub Menu 6</a></li>
+        </ul>
+        
+    </li>
+    <li>Portfolio
+    
+		<div class="port" style="background:#666; width:500px; line-height:23px;; text-align:justify; padding:10px; color:#EEE; ">    
+            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, 
+            by injected humour, or randomised words which don't look even slightly believable.        
+    	</div>
+    
+    </li>
+    <li>Contact</li>
+</ul>
+
+
+</div>
+</div>
+
+
+</body>
+</html>

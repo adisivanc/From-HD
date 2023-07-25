@@ -1,0 +1,168 @@
+@charset "utf-8";
+/* CSS Document */
+
+@font-face {
+    font-family: 'newsgoth_btroman';
+    src: url('tt0047m_0-webfont.eot');
+    src: url('tt0047m_0-webfont.eot?#iefix') format('embedded-opentype'),
+         url('tt0047m_0-webfont.woff2') format('woff2'),
+         url('tt0047m_0-webfont.woff') format('woff'),
+         url('tt0047m_0-webfont.ttf') format('truetype'),
+         url('tt0047m_0-webfont.svg#newsgoth_btroman') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'newsgoth_btbold';
+    src: url('tt0049m_0-webfont.eot');
+    src: url('tt0049m_0-webfont.eot?#iefix') format('embedded-opentype'),
+         url('tt0049m_0-webfont.woff2') format('woff2'),
+         url('tt0049m_0-webfont.woff') format('woff'),
+         url('tt0049m_0-webfont.ttf') format('truetype'),
+         url('tt0049m_0-webfont.svg#newsgoth_btbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'newsgoth_btitalic';
+    src: url('tt0048m_0-webfont.eot');
+    src: url('tt0048m_0-webfont.eot?#iefix') format('embedded-opentype'),
+         url('tt0048m_0-webfont.woff2') format('woff2'),
+         url('tt0048m_0-webfont.woff') format('woff'),
+         url('tt0048m_0-webfont.ttf') format('truetype'),
+         url('tt0048m_0-webfont.svg#newsgoth_btitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'newsgoth_btbold_italic';
+    src: url('tt0050m_0-webfont.eot');
+    src: url('tt0050m_0-webfont.eot?#iefix') format('embedded-opentype'),
+         url('tt0050m_0-webfont.woff2') format('woff2'),
+         url('tt0050m_0-webfont.woff') format('woff'),
+         url('tt0050m_0-webfont.ttf') format('truetype'),
+         url('tt0050m_0-webfont.svg#newsgoth_btbold_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'newsgoth_cn_btregular';
+    src: url('tt0375m_0-webfont.eot');
+    src: url('tt0375m_0-webfont.eot?#iefix') format('embedded-opentype'),
+         url('tt0375m_0-webfont.woff2') format('woff2'),
+         url('tt0375m_0-webfont.woff') format('woff'),
+         url('tt0375m_0-webfont.ttf') format('truetype'),
+         url('tt0375m_0-webfont.svg#newsgoth_cn_btregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'newsgoth_lt_btlight';
+    src: url('tt0132m_0-webfont.eot');
+    src: url('tt0132m_0-webfont.eot?#iefix') format('embedded-opentype'),
+         url('tt0132m_0-webfont.woff2') format('woff2'),
+         url('tt0132m_0-webfont.woff') format('woff'),
+         url('tt0132m_0-webfont.ttf') format('truetype'),
+         url('tt0132m_0-webfont.svg#newsgoth_lt_btlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+* html img,
+* html .png{
+position:relative;
+behavior: expression((this.runtimeStyle.behavior="none")&&(this.pngSet?this.pngSet=true:(this.nodeName == "IMG" && this.src.toLowerCase().indexOf('.png')>-1?(this.runtimeStyle.backgroundImage = "none",
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.src + "', sizingMethod='image')",
+this.src = "images/transparent.gif"):(this.origBg = this.origBg? this.origBg :this.currentStyle.backgroundImage.toString().replace('url("','').replace('")',''),
+this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.origBg + "', sizingMethod='crop')",
+this.runtimeStyle.backgroundImage = "none")),this.pngSet=true)
+);
+}
+
+
+html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video { margin:0; padding:0; }
+
+h1, h2, h3, h4, h5, h6 { font-style:normal; font-weight:normal; }
+img { border: 0; -ms-interpolation-mode: bicubic; }
+a { text-decoration:none; }
+
+
+/* ------------------------------------------------------------------------------ */
+
+body { margin:0 0 0 0; padding: 0 0 0 0; background:#FFFFFF; font-size:16px; color:#4f4f4f; font-family: 'newsgoth_btroman'; }
+
+.content { max-width:1200px; width:98%; margin:0 auto; }
+.full_width { width:100%; float:left }
+
+.txtwhite { color:#FFFFFF; }
+.txttheme { color:#4f4f4f; }
+.txtgreen { color:#6dafae; }
+
+.txtbold { font-family: 'newsgoth_btbold'; }
+.txtlight { font-family: 'newsgoth_lt_btlight'; }
+
+
+
+/* ----- Index ----- */
+
+.slide_container { padding-top:40px; }
+.slide_container h2 { font-size:72px; color:#4f4f4f; letter-spacing:1px; text-shadow:2px 2px 2px #FFFFFF, 2px 2px 2px #6dafae; }
+.slide_container h3 { color:#4f4f4f; font-size:40px; text-align:center; padding-top:20px; letter-spacing:2px; text-shadow:2px 2px 2px #FFFFFF; }
+.slide_container h4 { color:#46628b; font-size:32px; text-align:center; padding-top:10px; letter-spacing:3px; text-shadow:1px 1px 1px #FFFFFF; }
+
+.menu_content { max-width:1200px; width:98%; margin:95px auto 15px auto; }
+
+.header_container { background:url(../images/header_top.png) no-repeat center top; height:47px; font-size:17px; position:fixed; z-index:3; }
+.header_left { float:left; line-height:27px; letter-spacing:1px; margin-top:10px; }
+.header_right { float:right; line-height:27px; letter-spacing:1px; margin-top:10px; }
+
+
+.logo { position:relative; float:left; top:-50px; padding:0 82px 0 65px; }
+.header_strip { background:url(../images/hr1.jpg) repeat-x; height:2px; width:60%; margin:0 20%; float:left; }
+
+.slide_info { width:33.3%; float:left; }
+.slideinfo_outer { padding:45px 0 0 0; }
+
+.info_count { font-size:75px; padding-right:7px; }
+.info_descp { font-size:32px; }
+.info_descp div { font-size:24px; color:#888888; }
+
+
+/* ----- Parallelx ----- */
+
+#innerslide1 .parallax_inner { background-image:url(../images/slide_layer1.png); background-repeat:no-repeat; background-position: left top; background-attachment:fixed; height:860px; }
+#innerslide1 .hsContainer { background-image:url(../images/slidde_layer2.png); background-repeat:no-repeat; background-position: right top; background-size: cover; position:relative; }
+.parallax, .parallax_inner { background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover; height: 100%; width: 100%; display:block; z-index:0; }
+.hsContainer { width: 100%; height: 100%; overflow: hidden; position: relative; z-index:0; }
+
+#innerslide2 { background-image:url(../images/slide_layer2.png); background-repeat:no-repeat; background-position: left top; background-size: cover; position:relative; }
+
+
+
+
+

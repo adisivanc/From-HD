@@ -1,0 +1,2 @@
+$(document).on('mouseenter mouseleave', '.inter [class]', function (event) {
+$('.' + this.classCSS + 't').toggle(event.type === 'mouseenter');

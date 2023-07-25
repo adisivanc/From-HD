@@ -1,0 +1,32 @@
+/*! responsive-nav.js v1.0.20 by @viljamis */
+
+.js #navbar-1-left {
+  clip: rect(0 0 0 0);
+  max-height: 0;
+  position: absolute;
+  display: block;
+  zoom: 1;
+}
+
+#navbar-1-left.opened {
+  max-height: 9999px;
+}
+
+#nav-toggle {
+  font-family: 'genericons';
+  line-height: 100%;
+  font-size: 24px;
+  padding-left: 15px;
+}
+
+@media screen and (min-width: 767px) {
+  .js #navbar-1-left {
+    position: relative;
+  }
+  .js #navbar-1-left.closed {
+    max-height: none;
+  }
+  #nav-toggle {
+    display: none;
+  }
+}
